@@ -1,0 +1,136 @@
+// Loading libraries
+LOAD "core.types"
+LOAD "core.macros"
+LOAD "core.eu"
+LOAD "testlib"
+
+// Types Declarations
+TYPE data EXTENDS() ATTRIBUTES() ACTIONS()
+TYPE agent EXTENDS() ATTRIBUTES() ACTIONS()
+
+// Agents Declarations
+AGENT kim TYPES(DataSubject) REQUIRED(access) PROVIDED(sensor)
+AGENT cloudX TYPES(DataProcessor) REQUIRED(storage sensor) PROVIDED(access)
+AGENT cloudY TYPES(DataProcessor) REQUIRED(getData) PROVIDED(storage access audit)
+AGENT cloudZ TYPES(DataProcessor) REQUIRED(uploadData) PROVIDED(getData access uploadActivity report marketing audit)
+AGENT sandra TYPES(DataController) REQUIRED(access uploadActivity) PROVIDED()
+AGENT hospital TYPES(DataController) REQUIRED(research) PROVIDED(report uploadActivity uploadData audit)
+AGENT leslie TYPES(Auditor) REQUIRED(report audit) PROVIDED()
+
+
+// Service Declarations
+SERVICE sensor TYPES() PURPOSE()
+SERVICE access TYPES() PURPOSE()
+SERVICE storage TYPES() PURPOSE()
+SERVICE getData TYPES() PURPOSE()
+SERVICE audit TYPES() PURPOSE()
+SERVICE uploadData TYPES() PURPOSE()
+SERVICE uploadActivity TYPES() PURPOSE()
+SERVICE report TYPES() PURPOSE()
+SERVICE marketing TYPES() PURPOSE()
+SERVICE research TYPES() PURPOSE()
+SERVICE read TYPES() PURPOSE()
+SERVICE delete TYPES() PURPOSE()
+SERVICE sanction TYPES() PURPOSE()
+SERVICE write TYPES() PURPOSE()
+
+DATA data_kim TYPES() SUBJECT kim
+
+
+/*** Kim's user preference ***/
+CLAUSE c1 (
+    FORALL d:data WHERE d.subject == kim
+    FORALL a:agent
+    PERMIT kim.read[cloudX](d)
+//    IF(a.location != "EU") THEN (DENY cloudX.send[a](d))
+)
+
+CLAUSE t (
+    FORALL a:action
+    IF(a.contains[a](delete) AND a.time == NULL) THEN( a.add[a](error))
+)
+
+/*** Kim's user preference ***/
+CLAUSE kim_policy (
+    FORALL d:data WHERE d.subject == kim
+    FORALL a:agent
+    PERMIT kim.read[cloudX](d)
+    AND PERMIT kim.read[cloudX](d)
+    AND PERMIT kim.write[cloudX](d)
+    AND PERMIT kim.delete[cloudX](d)
+    AND PERMIT cloudX.sensors[kim](d)
+    AND cloudX.delete[d]() BEFORE "2 Years"
+    AND IF(a.read[cloudX](d)) THEN (MUST(cloudX.notify[kim]()))
+    AUDITING leslie.audit[cloudS]()
+    IF_VIOLATED_THEN MUST(leslie.sanction[cloudX]() AND cloudX.delete[d]())
+)
+
+/*** CloudX's policy ***/
+CLAUSE cloudX_policy (
+    FORALL a:agent FORALL d:data WHERE d.subject == a
+    FORALL b:agent
+    PERMIT a.read[cloudX](d)
+    AND PERMIT a.read[cloudX](d)
+    AND PERMIT a.write[cloudX](d)
+    AND PERMIT a.delete[cloudX](d)
+    AND PERMIT cloudX.sensors[a](d)
+    AND PERMIT cloudX.storage[cloudY](d)
+    AND cloudX.delete[d]() BEFORE "2 Years"
+    AND IF(b.read[cloudX](d)) THEN (MUST(cloudX.notify[a]()))
+    AND IF(cloudX.storage[cloudY](d)) THEN (MUST(cloudX.log[cloudX]()))
+    AUDITING leslie.audit[cloudX]()
+    IF_VIOLATED_THEN leslie.sanction[cloudX]()
+)
+/*
+ ∀ A : Actor , Res : Resource .
+     ( Res . subject = S ) ∧ ( Res . anonymity = T) ⇒ ∀m : Message .
+         G ( ( Res [ −m → ( m . source = A ) ∧ ( m . service = WRITE ) ]
+         ∧ X ( ¬ Res [ −m → ( m . source = A ) ∧ ( m . service = WRITE ) ] ) )
+Rules(
+    # PERMIT a.read[cloudX](d)
+    PERMIT(source=*, service=read, target=cloudX, data=*) & M+(source=*, service=read, target=cloudX, data=*)  => M(source=*, service=read)
+
+
+    )
+*/
+
+/*** CloudZ's policy ***/
+CLAUSE cloudZ_policy (
+    FORALL a:agent FORALL file:data WHERE file.subject == a
+
+    PERMIT a.read[cloudS](file)
+    AND PERMIT a.write[cloudS](file)
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN DPA.sanction[cloudS]()
+)
+
+
+/*** CloudY's policy ***/
+CLAUSE cloudY_policy (
+    FORALL a:agent FORALL file:data WHERE file.subject == a
+    PERMIT a.read[cloudS](file)
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN DPA.sanction[cloudS]()
+)
+
+
+/*** Hospital's policy ***/
+CLAUSE hospital_policy (
+    FORALL a:agent FORALL file:data WHERE file.subject == a
+    PERMIT a.read[cloudS](file)
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN DPA.sanction[cloudS]()
+)
+
+
+CALL validate("'kim_policy'" "'cloudX_policy'")
+CALL validate("'cloudX_policy'" "'cloudY_policy'")
+CALL validate("'cloudY_policy'" "'cloudZ_policy'")
+//CALL validate("'hospital_policy'" "'cloudZ_policy'")
+//CALL obligation6()
+//CALL obligation18()
+//CALL obligation31()
+//CALL obligation7()
+//CALL validate("'kim_policy'" "'cloudX_policy'")
+//CALL ltl("'cloudX_policy'")
+

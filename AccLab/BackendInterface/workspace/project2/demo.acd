@@ -1,0 +1,188 @@
+[
+  {
+    "type": "AgentUI",
+    "id": "1f8adf4e-720b-8d9b-4bf6-c28a2202ba7b",
+    "x": 196,
+    "y": 113,
+    "width": 100,
+    "height": 46,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "communicate",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "give",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      }
+    ],
+    "bgColor": "#A0A0A0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "kim",
+    "policy": "",
+    "pservices": {
+      "data": [
+        "give"
+      ]
+    },
+    "rservices": {
+      "data": [
+        "communicate"
+      ]
+    },
+    "types": {
+      "data": []
+    },
+    "DEFAULT_bgColor": "#0d0d0d",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "AgentUI",
+    "id": "7d59f5ef-4f75-9357-b148-e96a3a6faf97",
+    "x": 166,
+    "y": 277,
+    "width": 106,
+    "height": 50,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "give",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "send",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      }
+    ],
+    "bgColor": "#A0A0A0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "hospital",
+    "policy": "Clause hOblig (\n// The final provider clause\nALWAYS (\n    FORALL p:Patient FORALL d:Doctor FORALL a:Agent FORALL r:agent\n    FORALL file :Dataa WHERE file.subject=p\n    PERMIT p.read[file]() AND PERMIT p.write[file]()\n    AND IF relative(r, p) THEN \n    (PERMIT r.read[file]() AND DENY r.write[file]())\n    AND (PERMIT d.read[file]() AND PERMIT d.write[file]())\n    AND PERMIT hospital.delete[file]()\n    AND IF (a.read[file]() AND PERMIT a.read[file]()) THEN \n        hospital.notify[file.subject](\"Authorized Access\")\n    AND IF (a.write[file]() AND PERMIT a.write[file]()) THEN \n        hospital.notify[file.subject](\"Authorized Access\")\n    AND IF (a.read[file]()) THEN hospital.log(a, ``read'', file)\n    AND IF (a.write[file]()) THEN hospital.log(a, ``write'', file)\n)\nAND (MUST hospital.delete[file]() AFTER 6 months)\n)",
+    "pservices": {
+      "data": [
+        "send"
+      ]
+    },
+    "rservices": {
+      "data": [
+        "give"
+      ]
+    },
+    "types": {
+      "data": [
+        "DataSubject"
+      ]
+    },
+    "DEFAULT_bgColor": "#0d0d0d",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "AgentUI",
+    "id": "ba34cf4a-1a8f-d061-ed1a-7cb714418c9b",
+    "x": 524,
+    "y": 109,
+    "width": 115,
+    "height": 50,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "upload",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "communicate",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      }
+    ],
+    "bgColor": "#A0A0A0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "sandra",
+    "policy": "",
+    "pservices": {
+      "data": [
+        "communicate"
+      ]
+    },
+    "rservices": {
+      "data": [
+        "upload"
+      ]
+    },
+    "types": {
+      "data": [
+        "DataControler"
+      ]
+    },
+    "DEFAULT_bgColor": "#0d0d0d",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "d3e347c9-2d3d-2321-831e-0a295d18f0ed",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "1f8adf4e-720b-8d9b-4bf6-c28a2202ba7b",
+      "port": "communicate"
+    },
+    "target": {
+      "node": "ba34cf4a-1a8f-d061-ed1a-7cb714418c9b",
+      "port": "communicate"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "39357b7f-1412-bb41-0039-18cfcf7fdf09",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "7d59f5ef-4f75-9357-b148-e96a3a6faf97",
+      "port": "give"
+    },
+    "target": {
+      "node": "1f8adf4e-720b-8d9b-4bf6-c28a2202ba7b",
+      "port": "give"
+    }
+  }
+]

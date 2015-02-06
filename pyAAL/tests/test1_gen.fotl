@@ -1,0 +1,19 @@
+begin_problem(TranslatedInput).
+list_of_descriptions.
+name({*Translated Input*}).
+author({**}).
+status(unknown).
+description({**}).
+end_of_list.
+
+list_of_symbols.
+predicates[(_P,0),(_U,0),(a,0),(b,0),(nexta,0),(nextb,0)].
+end_of_list.
+
+list_of_formulae(axioms).
+formula(always(and(_P,and(nexta,nextb)))).
+formula(always(implies(_P,next(_U)))).
+formula(always(implies(_U,or(not(a),b)))).
+end_of_list.
+
+end_problem.

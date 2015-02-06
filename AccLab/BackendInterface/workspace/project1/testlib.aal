@@ -1,0 +1,11 @@
+TYPE controller EXTENDS() ATTRIBUTES() ACTIONS()
+TYPE subject EXTENDS() ATTRIBUTES() ACTIONS()
+
+MACRO test (
+"""
+print("hello world")
+//for x in self.aalprog.clauses:
+    //print(x.name)
+check_monodic(self.aalprog, verbose=True)
+"""
+)

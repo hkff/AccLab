@@ -1,0 +1,289 @@
+LOAD "core.types"
+LOAD "testlib"
+LOAD "core.macros"
+//LOAD "core.eu"
+//LOAD "test2"
+
+// Types Declarations
+TYPE data4 EXTENDS() ATTRIBUTES() ACTIONS()
+TYPE none EXTENDS() ATTRIBUTES() ACTIONS()
+TYPE data EXTENDS() ATTRIBUTES() ACTIONS()
+TYPE agent EXTENDS() ATTRIBUTES() ACTIONS()
+
+// Agents Declarations
+AGENT foo TYPES(DataController) REQUIRED(a) PROVIDED(p)
+AGENT bar TYPES(none) REQUIRED(a) PROVIDED(p)
+
+//CALL skip_defs()
+
+AGENT alice TYPES(DataSubject) REQUIRED() PROVIDED()
+AGENT cloudS TYPES(DataController) REQUIRED() PROVIDED()
+AGENT exbackup TYPES() REQUIRED() PROVIDED()
+AGENT DPA TYPES(Auditor) REQUIRED() PROVIDED()
+DATA d TYPES(data) SUBJECT alice
+DATA d2 TYPES(data) SUBJECT bobo
+// Service Declarations
+SERVICE a TYPES() PURPOSE()
+SERVICE p TYPES() PURPOSE()
+SERVICE read TYPES() PURPOSE()
+SERVICE write TYPES() PURPOSE()
+SERVICE delete TYPES() PURPOSE()
+SERVICE get TYPES() PURPOSE()
+SERVICE store TYPES() PURPOSE()
+SERVICE notify TYPES() PURPOSE()
+SERVICE audit TYPES() PURPOSE()
+SERVICE sanction TYPES() PURPOSE()
+SERVICE audit TYPES() PURPOSE()
+
+AGENT bob
+
+
+/*** Kim's user preference ***/
+CLAUSE kim_policy (
+    FORALL file:data WHERE file.subject == kim
+    PERMIT kim.read[cloudX](file)
+    AND cloudX.delete[file]() BEFORE "1 Years"
+    AND IF (cloudX.read[file]()) THEN (cloudX.notify[kim]())
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN MUST(DPA.sanction[cloudS]())
+)
+
+/*** CloudX's policy ***/
+CLAUSE cloudX_policy (
+    FORALL a:agent FORALL file:data WHERE file.subject == a
+    PERMIT a.read[cloudX](file)
+    AND cloudX.delete[file]() BEFORE "2 Years"
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN DPA.sanction[cloudS]()
+)
+
+CALL validate("'kim_policy'" "'cloudX_policy'")
+
+
+CLAUSE c0 (
+//    FORALL d:data WHERE d.subject==Kim
+    FORALL a:agent
+    PERMIT Kim.write[cloudX]()
+    AND PERMIT Kim.read[cloudX](d)
+    AND DENY Kim.read[cloudX](d)
+    AND not cloudX.send[a]()
+
+AUDITING ALWAYS(IF(Kim.notify[auditor]()) THEN (auditor.audit[cloudX]()))
+IF_VIOLATED_THEN auditor.sanction[cloudX]()
+
+//AUDITING ALWAYS IF Kim.notify[auditor]() THEN auditor.audit[cloudX]()
+//IF_VIOLATED_THEN auditor.sanction[cloudX]()
+
+
+/*
+
+    FORALL file:data WHERE file.subject==alice
+    EXISTS a:agent
+    PERMIT alice.read[cloudS](d)
+    AND PERMIT alice.write[cloudS](file)
+    AND DENY cloudS.store[a](file)
+    //AND IF (alice.read[cloudS](file) == "pp") THEN (MUST(cloudS.notify[cloudS]()))
+*/
+)
+
+EXEC
+"""
+#print(self.clause("kim_policy").to_ast())
+#print(self.clause("c0").audit.usage is None)
+#print(self.clause("c0").usage.to_ltl())
+#print(self.aalprog.clauses[2].walk(filter_type=m_aexpNotAexp)[0].remove())
+#print(self.aalprog.clauses[2].to_ast())
+from tools.visu import Visu
+Visu.show_ast(self.aalprog)
+
+"""
+
+//CHECK c1 (
+//clause(c0)
+//)
+
+//APPLY c1()
+/*
+always(![a,b,c] (not write(a, b, c)) | P_write(a, b, c) ) &
+always(![a,b,c] (not read(a, b, c)) | P_read(a, b, c) ) &
+
+![d] ![a](((
+    P_write(Kim, cloudX, d) &
+    not P_read(Kim, cloudX, d)) &
+    Asend(cloudX, a)
+))
+*/
+
+//CHECK c1 ( clause(c0) => clause(c0) & ae => ae )
+//CHECK c1 ( ae )
+//APPLY c1()
+/*
+CLAUSE c1 (
+    FORALL file:data WHERE file.subject==alice
+    EXISTS a:agent
+//    ALWAYS(
+    PERMIT alice.read[cloudS](d)
+    AND PERMIT alice.write[cloudS](file)
+    AND PERMIT alice.delete[cloudS](file)
+    AND PERMIT cloudS.get[a](file)
+    AND DENY cloudS.store[exbackup](file)
+    AND DENY cloudS.store[a](file)
+    AND IF (alice.read[cloudS](file) == "pp") THEN (MUST(cloudS.notify[cloudS]()))
+//    )
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN MUST(DPA.sanction[cloudS]() AND cloudS.delete[file]())
+)*/
+// TODO transalte equal
+// HINT 1 : Action auto complete
+/*
+CLAUSE c2(
+    FORALL a:agent FORALL file:data //WHERE file.subject==a
+    PERMIT a.read[cloudS](file)
+    AND PERMIT a.write[cloudS](file)
+    AND DENY a.delete[cloudS](file)
+//    AND PERMIT a.delete[cloudS](file)
+    AND PERMIT cloudS.get[a](file)
+    AND PERMIT cloudS.store[exbackup](file)
+//    AND DENY cloudS.store[exbackup](file)
+//    AND IF (a.read[cloudS](file)) THEN (MUST(cloudS.notify[cloudS]()))
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN DPA.sanction[cloudS]()
+)
+*/
+
+//CALL show_libs()
+//CALL resolve("self.clause('c1')" "self.clause('c2')")
+//CALL show_clause("'c1'")
+//CALL validate("self.clause('c1')" "self.clause('c2')")
+///CALL validate("'c1'" "'c2'")
+//CALL obligation6()
+//CALL to_natural("'c1'")
+
+/*EXEC
+"""
+for x in self.aalprog.walk(filters="self.is_a('DataController')", filter_type=m_agent):
+    print(x.name)
+"""
+*/
+//EXEC
+//"""
+//for x in self.aalprog.walk(filters="True", filter_type=m_action):
+//    if isinstance(x.args, m_ref):
+//        print(str(x.args.target) + "  " + str(x.args.target.is_a('data')))
+//"""
+//CALL test()
+//CHECK ck1 ( clause(c1).uc => clause(c2).uc )
+//CHECK ck2 ( clause(c2).uc => clause(c1).uc )
+//
+//APPLY ck1()
+//APPLY ck2()
+//CALL ltl("'c1'")
+
+/*
+MACRO ch(
+"""
+print(args)
+print(self.aalprog)
+pre_cond = "always( ![a,x,y,z] ~(PERMIT(a, x, y, z) & DENY(a, x, y, z))) &  "
+pre_cond = ""
+self.apply_check(code=pre_cond + "clause(c1).uc & clause(c2).uc", verbose=True)
+self.apply_check(code=pre_cond + "clause(c2).uc => clause(c1).uc")
+self.apply_check(code=pre_cond + "~(clause(c2).uc => clause(c1).uc)")
+"""
+)
+*/
+//MACRO h(a1 a2) (
+//"""
+//print(check_aal(self))
+//print(a1.name)
+//"""
+//)
+//CALL h("self.clause('c1')" "self.clause('c2')")
+//CALL ch()
+// states in policy calculus ??
+// golbal to local => pc code generation
+// traduction vers pc
+
+//CALL ltl_check()
+//APPLY toto1()
+//APPLY toto2()
+//APPLY toto3()
+//AGENT bob TYPES (controller subject) REQUIRED(write read) PROVIDED(get)
+//AGENT bob TYPE (subject controller) REQUIRED(write read) PROVIDED(get)
+//Clause c1 (
+//    MUST(FORALL p:data FORALL d:da not(bob.read[p](p)))
+//    MUST(EXISTS d:data FORALL d1:data EXISTS p:agent (MUST(bob.read[bob](d) AND p.read[d1]())))
+//      AND (FORALL a:agent (ALWAYS( bob.read[d]())))
+    //   bob.read[t]() AND alice.write[t]() AND toto.delete[t]() AND max.read[t]()
+    // ,IF ( (data.a != s.l) AND (data.a != s.l) ) THEN (must(p.read[d]()))
+   /* IF (data.ret == 5) THEN (bob.read[z](z) A<ND p.write[e](d) OR bob.delete[e](d)) AND
+    ALWAYS(bob.read[alice](roo))
+    AND bob.read[t]() AND bob.read[t]()
+    AND not(PERMIT bob.write[da](s))
+    AND bob.write[alice](d) AND
+    EXISTS d:agent AND FORALL p:data AND
+    PERMIT UserU.read[fileU](s) PURPOSE(admin)
+    AND DENY a.read[fileU](z) AND bob.read[g](z) AND
+    IF (p.read[r](d)) THEN ( bob.read[g](z) )*/
+   // AUDITING IF (p.read[a](z)) THEN (lesli.audit[hospital](dzdz))
+//    IF_VIOLATED_THEN Leslie.sanction[hospital](d)
+//)
+
+//CLAUSE hospitalPolicy (
+//    ALWAYS (
+//    FORALL p:Patient FORALL r:agent FORALL d:Doctor FORALL a:agent
+//    FORALL file:data WHERE file.subject == p
+//    // Any patient can read/write his personal data.
+//    (PERMIT p.read[file]() AND PERMIT p.write[file]()) AND bob.read[data](d) AND
+//    // Relatives can have read/write access as well.
+//    IF (p.relative == p) THEN (PERMIT r.read[file]() AND PERMIT r.write[file]())
+//    // Patients should be informed by mail whenever a permitted access to their data occurs.
+////    AND IF (a.read[file]() AND PERMIT a.read[file]()) THEN (hospital.notify[file]("Authorized Access"))
+//    //AND IF (a.write[file]() AND PERMIT a.write[file]()) THEN
+//    //hospital.notify[file.subject]("Authorized Access")
+//    // Any access attempt (be it permitted or denied) should be logged.
+////    AND IF (a.read[file]()) THEN hospital.log[a]("read, file")
+//    //AND IF (a.write[file]()) THEN hospital.log(a, ``write'', file)
+//    // Patients data should be deleted after 2 years.
+//    //AND (PERMIT hospital.delete[file]() AND MUST hospital.delete[file]() AFTER 2years) )
+//))
+
+//CALL test()
+//APPLY toto()
+/*
+CLAUSE c10 (
+    PERMIT p.d[z](z)
+)
+*/
+//SERVICE read TYPE(a b) PURPOSE(foo)
+//DATA d1 TYPE() PS() RS()
+/*
+MACRO test (
+"""
+print("hello world")
+print("hello world2")
+for x in self.aalprog.clauses:
+ print(x.name)
+"""
+)
+*/
+/*
+CLAUSE c2 (
+    EXISTS a:agent AND
+    IF (a.read[fileU]() AND DENY a.read[fileU]()) THEN (provider.notify[User_U]("Unauthorized Access"))
+    AND IF (a.read[fileU]() AND PERMIT a.read[fileU]()) THEN (provider.notify[User_U]("Authorized Access"))
+    AND IF (a.write[fileU]() AND DENY a.write[fileU]()) THEN (provider.notify[User_U]("Unauthorized Access"))
+    AND IF (a.write[fileU]() AND PERMIT a.write[fileU]()) THEN (provider.notify[User_U]("Authorized Access"))
+)
+AGENT bob TYPE (foo) REQUIRED ( bar ) PROVIDED ( foo )
+Clause d1 :
+IF p.read() THEN DENY alice.write(data)
+FORALL p:Data
+PERMIT bob.read(data) AND DENY alice.write(data) AND
+MUST (p.read[]() OR  p.write[]()  OR  p.delete[]())
+AUDITING Leslie.audit[hospital]()
+IF_VIOLATED_THEN MUST (Leslie.sanction[hospital]())
+ FORALL p:Data
+MUST (p.read[]()) OR  p.write[]()  OR  p.delete[]()
+MAY p.read[]() OR MUST p.write[]()  OR MUST p.delete[]()
+*/

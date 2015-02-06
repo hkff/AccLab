@@ -1,0 +1,19 @@
+begin_problem(TranslatedInput).
+list_of_descriptions.
+name({*Translated Input*}).
+author({**}).
+status(unknown).
+description({**}).
+end_of_list.
+
+list_of_symbols.
+functions[(Kim,0),(cloudX,0)].
+predicates[(Pread,3),(read,3)].
+end_of_list.
+
+list_of_formulae(axioms).
+formula(always(forall([_x],forall([_y],forall([_z],or(not(read(_x,_y,_z)),Pread(_x,_y,_z))))))).
+formula(forall([_x],and(not(Pread(Kim,cloudX,_x)),read(Kim,cloudX,_x)))).
+end_of_list.
+
+end_problem.

@@ -1,0 +1,71 @@
+
+------------------TEMPORAL-LOGIC-TRANSLATION-START-----------------------
+For initial clauses:
+------------------TEMPORAL-LOGIC-TRANSLATION-STOP------------------------
+------------------TEMPORAL-LOGIC-TRANSLATION-START-----------------------
+For universal clauses:
+1[0:Inp] ||  -> nextb*.    -> 1[0:Inp] ||  -> nextb(U)*.
+2[0:Inp] ||  -> nexta*.    -> 2[0:Inp] ||  -> nexta(U)*.
+3[0:Inp] ||  -> _P*.    -> 3[0:Inp] ||  -> _P(U)*.
+5[0:Inp] || a _U* -> b.    -> 5[0:Inp] || a(U) _U(U)* -> b(U).
+------------------TEMPORAL-LOGIC-TRANSLATION-STOP------------------------
+Non-Skolem constants contained in the problem: 
+-------------------------CONSTANT-FLOODING START-------------------------
+-------------------------CONSTANT-FLOODING STOP--------------------------
+-------------------------CONSTANT-FLOODING START-------------------------
+-------------------------CONSTANT-FLOODING STOP--------------------------
+Weight of the atom (_P U) is 2.
+Weight of the temporal successor function set to 3.
+Step clauses:
+4[0:Inp] || _P(U) -> _U(temp_succ(U))*.
+--------------------------TSPASS-START-----------------------------
+Input Problem:
+1[0:Inp] ||  -> _P(U)*.
+2[0:Inp] ||  -> nexta(U)*.
+3[0:Inp] ||  -> nextb(U)*.
+4[0:Inp] || _P(U) -> _U(temp_succ(U))*.
+5[0:Inp] || a(U) _U(U)* -> b(U).
+ This is a monadic Horn problem without equality.
+ This is a problem that contains sort information.
+ Axiom clauses: 5 Conjecture clauses: 0
+ Inferences: IORe=1 IOFc=1 
+ Reductions: RObv=1 RTaut=1 RFSub=1 RBSub=1 
+ Extras    : No Input Saturation, No Selection, No Splitting, Full Reduction,  Ratio: 5, FuncWeight: 1, VarWeight: 1
+ Precedence: div > id > c^l > temp_succ > temp_shield > temp_zero > _P > _U > a > b > nexta > nextb
+ Ordering  : KBO
+Processed Problem:
+
+Worked Off Clauses:
+
+Usable Clauses:
+3[0:Inp] ||  -> nextb(U)*.
+2[0:Inp] ||  -> nexta(U)*.
+1[0:Inp] ||  -> _P(U)*.
+4[0:Inp] || _P(U) -> _U(temp_succ(U))*.
+5[0:Inp] || _U(U)* a(U) -> b(U).
+Eventuality Clauses:
+
+TSPASS 0.95 
+SPASS beiseite: Satisfiable.
+Problem: tests/test1_gen.fotl 
+TSPASS derived 1 clauses, backtracked 0 clauses and kept 6 clauses.
+Number of input clauses: 5
+Number of eventualities: 0
+Total number of generated clauses: 6
+Number of forward-subsumed clauses: 0
+Number of backward-subsumed clauses: 0
+Total number of subsumed clauses: 0
+Number of tautology clauses: 0
+Number of clauses with different loop search markers: 0
+Number of usable clauses left: 0
+Number of worked-off clauses left: 6
+Number of successful loop searches: 0
+TSPASS allocated 507 KBytes.
+TSPASS spent	0:00:00.00 (0.002998s) on the problem.
+		0:00:00.00 (0s) for the input.
+		0:00:00.00 (0.001s) for the FLOTTER CNF translation.
+		0:00:00.00 (0s) for inferences.
+		0:00:00.00 (0s) for the backtracking.
+		0:00:00.00 (0s) for the reduction.
+
+--------------------------TSPASS-STOP------------------------------

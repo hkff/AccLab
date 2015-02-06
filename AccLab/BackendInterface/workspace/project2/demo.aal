@@ -1,0 +1,41 @@
+/***************************
+ *       Declarations
+ ****************************/
+AGENT kim TYPES() REQUIRED(communicate ) PROVIDED(give )
+AGENT hospital TYPES(DataSubject ) REQUIRED(give ) PROVIDED(send )
+AGENT sandra TYPES(DataControler ) REQUIRED(upload ) PROVIDED(communicate )
+AGENT agent TYPES() REQUIRED(send ) PROVIDED(notify )
+
+/***************************
+ *       Clauses
+ ****************************/
+
+
+Clause hOblig (
+// The final provider clause
+ALWAYS (
+    FORALL p:Patient FORALL d:Doctor FORALL a:Agent FORALL r:agent
+    FORALL file :Dataa WHERE file.subject=p
+    PERMIT p.read[file]() AND PERMIT p.write[file]()
+    AND IF relative(r, p) THEN 
+    (PERMIT r.read[file]() AND DENY r.write[file]())
+    AND (PERMIT d.read[file]() AND PERMIT d.write[file]())
+    AND PERMIT hospital.delete[file]()
+    AND IF (a.read[file]() AND PERMIT a.read[file]()) THEN 
+        hospital.notify[file.subject]("Authorized Access")
+    AND IF (a.write[file]() AND PERMIT a.write[file]()) THEN 
+        hospital.notify[file.subject]("Authorized Access")
+    AND IF (a.read[file]()) THEN hospital.log(a, ``read'', file)
+    AND IF (a.write[file]()) THEN hospital.log(a, ``write'', file)
+)
+AND (MUST hospital.delete[file]() AFTER 6 months)
+)
+
+
+
+Clause agent_policy (
+ {Usage}
+ AUDITING {actions}
+ IF_VIOLATED_THEN {actions}
+)
+

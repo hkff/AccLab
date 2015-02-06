@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" href="./libs/dock/css/dock-manager.css">
+    <link rel="stylesheet" href="./libs/dock/css/font-awesome.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="./libs/dock/js/dockspawn.js" type="text/javascript"></script>
+	
+	<!-- Info Vis graphing lib. Used for dock tree visualization -->
+	<link type="text/css" rel="stylesheet" href="infovis/jit-base.css" />
+	<link type="text/css" rel="stylesheet" href="infovis/Spacetree.css" />
+	<script language="javascript" type="text/javascript" src="infovis/jit.js"></script>
+	<script language="javascript" type="text/javascript" src="infovis/dock_tree_vis.js"></script>
+
+       <meta charset="utf-8">
+    <title>AccLab visual components editor</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <script src="./libs/jquery-1.10.2.min.js"></script>
+    <script src="./libs/jquery.autoresize.js"></script>
+    <script src="./libs/jquery-touch_punch.js"></script>
+    <script src="./libs/jquery.contextmenu.js"></script> 
+    <script src="./libs/raphael.js"></script>
+    <script src="./libs/rgbcolor.js"></script>
+    <script src="./libs/canvg.js"></script>
+    <script src="./libs/Class.js"></script>
+    <script src="./libs/json2.js"></script>
+    <script src="./libs/shifty.js"></script>
+    <script src="./libs/pathfinding-browser.min.js"></script>
+    <script src="./libs/draw2d.js"></script>
+    <script src="./libs/StackBlur.js"></script>
+    <script src="./libs/jquery-ui-1.8.23.custom.min.js"></script>
+    <script src="./libs/jquery.browser.js"></script>
+    
+
+    <!-- Toolbar -->  
+    <script src="./libs/toolbar/jquery.toolbar.min.js"></script>
+    <link href="./libs/toolbar/jquery.toolbars.css" rel="stylesheet" />
+    <!--<link href="./libs/toolbar/bootstrap.icons.css" rel="stylesheet" />-->
+    
+    <!-- avgrund
+    <script src="./libs/avgrund/jquery.avgrund.min.js"></script>
+    <link href="./libs/avgrund/avgrund.css" rel="stylesheet" />
+     -->
+    
+
+    <script src="./libs/ace/src-min-noconflict/ace.js"></script>
+
+    <!-- Selectize -->
+    <script src="./libs/selectize/selectize.js"></script>
+    <link href="./libs/selectize/selectize.default.css" rel="stylesheet" />
+
+    <!-- ColorPicker -->
+    <script src="./libs/colorPicker/js/colorpicker.js"></script>
+    <link href="./libs/colorPicker/css/colorpicker.css" rel="stylesheet" />
+     
+    <script src="./libs/screenfull.js"></script>
+    <script src="./libs/jquery.scrollTo.js"></script>
+    
+    <!-- AccDesigner -->
+    
+    <script src="./libs/easyUI/jquery.easyui.min.js"></script>
+    <link href="./libs/easyUI/easyui.css" rel="stylesheet" />
+    
+    <link href="./assets/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="diagramEditor.js"></script>
+    <script src="ui/ui.js"></script>
+    <script src="ui/fileManager.js"></script>
+    <script src="ui/grid.js"></script>
+    <script src="ui/outline.js"></script>
+    <script src="ui/components/components.js"></script>
+    <script src="ui/components/Ports2.js"></script>
+    <script src="ui/components/Actor.js"></script>
+    <script src="ui/components/Agent.js"></script>
+    <script src="ui/components/Data.js"></script>
+    <script src="ui/components/Policy.js"></script>
+    <script src="ui/tools/tools.js"></script>
+    <script src="ui/properties/properties.js"></script>
+</head>
+
+<body>
+    <div class="demo-header" id="header" style="width:100%">
+        <img src="assets/icon_128.png" class="logoHeader" alt="AccLab logo"/>
+        <div class="demo-header-title">
+        AccLab IDE [ALPHA V0.2]
+        </div>
+
+        <div id="explorerModeBtn" class="btn-action fa fa-sitemap fa-lg"></div>
+        <div id="designerModeBtn" class="btn-action fa fa-cubes fa-lg"></div>
+        <div id="coderModeBtn" class="btn-action fa fa-file-code-o fa-lg"></div>
+
+    </div>
+    <div id="my_dock_manager" class="my-dock-manager"></div>
+    <div id="solution_window" caption="Explorer" icon="icon-circle-arrow-right" class="solution-window">
+        <ul id="explorer" class="easyui-tree" >
+           <!--
+           <li><span>Demo</span>
+                <ul>
+                    <li><span>demo.aal</span></li>
+                    <li><span>demo.acd</span></li>
+                </ul>
+            </li>
+            <!--<li><span>File21</span></li>-->
+        </ul>
+    </div>
+    <div id="properties_window" caption="Properties" class="properties-window"></div>
+    <div id="problems_window" caption="Problems" class="problems-window"></div>
+    <div id="editor1_window" caption="demo.acd" class="editor1-window editor-host"></div>
+    <div id="editor2_window" caption="Steering.cpp" class="editor2-window editor-host"></div>
+    <div id="infovis" caption="Dock Tree Visualizer" class="editor2-window editor-host"></div>
+    <div id="output_window" caption="Output" class="output-window editor-host"></div>
+    <div id="toolbox_window" caption="Tools" class="toolbox-window"></div>
+    <div id="componentbox_window" caption="Components" class="componentbox-window"></div>
+    <div id="outline_window" caption="Outline" class="outline-window"></div>
+    
+    <div id="inPlaceAALEditor" caption="AAL Editor" class="problems-window">
+        <div id="inPlaceAALEditor-tools"></div>
+        <div id="inPlaceAALEditor-editor"></div>
+    </div>  
+
+    <script>
+        
+
+        window.onload = function()
+        {
+
+            // Convert a div to the dock manager.  Panels can then be docked on to it
+            this.divDockManager = document.getElementById("my_dock_manager");
+            this.dockManager = new dockspawn.DockManager(divDockManager);
+            this.dockManager.initialize();
+            // Let the dock manager element fill in the entire screen
+            var onResized = function(e)
+            {
+                dockManager.resize(window.innerWidth - (divDockManager.clientLeft + divDockManager.offsetLeft), window.innerHeight - (divDockManager.clientTop + divDockManager.offsetTop));
+            }
+            window.onresize = onResized;
+            onResized(null);
+
+            // Convert existing elements on the page into "Panels".
+            // They can then be docked on to the dock manager
+            // Panels get a titlebar and a close button, and can also be
+            // converted to a floating dialog box which can be dragged / resized
+            this.solution = new dockspawn.PanelContainer($("#solution_window")[0], dockManager);
+            this.properties = new dockspawn.PanelContainer($("#properties_window")[0], dockManager);
+            this.toolbox = new dockspawn.PanelContainer($("#toolbox_window")[0], dockManager);
+            this.outline = new dockspawn.PanelContainer($("#outline_window")[0], dockManager);
+            //this.problems = new dockspawn.PanelContainer(document.getElementById("problems_window"), dockManager);
+            this.problems = new dockspawn.PanelContainer($("#inPlaceAALEditor")[0], dockManager);
+            this.output = new dockspawn.PanelContainer($("#output_window")[0], dockManager);
+            this.components = new dockspawn.PanelContainer($("#componentbox_window")[0], dockManager);
+            this.editor1 = new dockspawn.PanelContainer($("#editor1_window")[0], dockManager);
+            this.editor2 = new dockspawn.PanelContainer($("#editor2_window")[0], dockManager);
+            this.infovis = new dockspawn.PanelContainer($("#infovis")[0], dockManager);
+
+
+            // Dock the panels on the dock manager
+            this.documentNode = dockManager.context.model.documentManagerNode;
+            var prop = 200 / $(document).width();
+            this.solutionNode = dockManager.dockLeft(documentNode, solution, prop);
+            this.outlineNode  = dockManager.dockDown(solutionNode, outline, 0.50);
+
+            prop = 250 / $(document).width();
+            this.propertiesNode = dockManager.dockRight(documentNode, properties, prop);
+
+            prop = 500 / $(document).height();
+            this.outputNode   = dockManager.dockDown(documentNode, output, prop);
+            this.problemsNode = dockManager.dockRight(outputNode, problems, 0.40);
+
+            prop = 130 / $(document).width();
+            this.componentsNode  = dockManager.dockLeft(documentNode, components, prop);
+            this.toolboxNode  = dockManager.dockDown(componentsNode, toolbox, 0.60);        
+            //this.editor1Node  = dockManager.dockFill(documentNode, editor1);
+            //this.editor2Node  = dockManager.dockFill(documentNode, editor2);
+            //this.infovisNode  = dockManager.dockFill(documentNode, infovis);
+            
+            // Initialize infovis (for dock tree visualization)
+            //InitDebugTreeVis(dockManager);
+
+            /**
+             *
+             */
+            dockspawn.TabHost.prototype.onTabChanged = function(page){
+                visualEditor.ui.canvas = page.activeTab.container.canvas;
+                visualEditor.ui.activeTab = page.activeTab;
+            }
+            //visualEditor.ui.fileManager.openFile("File1");
+            //editor1.canvas = visualEditor.ui.canvas;
+
+        }
+        visualEditor.init();
+        $("#pg").propertygrid("sort");
+
+
+        $("#explorerModeBtn").click(function(){
+            unlock();
+            this.documentNode   = dockManager.context.model.documentManagerNode;
+            this.solutionNode   = dockManager.dockLeft(this.documentNode, solution);
+            this.outlineNode    = dockManager.dockDown(this.solutionNode, outline, 0.50);
+            this.propertiesNode = dockManager.dockRight(this.documentNode, properties, 0.18);
+            this.outputNode     = dockManager.dockDown(this.documentNode, output, 0.2);
+            this.problemsNode   = dockManager.dockRight(this.outputNode, problems, 0.40);
+            this.componentsNode = dockManager.dockLeft(this.documentNode, components, 0.10);
+            this.toolboxNode    = dockManager.dockDown(this.componentsNode, toolbox, 0.60);        
+            //this.editor1Node    = dockManager.dockFill(this.documentNode, editor1);
+        });
+        
+        $("#designerModeBtn").click(function(){
+            unlock();
+            this.documentNode   = dockManager.context.model.documentManagerNode;
+            this.propertiesNode = dockManager.dockRight(this.documentNode, properties, 0.18);            
+            this.solutionNode   = dockManager.dockDown(this.propertiesNode, solution, 0.50);
+            this.outlineNode    = dockManager.dockFill(this.solutionNode, outline);
+            this.outputNode     = dockManager.dockDown(this.documentNode, output, 0.2);
+            this.problemsNode   = dockManager.dockRight(this.outputNode, problems, 0.40);
+            this.componentsNode = dockManager.dockLeft(this.documentNode, components, 0.05);
+            this.toolboxNode    = dockManager.dockDown(this.componentsNode, toolbox, 0.60);        
+            //this.editor1Node    = dockManager.dockFill(this.documentNode, editor1);
+        });
+
+        $("#coderModeBtn").click(function(){
+            unlock();
+            // this.documentNode   = dockManager.context.model.documentManagerNode;
+            // this.solutionNode   = dockManager.dockLeft(documentNode, solution);
+            // this.outlineNode    = dockManager.dockDown(solutionNode, outline, 0.50);
+            // this.propertiesNode = dockManager.dockRight(documentNode, properties, 0.18);
+            // this.outputNode     = dockManager.dockDown(documentNode, output, 0.2);
+            // this.problemsNode   = dockManager.dockRight(outputNode, problems, 0.40);
+            // this.componentsNode = dockManager.dockLeft(documentNode, components, 0.10);
+            // this.toolboxNode    = dockManager.dockDown(componentsNode, toolbox, 0.60);        
+            //this.editor1Node    = dockManager.dockFill(documentNode, editor1);
+
+            this.documentNode   = dockManager.context.model.documentManagerNode;
+            this.solutionNode   = dockManager.dockLeft(this.documentNode, solution);
+            this.outlineNode    = dockManager.dockDown(this.solutionNode, outline, 0.50);
+            this.propertiesNode = dockManager.dockRight(this.documentNode, properties, 0.001);
+            this.outputNode     = dockManager.dockDown(this.documentNode, output, 0.2);
+            //this.problemsNode   = dockManager.dockRight(this.outputNode, problems, 0.001);
+            //this.componentsNode = dockManager.dockLeft(this.documentNode, components, 0.001);
+            //this.toolboxNode    = dockManager.dockDown(this.componentsNode, toolbox, 0.001);         
+            //this.editor1Node    = dockManager.dockFill(this.documentNode, editor1);
+        }); 
+
+
+
+        function unlock() {
+            if(solution._floatingDialog == null) solution.performUndock();
+            else {
+                solution.prepareForDocking();
+                solution._floatingDialog = null;
+            }
+
+            if(properties._floatingDialog == null) properties.performUndock();
+            else {
+                properties.prepareForDocking();
+                properties._floatingDialog = null;
+            }
+
+            if(toolbox._floatingDialog == null) toolbox.performUndock();
+            else {
+                toolbox.prepareForDocking();
+                toolbox._floatingDialog = null;
+            }
+
+            if(outline._floatingDialog == null) outline.performUndock();
+            else {
+                outline.prepareForDocking();
+                outline._floatingDialog = null;
+            }
+
+            if(problems._floatingDialog == null) problems.performUndock();
+            else {
+                problems.prepareForDocking();
+                problems._floatingDialog = null;
+            }
+
+            if(output._floatingDialog == null) output.performUndock();
+            else {
+                output.prepareForDocking();
+                output._floatingDialog = null;
+            }
+
+            if(components._floatingDialog == null) components.performUndock();
+            else {
+                components.prepareForDocking();
+                components._floatingDialog = null;
+            }
+
+            /*if(editor1._floatingDialog == null) editor1.performUndock();
+            else {
+                editor1.prepareForDocking();
+                editor1._floatingDialog = null;
+            }*/
+            
+        }
+
+    </script>
+
+</body>
+</html>

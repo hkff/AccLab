@@ -1,0 +1,1 @@
+![d]( (<=>(subject(d), subject(d)) => ((DENY(write, Kim, cloudX, d) & PERMIT(read, Kim, cloudX, d)) & ~ always(![a](Asend(cloudX, a, d))))))  

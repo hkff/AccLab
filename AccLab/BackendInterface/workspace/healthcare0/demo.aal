@@ -1,0 +1,52 @@
+/***************************
+ *       Declarations
+ ****************************/
+AGENT kim TYPES(DataSubject ) REQUIRED(sensor access ) PROVIDED()
+AGENT cloudX TYPES(DataProcessor ) REQUIRED(storage ) PROVIDED(sensor access )
+AGENT cloudY TYPES(DataProcessor ) REQUIRED(getData ) PROVIDED(storage access audit )
+AGENT cloudZ TYPES(DataProcessor DataController ) REQUIRED(uploadData ) PROVIDED(getData access uploadActivity report marketing audit )
+AGENT sandra TYPES(DataController ) REQUIRED(access uploadActivity ) PROVIDED()
+AGENT hospital TYPES(DataController DataProcessor ) REQUIRED(research ) PROVIDED(report uploadActivity uploadData audit )
+AGENT leslie TYPES(Auditor ) REQUIRED(report audit ) PROVIDED()
+
+/***************************
+ *       Clauses
+ ****************************/
+Clause kim_policy (
+ {Usage}
+ AUDITING {actions}
+ IF_VIOLATED_THEN {actions}
+)
+
+Clause cloudX_policy (
+ {Usage}
+ AUDITING {actions}
+ IF_VIOLATED_THEN {actions}
+)
+
+Clause cloudY_policy (
+ {Usage}
+ AUDITING {actions}
+ IF_VIOLATED_THEN {actions}
+)
+
+Clause cloudZ_policy (
+ {Usage}
+ AUDITING {actions}
+ IF_VIOLATED_THEN {actions}
+)
+
+Clause sandra_policy (
+ {Usage}
+ AUDITING {actions}
+ IF_VIOLATED_THEN {actions}
+)
+
+Clause hospital_policy (
+ {Usage}
+ AUDITING {actions}
+ IF_VIOLATED_THEN {actions}
+)
+
+
+

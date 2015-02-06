@@ -1,0 +1,380 @@
+// European directives
+
+
+/*********************************************************************
+ *********************************************************************
+ *                      Legal obligations
+ *********************************************************************
+ ********************************************************************/
+
+
+/* Obligation 1-3: Informing about processing, purposes and recipients */
+MACRO obligation1_3 (
+"""
+// The hospital is accountable to patients, relatives/friends and hospital staff
+// for informing that their personal data is being collected, the purpose of the
+// processing, the recipients of their personal data and the rights the data
+// subjects have in relation to the processing of their personal data.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 4: Informing about rights */
+MACRO obligation4 (
+"""
+// The hospital is accountable to patients, relatives/friends and hospital staff
+// for informing that their personal data is being collected, the purpose of the
+// processing, the recipients of their personal data and the rights the data
+// subjects have in relation to the processing of their personal data.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 5: Data collection purposes. */
+MACRO obligation5 (
+"""
+// The data controller is accountable to data subjects, for collecting data only for
+// specific, explicit and legitimate purposes.
+ok = True
+num = 0
+res = "{autogreen}/* Obligation 5: Data collection purposes. */{/green}\n"
+services_dec = self.aalprog.declarations["services"]
+for x in services_dec :
+    if x.purpose is None or len(x.purpose) == 0:
+        res+= "  {autored}->{/red} " + str(x.name) + " at line " + x.get_line() + "\n"
+        num += 1
+        ok = False
+res += "\nServices declared without a purpose : " + str(num) + "\n"
+
+for c in self.aalprog.clauses:
+    actions = c.walk(filter_type=m_action)
+    for x in  actions: // TODO use actions concerning data only
+        if x.purpose is None or len(x.purpose) == 0:
+            res += "  {autored}->{/red} action " + str(x.name) + " is used without a purpose {automagenta}at line " +\
+                    x.get_line() + "{/magenta}\n"
+            ok = False
+
+if not ok:
+    res = res.replace("green", "red")
+res += "------------------------------------------------\n"
+print(Color(res))
+"""
+)
+
+/* Obligation 6: The right to access, correct and delete personal data. */
+MACRO obligation6 (
+"""
+// Get all data subjects
+dataSubjects = [x for x in self.aalprog.declarations["agents"] if x.is_a('DataSubject')]
+print(dataSubjects[0].name)
+
+// Get all actions
+actions = self.aalprog.walk(filter_type=m_action)
+
+// for each data subject get all his data TODO handle quant
+for s in dataSubjects:
+    name = str(s.name)
+    data = [x for x in self.aalprog.declarations["data"]]
+    for x in data:
+        if str(x.subject) != name:
+            data.remove(x)
+
+    // Check the data in actions
+    for d in data:
+        ac = []
+        // Get all actions that use the data d
+        for a in actions:
+            if isinstance(a.args, m_ref):
+                if a.args.target == d:
+                    ac.append(a)
+        r, w, d = 0 ,0, 0
+        print(ac)
+        // Check the if we have rwd actions
+        // TODO for all agents
+        for x in ac:
+            // Check delete
+            if str(x.name).lower() == "delete":
+                d = 1
+            elif str(x.name).lower() == "read":
+                r = 1
+            elif str(x.name).lower() == "write":
+                w = 1
+            elif str(x.name).lower() == "access":
+                r, w, d = 1, 1, 1
+
+        if (r + w + d) < 3:
+
+            print(" Action : " + str(x) + "  " )
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 7: Data storage period. */
+MACRO obligation7 (
+"""
+ok = True
+res = "\n{autogreen}/* Obligation 7: Data storage period. */{/green} \n"
+// Get all actions
+actions = self.aalprog.walk(filter_type=m_action)
+for x in actions:
+    // Check delete
+    if str(x.name).lower() == "delete":
+        if x.time is None:
+            res += "  {autored}->{/red} Delete action {automagenta}at line " + str(x.get_line()) +\
+                    "{/magenta} seems to be used without time constraints\n"
+            ok = False
+
+if not ok:
+    res = res.replace("green", "red")
+res += "------------------------------------------------\n"
+print(Color(res))
+"""
+)
+
+
+/* Obligation 8, 11-12: Security and privacy measures. */
+MACRO obligation8 (
+"""
+// The hospital is accountable to patients, relatives/friends and hospital staff for the security
+// and privacy of the personal data they collect. The hospital is also accountable for
+// choosing sub-providers that can provide sufficient safeguards to protect the personal data they process.
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 9-10: Rules for data processing by providers. */
+MACRO obligation9_10 (
+"""
+// The hospital is accountable to patients, relatives/friends and hospital staff for how the sub-providers
+// processors process their personal data.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 13-15: Consent to processing. */
+MACRO obligation13_15 (
+"""
+// The hospital is accountable to patients, relatives/friends and hospital staff for
+// obtaining informed consent before collecting data, explicit consent (agree or disagree)
+// before collecting sensitive personal data and before allowing joint data controllers to process them.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 16: Informing DPAs. */
+MACRO obligation16 (
+"""
+//The hospital is accountable to the data protection authorities to inform that they collect personal data.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+
+/*********************************************************************
+ *********************************************************************
+ *                      Contractual obligations
+ *********************************************************************
+ ********************************************************************/
+
+/* Obligation 17: Informing about the use of sub-processors. */
+MACRO obligation17 (
+"""
+// The M platform is accountable to the hospital for informing about their usage of data
+// processors X and Y to process personal data.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 18: Security breach notification. */
+MACRO obligation18 (
+"""
+ok = True
+res = "\n{autogreen}/* Obligation 18: Security breach notification. */{/green}\n"
+// For all clauses
+for c in self.aalprog.clauses:
+    // Get all actions
+    actions = c.rectification.walk(filter_type=m_action)
+    n = 0
+    for x in actions:
+        // Check notify
+        if str(x.name).lower() == "notify":
+            n = 1
+    // If there is no notification action
+    if n != 1:
+        res += "  {autored}->{/red} No notification in clause " + str(c.name) +\
+               "'s rectification {automagenta}at line " + str(c.get_line()) + "{/magenta}\n"
+        ok = False
+
+if not ok:
+    res = res.replace("green", "red")
+res += "------------------------------------------------\n"
+print(Color(res))
+"""
+)
+
+/* Obligation 19-20: Evidence on data processing and data deletion. */
+MACRO obligation19_20 (
+"""
+// X and Y are accountable to M, which in turn is accountable to the hospital, for, upon request,
+// providing evidence on their data processing practices and on the correct and timely deletion of personal data.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 21: Data location. */
+MACRO obligation21 (
+"""
+// Cloud X and Y are accountable to M and M is accountable to the
+// hospital and the hospital to the data subjects for the location of the processing of personal data.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/*********************************************************************
+ *********************************************************************
+ *                      Ethical obligations
+ *********************************************************************
+ ********************************************************************/
+
+/* Obligation 22: Informing about personal data processing. */
+MACRO obligation22 (
+"""
+// This obligation means for instance that the hospital is accountable to cloud X and Y for
+// informing them that they will use their services to process personal data.
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 23: Personal data minimization. */
+MACRO obligation23 (
+"""
+// The hospital is accountable to the patients and the hospital staff for offering services
+// that have been designed to minimize the amount of personal data it collects from them.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 24: Privacy-by-default. */
+MACRO obligation24 (
+"""
+// M is accountable to the hospital for offering services that have been designed in such
+// a way that the strongest privacy settings are the default settings.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 25: Specifying user preferences. */
+MACRO obligation25 (
+"""
+// M is accountable to the hospital which is accountable to the patients for offering
+// services that allow the users to specify privacy preferences.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 26: Monitoring of data practices. */
+MACRO obligation26 (
+"""
+// Cloud X and Cloud Y are accountable to M and M is accountable to the hospital to keep
+// records of their respective monitoring of their data practices.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 27: Compliance with user preferences. */
+MACRO obligation27 (
+"""
+// Cloud X and Cloud X are accountable for providing evidences to M that personal data
+// is processed in accordance to user preferences. The same accountability relationship
+// exists between M and the hospital and between the hospital and the patients.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 28: Compliance with privacy policies. */
+MACRO obligation28 (
+"""
+// M should be demonstrate to the patients, their relatives and the hospital staff
+// compliance with their policies in a timely fashion reactively and where possible proactively.
+// HINT use p => u
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 29-30: Informing about policy violations and privacy preferences violations. */
+MACRO obligation29_30 (
+"""
+//  Cloud X and Cloud Y should inform M about any policy violation that are related to personal data and any
+// violation of users’ privacy preferences. The same relationship exists between M and the hospital and
+// between the hospital and the patients.
+
+print("NOT YET IMPLEMENTED !")
+"""
+)
+
+/* Obligation 31: Remediation in case of incidents. */
+MACRO obligation31 (
+"""
+ok = True
+res = "\n{autogreen}/* Obligation 31: Remediation in case of incidents. */{/green}\n"
+// For all clauses
+for c in self.aalprog.clauses:
+    // Get all actions
+    actions = c.rectification.walk(filter_type=m_action)
+    // If there is no action
+    if len(actions) == 0:
+        res += "  {autored}->{/red} No rectification in clause " + str(c.name) + " {automagenta}at line " +\
+               str(c.get_line()) + "{/magenta}\n"
+        ok = False
+
+if not ok:
+    res = res.replace("green", "red")
+res += "------------------------------------------------\n"
+print(Color(res))
+"""
+)
+
+MACRO obligations (
+"""
+
+res =  "\nObligations list : (L) Legal / (C) Contractual / (E) Ethical \n" +\
+        "\n L {autored} Obligation 1-3      :{/red} Informing about processing, purposes and recipients. " +\
+        "\n L {autored} Obligation 4        :{/red} Informing about rights. " +\
+        "\n L {autoyellow} Obligation 5        :{/yellow} Data collection purposes. " +\
+        "\n L {autoyellow} Obligation 6        :{/yellow} The right to access, correct and delete personal data. " +\
+        "\n L {autoyellow} Obligation 7        :{/yellow} Data storage period. " +\
+        "\n L {autored} Obligation 8,11-12  :{/red} Security and privacy measures. " +\
+        "\n L {autored} Obligation 9-10     :{/red} Rules for data processing by providers. " +\
+        "\n L {autored} Obligation 13-15    :{/red} Consent to processing. " +\
+        "\n L {autored} Obligation 16       :{/red} Informing DPAs. " +\
+        "\n C {autored} Obligation 17       :{/red} Informing about the use of sub-processors. " +\
+        "\n C {autogreen} Obligation 18       :{/green} Security breach notification. " +\
+        "\n C {autored} Obligation 19-20    :{/red} Evidence on data processing and data deletion. " +\
+        "\n C {autored} Obligation 21       :{/red} Data location. " +\
+        "\n E {autored} Obligation 22       :{/red} Informing about personal data processing. " +\
+        "\n E {autored} Obligation 23       :{/red} Personal data minimization. " +\
+        "\n E {autored} Obligation 24       :{/red} Privacy-by-default. " +\
+        "\n E {autored} Obligation 25       :{/red} Specifying user preferences. " +\
+        "\n E {autored} Obligation 26       :{/red} Monitoring of data practices. " +\
+        "\n E {autored} Obligation 27       :{/red} Compliance with user preferences. " +\
+        "\n E {autored} Obligation 28       :{/red} Compliance with privacy policies. " +\
+        "\n E {autored} Obligation 29-30    :{/red} Informing about policy violations and privacy preferences violations. " +\
+        "\n E {autogreen} Obligation 31       :{/green} Remediation in case of incidents. "
+
+print(Color(res))
+"""
+)

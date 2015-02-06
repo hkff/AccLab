@@ -1,0 +1,665 @@
+
+------------------TEMPORAL-LOGIC-TRANSLATION-START-----------------------
+For initial clauses:
+1[0:Inp] || oneMonth* -> twelveMonths.    -> 1[0:Inp] || oneMonth(temp_zero)* -> twelveMonths(temp_zero).
+2[0:Inp] || oneMonth -> elevenMonths*.    -> 2[0:Inp] || oneMonth(temp_zero) -> elevenMonths(temp_zero)*.
+3[0:Inp] || oneMonth* -> tenMonths.    -> 3[0:Inp] || oneMonth(temp_zero)* -> tenMonths(temp_zero).
+4[0:Inp] || oneMonth -> nineMonths*.    -> 4[0:Inp] || oneMonth(temp_zero) -> nineMonths(temp_zero)*.
+5[0:Inp] || oneMonth -> eightMonths*.    -> 5[0:Inp] || oneMonth(temp_zero) -> eightMonths(temp_zero)*.
+6[0:Inp] || oneMonth* -> sevenMonths.    -> 6[0:Inp] || oneMonth(temp_zero)* -> sevenMonths(temp_zero).
+7[0:Inp] || oneMonth* -> sixMonths.    -> 7[0:Inp] || oneMonth(temp_zero)* -> sixMonths(temp_zero).
+8[0:Inp] || oneMonth -> fiveMonths*.    -> 8[0:Inp] || oneMonth(temp_zero) -> fiveMonths(temp_zero)*.
+9[0:Inp] || oneMonth -> fourMonths*.    -> 9[0:Inp] || oneMonth(temp_zero) -> fourMonths(temp_zero)*.
+10[0:Inp] || oneMonth* -> threeMonths.    -> 10[0:Inp] || oneMonth(temp_zero)* -> threeMonths(temp_zero).
+11[0:Inp] || oneMonth* -> twoMonths.    -> 11[0:Inp] || oneMonth(temp_zero)* -> twoMonths(temp_zero).
+12[0:Inp] || twoMonths -> twelveMonths*.    -> 12[0:Inp] || twoMonths(temp_zero) -> twelveMonths(temp_zero)*.
+13[0:Inp] || twoMonths -> elevenMonths*.    -> 13[0:Inp] || twoMonths(temp_zero) -> elevenMonths(temp_zero)*.
+14[0:Inp] || twoMonths -> tenMonths*.    -> 14[0:Inp] || twoMonths(temp_zero) -> tenMonths(temp_zero)*.
+15[0:Inp] || twoMonths -> nineMonths*.    -> 15[0:Inp] || twoMonths(temp_zero) -> nineMonths(temp_zero)*.
+16[0:Inp] || twoMonths -> eightMonths*.    -> 16[0:Inp] || twoMonths(temp_zero) -> eightMonths(temp_zero)*.
+17[0:Inp] || twoMonths -> sevenMonths*.    -> 17[0:Inp] || twoMonths(temp_zero) -> sevenMonths(temp_zero)*.
+18[0:Inp] || twoMonths -> sixMonths*.    -> 18[0:Inp] || twoMonths(temp_zero) -> sixMonths(temp_zero)*.
+19[0:Inp] || twoMonths -> fiveMonths*.    -> 19[0:Inp] || twoMonths(temp_zero) -> fiveMonths(temp_zero)*.
+20[0:Inp] || twoMonths -> fourMonths*.    -> 20[0:Inp] || twoMonths(temp_zero) -> fourMonths(temp_zero)*.
+21[0:Inp] || twoMonths -> threeMonths*.    -> 21[0:Inp] || twoMonths(temp_zero) -> threeMonths(temp_zero)*.
+22[0:Inp] || threeMonths* -> twelveMonths.    -> 22[0:Inp] || threeMonths(temp_zero)* -> twelveMonths(temp_zero).
+23[0:Inp] || threeMonths -> elevenMonths*.    -> 23[0:Inp] || threeMonths(temp_zero) -> elevenMonths(temp_zero)*.
+24[0:Inp] || threeMonths -> tenMonths*.    -> 24[0:Inp] || threeMonths(temp_zero) -> tenMonths(temp_zero)*.
+25[0:Inp] || threeMonths -> nineMonths*.    -> 25[0:Inp] || threeMonths(temp_zero) -> nineMonths(temp_zero)*.
+26[0:Inp] || threeMonths -> eightMonths*.    -> 26[0:Inp] || threeMonths(temp_zero) -> eightMonths(temp_zero)*.
+27[0:Inp] || threeMonths -> sevenMonths*.    -> 27[0:Inp] || threeMonths(temp_zero) -> sevenMonths(temp_zero)*.
+28[0:Inp] || threeMonths -> sixMonths*.    -> 28[0:Inp] || threeMonths(temp_zero) -> sixMonths(temp_zero)*.
+29[0:Inp] || threeMonths -> fiveMonths*.    -> 29[0:Inp] || threeMonths(temp_zero) -> fiveMonths(temp_zero)*.
+30[0:Inp] || threeMonths -> fourMonths*.    -> 30[0:Inp] || threeMonths(temp_zero) -> fourMonths(temp_zero)*.
+31[0:Inp] || fourMonths* -> twelveMonths.    -> 31[0:Inp] || fourMonths(temp_zero)* -> twelveMonths(temp_zero).
+32[0:Inp] || fourMonths -> elevenMonths*.    -> 32[0:Inp] || fourMonths(temp_zero) -> elevenMonths(temp_zero)*.
+33[0:Inp] || fourMonths* -> tenMonths.    -> 33[0:Inp] || fourMonths(temp_zero)* -> tenMonths(temp_zero).
+34[0:Inp] || fourMonths* -> nineMonths.    -> 34[0:Inp] || fourMonths(temp_zero)* -> nineMonths(temp_zero).
+35[0:Inp] || fourMonths -> eightMonths*.    -> 35[0:Inp] || fourMonths(temp_zero) -> eightMonths(temp_zero)*.
+36[0:Inp] || fourMonths* -> sevenMonths.    -> 36[0:Inp] || fourMonths(temp_zero)* -> sevenMonths(temp_zero).
+37[0:Inp] || fourMonths* -> sixMonths.    -> 37[0:Inp] || fourMonths(temp_zero)* -> sixMonths(temp_zero).
+38[0:Inp] || fourMonths -> fiveMonths*.    -> 38[0:Inp] || fourMonths(temp_zero) -> fiveMonths(temp_zero)*.
+39[0:Inp] || fiveMonths* -> twelveMonths.    -> 39[0:Inp] || fiveMonths(temp_zero)* -> twelveMonths(temp_zero).
+40[0:Inp] || fiveMonths -> elevenMonths*.    -> 40[0:Inp] || fiveMonths(temp_zero) -> elevenMonths(temp_zero)*.
+41[0:Inp] || fiveMonths* -> tenMonths.    -> 41[0:Inp] || fiveMonths(temp_zero)* -> tenMonths(temp_zero).
+42[0:Inp] || fiveMonths* -> nineMonths.    -> 42[0:Inp] || fiveMonths(temp_zero)* -> nineMonths(temp_zero).
+43[0:Inp] || fiveMonths -> eightMonths*.    -> 43[0:Inp] || fiveMonths(temp_zero) -> eightMonths(temp_zero)*.
+44[0:Inp] || fiveMonths* -> sevenMonths.    -> 44[0:Inp] || fiveMonths(temp_zero)* -> sevenMonths(temp_zero).
+45[0:Inp] || fiveMonths* -> sixMonths.    -> 45[0:Inp] || fiveMonths(temp_zero)* -> sixMonths(temp_zero).
+46[0:Inp] || sixMonths* -> twelveMonths.    -> 46[0:Inp] || sixMonths(temp_zero)* -> twelveMonths(temp_zero).
+47[0:Inp] || sixMonths -> elevenMonths*.    -> 47[0:Inp] || sixMonths(temp_zero) -> elevenMonths(temp_zero)*.
+48[0:Inp] || sixMonths* -> tenMonths.    -> 48[0:Inp] || sixMonths(temp_zero)* -> tenMonths(temp_zero).
+49[0:Inp] || sixMonths -> nineMonths*.    -> 49[0:Inp] || sixMonths(temp_zero) -> nineMonths(temp_zero)*.
+50[0:Inp] || sixMonths -> eightMonths*.    -> 50[0:Inp] || sixMonths(temp_zero) -> eightMonths(temp_zero)*.
+51[0:Inp] || sixMonths -> sevenMonths*.    -> 51[0:Inp] || sixMonths(temp_zero) -> sevenMonths(temp_zero)*.
+52[0:Inp] || sevenMonths* -> twelveMonths.    -> 52[0:Inp] || sevenMonths(temp_zero)* -> twelveMonths(temp_zero).
+53[0:Inp] || sevenMonths -> elevenMonths*.    -> 53[0:Inp] || sevenMonths(temp_zero) -> elevenMonths(temp_zero)*.
+54[0:Inp] || sevenMonths* -> tenMonths.    -> 54[0:Inp] || sevenMonths(temp_zero)* -> tenMonths(temp_zero).
+55[0:Inp] || sevenMonths -> nineMonths*.    -> 55[0:Inp] || sevenMonths(temp_zero) -> nineMonths(temp_zero)*.
+56[0:Inp] || sevenMonths -> eightMonths*.    -> 56[0:Inp] || sevenMonths(temp_zero) -> eightMonths(temp_zero)*.
+57[0:Inp] || eightMonths* -> twelveMonths.    -> 57[0:Inp] || eightMonths(temp_zero)* -> twelveMonths(temp_zero).
+58[0:Inp] || eightMonths* -> elevenMonths.    -> 58[0:Inp] || eightMonths(temp_zero)* -> elevenMonths(temp_zero).
+59[0:Inp] || eightMonths* -> tenMonths.    -> 59[0:Inp] || eightMonths(temp_zero)* -> tenMonths(temp_zero).
+60[0:Inp] || eightMonths* -> nineMonths.    -> 60[0:Inp] || eightMonths(temp_zero)* -> nineMonths(temp_zero).
+61[0:Inp] || nineMonths* -> twelveMonths.    -> 61[0:Inp] || nineMonths(temp_zero)* -> twelveMonths(temp_zero).
+62[0:Inp] || nineMonths -> elevenMonths*.    -> 62[0:Inp] || nineMonths(temp_zero) -> elevenMonths(temp_zero)*.
+63[0:Inp] || nineMonths* -> tenMonths.    -> 63[0:Inp] || nineMonths(temp_zero)* -> tenMonths(temp_zero).
+64[0:Inp] || tenMonths* -> twelveMonths.    -> 64[0:Inp] || tenMonths(temp_zero)* -> twelveMonths(temp_zero).
+65[0:Inp] || tenMonths -> elevenMonths*.    -> 65[0:Inp] || tenMonths(temp_zero) -> elevenMonths(temp_zero)*.
+66[0:Inp] || elevenMonths* -> twelveMonths.    -> 66[0:Inp] || elevenMonths(temp_zero)* -> twelveMonths(temp_zero).
+67[0:Inp] || oneYear* -> twelveYears.    -> 67[0:Inp] || oneYear(temp_zero)* -> twelveYears(temp_zero).
+68[0:Inp] || oneYear -> elevenYears*.    -> 68[0:Inp] || oneYear(temp_zero) -> elevenYears(temp_zero)*.
+69[0:Inp] || oneYear* -> tenYears.    -> 69[0:Inp] || oneYear(temp_zero)* -> tenYears(temp_zero).
+70[0:Inp] || oneYear -> nineYears*.    -> 70[0:Inp] || oneYear(temp_zero) -> nineYears(temp_zero)*.
+71[0:Inp] || oneYear -> eightYears*.    -> 71[0:Inp] || oneYear(temp_zero) -> eightYears(temp_zero)*.
+72[0:Inp] || oneYear* -> sevenYears.    -> 72[0:Inp] || oneYear(temp_zero)* -> sevenYears(temp_zero).
+73[0:Inp] || oneYear* -> sixYears.    -> 73[0:Inp] || oneYear(temp_zero)* -> sixYears(temp_zero).
+74[0:Inp] || oneYear -> fiveYears*.    -> 74[0:Inp] || oneYear(temp_zero) -> fiveYears(temp_zero)*.
+75[0:Inp] || oneYear -> fourYears*.    -> 75[0:Inp] || oneYear(temp_zero) -> fourYears(temp_zero)*.
+76[0:Inp] || oneYear* -> threeYears.    -> 76[0:Inp] || oneYear(temp_zero)* -> threeYears(temp_zero).
+77[0:Inp] || oneYear* -> twoYears.    -> 77[0:Inp] || oneYear(temp_zero)* -> twoYears(temp_zero).
+78[0:Inp] || twoYears -> twelveYears*.    -> 78[0:Inp] || twoYears(temp_zero) -> twelveYears(temp_zero)*.
+79[0:Inp] || twoYears -> elevenYears*.    -> 79[0:Inp] || twoYears(temp_zero) -> elevenYears(temp_zero)*.
+80[0:Inp] || twoYears -> tenYears*.    -> 80[0:Inp] || twoYears(temp_zero) -> tenYears(temp_zero)*.
+81[0:Inp] || twoYears -> nineYears*.    -> 81[0:Inp] || twoYears(temp_zero) -> nineYears(temp_zero)*.
+82[0:Inp] || twoYears -> eightYears*.    -> 82[0:Inp] || twoYears(temp_zero) -> eightYears(temp_zero)*.
+83[0:Inp] || twoYears -> sevenYears*.    -> 83[0:Inp] || twoYears(temp_zero) -> sevenYears(temp_zero)*.
+84[0:Inp] || twoYears -> sixYears*.    -> 84[0:Inp] || twoYears(temp_zero) -> sixYears(temp_zero)*.
+85[0:Inp] || twoYears -> fiveYears*.    -> 85[0:Inp] || twoYears(temp_zero) -> fiveYears(temp_zero)*.
+86[0:Inp] || twoYears -> fourYears*.    -> 86[0:Inp] || twoYears(temp_zero) -> fourYears(temp_zero)*.
+87[0:Inp] || twoYears -> threeYears*.    -> 87[0:Inp] || twoYears(temp_zero) -> threeYears(temp_zero)*.
+88[0:Inp] || threeYears* -> twelveYears.    -> 88[0:Inp] || threeYears(temp_zero)* -> twelveYears(temp_zero).
+89[0:Inp] || threeYears -> elevenYears*.    -> 89[0:Inp] || threeYears(temp_zero) -> elevenYears(temp_zero)*.
+90[0:Inp] || threeYears -> tenYears*.    -> 90[0:Inp] || threeYears(temp_zero) -> tenYears(temp_zero)*.
+91[0:Inp] || threeYears -> nineYears*.    -> 91[0:Inp] || threeYears(temp_zero) -> nineYears(temp_zero)*.
+92[0:Inp] || threeYears -> eightYears*.    -> 92[0:Inp] || threeYears(temp_zero) -> eightYears(temp_zero)*.
+93[0:Inp] || threeYears -> sevenYears*.    -> 93[0:Inp] || threeYears(temp_zero) -> sevenYears(temp_zero)*.
+94[0:Inp] || threeYears -> sixYears*.    -> 94[0:Inp] || threeYears(temp_zero) -> sixYears(temp_zero)*.
+95[0:Inp] || threeYears -> fiveYears*.    -> 95[0:Inp] || threeYears(temp_zero) -> fiveYears(temp_zero)*.
+96[0:Inp] || threeYears -> fourYears*.    -> 96[0:Inp] || threeYears(temp_zero) -> fourYears(temp_zero)*.
+97[0:Inp] || fourYears* -> twelveYears.    -> 97[0:Inp] || fourYears(temp_zero)* -> twelveYears(temp_zero).
+98[0:Inp] || fourYears -> elevenYears*.    -> 98[0:Inp] || fourYears(temp_zero) -> elevenYears(temp_zero)*.
+99[0:Inp] || fourYears* -> tenYears.    -> 99[0:Inp] || fourYears(temp_zero)* -> tenYears(temp_zero).
+100[0:Inp] || fourYears* -> nineYears.    -> 100[0:Inp] || fourYears(temp_zero)* -> nineYears(temp_zero).
+101[0:Inp] || fourYears -> eightYears*.    -> 101[0:Inp] || fourYears(temp_zero) -> eightYears(temp_zero)*.
+102[0:Inp] || fourYears* -> sevenYears.    -> 102[0:Inp] || fourYears(temp_zero)* -> sevenYears(temp_zero).
+103[0:Inp] || fourYears* -> sixYears.    -> 103[0:Inp] || fourYears(temp_zero)* -> sixYears(temp_zero).
+104[0:Inp] || fourYears -> fiveYears*.    -> 104[0:Inp] || fourYears(temp_zero) -> fiveYears(temp_zero)*.
+105[0:Inp] || fiveYears* -> twelveYears.    -> 105[0:Inp] || fiveYears(temp_zero)* -> twelveYears(temp_zero).
+106[0:Inp] || fiveYears -> elevenYears*.    -> 106[0:Inp] || fiveYears(temp_zero) -> elevenYears(temp_zero)*.
+107[0:Inp] || fiveYears* -> tenYears.    -> 107[0:Inp] || fiveYears(temp_zero)* -> tenYears(temp_zero).
+108[0:Inp] || fiveYears* -> nineYears.    -> 108[0:Inp] || fiveYears(temp_zero)* -> nineYears(temp_zero).
+109[0:Inp] || fiveYears -> eightYears*.    -> 109[0:Inp] || fiveYears(temp_zero) -> eightYears(temp_zero)*.
+110[0:Inp] || fiveYears* -> sevenYears.    -> 110[0:Inp] || fiveYears(temp_zero)* -> sevenYears(temp_zero).
+111[0:Inp] || fiveYears* -> sixYears.    -> 111[0:Inp] || fiveYears(temp_zero)* -> sixYears(temp_zero).
+112[0:Inp] || sixYears* -> twelveYears.    -> 112[0:Inp] || sixYears(temp_zero)* -> twelveYears(temp_zero).
+113[0:Inp] || sixYears -> elevenYears*.    -> 113[0:Inp] || sixYears(temp_zero) -> elevenYears(temp_zero)*.
+114[0:Inp] || sixYears* -> tenYears.    -> 114[0:Inp] || sixYears(temp_zero)* -> tenYears(temp_zero).
+115[0:Inp] || sixYears -> nineYears*.    -> 115[0:Inp] || sixYears(temp_zero) -> nineYears(temp_zero)*.
+116[0:Inp] || sixYears -> eightYears*.    -> 116[0:Inp] || sixYears(temp_zero) -> eightYears(temp_zero)*.
+117[0:Inp] || sixYears -> sevenYears*.    -> 117[0:Inp] || sixYears(temp_zero) -> sevenYears(temp_zero)*.
+118[0:Inp] || sevenYears* -> twelveYears.    -> 118[0:Inp] || sevenYears(temp_zero)* -> twelveYears(temp_zero).
+119[0:Inp] || sevenYears -> elevenYears*.    -> 119[0:Inp] || sevenYears(temp_zero) -> elevenYears(temp_zero)*.
+120[0:Inp] || sevenYears* -> tenYears.    -> 120[0:Inp] || sevenYears(temp_zero)* -> tenYears(temp_zero).
+121[0:Inp] || sevenYears -> nineYears*.    -> 121[0:Inp] || sevenYears(temp_zero) -> nineYears(temp_zero)*.
+122[0:Inp] || sevenYears -> eightYears*.    -> 122[0:Inp] || sevenYears(temp_zero) -> eightYears(temp_zero)*.
+123[0:Inp] || eightYears* -> twelveYears.    -> 123[0:Inp] || eightYears(temp_zero)* -> twelveYears(temp_zero).
+124[0:Inp] || eightYears* -> elevenYears.    -> 124[0:Inp] || eightYears(temp_zero)* -> elevenYears(temp_zero).
+125[0:Inp] || eightYears* -> tenYears.    -> 125[0:Inp] || eightYears(temp_zero)* -> tenYears(temp_zero).
+126[0:Inp] || eightYears* -> nineYears.    -> 126[0:Inp] || eightYears(temp_zero)* -> nineYears(temp_zero).
+127[0:Inp] || nineYears* -> twelveYears.    -> 127[0:Inp] || nineYears(temp_zero)* -> twelveYears(temp_zero).
+128[0:Inp] || nineYears -> elevenYears*.    -> 128[0:Inp] || nineYears(temp_zero) -> elevenYears(temp_zero)*.
+129[0:Inp] || nineYears* -> tenYears.    -> 129[0:Inp] || nineYears(temp_zero)* -> tenYears(temp_zero).
+130[0:Inp] || tenYears* -> twelveYears.    -> 130[0:Inp] || tenYears(temp_zero)* -> twelveYears(temp_zero).
+131[0:Inp] || tenYears -> elevenYears*.    -> 131[0:Inp] || tenYears(temp_zero) -> elevenYears(temp_zero)*.
+132[0:Inp] || elevenYears* -> twelveYears.    -> 132[0:Inp] || elevenYears(temp_zero)* -> twelveYears(temp_zero).
+133[0:Inp] || oneDay* -> twelveDays.    -> 133[0:Inp] || oneDay(temp_zero)* -> twelveDays(temp_zero).
+134[0:Inp] || oneDay -> elevenDays*.    -> 134[0:Inp] || oneDay(temp_zero) -> elevenDays(temp_zero)*.
+135[0:Inp] || oneDay* -> tenDays.    -> 135[0:Inp] || oneDay(temp_zero)* -> tenDays(temp_zero).
+136[0:Inp] || oneDay -> nineDays*.    -> 136[0:Inp] || oneDay(temp_zero) -> nineDays(temp_zero)*.
+137[0:Inp] || oneDay -> eightDays*.    -> 137[0:Inp] || oneDay(temp_zero) -> eightDays(temp_zero)*.
+138[0:Inp] || oneDay* -> sevenDays.    -> 138[0:Inp] || oneDay(temp_zero)* -> sevenDays(temp_zero).
+139[0:Inp] || oneDay* -> sixDays.    -> 139[0:Inp] || oneDay(temp_zero)* -> sixDays(temp_zero).
+140[0:Inp] || oneDay -> fiveDays*.    -> 140[0:Inp] || oneDay(temp_zero) -> fiveDays(temp_zero)*.
+141[0:Inp] || oneDay -> fourDays*.    -> 141[0:Inp] || oneDay(temp_zero) -> fourDays(temp_zero)*.
+142[0:Inp] || oneDay* -> threeDays.    -> 142[0:Inp] || oneDay(temp_zero)* -> threeDays(temp_zero).
+143[0:Inp] || oneDay* -> twoDays.    -> 143[0:Inp] || oneDay(temp_zero)* -> twoDays(temp_zero).
+144[0:Inp] || twoDays -> twelveDays*.    -> 144[0:Inp] || twoDays(temp_zero) -> twelveDays(temp_zero)*.
+145[0:Inp] || twoDays -> elevenDays*.    -> 145[0:Inp] || twoDays(temp_zero) -> elevenDays(temp_zero)*.
+146[0:Inp] || twoDays -> tenDays*.    -> 146[0:Inp] || twoDays(temp_zero) -> tenDays(temp_zero)*.
+147[0:Inp] || twoDays -> nineDays*.    -> 147[0:Inp] || twoDays(temp_zero) -> nineDays(temp_zero)*.
+148[0:Inp] || twoDays -> eightDays*.    -> 148[0:Inp] || twoDays(temp_zero) -> eightDays(temp_zero)*.
+149[0:Inp] || twoDays -> sevenDays*.    -> 149[0:Inp] || twoDays(temp_zero) -> sevenDays(temp_zero)*.
+150[0:Inp] || twoDays -> sixDays*.    -> 150[0:Inp] || twoDays(temp_zero) -> sixDays(temp_zero)*.
+151[0:Inp] || twoDays -> fiveDays*.    -> 151[0:Inp] || twoDays(temp_zero) -> fiveDays(temp_zero)*.
+152[0:Inp] || twoDays -> fourDays*.    -> 152[0:Inp] || twoDays(temp_zero) -> fourDays(temp_zero)*.
+153[0:Inp] || twoDays -> threeDays*.    -> 153[0:Inp] || twoDays(temp_zero) -> threeDays(temp_zero)*.
+154[0:Inp] || threeDays* -> twelveDays.    -> 154[0:Inp] || threeDays(temp_zero)* -> twelveDays(temp_zero).
+155[0:Inp] || threeDays -> elevenDays*.    -> 155[0:Inp] || threeDays(temp_zero) -> elevenDays(temp_zero)*.
+156[0:Inp] || threeDays -> tenDays*.    -> 156[0:Inp] || threeDays(temp_zero) -> tenDays(temp_zero)*.
+157[0:Inp] || threeDays -> nineDays*.    -> 157[0:Inp] || threeDays(temp_zero) -> nineDays(temp_zero)*.
+158[0:Inp] || threeDays -> eightDays*.    -> 158[0:Inp] || threeDays(temp_zero) -> eightDays(temp_zero)*.
+159[0:Inp] || threeDays -> sevenDays*.    -> 159[0:Inp] || threeDays(temp_zero) -> sevenDays(temp_zero)*.
+160[0:Inp] || threeDays -> sixDays*.    -> 160[0:Inp] || threeDays(temp_zero) -> sixDays(temp_zero)*.
+161[0:Inp] || threeDays -> fiveDays*.    -> 161[0:Inp] || threeDays(temp_zero) -> fiveDays(temp_zero)*.
+162[0:Inp] || threeDays -> fourDays*.    -> 162[0:Inp] || threeDays(temp_zero) -> fourDays(temp_zero)*.
+163[0:Inp] || fourDays* -> twelveDays.    -> 163[0:Inp] || fourDays(temp_zero)* -> twelveDays(temp_zero).
+164[0:Inp] || fourDays -> elevenDays*.    -> 164[0:Inp] || fourDays(temp_zero) -> elevenDays(temp_zero)*.
+165[0:Inp] || fourDays* -> tenDays.    -> 165[0:Inp] || fourDays(temp_zero)* -> tenDays(temp_zero).
+166[0:Inp] || fourDays* -> nineDays.    -> 166[0:Inp] || fourDays(temp_zero)* -> nineDays(temp_zero).
+167[0:Inp] || fourDays -> eightDays*.    -> 167[0:Inp] || fourDays(temp_zero) -> eightDays(temp_zero)*.
+168[0:Inp] || fourDays* -> sevenDays.    -> 168[0:Inp] || fourDays(temp_zero)* -> sevenDays(temp_zero).
+169[0:Inp] || fourDays* -> sixDays.    -> 169[0:Inp] || fourDays(temp_zero)* -> sixDays(temp_zero).
+170[0:Inp] || fourDays -> fiveDays*.    -> 170[0:Inp] || fourDays(temp_zero) -> fiveDays(temp_zero)*.
+171[0:Inp] || fiveDays* -> twelveDays.    -> 171[0:Inp] || fiveDays(temp_zero)* -> twelveDays(temp_zero).
+172[0:Inp] || fiveDays -> elevenDays*.    -> 172[0:Inp] || fiveDays(temp_zero) -> elevenDays(temp_zero)*.
+173[0:Inp] || fiveDays* -> tenDays.    -> 173[0:Inp] || fiveDays(temp_zero)* -> tenDays(temp_zero).
+174[0:Inp] || fiveDays* -> nineDays.    -> 174[0:Inp] || fiveDays(temp_zero)* -> nineDays(temp_zero).
+175[0:Inp] || fiveDays -> eightDays*.    -> 175[0:Inp] || fiveDays(temp_zero) -> eightDays(temp_zero)*.
+176[0:Inp] || fiveDays* -> sevenDays.    -> 176[0:Inp] || fiveDays(temp_zero)* -> sevenDays(temp_zero).
+177[0:Inp] || fiveDays* -> sixDays.    -> 177[0:Inp] || fiveDays(temp_zero)* -> sixDays(temp_zero).
+178[0:Inp] || sixDays* -> twelveDays.    -> 178[0:Inp] || sixDays(temp_zero)* -> twelveDays(temp_zero).
+179[0:Inp] || sixDays -> elevenDays*.    -> 179[0:Inp] || sixDays(temp_zero) -> elevenDays(temp_zero)*.
+180[0:Inp] || sixDays* -> tenDays.    -> 180[0:Inp] || sixDays(temp_zero)* -> tenDays(temp_zero).
+181[0:Inp] || sixDays -> nineDays*.    -> 181[0:Inp] || sixDays(temp_zero) -> nineDays(temp_zero)*.
+182[0:Inp] || sixDays -> eightDays*.    -> 182[0:Inp] || sixDays(temp_zero) -> eightDays(temp_zero)*.
+183[0:Inp] || sixDays -> sevenDays*.    -> 183[0:Inp] || sixDays(temp_zero) -> sevenDays(temp_zero)*.
+184[0:Inp] || sevenDays* -> twelveDays.    -> 184[0:Inp] || sevenDays(temp_zero)* -> twelveDays(temp_zero).
+185[0:Inp] || sevenDays -> elevenDays*.    -> 185[0:Inp] || sevenDays(temp_zero) -> elevenDays(temp_zero)*.
+186[0:Inp] || sevenDays* -> tenDays.    -> 186[0:Inp] || sevenDays(temp_zero)* -> tenDays(temp_zero).
+187[0:Inp] || sevenDays -> nineDays*.    -> 187[0:Inp] || sevenDays(temp_zero) -> nineDays(temp_zero)*.
+188[0:Inp] || sevenDays -> eightDays*.    -> 188[0:Inp] || sevenDays(temp_zero) -> eightDays(temp_zero)*.
+189[0:Inp] || eightDays* -> twelveDays.    -> 189[0:Inp] || eightDays(temp_zero)* -> twelveDays(temp_zero).
+190[0:Inp] || eightDays* -> elevenDays.    -> 190[0:Inp] || eightDays(temp_zero)* -> elevenDays(temp_zero).
+191[0:Inp] || eightDays* -> tenDays.    -> 191[0:Inp] || eightDays(temp_zero)* -> tenDays(temp_zero).
+192[0:Inp] || eightDays* -> nineDays.    -> 192[0:Inp] || eightDays(temp_zero)* -> nineDays(temp_zero).
+193[0:Inp] || nineDays* -> twelveDays.    -> 193[0:Inp] || nineDays(temp_zero)* -> twelveDays(temp_zero).
+194[0:Inp] || nineDays -> elevenDays*.    -> 194[0:Inp] || nineDays(temp_zero) -> elevenDays(temp_zero)*.
+195[0:Inp] || nineDays* -> tenDays.    -> 195[0:Inp] || nineDays(temp_zero)* -> tenDays(temp_zero).
+196[0:Inp] || tenDays* -> twelveDays.    -> 196[0:Inp] || tenDays(temp_zero)* -> twelveDays(temp_zero).
+197[0:Inp] || tenDays -> elevenDays*.    -> 197[0:Inp] || tenDays(temp_zero) -> elevenDays(temp_zero)*.
+198[0:Inp] || elevenDays* -> twelveDays.    -> 198[0:Inp] || elevenDays(temp_zero)* -> twelveDays(temp_zero).
+200[0:Inp] ||  -> twoYears delete(cloudX,U)*.    -> 200[0:Inp] ||  -> twoYears(temp_zero) delete(temp_zero,cloudX,U)*.
+201[0:Inp] ||  -> Pread(U,cloudX,V)*.    -> 201[0:Inp] ||  -> Pread(temp_zero,U,cloudX,V)*.
+202[0:Inp] ||  -> read(cloudX,file)*.    -> 202[0:Inp] ||  -> read(temp_zero,cloudX,file)*.
+203[0:Inp] || notify(cloudX,kim)* -> .    -> 203[0:Inp] || notify(temp_zero,cloudX,kim)* -> .
+------------------TEMPORAL-LOGIC-TRANSLATION-STOP------------------------
+------------------TEMPORAL-LOGIC-TRANSLATION-START-----------------------
+For universal clauses:
+199[0:Inp] || DENY(U,V,W,X)* PERMIT(U,V,W,X) -> .    -> 199[0:Inp] || DENY(U,V,W,X,Y)* PERMIT(U,V,W,X,Y) -> .
+------------------TEMPORAL-LOGIC-TRANSLATION-STOP------------------------
+Non-Skolem constants contained in the problem: kim, temp_zero, cloudX, file
+-------------------------CONSTANT-FLOODING START-------------------------
+-------------------------CONSTANT-FLOODING STOP--------------------------
+-------------------------CONSTANT-FLOODING START-------------------------
+-------------------------CONSTANT-FLOODING STOP--------------------------
+Weight of the temporal successor function set to 1.
+Step clauses:
+--------------------------TSPASS-START-----------------------------
+Input Problem:
+1[0:Inp] ||  -> read(temp_zero,cloudX,file)*.
+2[0:Inp] || notify(temp_zero,cloudX,kim)* -> .
+3[0:Inp] ||  -> Pread(temp_zero,U,cloudX,V)*.
+4[0:Inp] || elevenDays(temp_zero)* -> twelveDays(temp_zero).
+5[0:Inp] || tenDays(temp_zero) -> elevenDays(temp_zero)*.
+6[0:Inp] || tenDays(temp_zero)* -> twelveDays(temp_zero).
+7[0:Inp] || nineDays(temp_zero)* -> tenDays(temp_zero).
+8[0:Inp] || nineDays(temp_zero) -> elevenDays(temp_zero)*.
+9[0:Inp] || nineDays(temp_zero)* -> twelveDays(temp_zero).
+10[0:Inp] || eightDays(temp_zero)* -> nineDays(temp_zero).
+11[0:Inp] || eightDays(temp_zero)* -> tenDays(temp_zero).
+12[0:Inp] || eightDays(temp_zero)* -> elevenDays(temp_zero).
+13[0:Inp] || eightDays(temp_zero)* -> twelveDays(temp_zero).
+14[0:Inp] || sevenDays(temp_zero) -> eightDays(temp_zero)*.
+15[0:Inp] || sevenDays(temp_zero) -> nineDays(temp_zero)*.
+16[0:Inp] || sevenDays(temp_zero)* -> tenDays(temp_zero).
+17[0:Inp] || sevenDays(temp_zero) -> elevenDays(temp_zero)*.
+18[0:Inp] || sevenDays(temp_zero)* -> twelveDays(temp_zero).
+19[0:Inp] || sixDays(temp_zero) -> sevenDays(temp_zero)*.
+20[0:Inp] || sixDays(temp_zero) -> eightDays(temp_zero)*.
+21[0:Inp] || sixDays(temp_zero) -> nineDays(temp_zero)*.
+22[0:Inp] || sixDays(temp_zero)* -> tenDays(temp_zero).
+23[0:Inp] || sixDays(temp_zero) -> elevenDays(temp_zero)*.
+24[0:Inp] || sixDays(temp_zero)* -> twelveDays(temp_zero).
+25[0:Inp] || fiveDays(temp_zero)* -> sixDays(temp_zero).
+26[0:Inp] || fiveDays(temp_zero)* -> sevenDays(temp_zero).
+27[0:Inp] || fiveDays(temp_zero) -> eightDays(temp_zero)*.
+28[0:Inp] || fiveDays(temp_zero)* -> nineDays(temp_zero).
+29[0:Inp] || fiveDays(temp_zero)* -> tenDays(temp_zero).
+30[0:Inp] || fiveDays(temp_zero) -> elevenDays(temp_zero)*.
+31[0:Inp] || fiveDays(temp_zero)* -> twelveDays(temp_zero).
+32[0:Inp] || fourDays(temp_zero) -> fiveDays(temp_zero)*.
+33[0:Inp] || fourDays(temp_zero)* -> sixDays(temp_zero).
+34[0:Inp] || fourDays(temp_zero)* -> sevenDays(temp_zero).
+35[0:Inp] || fourDays(temp_zero) -> eightDays(temp_zero)*.
+36[0:Inp] || fourDays(temp_zero)* -> nineDays(temp_zero).
+37[0:Inp] || fourDays(temp_zero)* -> tenDays(temp_zero).
+38[0:Inp] || fourDays(temp_zero) -> elevenDays(temp_zero)*.
+39[0:Inp] || fourDays(temp_zero)* -> twelveDays(temp_zero).
+40[0:Inp] || threeDays(temp_zero) -> fourDays(temp_zero)*.
+41[0:Inp] || threeDays(temp_zero) -> fiveDays(temp_zero)*.
+42[0:Inp] || threeDays(temp_zero) -> sixDays(temp_zero)*.
+43[0:Inp] || threeDays(temp_zero) -> sevenDays(temp_zero)*.
+44[0:Inp] || threeDays(temp_zero) -> eightDays(temp_zero)*.
+45[0:Inp] || threeDays(temp_zero) -> nineDays(temp_zero)*.
+46[0:Inp] || threeDays(temp_zero) -> tenDays(temp_zero)*.
+47[0:Inp] || threeDays(temp_zero) -> elevenDays(temp_zero)*.
+48[0:Inp] || threeDays(temp_zero)* -> twelveDays(temp_zero).
+49[0:Inp] || twoDays(temp_zero) -> threeDays(temp_zero)*.
+50[0:Inp] || twoDays(temp_zero) -> fourDays(temp_zero)*.
+51[0:Inp] || twoDays(temp_zero) -> fiveDays(temp_zero)*.
+52[0:Inp] || twoDays(temp_zero) -> sixDays(temp_zero)*.
+53[0:Inp] || twoDays(temp_zero) -> sevenDays(temp_zero)*.
+54[0:Inp] || twoDays(temp_zero) -> eightDays(temp_zero)*.
+55[0:Inp] || twoDays(temp_zero) -> nineDays(temp_zero)*.
+56[0:Inp] || twoDays(temp_zero) -> tenDays(temp_zero)*.
+57[0:Inp] || twoDays(temp_zero) -> elevenDays(temp_zero)*.
+58[0:Inp] || twoDays(temp_zero) -> twelveDays(temp_zero)*.
+59[0:Inp] || oneDay(temp_zero)* -> twoDays(temp_zero).
+60[0:Inp] || oneDay(temp_zero)* -> threeDays(temp_zero).
+61[0:Inp] || oneDay(temp_zero) -> fourDays(temp_zero)*.
+62[0:Inp] || oneDay(temp_zero) -> fiveDays(temp_zero)*.
+63[0:Inp] || oneDay(temp_zero)* -> sixDays(temp_zero).
+64[0:Inp] || oneDay(temp_zero)* -> sevenDays(temp_zero).
+65[0:Inp] || oneDay(temp_zero) -> eightDays(temp_zero)*.
+66[0:Inp] || oneDay(temp_zero) -> nineDays(temp_zero)*.
+67[0:Inp] || oneDay(temp_zero)* -> tenDays(temp_zero).
+68[0:Inp] || oneDay(temp_zero) -> elevenDays(temp_zero)*.
+69[0:Inp] || oneDay(temp_zero)* -> twelveDays(temp_zero).
+70[0:Inp] || elevenYears(temp_zero)* -> twelveYears(temp_zero).
+71[0:Inp] || tenYears(temp_zero) -> elevenYears(temp_zero)*.
+72[0:Inp] || tenYears(temp_zero)* -> twelveYears(temp_zero).
+73[0:Inp] || nineYears(temp_zero)* -> tenYears(temp_zero).
+74[0:Inp] || nineYears(temp_zero) -> elevenYears(temp_zero)*.
+75[0:Inp] || nineYears(temp_zero)* -> twelveYears(temp_zero).
+76[0:Inp] || eightYears(temp_zero)* -> nineYears(temp_zero).
+77[0:Inp] || eightYears(temp_zero)* -> tenYears(temp_zero).
+78[0:Inp] || eightYears(temp_zero)* -> elevenYears(temp_zero).
+79[0:Inp] || eightYears(temp_zero)* -> twelveYears(temp_zero).
+80[0:Inp] || sevenYears(temp_zero) -> eightYears(temp_zero)*.
+81[0:Inp] || sevenYears(temp_zero) -> nineYears(temp_zero)*.
+82[0:Inp] || sevenYears(temp_zero)* -> tenYears(temp_zero).
+83[0:Inp] || sevenYears(temp_zero) -> elevenYears(temp_zero)*.
+84[0:Inp] || sevenYears(temp_zero)* -> twelveYears(temp_zero).
+85[0:Inp] || sixYears(temp_zero) -> sevenYears(temp_zero)*.
+86[0:Inp] || sixYears(temp_zero) -> eightYears(temp_zero)*.
+87[0:Inp] || sixYears(temp_zero) -> nineYears(temp_zero)*.
+88[0:Inp] || sixYears(temp_zero)* -> tenYears(temp_zero).
+89[0:Inp] || sixYears(temp_zero) -> elevenYears(temp_zero)*.
+90[0:Inp] || sixYears(temp_zero)* -> twelveYears(temp_zero).
+91[0:Inp] || fiveYears(temp_zero)* -> sixYears(temp_zero).
+92[0:Inp] || fiveYears(temp_zero)* -> sevenYears(temp_zero).
+93[0:Inp] || fiveYears(temp_zero) -> eightYears(temp_zero)*.
+94[0:Inp] || fiveYears(temp_zero)* -> nineYears(temp_zero).
+95[0:Inp] || fiveYears(temp_zero)* -> tenYears(temp_zero).
+96[0:Inp] || fiveYears(temp_zero) -> elevenYears(temp_zero)*.
+97[0:Inp] || fiveYears(temp_zero)* -> twelveYears(temp_zero).
+98[0:Inp] || fourYears(temp_zero) -> fiveYears(temp_zero)*.
+99[0:Inp] || fourYears(temp_zero)* -> sixYears(temp_zero).
+100[0:Inp] || fourYears(temp_zero)* -> sevenYears(temp_zero).
+101[0:Inp] || fourYears(temp_zero) -> eightYears(temp_zero)*.
+102[0:Inp] || fourYears(temp_zero)* -> nineYears(temp_zero).
+103[0:Inp] || fourYears(temp_zero)* -> tenYears(temp_zero).
+104[0:Inp] || fourYears(temp_zero) -> elevenYears(temp_zero)*.
+105[0:Inp] || fourYears(temp_zero)* -> twelveYears(temp_zero).
+106[0:Inp] || threeYears(temp_zero) -> fourYears(temp_zero)*.
+107[0:Inp] || threeYears(temp_zero) -> fiveYears(temp_zero)*.
+108[0:Inp] || threeYears(temp_zero) -> sixYears(temp_zero)*.
+109[0:Inp] || threeYears(temp_zero) -> sevenYears(temp_zero)*.
+110[0:Inp] || threeYears(temp_zero) -> eightYears(temp_zero)*.
+111[0:Inp] || threeYears(temp_zero) -> nineYears(temp_zero)*.
+112[0:Inp] || threeYears(temp_zero) -> tenYears(temp_zero)*.
+113[0:Inp] || threeYears(temp_zero) -> elevenYears(temp_zero)*.
+114[0:Inp] || threeYears(temp_zero)* -> twelveYears(temp_zero).
+115[0:Inp] || twoYears(temp_zero) -> threeYears(temp_zero)*.
+116[0:Inp] || twoYears(temp_zero) -> fourYears(temp_zero)*.
+117[0:Inp] || twoYears(temp_zero) -> fiveYears(temp_zero)*.
+118[0:Inp] || twoYears(temp_zero) -> sixYears(temp_zero)*.
+119[0:Inp] || twoYears(temp_zero) -> sevenYears(temp_zero)*.
+120[0:Inp] || twoYears(temp_zero) -> eightYears(temp_zero)*.
+121[0:Inp] || twoYears(temp_zero) -> nineYears(temp_zero)*.
+122[0:Inp] || twoYears(temp_zero) -> tenYears(temp_zero)*.
+123[0:Inp] || twoYears(temp_zero) -> elevenYears(temp_zero)*.
+124[0:Inp] || twoYears(temp_zero) -> twelveYears(temp_zero)*.
+125[0:Inp] || oneYear(temp_zero)* -> twoYears(temp_zero).
+126[0:Inp] || oneYear(temp_zero)* -> threeYears(temp_zero).
+127[0:Inp] || oneYear(temp_zero) -> fourYears(temp_zero)*.
+128[0:Inp] || oneYear(temp_zero) -> fiveYears(temp_zero)*.
+129[0:Inp] || oneYear(temp_zero)* -> sixYears(temp_zero).
+130[0:Inp] || oneYear(temp_zero)* -> sevenYears(temp_zero).
+131[0:Inp] || oneYear(temp_zero) -> eightYears(temp_zero)*.
+132[0:Inp] || oneYear(temp_zero) -> nineYears(temp_zero)*.
+133[0:Inp] || oneYear(temp_zero)* -> tenYears(temp_zero).
+134[0:Inp] || oneYear(temp_zero) -> elevenYears(temp_zero)*.
+135[0:Inp] || oneYear(temp_zero)* -> twelveYears(temp_zero).
+136[0:Inp] || elevenMonths(temp_zero)* -> twelveMonths(temp_zero).
+137[0:Inp] || tenMonths(temp_zero) -> elevenMonths(temp_zero)*.
+138[0:Inp] || tenMonths(temp_zero)* -> twelveMonths(temp_zero).
+139[0:Inp] || nineMonths(temp_zero)* -> tenMonths(temp_zero).
+140[0:Inp] || nineMonths(temp_zero) -> elevenMonths(temp_zero)*.
+141[0:Inp] || nineMonths(temp_zero)* -> twelveMonths(temp_zero).
+142[0:Inp] || eightMonths(temp_zero)* -> nineMonths(temp_zero).
+143[0:Inp] || eightMonths(temp_zero)* -> tenMonths(temp_zero).
+144[0:Inp] || eightMonths(temp_zero)* -> elevenMonths(temp_zero).
+145[0:Inp] || eightMonths(temp_zero)* -> twelveMonths(temp_zero).
+146[0:Inp] || sevenMonths(temp_zero) -> eightMonths(temp_zero)*.
+147[0:Inp] || sevenMonths(temp_zero) -> nineMonths(temp_zero)*.
+148[0:Inp] || sevenMonths(temp_zero)* -> tenMonths(temp_zero).
+149[0:Inp] || sevenMonths(temp_zero) -> elevenMonths(temp_zero)*.
+150[0:Inp] || sevenMonths(temp_zero)* -> twelveMonths(temp_zero).
+151[0:Inp] || sixMonths(temp_zero) -> sevenMonths(temp_zero)*.
+152[0:Inp] || sixMonths(temp_zero) -> eightMonths(temp_zero)*.
+153[0:Inp] || sixMonths(temp_zero) -> nineMonths(temp_zero)*.
+154[0:Inp] || sixMonths(temp_zero)* -> tenMonths(temp_zero).
+155[0:Inp] || sixMonths(temp_zero) -> elevenMonths(temp_zero)*.
+156[0:Inp] || sixMonths(temp_zero)* -> twelveMonths(temp_zero).
+157[0:Inp] || fiveMonths(temp_zero)* -> sixMonths(temp_zero).
+158[0:Inp] || fiveMonths(temp_zero)* -> sevenMonths(temp_zero).
+159[0:Inp] || fiveMonths(temp_zero) -> eightMonths(temp_zero)*.
+160[0:Inp] || fiveMonths(temp_zero)* -> nineMonths(temp_zero).
+161[0:Inp] || fiveMonths(temp_zero)* -> tenMonths(temp_zero).
+162[0:Inp] || fiveMonths(temp_zero) -> elevenMonths(temp_zero)*.
+163[0:Inp] || fiveMonths(temp_zero)* -> twelveMonths(temp_zero).
+164[0:Inp] || fourMonths(temp_zero) -> fiveMonths(temp_zero)*.
+165[0:Inp] || fourMonths(temp_zero)* -> sixMonths(temp_zero).
+166[0:Inp] || fourMonths(temp_zero)* -> sevenMonths(temp_zero).
+167[0:Inp] || fourMonths(temp_zero) -> eightMonths(temp_zero)*.
+168[0:Inp] || fourMonths(temp_zero)* -> nineMonths(temp_zero).
+169[0:Inp] || fourMonths(temp_zero)* -> tenMonths(temp_zero).
+170[0:Inp] || fourMonths(temp_zero) -> elevenMonths(temp_zero)*.
+171[0:Inp] || fourMonths(temp_zero)* -> twelveMonths(temp_zero).
+172[0:Inp] || threeMonths(temp_zero) -> fourMonths(temp_zero)*.
+173[0:Inp] || threeMonths(temp_zero) -> fiveMonths(temp_zero)*.
+174[0:Inp] || threeMonths(temp_zero) -> sixMonths(temp_zero)*.
+175[0:Inp] || threeMonths(temp_zero) -> sevenMonths(temp_zero)*.
+176[0:Inp] || threeMonths(temp_zero) -> eightMonths(temp_zero)*.
+177[0:Inp] || threeMonths(temp_zero) -> nineMonths(temp_zero)*.
+178[0:Inp] || threeMonths(temp_zero) -> tenMonths(temp_zero)*.
+179[0:Inp] || threeMonths(temp_zero) -> elevenMonths(temp_zero)*.
+180[0:Inp] || threeMonths(temp_zero)* -> twelveMonths(temp_zero).
+181[0:Inp] || twoMonths(temp_zero) -> threeMonths(temp_zero)*.
+182[0:Inp] || twoMonths(temp_zero) -> fourMonths(temp_zero)*.
+183[0:Inp] || twoMonths(temp_zero) -> fiveMonths(temp_zero)*.
+184[0:Inp] || twoMonths(temp_zero) -> sixMonths(temp_zero)*.
+185[0:Inp] || twoMonths(temp_zero) -> sevenMonths(temp_zero)*.
+186[0:Inp] || twoMonths(temp_zero) -> eightMonths(temp_zero)*.
+187[0:Inp] || twoMonths(temp_zero) -> nineMonths(temp_zero)*.
+188[0:Inp] || twoMonths(temp_zero) -> tenMonths(temp_zero)*.
+189[0:Inp] || twoMonths(temp_zero) -> elevenMonths(temp_zero)*.
+190[0:Inp] || twoMonths(temp_zero) -> twelveMonths(temp_zero)*.
+191[0:Inp] || oneMonth(temp_zero)* -> twoMonths(temp_zero).
+192[0:Inp] || oneMonth(temp_zero)* -> threeMonths(temp_zero).
+193[0:Inp] || oneMonth(temp_zero) -> fourMonths(temp_zero)*.
+194[0:Inp] || oneMonth(temp_zero) -> fiveMonths(temp_zero)*.
+195[0:Inp] || oneMonth(temp_zero)* -> sixMonths(temp_zero).
+196[0:Inp] || oneMonth(temp_zero)* -> sevenMonths(temp_zero).
+197[0:Inp] || oneMonth(temp_zero) -> eightMonths(temp_zero)*.
+198[0:Inp] || oneMonth(temp_zero) -> nineMonths(temp_zero)*.
+199[0:Inp] || oneMonth(temp_zero)* -> tenMonths(temp_zero).
+200[0:Inp] || oneMonth(temp_zero) -> elevenMonths(temp_zero)*.
+201[0:Inp] || oneMonth(temp_zero)* -> twelveMonths(temp_zero).
+202[0:Inp] ||  -> twoYears(temp_zero) delete(temp_zero,cloudX,U)*.
+203[0:Inp] || DENY(U,V,W,X,Y)* PERMIT(U,V,W,X,Y) -> .
+ This is a first-order Non-Horn problem without equality.
+ This is a problem that has, if any, a finite domain model.
+ There are no function symbols.
+ Axiom clauses: 203 Conjecture clauses: 0
+ Inferences: IORe=1 IOFc=1 
+ Reductions: RObv=1 RTaut=1 RFSub=1 RBSub=1 
+ Extras    : No Input Saturation, No Selection, No Splitting, Full Reduction,  Ratio: 5, FuncWeight: 1, VarWeight: 1
+ Precedence: div > id > c^l > temp_succ > temp_shield > temp_zero > cloudX > file > kim > DENY > PERMIT > Pread > delete > eightDays > eightMonths > eightYears > elevenDays > elevenMonths > elevenYears > fiveDays > fiveMonths > fiveYears > fourDays > fourMonths > fourYears > nineDays > nineMonths > nineYears > notify > oneDay > oneMonth > oneYear > read > sevenDays > sevenMonths > sevenYears > sixDays > sixMonths > sixYears > tenDays > tenMonths > tenYears > threeDays > threeMonths > threeYears > twelveDays > twelveMonths > twelveYears > twoDays > twoMonths > twoYears
+ Ordering  : KBO
+Processed Problem:
+
+Worked Off Clauses:
+
+Usable Clauses:
+1[0:Inp] ||  -> read(temp_zero,cloudX,file)*.
+2[0:Inp] || notify(temp_zero,cloudX,kim)* -> .
+201[0:Inp] || oneMonth(temp_zero)* -> twelveMonths(temp_zero).
+200[0:Inp] || oneMonth(temp_zero) -> elevenMonths(temp_zero)*.
+199[0:Inp] || oneMonth(temp_zero)* -> tenMonths(temp_zero).
+198[0:Inp] || oneMonth(temp_zero) -> nineMonths(temp_zero)*.
+197[0:Inp] || oneMonth(temp_zero) -> eightMonths(temp_zero)*.
+196[0:Inp] || oneMonth(temp_zero)* -> sevenMonths(temp_zero).
+195[0:Inp] || oneMonth(temp_zero)* -> sixMonths(temp_zero).
+194[0:Inp] || oneMonth(temp_zero) -> fiveMonths(temp_zero)*.
+193[0:Inp] || oneMonth(temp_zero) -> fourMonths(temp_zero)*.
+192[0:Inp] || oneMonth(temp_zero)* -> threeMonths(temp_zero).
+191[0:Inp] || oneMonth(temp_zero)* -> twoMonths(temp_zero).
+190[0:Inp] || twoMonths(temp_zero) -> twelveMonths(temp_zero)*.
+189[0:Inp] || twoMonths(temp_zero) -> elevenMonths(temp_zero)*.
+188[0:Inp] || twoMonths(temp_zero) -> tenMonths(temp_zero)*.
+187[0:Inp] || twoMonths(temp_zero) -> nineMonths(temp_zero)*.
+186[0:Inp] || twoMonths(temp_zero) -> eightMonths(temp_zero)*.
+185[0:Inp] || twoMonths(temp_zero) -> sevenMonths(temp_zero)*.
+184[0:Inp] || twoMonths(temp_zero) -> sixMonths(temp_zero)*.
+183[0:Inp] || twoMonths(temp_zero) -> fiveMonths(temp_zero)*.
+182[0:Inp] || twoMonths(temp_zero) -> fourMonths(temp_zero)*.
+181[0:Inp] || twoMonths(temp_zero) -> threeMonths(temp_zero)*.
+180[0:Inp] || threeMonths(temp_zero)* -> twelveMonths(temp_zero).
+179[0:Inp] || threeMonths(temp_zero) -> elevenMonths(temp_zero)*.
+178[0:Inp] || threeMonths(temp_zero) -> tenMonths(temp_zero)*.
+177[0:Inp] || threeMonths(temp_zero) -> nineMonths(temp_zero)*.
+176[0:Inp] || threeMonths(temp_zero) -> eightMonths(temp_zero)*.
+175[0:Inp] || threeMonths(temp_zero) -> sevenMonths(temp_zero)*.
+174[0:Inp] || threeMonths(temp_zero) -> sixMonths(temp_zero)*.
+173[0:Inp] || threeMonths(temp_zero) -> fiveMonths(temp_zero)*.
+172[0:Inp] || threeMonths(temp_zero) -> fourMonths(temp_zero)*.
+171[0:Inp] || fourMonths(temp_zero)* -> twelveMonths(temp_zero).
+170[0:Inp] || fourMonths(temp_zero) -> elevenMonths(temp_zero)*.
+169[0:Inp] || fourMonths(temp_zero)* -> tenMonths(temp_zero).
+168[0:Inp] || fourMonths(temp_zero)* -> nineMonths(temp_zero).
+167[0:Inp] || fourMonths(temp_zero) -> eightMonths(temp_zero)*.
+166[0:Inp] || fourMonths(temp_zero)* -> sevenMonths(temp_zero).
+165[0:Inp] || fourMonths(temp_zero)* -> sixMonths(temp_zero).
+164[0:Inp] || fourMonths(temp_zero) -> fiveMonths(temp_zero)*.
+163[0:Inp] || fiveMonths(temp_zero)* -> twelveMonths(temp_zero).
+162[0:Inp] || fiveMonths(temp_zero) -> elevenMonths(temp_zero)*.
+161[0:Inp] || fiveMonths(temp_zero)* -> tenMonths(temp_zero).
+160[0:Inp] || fiveMonths(temp_zero)* -> nineMonths(temp_zero).
+159[0:Inp] || fiveMonths(temp_zero) -> eightMonths(temp_zero)*.
+158[0:Inp] || fiveMonths(temp_zero)* -> sevenMonths(temp_zero).
+157[0:Inp] || fiveMonths(temp_zero)* -> sixMonths(temp_zero).
+156[0:Inp] || sixMonths(temp_zero)* -> twelveMonths(temp_zero).
+155[0:Inp] || sixMonths(temp_zero) -> elevenMonths(temp_zero)*.
+154[0:Inp] || sixMonths(temp_zero)* -> tenMonths(temp_zero).
+153[0:Inp] || sixMonths(temp_zero) -> nineMonths(temp_zero)*.
+152[0:Inp] || sixMonths(temp_zero) -> eightMonths(temp_zero)*.
+151[0:Inp] || sixMonths(temp_zero) -> sevenMonths(temp_zero)*.
+150[0:Inp] || sevenMonths(temp_zero)* -> twelveMonths(temp_zero).
+149[0:Inp] || sevenMonths(temp_zero) -> elevenMonths(temp_zero)*.
+148[0:Inp] || sevenMonths(temp_zero)* -> tenMonths(temp_zero).
+147[0:Inp] || sevenMonths(temp_zero) -> nineMonths(temp_zero)*.
+146[0:Inp] || sevenMonths(temp_zero) -> eightMonths(temp_zero)*.
+145[0:Inp] || eightMonths(temp_zero)* -> twelveMonths(temp_zero).
+144[0:Inp] || eightMonths(temp_zero)* -> elevenMonths(temp_zero).
+143[0:Inp] || eightMonths(temp_zero)* -> tenMonths(temp_zero).
+142[0:Inp] || eightMonths(temp_zero)* -> nineMonths(temp_zero).
+141[0:Inp] || nineMonths(temp_zero)* -> twelveMonths(temp_zero).
+140[0:Inp] || nineMonths(temp_zero) -> elevenMonths(temp_zero)*.
+139[0:Inp] || nineMonths(temp_zero)* -> tenMonths(temp_zero).
+138[0:Inp] || tenMonths(temp_zero)* -> twelveMonths(temp_zero).
+137[0:Inp] || tenMonths(temp_zero) -> elevenMonths(temp_zero)*.
+136[0:Inp] || elevenMonths(temp_zero)* -> twelveMonths(temp_zero).
+135[0:Inp] || oneYear(temp_zero)* -> twelveYears(temp_zero).
+134[0:Inp] || oneYear(temp_zero) -> elevenYears(temp_zero)*.
+133[0:Inp] || oneYear(temp_zero)* -> tenYears(temp_zero).
+132[0:Inp] || oneYear(temp_zero) -> nineYears(temp_zero)*.
+131[0:Inp] || oneYear(temp_zero) -> eightYears(temp_zero)*.
+130[0:Inp] || oneYear(temp_zero)* -> sevenYears(temp_zero).
+129[0:Inp] || oneYear(temp_zero)* -> sixYears(temp_zero).
+128[0:Inp] || oneYear(temp_zero) -> fiveYears(temp_zero)*.
+127[0:Inp] || oneYear(temp_zero) -> fourYears(temp_zero)*.
+126[0:Inp] || oneYear(temp_zero)* -> threeYears(temp_zero).
+114[0:Inp] || threeYears(temp_zero)* -> twelveYears(temp_zero).
+113[0:Inp] || threeYears(temp_zero) -> elevenYears(temp_zero)*.
+112[0:Inp] || threeYears(temp_zero) -> tenYears(temp_zero)*.
+111[0:Inp] || threeYears(temp_zero) -> nineYears(temp_zero)*.
+110[0:Inp] || threeYears(temp_zero) -> eightYears(temp_zero)*.
+109[0:Inp] || threeYears(temp_zero) -> sevenYears(temp_zero)*.
+108[0:Inp] || threeYears(temp_zero) -> sixYears(temp_zero)*.
+107[0:Inp] || threeYears(temp_zero) -> fiveYears(temp_zero)*.
+106[0:Inp] || threeYears(temp_zero) -> fourYears(temp_zero)*.
+105[0:Inp] || fourYears(temp_zero)* -> twelveYears(temp_zero).
+104[0:Inp] || fourYears(temp_zero) -> elevenYears(temp_zero)*.
+103[0:Inp] || fourYears(temp_zero)* -> tenYears(temp_zero).
+102[0:Inp] || fourYears(temp_zero)* -> nineYears(temp_zero).
+101[0:Inp] || fourYears(temp_zero) -> eightYears(temp_zero)*.
+100[0:Inp] || fourYears(temp_zero)* -> sevenYears(temp_zero).
+99[0:Inp] || fourYears(temp_zero)* -> sixYears(temp_zero).
+98[0:Inp] || fourYears(temp_zero) -> fiveYears(temp_zero)*.
+97[0:Inp] || fiveYears(temp_zero)* -> twelveYears(temp_zero).
+96[0:Inp] || fiveYears(temp_zero) -> elevenYears(temp_zero)*.
+95[0:Inp] || fiveYears(temp_zero)* -> tenYears(temp_zero).
+94[0:Inp] || fiveYears(temp_zero)* -> nineYears(temp_zero).
+93[0:Inp] || fiveYears(temp_zero) -> eightYears(temp_zero)*.
+92[0:Inp] || fiveYears(temp_zero)* -> sevenYears(temp_zero).
+91[0:Inp] || fiveYears(temp_zero)* -> sixYears(temp_zero).
+90[0:Inp] || sixYears(temp_zero)* -> twelveYears(temp_zero).
+89[0:Inp] || sixYears(temp_zero) -> elevenYears(temp_zero)*.
+88[0:Inp] || sixYears(temp_zero)* -> tenYears(temp_zero).
+87[0:Inp] || sixYears(temp_zero) -> nineYears(temp_zero)*.
+86[0:Inp] || sixYears(temp_zero) -> eightYears(temp_zero)*.
+85[0:Inp] || sixYears(temp_zero) -> sevenYears(temp_zero)*.
+84[0:Inp] || sevenYears(temp_zero)* -> twelveYears(temp_zero).
+83[0:Inp] || sevenYears(temp_zero) -> elevenYears(temp_zero)*.
+82[0:Inp] || sevenYears(temp_zero)* -> tenYears(temp_zero).
+81[0:Inp] || sevenYears(temp_zero) -> nineYears(temp_zero)*.
+80[0:Inp] || sevenYears(temp_zero) -> eightYears(temp_zero)*.
+79[0:Inp] || eightYears(temp_zero)* -> twelveYears(temp_zero).
+78[0:Inp] || eightYears(temp_zero)* -> elevenYears(temp_zero).
+77[0:Inp] || eightYears(temp_zero)* -> tenYears(temp_zero).
+76[0:Inp] || eightYears(temp_zero)* -> nineYears(temp_zero).
+75[0:Inp] || nineYears(temp_zero)* -> twelveYears(temp_zero).
+74[0:Inp] || nineYears(temp_zero) -> elevenYears(temp_zero)*.
+73[0:Inp] || nineYears(temp_zero)* -> tenYears(temp_zero).
+72[0:Inp] || tenYears(temp_zero)* -> twelveYears(temp_zero).
+71[0:Inp] || tenYears(temp_zero) -> elevenYears(temp_zero)*.
+70[0:Inp] || elevenYears(temp_zero)* -> twelveYears(temp_zero).
+69[0:Inp] || oneDay(temp_zero)* -> twelveDays(temp_zero).
+68[0:Inp] || oneDay(temp_zero) -> elevenDays(temp_zero)*.
+67[0:Inp] || oneDay(temp_zero)* -> tenDays(temp_zero).
+66[0:Inp] || oneDay(temp_zero) -> nineDays(temp_zero)*.
+65[0:Inp] || oneDay(temp_zero) -> eightDays(temp_zero)*.
+64[0:Inp] || oneDay(temp_zero)* -> sevenDays(temp_zero).
+63[0:Inp] || oneDay(temp_zero)* -> sixDays(temp_zero).
+62[0:Inp] || oneDay(temp_zero) -> fiveDays(temp_zero)*.
+61[0:Inp] || oneDay(temp_zero) -> fourDays(temp_zero)*.
+60[0:Inp] || oneDay(temp_zero)* -> threeDays(temp_zero).
+59[0:Inp] || oneDay(temp_zero)* -> twoDays(temp_zero).
+58[0:Inp] || twoDays(temp_zero) -> twelveDays(temp_zero)*.
+57[0:Inp] || twoDays(temp_zero) -> elevenDays(temp_zero)*.
+56[0:Inp] || twoDays(temp_zero) -> tenDays(temp_zero)*.
+55[0:Inp] || twoDays(temp_zero) -> nineDays(temp_zero)*.
+54[0:Inp] || twoDays(temp_zero) -> eightDays(temp_zero)*.
+53[0:Inp] || twoDays(temp_zero) -> sevenDays(temp_zero)*.
+52[0:Inp] || twoDays(temp_zero) -> sixDays(temp_zero)*.
+51[0:Inp] || twoDays(temp_zero) -> fiveDays(temp_zero)*.
+50[0:Inp] || twoDays(temp_zero) -> fourDays(temp_zero)*.
+49[0:Inp] || twoDays(temp_zero) -> threeDays(temp_zero)*.
+48[0:Inp] || threeDays(temp_zero)* -> twelveDays(temp_zero).
+47[0:Inp] || threeDays(temp_zero) -> elevenDays(temp_zero)*.
+46[0:Inp] || threeDays(temp_zero) -> tenDays(temp_zero)*.
+45[0:Inp] || threeDays(temp_zero) -> nineDays(temp_zero)*.
+44[0:Inp] || threeDays(temp_zero) -> eightDays(temp_zero)*.
+43[0:Inp] || threeDays(temp_zero) -> sevenDays(temp_zero)*.
+42[0:Inp] || threeDays(temp_zero) -> sixDays(temp_zero)*.
+41[0:Inp] || threeDays(temp_zero) -> fiveDays(temp_zero)*.
+40[0:Inp] || threeDays(temp_zero) -> fourDays(temp_zero)*.
+39[0:Inp] || fourDays(temp_zero)* -> twelveDays(temp_zero).
+38[0:Inp] || fourDays(temp_zero) -> elevenDays(temp_zero)*.
+37[0:Inp] || fourDays(temp_zero)* -> tenDays(temp_zero).
+36[0:Inp] || fourDays(temp_zero)* -> nineDays(temp_zero).
+35[0:Inp] || fourDays(temp_zero) -> eightDays(temp_zero)*.
+34[0:Inp] || fourDays(temp_zero)* -> sevenDays(temp_zero).
+33[0:Inp] || fourDays(temp_zero)* -> sixDays(temp_zero).
+32[0:Inp] || fourDays(temp_zero) -> fiveDays(temp_zero)*.
+31[0:Inp] || fiveDays(temp_zero)* -> twelveDays(temp_zero).
+30[0:Inp] || fiveDays(temp_zero) -> elevenDays(temp_zero)*.
+29[0:Inp] || fiveDays(temp_zero)* -> tenDays(temp_zero).
+28[0:Inp] || fiveDays(temp_zero)* -> nineDays(temp_zero).
+27[0:Inp] || fiveDays(temp_zero) -> eightDays(temp_zero)*.
+26[0:Inp] || fiveDays(temp_zero)* -> sevenDays(temp_zero).
+25[0:Inp] || fiveDays(temp_zero)* -> sixDays(temp_zero).
+24[0:Inp] || sixDays(temp_zero)* -> twelveDays(temp_zero).
+23[0:Inp] || sixDays(temp_zero) -> elevenDays(temp_zero)*.
+22[0:Inp] || sixDays(temp_zero)* -> tenDays(temp_zero).
+21[0:Inp] || sixDays(temp_zero) -> nineDays(temp_zero)*.
+20[0:Inp] || sixDays(temp_zero) -> eightDays(temp_zero)*.
+19[0:Inp] || sixDays(temp_zero) -> sevenDays(temp_zero)*.
+18[0:Inp] || sevenDays(temp_zero)* -> twelveDays(temp_zero).
+17[0:Inp] || sevenDays(temp_zero) -> elevenDays(temp_zero)*.
+16[0:Inp] || sevenDays(temp_zero)* -> tenDays(temp_zero).
+15[0:Inp] || sevenDays(temp_zero) -> nineDays(temp_zero)*.
+14[0:Inp] || sevenDays(temp_zero) -> eightDays(temp_zero)*.
+13[0:Inp] || eightDays(temp_zero)* -> twelveDays(temp_zero).
+12[0:Inp] || eightDays(temp_zero)* -> elevenDays(temp_zero).
+11[0:Inp] || eightDays(temp_zero)* -> tenDays(temp_zero).
+10[0:Inp] || eightDays(temp_zero)* -> nineDays(temp_zero).
+9[0:Inp] || nineDays(temp_zero)* -> twelveDays(temp_zero).
+8[0:Inp] || nineDays(temp_zero) -> elevenDays(temp_zero)*.
+7[0:Inp] || nineDays(temp_zero)* -> tenDays(temp_zero).
+6[0:Inp] || tenDays(temp_zero)* -> twelveDays(temp_zero).
+5[0:Inp] || tenDays(temp_zero) -> elevenDays(temp_zero)*.
+4[0:Inp] || elevenDays(temp_zero)* -> twelveDays(temp_zero).
+124[0:Inp] || twoYears(temp_zero) -> twelveYears(temp_zero)*.
+123[0:Inp] || twoYears(temp_zero) -> elevenYears(temp_zero)*.
+122[0:Inp] || twoYears(temp_zero) -> tenYears(temp_zero)*.
+121[0:Inp] || twoYears(temp_zero) -> nineYears(temp_zero)*.
+120[0:Inp] || twoYears(temp_zero) -> eightYears(temp_zero)*.
+119[0:Inp] || twoYears(temp_zero) -> sevenYears(temp_zero)*.
+118[0:Inp] || twoYears(temp_zero) -> sixYears(temp_zero)*.
+117[0:Inp] || twoYears(temp_zero) -> fiveYears(temp_zero)*.
+116[0:Inp] || twoYears(temp_zero) -> fourYears(temp_zero)*.
+115[0:Inp] || twoYears(temp_zero) -> threeYears(temp_zero)*.
+125[0:Inp] || oneYear(temp_zero)* -> twoYears(temp_zero).
+3[0:Inp] ||  -> Pread(temp_zero,U,cloudX,V)*.
+202[0:Inp] ||  -> twoYears(temp_zero) delete(temp_zero,cloudX,U)*.
+203[0:Inp] || PERMIT(U,V,W,X,Y) DENY(U,V,W,X,Y)* -> .
+Eventuality Clauses:
+
+TSPASS 0.95 
+SPASS beiseite: Satisfiable.
+Problem: tests/tmp_gen.fotl 
+TSPASS derived 285 clauses, backtracked 0 clauses and kept 203 clauses.
+Number of input clauses: 203
+Number of eventualities: 0
+Total number of generated clauses: 488
+Number of forward-subsumed clauses: 285
+Number of backward-subsumed clauses: 0
+Total number of subsumed clauses: 285
+Number of tautology clauses: 0
+Number of clauses with different loop search markers: 0
+Number of usable clauses left: 0
+Number of worked-off clauses left: 203
+Number of successful loop searches: 0
+TSPASS allocated 559 KBytes.
+TSPASS spent	0:00:00.05 (0.049992s) on the problem.
+		0:00:00.00 (0.003s) for the input.
+		0:00:00.01 (0.011998s) for the FLOTTER CNF translation.
+		0:00:00.00 (0s) for inferences.
+		0:00:00.00 (0s) for the backtracking.
+		0:00:00.01 (0.005s) for the reduction.
+
+--------------------------TSPASS-STOP------------------------------

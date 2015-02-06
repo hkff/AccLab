@@ -1,0 +1,2 @@
+
+always( ![a,x,y,z] ~(PERMIT(a, x, y, z) & DENY(a, x, y, z))) &  ~(![a] ![file]((DENY(read, a, cloudX, file) & (~twoYears => Adelete(cloudX, file))))  => ![file]((PERMIT(read, kim, cloudX, file) & (~threeYears => Adelete(cloudX, file)))) )

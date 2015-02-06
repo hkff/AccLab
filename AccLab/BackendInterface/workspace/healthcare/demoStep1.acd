@@ -1,0 +1,372 @@
+[
+  {
+    "type": "AgentUI",
+    "id": "e36433d8-fde1-f241-d8a7-09e7af108867",
+    "x": 85,
+    "y": 39,
+    "width": 56,
+    "height": 50,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "sensor",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "access",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      }
+    ],
+    "bgColor": "#A0A0A0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "kim",
+    "policy": "",
+    "pservices": {
+      "data": []
+    },
+    "rservices": {
+      "data": [
+        "sensor",
+        "access"
+      ]
+    },
+    "types": {
+      "data": [
+        "DataSubject"
+      ]
+    },
+    "DEFAULT_bgColor": "#0d0d0d",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "AgentUI",
+    "id": "0667f25c-0732-3ef5-99bb-2b341edc1bd8",
+    "x": 147,
+    "y": 172,
+    "width": 71,
+    "height": 50,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "storage",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "sensor",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "access",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      }
+    ],
+    "bgColor": "#A0A0A0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "cloudX",
+    "policy": "",
+    "pservices": {
+      "data": [
+        "sensor",
+        "access"
+      ]
+    },
+    "rservices": {
+      "data": [
+        "storage"
+      ]
+    },
+    "types": {
+      "data": [
+        "DataProcessor"
+      ]
+    },
+    "DEFAULT_bgColor": "#0d0d0d",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "AgentUI",
+    "id": "2c9dc8e8-b215-0000-5965-715513ec4bdd",
+    "x": 147,
+    "y": 296,
+    "width": 71,
+    "height": 50,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "storage",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "access",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "getData",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      }
+    ],
+    "bgColor": "#A0A0A0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "cloudY",
+    "policy": "",
+    "pservices": {
+      "data": [
+        "storage",
+        "access"
+      ]
+    },
+    "rservices": {
+      "data": [
+        "getData"
+      ]
+    },
+    "types": {
+      "data": [
+        "DataProcessor"
+      ]
+    },
+    "DEFAULT_bgColor": "#0d0d0d",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "AgentUI",
+    "id": "09dc10ec-d539-1df4-9c58-92a0e0cb3485",
+    "x": 449,
+    "y": 145,
+    "width": 57,
+    "height": 132,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "getData",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "access",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "uploadActivity",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "report",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "marketing",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      }
+    ],
+    "bgColor": "#A0A0A0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "cloudZ",
+    "policy": "",
+    "pservices": {
+      "data": [
+        "getData",
+        "access",
+        "uploadActivity",
+        "report",
+        "marketing"
+      ]
+    },
+    "rservices": {
+      "data": []
+    },
+    "types": {
+      "data": [
+        "DataProcessor",
+        "DataController"
+      ]
+    },
+    "DEFAULT_bgColor": "#0d0d0d",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "AgentUI",
+    "id": "2ce4457c-673e-485c-5d02-94eee88b1e6f",
+    "x": 571,
+    "y": 39,
+    "width": 74,
+    "height": 50,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "access",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "uploadActivity",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      }
+    ],
+    "bgColor": "#A0A0A0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "sandra",
+    "policy": "",
+    "pservices": {
+      "data": []
+    },
+    "rservices": {
+      "data": [
+        "access",
+        "uploadActivity"
+      ]
+    },
+    "types": {
+      "data": [
+        "DataController"
+      ]
+    },
+    "DEFAULT_bgColor": "#0d0d0d",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "AgentUI",
+    "id": "a33974cf-c541-977b-f223-9357ab42b422",
+    "x": 671,
+    "y": 209,
+    "width": 77,
+    "height": 50,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "research",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "report",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "uploadActivity",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      }
+    ],
+    "bgColor": "#A0A0A0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "hospital",
+    "policy": "",
+    "pservices": {
+      "data": [
+        "report",
+        "uploadActivity"
+      ]
+    },
+    "rservices": {
+      "data": [
+        "research"
+      ]
+    },
+    "types": {
+      "data": [
+        "DataController"
+      ]
+    },
+    "DEFAULT_bgColor": "#0d0d0d",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "AgentUI",
+    "id": "ecc70910-2d8c-d114-5811-065022240cc1",
+    "x": 441,
+    "y": 351,
+    "width": 50,
+    "height": 50,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "report",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "audit",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      }
+    ],
+    "bgColor": "#A0A0A0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "leslie",
+    "policy": "",
+    "pservices": {
+      "data": [
+        "audit"
+      ]
+    },
+    "rservices": {
+      "data": [
+        "report"
+      ]
+    },
+    "types": {
+      "data": [
+        "Auditor"
+      ]
+    },
+    "DEFAULT_bgColor": "#0d0d0d",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  }
+]

@@ -1,0 +1,72 @@
+/** ltl check**/
+MACRO ltl_check (
+"""
+print(self.aalprog.to_ltl())
+"""
+)
+
+MACRO validate(c1 c2) (
+// Checking validity
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+validate(self, _c1, _c2)
+"""
+)
+
+MACRO resolve(c1 c2) (
+// Checking validity and auto resolve conflicts
+"""
+validate(self, c1, c2, resolve=True)
+"""
+)
+
+MACRO show_libs (
+"""
+print("loaded libs....")
+for x in self.libs:
+    print(x.file)
+print("\n")
+"""
+)
+
+
+MACRO ltl (c) (
+"""
+print(isinstance(c, m_clause) )
+//cl = self.clause(c)
+//print(cl.to_ltl())
+//r = cl.to_ltl()
+//print(self.pprinter(ltl_code=r))
+//return cl.to_ltl()
+"""
+)
+
+MACRO show_clause(c) (
+"""
+cl = self.clause(c)
+print(cl)
+"""
+)
+
+MACRO to_natural(c) (
+"""
+print("koko")
+print(self.clause(c).to_natural())
+"""
+)
+
+MACRO do(a) (
+"""
+self.apply_check(code= AALtoFOTL(l) + " & " + a , verbose=False, show=True)["print"]
+"""
+)
+
+
+MACRO skip_defs() (
+"""
+def exitAgentDec(ctx):
+    pass
+self.exitAgentDec = exitAgentDec
+"""
+)

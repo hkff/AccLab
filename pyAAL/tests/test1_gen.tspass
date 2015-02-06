@@ -1,0 +1,4 @@
+~(always(![a] ![b] ![c] ((~ read(a, b, c)) | Pread(a, b, c)) )
+=> ~(![d] (
+    ~ Pread(Kim, cloudX, d) &
+    read(Kim, cloudX, d) )))

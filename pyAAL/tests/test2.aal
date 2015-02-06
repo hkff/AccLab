@@ -1,0 +1,32 @@
+//LOAD "core.types"
+//LOAD "testlib"
+//LOAD "core.macros"
+
+
+CLAUSE c3(
+    FORALL file:data //WHERE file.subject==alice
+    EXISTS a:agent
+    PERMIT alice.read[cloudS](file)
+    AND PERMIT alice.write[cloudS](file)
+    AND PERMIT alice.delete[cloudS](file)
+    AND PERMIT cloudS.get[a](file)
+    AND DENY cloudS.store[exbackup](file)
+    AND DENY cloudS.store[a](file)
+    AND IF (alice.read[cloudS](file)) THEN (MUST(cloudS.notify[cloudS]()))
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN MUST(DPA.sanction[cloudS]() AND cloudS.delete[file]())
+)
+
+CLAUSE c4(
+    FORALL a:agent FORALL file:data //WHERE file.subject==a
+    PERMIT a.read[cloudS](file)
+    AND PERMIT a.write[cloudS](file)
+    AND DENY a.delete[cloudS](file)
+//    AND PERMIT a.delete[cloudS](file)
+    AND PERMIT cloudS.get[a](file)
+    AND PERMIT cloudS.store[exbackup](file)
+//    AND DENY cloudS.store[exbackup](file)
+//    AND IF (a.read[cloudS](file)) THEN (MUST(cloudS.notify[cloudS]()))
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN DPA.sanction[cloudS]()
+)

@@ -1,0 +1,90 @@
+// Loading libraries
+LOAD "core.types"
+LOAD "core.macros"
+LOAD "core.eu"
+
+/***************************
+ *       Declarations
+ ****************************/
+AGENT kim TYPES(DataSubject ) REQUIRED(sensor access ) PROVIDED()
+AGENT cloudX TYPES(DataProcessor ) REQUIRED(storage ) PROVIDED(sensor access )
+AGENT cloudY TYPES(DataProcessor ) REQUIRED(getData ) PROVIDED(storage access audit )
+AGENT cloudZ TYPES(DataProcessor DataController ) REQUIRED(uploadData ) PROVIDED(getData access uploadActivity report marketing audit )
+AGENT sandra TYPES(DataController ) REQUIRED(access uploadActivity ) PROVIDED()
+AGENT hospital TYPES(DataController DataProcessor ) REQUIRED(research ) PROVIDED(report uploadActivity uploadData audit )
+AGENT leslie TYPES(Auditor ) REQUIRED(report audit ) PROVIDED()
+
+/***************************
+ *       Clauses
+ ****************************/
+
+/*** Kim's user preference ***/
+CLAUSE kim_policy (
+    FORALL file:data WHERE file.subject == kim
+    PERMIT kim.read[cloudX](file)
+    AND cloudX.delete[file]() BEFORE "3 Years"
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN MUST(DPA.sanction[cloudS]())
+)
+
+/*** CloudX's policy ***/
+CLAUSE cloudX_policy (
+    FORALL a:agent FORALL file:data WHERE file.subject == a
+    DENY a.read[cloudX](file)
+    AND cloudX.delete[file]() BEFORE "2 Years"
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN DPA.sanction[cloudS]()
+)
+
+CALL validate("'kim_policy'" "'cloudX_policy'")
+
+/*** Sandra's user preference ***/
+CLAUSE sandra_policy (
+    FORALL file:data WHERE file.subject == alice
+    EXISTS a:agent
+    PERMIT alice.read[cloudS](d)
+    AND PERMIT alice.write[cloudS](file)
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN MUST(DPA.sanction[cloudS]() AND cloudS.delete[file]())
+)
+
+
+
+
+
+/*** CloudZ's policy ***/
+CLAUSE cloudZ_policy (
+    FORALL a:agent FORALL file:data WHERE file.subject == a
+
+    PERMIT a.read[cloudS](file)
+    AND PERMIT a.write[cloudS](file)
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN DPA.sanction[cloudS]()
+)
+
+
+/*** CloudY's policy ***/
+CLAUSE cloudY_policy (
+    FORALL a:agent FORALL file:data WHERE file.subject == a
+    PERMIT a.read[cloudS](file)
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN DPA.sanction[cloudS]()
+)
+
+
+/*** Hospital's policy ***/
+CLAUSE hospital_policy (
+    FORALL a:agent FORALL file:data WHERE file.subject == a
+    PERMIT a.read[cloudS](file)
+    AUDITING DPA.audit[cloudS]()
+    IF_VIOLATED_THEN DPA.sanction[cloudS]()
+)
+
+
+
+
+
+
+
+
+
