@@ -60,7 +60,7 @@ class DescriptiveErrorListener(ErrorListener):
 
 # aalc
 def aalc(file, use_shell=False, check=False, monodic=False, compile=False, libs_path="libs/aal/",
-         root_path=None, recompile=False, to_ltl=False):
+         root_path=None, recompile=False, to_ltl=False, show_ast=False):
     """
     Parse AAL
     :param file:
@@ -113,6 +113,11 @@ def aalc(file, use_shell=False, check=False, monodic=False, compile=False, libs_
         sys.setrecursionlimit(3000)
         with open(file+"c", "wb") as f:
             pickle.dump(l, f, pickle.HIGHEST_PROTOCOL)
+
+    # Show AST
+    if show_ast:
+        from tools.visu import Visu
+        Visu.show_ast(l.aalprog)
 
     # Run the shell
     if use_shell:
@@ -266,6 +271,7 @@ def main(argv):
         "\n  -b \t--no-colors     " + "\t disable colors in output" +\
         "\n  -x \t--compile-stdlib" + "\t compile the standard library" +\
         "\n  -d \t--hotswap       " + "\t enable hotswaping (for development only)" +\
+        "\n  -a \t--ast           " + "\t show ast tree" +\
         "\n\nReport aalc bugs to walid.benghabrit@mines-nantes.fr" +\
         "\nAccLab home page: <http://www.emn.fr/z-info/acclab/>" +\
         "\naalc is a free software released under GPL 3"
@@ -281,11 +287,12 @@ def main(argv):
     initialize = False
     to_ltl = False
     hotswaping = False
+    show_ast = False
 
     try:
-        opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxd", ["help", "input=", "ofile=", "compile", "monodic",
+        opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxda", ["help", "input=", "ofile=", "compile", "monodic",
                                                                  "shell", "check", "load", "recompile", "init",
-                                                                 "no-colors", "compile-stdlib", "hotswap"])
+                                                                 "no-colors", "compile-stdlib", "hotswap", "ast"])
     except getopt.GetoptError:
         print(helpStr)
         sys.exit(2)
@@ -324,6 +331,8 @@ def main(argv):
             return
         elif opt in ("-d", "--hotswap"):
             hotswaping = True
+        elif opt in ("-a", "--ast"):
+            show_ast = True
 
 
     # Use hot swaping decoration on all AALMetaModel classes
@@ -345,7 +354,8 @@ def main(argv):
         shell(l)
 
     elif inputfile.endswith(".aal"):
-        aalc(inputfile, use_shell=use_shell, check=check, monodic=monodic, compile=compile, recompile=recompile, to_ltl=to_ltl)
+        aalc(inputfile, use_shell=use_shell, check=check, monodic=monodic, compile=compile, recompile=recompile,
+             to_ltl=to_ltl, show_ast=show_ast)
 
     elif inputfile.endswith(".tspass"):
          tspassc(inputfile, use_shell=False, debug=True)

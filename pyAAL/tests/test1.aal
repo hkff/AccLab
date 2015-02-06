@@ -93,8 +93,8 @@ EXEC
 #print(self.clause("c0").usage.to_ltl())
 #print(self.aalprog.clauses[2].walk(filter_type=m_aexpNotAexp)[0].remove())
 #print(self.aalprog.clauses[2].to_ast())
-from tools.visu import Visu
-Visu.show_ast(self.aalprog)
+#from tools.visu import Visu
+#Visu.show_ast(self.aalprog)
 
 """
 
