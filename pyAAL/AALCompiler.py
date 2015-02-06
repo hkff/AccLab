@@ -33,6 +33,7 @@ import tools.hottie as hottie
 from tools.hottie import hot
 from AALChecker import *
 
+
 # TO avoid cyclic import
 class AALCompilerListener(AALListener.AALListener):
     def __init__(self, loadlibs: bool=True, serialize: bool=False, file: str="",

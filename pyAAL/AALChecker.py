@@ -111,7 +111,7 @@ def check_monodic(node=None, verbose: bool=False):
     if p["monodic"]:
         res = Color("{autogreen}Formula is monodic !{/green}\n")
     else:
-        res = Color("{autored}Formula is monodic !{/red}\n")
+        res = Color("{autored}Formula is not monodic !{/red}\n")
 
     if not p["monodic"]:
         for info in p["info"]:
