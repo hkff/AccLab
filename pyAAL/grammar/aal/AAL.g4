@@ -191,9 +191,10 @@ varDec       : h_varTypeId h_varId attrValue*;
 attrValue    : h_attribute h_lpar ID* h_rpar;
 
 // TypesDec      ::= TYPE Id [EXTENDS '(' Type* ')'] ATTRIBUTES '(' AttributeDec* ')' ACTIONS '(' ActionDec* ')'
-typeDec      : D_type ID  M_extends h_lpar dataType* h_rpar type_attr  type_actions;
-type_attr    : M_attr h_lpar dataType* h_rpar;
-type_actions : M_actions h_lpar dataType* h_rpar;
+typeDec      : D_type ID  type_super? type_attr? type_actions?;
+type_super   : M_extends h_lpar ID* h_rpar;
+type_attr    : M_attr h_lpar ID* h_rpar;
+type_actions : M_actions h_lpar ID* h_rpar;
 
 
 //**** Types and Attributes ****//
