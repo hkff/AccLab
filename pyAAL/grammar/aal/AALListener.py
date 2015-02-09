@@ -220,6 +220,15 @@ class AALListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by AALParser#attrValue.
+    def enterAttrValue(self, ctx):
+        pass
+
+    # Exit a parse tree produced by AALParser#attrValue.
+    def exitAttrValue(self, ctx):
+        pass
+
+
     # Enter a parse tree produced by AALParser#exp.
     def enterExp(self, ctx):
         pass
@@ -325,6 +334,15 @@ class AALListener(ParseTreeListener):
 
     # Exit a parse tree produced by AALParser#h_type.
     def exitH_type(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by AALParser#h_varTypeId.
+    def enterH_varTypeId(self, ctx):
+        pass
+
+    # Exit a parse tree produced by AALParser#h_varTypeId.
+    def exitH_varTypeId(self, ctx):
         pass
 
 
@@ -499,6 +517,15 @@ class AALListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by AALParser#varDec.
+    def enterVarDec(self, ctx):
+        pass
+
+    # Exit a parse tree produced by AALParser#varDec.
+    def exitVarDec(self, ctx):
+        pass
+
+
     # Enter a parse tree produced by AALParser#ifthen.
     def enterIfthen(self, ctx):
         pass
@@ -508,21 +535,21 @@ class AALListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by AALParser#main.
-    def enterMain(self, ctx):
-        pass
-
-    # Exit a parse tree produced by AALParser#main.
-    def exitMain(self, ctx):
-        pass
-
-
     # Enter a parse tree produced by AALParser#qvar.
     def enterQvar(self, ctx):
         pass
 
     # Exit a parse tree produced by AALParser#qvar.
     def exitQvar(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by AALParser#main.
+    def enterMain(self, ctx):
+        pass
+
+    # Exit a parse tree produced by AALParser#main.
+    def exitMain(self, ctx):
         pass
 
 
@@ -559,6 +586,15 @@ class AALListener(ParseTreeListener):
 
     # Exit a parse tree produced by AALParser#actionExp2notAction.
     def exitActionExp2notAction(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by AALParser#h_varId.
+    def enterH_varId(self, ctx):
+        pass
+
+    # Exit a parse tree produced by AALParser#h_varId.
+    def exitH_varId(self, ctx):
         pass
 
 

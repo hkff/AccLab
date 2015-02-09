@@ -38,6 +38,7 @@ SERVICE audit TYPES() PURPOSE()
 AGENT bob
 
 
+
 /*** Kim's user preference ***/
 CLAUSE kim_policy (
     FORALL file:data WHERE file.subject == kim

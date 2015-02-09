@@ -1,26 +1,40 @@
 grammar AAL;
 /*
-    // AAL CORE
-    AALprogram    ::= (Declaration | Clause | Comment | Macro | MacroCall)*
-    Declaration   ::= AgentDec | ServiceDec | DataDec | TypesDec
-    AgentDec      ::= AGENT Id TYPE'('Type*')' REQUIRED'('service*')' PROVIDED'('service*')'
+     // AAL CORE
+    AALprogram    ::= (Declaration | Clause | Comment | Macro | MacroCall | loadlib | ltlCheck | checkApply | exec)*
+
+    Declaration   ::= AgentDec | ServiceDec | DataDec | TypesDec | varDec
+    AgentDec      ::= AGENT Id TYPE '(' Type *')' REQUIRED'('service*')' PROVIDED'('service*')'
     ServiceDec    ::= SERVICE Id TYPE'('Type*')' [PURPOSE '(' Id* ')']
     DataDec       ::= DATA Id TYPE'('Type*')' [REQUIRED'('service*')' PROVIDED'('service*')'] SUBJECT agent
+
+    VarDec        ::= Type_Id Id [attr_Id '(' value* ')']*
+
     Clause        ::= CLAUSE Id '(' [Usage] [Audit Rectification] ')'
     Usage         ::= ActionExp
-    Audit         ::= AUDITING [ActionExp THEN] agent.audit'['agent']' '()'
-    Rectification ::= IF_VIOLATED_THEN ActionExp (??Usage)
-    ActionExp     ::= Action | NOT ActionExp | Modality ActionExp | Condition 
-                    | ActionExp (AND|OR|ONLYWHEN) ActionExp | Author | Quant*
+    Audit         ::= AUDITING Usage
+    Rectification ::= IF_VIOLATED_THEN Usage
+
+    ActionExp     ::= Action
+                    | NOT ActionExp
+                    | Modality ActionExp
+                    | Condition
+                    | ActionExp (AND|OR|ONLYWHEN|UNTIL|UNLESS) ActionExp
+                    | Author
+                    | Quant*
                     | IF ActionExp THEN ActionExp
+
+
     Exp           ::= Variable | Constant | Variable.Attribute
-    Condition     ::= [NOT] Exp | Exp ['==' | '!='] Exp | Condition (AND|OR) Condition 
+    Condition     ::= [NOT] Exp | Exp ['==' | '!='] Exp | Condition (AND|OR) Condition
     Author        ::= (PERMIT | DENY) Action
     Action        ::= agent.service ['['[agent]']'] '('Exp')' [Time] [Purpose]
     Quant         ::= (FORALL | EXISTS) Var [WHERE Condition]
     Variable      ::= Var ':' Type
     Modality      ::= MUST | MUSTNOT | ALWAYS | NEVER | SOMETIME
     Time          ::= (AFTER | BEFORE) Date | Time (AND | OR) Time
+
+
     Date          ::= hh ':' mm ':' ss  DD '/' MM '/' YYYY (use string)
     Type, var, val, attr Id, agent, Constant, Purpose ::= literal
 
@@ -30,7 +44,6 @@ grammar AAL;
     AttributeDec  ::= Id ':' Type
     ActionDec     ::= Id
     Type, Id      ::= litteral
-    Affectation   ::= var.id '=' val
 
 
     // Reflexion extension
@@ -38,9 +51,9 @@ grammar AAL;
     MCode         ::= Meta model api + Python3 code (subset)
     MCall         ::= CALL Id '(' param* ')'
     LoadLib       ::= LOAD STRING;
+    Exex          ::= EXEC MCode
 
     // LTL checking extension
-    Modified version of LTL
 */
 
 //-------------------------------------------------------//
@@ -128,6 +141,8 @@ h_data    : ID;
 h_value   : h_constant;
 h_time    : h_date | h_duration;
 h_agentId : ID;
+h_varTypeId   : ID;
+h_varId   : ID;
 h_dataId  : ID;
 h_date    : STRING; // INT INT h_slash INT INT h_slash INT INT INT INT;
 
@@ -161,8 +176,9 @@ MLCOMMENT : '/*' (.)*? '*/' -> channel(HIDDEN);
 //------------------------------------------------------//
 
 main        : aalprog;
-aalprog     : (clause | declaration | h_comment | macro | macroCall | loadlib | ltlCheck | checkApply | exec)* ;
-declaration : (agentDec | serviceDec | dataDec | typeDec) NEWLINE?;
+aalprog     : (clause | declaration | h_comment | macro | macroCall | loadlib | ltlCheck | checkApply | exec)*;
+declaration : (agentDec | serviceDec | dataDec | typeDec | varDec) NEWLINE?;
+
 
 //****   Declarations ****//
 agentDec   : D_agent h_agentId ( D_types h_lpar agentType*  h_rpar ( (rsService psService) | (psService rsService) ) )?;
@@ -170,6 +186,9 @@ dataDec    : D_data h_dataId D_types h_lpar dataType* h_rpar ((rsService psServi
 rsService  : M_rservice h_lpar h_serviceId* h_rpar;
 psService  : M_pservice h_lpar h_serviceId* h_rpar;
 serviceDec : D_service h_serviceId D_types h_lpar serviceType* h_rpar M_purpose h_lpar h_purposeId* h_rpar;
+
+varDec       : h_varTypeId h_varId attrValue*;
+attrValue    : h_attribute h_lpar ID* h_rpar;
 
 // TypesDec      ::= TYPE Id [EXTENDS '(' Type* ')'] ATTRIBUTES '(' AttributeDec* ')' ACTIONS '(' ActionDec* ')'
 typeDec      : D_type ID  M_extends h_lpar dataType* h_rpar type_attr  type_actions;
@@ -184,24 +203,20 @@ dataType    : ID;
 
 
 //**** Program core ****//
-clause  : D_clause h_clauseId h_lpar
-              (usage NEWLINE?) (audit NEWLINE?)? (rectification NEWLINE?)? 
-          h_rpar ;
 
-qvar    : quant h_variable (O_where condition)?;
-
+//Clause        ::= CLAUSE Id '(' [Usage] [Audit Rectification] ')'
+clause  : D_clause h_clauseId h_lpar (usage NEWLINE?) (audit NEWLINE?)? (rectification NEWLINE?)? h_rpar ;
 usage         : actionExp;
-//audit         : C_auditing (actionExp O_then)? h_agentId h_dot M_audit h_lbar h_agentId h_rbar  h_lpar exp? h_rpar;
 audit         : C_auditing usage;
 rectification : C_ifviolated usage;
 
 
-// Use this separation to handle contexts in compiler
+// We use this separation to handle contexts in the compiler
 actionExp  : actionExp1Action
            | actionExp2notAction
            | actionExp3modalAction
            | actionExp4condition
-           | actionExp booleanOp actionExp
+           | actionExp booleanOp actionExp // use inline because antrl4 doesn't supports mutually left-recursive rules
            | actionExp6Author
            | actionExp7ifthen
            | actionExp8qvar
@@ -214,11 +229,16 @@ actionExp4condition   : condition;
 //actionExp5boolAction  : actionExp booleanOp actionExp;
 actionExp6Author      : author;
 actionExp7ifthen      : ifthen;
-actionExp8qvar        : qvar qvar* actionExp;
+actionExp8qvar        : qvar qvar* actionExp; // Force the first qvar
 
-booleanOp   : O_and | O_or | O_onlywhen;
+
+
+quant       : Q_forall | Q_exists;
+qvar        : quant h_variable (O_where condition)?;
+booleanOp   : O_and | O_or | O_onlywhen | T_until | T_unless;
 author      : (A_permit | A_deny) action NEWLINE?;
 ifthen      : O_if h_lpar actionExp h_rpar O_then h_lpar actionExp h_rpar;
+
 
 exp : h_variable
     | h_constant
@@ -226,17 +246,17 @@ exp : h_variable
 
 condition              : condition1notExp
                        | condition2cmpExp
-                       | condition (O_and|O_or) condition;
-
+                       | condition (O_and|O_or) condition;  // mutually left-recursive
 condition1notExp       : (O_not)? exp;
 condition2cmpExp       : exp (h_equal | h_inequal) exp;
 
 
 action                 : h_agentId h_dot (h_serviceId) (h_lbar h_agentId? h_rbar)?  h_lpar exp? h_rpar (time)? (M_purpose h_lpar h_purposeId* h_rpar)?;
-quant                  : Q_forall | Q_exists;
-modal                  : T_must | T_mustnot | T_always | T_never | T_sometime | T_until;
+
+modal                  : T_must | T_mustnot | T_always | T_never | T_sometime;
 time                   : (O_after | O_before) h_date | time (O_and | O_or) time;
     
+
 
 //****  Reflexion extension ****//
 macro  : M_macro ID args? h_lpar MCODE h_rpar;
