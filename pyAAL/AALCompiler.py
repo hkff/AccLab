@@ -471,7 +471,7 @@ class AALCompilerListener(AALListener.AALListener):
                     print("Quantified var : " + str(s[0]))
                 return s[0]
 
-        # Check if service is already declared
+        # Check if type is already declared
         dec = self.aalprog.isDeclared(ttypeId, m_type, ret=int)
         if dec is not None:
             return dec
@@ -640,12 +640,28 @@ class AALCompilerListener(AALListener.AALListener):
         dtDec = m_type(name=ctx.ID())  # Declare type (put the ID() to keep context)
 
         # Check if type is already declared
+        print("Type : " + dtName + " " + str(self.aalprog.isDeclared(dtName, m_type)) + " "+ str(dtName in self.refForwardTypes))
         if self.aalprog.isDeclared(dtName, m_type) is True:
             if dtName in self.refForwardTypes:  # Check if type is in forwards ref
-                del(self.refForwardTypes[dtName])  # Remove it to resolve forwards ref
+                del self.refForwardTypes[dtName]  # Remove it to resolve forwards ref
             else:  # The data was effectively declared
                 print("Error data already declared !")
                 return
+
+        # Handle type superTypes
+        if ctx.type_super():
+            for x in ctx.type_super().ID():
+                dtDec.superTypes.append(x)
+
+        # Handle type attributes
+        if ctx.type_attr():
+            for x in ctx.type_attr().ID():
+                dtDec.attributes.append(x)
+
+        # Handle type actions
+        if ctx.type_actions():
+            for x in ctx.type_actions().ID():
+                dtDec.actions.append(x)
         self.aalprog.declarations["types"].append(dtDec)  # Add type declaration to prog
 
     ##########################

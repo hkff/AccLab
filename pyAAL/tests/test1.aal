@@ -5,7 +5,7 @@ LOAD "core.macros"
 //LOAD "test2"
 
 // Types Declarations
-TYPE data4 EXTENDS() ATTRIBUTES() ACTIONS()
+TYPE data EXTENDS(toto) ATTRIBUTES() ACTIONS(d z)
 TYPE none EXTENDS() ATTRIBUTES() ACTIONS()
 TYPE data EXTENDS() ATTRIBUTES() ACTIONS()
 TYPE agent EXTENDS() ATTRIBUTES() ACTIONS()
@@ -36,17 +36,29 @@ SERVICE sanction TYPES() PURPOSE()
 SERVICE audit TYPES() PURPOSE()
 
 AGENT bob
+TYPE tot ATTRIBUTES(a b c) ACTIONS()
+tot d
+
+
 
 
 /*** Kim's user preference ***/
 CLAUSE kim_policy (
-    FORALL file:data WHERE file.subject == kim
+    FORALL file:foo WHERE file.subject == kim
     PERMIT kim.read[cloudX](file)
     AND cloudX.delete[file]() BEFORE "1 Years"
     AND IF (cloudX.read[file]()) THEN (cloudX.notify[kim]())
     AUDITING DPA.audit[cloudS]()
     IF_VIOLATED_THEN MUST(DPA.sanction[cloudS]())
 )
+
+TYPE foo ATTRIBUTES(a b c) ACTIONS()
+AGENT kim TYPES(DataSubject) REQUIRED() PROVIDED()
+EXEC
+"""
+for x in self.aalprog.declarations["agents"]:
+    print(x)
+"""
 
 /*** CloudX's policy ***/
 CLAUSE cloudX_policy (
