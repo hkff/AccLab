@@ -104,3 +104,12 @@ path.link {
   stroke: #ccc;
   stroke-width: 1.5px;
 }
+
+aside {
+    position: absolute;
+    left: 0;
+    top: 0; /* set these so Chrome doesn't return 'auto' from getComputedStyle */
+    background: rgba(255,255,255,0.95);
+    border: 2px  solid rgba(0,0,0,0.5);
+    border-radius: 4px; padding: 8px;
+}

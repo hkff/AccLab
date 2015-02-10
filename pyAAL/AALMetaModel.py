@@ -212,7 +212,7 @@ class aalmmnode():
         # return ("<" + str(self.__class__) + "> ".join([ (str(x.to_ast()) if isinstance(x, aalmmnode) else "")
         #                                                for x in self.children() ]) +\
         #        "</" + str(self.__class__) + "> ").replace("class 'AALMetaModel.", "")
-        res = '{"name": "' + str(self.__class__.__name__) + '", "children": ['
+        res = '{"name": "' + str(self.__class__.__name__) + '", "code": "' + '", "children": ['
         for x in self.children():
             if isinstance(x, aalmmnode) or isinstance(x, sEnum):
                 res += x.to_ast()
@@ -530,6 +530,9 @@ class m_ref(aalmmnode):
     # Type test
     def is_a(self, ttype):
         return self.target.is_a(ttype)
+
+    # def children(self):
+    #     return [self.target]
 
 
 #########################
@@ -890,6 +893,11 @@ class m_action(m_aexp):
             res += ")"
         return res
 
+    def to_ast(self):
+        p = super().to_ast()
+        p = p.replace('"m_action", "code": ""', '"m_action", "code": "' +
+                      str(self).replace("\"", "'") + '"')
+        return p
 
 # m_time
 class m_time(aalmmnode):

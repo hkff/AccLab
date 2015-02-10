@@ -9,61 +9,113 @@
     <script type="text/javascript" src="./tree_files/d3pie.js"></script>
 
 </head>
-<body>
+<body onload="docLoaded()">
     <div id="body">
-        <select id="mmSelector">
-            <option>m_aalprog</option>
-            <option>m_action</option>
-            <option>m_aexp</option>
-            <option>m_aexpAction</option>
-            <option>m_aexpAuthor</option>
-            <option>m_aexpComb</option>
-            <option>m_aexpCondition</option>
-            <option>m_aexpIfthen</option>
-            <option>m_aexpModal</option>
-            <option>m_aexpNotAexp</option>
-            <option>m_aexpQvar</option>
-            <option>m_agent</option>
-            <option>m_audit</option>
-            <option>m_author</option>
-            <option>m_booleanOp</option>
-            <option>m_clause</option>
-            <option>m_condition</option>
-            <option>m_conditionCmp</option>
-            <option>m_conditionComb</option>
-            <option>m_conditionNotComb</option>
-            <option>m_constant</option>
-            <option>m_data</option>
-            <option>m_declarable</option>
-            <option>m_exp</option>
-            <option>m_ltlCheck</option>
-            <option>m_macro</option>
-            <option>m_modal</option>
-            <option>m_quant</option>
-            <option>m_qvar</option>
-            <option>m_rectification</option>
-            <option>m_ref</option>
-            <option>m_service</option>
-            <option>m_time</option>
-            <option>m_type</option>
-            <option>m_usage</option>
-            <option>m_varAttr</option>
-            <option>m_variable</option>
-        </select>
-        <div id="pie"></div>
-        <div id="header">
+        <div id="footer">
             AAL AST viewer
             <div class="hint">click or option-click to expand or collapse</div>
         </div>
+
+        <aside draggable="true" id="dragme">
+            <div id="pie"></div>
+        </aside>
+
+        <aside draggable="true" id="toolbox">
+            <h4>Toolbox</h4>
+
+            <select id="mmSelector">
+            <option>m_aalprog</option><option>m_action</option><option>m_aexp</option><option>m_aexpAction</option>
+            <option>m_aexpAuthor</option><option>m_aexpComb</option><option>m_aexpCondition</option>
+            <option>m_aexpIfthen</option><option>m_aexpModal</option><option>m_aexpNotAexp</option>
+            <option>m_aexpQvar</option><option>m_agent</option><option>m_audit</option>
+            <option>m_author</option><option>m_booleanOp</option><option>m_clause</option>
+            <option>m_condition</option><option>m_conditionCmp</option><option>m_conditionComb</option>
+            <option>m_conditionNotComb</option><option>m_constant</option><option>m_data</option>
+            <option>m_declarable</option><option>m_exp</option><option>m_ltlCheck</option>
+            <option>m_macro</option><option>m_modal</option><option>m_quant</option>
+            <option>m_qvar</option><option>m_rectification</option><option>m_ref</option>
+            <option>m_service</option><option>m_time</option><option>m_type</option>
+            <option>m_usage</option><option>m_varAttr</option><option>m_variable</option>
+            </select>
+
+            <button id="nodeHider">Hide/Show</button>
+            <input id="nodeColor" type="color" onchange="changeNodeColor()"/>
+            <br>
+            <input type="checkbox" id="statHider" onchange="hideElement('dragme')"/>Hide AST stats
+            <br>
+            <input type="checkbox" id="codeHider" onchange="showCode()"/>Show code
+        </aside>
+
+
     </div>
 
     <script type="text/javascript">
+        /**
+         * Drag start function
+         * @param event
+         */
+        function drag_start(event) {
+            var style = window.getComputedStyle(event.target, null);
+            event.dataTransfer.setData("text/plain",
+            (parseInt(style.getPropertyValue("left"),10) - event.clientX) + ',' +
+            (parseInt(style.getPropertyValue("top"),10) - event.clientY) + ',' + event.target.id);
+        }
+
+        /**
+         *
+         * @param event
+         * @returns {boolean}
+         */
+        function drag_over(event) {
+            event.preventDefault();
+            return false;
+        }
+
+        /**
+         * Generic Drop function
+         * @param event
+         * @returns {boolean}
+         */
+        function drop(event) {
+            var data = event.dataTransfer.getData("text/plain").split(',');
+
+            console.log(event.dataTransfer.getData("text/plain"))
+            var dm = document.getElementById(data[2]);
+            dm.style.left = (event.clientX + parseInt(data[0],10)) + 'px';
+            dm.style.top = (event.clientY + parseInt(data[1],10)) + 'px';
+            event.preventDefault();
+            return false;
+        }
+
+        var dm = document.getElementById('dragme');
+        dm.addEventListener('dragstart',drag_start,false);
+
+        var tb = document.getElementById('toolbox');
+        tb.addEventListener('dragstart',drag_start,false);
+
+        document.body.addEventListener('dragover',drag_over,false);
+        document.body.addEventListener('drop',drop,false);
+
+
+        /**
+         * Hide an element
+         * @param id
+         */
+        function hideElement(id) {
+            var e = document.getElementById(id);
+            if(e.style.display != "none")
+                e.style.display = "none";
+            else
+                e.style.display = "";
+        }
+
+
+        // Handling ast stats
         d3.json("ast_stat.json", function (json) {
             var pieconf = {
                 header: { title: { text: "AAL atoms distribution"}},
                 data: { content: []}
             };
-            console.log(pieconf.data.content)
             for(i=0; i<json.length; i++) {
                 pieconf.data.content.push({label: json[i].label, value: json[i].value});
             }
@@ -130,6 +182,20 @@
                 .on("click", function (d) {
                     toggle(d);
                     update(d);
+                })
+                .on("mouseover", function(d) {
+                    var g = d3.select(this); // The node
+                    // The class is used to remove the additional text later
+                    var info = g.append('text')
+                        .classed('info', true)
+                        .attr('x', 20)
+                        .attr('y', 10)
+                        .style("fill", "red")
+                        .text(d.code);
+                })
+                .on("mouseout", function() {
+                    // Remove the info text on mouse out.
+                    d3.select(this).select('text.info').remove();
                 });
 
             nodeEnter.append("svg:circle")
@@ -230,13 +296,9 @@
             }
         }
 
+
         // Filtering function
         function nodeFilter(n) {
-            // Reset all nodes
-            vis.selectAll("g.node").style("fill", "black").select("circle").style("fill", function (d) {
-                    return d._children ? "lightsteelblue" : "#fff";
-                });
-
             // Highlight selected nodes
             vis.selectAll("g.node").filter(function(d) {
                 return d.name === n;
@@ -247,6 +309,58 @@
         document.getElementById("mmSelector").onchange = function(e) {
            nodeFilter(e.target.value);
         };
+
+
+        // Coloring nodes function
+        function nodeColor(n, color) {
+            // Coloring selected nodes
+            vis.selectAll("g.node").filter(function(d) {
+                return d.name === n;
+            })
+            .style("fill", color).select("circle").style("fill", color);
+        }
+
+
+        /**
+         * Hiding nodes
+         * @param n
+         */
+        function nodeHider(n) {
+
+            // Reset all nodes
+            vis.selectAll("g.node").style("opacity", "1.0").select("circle").style("opacity", "1.0");;
+
+            // Hide selected nodes
+            var p = vis.selectAll("g.node").filter(function(d) {
+                return d.name === n;
+            })
+            .style("opacity", "0").select("circle").style("opacity", "0");
+
+            var link = vis.selectAll("path.link")
+                .data(tree.links(p), function (d) {
+                    return d.target.id;
+            }).style("opacity", "0");
+            console.log(link)
+
+        }
+
+
+        function resetNodeColor() {
+            // Reset all nodes
+            vis.selectAll("g.node").style("fill", "black").select("circle").style("fill", function (d) {
+                    return d._children ? "lightsteelblue" : "#fff";
+                });
+        }
+
+        function changeNodeColor() {
+            var color = document.getElementById("nodeColor").value;
+            var eltype = document.getElementById("mmSelector").value;;
+            nodeColor(eltype, color);
+        }
+
+        function docLoaded() {
+           document.getElementById("statHider").click();
+        }
 
     </script>
 </body>
