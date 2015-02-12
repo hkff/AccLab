@@ -44,10 +44,11 @@ tot d
 
 /*** Kim's user preference ***/
 CLAUSE kim_policy (
-    FORALL file:foo WHERE file.subject == kim
+    FORALL file:foo WHERE file.subject == kim FORALL x:data
     PERMIT kim.read[cloudX](file)
     AND cloudX.delete[file]() BEFORE "1 Years"
     AND IF (cloudX.read[file]()) THEN (cloudX.notify[kim]())
+    AND ALWAYS(PERMIT x.read[file]())
     AUDITING DPA.audit[cloudS]()
     IF_VIOLATED_THEN MUST(DPA.sanction[cloudS]())
 )

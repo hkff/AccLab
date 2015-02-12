@@ -21,9 +21,11 @@ import webbrowser
 from http.server import SimpleHTTPRequestHandler
 from http.server import HTTPServer
 import threading
+from AALMetaModel import *
+
 
 # Run server in thread
-def  run_server():
+def run_server():
     server_address = ('', 9025)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
     try:
@@ -40,12 +42,14 @@ def show_ast(aalprog: m_aalprog):
     with open("tools/visu/ast.json", mode='w') as f:
         f.write(ast)
 
+    ignored = [aalmmnode, aalmm, m_declarable, m_aalprog, m_aexp]
     # ast_stat = "{ 'header: { title: { text: 'A very simple example pie'}}, data: {content: ["
     ast_stat = "["
     classes = get_mm_classes()
     for x in classes:
-        nbr = len(aalprog.walk(filter_type=x))
-        ast_stat += '{"label": "' + str(x.__name__) + '", "value": ' + str(nbr) + '},'
+        if not(x in ignored):
+            nbr = len(aalprog.walk(filter_type=x))
+            ast_stat += '{"label": "' + str(x.__name__) + '", "value": ' + str(nbr) + '},'
 
     ast_stat = ast_stat[:-1]
     ast_stat += "]"
