@@ -41,5 +41,9 @@ CLAUSE c1(
 
 EXEC
 """
-#self.aalprog.walk(filter_type=m_aexpNotAexp)[0].remove()
+for x in self.aalprog.walk(filter_type=m_aexpNotAexp):
+    x.remove()
+
+#for x in self.aalprog.walk(filter_type=m_aexpAction):
+#    x.negate()
 """

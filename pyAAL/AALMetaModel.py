@@ -568,6 +568,11 @@ class m_aexpAction(m_aexp):
     def to_ltl(self):
         return str(self.action.to_ltl())
 
+    def negate(self):
+        neg = m_aexpNotAexp()
+        neg.actionExpression = self
+        self.parent.replace(self, neg)
+
 
 # ActionExp negation
 class m_aexpNotAexp(m_aexp):
@@ -586,13 +591,13 @@ class m_aexpNotAexp(m_aexp):
         return str(self.negation.to_ltl()) + "(" + str(self.actionExpression.to_ltl()) + ")"
 
     def remove(self):
-        self.actionExpression.parent = self.parent
+        #self.actionExpression.parent = self.parent
         self.parent.replace(self, self.actionExpression)
-        # self = self.actionExpression
 
     def replace(self, child, node):
         if child == self.actionExpression:
             self.actionExpression = node
+            node.parent = self
         else:
             print("You are not my child !")
 
@@ -616,6 +621,7 @@ class m_aexpModal(m_aexp):
     def replace(self, child, node):
         if child == self.actionExpression:
             self.actionExpression = node
+            node.parent = self
         else:
             print("You are not my child !")
 
@@ -656,8 +662,10 @@ class m_aexpComb(m_aexp):
     def replace(self, child, node):
         if child == self.actionExp1:
             self.actionExp1 = node
+            node.parent = self
         elif child == self.actionExp2:
             self.actionExp2 = node
+            node.parent = self
         else:
             print("You are not my child !")
 
@@ -678,6 +686,7 @@ class m_aexpAuthor(m_aexp):
     def to_ltl(self):
         # return str(self.author.to_ltl()) + "(" + str(self.action.to_ltl(auth=True)) + ")"
         return str(self.author.to_ltl()) + str(self.action.to_ltl(auth=True))
+
 
 # ActionExp ifthen
 class m_aexpIfthen(m_aexp):
@@ -700,8 +709,10 @@ class m_aexpIfthen(m_aexp):
     def replace(self, child, node):
         if child == self.actionExp1:
             self.condition = node
+            node.parent = self
         elif child == self.actionExp2:
             self.branchTrue = node
+            node.parent = self
         else:
             print("You are not my child !")
 
