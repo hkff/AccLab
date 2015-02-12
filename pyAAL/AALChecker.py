@@ -99,12 +99,15 @@ def check_monodic(node=None, verbose: bool=False):
     :param node:
     :return:
     """
-    p = None
+    p = {"monodic": True, "info": []}
     # Check node type
     if isinstance(node, aalmm):
-        p = check_monodic_exp(node.aalprog.clauses[0])
+        p = check_monodic_exp(node.aalprog)
     elif isinstance(node, m_aalprog):
-        p = check_monodic_exp(node.clauses[0])
+        for c in node.clauses:
+            t = check_monodic_exp(c)
+            p["monodic"] = p["monodic"] and t["monodic"]
+            p["info"].extend(t["info"])
     elif isinstance(node, m_clause):
         p = check_monodic_exp(node)
 
@@ -116,8 +119,8 @@ def check_monodic(node=None, verbose: bool=False):
     if not p["monodic"]:
         for info in p["info"]:
             res += " - found " + str(len(info["vars"])) + " free variables in [" + str(info["exp"]) + "]\n"
-            tmp = [str(x.label) + " -> " + str(x.target) + " at line " + str(x.target.name.parentCtx.getPayload().start.line)
-                   + "\n   " for x in info["vars"]]
+            tmp = [str(x.label) + " -> " + str(x.target) + " at line " +
+                   str(x.target.name.parentCtx.getPayload().start.line) + "\n   " for x in info["vars"]]
             res += "   " + "".join(tmp)
 
     # Print the result
