@@ -33,6 +33,13 @@ CLAUSE c1(
     FORALL d:data WHERE d.subject == bob FORALL a:agent
     ALWAYS(
         PERMIT bob.read[a](d) AND
-        DENY bob.send[a](d)
+        DENY bob.send[a](d) AND
+        not (not (bob.read[a](d))) AND
+        ALWAYS (not (bob.write[a]()))
     )
 )
+
+EXEC
+"""
+#self.aalprog.walk(filter_type=m_aexpNotAexp)[0].remove()
+"""

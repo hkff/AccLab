@@ -156,10 +156,18 @@ class aalmmnode():
             res = "\n".join(res)
         return res
 
-    def remove(self, child):
+    def remove(self):
         """
-        Remove child
+        Remove
+        :return:
+        """
+        pass
+
+    def replace(self, child, node):
+        """
+        Replace child
         :param child:
+        :param node:
         :return:
         """
         pass
@@ -578,9 +586,15 @@ class m_aexpNotAexp(m_aexp):
         return str(self.negation.to_ltl()) + "(" + str(self.actionExpression.to_ltl()) + ")"
 
     def remove(self):
-        print(self.parent.__class__)
-        print("hhihi")
-        pass
+        self.actionExpression.parent = self.parent
+        self.parent.replace(self, self.actionExpression)
+        # self = self.actionExpression
+
+    def replace(self, child, node):
+        if child == self.actionExpression:
+            self.actionExpression = node
+        else:
+            print("You are not my child !")
 
 
 # ActionExp modality
@@ -598,6 +612,12 @@ class m_aexpModal(m_aexp):
 
     def to_ltl(self):
         return str(self.modality.to_ltl()) + "(" + str(self.actionExpression.to_ltl()) + ")"
+
+    def replace(self, child, node):
+        if child == self.actionExpression:
+            self.actionExpression = node
+        else:
+            print("You are not my child !")
 
 
 # ActionExp condition
@@ -633,13 +653,13 @@ class m_aexpComb(m_aexp):
     def to_ltl(self):
         return "(" + str(self.actionExp1.to_ltl()) + " " + str(self.operator.to_ltl()) + " " + str(self.actionExp2.to_ltl()) + ")"
 
-    def remove(self, child):
+    def replace(self, child, node):
         if child == self.actionExp1:
-            self.actionExp1 = m_booleanOp.O_true
+            self.actionExp1 = node
         elif child == self.actionExp2:
-            self.actionExp2 = m_booleanOp.O_true
+            self.actionExp2 = node
         else:
-            print("you are not my child !")
+            print("You are not my child !")
 
 
 # ActionExp Authorization
@@ -677,8 +697,16 @@ class m_aexpIfthen(m_aexp):
         return " (" + str(self.condition.to_ltl()) + " " + str(m_booleanOp.O_then.to_ltl()) + " " + \
                str(self.branchTrue.to_ltl()) + ")"
 
+    def replace(self, child, node):
+        if child == self.actionExp1:
+            self.condition = node
+        elif child == self.actionExp2:
+            self.branchTrue = node
+        else:
+            print("You are not my child !")
 
-#  Qvar
+
+# Qvar
 class m_qvar(aalmmnode):
     def __init__(self):
         super().__init__()
