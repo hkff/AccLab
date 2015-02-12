@@ -1146,3 +1146,15 @@ class AALCompilerListener(AALListener.AALListener):
         bt = Trees2.tspassTree(tr, recog=parser)
         print("\n\n\n BT")
         print(bt)
+
+
+    def test(self, msg, test, expected):
+        print(Color("{autoblue}------- " + msg + "{/autoblue}"))
+        res = eval(test)  # !IMPORTANT! Do not turn this method into static (self may be used inside eval)
+        ret = (res == expected)
+        if ret:
+            print(Color("{autogreen}OK{/autogreen}"))
+        else:
+            print(Color("{autored}FAILED{/autoblue}"))
+            print("  Found value " + str(res) + " for test " + str(test) + " while " + str(expected) + " was expected !")
+        return ret

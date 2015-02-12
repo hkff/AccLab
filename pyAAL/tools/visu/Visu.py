@@ -23,8 +23,9 @@ from http.server import HTTPServer
 import threading
 from AALMetaModel import *
 
+
 # Run server in thread
-def  run_server():
+def run_server():
     server_address = ('', 9025)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
     try:

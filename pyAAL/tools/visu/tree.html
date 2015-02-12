@@ -38,7 +38,7 @@
             <option>m_usage</option><option>m_varAttr</option><option>m_variable</option>
             </select>
 
-            <button id="nodeHider">Hide/Show</button>
+            <button id="nodeHider" onclick="hideNode()">Hide/Show</button>
             <input id="nodeColor" type="color" onchange="changeNodeColor()"/>
             <br>
             <input type="checkbox" id="statHider" onchange="hideElement('dragme')"/>Hide AST stats
@@ -326,9 +326,8 @@
          * @param n
          */
         function nodeHider(n) {
-
             // Reset all nodes
-            vis.selectAll("g.node").style("opacity", "1.0").select("circle").style("opacity", "1.0");;
+            //vis.selectAll("g.node").style("opacity", "1.0").select("circle").style("opacity", "1.0");
 
             // Hide selected nodes
             var p = vis.selectAll("g.node").filter(function(d) {
@@ -362,6 +361,9 @@
            document.getElementById("statHider").click();
         }
 
+        function hideNode() {
+            nodeHider(document.getElementById("mmSelector").value);
+        }
     </script>
 </body>
 </html>

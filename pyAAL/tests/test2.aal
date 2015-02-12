@@ -1,32 +1,38 @@
-//LOAD "core.types"
-//LOAD "testlib"
-//LOAD "core.macros"
+EXEC
+"""
+print(Color("{autogreen}Starting unit tests{/autogreen}"))
+"""
 
 
-CLAUSE c3(
-    FORALL file:data //WHERE file.subject==alice
-    EXISTS a:agent
-    PERMIT alice.read[cloudS](file)
-    AND PERMIT alice.write[cloudS](file)
-    AND PERMIT alice.delete[cloudS](file)
-    AND PERMIT cloudS.get[a](file)
-    AND DENY cloudS.store[exbackup](file)
-    AND DENY cloudS.store[a](file)
-    AND IF (alice.read[cloudS](file)) THEN (MUST(cloudS.notify[cloudS]()))
-    AUDITING DPA.audit[cloudS]()
-    IF_VIOLATED_THEN MUST(DPA.sanction[cloudS]() AND cloudS.delete[file]())
+LOAD "core.types"
+
+TYPE Actor ATTRIBUTES(requires provides) ACTIONS()
+TYPE agent EXTENDS(Actor)
+TYPE data EXTENDS(Actor)
+TYPE service EXTENDS(Actor)
+
+
+EXEC
+"""
+self.test("Testing types declaration", "len(self.aalprog.declarations['types'])", 4)
+"""
+
+agent bob
+
+
+CLAUSE c0(
+    PERMIT bob.read[d]()
 )
 
-CLAUSE c4(
-    FORALL a:agent FORALL file:data //WHERE file.subject==a
-    PERMIT a.read[cloudS](file)
-    AND PERMIT a.write[cloudS](file)
-    AND DENY a.delete[cloudS](file)
-//    AND PERMIT a.delete[cloudS](file)
-    AND PERMIT cloudS.get[a](file)
-    AND PERMIT cloudS.store[exbackup](file)
-//    AND DENY cloudS.store[exbackup](file)
-//    AND IF (a.read[cloudS](file)) THEN (MUST(cloudS.notify[cloudS]()))
-    AUDITING DPA.audit[cloudS]()
-    IF_VIOLATED_THEN DPA.sanction[cloudS]()
+EXEC
+"""
+self.test("Testing clause declaration", "len(self.aalprog.clauses)", 1)
+"""
+
+CLAUSE c1(
+    FORALL d:data WHERE d.subject == bob FORALL a:agent
+    ALWAYS(
+        PERMIT bob.read[a](d) AND
+        DENY bob.send[a](d)
+    )
 )
