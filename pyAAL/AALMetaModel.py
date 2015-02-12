@@ -707,10 +707,10 @@ class m_aexpIfthen(m_aexp):
                str(self.branchTrue.to_ltl()) + ")"
 
     def replace(self, child, node):
-        if child == self.actionExp1:
+        if child == self.condition:
             self.condition = node
             node.parent = self
-        elif child == self.actionExp2:
+        elif child == self.branchTrue:
             self.branchTrue = node
             node.parent = self
         else:
