@@ -627,7 +627,7 @@ class m_aexpNotAexp(m_aexp):
 
     def to_nnf(self,bool):
         self.remove()
-        return str(self.actionExpression.to_nnf(bool))
+        return str(self.actionExpression.to_nnf(not bool))
 
     def remove(self):
         #self.actionExpression.parent = self.parent
@@ -723,7 +723,7 @@ class m_aexpComb(m_aexp):
                 return "(" + str(self.actionExp1.to_nnf(True)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
             elif self.operator==m_booleanOp.T_unless:
                 self.operator==m_booleanOp.T_until
-                return
+                return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
             elif self.operator==m_booleanOp.T_until:
                 self.operator==m_booleanOp.T_unless
                 return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
@@ -756,10 +756,10 @@ class m_aexpAuthor(m_aexp):
         # return str(self.author.to_ltl()) + "(" + str(self.action.to_ltl(auth=True)) + ")"
         return str(self.author.to_ltl()) + str(self.action.to_ltl(auth=True))
 
-    def to_nnf(self,bool):
-        #TODO: check
-        self.action.to_nnf(bool)
-        return str(self.author) + str(self.action.negate())
+#    def to_nnf(self,bool):
+ #       #TODO: check
+  #      self.action.to_nnf(bool)
+   #     return str(self.author) + str(self.action.negate())
 
     def to_nnf(self,bool):
         if bool:
