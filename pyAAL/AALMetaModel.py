@@ -772,7 +772,6 @@ class m_aexpAuthor(m_aexp):
         neg.actionExpression = self
         self.parent.replace(self, neg)
 
-
 # ActionExp ifthen
 class m_aexpIfthen(m_aexp):
     def __init__(self):
