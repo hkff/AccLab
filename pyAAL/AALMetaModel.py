@@ -605,8 +605,14 @@ class m_aexpAction(m_aexp):
 
     def negate(self):
         neg = m_aexpNotAexp()
-        neg.actionExpression = self
+        act = m_aexpAction()
+        act.action = self.action
+        neg.actionExpression = act
         self.parent.replace(self, neg)
+        print(id(self))
+        print(id(neg.actionExpression))
+        return neg
+
 
 
 # ActionExp negation
@@ -732,9 +738,11 @@ class m_aexpComb(m_aexp):
         if child == self.actionExp1:
             self.actionExp1 = node
             node.parent = self
+            print("jj")
         elif child == self.actionExp2:
             self.actionExp2 = node
             node.parent = self
+            print("ll")
         else:
             print("You are not my child !")
 
