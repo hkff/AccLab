@@ -980,7 +980,6 @@ class m_varAttr(m_exp):
     def to_natural(self):
         str(self.attribute) + "(" + str(self.variable) + ")"
 
-
 #########################
 ####### Condition #######
 #########################
