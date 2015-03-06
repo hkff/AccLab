@@ -327,6 +327,9 @@ class m_aalprog(aalmmnode):
     def to_nnf(self,bool):
         return "".join([str(x.to_nnf(True)) + " " for x in self.clauses])
 
+    def to_natural(self):
+        return "".join([str(x.to_natural()) + " " for x in self.clauses])
+
     # Children
     def children(self):
         res = []
@@ -364,6 +367,9 @@ class m_usage(aalmmnode):
     def to_nnf(self,bool):
         return "".join([str(x.to_nnf(bool)) + " " for x in self.actionExp])
 
+    def to_natural(self):
+        return "".join([str(x.to_natural()) + " " for x in self.actionExp])
+
 # Audit
 class m_audit(aalmmnode):
     """
@@ -385,6 +391,9 @@ class m_audit(aalmmnode):
     def to_nnf(self,bool):
         return self.usage.to_nnf(bool)
 
+    def to_natural(self):
+        return self.usage.to_natural()
+
 # Rectification
 class m_rectification(aalmmnode):
     """
@@ -405,6 +414,9 @@ class m_rectification(aalmmnode):
 
     def to_nnf(self,bool):
         return self.usage.to_nnf(bool)
+
+    def to_natural(self):
+        return self.usage.to_natural()
 
 
 ##########################
@@ -459,6 +471,11 @@ class m_clause(m_declarable):
         re = str(self.rectification.to_nnf(bool)) if self.rectification.usage is not None else "false"
         return ue + ae + re
 
+    def to_natural(self):
+        ue = str(self.usage.to_natural()) if self.usage is not None else "false"
+        ae = str(self.audit.to_natural()) if self.audit.usage is not None else "false"
+        re = str(self.rectification.to_natural()) if self.rectification.usage is not None else "false"
+        return ue + " with audit "+ ae + " if violated then " + re
 
 # Agent
 class m_agent(m_declarable):
@@ -563,6 +580,10 @@ class m_ref(aalmmnode):
     def to_nnf(self,bool):
         return self.label # TODO: check
 
+    def to_natural(self):
+        return self.label # TODO: check
+
+
     # Type test
     def is_a(self, ttype):
         return self.target.is_a(ttype)
@@ -603,14 +624,15 @@ class m_aexpAction(m_aexp):
         else:
             return str(self.negate())
 
+    def to_natural(self):
+        return self.action.to_natural()
+
     def negate(self):
         neg = m_aexpNotAexp()
         act = m_aexpAction()
         act.action = self.action
         neg.actionExpression = act
         self.parent.replace(self, neg)
-        print(id(self))
-        print(id(neg.actionExpression))
         return neg
 
 
@@ -634,6 +656,9 @@ class m_aexpNotAexp(m_aexp):
     def to_nnf(self,bool):
         self.remove()
         return str(self.actionExpression.to_nnf(not bool))
+
+    def to_natural(self):
+        return " not "+ self.actionExpression.to_natural()
 
     def remove(self):
         #self.actionExpression.parent = self.parent
@@ -666,6 +691,8 @@ class m_aexpModal(m_aexp):
     def to_nnf(self,bool):
         return str(self.modality.to_nnf(bool)) + "(" + str(self.actionExpression.to_nnf(bool)) + ")"
 
+    def to_natural(self):
+        return self.modality.to_natural() + self.actionExpression.to_natural()
 
     def replace(self, child, node):
         if child == self.actionExpression:
@@ -694,6 +721,8 @@ class m_aexpCondition(m_aexp):
     def to_nnf(self,bool):
         return str(self.condition.to_nnf(bool))
 
+    def to_natural(self):
+        return str(self.condition)
 
 # ActionExpComb
 class m_aexpComb(m_aexp):
@@ -734,15 +763,17 @@ class m_aexpComb(m_aexp):
                 self.operator==m_booleanOp.T_unless
                 return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
 
+    def to_natural(self):
+        return ""+self.actionExp1.to_natural() + self.operator.to_natural() + self.actionExp2.to_natural()
+
+
     def replace(self, child, node):
         if child == self.actionExp1:
             self.actionExp1 = node
             node.parent = self
-            print("jj")
         elif child == self.actionExp2:
             self.actionExp2 = node
             node.parent = self
-            print("ll")
         else:
             print("You are not my child !")
 
@@ -775,6 +806,9 @@ class m_aexpAuthor(m_aexp):
         else:
             return str(self.negate())
 
+    def to_natural(self):
+        return ""+ self.author.to_natural() + self.action.to_natural()
+
     def negate(self):
         neg = m_aexpNotAexp()
         neg.actionExpression = self
@@ -801,6 +835,9 @@ class m_aexpIfthen(m_aexp):
     def to_nnf(self,bool):
         self.branchTrue.to_nnf(bool)
         return "(" + str(self.condition.to_nnf(True)) + " " + str(m_booleanOp.O_then) +" " + str(self.branchTrue.to_nnf(bool))
+
+    def to_natural(self):
+        return "if " + self.condition.to_natural() + "then " + self.branchTrue.to_natural()
 
     def replace(self, child, node):
         if child == self.condition:
@@ -851,6 +888,12 @@ class m_qvar(aalmmnode):
                 self.condition.to_nnf(False)
                 return str(self.quant) + "[" + str(self.variable.target.name) + "]"
 
+    def to_natural(self):
+        if self.condition==None:
+            return "" + str(self.quant.to_natural()) + str(self.variable.to_natural())
+        else:
+            return "" + str(self.quant.to_natural()) + str(self.variable.to_natural()) + str(self.condition.to_natural())
+
     # Type test
     def is_a(self, ttype):
         return self.variable.is_a(ttype)
@@ -882,6 +925,10 @@ class m_aexpQvar(m_aexp):
     def to_nnf(self,bool):
         q = [str(x.to_nnf(bool)) for x in self.qvars]
         return str(" ".join(q)) + "(" + str(self.actionExp.to_nnf(bool)) + ")"
+
+    def to_natural(self):
+        q = [str(x.to_natural()) for x in self.qvars]
+        return str(" ".join(q)) + "(" + str(self.actionExp.to_natural()) + ")"
 
 # Expression
 class m_exp(aalmmnode):
@@ -926,6 +973,14 @@ class m_varAttr(m_exp):
     def to_ltl(self):
         return str(self.attribute) + "(" + str(self.variable) + ")"
 
+    def to_nnf(self,bool):
+        #TODO:
+        return str(self.attribute) + "(" + str(self.variable) + ")"
+
+    def to_natural(self):
+        str(self.attribute) + "(" + str(self.variable) + ")"
+
+
 #########################
 ####### Condition #######
 #########################
@@ -961,6 +1016,8 @@ class m_conditionCmp(m_condition):
                 self.operator=m_booleanOp.O_equal
                 return "(" + str(self.exp1.to_nnf(True)) + " " + str(self.operator) + " " + str(self.exp2.to_nnf(True)) + ")"
 
+    def to_natural(self):
+        return "" + str(self.exp1.to_natural()) + str(self.operator.to_natural()) + str(self.exp2.to_natural())
 
 
 
@@ -991,6 +1048,8 @@ class m_conditionComb(m_condition):
                 self.operator=m_booleanOp.O_and
                 return "(" + str(self.cond1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.cond2.to_nnf(False)) + ")"
 
+    def to_natural(self):
+        return "" + self.cond1.to_natural() + self.operator.to_natural() + self.cond2.to_natural()
 
 # Not
 class m_conditionNotComb(m_condition):
@@ -1014,6 +1073,10 @@ class m_conditionNotComb(m_condition):
             if self.operator==m_booleanOp.O_not:
                 self.operator=None
                 return str(self.exp.to_nnf(True))
+
+    def to_natural(self):
+        return "" + self.operator.to_natural() + self.exp.to_natural()
+
 
 #########################
 ####### ActionExp #######
@@ -1079,6 +1142,15 @@ class m_action(m_aexp):
             res += ")"
         return res
 
+    def to_natural(self):
+        res = str(self.agent1) + "  is allowed to use " + str(self.service.name)+" service from " +\
+            ( str(self.agent2) if self.agent2 is not None else "") + \
+            " " + ("to "+ str(self.service.name)+" "+str(self.args) if self.args is not None else "") + " " +\
+            (str(self.time) if self.time is not None else "")
+
+        if len(self.purpose) > 0:
+            res += " PURPOSE(" + str(self.purpose) + ")"
+        return res
 
     def to_ast(self):
         p = super().to_ast()
@@ -1186,6 +1258,32 @@ class m_booleanOp(sEnum):
     T_until = "UNTIL"
     T_unless = "UNLESS"
 
+    def to_natural(self):
+        if self == m_booleanOp.O_and:
+            return " and "
+        elif self == m_booleanOp.O_or:
+            return " or "
+        elif self == m_booleanOp.O_onlywhen:
+            return " onlywhen "
+        elif self == m_booleanOp.O_if:
+            return " if "
+        elif self == m_booleanOp.O_then:
+            return " then "
+        elif self == m_booleanOp.O_after:
+            return " after "
+        elif self == m_booleanOp.O_before:
+            return " before "
+        elif self == m_booleanOp.O_not:
+            return " not "
+        elif self == m_booleanOp.O_equal:
+            return " equals "
+        elif self == m_booleanOp.O_inequal:
+            return " does not equal "
+        elif self == m_modal.T_until:
+            return " until "
+        elif self == m_modal.T_unless:
+            return " unless "
+
     def to_ltl(self):
         if self == m_booleanOp.O_and:
             return str(LTLOperators.t_and)
@@ -1223,6 +1321,11 @@ class m_author(sEnum):
         elif self == m_author.A_deny:
             return "~P"
 
+    def to_natural(self):
+        if self == m_author.A_permit:
+            return  ""
+        elif self == m_author.A_deny:
+            return ""
 
 # Quant
 class m_quant(sEnum):
@@ -1235,6 +1338,11 @@ class m_quant(sEnum):
         elif self == m_quant.Q_exists:
             return str(LTLOperators.t_exists)
 
+    def to_natural(self):
+        if self == m_quant.Q_forall:
+            return " for all "
+        elif self == m_quant.Q_exists:
+            return " it exists "
 
 # Modal
 class m_modal(sEnum):
@@ -1244,6 +1352,17 @@ class m_modal(sEnum):
     T_never = "NEVER"
     T_sometime = "SOMETIME"
 
+    def to_natural(self):
+        if self == m_modal.T_must:
+            return " must "
+        elif self == m_modal.T_mustnot:
+            return " must not "
+        elif self == m_modal.T_always:
+            return " always "
+        elif self == m_modal.T_never:
+            return " never can "
+        elif self == m_modal.T_sometime:
+            return " sometimes can "
 
     def to_ltl(self):
         if self == m_modal.T_must:
