@@ -4,7 +4,7 @@ import os
 from urllib.parse import *
 import sys
 from io import StringIO
-from aalc import *
+#from aalc import *
 base_dir = "BackendInterface/workspace"
 
 
@@ -75,10 +75,10 @@ def api_compile_aal(f):
     sys.stderr = reportEIO
 
     res = ""
-    try:
-        aalc(base_dir + "/" + f, libs_path="../pyAAL/libs/aal/", root_path="workspace")
-    except:
-        res = "Compilation Error"
+    # try:
+    #     aalc(base_dir + "/" + f, libs_path="../pyAAL/libs/aal/", root_path="workspace")
+    # except:
+    #     res = "Compilation Error"
 
     res = reportSIO.getvalue() + "\n" + reportEIO.getvalue()
 
