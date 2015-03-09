@@ -1,0 +1,7 @@
+@import url{./libs/qooxdoo/indigo-4.1.css}
+@import url{.libs/qooxdoo/q-4.1.min.js}
+
+#main { display: flex; }
+#main > article { order: 2; min-width: 12em; flex:1; }
+#main > nav     { order: 1; width: 200px; }
+#main > aside   { order: 3; width: 200px; }
