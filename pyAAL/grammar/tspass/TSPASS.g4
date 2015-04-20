@@ -33,6 +33,8 @@ h_equal   : '=';
 // % Brackets '(', ')' can be used for grouping.
 // % Input formulae are *not* negated before being transformed into the normal form.
 
+program : formula;
+
 formula : //variable NEWLINE* | constants NEWLINE* | atom NEWLINE*
         atom NEWLINE*
         | formula NEWLINE* (conjunction | disjunction | implication | equivalence) NEWLINE* formula NEWLINE*

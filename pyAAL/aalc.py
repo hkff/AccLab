@@ -161,7 +161,9 @@ def tspassc(file=None, code="", output="tests/tmp.tspass", use_shell=False, debu
         # Adding sythetizer
         if synth:
             parser.addParseListener(FOTLCompilerListener())
-        tr = parser.formula()
+            tr = parser.program()
+        else:
+            tr = parser.formula()
         bt = Trees2.tspassTree(tr, recog=parser)
         #print(bt)
         generated_tspass = file.replace(".tspass", "_gen.tspass")

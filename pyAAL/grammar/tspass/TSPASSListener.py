@@ -184,6 +184,15 @@ class TSPASSListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by TSPASSParser#program.
+    def enterProgram(self, ctx):
+        pass
+
+    # Exit a parse tree produced by TSPASSParser#program.
+    def exitProgram(self, ctx):
+        pass
+
+
     # Enter a parse tree produced by TSPASSParser#eQuant.
     def enterEQuant(self, ctx):
         pass
@@ -202,21 +211,21 @@ class TSPASSListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by TSPASSParser#variable.
-    def enterVariable(self, ctx):
-        pass
-
-    # Exit a parse tree produced by TSPASSParser#variable.
-    def exitVariable(self, ctx):
-        pass
-
-
     # Enter a parse tree produced by TSPASSParser#snext.
     def enterSnext(self, ctx):
         pass
 
     # Exit a parse tree produced by TSPASSParser#snext.
     def exitSnext(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by TSPASSParser#variable.
+    def enterVariable(self, ctx):
+        pass
+
+    # Exit a parse tree produced by TSPASSParser#variable.
+    def exitVariable(self, ctx):
         pass
 
 

@@ -1,1 +1,3 @@
-always ( P(i) => Q(j) )
+always ( P(i,j,d1) => Q(j,j,d1) )
+&
+always ( D(i,j,d1) )
