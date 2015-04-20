@@ -46,6 +46,7 @@ import time
 from tools.hottie import hot
 from antlr4.error.ErrorListener import ErrorListener
 from AALtoFOTL import *
+from FOTLSynthesizer import *
 
 class DescriptiveErrorListener(ErrorListener):
     """
@@ -130,13 +131,13 @@ def aalc(file, use_shell=False, check=False, monodic=False, compile=False, libs_
 
 
 # tspassc
-def tspassc(file=None, code="", output="tests/tmp.tspass", use_shell=False, debug=False):
+def tspassc(file=None, code="", output="tests/tmp.tspass", use_shell=False, debug=False, synth=False):
     """
     Parse tspass
     :param file:
     :return:
     """
-    # TODO add binaries for win and mac
+    # TODO add binaries for win
     os_name = "linux"
     p = sys.platform
     if p.startswith("linux"):
@@ -157,6 +158,9 @@ def tspassc(file=None, code="", output="tests/tmp.tspass", use_shell=False, debu
         stream = CommonTokenStream(lexer)
         parser = TSPASSParser(stream)
         parser.buildParseTrees = True
+        # Adding sythetizer
+        if synth:
+            parser.addParseListener(FOTLCompilerListener())
         tr = parser.formula()
         bt = Trees2.tspassTree(tr, recog=parser)
         #print(bt)
@@ -288,11 +292,12 @@ def main(argv):
     to_ltl = False
     hotswaping = False
     show_ast = False
+    synth = False
 
     try:
-        opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxda", ["help", "input=", "ofile=", "compile", "monodic",
+        opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaS", ["help", "input=", "ofile=", "compile", "monodic",
                                                                  "shell", "check", "load", "recompile", "init",
-                                                                 "no-colors", "compile-stdlib", "hotswap", "ast"])
+                                                                 "no-colors", "compile-stdlib", "hotswap", "ast", "synth"])
     except getopt.GetoptError:
         print(helpStr)
         sys.exit(2)
@@ -333,6 +338,8 @@ def main(argv):
             hotswaping = True
         elif opt in ("-a", "--ast"):
             show_ast = True
+        elif opt in ("-S", "--synth"):
+            synth = True
 
 
     # Use hot swaping decoration on all AALMetaModel classes
@@ -358,7 +365,7 @@ def main(argv):
              to_ltl=to_ltl, show_ast=show_ast)
 
     elif inputfile.endswith(".tspass"):
-         tspassc(inputfile, use_shell=False, debug=True)
+         tspassc(inputfile, use_shell=False, debug=False, synth=synth)
 
 
 if __name__ == '__main__':

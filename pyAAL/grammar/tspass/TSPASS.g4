@@ -33,7 +33,8 @@ h_equal   : '=';
 // % Brackets '(', ')' can be used for grouping.
 // % Input formulae are *not* negated before being transformed into the normal form.
 
-formula : variable NEWLINE* | constants NEWLINE* | atom NEWLINE*
+formula : //variable NEWLINE* | constants NEWLINE* | atom NEWLINE*
+        atom NEWLINE*
         | formula NEWLINE* (conjunction | disjunction | implication | equivalence) NEWLINE* formula NEWLINE*
         | negation formula NEWLINE*
         | uQuant formula NEWLINE* | eQuant formula NEWLINE*
@@ -41,8 +42,8 @@ formula : variable NEWLINE* | constants NEWLINE* | atom NEWLINE*
         | h_lpar formula h_rpar NEWLINE*
         | formula NEWLINE* formula;
 
-atom        : predicate h_lpar (variable | constants) (',' (variable | constants))* h_rpar;
-predicate   : ID;   
+atom        : predicate (h_lpar (variable | constants) (',' (variable | constants))* h_rpar)?;
+predicate   : ID;
 variable    : ID;
 constants   : 'true' | 'false';
 negation    : '~' | 'not';
