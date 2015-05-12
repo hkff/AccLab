@@ -1,7 +1,1114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/AccLab/index.html" />
+    <bookmark url="file://$PROJECT_DIR$/AccLab/index.html" line="333" />
+    <bookmark url="file://$PROJECT_DIR$/AccLab/index.html" line="278" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="3bbad578-e885-4692-b39b-277b066edc8f" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/fonts/FontAwesome.otf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/fonts/fontawesome-webfont.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/fonts/glyphicons-halflings-regular.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/fonts/glyphicons-halflings-regular.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/fonts/glyphicons-halflings-regular.woff2" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/fonts/glyphicons-halflings-regular.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/LICENSE" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/scss/_bordered-pulled.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/scss/_core.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/scss/_fixed-width.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/scss/_icons.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/scss/_larger.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/scss/_list.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/scss/_mixins.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/scss/_path.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/scss/_rotated-flipped.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/scss/_spinning.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/scss/_stacked.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/scss/_variables.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/blank-page.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/bootstrap-elements.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/bootstrap-grid.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/css/bootstrap-rtl.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/css/bootstrap-rtl.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/css/bootstrap.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/js/bootstrap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/css/bootstrap.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/js/bootstrap.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/less/bordered-pulled.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/charts.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/libs/componentsbar/components.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/less/core.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/js/plugins/flot/excanvas.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/less/fixed-width.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/js/plugins/flot/flot-data.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/css/font-awesome.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/less/font-awesome.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/css/font-awesome.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/scss/font-awesome.scss" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/fonts/fontawesome-webfont.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/forms.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/fonts/glyphicons-halflings-regular.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/less/icons.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/index-rtl.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/old html/indexExemple.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/js/plugins/flot/jquery.flot.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/js/plugins/flot/jquery.flot.pie.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/js/plugins/flot/jquery.flot.resize.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/js/plugins/flot/jquery.flot.tooltip.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/js/jquery.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/less/larger.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/less/list.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/less/mixins.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/js/plugins/morris/morris-data.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/css/plugins/morris.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/js/plugins/morris/morris.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/js/plugins/morris/morris.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/less/path.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/js/plugins/morris/raphael.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/less/rotated-flipped.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/css/sb-admin-rtl.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/css/sb-admin.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/less/spinning.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/less/stacked.less" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/tables.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/less/variables.less" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/qooxdoo/indigo-4.1.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/qooxdoo/q-4.1.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/fonts/PTS-bold.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/fonts/PTS-bold.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/fonts/PTS-bold.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/fonts/PTS-webfont.eot" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/fonts/PTS-webfont.ttf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/fonts/PTS-webfont.woff" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/fonts/font-license.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/fonts/fontawesome-webfont.svg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/i18n/be.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/i18n/de.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/i18n/en.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/i18n/es.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/i18n/fr.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/i18n/it.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/i18n/ja.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/i18n/ru.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/i18n/zh.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/legacy/excanvas/AUTHORS.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/legacy/excanvas/COPYING.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/legacy/excanvas/README.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/legacy/excanvas/excanvas.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/legacy/swfobject.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/air.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/aircompact.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/clouds.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/compact.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/debug/air.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/debug/aircompact.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/debug/clouds.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/debug/compact.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/debug/flat.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/debug/glamour.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/debug/light.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/debug/metro.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/debug/terrace.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/debug/touch.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/debug/web.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/flat.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/glamour.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/light.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/metro.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/terrace.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/touch.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/skins/web.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/webix.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/webix.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/webix.js.map" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/webix_debug.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/license.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/readme.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/01_layout/01_resizer.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/01_layout/02_resize_limit.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/01_layout/03_header.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/01_layout/04_header_vertical.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/01_layout/05_header_complex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/01_layout/06_header_resize.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/01_layout/07_header_all.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/01_layout/08_min_size.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/01_layout/10_performance.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/01_layout/11_responsive.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/01_layout/12_responsive_hidden.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/01_layout/13_reconfiguration.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/01_layout/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/02_tabbar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/03_tabview.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/04_toolbar_align.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/05_toolbar_lines.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/06_toolbar_button.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/07_toolbar_image_button.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/08_toolbar_topimage_button.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/09_toolbar_image_button_box.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/10_toolbar_topimage_button_box.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/11_toolbar_icons.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/12_styled_buttons.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/13_search_field.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/14_batches.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/14_toolbar_toggle.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/15_common_config.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/15_toolbar_topimage_toggle.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/16_toolbar_image_button_toggle.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/17_toolbar_topimage_button_toggle.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/18_toolbar_toggle_icons.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/19_tabs_on_the_go.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/20_richselect.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/02_toolbar/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/01_menubar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/02_menubar_template.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/03_in_layout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/04_context.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/05_context_content.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/06_context_for_list.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/07_context_ui.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/07_menu_toolbar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/09_disable_item.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/10_hide_item.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/11_menu_open_click.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/12_submenu_config.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/13_hrefs.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/images/html4.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/images/html5.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/03_menu/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/04_template/02_autoheight.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/04_template/03_ui_inside.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/04_template/10_scrollview.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/04_template/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/01_list.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/02_list_layout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/03_group_list.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/04_list_grouping.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/05_editable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/06_validation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/07_empty_list.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/08_xlist.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/09_copypaste.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/10_filtering.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/11_unitlist.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/12_paging.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/13_ycount.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/14_custom_handlers.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/15_active_content.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/16_unitlist_pager.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/17_advanced_template.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/data/empty.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/05_list/readme.md" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/01_initialization/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/01_initialization/02_url_loading.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/01_initialization/03_fixed_sizing.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/01_initialization/04_content_sizing.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/01_initialization/05_type_sizing.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/01_initialization/06_autoheight.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/01_initialization/data/data_json.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/01_initialization/data/data_xml.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/01_initialization/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/02_templates/01_jshtml.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/02_templates/02_js.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/02_templates/03_html.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/02_templates/04_external.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/02_templates/05_named.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/02_templates/06_tooltip.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/02_templates/dataview_styles.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/02_templates/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/02_templates/template.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/03_loading/01_xml.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/03_loading/02_json.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/03_loading/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/03_loading/movies.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/03_loading/movies.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/04_manipulations/01_adding.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/04_manipulations/02_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/04_manipulations/03_edit.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/04_manipulations/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/05_edit/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/05_edit/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/16_dyn_loading/01_big_dateset_static.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/16_dyn_loading/02_big_dataset_dynamic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/16_dyn_loading/03_datafetch.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/16_dyn_loading/04_datathrottle.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/16_dyn_loading/data/data.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/16_dyn_loading/data/data_dyn.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/16_dyn_loading/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/19_paging/01_static_paging.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/19_paging/02_dynamic_paging.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/19_paging/03_paging_custom.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/19_paging/data/data.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/19_paging/data/data_dyn.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/19_paging/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/22_dnd/01_basic_dnd.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/22_dnd/02_in_out.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/22_dnd/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/06_dataview/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/07_property/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/07_property/02_custom_checkbox.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/07_property/03_colorpicker.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/07_property/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/01_initialization/01_load_xml.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/01_initialization/02_load_json.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/01_initialization/03_load_csv.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/01_initialization/04_load_jsarray.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/01_initialization/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/02_color/01_custom.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/02_color/02_function.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/02_color/03_gradient.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/02_color/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/03_group/01_group.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/03_group/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/04_pie_chart/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/04_pie_chart/02_3d_chart.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/04_pie_chart/03_legend.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/04_pie_chart/04_donut.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/04_pie_chart/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/05_line_chart/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/05_line_chart/02_style.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/05_line_chart/03_scale.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/05_line_chart/04_spline.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/05_line_chart/05_series.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/05_line_chart/06_style_presets.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/05_line_chart/07_legend.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/05_line_chart/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/02_text.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/03_scales.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/04_styles.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/05_stacked_chart.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/06_series.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/07_horizonal_bars.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/08_horizonal_stacked_bars.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/09_origin.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/10_style_presets.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/11_bar_width.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/12_diff_charts.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/13_custom_axis.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/06_bar_chart/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/07_area_chart/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/07_area_chart/02_scale.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/07_area_chart/03_series.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/07_area_chart/04_stacked_area.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/07_area_chart/05_diff_charts.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/07_area_chart/06_custom_axis.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/07_area_chart/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/08_dynamic/01_add.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/08_dynamic/02_events.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/08_dynamic/03_sorting.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/08_dynamic/04_filtering.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/08_dynamic/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/09_radar_chart/01_radar_points.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/09_radar_chart/02_radar_area.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/09_radar_chart/03_radar_lines.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/09_radar_chart/04_style_presets.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/09_radar_chart/05_scale.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/09_radar_chart/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/10_scatter_chart/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/10_scatter_chart/02_templates.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/10_scatter_chart/03_style_presets.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/10_scatter_chart/04_series.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/10_scatter_chart/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/11_scale/01_y_intervals.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/11_scale/02_custom_x_axis.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/11_scale/03_origin.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/11_scale/04_logarithmic_y.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/11_scale/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/08_chart/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/09_calendar/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/09_calendar/02_start_date.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/09_calendar/03_timepicker.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/09_calendar/04_custom_holidays.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/09_calendar/05_fullscreen.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/09_calendar/06_datepicker.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/09_calendar/07_calendar_localized.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/09_calendar/08_disabled_dates.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/09_calendar/09_day_template.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/09_calendar/10_icons.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/09_calendar/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/02_popup.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/03_alert.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/04_confirm.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/05_popup_menu.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/06_component_inside.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/07_center.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/08_position.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/09_icons.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/10_modal_box.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/11_scrollview.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/12_fullscreen.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/13_form.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/14_datatable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/10_window/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/11_htmlform/01_htmlform_body.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/11_htmlform/02_htmlform_layout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/11_htmlform/03_htmlform_validation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/11_htmlform/04_htmlform_http.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/11_htmlform/05_htmlform_binding.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/11_htmlform/data/book.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/11_htmlform/data/form.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/11_htmlform/data/myform.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/11_htmlform/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/01_text.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/02_select.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/03_textarea.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/04_radio.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/05_counter.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/06_checkbox.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/07_segmented.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/08_tabbar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/09_combo.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/10_buttons.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/10_buttons_image.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/11_combo_advanced.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/11_richselect.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/12_colorpicker.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/13_datepicker.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/14_toggle.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/14_toggle_images.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/15_suggest_position.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/15_suggest_server.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/15_suggest_text.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/16_combo_css.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/17_search.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/18_sections.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/19_required.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/20_all.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/21_validation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/search.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/server/countries.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/server/data.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/01_controls/server/data.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/01_basic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/02_attributes.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/03_label_position.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/04_input_align.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/05_add_view.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/06_form_in_form.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/07_onchange_event.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/08_common_config.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/09_hidden_inputs.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/10_binding.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/11_dynamic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/12_hotkey.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/13_tabs_form.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/02_api/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/04_validation/01_basic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/04_validation/02_complex_rule.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/04_validation/03_common_rule.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/04_validation/04_message_complex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/04_validation/05_message_complex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/04_validation/06_validation_rules.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/04_validation/07_custom_rules.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/04_validation/08_confirmation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/04_validation/09_auto_validation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/04_validation/10_html5_validation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/04_validation/11_per_item_validation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/04_validation/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/05_extras/01_fieldset.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/05_extras/02_multiple_fieldsets.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/05_extras/03_slider.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/05_extras/04_slider_step.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/05_extras/05_slider_title.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/05_extras/06_slider_negative.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/05_extras/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/13_form/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/01_datatable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/02_list.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/03_dataview.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/04_tree.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/05_form.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/06_datastore.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/08_custom_urls.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/10_csrf_atack.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/11_xss_atack.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/data/connector.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/data/connector_csrf.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/data/connector_safe.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/data/connector_tree.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/data/connector_trusted.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/data/dummy.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/14_dataprocessor/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/01_inline_data.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/02_url_data.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/03_db_data.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/04_html.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/05_load_message.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/06_nodata_message.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/09_config_xml.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/10_custom_configuration_format.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/11_aggregation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/12_custom_xml.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/config.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/configdata.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/custom.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/data-config-json.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/data-config-xml.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/data-config.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/data-config.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/data.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/data.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/data.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/data.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/data.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/empty.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/data/slow.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/01_loading/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/02_sorting/01_builtin.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/02_sorting/02_custom.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/02_sorting/03_sort_api.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/02_sorting/04_by_text.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/02_sorting/05_server.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/02_sorting/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/03_filtering/01_builtin.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/03_filtering/02_and.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/03_filtering/03_or.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/03_filtering/04_one_for_all.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/03_filtering/04_one_for_all_2.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/03_filtering/05_custom.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/03_filtering/06_custom_built.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/03_filtering/07_rules.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/03_filtering/08_case_sensitive.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/03_filtering/09_numeric.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/03_filtering/10_date.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/03_filtering/11_find_api.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/03_filtering/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/01_basic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/02_tab_support.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/03_multiple_editors.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/04_select.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/05_multiple_editors_select.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/06_select_id.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/07_checkbox.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/08_custom_checkbox.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/09_inline_editors.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/10_dates.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/11_colorpicker.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/12_text_popup.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/13_bind_form.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/14_autosuggest.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/15_combo.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/16_master_checkbox.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/17_xss_template.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/18_richselect.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/19_live_editor.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/20_select_server.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/21_advanced_combo.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/28_scroll.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/data/options.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/04_editing/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/05_selection/01_cell_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/05_selection/02_row_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/05_selection/03_column_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/05_selection/04_multi_cell_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/05_selection/05_multi_row_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/05_selection/06_multi_column_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/05_selection/07_map_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/05_selection/08_block_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/05_selection/09_navigation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/05_selection/10_navigation_wide.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/05_selection/11_navigation_long.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/05_selection/12_hover.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/05_selection/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/06_clipboard/01_cell_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/06_clipboard/02_row_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/06_clipboard/03_column_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/06_clipboard/04_paste_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/06_clipboard/05_two_grids.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/06_clipboard/06_block_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/06_clipboard/07_paste_repeat.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/06_clipboard/08_csv_parser.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/06_clipboard/09_paste_custom.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/06_clipboard/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/07_resize/01_column_resize.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/07_resize/02_row_resize.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/07_resize/03_all_resize.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/07_resize/04_column_resize_auto.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/07_resize/05_row_resize_auto.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/07_resize/06_all_resize_auto.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/07_resize/07_custom_size.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/07_resize/08_custom_size_auto.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/07_resize/09_custom_size_align.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/07_resize/10_row_auto_height.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/07_resize/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/08_math/01_basic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/08_math/02_cell_values.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/08_math/03_column_math.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/08_math/04_treetable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/08_math/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/09_columns/01_size_by_content.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/09_columns/02_autosize_column.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/09_columns/03_scrolls.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/09_columns/04_add_column.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/09_columns/05_index_column.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/09_columns/06_rating_column.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/09_columns/07_stars_column.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/09_columns/08_tooltips.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/09_columns/09_tooltips_advanced.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/09_columns/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/09_columns/stars.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/10_export/01_pdf.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/10_export/02_excel.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/10_export/03_configuration.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/10_export/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/11_sizing/01_size_to_div.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/11_sizing/02_resize_node.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/11_sizing/03_resize_win.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/11_sizing/04_fixed_size.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/11_sizing/05_auto_size.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/11_sizing/06_resize_layout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/11_sizing/07_resize_window.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/11_sizing/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/12_header_footer/01_basic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/12_header_footer/02_configuration.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/12_header_footer/03_multiline.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/12_header_footer/04_content.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/12_header_footer/05_filters.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/12_header_footer/06_counter.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/12_header_footer/07_sorting.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/12_header_footer/08_header_element.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/12_header_footer/09_colspan.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/12_header_footer/10_actions.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/12_header_footer/11_custom_content.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/12_header_footer/12_lineheight.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/12_header_footer/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/13_frozen_columns/01_basic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/13_frozen_columns/02_v_scroll.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/13_frozen_columns/04_block_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/13_frozen_columns/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/14_events/01_log_all_events.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/14_events/02_click_css.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/14_events/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/15_api/01_map_cell.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/15_api/02_link_grid.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/15_api/03_custom_class.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/15_api/04_hide_column.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/15_api/05_hide_split.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/15_api/06_aggregation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/15_api/07_lines.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/15_api/08_aggregation_line.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/15_api/09_initially_hidden.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/15_api/11_column_batches.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/15_api/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/16_dyn_loading/01_db_dyn_data.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/16_dyn_loading/02_db_dyn_start.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/16_dyn_loading/03_db_dyn_throttle.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/16_dyn_loading/04_db_dyn_loadahead.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/16_dyn_loading/05_load_next_add.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/16_dyn_loading/06_load_next_replace.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/16_dyn_loading/07_dyn_proxy.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/16_dyn_loading/data/data.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/16_dyn_loading/data/data_dyn.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/16_dyn_loading/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/17_jquery/01_jquery.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/17_jquery/03_htmltable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/17_jquery/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/19_paging/01_static.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/19_paging/02_db_data.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/19_paging/03_db_data_dyn.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/19_paging/04_many_pagers.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/19_paging/05_templates.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/19_paging/06_custom_template.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/19_paging/07_localization.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/19_paging/data/data.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/19_paging/data/data_dyn.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/19_paging/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/01_string.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/02_images.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/03_links.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/04_numbers.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/05_dates.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/06_dates_string.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/07_pre_processing.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/08_locales.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/imgs/1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/imgs/2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/imgs/3.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/imgs/4.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/imgs/5.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/imgs/6.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/20_templates/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/21_styling/01_basic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/21_styling/02_column_styling.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/21_styling/03_cell_styling.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/21_styling/04_rows_styling.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/21_styling/05_header_styling.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/21_styling/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/22_dnd/01_basic_dnd.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/22_dnd/02_in_out.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/22_dnd/03_events.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/22_dnd/04_reorder_dnd.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/22_dnd/05_handle_dnd.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/22_dnd/06_columns.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/22_dnd/07_columns_order.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/22_dnd/08_columns_handle.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/22_dnd/handle.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/22_dnd/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/23_html_only/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/23_html_only/02_clipboard.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/23_html_only/03_sortable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/23_html_only/04_access_by_id.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/23_html_only/05_size_to_content.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/23_html_only/06_auto.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/23_html_only/07_header.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/23_html_only/08_footer.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/23_html_only/09_paging.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/23_html_only/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/25_validation/01_existing_data.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/25_validation/02_complex_rule.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/25_validation/03_common_rule.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/25_validation/04_message.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/25_validation/05_message_complex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/25_validation/06_per_cell_marks.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/25_validation/07_edit_validation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/25_validation/08_live_validation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/25_validation/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/02_dyn_loading.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/03_big_datatree.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/04_filter.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/05_filter_custom.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/06_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/08_edit.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/09_item_checkbox.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/10_item_checkbox_3st.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/12_export.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/13_copypaste.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/14_colspan.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/data/treedata.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/data/treedata_dyn.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/30_treetable/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/31_treedrag/01_basic_dnd.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/31_treedrag/02_order_mode.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/31_treedrag/03_multidrag.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/31_treedrag/04_drop_as_child.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/31_treedrag/05_drop_next.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/31_treedrag/06_drop_allow.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/31_treedrag/data/data.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/31_treedrag/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/32_grouping/01_static.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/32_grouping/02_dynamic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/32_grouping/03_aggregation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/32_grouping/04_custom_aggregation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/32_grouping/05_grouping_event.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/32_grouping/06_extra_lines.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/32_grouping/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/80_docs/11_minimal_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/80_docs/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/common/bigtestdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/common/imdb.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/common/mathdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/common/samples.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/common/testdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/15_datatable/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/16_skins/01_flat.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/16_skins/02_touch.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/16_skins/03_icons.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/16_skins/04_compact.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/16_skins/05_air.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/16_skins/06_clouds.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/16_skins/07_web.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/16_skins/08_terrace.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/16_skins/09_aircompact.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/16_skins/10_glamour.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/16_skins/11_modern.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/16_skins/12_light.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/16_skins/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/01_loading/01_json_data.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/01_loading/02_xml_data.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/01_loading/03_big_data.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/01_loading/07_load_group.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/01_loading/data/data.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/01_loading/data/data.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/01_loading/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/02_checkbox/01_basic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/02_checkbox/02_three_state.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/02_checkbox/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/01_treelines.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/02_treelines_dnd.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/03_icons.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/04_without_icons.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/05_custom_icons.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/06_custom_select.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/07_custom_folders.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/08_styled_items.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/09_custom_type.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/icons/file.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/icons/folder.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/icons/folder_open.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/icons/home.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/icons/pre.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/icons/puzzle.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/icons/rss.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/03_styles/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/04_api/01_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/04_api/02_sort.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/04_api/03_filter.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/04_api/04_multi_select.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/04_api/05_sort_custom.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/04_api/06_add_delete.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/04_api/07_sync.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/04_api/08_bind.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/04_api/09_subdata.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/04_api/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/05_edit/01_selection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/05_edit/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/16_dyn_loading/01_dyn_loading.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/16_dyn_loading/02_load_branch.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/16_dyn_loading/03_on_data_request.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/16_dyn_loading/data/data.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/16_dyn_loading/data/data_dyn.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/16_dyn_loading/data/data_dyn_json.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/16_dyn_loading/data/data_json.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/16_dyn_loading/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/19_copypaste/01_copy.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/19_copypaste/02_paste_modify.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/19_copypaste/03_paste_insert.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/19_copypaste/04_paste_custom.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/19_copypaste/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/22_dnd/01_basic_dnd.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/22_dnd/02_in_out.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/22_dnd/03_multidrag.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/22_dnd/04_drop_as_child.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/22_dnd/05_drop_next.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/22_dnd/06_custom_marker.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/22_dnd/07_order_mode.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/22_dnd/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/common/samples.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/common/treedata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/17_datatree/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/19_api/01_disable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/19_api/02_hide_show.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/19_api/04_progress_data.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/19_api/05_progress_app.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/19_api/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/02_navigation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/03_nested_multiviews.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/04_tabbar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/05_tabbar_with_icons.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/06_carousel.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/07_no_animation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/08_tabview.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/09_fit_biggest.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/10_many_tabs.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/11_close_button.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/12_view_recreating.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/13_tabview_dynamic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/data/charts.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/20_multiview/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/01_init_list.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/02_init_template.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/03_manual_send.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/04_prefill_with_data.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/05_attachment.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/06_integration.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/06_progress_bar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/07_form.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/08_single_upload.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/09_integration_to_element.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/10_accept.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/php/photo.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/php/photos/1.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/php/photos/2.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/php/saveform.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/21_upload/php/upload.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/22_dnd/01_basic_dnd.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/22_dnd/02_drag_order.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/22_dnd/03_drag_handle.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/22_dnd/04_html_dnd.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/22_dnd/05_html_dnd_in.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/22_dnd/06_native_dnd.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/22_dnd/handle.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/22_dnd/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/02_form.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/03_datatable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/04_by_ajax.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/05_accordion.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/06_tabbar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/07_fieldset.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/08_layouts.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/09_window.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/10_chart.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/11_pager.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/12_menu.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/data/book.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/data/chart.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/data/config.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/data/data.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/01_html/patch.zip" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/02_xhtml/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/02_xhtml/02_form.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/02_xhtml/03_datatable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/02_xhtml/04_by_ajax.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/02_xhtml/05_accordion.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/02_xhtml/06_tabbar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/02_xhtml/07_fieldset.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/02_xhtml/08_layouts.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/02_xhtml/09_window.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/02_xhtml/data/book.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/02_xhtml/data/config.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/02_xhtml/data/data.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/02_xhtml/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/03_xml/01_custom_namespace.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/03_xml/02_without_namespace.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/03_xml/03_multi_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/03_xml/04_init_events.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/03_xml/05_tabbar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/03_xml/06_tree_data.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/03_xml/data/complex.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/03_xml/data/events.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/03_xml/data/tabbar.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/03_xml/data/tree.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/03_xml/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/23_markup/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/24_colorpicker/01_initialization.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/24_colorpicker/02_custom_template.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/24_colorpicker/03_custom_colors.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/24_colorpicker/04_in_form.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/24_colorpicker/05_proprty_sheet.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/24_colorpicker/06_datatable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/24_colorpicker/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/25_pager/01_visible.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/25_pager/02_apionly.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/25_pager/03_layout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/25_pager/04_template.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/25_pager/05_twoareas.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/25_pager/06_twoareas_layout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/25_pager/07_animate.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/25_pager/08_animate_types.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/25_pager/09_animate_types_datatable.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/25_pager/10_size_to_page.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/25_pager/11_page_to_size.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/25_pager/12_standalone_pager.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/25_pager/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/26_carousel/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/26_carousel/02_types.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/26_carousel/03_outer_navigation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/26_carousel/imgs/image001.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/26_carousel/imgs/image002.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/26_carousel/imgs/image003.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/26_carousel/imgs/image004.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/26_carousel/imgs/image005.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/26_carousel/imgs/image006.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/26_carousel/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/27_video/01_init.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/27_video/02_autoplay.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/27_video/03_api.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/27_video/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/30_backbone/01_view.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/30_backbone/02_nested_views.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/30_backbone/03_load_collection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/30_backbone/04_save_collection.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/30_backbone/05_views_models.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/30_backbone/06_routes_webix.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/30_backbone/07_routes_views.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/30_backbone/08_routes_layout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/30_backbone/common/backbone.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/30_backbone/common/data.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/30_backbone/common/underscore.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/30_backbone/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/31_jquery/01_list.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/31_jquery/02_calendar.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/31_jquery/03_from_table.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/31_jquery/04_custom_component.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/31_jquery/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/01_mercury.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/02_nicedit.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/03_tinymce.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/04_scheduler.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/05_sigma.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/06_d3.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/07_raphael.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/08_codemirror.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/09_google_map.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/10_nokia_map.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/11_yandex_map.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/12_open_map.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/13_gridselect.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/13_gridselect_editor.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/14_dataselect.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/14_dataselect_editor.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/15_ckeditor.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/data/chart.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/data/flare.json" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/data/image001.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/data/image002.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/data/image003.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/data/image004.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/data/image005.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/data/image006.JPG" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/data/les_miserables.gexf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/32_thirdparty/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/01_layout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/02_grid.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/03_chart.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/04_events.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/05_show.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/06_controller.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/07_ng_repeat.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/08_complex.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/js/angular.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/js/chartApp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/js/complexApp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/js/dataApp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/33_angular/js/uiApp.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/01_datatable_loading.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/02_datatable_saving.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/03_datatable_reordering.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/04_datatree_loading.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/05_datatree_saving.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/06_form_loading.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/07_form_saving.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/08_datastore.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/09_datastore_dynamic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/10_datatable_update.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/11_datatable_sort_filter.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/server/datatable.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/server/datatable_order.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/server/datatable_save.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/server/datatable_save_order.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/server/datatable_update.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/server/datatree.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/server/datatree_save.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/server/form.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/01_php_vanila/server/form_save.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/02_php_connector/01_datatable_loading.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/02_php_connector/02_datatable_saving.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/02_php_connector/05_datatree_saving.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/02_php_connector/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/02_php_connector/server/datatable.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/02_php_connector/server/datatree.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/03_php_custom/01_datatable_loading.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/03_php_custom/02_datatable_saving_rest.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/03_php_custom/03_datatable_cache.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/03_php_custom/04_datatable_cache_static.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/03_php_custom/05_datatable_offline.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/03_php_custom/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/03_php_custom/server/datatable.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/03_php_custom/server/datatable_rest.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/04_websockets/01_sockets_chat.zip" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/04_websockets/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/05_indexeddb/01_datatable_loading.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/05_indexeddb/02_datatable_saving.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/05_indexeddb/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/40_serverside/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/01_basic_app.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/02_basic_app.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/03_basic_app.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/accordion.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/accordionitem.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/autoid.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/binding_rule.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/custom_ed.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/custom_holidays.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/data/connector.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/data/pageA.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/data/pageB.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/data_binding.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/dataview_formatting.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/dataview_italic.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/dataview_resizing.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/dataview_type.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/dates.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/default_data.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/default_template.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/editors.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/getpopup.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/grouplist_openstate.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/header_templates.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/history.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/icons.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/iframe.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/layout.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/multiple_property_filter.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/multiview_animation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/new.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/nonui.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/quick_start_datatree.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/simple_dataview.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/styled_window.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/suggest_combo.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/tab_navigation.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/tabs_popup.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/unit_items.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/validation_rules.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/80_docs/window_offset.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/chartdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/companies.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/config.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/connector/base_connector.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/connector/data_connector.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/connector/dataprocessor.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/connector/db_common.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/connector/db_sqlite3.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/connector/scheduler_connector.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/connector/strategy.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/connector/tools.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/connector/update.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/connector/xss_filter.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/docs.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/dump.sql" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/18/copy.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/18/cut.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/18/new.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/18/open.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/18/paste.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/18/print.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/18/redo.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/18/save.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/18/undo.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/24/copy.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/24/cut.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/24/open.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/24/paste.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/24/save.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/32/copy.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/32/cut.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/32/new.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/32/open.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/32/paste.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/32/print.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/32/redo.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/32/save.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/32/undo.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/48/copy.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/48/cut.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/48/new.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/48/open.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/48/paste.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/48/redo.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/48/save.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/imgs/48/undo.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/samples.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/testdata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/testdata.sqlite" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/common/treedata.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/samples/index.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/whatsnew.txt" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/AccLab/diagramEditor.js" afterPath="$PROJECT_DIR$/AccLab/old html/diagramEditor.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/AccLab/index.html" afterPath="$PROJECT_DIR$/AccLab/old html/index9.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/AccLab/index.html.backup" afterPath="$PROJECT_DIR$/AccLab/old html/index.html.backup" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/AccLab/index2.html" afterPath="$PROJECT_DIR$/AccLab/old html/index2.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/AccLab/indexee.html" afterPath="$PROJECT_DIR$/AccLab/old html/indexee.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/fonts/fontawesome-webfont.eot" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/fonts/fontawesome-webfont.eot" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/AccLab/libs/webix/codebase/fonts/fontawesome-webfont.woff" afterPath="$PROJECT_DIR$/AccLab/template/font-awesome/fonts/fontawesome-webfont.woff" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/AccLab/style.css" afterPath="$PROJECT_DIR$/AccLab/old html/style9.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/AccLab/style2.css" afterPath="$PROJECT_DIR$/AccLab/old html/style2.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/AccLab/stylee.css" afterPath="$PROJECT_DIR$/AccLab/old html/stylee.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/AccLab/wizard.html" afterPath="$PROJECT_DIR$/AccLab/old html/wizard.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AccLab/index.html" afterPath="$PROJECT_DIR$/AccLab/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="AccLab.iws" />
@@ -26,16 +1133,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="indexee.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AccLab/indexee.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1337" max-vertical-offset="6405">
-              <caret line="117" column="47" selection-start-line="117" selection-start-column="47" selection-end-line="117" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="tools.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AccLab/ui/tools/tools.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -46,31 +1143,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stylee.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AccLab/stylee.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4913" max-vertical-offset="5313">
-              <caret line="213" column="0" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AccLab/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1498" max-vertical-offset="2310">
-              <caret line="100" column="3" selection-start-line="100" selection-start-column="3" selection-end-line="100" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AccLab/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.27356747" vertical-offset="1849" max-vertical-offset="6069">
-              <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.45101663" vertical-offset="4670" max-vertical-offset="10080">
+              <caret line="234" column="0" selection-start-line="234" selection-start-column="0" selection-end-line="234" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="components.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AccLab/libs/componentsbar/components.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="126">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -103,10 +1190,13 @@
         <option value="$PROJECT_DIR$/AccLab/ui/newUI/style.css" />
         <option value="$PROJECT_DIR$/AccLab/index3.html" />
         <option value="$PROJECT_DIR$/AccLab/Server.py" />
-        <option value="$PROJECT_DIR$/AccLab/style.css" />
         <option value="$PROJECT_DIR$/AccLab/index6.html" />
-        <option value="$PROJECT_DIR$/AccLab/style3.css" />
         <option value="$PROJECT_DIR$/AccLab/try.html" />
+        <option value="$PROJECT_DIR$/AccLab/index99.html" />
+        <option value="$PROJECT_DIR$/AccLab/style99.css" />
+        <option value="$PROJECT_DIR$/AccLab/style3.css" />
+        <option value="$PROJECT_DIR$/AccLab/style4.css" />
+        <option value="$PROJECT_DIR$/AccLab/style.css" />
         <option value="$PROJECT_DIR$/AccLab/index.html" />
       </list>
     </option>
@@ -158,6 +1248,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -204,7 +1295,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
+              <option name="myItemId" value="template" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -222,17 +1313,16 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
+              <option name="myItemId" value="template" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -243,6 +1333,7 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="FullScreen" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="Html5" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -251,10 +1342,12 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/AccLab/libs" />
       <recent name="$PROJECT_DIR$/AccLab" />
+      <recent name="$PROJECT_DIR$/AccLab/libs" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/AccLab" />
+      <recent name="$PROJECT_DIR$/AccLab/old html" />
       <recent name="$PROJECT_DIR$/AccLab/libs" />
     </key>
   </component>
@@ -451,7 +1544,7 @@
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289689" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2527881" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2527881" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289689" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25448614" sideWeight="0.50037175" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -465,7 +1558,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1685761" sideWeight="0.49962825" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24713585" sideWeight="0.49962825" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -495,40 +1588,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/AccLab/indexee.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="609" max-vertical-offset="6405">
-          <caret line="29" column="32" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4242">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/libs/dock/js/dockspawn.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="32057" max-vertical-offset="59745">
-          <caret line="1534" column="22" selection-start-line="1534" selection-start-column="17" selection-end-line="1534" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/Server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="336" max-vertical-offset="1995">
-          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
-          <folding>
-            <element signature="e#20#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/stylee.css">
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/stylee.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5187" max-vertical-offset="5313">
           <caret line="247" column="1" selection-start-line="247" selection-start-column="1" selection-end-line="247" selection-end-column="1" />
@@ -542,113 +1602,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/indexee.html">
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/indexee.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="609" max-vertical-offset="6405">
           <caret line="29" column="32" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4242">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/libs/dock/js/dockspawn.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="32057" max-vertical-offset="59745">
-          <caret line="1534" column="22" selection-start-line="1534" selection-start-column="17" selection-end-line="1534" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/Server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="336" max-vertical-offset="1995">
-          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
-          <folding>
-            <element signature="e#20#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/stylee.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5187" max-vertical-offset="5313">
-          <caret line="247" column="1" selection-start-line="247" selection-start-column="1" selection-end-line="247" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1848" max-vertical-offset="2037">
-          <caret line="88" column="8" selection-start-line="88" selection-start-column="6" selection-end-line="88" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/indexee.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="609" max-vertical-offset="6405">
-          <caret line="29" column="32" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4242">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/libs/dock/js/dockspawn.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="32057" max-vertical-offset="59745">
-          <caret line="1534" column="22" selection-start-line="1534" selection-start-column="17" selection-end-line="1534" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/Server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="336" max-vertical-offset="1995">
-          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
-          <folding>
-            <element signature="e#20#68#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/stylee.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5187" max-vertical-offset="5313">
-          <caret line="247" column="1" selection-start-line="247" selection-start-column="1" selection-end-line="247" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1848" max-vertical-offset="2037">
-          <caret line="88" column="8" selection-start-line="88" selection-start-column="6" selection-end-line="88" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/indexee.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="609" max-vertical-offset="6405">
-          <caret line="29" column="32" selection-start-line="29" selection-start-column="29" selection-end-line="29" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/index.html">
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/index9.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="147" max-vertical-offset="4242">
           <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -669,7 +1633,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/stylee.css">
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/stylee.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5187" max-vertical-offset="5313">
           <caret line="247" column="1" selection-start-line="247" selection-start-column="1" selection-end-line="247" selection-end-column="1" />
@@ -683,19 +1647,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/indexee.html">
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/indexee.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="168" max-vertical-offset="6405">
           <caret line="8" column="78" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="78" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/index.html">
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/index9.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4221">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -751,13 +1713,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/wizard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.6356784" vertical-offset="400" max-vertical-offset="987">
-          <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AccLab/BackendInterface/workspace/healthcare/demo.aal">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.6048193" vertical-offset="1601" max-vertical-offset="2016">
@@ -765,7 +1720,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/diagramEditor.js">
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/diagramEditor.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5060241" vertical-offset="0" max-vertical-offset="840">
           <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
@@ -779,27 +1734,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/index2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="6.4135137" vertical-offset="0" max-vertical-offset="6405">
-          <caret line="113" column="34" selection-start-line="113" selection-start-column="34" selection-end-line="113" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/libs/qooxdoo/indigo-4.1.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="372">
-          <caret line="0" column="26" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/libs/qooxdoo/q-4.1.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.5225" vertical-offset="0" max-vertical-offset="798">
-          <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LICENSE">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="14301">
@@ -807,17 +1741,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/style2.css">
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/style2.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="693">
           <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/libs/webix/samples/19_api/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1470">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -825,6 +1752,62 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7525" vertical-offset="22442" max-vertical-offset="28644">
           <caret line="1084" column="37" selection-start-line="1084" selection-start-column="37" selection-end-line="1084" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.59615386" vertical-offset="1569" max-vertical-offset="2037">
+          <caret line="88" column="8" selection-start-line="88" selection-start-column="6" selection-end-line="88" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/indexee.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-37.333332" vertical-offset="1337" max-vertical-offset="6405">
+          <caret line="117" column="47" selection-start-line="117" selection-start-column="47" selection-end-line="117" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/ui/components/Actor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="11235">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/style9.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.5958905" vertical-offset="0" max-vertical-offset="2310">
+          <caret line="100" column="3" selection-start-line="100" selection-start-column="3" selection-end-line="100" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/ui/outline.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3171">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/ui/properties/properties.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="4.0072465" vertical-offset="189" max-vertical-offset="11361">
+          <caret line="88" column="48" selection-start-line="88" selection-start-column="48" selection-end-line="88" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/stylee.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="12.123188" vertical-offset="0" max-vertical-offset="5313">
+          <caret line="239" column="0" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/style6.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.4202899" vertical-offset="630" max-vertical-offset="1050">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="6" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -838,34 +1821,108 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/stylee.css">
+    <entry file="file://$PROJECT_DIR$/AccLab/libs/bootstrap/js/npm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4913" max-vertical-offset="5313">
-          <caret line="213" column="0" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="414">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/style.css">
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/indexExemple.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1498" max-vertical-offset="2310">
-          <caret line="100" column="3" selection-start-line="100" selection-start-column="3" selection-end-line="100" selection-end-column="3" />
-          <folding />
+        <state vertical-scroll-proportion="-2.8" vertical-offset="0" max-vertical-offset="903">
+          <caret line="4" column="100" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="100" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/api.py">
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/style3.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.59615386" vertical-offset="1569" max-vertical-offset="2037">
-          <caret line="88" column="8" selection-start-line="88" selection-start-column="6" selection-end-line="88" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.8115942" vertical-offset="63" max-vertical-offset="756">
+          <caret line="19" column="22" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AccLab/indexee.html">
+    <entry file="file://$PROJECT_DIR$/AccLab/libs/toolbar/jquery.toolbars.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1337" max-vertical-offset="6405">
-          <caret line="117" column="47" selection-start-line="117" selection-start-column="47" selection-end-line="117" selection-end-column="47" />
-          <folding />
+        <state vertical-scroll-proportion="0.6086956" vertical-offset="0" max-vertical-offset="2919">
+          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/index9.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.2421875" vertical-offset="1827" max-vertical-offset="6069">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/libs/colorPicker/css/colorpicker.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.1311474" vertical-offset="1764" max-vertical-offset="3507">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/libs/colorPicker/css/layout.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4704">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/libs/avgrund/jquery.avgrund.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="414">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1084" max-vertical-offset="1953">
+          <caret line="85" column="19" selection-start-line="85" selection-start-column="19" selection-end-line="85" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/wizard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.63727957" vertical-offset="400" max-vertical-offset="987">
+          <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/template/js/plugins/flot/flot-data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="26250">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/libs/avgrund/avgrund.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.0068493" vertical-offset="819" max-vertical-offset="2541">
+          <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/index2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1806" max-vertical-offset="6405">
+          <caret line="86" column="14" selection-start-line="86" selection-start-column="14" selection-end-line="86" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/old html/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.68231046" vertical-offset="63" max-vertical-offset="1197">
+          <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/forms.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0480591" vertical-offset="0" max-vertical-offset="9450">
+          <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -877,10 +1934,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/blank-page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="5061">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AccLab/libs/componentsbar/components.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="427">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/AccLab/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.27356747" vertical-offset="1849" max-vertical-offset="6069">
-          <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.45101663" vertical-offset="4670" max-vertical-offset="10080">
+          <caret line="234" column="0" selection-start-line="234" selection-start-column="0" selection-end-line="234" selection-end-column="0" />
           <folding />
         </state>
       </provider>
