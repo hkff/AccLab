@@ -21,7 +21,7 @@ __author__ = 'hkff'
 from AALMetaModel import *
 
 
-# AALtoTSPASS
+# AALtoFOTL
 def AALtoFOTL(mm: aalmm=None):
     """
 

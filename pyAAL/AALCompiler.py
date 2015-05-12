@@ -34,7 +34,8 @@ from tools.hottie import hot
 from AALChecker import *
 
 
-# TO avoid cyclic import
+
+# Note : To avoid cyclic import
 class AALCompilerListener(AALListener.AALListener):
     def __init__(self, loadlibs: bool=True, serialize: bool=False, file: str="",
                  libs_path="libs/aal/", root_path=None, recompile=False, errors_listener=None):
@@ -546,6 +547,7 @@ class AALCompilerListener(AALListener.AALListener):
         self.aalprog.declarations["agents"].append(agDec)  # Add agent declaration to prog
         pass
 
+    # Exit service declaration
     def exitServiceDec(self, ctx):
         """
         Exit service declaration
@@ -988,6 +990,8 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Apply check
     def apply_check(self, chk=None, code=None, verbose=False, show=True):
+        """
+        """
         from aalc import tspassc
         if chk is None:
             chk = m_ltlCheck(name="tmp", code=code)

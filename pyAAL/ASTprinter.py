@@ -16,10 +16,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from antlr4.tree.Trees import Trees
+from antlr4.tree.Trees import Trees, RuleNode, ErrorNode, TerminalNode, Tree, ParseTree
 from antlr4.Utils import escapeWhitespace
 from io import StringIO
-from antlr4.tree.Tree import RuleNode, ErrorNode, TerminalNode, Tree, ParseTree
 from antlr4 import *
 
 
@@ -85,4 +84,5 @@ class Trees2(Trees):
         payload = t.getPayload()
         if isinstance(payload, Token):
             return payload.text
+
         return str(t.getPayload())
