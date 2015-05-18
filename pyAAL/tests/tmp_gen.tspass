@@ -1,0 +1,1 @@
+~(audit(leslie, cloudS)  & always(read(kim, cloudX)  | ((~(read(kim, cloudX) )) & (always(audit(leslie, cloudS)  => (delete(cloudX, d) ))))))
