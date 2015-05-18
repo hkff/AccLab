@@ -1,3 +1,3 @@
-always ( P(i,j,d1) => Q(j,j,d1) )
-&
-always ( D(i,j,d1) )
+~(
+audit(DPA, cloudS)  & (always(![file] ![x]((((Pread(kim, cloudX, file) & (~oneYears => delete(cloudX, file))) &  (read(cloudX, file) => notify(cloudX, kim))) & always(Pread(x, file))))  | (~![file] ![x]((((Pread(kim, cloudX, file) & (~oneYears => delete(cloudX, file))) &  (read(cloudX, file) => notify(cloudX, kim))) & always(Pread(x, file)))) ) & (always(audit => sometime(sanction(DPA, cloudS)) ))) audit(DPA, cloudS)  & (always(![a] ![file]((Pread(a, cloudX, file) & (~twoYears => delete(cloudX, file))))  | (~![a] ![file]((Pread(a, cloudX, file) & (~twoYears => delete(cloudX, file)))) ) & (always(audit => sanction(DPA, cloudS) ))) always( (notify(Kim, auditor) => audit(auditor, cloudX)))  & (always(![a]((((Pwrite(Kim, cloudX) & Pread(Kim, cloudX, d)) & ~Pread(Kim, cloudX, d)) & ~(send(cloudX, a))))  | (~![a]((((Pwrite(Kim, cloudX) & Pread(Kim, cloudX, d)) & ~Pread(Kim, cloudX, d)) & ~(send(cloudX, a)))) ) & (always(audit => sanction(auditor, cloudX) )))
+)

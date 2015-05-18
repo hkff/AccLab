@@ -7,8 +7,8 @@ description({**}).
 end_of_list.
 
 list_of_symbols.
-functions[(cloudX,0),(kim,0),(read,0)].
-predicates[(Adelete,2),(DENY,4),(PERMIT,4),(eightDays,0),(eightMonths,0),(eightYears,0),(elevenDays,0),(elevenMonths,0),(elevenYears,0),(fiveDays,0),(fiveMonths,0),(fiveYears,0),(fourDays,0),(fourMonths,0),(fourYears,0),(nineDays,0),(nineMonths,0),(nineYears,0),(oneDay,0),(oneMonth,0),(oneYear,0),(sevenDays,0),(sevenMonths,0),(sevenYears,0),(sixDays,0),(sixMonths,0),(sixYears,0),(tenDays,0),(tenMonths,0),(tenYears,0),(threeDays,0),(threeMonths,0),(threeYears,0),(twelveDays,0),(twelveMonths,0),(twelveYears,0),(twoDays,0),(twoMonths,0),(twoYears,0)].
+functions[(cloudX,0),(kim,0)].
+predicates[(DENY,4),(PERMIT,4),(Pread,3),(delete,2),(eightDays,0),(eightMonths,0),(eightYears,0),(elevenDays,0),(elevenMonths,0),(elevenYears,0),(fiveDays,0),(fiveMonths,0),(fiveYears,0),(fourDays,0),(fourMonths,0),(fourYears,0),(nineDays,0),(nineMonths,0),(nineYears,0),(oneDay,0),(oneMonth,0),(oneYear,0),(sevenDays,0),(sevenMonths,0),(sevenYears,0),(sixDays,0),(sixMonths,0),(sixYears,0),(tenDays,0),(tenMonths,0),(tenYears,0),(threeDays,0),(threeMonths,0),(threeYears,0),(twelveDays,0),(twelveMonths,0),(twelveYears,0),(twoDays,0),(twoMonths,0),(twoYears,0)].
 end_of_list.
 
 list_of_formulae(axioms).
@@ -46,8 +46,8 @@ formula(and(implies(nineDays,tenDays),and(implies(nineDays,elevenDays),implies(n
 formula(and(implies(tenDays,elevenDays),implies(tenDays,twelveDays))).
 formula(implies(elevenDays,twelveDays)).
 formula(always(forall([_x],forall([_y],forall([_z],forall([_x1],or(not(PERMIT(_x,_y,_z,_x1)),not(DENY(_x,_y,_z,_x1))))))))).
-formula(forall([_x],forall([_y],and(DENY(read,_x,cloudX,_y),or(twoYears,Adelete(cloudX,_y)))))).
-formula(exists([_x],or(not(PERMIT(read,kim,cloudX,_x)),and(not(threeYears),not(Adelete(cloudX,_x)))))).
+formula(forall([_x],forall([_y],and(not(Pread(_x,cloudX,_y)),or(twoYears,delete(cloudX,_y)))))).
+formula(exists([_x],or(not(Pread(kim,cloudX,_x)),and(not(threeYears),not(delete(cloudX,_x)))))).
 end_of_list.
 
 end_problem.

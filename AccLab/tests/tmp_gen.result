@@ -199,16 +199,16 @@ For initial clauses:
 196[0:Inp] || tenDays* -> twelveDays.    -> 196[0:Inp] || tenDays(temp_zero)* -> twelveDays(temp_zero).
 197[0:Inp] || tenDays -> elevenDays*.    -> 197[0:Inp] || tenDays(temp_zero) -> elevenDays(temp_zero)*.
 198[0:Inp] || elevenDays* -> twelveDays.    -> 198[0:Inp] || elevenDays(temp_zero)* -> twelveDays(temp_zero).
-200[0:Inp] ||  -> twoYears Adelete(cloudX,U)*.    -> 200[0:Inp] ||  -> twoYears(temp_zero) Adelete(temp_zero,cloudX,U)*.
-201[0:Inp] ||  -> DENY(read,U,cloudX,V)*.    -> 201[0:Inp] ||  -> DENY(temp_zero,read,U,cloudX,V)*.
-203[0:Inp] || threeYears PERMIT(read,kim,cloudX,skc0)* -> .    -> 203[0:Inp] || threeYears(temp_zero) PERMIT(temp_zero,read,kim,cloudX,skc0)* -> .
-202[0:Inp] || Adelete(cloudX,skc1) PERMIT(read,kim,cloudX,skc0)* -> .    -> 202[0:Inp] || Adelete(temp_zero,cloudX,skc1) PERMIT(temp_zero,read,kim,cloudX,skc0)* -> .
+200[0:Inp] ||  -> twoYears delete(cloudX,U)*.    -> 200[0:Inp] ||  -> twoYears(temp_zero) delete(temp_zero,cloudX,U)*.
+201[0:Inp] || Pread(U,cloudX,V)* -> .    -> 201[0:Inp] || Pread(temp_zero,U,cloudX,V)* -> .
+203[0:Inp] || threeYears Pread(kim,cloudX,skc0)* -> .    -> 203[0:Inp] || threeYears(temp_zero) Pread(temp_zero,kim,cloudX,skc0)* -> .
+202[0:Inp] || delete(cloudX,skc1) Pread(kim,cloudX,skc0)* -> .    -> 202[0:Inp] || delete(temp_zero,cloudX,skc1) Pread(temp_zero,kim,cloudX,skc0)* -> .
 ------------------TEMPORAL-LOGIC-TRANSLATION-STOP------------------------
 ------------------TEMPORAL-LOGIC-TRANSLATION-START-----------------------
 For universal clauses:
 199[0:Inp] || DENY(U,V,W,X)* PERMIT(U,V,W,X) -> .    -> 199[0:Inp] || DENY(U,V,W,X,Y)* PERMIT(U,V,W,X,Y) -> .
 ------------------TEMPORAL-LOGIC-TRANSLATION-STOP------------------------
-Non-Skolem constants contained in the problem: kim, read, cloudX, temp_zero
+Non-Skolem constants contained in the problem: kim, cloudX, temp_zero
 -------------------------CONSTANT-FLOODING START-------------------------
 -------------------------CONSTANT-FLOODING STOP--------------------------
 -------------------------CONSTANT-FLOODING START-------------------------
@@ -415,10 +415,10 @@ Input Problem:
 196[0:Inp] || oneMonth(temp_zero)* -> tenMonths(temp_zero).
 197[0:Inp] || oneMonth(temp_zero) -> elevenMonths(temp_zero)*.
 198[0:Inp] || oneMonth(temp_zero)* -> twelveMonths(temp_zero).
-199[0:Inp] ||  -> DENY(temp_zero,read,U,cloudX,V)*.
-200[0:Inp] ||  -> twoYears(temp_zero) Adelete(temp_zero,cloudX,U)*.
-201[0:Inp] || threeYears(temp_zero) PERMIT(temp_zero,read,kim,cloudX,skc0)* -> .
-202[0:Inp] || Adelete(temp_zero,cloudX,skc1) PERMIT(temp_zero,read,kim,cloudX,skc0)* -> .
+199[0:Inp] || Pread(temp_zero,U,cloudX,V)* -> .
+200[0:Inp] ||  -> twoYears(temp_zero) delete(temp_zero,cloudX,U)*.
+201[0:Inp] || threeYears(temp_zero) Pread(temp_zero,kim,cloudX,skc0)* -> .
+202[0:Inp] || delete(temp_zero,cloudX,skc1) Pread(temp_zero,kim,cloudX,skc0)* -> .
 203[0:Inp] || DENY(U,V,W,X,Y)* PERMIT(U,V,W,X,Y) -> .
  This is a first-order Non-Horn problem without equality.
  This is a problem that has, if any, a finite domain model.
@@ -427,7 +427,7 @@ Input Problem:
  Inferences: IORe=1 IOFc=1 
  Reductions: RObv=1 RTaut=1 RFSub=1 RBSub=1 
  Extras    : No Input Saturation, No Selection, No Splitting, Full Reduction,  Ratio: 5, FuncWeight: 1, VarWeight: 1
- Precedence: div > id > c^l > temp_succ > temp_shield > temp_zero > cloudX > kim > read > Adelete > DENY > PERMIT > eightDays > eightMonths > eightYears > elevenDays > elevenMonths > elevenYears > fiveDays > fiveMonths > fiveYears > fourDays > fourMonths > fourYears > nineDays > nineMonths > nineYears > oneDay > oneMonth > oneYear > sevenDays > sevenMonths > sevenYears > sixDays > sixMonths > sixYears > tenDays > tenMonths > tenYears > threeDays > threeMonths > threeYears > twelveDays > twelveMonths > twelveYears > twoDays > twoMonths > twoYears > skc0 > skc1
+ Precedence: div > id > c^l > temp_succ > temp_shield > temp_zero > cloudX > kim > DENY > PERMIT > Pread > delete > eightDays > eightMonths > eightYears > elevenDays > elevenMonths > elevenYears > fiveDays > fiveMonths > fiveYears > fourDays > fourMonths > fourYears > nineDays > nineMonths > nineYears > oneDay > oneMonth > oneYear > sevenDays > sevenMonths > sevenYears > sixDays > sixMonths > sixYears > tenDays > tenMonths > tenYears > threeDays > threeMonths > threeYears > twelveDays > twelveMonths > twelveYears > twoDays > twoMonths > twoYears > skc0 > skc1
  Ordering  : KBO
 Processed Problem:
 
@@ -509,6 +509,16 @@ Usable Clauses:
 126[0:Inp] || oneYear(temp_zero)* -> sixYears(temp_zero).
 125[0:Inp] || oneYear(temp_zero) -> fiveYears(temp_zero)*.
 124[0:Inp] || oneYear(temp_zero) -> fourYears(temp_zero)*.
+123[0:Inp] || oneYear(temp_zero)* -> threeYears(temp_zero).
+111[0:Inp] || threeYears(temp_zero)* -> twelveYears(temp_zero).
+110[0:Inp] || threeYears(temp_zero) -> elevenYears(temp_zero)*.
+109[0:Inp] || threeYears(temp_zero) -> tenYears(temp_zero)*.
+108[0:Inp] || threeYears(temp_zero) -> nineYears(temp_zero)*.
+107[0:Inp] || threeYears(temp_zero) -> eightYears(temp_zero)*.
+106[0:Inp] || threeYears(temp_zero) -> sevenYears(temp_zero)*.
+105[0:Inp] || threeYears(temp_zero) -> sixYears(temp_zero)*.
+104[0:Inp] || threeYears(temp_zero) -> fiveYears(temp_zero)*.
+103[0:Inp] || threeYears(temp_zero) -> fourYears(temp_zero)*.
 102[0:Inp] || fourYears(temp_zero)* -> twelveYears(temp_zero).
 101[0:Inp] || fourYears(temp_zero) -> elevenYears(temp_zero)*.
 100[0:Inp] || fourYears(temp_zero)* -> tenYears(temp_zero).
@@ -620,46 +630,34 @@ Usable Clauses:
 115[0:Inp] || twoYears(temp_zero) -> sixYears(temp_zero)*.
 114[0:Inp] || twoYears(temp_zero) -> fiveYears(temp_zero)*.
 113[0:Inp] || twoYears(temp_zero) -> fourYears(temp_zero)*.
-111[0:Inp] || threeYears(temp_zero)* -> twelveYears(temp_zero).
-110[0:Inp] || threeYears(temp_zero) -> elevenYears(temp_zero)*.
-109[0:Inp] || threeYears(temp_zero) -> tenYears(temp_zero)*.
-108[0:Inp] || threeYears(temp_zero) -> nineYears(temp_zero)*.
-107[0:Inp] || threeYears(temp_zero) -> eightYears(temp_zero)*.
-106[0:Inp] || threeYears(temp_zero) -> sevenYears(temp_zero)*.
-105[0:Inp] || threeYears(temp_zero) -> sixYears(temp_zero)*.
-104[0:Inp] || threeYears(temp_zero) -> fiveYears(temp_zero)*.
-103[0:Inp] || threeYears(temp_zero) -> fourYears(temp_zero)*.
-123[0:Inp] || oneYear(temp_zero)* -> threeYears(temp_zero).
-122[0:Inp] || oneYear(temp_zero)* -> twoYears(temp_zero).
 112[0:Inp] || twoYears(temp_zero) -> threeYears(temp_zero)*.
-200[0:Inp] ||  -> twoYears(temp_zero) Adelete(temp_zero,cloudX,U)*.
-199[0:Inp] ||  -> DENY(temp_zero,read,U,cloudX,V)*.
-201[0:Inp] || threeYears(temp_zero) PERMIT(temp_zero,read,kim,cloudX,skc0)* -> .
-202[0:Inp] || Adelete(temp_zero,cloudX,skc1) PERMIT(temp_zero,read,kim,cloudX,skc0)* -> .
+122[0:Inp] || oneYear(temp_zero)* -> twoYears(temp_zero).
+200[0:Inp] ||  -> twoYears(temp_zero) delete(temp_zero,cloudX,U)*.
+199[0:Inp] || Pread(temp_zero,U,cloudX,V)* -> .
 203[0:Inp] || PERMIT(U,V,W,X,Y) DENY(U,V,W,X,Y)* -> .
 Eventuality Clauses:
 
 TSPASS 0.95 
 SPASS beiseite: Satisfiable.
 Problem: tests/tmp_gen.fotl 
-TSPASS derived 286 clauses, backtracked 0 clauses and kept 204 clauses.
+TSPASS derived 285 clauses, backtracked 0 clauses and kept 201 clauses.
 Number of input clauses: 203
 Number of eventualities: 0
-Total number of generated clauses: 489
-Number of forward-subsumed clauses: 285
-Number of backward-subsumed clauses: 2
+Total number of generated clauses: 488
+Number of forward-subsumed clauses: 287
+Number of backward-subsumed clauses: 0
 Total number of subsumed clauses: 287
 Number of tautology clauses: 0
 Number of clauses with different loop search markers: 0
 Number of usable clauses left: 0
-Number of worked-off clauses left: 202
+Number of worked-off clauses left: 201
 Number of successful loop searches: 0
 TSPASS allocated 560 KBytes.
-TSPASS spent	0:00:00.01 (0.013998s) on the problem.
-		0:00:00.00 (0.003s) for the input.
-		0:00:00.00 (0.003s) for the FLOTTER CNF translation.
+TSPASS spent	0:00:00.00 (0.004s) on the problem.
+		0:00:00.00 (0s) for the input.
+		0:00:00.00 (0s) for the FLOTTER CNF translation.
 		0:00:00.00 (0s) for inferences.
 		0:00:00.00 (0s) for the backtracking.
-		0:00:00.00 (0.001s) for the reduction.
+		0:00:00.00 (0s) for the reduction.
 
 --------------------------TSPASS-STOP------------------------------

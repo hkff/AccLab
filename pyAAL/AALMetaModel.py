@@ -432,7 +432,7 @@ class m_clause(m_declarable):
         ue = str(self.usage.to_ltl()) if self.usage is not None else "false"
         ae = str(self.audit.to_ltl()) if self.audit.usage is not None else "false"
         re = str(self.rectification.to_ltl()) if self.rectification.usage is not None else "false"
-        return ae + " & (always(" + ue + " | (~" + ue + ") & (always(audit => " + re + ")))"
+        return ae + " & always(" + ue + " | ((~(" + ue + ")) & (always(" + ae + " => (" + re + ")))))"
 
 
 # Agent

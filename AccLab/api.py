@@ -4,9 +4,11 @@ import os
 from urllib.parse import *
 import sys
 from io import StringIO
+
+sys.path.insert(0, "../pyAAL/")
+
 from aalc import *
 base_dir = "BackendInterface/workspace"
-
 
 # List dir
 def api_listDir(wpath):

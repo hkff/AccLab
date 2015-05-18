@@ -4,7 +4,6 @@
 AGENT kim TYPES() REQUIRED(communicate ) PROVIDED(give )
 AGENT hospital TYPES(DataSubject ) REQUIRED(give ) PROVIDED(send )
 AGENT sandra TYPES(DataControler ) REQUIRED(upload ) PROVIDED(communicate )
-AGENT agent TYPES() REQUIRED(send ) PROVIDED(notify )
 
 /***************************
  *       Clauses
@@ -32,10 +31,4 @@ AND (MUST hospital.delete[file]() AFTER 6 months)
 )
 
 
-
-Clause agent_policy (
- {Usage}
- AUDITING {actions}
- IF_VIOLATED_THEN {actions}
-)
 

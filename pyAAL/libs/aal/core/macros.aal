@@ -14,6 +14,14 @@ validate(self, _c1, _c2)
 """
 )
 
+MACRO validate2(c1) (
+// Checking validity
+"""
+_c1 = self.clause(c1).to_ltl()
+validate2(self, _c1)
+"""
+)
+
 MACRO resolve(c1 c2) (
 // Checking validity and auto resolve conflicts
 """

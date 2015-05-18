@@ -1,0 +1,17 @@
+LOAD "core.macros"
+/*** Kim's user preference ***/
+/*
+CLAUSE km (
+    kim.read[cloudX](d)
+    AUDITING leslie.audit[cloudS]()
+    IF_VIOLATED_THEN MUST(leslie.sanction[cloudX]() AND cloudX.delete[d]())
+)
+*/
+CLAUSE km2 (
+    kim.read[cloudX]()
+    AUDITING leslie.audit[cloudS]()
+    IF_VIOLATED_THEN cloudX.delete[d]()
+)
+
+
+ call validate2("'km2'")

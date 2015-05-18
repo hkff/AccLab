@@ -50,8 +50,6 @@ CLAUSE sandra_policy (
 
 
 
-
-
 /*** CloudZ's policy ***/
 CLAUSE cloudZ_policy (
     FORALL a:agent FORALL file:data WHERE file.subject == a

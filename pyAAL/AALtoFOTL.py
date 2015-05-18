@@ -30,4 +30,20 @@ def AALtoFOTL(mm: aalmm=None):
     """
     # TODO: define Algo
     print("Entering TSPASS translation...")
+    """
+    INTER[clause] :
+        INTER[ae] AND Always (INTER[ue] OR ((~ INTER[ue]) AND (Always audit => INTER[re])))
+
+    INTER[actionExp] :
+        action        -> time => serviceId(agentId1, agentId2, INTER[exp], purpose)
+        not action    -> ~ INTER[action]
+        modal         -> modal INTER[actionExp]
+        condition     -> INTER[exp]
+        booleanopExp  -> INTER[actionExp1] booleanOp INTER[actionExp2]
+        Author        : PERMIT action -> P_INTER[action]
+                        DENY action   -> ~ P_INTER[action]
+        ifthen        -> INTER[actionExp1] => INTER[actionExp2]
+        qvar          -> quant INTER[var]
+    """
+
     return mm.aalprog.to_ltl()

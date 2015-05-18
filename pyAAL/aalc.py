@@ -89,16 +89,16 @@ def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, co
     """
     Parse AAL.
     :param file: The AAL input file
-    :param use_shell:
-    :param check:
+    :param use_shell: Run an interactive shell after parsing
+    :param check: Perform a various checks
     :param monodic: Perform the monodic test
-    :param compile:
+    :param compile: Compile the AAL file into aalc
     :param libs_path: The standard library path
-    :param root_path:
-    :param recompile:
+    :param root_path: Base path
+    :param recompile: Recompile the file
     :param to_ltl: Transform AAL code into FOTL formula
     :param show_ast: Show an interactive AST graph in a web page
-    :return:
+    :return: {"res": the result, "mm": the metamodel instance}
     """
     from AALCompiler import AALCompilerListener
 
@@ -141,8 +141,6 @@ def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, co
             f.write(ltl_trans)
         res += "\n-------------------------- FOTL Translation end --------------------------\n"
 
-    print(res)  # TODO remove
-
     if compile:  # Compile aal file to aalc
         sys.setrecursionlimit(3000)
         with open(file+"c", "wb") as f:
@@ -166,7 +164,7 @@ def tspassc(file=None, code="", output="tests/tmp.tspass", use_shell=False, debu
     :param file: The tspass input file
     :param code: The tspass code (if a file is given the code will be ignored)
     :param output: The output parsing file
-    :param use_shell:
+    :param use_shell: Run an interactive shell after parsing
     :param debug: boolean enable/disable debug messages
     :param synth: Synthesize monitors specifications from a global FOTL formula
     :return:
@@ -383,7 +381,8 @@ def main(argv):
              to_ltl=to_ltl, show_ast=show_ast)
 
     elif inputfile.endswith(".tspass"):  # Use tspass compiler
-         tspassc(inputfile, use_shell=False, debug=False, synth=synth)
+        res = tspassc(inputfile, use_shell=False, debug=False, synth=synth)
+        print(res["print"])
 
 
 # Call the main

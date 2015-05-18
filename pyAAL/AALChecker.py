@@ -23,7 +23,7 @@ from pprint import pprint
 from tools.color import *
 DEBUG = False
 
-# TODO optimize pre_cond... this is bullshit
+# TODO optimize pre_cond... to remove
 pre_cond = "(oneMonth => twoMonths) & " + "(oneMonth => threeMonths) & " + "(oneMonth => fourMonths) & " +\
             "(oneMonth => fiveMonths) & " + "(oneMonth => sixMonths) & " + "(oneMonth => sevenMonths) & " +\
             "(oneMonth => eightMonths) & " + "(oneMonth => nineMonths) & " + "(oneMonth => tenMonths) & " +\
@@ -56,12 +56,13 @@ pre_condDays = pre_cond.replace("Month", "Day")
 
 pre_cond += pre_condYears + pre_condDays
 
-pre_cond += "always( ![a,x,y,z] ~(PERMIT(a, x, y, z) & DENY(a, x, y, z))) &  "
+pre_cond += "always( ![a,x,y,z] ~(PERMIT(a, x, y, z) & DENY(a, x, y, z))) &  "  # Translation not valid
+
 
 # Check AAL global
 def check_aal(mm=None, verbose=False):
     res = ""
-    res +="------------------------- Checking Monodic test -------------------------"
+    res += "------------------------- Checking Monodic test -------------------------"
     if verbose:
         agentsCount = len(mm.aalprog.declarations["agents"])
         servicesCount = len(mm.aalprog.declarations["services"])
@@ -85,7 +86,7 @@ def check_aal(mm=None, verbose=False):
         res += "\nMonodic test :"
     p = check_monodic(mm.aalprog)
     res += "\n" + p["print"]
-    res +="-------------------------- Checking Monodic End -------------------------"
+    res += "-------------------------- Checking Monodic End -------------------------"
     return res
 
 
@@ -282,6 +283,54 @@ def validate(compiler, c1, c2, resolve=False):
         v = True
     else:
         solve_triggers(compiler, p=c2, u=c1, resolve=resolve)
+
+    if v:
+        print(Color("\n{autogreen}[VALIDITY] Formula is valid !{/green}"))
+    else:
+        print(Color("\n{autored}[VALIDITY] Formula is not valid !{/red}"))
+
+    print("------------------------- Validity check End -------------------------\n")
+    return ""
+
+
+def validate2(compiler, c1):
+    # Monodic test
+    print("------------------------- Monodic check -------------------------")
+    mc1 = check_monodic(c1)
+    if not mc1["monodic"]:
+        print(mc1["print"])
+        print(Color("{autored}Please correct your clause. Exiting... {/red}"))
+        return
+
+    print(Color("{autogreen}Monodic check passed ! {/green}"))
+
+    v = False
+    verbose = False
+    print("------------------------- Starting Validity check -------------------------")
+
+    print("----- Checking c1 :")
+    res = compiler.apply_check(code=c1, show=False, verbose=verbose)
+    if res["res"] == "Unsatisfiable":
+        v = False
+        print(Color("{autored}  -> " + res["res"] + "{/red}"))
+    else:
+        print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+
+    if res["res"] == "":
+        print(res["print"])
+
+    print("----- Checking ~(c1) :")
+    res = compiler.apply_check(code="~(" + c1 + ")", show=False, verbose=verbose)
+    if res["res"] == "Unsatisfiable":
+        print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+    else:
+        print(Color("{autored}  -> " + res["res"] + "{/red}"))
+
+    if res["res"] == "":
+        print(res["print"])
+
+    if res["res"] == "Unsatisfiable":
+        v = True
 
     if v:
         print(Color("\n{autogreen}[VALIDITY] Formula is valid !{/green}"))
