@@ -14,4 +14,10 @@ CLAUSE km2 (
 )
 
 
- call validate2("'km2'")
+call validate2("'km2'")
+
+EXEC
+"""
+print(self.clause("km2").to_natural())
+print(self)
+"""
