@@ -132,6 +132,8 @@ h_lpar    : '(';
 h_rpar    : ')';
 h_lbar    : '[';
 h_rbar    : ']';
+h_lmar    : '{';
+h_rmar    : '}';
 h_dot     : '.';
 h_colon   : ':';
 h_equal   : '==';
@@ -238,7 +240,7 @@ quant       : Q_forall | Q_exists;
 qvar        : quant h_variable (O_where condition)?;
 booleanOp   : O_and | O_or | O_onlywhen | T_until | T_unless;
 author      : (A_permit | A_deny) action NEWLINE?;
-ifthen      : O_if h_lpar actionExp h_rpar O_then h_lpar actionExp h_rpar
+ifthen      : O_if h_lpar actionExp h_rpar O_then h_lmar actionExp h_rmar
             | O_if actionExp O_then actionExp;
 
 

@@ -537,11 +537,11 @@ when we develop our products and services. We shall inform you of any modificati
 
 CLAUSE aal_rule_1(
     FORALL u:DataSubject FORALL b:Actor FORALL d:data
-    IF(d.subject == u) THEN (
+    IF(d.subject == u) THEN {
         PERMIT u.read[b](d)   AND
         PERMIT u.update[b](d) AND
         PERMIT u.delete[b](d)
-    )
+    }
 )
 
 /*
@@ -551,7 +551,7 @@ CLAUSE aal_rule_1(
 CLAUSE aal_rule_2 (
     FORALL e:Employee FORALL d:data
     IF (@username(d) OR @displayName(d) OR @gender(d) OR @age(d) OR @country(d)) THEN
-     (PERMIT e.read[cardioMon](d))
+     {PERMIT e.read[cardioMon](d) PURPOSE (health) }
 )
 
 /*
@@ -561,10 +561,17 @@ CLAUSE aal_rule_2 (
 CLAUSE aal_rule_3 (
     FORALL d:data
     IF( @age(d) OR @blood(d) OR @sugarLevel(d) OR @heartbeat(d) OR @country(d)) THEN
-     ( PERMIT mapOnWeb.read[cardioMon](d) )
+    {
+        PERMIT mapOnWeb.read[cardioMon](d) AND
+        MUST( mapOnWeb.delete[mapOnWeb](d) BEFORE "P0Y0M0DT0H2M0S")
+    }
 )
 
+/*
+CLAUSE MapOnWeb_Policy (
 
+)
+*/
 /*
 CLAUSE km2 (
     PERMIT kim.read[cloudX]() or kim.read[cloudX]()
