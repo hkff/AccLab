@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE a-ppl:Policy>
+<a-ppl:Policy
+    xmlns:ob="http://www.a4cloud.eu/a-ppl/obligation" xmlns:a-ppl="http://www.a4cloud.eu/a-ppl"
+    xmlns:xacml="urn:oasis:names:tc:xacml:2.0:policy:schema:os" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    PolicyId="WearableCo-Policy" RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides">
+	
+    <!-- The personal data that will be stored are defined here   -->
+    <xacml:Target>
+        <xacml:Resources>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">username</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">password</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">user id</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">display name</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">gender</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">date of birth</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type"
+                        ResourceSchema="https://schema.org/MedicalCondition" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">country</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">email</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">height</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type"
+                        ResourceSchema="https://schema.org/MedicalCondition" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">weight</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type"
+                        ResourceSchema="https://schema.org/MedicalCondition" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">sugar level</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type"
+                        ResourceSchema="https://schema.org/MedicalCondition" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">blood pressure</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type"
+                        ResourceSchema="https://schema.org/MedicalCondition" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">heartbeat rate</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type"
+                        ResourceSchema="https://schema.org/MedicalCondition" />
+                     </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">workout</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type"
+                        ResourceSchema="https://schema.org/MedicalCondition" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">yoga</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type"
+                        ResourceSchema="https://schema.org/MedicalCondition" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">swimming</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type"
+                        ResourceSchema="https://schema.org/MedicalCondition" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+            <xacml:Resource>
+                <xacml:ResourceMatch
+                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">running</xacml:AttributeValue>
+                    <xacml:ResourceAttributeDesignator
+                        DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type"
+                        ResourceSchema="https://schema.org/MedicalCondition" />
+                </xacml:ResourceMatch>
+            </xacml:Resource>
+
+        </xacml:Resources>
+    </xacml:Target>
+
+
+    <!-- Rule for personal data accessing by Data Subjects (Clients of WearableCo)-->
+    <!-- Rule1: All PII can be read, updated or deleted by Data Subject-->
+    <a-ppl:Rule Effect="Permit" RuleId="a-ppl_rule_1">
+        <xacml:Target>
+            <xacml:Subjects>
+                <xacml:Subject>
+                    <xacml:SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Data Subject</xacml:AttributeValue>
+                        <xacml:SubjectAttributeDesignator 	DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="subject:subject-id"/>
+                    </xacml:SubjectMatch>
+                </xacml:Subject>
+            </xacml:Subjects>
+            <xacml:Actions>
+
+           <xacml:Action>
+                    <xacml:ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</xacml:AttributeValue>
+                        <xacml:ActionAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="action:action-id"/>
+                    </xacml:ActionMatch>
+                </xacml:Action>
+                <xacml:Action>
+                    <xacml:ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">update</xacml:AttributeValue>
+                        <xacml:ActionAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="action:action-id"/>
+                    </xacml:ActionMatch>
+                </xacml:Action>
+                <xacml:Action>
+                    <xacml:ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">delete</xacml:AttributeValue>
+                        <xacml:ActionAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="action:action-id"/>
+                    </xacml:ActionMatch>
+                </xacml:Action>
+            </xacml:Actions>
+        </xacml:Target>
+    </a-ppl:Rule>
+
+    <!-- WearableCo's access control policy -->
+    <!-- Rule 2: referring to access to personal data for WearableCo Employees -->
+    <a-ppl:Rule Effect="Permit" RuleId="a-ppl_rule_2">
+        <xacml:Target>
+            <xacml:Subjects>
+                <xacml:Subject>
+                    <xacml:SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Employee</xacml:AttributeValue>
+                        <xacml:SubjectAttributeDesignator 	DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="subject:subject-id"/>
+                    </xacml:SubjectMatch>
+                </xacml:Subject>
+            </xacml:Subjects>
+            <xacml:Resources>
+                <xacml:Resource>
+                    <xacml:ResourceMatch
+                        MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">username</xacml:AttributeValue>
+                        <xacml:ResourceAttributeDesignator
+                            DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
+                    </xacml:ResourceMatch>
+                </xacml:Resource>
+                <xacml:Resource>
+                    <xacml:ResourceMatch
+                        MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">display name</xacml:AttributeValue>
+                        <xacml:ResourceAttributeDesignator
+                            DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
+                    </xacml:ResourceMatch>
+                   </xacml:Resource>
+                <xacml:Resource>
+                    <xacml:ResourceMatch
+                        MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">gender</xacml:AttributeValue>
+                        <xacml:ResourceAttributeDesignator
+                            DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
+                    </xacml:ResourceMatch>
+                </xacml:Resource>
+                <xacml:Resource>
+                    <xacml:ResourceMatch
+                        MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">date of birth</xacml:AttributeValue>
+                        <xacml:ResourceAttributeDesignator
+                            DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
+                    </xacml:ResourceMatch>
+                </xacml:Resource>
+                <xacml:Resource>
+                    <xacml:ResourceMatch
+                        MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">country</xacml:AttributeValue>
+                        <xacml:ResourceAttributeDesignator
+                            DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
+                    </xacml:ResourceMatch>
+                </xacml:Resource>
+                <xacml:Resource>
+                    <xacml:ResourceMatch
+                        MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">email</xacml:AttributeValue>
+                        <xacml:ResourceAttributeDesignator
+                            DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
+                    </xacml:ResourceMatch>
+                </xacml:Resource>
+            </xacml:Resources>
+            <xacml:Actions>
+                <xacml:Action>
+                    <xacml:ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</xacml:AttributeValue>
+                        <xacml:ActionAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="action:action-id"/>
+                    </xacml:ActionMatch>
+                </xacml:Action>
+            </xacml:Actions>
+        </xacml:Target>
+    </a-ppl:Rule>
+
+    <!-- WearableCo's access control policy for Map-On-Web -->
+    <!-- Rule 3: NON downstream usage -->
+    <a-ppl:Rule Effect="Permit" RuleId="a-ppl_rule_3">
+        <xacml:Target>
+            <xacml:Subjects>
+                <xacml:Subject>
+                    <xacml:SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+<xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Map-On-Web</xacml:AttributeValue>
+                        <xacml:SubjectAttributeDesignator 	DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="subject:subject-id"/>
+                    </xacml:SubjectMatch>
+                </xacml:Subject>
+            </xacml:Subjects>
+            <xacml:Resources>
+                <xacml:Resource>
+                    <xacml:ResourceMatch
+                        MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">date of birth</xacml:AttributeValue>
+                        <xacml:ResourceAttributeDesignator
+                            DataType="http://www.w3.org/2001/XMLSchema#string"
+                            AttributeId="resource:resource-type" />
+                    </xacml:ResourceMatch>
+                </xacml:Resource>
+                <xacml:Resource>
+                    <xacml:ResourceMatch
+                        MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">blood pressure</xacml:AttributeValue>
+                        <xacml:ResourceAttributeDesignator
+                            DataType="http://www.w3.org/2001/XMLSchema#string"
+                            AttributeId="resource:resource-type" />
+                    </xacml:ResourceMatch>
+                </xacml:Resource>
+                <xacml:Resource>
+                    <xacml:ResourceMatch
+                        MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">sugar level</xacml:AttributeValue>
+                        <xacml:ResourceAttributeDesignator
+                            DataType="http://www.w3.org/2001/XMLSchema#string"
+                            AttributeId="resource:resource-type" />
+                    </xacml:ResourceMatch>
+                </xacml:Resource>
+                <xacml:Resource>
+                    <xacml:ResourceMatch
+                        MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">heartbeat rate</xacml:AttributeValue>
+                        <xacml:ResourceAttributeDesignator
+                            DataType="http://www.w3.org/2001/XMLSchema#string"
+                            AttributeId="resource:resource-type" />
+                    </xacml:ResourceMatch>
+                </xacml:Resource>
+                <xacml:Resource>
+                    <xacml:ResourceMatch
+                        MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">country</xacml:AttributeValue>
+                        <xacml:ResourceAttributeDesignator
+                            DataType="http://www.w3.org/2001/XMLSchema#string"
+                            AttributeId="resource:resource-type" />
+                    </xacml:ResourceMatch>
+                </xacml:Resource>
+            </xacml:Resources>
+  <xacml:Actions>
+                <xacml:Action>
+                    <xacml:ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</xacml:AttributeValue>
+                        <xacml:ActionAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="action:action-id"/>
+                    </xacml:ActionMatch>
+                </xacml:Action>
+            </xacml:Actions>
+        </xacml:Target>
+    </a-ppl:Rule>
+
+    <!-- WearableCo's data handling policy -->
+    <a-ppl:DataHandlingPolicy>
+        <a-ppl:AuthorizationsSet>
+
+            <!-- Personal Data should be used from Wearable Co only for the following purposes -->
+
+            <a-ppl:AuthzUseForPurpose>
+                <a-ppl:Purpose duration="P2Y6M0DT00H0M0S" location="Europe">http://www.w3.org/2002/01/P3Pv1/health</a-ppl:Purpose>
+                <a-ppl:Purpose duration="P2Y6M2DT00H0M0S" location="Europe">http://www.w3.org/2002/01/P3Pv1/admin</a-ppl:Purpose>
+            </a-ppl:AuthzUseForPurpose>
+
+            <!-- Policy for third party data processors (Map-On-Web data provider) -->
+            <!-- This policy has more "strict" rules -->
+            <a-ppl:AuthzDownstreamUsage allowed="false">
+                <a-ppl:Policy xmlns:ob="http://www.a4cloud.eu/a-ppl/obligation"
+                              xmlns:a-ppl="http://www.a4cloud.eu/a-ppl" xmlns:xacml="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" PolicyId="MapOnWeb-Policy"
+                              RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides">
+
+                    <xacml:Target>
+                        <xacml:Resources>
+                            <xacml:Resource>
+                                <xacml:ResourceMatch
+                                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Age</xacml:AttributeValue>
+                                    <xacml:ResourceAttributeDesignator
+                                        DataType="http://www.w3.org/2001/XMLSchema#string"
+                                        AttributeId="resource:resource-type" />
+                                </xacml:ResourceMatch>
+                            </xacml:Resource>
+                            <xacml:Resource>
+                                <xacml:ResourceMatch
+                                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Blood Pressure</xacml:AttributeValue>
+                                    <xacml:ResourceAttributeDesignator
+                                        DataType="http://www.w3.org/2001/XMLSchema#string"
+                                        AttributeId="resource:resource-type" />
+                                </xacml:ResourceMatch>
+                            </xacml:Resource>
+                            <xacml:Resource>
+                                <xacml:ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Sugar Level</xacml:AttributeValue>
+                                    <xacml:ResourceAttributeDesignator
+                                        DataType="http://www.w3.org/2001/XMLSchema#string"
+                                        AttributeId="resource:resource-type" />
+                                </xacml:ResourceMatch>
+                            </xacml:Resource>
+                            <xacml:Resource>
+                                <xacml:ResourceMatch
+                                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Heartbeat Rate</xacml:AttributeValue>
+                                    <xacml:ResourceAttributeDesignator
+                                        DataType="http://www.w3.org/2001/XMLSchema#string"
+                                        AttributeId="resource:resource-type" />
+                                </xacml:ResourceMatch>
+                            </xacml:Resource>
+                            <xacml:Resource>
+                                <xacml:ResourceMatch
+                                    MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                                    <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Country</xacml:AttributeValue>
+                                    <xacml:ResourceAttributeDesignator
+                                        DataType="http://www.w3.org/2001/XMLSchema#string"
+                                        AttributeId="resource:resource-type" />
+                                </xacml:ResourceMatch>
+                            </xacml:Resource>
+                        </xacml:Resources>
+                    </xacml:Target>
+
+                    <!-- Rule for personal data accessing by Map-On-Web provider -->
+                    <!-- All data can be read or deleted by Map-On-Web from it's database -->
+                    <a-ppl:Rule Effect="Permit" RuleId="a-ppl_rule_1">
+                        <xacml:Target>
+                            <xacml:Subjects>
+                                <xacml:Subject>
+                                    <xacml:SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Map-On-Web</xacml:AttributeValue>
+                                        <xacml:SubjectAttributeDesignator 	DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="subject:subject-id"/>
+                                    </xacml:SubjectMatch>
+                                </xacml:Subject>
+                            </xacml:Subjects>
+                            <xacml:Actions>
+                                <xacml:Action>
+                                    <xacml:ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</xacml:AttributeValue>
+                                        <xacml:ActionAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="action:action-id"/>
+                                    </xacml:ActionMatch>
+                                </xacml:Action>
+                                <!--  Point out that access to delete must be agreed to Map-On-Web to ATC -->
+                                <xacml:Action>
+                                    <xacml:ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">delete</xacml:AttributeValue>
+                                        <xacml:ActionAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="action:action-id"/>
+                                    </xacml:ActionMatch>
+                                </xacml:Action>
+                            </xacml:Actions>
+                        </xacml:Target>
+                    </a-ppl:Rule>
+
+                    <!-- Map-On-Web's data handling policy -->
+                    <a-ppl:DataHandlingPolicy>
+                        <a-ppl:AuthorizationsSet>
+
+                            <!-- Personal Data should be used from Map-On-Web only for the following purposes -->
+                            <a-ppl:AuthzUseForPurpose>
+                                <a-ppl:Purpose duration="P0Y0M0DT00H10M0S" location="Europe">http://www.w3.org/2002/01/P3Pv1/health</a-ppl:Purpose>
+                            </a-ppl:AuthzUseForPurpose>
+
+                            <!-- Map-On-Web is not allowed to send Personal Data to third party data processors  -->
+                            <a-ppl:AuthzDownstreamUsage allowed="false"/>
+                        </a-ppl:AuthorizationsSet>
+
+                        <!-- Wearable Co is accountable to their customers for how data are processed by Map-On-Web-->
+                        <ob:ObligationsSet>
+                            <ob:Obligation elementId="a-ppl_rule_2">
+                                <ob:TriggersSet>
+                                    <ob:TriggerPersonalDataAccessedForPurpose>
+                                        <a-ppl:Purpose>http://www.w3.org/2002/01/P3Pv1/health</a-ppl:Purpose>
+                                    </ob:TriggerPersonalDataAccessedForPurpose>
+                                </ob:TriggersSet>
+                                <ob:ActionLog>
+                                    <ob:Timestamp>true</ob:Timestamp>
+                                    <ob:Action>true</ob:Action>
+                                    <ob:Purpose>true</ob:Purpose>
+                                    <ob:Subject>true</ob:Subject>
+                                    <ob:Resource>true</ob:Resource>
+                                    <ob:Location>false</ob:Location>
+                                    <ob:Expiration>false</ob:Expiration>
+                                    <ob:Flag>false</ob:Flag>
+                                </ob:ActionLog>
+                            </ob:Obligation>
+
+                            <!--Personal Data storage period of 6 months -->
+                            <ob:Obligation elementId="a-ppl_rule_3">
+                                <ob:TriggersSet>
+                                    <ob:TriggerAtTime>
+                                        <ob:Start>
+                                            <ob:StartNow />
+                                        </ob:Start>
+                                        <ob:MaxDelay>
+                                            <ob:Duration>P0Y0M0DT0H2M0S</ob:Duration>
+                                        </ob:MaxDelay>
+                                    </ob:TriggerAtTime>
+                                </ob:TriggersSet>
+                                <ob:ActionDeletePersonalData/>
+                            </ob:Obligation>
+
+                            <!-- Notification of Cardio Mon about security breach (data loss) -->
+                            <ob:Obligation elementId="a-ppl_rule_4">
+                               <ob:TriggersSet>
+                                    <ob:TriggerDataLost/>
+                                </ob:TriggersSet>
+                                <ob:ActionNotify>
+                                    <ob:Media>e-mail</ob:Media>
+                                    <ob:Address>cardio.mon@a4cloud.com</ob:Address>
+                                    <ob:Recipients>Cardio Mon</ob:Recipients>
+                                    <ob:Type>Data Lost</ob:Type>
+                                </ob:ActionNotify>
+                            </ob:Obligation>
+
+                            <!--Notification of Cardio Mon about security breach (policy violation) -->
+                            <ob:Obligation elementId="a-ppl_rule_5">
+                                <ob:TriggersSet>
+                                    <ob:TriggerOnViolation/>
+                                </ob:TriggersSet>
+                                <ob:ActionNotify>
+                                    <ob:Media>e-mail</ob:Media>
+                                    <ob:Address>cardio.mon@a4cloud.com</ob:Address>
+                                    <ob:Recipients>Cardio Mon</ob:Recipients>
+                                    <ob:Type>Policy violation</ob:Type>
+                                </ob:ActionNotify>
+                            </ob:Obligation>
+
+                            <!-- Other security and privacy measures -->
+
+                            <!-- Log whenever access is permitted-->
+                            <ob:Obligation elementId="a-ppl_rule_6">
+                                <ob:TriggersSet>
+                                    <!-- A-PPL trigger -->
+                                    <ob:TriggerPersonalDataAccessPermitted/>
+                                </ob:TriggersSet>
+                                <!-- A-PPL log action -->
+                                <ob:ActionLog>
+                                    <ob:Timestamp>true</ob:Timestamp>
+                                    <ob:Action>true</ob:Action>
+                                    <ob:Purpose>true</ob:Purpose>
+                                    <ob:Subject>true</ob:Subject>
+                                    <ob:Resource>true</ob:Resource>
+                                    <ob:Location>false</ob:Location>
+                                    <ob:Expiration>false</ob:Expiration>
+                                    <ob:Flag>false</ob:Flag>
+                                </ob:ActionLog>
+                            </ob:Obligation>
+
+                            <!-- Notify Cardio Mon whenever access is denied-->
+                            <ob:Obligation elementId="a-ppl_rule_7">
+                                <ob:TriggersSet>
+                                    <ob:TriggerPersonalDataAccessDenied/>
+                                </ob:TriggersSet>
+                                <ob:ActionNotify>
+                                    <ob:Media>e-mail</ob:Media>
+                                    <ob:Address>cardio.mon@a4cloud.com</ob:Address>
+                                    <ob:Recipients>Cardio Mon</ob:Recipients>
+                                    <ob:Type>Unauthorized Personal Data Access Attempt</ob:Type>
+                                </ob:ActionNotify>
+                            </ob:Obligation>
+
+                            <!-- Notify Cardio Mon whenever personal data are deleted-->
+                            <ob:Obligation elementId="a-ppl_rule_8">
+                                <ob:TriggersSet>
+                                    <ob:TriggerPersonalDataDeleted/>
+                                </ob:TriggersSet>
+                                <ob:ActionNotify>
+                                    <ob:Media>e-mail</ob:Media>
+                                    <ob:Address>cardio.mon@a4cloud.com</ob:Address>
+                                    <ob:Recipients>Cardio Mon</ob:Recipients>
+                                    <ob:Type>Personal Data Deleted</ob:Type>
+                                </ob:ActionNotify>
+                            </ob:Obligation>
+                        </ob:ObligationsSet>
+                    </a-ppl:DataHandlingPolicy>
+                </a-ppl:Policy>
+            </a-ppl:AuthzDownstreamUsage>
+        </a-ppl:AuthorizationsSet>
+
+        <!-- Wearable Co obligations (accountable to their customers) -->
+        <ob:ObligationsSet>
+            <!--Notification of data subject when she is registered to the application
+            for the first time. Data then is about to be collected -->
+            <!-- Information about collecting and processing, purpose, location, recipients,
+            rights -->
+            <ob:Obligation elementId="a-ppl_rule_2">
+                <ob:TriggersSet>
+                    <ob:TriggerOnUserRegistration />
+                </ob:TriggersSet>
+                <!-- A-PPL action -->
+                <ob:ActionNotify>
+                    <ob:Media>e-mail</ob:Media>
+                    <ob:Address>data.subject@a4cloud.com</ob:Address>
+                    <ob:Recipients>Data Subject</ob:Recipients>
+                    <ob:Type>Data Collection</ob:Type>
+                </ob:ActionNotify>
+            </ob:Obligation>
+
+            <!-- Notification of Data Protection Authority (DPA) that data is about
+            to be collected -->
+            <ob:Obligation elementId="a-ppl_rule_3">
+                <ob:TriggersSet>
+                    <ob:TriggerOnDataCollection />
+                </ob:TriggersSet>
+                <!-- A-PPL action -->
+                <ob:ActionNotify>
+                    <ob:Media>e-mail</ob:Media>
+                    <ob:Address>dpa@a4cloud.com</ob:Address>
+                    <ob:Recipients>Data Protection Authority</ob:Recipients>
+                    <ob:Type>Data Collection</ob:Type>
+                </ob:ActionNotify>
+            </ob:Obligation>
+
+
+            <!-- Wearable Co is accountable for collecting, processing data only for
+            specific purposes -->
+            <ob:Obligation elementId="a-ppl_rule_4">
+                <ob:TriggersSet>
+                    <ob:TriggerPersonalDataAccessedForPurpose>
+                        <a-ppl:Purpose duration="P1Y0M0DT00H02M0S" location="Europe">http://www.w3.org/2002/01/P3Pv1/health</a-ppl:Purpose>
+                        <a-ppl:Purpose duration="P1Y0M0DT00H02M0S" location="Europe">http://www.w3.org/2002/01/P3Pv1/admin</a-ppl:Purpose>
+                    </ob:TriggerPersonalDataAccessedForPurpose>
+                </ob:TriggersSet>
+                <ob:ActionLog>
+                    <ob:Timestamp>true</ob:Timestamp>
+                    <ob:Action>true</ob:Action>
+                    <ob:Purpose>true</ob:Purpose>
+                    <ob:Subject>true</ob:Subject>
+                    <ob:Resource>true</ob:Resource>
+                    <ob:Location>false</ob:Location>
+                    <ob:Expiration>false</ob:Expiration>
+                    <ob:Flag>false</ob:Flag>
+                </ob:ActionLog>
+            </ob:Obligation>
+            <!--Personal Data storage period of 1 year -->
+            <ob:Obligation elementId="a-ppl_rule_5">
+                <ob:TriggersSet>
+                    <ob:TriggerAtTime>
+                        <ob:Start>
+                            <ob:StartNow />
+                        </ob:Start>
+                        <ob:MaxDelay>
+                            <ob:Duration>P0Y1M0DT0H1M0S</ob:Duration>
+                        </ob:MaxDelay>
+                    </ob:TriggerAtTime>
+                </ob:TriggersSet>
+                <ob:ActionDeletePersonalData />
+            </ob:Obligation>
+
+            <!-- Ask Data Subject for consent to processing -->
+            <ob:Obligation elementId="a-ppl_rule_6">
+                <ob:TriggersSet>
+                    <ob:TriggerOnUserRegistration />
+                </ob:TriggersSet>
+                <ob:ActionRequestConsent />
+            </ob:Obligation>
+
+            <!-- Notification of DS about security breach (data loss) -->
+            <ob:Obligation elementId="a-ppl_rule_7">
+                <ob:TriggersSet>
+                    <ob:TriggerDataLost/>
+                </ob:TriggersSet>
+                <ob:ActionNotify>
+                    <ob:Media>e-mail</ob:Media>
+                    <ob:Address>data.subject@a4cloud.com</ob:Address>
+                    <ob:Recipients>Data Subject</ob:Recipients>
+                    <ob:Type>Data Lost</ob:Type>
+                </ob:ActionNotify>
+            </ob:Obligation>
+
+            <!--Notification of DS about security breach (policy violation) -->
+            <ob:Obligation elementId="a-ppl_rule_8">
+                <ob:TriggersSet>
+                    <ob:TriggerOnViolation />
+                </ob:TriggersSet>
+                <ob:ActionNotify>
+                    <ob:Media>e-mail</ob:Media>
+                    <ob:Address>data.subject@a4cloud.com</ob:Address>
+                    <ob:Recipients>Data Subject</ob:Recipients>
+                    <ob:Type>Policy violation</ob:Type>
+                </ob:ActionNotify>
+            </ob:Obligation>
+
+            <!-- Other security and privacy measures -->
+
+            <!-- Log whenever access is permitted or denied -->
+            <ob:Obligation elementId="a-ppl_rule_9">
+                <ob:TriggersSet>
+                    <!-- A-PPL trigger -->
+                    <ob:TriggerPersonalDataAccessPermitted />
+                    <ob:TriggerPersonalDataAccessDenied />
+                </ob:TriggersSet>
+                <!-- A-PPL log action -->
+                <ob:ActionLog>
+                    <ob:Timestamp>true</ob:Timestamp>
+                    <ob:Action>true</ob:Action>
+                    <ob:Purpose>true</ob:Purpose>
+                    <ob:Subject>true</ob:Subject>
+                    <ob:Resource>true</ob:Resource>
+                    <ob:Location>false</ob:Location>
+                    <ob:Expiration>false</ob:Expiration>
+                    <ob:Flag>false</ob:Flag>
+                </ob:ActionLog>
+            </ob:Obligation>
+<!-- Notify DS whenever access is denied -->
+            <ob:Obligation elementId="a-ppl_rule_10">
+                <ob:TriggersSet>
+                    <ob:TriggerPersonalDataAccessDenied />
+                </ob:TriggersSet>
+                <ob:ActionNotify>
+                    <ob:Media>e-mail</ob:Media>
+                    <ob:Address>data.subject@a4cloud.com</ob:Address>
+                    <ob:Recipients>Data Subject</ob:Recipients>
+                    <ob:Type>Unauthorized Personal Data Access Attempt</ob:Type>
+                </ob:ActionNotify>
+            </ob:Obligation>
+
+
+            <!-- Notify DS whenever personal data are deleted -->
+            <ob:Obligation elementId="a-ppl_rule_11">
+                <ob:TriggersSet>
+                    <ob:TriggerPersonalDataDeleted />
+                </ob:TriggersSet>
+                <ob:ActionNotify>
+                    <ob:Media>e-mail</ob:Media>
+                    <ob:Address>data.subject@a4cloud.com</ob:Address>
+                    <ob:Recipients>Data Subject</ob:Recipients>
+                    <ob:Type>Personal Data Deleted</ob:Type>
+                </ob:ActionNotify>
+            </ob:Obligation>
+
+            <!-- Information about use of data processors -->
+            <ob:Obligation elementId="a-ppl_rule_12">
+                <ob:TriggersSet>
+                    <ob:TriggerPersonalDataSent>
+                        <ob:Id> Personal Data of User</ob:Id>
+                    </ob:TriggerPersonalDataSent>
+                </ob:TriggersSet>
+                <!-- A-PPL action -->
+                <ob:ActionNotify>
+                    <ob:Media>e-mail</ob:Media>
+                    <ob:Address>data.subject@a4cloud.com</ob:Address>
+                    <ob:Recipients>Data Subject</ob:Recipients>
+                    <ob:Type>Personal Data Sent to Data Processor</ob:Type>
+                </ob:ActionNotify>
+            </ob:Obligation>
+        </ob:ObligationsSet>
+    </a-ppl:DataHandlingPolicy>
+</a-ppl:Policy>

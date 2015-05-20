@@ -156,7 +156,7 @@ h_parameters : h_constant | h_variable;
 h_constant   : INT | '"' STRING '"';
 h_type       : ID;
 h_variable   : ID (h_colon h_type)?;
-
+h_predicate  : '@' ID h_lpar ID* h_rpar;
 
 //-------------------------------------------------------//
 //----------------- Lexer rules ------------------------//
@@ -238,11 +238,13 @@ quant       : Q_forall | Q_exists;
 qvar        : quant h_variable (O_where condition)?;
 booleanOp   : O_and | O_or | O_onlywhen | T_until | T_unless;
 author      : (A_permit | A_deny) action NEWLINE?;
-ifthen      : O_if h_lpar actionExp h_rpar O_then h_lpar actionExp h_rpar;
+ifthen      : O_if h_lpar actionExp h_rpar O_then h_lpar actionExp h_rpar
+            | O_if actionExp O_then actionExp;
 
 
 exp : h_variable
     | h_constant
+    | h_predicate
     | ID h_dot h_attribute;
 
 condition              : condition1notExp

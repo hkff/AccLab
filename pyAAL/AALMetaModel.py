@@ -948,6 +948,7 @@ class m_exp(aalmmnode):
         super().__init__()
         pass
 
+
 # Variable
 class m_variable(m_exp):
     def __init__(self):
@@ -965,8 +966,26 @@ class m_variable(m_exp):
     def is_a(self, ttype):
         return str(ttype) == str(self.type)
 
-    def to_natural(self,kw=True):
-        return str(self)+" "
+    def to_natural(self, kw=True):
+        return str(self) + " "
+
+
+# Predicate
+class m_predicate(m_exp):
+    def __init__(self):
+        super().__init__()
+        self.args = []
+        pass
+
+    def __str__(self):
+        q = [str(x) for x in self.args]
+        return "@" + str(self.name) + "(" + str(" ".join(q)) + ")"
+
+    def children(self):
+        return [self.args]
+
+    def to_natural(self, kw=True):
+        return str(self) + " "
 
 # Constant
 class m_constant(m_exp):
@@ -1070,6 +1089,7 @@ class m_conditionComb(m_condition):
         else:
             return "not " + self.cond1.to_natural() + self.operator.to_natural() + self.cond2.to_natural()
 
+
 # Not
 class m_conditionNotComb(m_condition):
     def __init__(self):
@@ -1078,12 +1098,12 @@ class m_conditionNotComb(m_condition):
         self.exp = None
 
     def __str__(self):
-        return str(self.operator) + " " + str(self.exp)
+        return (str(self.operator) if self.operator is not None else "") + " " + str(self.exp)
 
     def to_ltl(self):
-        return (str(self.operator) + "(" + str(self.exp.to_ltl()) + ")") if self.operator is not None else str(self.exp.to_ltl())
+        return ((str(self.operator) if self.operator is not None else "") + "(" + str(self.exp.to_ltl()) + ")") if self.operator is not None else str(self.exp.to_ltl())
 
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         if bool:
             if self.operator==m_booleanOp.O_not:
                 self.operator=None

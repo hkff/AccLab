@@ -418,6 +418,15 @@ class AALListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by AALParser#h_predicate.
+    def enterH_predicate(self, ctx):
+        pass
+
+    # Exit a parse tree produced by AALParser#h_predicate.
+    def exitH_predicate(self, ctx):
+        pass
+
+
     # Enter a parse tree produced by AALParser#serviceDec.
     def enterServiceDec(self, ctx):
         pass
