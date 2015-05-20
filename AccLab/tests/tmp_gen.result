@@ -653,9 +653,9 @@ Number of usable clauses left: 0
 Number of worked-off clauses left: 201
 Number of successful loop searches: 0
 TSPASS allocated 560 KBytes.
-TSPASS spent	0:00:00.00 (0.004s) on the problem.
+TSPASS spent	0:00:00.01 (0.012s) on the problem.
 		0:00:00.00 (0s) for the input.
-		0:00:00.00 (0s) for the FLOTTER CNF translation.
+		0:00:00.00 (0.004s) for the FLOTTER CNF translation.
 		0:00:00.00 (0s) for inferences.
 		0:00:00.00 (0s) for the backtracking.
 		0:00:00.00 (0s) for the reduction.

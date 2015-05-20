@@ -7,12 +7,13 @@ For initial clauses:
 For universal clauses:
 2[0:Inp] || _L -> audit(leslie,cloudS)*.    -> 2[0:Inp] || _L(U) -> audit(U,leslie,cloudS)*.
 3[0:Inp] || delete(cloudX,d)* _L -> .    -> 3[0:Inp] || delete(U,cloudX,d)* _L(U) -> .
-4[0:Inp] || read(kim,cloudX)* _L1 -> .    -> 4[0:Inp] || read(U,kim,cloudX)* _L1(U) -> .
-5[0:Inp] || _L1 -> _P read(kim,cloudX)*.    -> 5[0:Inp] || _L1(U) -> _P(U) read(U,kim,cloudX)*.
-6[0:Inp] || _P -> _waitfor_L _L*.    -> 6[0:Inp] || _P(U) -> _waitfor_L(U) _L(U)*.
-8[0:Inp] || _P1 -> _waitfor_L1_1 _L1*.    -> 8[0:Inp] || _P1(U) -> _waitfor_L1_1(U) _L1(U)*.
-12[0:Inp] || _U -> _L* _waitfor_L.    -> 12[0:Inp] || _U(U) -> _L(U)* _waitfor_L(U).
-13[0:Inp] || _U1 -> _L1* _waitfor_L1_1.    -> 13[0:Inp] || _U1(U) -> _L1(U)* _waitfor_L1_1(U).
+4[0:Inp] || Pread(kim,cloudX)* _L1 -> .    -> 4[0:Inp] || Pread(U,kim,cloudX)* _L1(U) -> .
+5[0:Inp] || read(kim,cloudX)* _L1 -> .    -> 5[0:Inp] || read(U,kim,cloudX)* _L1(U) -> .
+6[0:Inp] || _L1 -> _P read(kim,cloudX) Pread(kim,cloudX)*.    -> 6[0:Inp] || _L1(U) -> _P(U) read(U,kim,cloudX) Pread(U,kim,cloudX)*.
+7[0:Inp] || _P -> _waitfor_L _L*.    -> 7[0:Inp] || _P(U) -> _waitfor_L(U) _L(U)*.
+9[0:Inp] || _P1 -> _waitfor_L1_1 _L1*.    -> 9[0:Inp] || _P1(U) -> _waitfor_L1_1(U) _L1(U)*.
+13[0:Inp] || _U -> _L* _waitfor_L.    -> 13[0:Inp] || _U(U) -> _L(U)* _waitfor_L(U).
+14[0:Inp] || _U1 -> _L1* _waitfor_L1_1.    -> 14[0:Inp] || _U1(U) -> _L1(U)* _waitfor_L1_1(U).
 ------------------TEMPORAL-LOGIC-TRANSLATION-STOP------------------------
 Non-Skolem constants contained in the problem: d, kim, cloudX, temp_zero, leslie, cloudS
 -------------------------CONSTANT-FLOODING START-------------------------
@@ -23,14 +24,14 @@ Weight of the atom (_waitfor_L1_1 U) is 2.
 Weight of the atom (_waitfor_L U) is 2.
 Weight of the temporal successor function set to 3.
 Step clauses:
-13[0:Inp] || s^not-_waitfor_L_0 _waitfor_L(temp_succ(U))* -> .
-12[0:Inp] || s^not-_waitfor_L1_1_0 _waitfor_L1_1(temp_succ(U))* -> .
+14[0:Inp] || s^not-_waitfor_L_0 _waitfor_L(temp_succ(U))* -> .
+13[0:Inp] || s^not-_waitfor_L1_1_0 _waitfor_L1_1(temp_succ(U))* -> .
 1[0:Inp] || _waitfor_L1_1(U) -> _U1(temp_succ(U))*.
 2[0:Inp] || _waitfor_L(U) -> _U(temp_succ(U))*.
 --------------------------TSPASS-START-----------------------------
 Input Problem:
-13[0:Inp] || s^not-_waitfor_L_0 _waitfor_L(temp_succ(U))* -> .
-12[0:Inp] || s^not-_waitfor_L1_1_0 _waitfor_L1_1(temp_succ(U))* -> .
+14[0:Inp] || s^not-_waitfor_L_0 _waitfor_L(temp_succ(U))* -> .
+13[0:Inp] || s^not-_waitfor_L1_1_0 _waitfor_L1_1(temp_succ(U))* -> .
 1[0:Inp] || _waitfor_L1_1(U) -> _U1(temp_succ(U))*.
 2[0:Inp] || _waitfor_L(U) -> _U(temp_succ(U))*.
 3[0:Inp] || _U1(U) -> _L1(U)* _waitfor_L1_1(U).
@@ -40,15 +41,16 @@ Input Problem:
 7[0:Inp] || _L(U) -> audit(U,leslie,cloudS)*.
 8[0:Inp] || audit(temp_zero,leslie,cloudS)* -> _P1(temp_zero).
 9[0:Inp] || read(U,kim,cloudX)* _L1(U) -> .
-10[0:Inp] || delete(U,cloudX,d)* _L(U) -> .
-11[0:Inp] || _L1(U) -> _P(U) read(U,kim,cloudX)*.
+10[0:Inp] || Pread(U,kim,cloudX)* _L1(U) -> .
+11[0:Inp] || delete(U,cloudX,d)* _L(U) -> .
+12[0:Inp] || _L1(U) -> _P(U) read(U,kim,cloudX) Pread(U,kim,cloudX)*.
  This is a first-order Non-Horn problem without equality.
  This is a problem that contains sort information.
- Axiom clauses: 13 Conjecture clauses: 0
+ Axiom clauses: 14 Conjecture clauses: 0
  Inferences: IORe=1 IOFc=1 
  Reductions: RObv=1 RTaut=1 RFSub=1 RBSub=1 
  Extras    : No Input Saturation, No Selection, No Splitting, Full Reduction,  Ratio: 5, FuncWeight: 1, VarWeight: 1
- Precedence: div > id > c^l > temp_succ > temp_shield > temp_zero > cloudS > cloudX > d > kim > leslie > _L > _L1 > _P > _P1 > _U > _U1 > _waitfor_L > _waitfor_L1_1 > audit > delete > read > s^not-_waitfor_L1_1_0 > s^not-_waitfor_L_0
+ Precedence: div > id > c^l > temp_succ > temp_shield > temp_zero > cloudS > cloudX > d > kim > leslie > Pread > _L > _L1 > _P > _P1 > _U > _U1 > _waitfor_L > _waitfor_L1_1 > audit > delete > read > s^not-_waitfor_L1_1_0 > s^not-_waitfor_L_0
  Ordering  : KBO
 Processed Problem:
 
@@ -57,37 +59,38 @@ Worked Off Clauses:
 Usable Clauses:
 2[0:Inp] || _waitfor_L(U) -> _U(temp_succ(U))*.
 1[0:Inp] || _waitfor_L1_1(U) -> _U1(temp_succ(U))*.
-12[0:Inp] || s^not-_waitfor_L1_1_0 _waitfor_L1_1(temp_succ(U))* -> .
-13[0:Inp] || s^not-_waitfor_L_0 _waitfor_L(temp_succ(U))* -> .
+13[0:Inp] || s^not-_waitfor_L1_1_0 _waitfor_L1_1(temp_succ(U))* -> .
+14[0:Inp] || s^not-_waitfor_L_0 _waitfor_L(temp_succ(U))* -> .
 8[0:Inp] || audit(temp_zero,leslie,cloudS)* -> _P1(temp_zero).
 7[0:Inp] || _L(U) -> audit(U,leslie,cloudS)*.
 6[0:Inp] || _P(U) -> _L(U)* _waitfor_L(U).
-5[0:Inp] || _P1(U) -> _L1(U)* _waitfor_L1_1(U).
 4[0:Inp] || _U(U) -> _waitfor_L(U) _L(U)*.
+5[0:Inp] || _P1(U) -> _L1(U)* _waitfor_L1_1(U).
 3[0:Inp] || _U1(U) -> _waitfor_L1_1(U) _L1(U)*.
-10[0:Inp] || _L(U) delete(U,cloudX,d)* -> .
+11[0:Inp] || _L(U) delete(U,cloudX,d)* -> .
+10[0:Inp] || _L1(U) Pread(U,kim,cloudX)* -> .
 9[0:Inp] || _L1(U) read(U,kim,cloudX)* -> .
-11[0:Inp] || _L1(U) -> _P(U) read(U,kim,cloudX)*.
+12[0:Inp] || _L1(U) -> _P(U) Pread(U,kim,cloudX)* read(U,kim,cloudX).
 Eventuality Clauses:
-9[0:Inp] || _waitfor_L1_1(U)* -> .
-7[0:Inp] || _waitfor_L(U)* -> .
+10[0:Inp] || _waitfor_L1_1(U)* -> .
+8[0:Inp] || _waitfor_L(U)* -> .
 TSPASS 0.95 
 SPASS beiseite: Satisfiable.
 Problem: tests/tmp_gen.fotl 
-TSPASS derived 8 clauses, backtracked 0 clauses and kept 20 clauses.
-Number of input clauses: 13
+TSPASS derived 9 clauses, backtracked 0 clauses and kept 22 clauses.
+Number of input clauses: 14
 Number of eventualities: 2
-Total number of generated clauses: 21
+Total number of generated clauses: 23
 Number of forward-subsumed clauses: 0
-Number of backward-subsumed clauses: 1
-Total number of subsumed clauses: 1
+Number of backward-subsumed clauses: 2
+Total number of subsumed clauses: 2
 Number of tautology clauses: 1
 Number of clauses with different loop search markers: 0
 Number of usable clauses left: 0
-Number of worked-off clauses left: 19
+Number of worked-off clauses left: 20
 Number of successful loop searches: 0
 TSPASS allocated 521 KBytes.
-TSPASS spent	0:00:00.00 (0.004s) on the problem.
+TSPASS spent	0:00:00.00 (0s) on the problem.
 		0:00:00.00 (0s) for the input.
 		0:00:00.00 (0s) for the FLOTTER CNF translation.
 		0:00:00.00 (0s) for inferences.

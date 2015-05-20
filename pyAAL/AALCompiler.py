@@ -642,7 +642,7 @@ class AALCompilerListener(AALListener.AALListener):
         dtDec = m_type(name=ctx.ID())  # Declare type (put the ID() to keep context)
 
         # Check if type is already declared
-        print("Type : " + dtName + " " + str(self.aalprog.isDeclared(dtName, m_type)) + " "+ str(dtName in self.refForwardTypes))
+        #print("Type : " + dtName + " " + str(self.aalprog.isDeclared(dtName, m_type)) + " "+ str(dtName in self.refForwardTypes))
         if self.aalprog.isDeclared(dtName, m_type) is True:
             if dtName in self.refForwardTypes:  # Check if type is in forwards ref
                 del self.refForwardTypes[dtName]  # Remove it to resolve forwards ref

@@ -1029,7 +1029,7 @@ class m_conditionCmp(m_condition):
                 self.operator=m_booleanOp.O_equal
                 return "(" + str(self.exp1.to_nnf(True)) + " " + str(self.operator) + " " + str(self.exp2.to_nnf(True)) + ")"
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         if kw:
             return str(self.exp1.to_natural()) + str(self.operator.to_natural()) + str(self.exp2.to_natural())
         else:
@@ -1164,17 +1164,17 @@ class m_action(m_aexp):
             res += ")"
         return res
 
-    def to_natural(self,kw=True,auth=False):
+    def to_natural(self, kw=True, auth=False):
         if kw:
-            res = str(self.agent1) + (" is allowed to use " if auth else " ") + str(self.service.name)+" service from " + \
-                  ( str(self.agent2) if self.agent2 is not None else " ") + \
-                  " " + ("to "+ str(self.service.name)+" "+str(self.args)+" " if self.args is not None else "") + "" + \
-                  (str(self.time) if self.time is not None else "")
+            res = str(self.agent1) + (" is allowed to use " if auth else " use ") + str(self.service.name)+" service of " + \
+                (str(self.agent2) if self.agent2 is not None else " ") + \
+                " " + ("to " + str(self.service.name)+" "+str(self.args)+" " if self.args is not None else "") + "" + \
+                (str(self.time) if self.time is not None else "")
         else:
-            res = str(self.agent1) + (" is not allowed to use " if auth else " ") + str(self.service.name)+" service from " + \
-                  ( str(self.agent2) if self.agent2 is not None else " ") + \
-                  " " + ("to "+ str(self.service.name)+" "+str(self.args)+" " if self.args is not None else "") + "" + \
-                  (str(self.time) if self.time is not None else "")
+            res = str(self.agent1) + (" is not allowed to use " if auth else " use ") + str(self.service.name)+" service of " + \
+                (str(self.agent2) if self.agent2 is not None else " ") + \
+                " " + ("to " + str(self.service.name)+" "+str(self.args)+" " if self.args is not None else "") + "" + \
+                (str(self.time) if self.time is not None else "")
         return res
 
     def to_ast(self):

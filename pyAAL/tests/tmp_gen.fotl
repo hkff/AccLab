@@ -8,13 +8,13 @@ end_of_list.
 
 list_of_symbols.
 functions[(cloudS,0),(cloudX,0),(d,0),(kim,0),(leslie,0)].
-predicates[(_L,0),(_L1,0),(_P,0),(_P1,0),(_U,0),(_U1,0),(_waitfor_L,0),(_waitfor_L1_1,0),(audit,2),(delete,2),(read,2)].
+predicates[(Pread,2),(_L,0),(_L1,0),(_P,0),(_P1,0),(_U,0),(_U1,0),(_waitfor_L,0),(_waitfor_L1_1,0),(audit,2),(delete,2),(read,2)].
 end_of_list.
 
 list_of_formulae(axioms).
 formula(or(not(audit(leslie,cloudS)),_P1)).
 formula(always(implies(_L,and(audit(leslie,cloudS),not(delete(cloudX,d)))))).
-formula(always(implies(_L1,and(not(read(kim,cloudX)),or(read(kim,cloudX),_P))))).
+formula(always(implies(_L1,and(and(not(Pread(kim,cloudX)),not(read(kim,cloudX))),or(or(Pread(kim,cloudX),read(kim,cloudX)),_P))))).
 formula(always(implies(and(_P,not(_L)),_waitfor_L))).
 formula(always(sometime(not(_waitfor_L)))).
 formula(always(implies(and(_P1,not(_L1)),_waitfor_L1_1))).

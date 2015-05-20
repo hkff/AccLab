@@ -185,7 +185,7 @@ agentDec   : D_agent h_agentId ( D_types h_lpar agentType*  h_rpar ( (rsService 
 dataDec    : D_data h_dataId D_types h_lpar dataType* h_rpar ((rsService psService) | (psService rsService))? (M_subject h_agentId)?;
 rsService  : M_rservice h_lpar h_serviceId* h_rpar;
 psService  : M_pservice h_lpar h_serviceId* h_rpar;
-serviceDec : D_service h_serviceId D_types h_lpar serviceType* h_rpar M_purpose h_lpar h_purposeId* h_rpar;
+serviceDec : D_service h_serviceId ( D_types h_lpar serviceType* h_rpar)? (M_purpose h_lpar h_purposeId* h_rpar )?;
 
 varDec       : h_varTypeId h_varId attrValue*;
 attrValue    : h_attribute h_lpar ID* h_rpar;

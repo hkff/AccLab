@@ -1,14 +1,380 @@
+// Loading aal libs
+LOAD "core.types"
 LOAD "core.macros"
-/*** Kim's user preference ***/
+
+
+//=====================================================//
+//================ Defining data types ================//
+//=====================================================//
+TYPE sensitive EXTENDS(data)
+TYPE public EXTENDS(data)
+
 /*
-CLAUSE km (
-    kim.read[cloudX](d)
-    AUDITING leslie.audit[cloudS]()
-    IF_VIOLATED_THEN MUST(leslie.sanction[cloudX]() AND cloudX.delete[d]())
-)
-*/
+ * Username
+ * The username used as user credentials, along with the password, to log in to the Wearable Service
+ * Sensitive PII
+ */
+TYPE username EXTENDS(sensitive)
+
+/*
+ * Password
+ * The password used as user credentials, along with the username, to log in to the Wearable Service
+ * Sensitive PII
+ */
+TYPE password EXTENDS(sensitive)
+
+/*
+ * User ID
+ * The unique identification number assigned to the user in order to accomplish user specific actions within a session life time
+ * Sensitive PII
+ */
+TYPE userId EXTENDS(sensitive)
+
+/*
+ * Display Name
+ * The nickname selected by the user to display on the Wearable Service front end, as a comprehensive user reference
+ * Public PII
+ */
+TYPE displayName EXTENDS(public)
+
+/*
+ * Gender
+ * The gender of the user to be used for determining the threshold values applied to the collected wellbeing metric values.
+ *  Gender is considered to affect the optimal values determining the threshold values.
+ * Public PII
+ */
+TYPE gender EXTENDS(public)
+
+/*
+ * Age
+ * The age of the user to be used for determining the threshold values applied to the collected wellbeing metric values.
+ *  Different age groups are considered to have different optimal values determining the threshold values.
+ * Public PII
+ */
+TYPE age EXTENDS(public)
+
+/*
+ * Height
+ * The height of the user to be used for determining wellbeing related information by joining up the wellbeing record with the body type.
+ * Sensitive PII
+ */
+TYPE height EXTENDS(sensitive)
+
+/*
+ * Weight
+ * The weight of the user to be used for determining wellbeing related information by joining up the wellbeing record with the body type.
+ * Sensitive PII
+ */
+TYPE weight EXTENDS(sensitive)
+
+/*
+ * Sugar Level
+ * The sugar level in the user’s blood, measured by the wearable device
+ * Sensitive PII
+ */
+TYPE sugarLevel EXTENDS(sensitive)
+
+/*
+ * Blood Pressure
+ * The user’s blood pressure, measured by the wearable device
+ * Sensitive PII
+ */
+TYPE blood EXTENDS(sensitive)
+
+/*
+ * Heartbeat Rate
+ * The user’s heart beat rate, measured by the wearable device
+ * Sensitive PII
+ */
+TYPE heartbeat EXTENDS(sensitive)
+
+/*
+ * Training Activity
+ * The daily exercises taken by the user, such as time of walking, running, swimming and any other physical exercise
+ * Sensitive PII
+ */
+TYPE activity EXTENDS(sensitive)
+
+/*
+ * Wellbeing Score
+ * The value of the wellbeing score, based on the formula defined by the cloud service
+ * Sensitive PII
+ */
+TYPE wellbeing EXTENDS(sensitive)
+
+/*
+ * Country
+ * The country of permanent residence of the user
+ * Public PII
+ */
+TYPE country EXTENDS(public)
+
+
+//=====================================================//
+//================= Defining services =================//
+//=====================================================//
+
+
+/*
+ * F1 : Create Customer Profile
+ * Create a customer account to the Wearable Service, by determining the credentials for logging into the service and
+ *  providing profile data to be processed by the service
+ * Used by Wearable Customer
+ */
+SERVICE createCustomerProfile
+
+/*
+ * F2 : Create Business User Profile
+ * Create an account for managing the users registered to the Wearable Service and retrieving information about their
+ *  public data submitted to the service
+ * Used by Wearable Co employee
+ */
+SERVICE createBusinessProfile
+
+/*
+ * F3 : Log in
+ * Provide the security mechanism for the user authentication to the service
+ * Used by Wearable Customer / Wearable Co employee
+ */
+SERVICE login
+
+/*
+ * F4 : Manage Profile
+ * Add / edit / update / delete profile information
+ * Used by  Wearable Customer / Wearable Co employee
+ */
+ SERVICE add
+ SERVICE edit
+ SERVICE update
+ SERVICE delete
+
+/*
+ * F5 : Submit Real-time Information
+ * Upload data stream with the recorded wellbeing information per time unit (e.g. per hour or per day) as collected by
+ *  wearable device. Such data involve the heart beat rate, the blood pressure, the sugar blood level, etc. These data
+ *  are associated with the current geographical position of the user.
+ * Used by Wearable Customer
+ */
+SERVICE submitRTI
+
+/*
+ * F6 : Request Real- time Information
+ * Retrieve a timeline visualisation of the wellbeing collected records, along with the typical threshold values for
+ *  the wellbeing metrics per age group and country (for the specific customer)
+ * Used by Wearable Customer
+ */
+SERVICE requestRTI
+
+/*
+ * F7 : Update Wellbeing activities
+ * Specify everyday activities (such as the duration of a running / walking exercise, etc.)
+ * Used by Wearable Customer
+ */
+SERVICE updateWellbeing
+
+/*
+ * F8 : Get wellbeing training
+ * Receive recommendations on the available wellbeing training courses
+ * Used by Wearable Customer
+ */
+SERVICE getWellbeingTraining
+
+/*
+ * F9 : Get wellbeing score
+ * Receive a single value wellbeing score by combining information from the collected real time information and
+ *  wellbeing training activities.
+ * Used by Wearable Customer
+ */
+SERVICE getWellbeingScore
+
+/*
+ * F10 : Manage Business Formula for wellbeing scores
+ * Define the thresholds (per real time data stream, e.g. blood pressure, per age and country) and the weights,
+ *  through which the wellbeing score of a customer is determined
+ * Used by Wearable Co employee
+ */
+SERVICE manageBusinessFormula
+
+/*
+ * F11 : Update Thresholds
+ * Update the threshold for the acceptable values of the wellbeing metrics, possibly customised to geographical
+ *  locations (affected by climate and altitude factors)
+ * Used by Wearable Co employee
+ */
+SERVICE updateThresholds
+
+/*
+ * F12 : View active users
+ * Browse through the list of registered users and part of their profile data
+ * Used by Wearable Co employee
+ */
+SERVICE viewActiveUsers
+
+/*
+ * F13 : Request Statistical Visualisation
+ * Get a map visualisation of the anonymised wellbeing record data (i.e. blood pressure, accountability score, etc.)
+ *  per country and age group
+ * Used by Wearable Customer / Wearable Co employee
+ */
+SERVICE requestStat
+
+/*
+ * F14 : Request data handling compliance
+ * Get an audit report on how data involved in the Wearable Service are handled in the cloud, by presenting relevant
+ *  evidences, such as access logs and listing access violations (if any)
+ * Used by Wearable Co employee
+ */
+SERVICE requestDataCompliance
+
+/*
+ * F15 : Request data disclosure path
+ * Get a summary of the personal data that the Wearable Service is processing for the specific Wearable Customer
+ * Used by Wearable Customer
+ */
+SERVICE requestDataPath
+
+/*
+ * F16 : Receive alerts on excessive wellbeing values
+ * In cases of human body metrics getting exceptional (beyond thresholds) values, raise notifications to the referred user
+ * Used by Wearable Customer
+ */
+SERVICE receiveAlerts
+
+/*
+ * F17 : Receive policy violation alert
+ * Receive a notification on the type of policy violation and detailed information about it
+ * Used by Wearable Customer / Wearable Co employee
+ */
+SERVICE receivePVA
+/*
+ * F18 : Receive transfer violation alert
+ * Receive a notification on the detailed data transfer violation
+ * Used by Wearable Customer / Wearable Co employee
+ */
+SERVICE receiveTVA
+
+/*
+ * F19 : Receive breach notification
+ * Receive security and/or privacy breach notifications
+ * Used by Wearable Customer / Wearable Co employee
+ */
+SERVICE receiveBreachNotif
+
+//=====================================================//
+//================== Defining actors ==================//
+//=====================================================//
+
+/*
+ * Wearable Customer
+ * The end user of the Wearable Service
+ * Individual Cloud Subject
+ * Data Subject
+ */
+AGENT customer TYPES(DataSubject)
+    REQUIRED(createCustomerProfile  login  add  edit  update  delete  submitRTI
+             requestRTI  updateWellbeing  getWellbeingTraining  getWellbeingScore
+             requestStat  requestDataPath  receiveAlerts  receivePVA  receiveBreachNotif)
+    PROVIDED()
+
+/*
+ * Wearable Co
+ * The SME operating the Wearable Service
+ * Organisational Cloud Customer
+ * Data Controller
+ */
+AGENT wearableCo TYPES(DataController)
+    REQUIRED(createBusinessProfile  login  add  edit  update  delete  manageBusinessFormula
+             updateThresholds  viewActiveUsers  requestStat  requestDataCompliance  receivePVA
+             receiveBreachNotif)
+    PROVIDED()
+
+/*
+ * CardioMon
+ * A SaaS SME cloud provider offering the Wearable Service
+ * Cloud Provider
+ * Data Processor
+ */
+AGENT cardioMon TYPES(DataProcessor)
+    REQUIRED()
+    PROVIDED(createCustomerProfile  login  add  edit  update  delete  submitRTI  requestRTI  updateWellbeing
+             getWellbeingTraining  getWellbeingScore  requestStat  requestDataPath  receiveAlerts  receivePVA
+             receiveBreachNotif  createBusinessProfile manageBusinessFormula updateThresholds  viewActiveUsers
+             requestDataCompliance)
+
+/*
+ * Map-on-Web
+ * A SaaS cloud provider allowing the creation of maps overlaid with annotated itineraries, based on annotated GPX traces
+ * Cloud Provider
+ * Data Processor
+ */
+AGENT mapOnWeb TYPES(DataProcessor)
+    REQUIRED()
+    PROVIDED()
+
+/*
+ * DataSpacer
+ * An IaaS cloud provider operating an OpenStack-based cloud environment for processing and hosting different types of data
+ * Cloud Provider
+ * Data Processor
+ */
+AGENT dataSpacer TYPES(DataProcessor)
+    REQUIRED()
+    PROVIDED()
+
+
+// wearableCo employee type
+TYPE WCOemployee EXTENDS(DataController)
+
+
+
+//=====================================================//
+//===================== Clauses =======================//
+//=====================================================//
+
+
+/*
+ * 1 : Unauthorised Data Access
+ * The Wearable Co employee browses the list of registered wearable customers and requests to access the complete
+ *  record of the personal information of a customer, which is not allowed by the specified policy. CardioMon raises
+ *  a data access exception.
+ */
+
+/*
+ * 2 : Inadequate Data Retention / Deletion
+ * The agreed accountability policy between CardioMon and the Wearable Co defines that the personal data collected from
+ *  the customer’s device must be deleted if being older than 6 months. However, a backup of the CardioMon store is left.
+ */
+
+/*
+ * 3 : Unauthorised Data Location
+ * The Wearable Co has agreed with CardioMon that only data centres in Europe are used for storing the personal data of
+ *  the customers. A sudden hardware failure in DataSpacer results in the CardioMon store being moved to a third country location.
+ */
+
+/*
+ * 4 : Encryption vulnerability
+ * The Map-on-Web uses encrypted communication with CardioMon to access the personal information of the customers
+ *  collected from their devices in order to generate the statistics per geographical area. However, at a specific period
+ *  of time this communication turns to be unencrypted.
+ */
+
+/*
+ * 5 : Right to know vs. Need to know
+ * The Wearable Co employee performs too many requests to access the list of wearable customers and get their profile
+ *  data. Although being an authorized party, the employee invokes the relevant service too many times, indicating an
+ *  abuse of its right, hence a (probable) security violation.
+ */
+
+/*
+ * 6 : Service unavailability
+ * The Wearable Customer requests the visualisation of statistical information, but the communication between
+ *  CardioMon and Map-on-Web is broken.
+ */
+
+
+
 CLAUSE km2 (
-    kim.read[cloudX]()
+    PERMIT kim.read[cloudX]() or kim.read[cloudX]()
     AUDITING leslie.audit[cloudS]()
     IF_VIOLATED_THEN cloudX.delete[d]()
 )
