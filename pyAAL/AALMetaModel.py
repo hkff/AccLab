@@ -294,6 +294,7 @@ class m_aalprog(aalmmnode):
          if type of int, return the element if the element is declare, otherwise return None
         :return:
         """
+        # print(klass == m_service)
         decList = ""
         if klass == m_agent:
             decList = self.declarations["agents"]
@@ -324,10 +325,10 @@ class m_aalprog(aalmmnode):
     def to_ltl(self):
         return "".join([str(x.to_ltl()) + " " for x in self.clauses])
 
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         return "".join([str(x.to_nnf(True)) + " " for x in self.clauses])
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         return "".join([str(x.to_natural()) + "" for x in self.clauses])
 
     # Children
@@ -461,10 +462,10 @@ class m_clause(m_declarable):
         return res
 
     def to_ltl(self):
-        ue = str(self.usage.to_ltl()) if self.usage is not None else ""
-        ae = str(self.audit.to_ltl()) if self.audit.usage is not None else ""
-        re = str(self.rectification.to_ltl()) if self.rectification.usage is not None else ""
-        return ue + "\n" + ae + "\n" + re
+        ue = ("always(" + str(self.usage.to_ltl()) + ")") if self.usage is not None else ""
+        ae = str(self.audit.to_ltl()) if self.audit.usage is not None else None
+        re = str(self.rectification.to_ltl()) if self.rectification.usage is not None else None
+        return ue + ("\n & " + ae if ae is not None else "") + ("\n & " + re if re is not None else "")
         return ae + " & always(" + ue + " | ((~(" + ue + ")) & (always(" + ae + " => (" + re + ")))))"
 
     def to_nnf(self,bool):

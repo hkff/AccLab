@@ -1,0 +1,149 @@
+//=====================================================//
+//================= Clauses from APPL =================//
+//=====================================================//
+/*
+    <!-- Rule for personal data accessing by Data Subjects (Clients of WearableCo)-->
+    <!-- Rule1: All PII can be read, updated or deleted by Data Subject-->
+*/
+CLAUSE aal_rule_1(
+    FORALL u:DataSubject FORALL b:Actor FORALL d:data
+    IF(d.subject == u) THEN
+    {
+        PERMIT u.read[b](d)   AND
+        PERMIT u.update[b](d) AND
+        PERMIT u.delete[b](d)
+    }
+)
+
+
+/*
+    <!-- WearableCo's access control policy -->
+    <!-- Rule 2: referring to access to personal data for WearableCo Employees -->
+*/
+CLAUSE aal_rule_2 (
+    FORALL e:Employee FORALL d:data
+    IF (@username(d) OR @displayName(d) OR @gender(d) OR @age(d) OR @country(d)) THEN
+    {
+        PERMIT e.read[cardioMon](d) PURPOSE (health admin)
+    }
+)
+
+
+/*
+    <!-- WearableCo's access control policy for Map-On-Web -->
+    <!-- Rule 3: NON downstream usage -->
+*/
+CLAUSE aal_rule_3 (
+    FORALL d:data
+    IF( @age(d) OR @blood(d) OR @sugarLevel(d) OR @heartbeat(d) OR @country(d)) THEN
+    {
+        PERMIT mapOnWeb.read[cardioMon](d) AND
+        MUST( mapOnWeb.delete[mapOnWeb](d) BEFORE "P0Y0M0DT0H2M0S")
+    }
+)
+
+
+/*
+    <!-- WearableCo's data handling policy -->
+*/
+CLAUSE wearableCo_policy (
+//    ref aal_rule_3
+    FORALL s:DataSubject EXISTS d:data
+
+    /*
+        <!--Notification of data subject when she is registered to the application
+            for the first time. Data then is about to be collected -->
+        <!-- Information about collecting and processing, purpose, location, recipients, rights -->
+         <!-- Notification of Data Protection Authority (DPA) that data is about to be collected -->
+    */
+    IF ( s.createCustomerProfile[wearableCo](d) ) THEN
+    {
+        MUST(wearableCo.notify[s]("Data Collection")) AND
+        MUST(wearableCo.notify[DPA]("Data Collection"))
+    }
+    AND
+    /*
+        <!-- Wearable Co is accountable for collecting, processing data only for specific purposes -->
+    */
+
+    // AuthzDownstreamUsage
+        //  <!-- Wearable Co is accountable to their customers for how data are processed by Map-On-Web-->
+        FORALL d:data FORALL a:Actor
+        IF ( a.read[mapOnWeb](d) ) THEN
+        {
+             mapOnWeb.log[mapOnWeb]("Timestamp;Action;Purpose;Subject;Resource;")
+        }
+        AND
+        // <!--Personal Data storage period of 6 months -->
+        MUST( mapOnWeb.delete[mapOnWeb](d) BEFORE "6 months")
+
+        AND
+
+         // <!-- Notify Cardio Mon whenever access is denied-->
+        IF (a.read[mapOnWeb](d) AND DENY a.read[mapOnWeb](d) ) THEN
+        {
+            MUST( mapOnWeb.notify[cardioMon]("Unauthorized Personal Data Access Attempt") )
+        }
+        AND
+
+        // <!-- Notify Cardio Mon whenever personal data are deleted-->
+        IF (a.delete[mapOnWeb](d)) THEN
+        {
+            MUST( mapOnWeb.notify[cardioMon]("Personal Data Deleted") )
+        }
+)
+
+
+/*
+    <!-- Map-On-Web's data handling policy -->
+*/
+CLAUSE MapOnWeb_Policy (
+    //  <!-- Wearable Co is accountable to their customers for how data are processed by Map-On-Web-->
+    FORALL d:data FORALL a:Actor
+    IF ( a.read[mapOnWeb](d) ) THEN
+    {
+         mapOnWeb.log[mapOnWeb]("Timestamp;Action;Purpose;Subject;Resource;")
+    }
+    AND
+    // <!--Personal Data storage period of 6 months -->
+    MUST( mapOnWeb.delete[mapOnWeb](d) BEFORE "6 months")
+
+    AND
+
+     // <!-- Notify Cardio Mon whenever access is denied-->
+    IF (a.read[mapOnWeb](d) AND DENY a.read[mapOnWeb](d) ) THEN
+    {
+        MUST( mapOnWeb.notify[cardioMon]("Unauthorized Personal Data Access Attempt") )
+    }
+    AND
+
+    // <!-- Notify Cardio Mon whenever personal data are deleted-->
+    IF (a.delete[mapOnWeb](d)) THEN
+    {
+        MUST( mapOnWeb.notify[cardioMon]("Personal Data Deleted") )
+    }
+
+    // Audit : Here the audit is performed by the APPLE runtime monitor
+    AUDITING always(monitor.audit[mapOnWeb]())
+
+    IF_VIOLATED_THEN
+        // <!--Notification of Cardio Mon about security breach (policy violation) -->
+        MUST(mapOnWeb.notify[cardioMon](""))
+)
+
+
+
+//call validate2("'MapOnWeb_Policy'" )
+//call validate2( "'wearableCo_policy'" )
+//call validate( "'wearableCo_policy'"  "'MapOnWeb_Policy'" )
+//call sat("'aal_rule_3'")
+EXEC
+"""
+#print(self.clause("km2").to_natural())
+#print(self.aalprog)
+print("-------------------")
+"""
+
+CHECK c1 (  clause(MapOnWeb_Policy).ue => clause(wearableCo_policy).ue)
+
+APPLY c1()

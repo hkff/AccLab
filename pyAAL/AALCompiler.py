@@ -208,7 +208,7 @@ class AALCompilerListener(AALListener.AALListener):
             return
 
         if found_lib_path.endswith(".aalc"):
-            print("loading compiled verison")
+            print("loading compiled version")
             sys.setrecursionlimit(3000)
             with open(found_lib_path, "rb") as f:
                 l = pickle.load(f)
@@ -342,6 +342,10 @@ class AALCompilerListener(AALListener.AALListener):
         TODO: detailed result
         :return:
         """
+        # Disable check in lib context
+        if not self.loadlibs:
+            return
+        print("File : " + str(self.file))
         if len(self.refForwardAgents) > 0:
             print(Color("{autoyellow}[WARNING]{/yellow} Agents declarations missing !"))
             for d in self.refForwardAgents:
@@ -376,6 +380,12 @@ class AALCompilerListener(AALListener.AALListener):
         :return:
         """
         agentId = str(agent)
+        # Checck in libs
+        for l in self.libs:
+            res = l.checkAgentDec(agentId, declare=False)  # !IMPORTANT : set declare to false
+            if res is not None:
+                return res
+
         # Check in quant stack
         if quant:
             s = [x for x in self.quantStack if str(x.variable.name) == agentId]
@@ -405,6 +415,12 @@ class AALCompilerListener(AALListener.AALListener):
         :return:
         """
         dataId = str(data)
+        # Checck in libs
+        for l in self.libs:
+            res = l.checkDataDec(dataId, declare=False)  # !IMPORTANT : set declare to false
+            if res is not None:
+                return res
+
         # Check in quant stack
         if quant:
             s = [x for x in self.quantStack if str(x.variable.name) == dataId]
@@ -431,6 +447,11 @@ class AALCompilerListener(AALListener.AALListener):
         :param service: the service to declare
         """
         serviceId = str(service)
+        # Checck in libs
+        for l in self.libs:
+            res = l.checkServiceDec(serviceId, declare=False)  # !IMPORTANT : set declare to false
+            if res is not None:
+                return res
 
         # Check in quant stack
         if quant:
@@ -1032,7 +1053,7 @@ class AALCompilerListener(AALListener.AALListener):
         if verbose:
             print(ltl)
         # exec("from aalc import tspassc")
-        res = tspassc(code=ltl, use_shell=False, debug=False)
+        res = tspassc(code=ltl, use_shell=False, debug=False, reparse=False)
         if show:
             print(str(chk.name) + " : " + str(res["print"]))
         return res

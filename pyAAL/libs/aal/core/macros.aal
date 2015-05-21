@@ -22,6 +22,14 @@ validate2(self, _c1)
 """
 )
 
+MACRO sat(c1) (
+// Checking satisfiability
+"""
+_c1 = self.clause(c1).to_ltl()
+validate2(self, _c1, True)
+"""
+)
+
 MACRO resolve(c1 c2) (
 // Checking validity and auto resolve conflicts
 """
@@ -41,12 +49,9 @@ print("\n")
 
 MACRO ltl (c) (
 """
-print(isinstance(c, m_clause) )
-//cl = self.clause(c)
-//print(cl.to_ltl())
-//r = cl.to_ltl()
-//print(self.pprinter(ltl_code=r))
-//return cl.to_ltl()
+//print(isinstance(c, m_clause) )
+cl = self.clause(c)
+print(cl.to_ltl())
 """
 )
 

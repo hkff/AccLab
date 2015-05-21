@@ -5,16 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/wearable/wLawyers.aal" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/wearable/wactors.aal" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/wearable/wearable.aal" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/wearable/wfromAPPL.aal" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/wearable/wservices.aal" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/wearable/wtypes.aal" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/wearable/wviolations.aal" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grammar/aal/AAL.g4" afterPath="$PROJECT_DIR$/grammar/aal/AAL.g4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grammar/aal/AAL.tokens" afterPath="$PROJECT_DIR$/grammar/aal/AAL.tokens" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AALChecker.py" afterPath="$PROJECT_DIR$/AALChecker.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AALCompiler.py" afterPath="$PROJECT_DIR$/AALCompiler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grammar/aal/AALLexer.py" afterPath="$PROJECT_DIR$/grammar/aal/AALLexer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grammar/aal/AALLexer.tokens" afterPath="$PROJECT_DIR$/grammar/aal/AALLexer.tokens" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AALMetaModel.py" afterPath="$PROJECT_DIR$/AALMetaModel.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grammar/aal/AALParser.py" afterPath="$PROJECT_DIR$/grammar/aal/AALParser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/aalc.py" afterPath="$PROJECT_DIR$/aalc.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/aal/core/macros.aal" afterPath="$PROJECT_DIR$/libs/aal/core/macros.aal" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test4.aal" afterPath="$PROJECT_DIR$/tests/test4.aal" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test4.tspass" afterPath="$PROJECT_DIR$/tests/test4.tspass" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/testlib.aal" afterPath="$PROJECT_DIR$/tests/testlib.aal" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/tmp_gen.fotl" afterPath="$PROJECT_DIR$/tests/tmp_gen.fotl" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/tmp_gen.result" afterPath="$PROJECT_DIR$/tests/tmp_gen.result" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/tmp_gen.tspass" afterPath="$PROJECT_DIR$/tests/tmp_gen.tspass" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pyAAL.iws" />
@@ -30,10 +38,10 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/pyAAL$Simul.coverage" NAME="Simul Coverage Results" MODIFIED="1423852073433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pyAAL$aalc2.coverage" NAME="aalc2 Coverage Results" MODIFIED="1432213881518" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pyAAL$aaltlr.coverage" NAME="aaltlr Coverage Results" MODIFIED="1432210875404" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
+    <SUITE FILE_PATH="coverage/pyAAL$aalc2.coverage" NAME="aalc2 Coverage Results" MODIFIED="1432216928342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pyAAL$aaltlr.coverage" NAME="aaltlr Coverage Results" MODIFIED="1432219574331" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
     <SUITE FILE_PATH="coverage/pyAAL$tspasslr.coverage" NAME="tspasslr Coverage Results" MODIFIED="1429548518332" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
-    <SUITE FILE_PATH="coverage/pyAAL$aalc.coverage" NAME="aalc Coverage Results" MODIFIED="1432213854545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pyAAL$aalc.coverage" NAME="aalc Coverage Results" MODIFIED="1432230985582" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -41,153 +49,122 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
-  <component name="DockManager">
-    <window id="2">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file leaf-file-name="wearable.xml" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/tests/wearable.xml">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.5005688" vertical-offset="4684" max-vertical-offset="9471">
-                    <caret line="532" column="79" selection-start-line="532" selection-start-column="27" selection-end-line="532" selection-end-column="79" />
-                    <folding>
-                      <element signature="n#xacml:Resource#1;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#2;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#3;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#4;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#5;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#6;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#7;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#8;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#9;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#10;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#11;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#12;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#13;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#14;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#15;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#xacml:Resource#16;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#a-ppl:Rule#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#a-ppl:Rule#1;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                      <element signature="n#a-ppl:Rule#2;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="pyAAL" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.76198083">
-      <split-first>
-        <leaf>
-          <file leaf-file-name="aalc.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/aalc.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="6133" max-vertical-offset="8484">
-                  <caret line="314" column="19" selection-start-line="314" selection-start-column="19" selection-end-line="314" selection-end-column="19" />
-                  <folding>
-                    <marker date="1432213653763" expanded="true" signature="9187:9249" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="AALMetaModel.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="20613" max-vertical-offset="31269">
-                  <caret line="1000" column="26" selection-start-line="1000" selection-start-column="26" selection-end-line="1000" selection-end-column="26" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="test4.tspass" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tests/test4.tspass">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="294">
-                  <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="test1.aal" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tests/test1.aal">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="630" max-vertical-offset="6447">
-                  <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="testlib.aal" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/tests/testlib.aal">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="882">
-                  <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="types.aal" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/libs/aal/core/types.aal">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
-                  <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="AAL.g4" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/grammar/aal/AAL.g4">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="4884" max-vertical-offset="6363">
-                  <caret line="251" column="41" selection-start-line="251" selection-start-column="25" selection-end-line="251" selection-end-column="41" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="test4.aal" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/tests/test4.aal">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-1.0327868" vertical-offset="12159" max-vertical-offset="13209">
-                  <caret line="528" column="42" selection-start-line="528" selection-start-column="42" selection-end-line="528" selection-end-column="42" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="test4.aal" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/tests/test4.aal">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-3.9267116" vertical-offset="5773" max-vertical-offset="13209">
-                  <caret line="81" column="14" selection-start-line="81" selection-start-column="14" selection-end-line="81" selection-end-column="14" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file leaf-file-name="AALChecker.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AALChecker.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="5243" max-vertical-offset="7164">
+              <caret line="256" column="0" selection-start-line="256" selection-start-column="0" selection-end-line="256" selection-end-column="0" />
+              <folding>
+                <element signature="e#783#809#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AALCompiler.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AALCompiler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.4827585" vertical-offset="8048" max-vertical-offset="21582">
+              <caret line="464" column="68" selection-start-line="464" selection-start-column="68" selection-end-line="464" selection-end-column="68" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wactors.aal" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/wearable/wactors.aal">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.8965516" vertical-offset="6" max-vertical-offset="1350">
+              <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wservices.aal" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/wearable/wservices.aal">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2772">
+              <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AALMetaModel.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="5103" max-vertical-offset="26820">
+              <caret line="319" column="13" selection-start-line="319" selection-start-column="13" selection-end-line="319" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AAL.g4" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/grammar/aal/AAL.g4">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3985" max-vertical-offset="5454">
+              <caret line="251" column="41" selection-start-line="251" selection-start-column="25" selection-end-line="251" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="macros.aal" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libs/aal/core/macros.aal">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="441" max-vertical-offset="1620">
+              <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wearable.aal" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tests/wearable/wearable.aal">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.433681" vertical-offset="2263" max-vertical-offset="4338">
+              <caret line="35" column="2" selection-start-line="35" selection-start-column="2" selection-end-line="35" selection-end-column="2" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wearable.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/wearable.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2205" max-vertical-offset="10674">
+              <caret line="274" column="31" selection-start-line="274" selection-start-column="31" selection-end-line="274" selection-end-column="31" />
+              <folding>
+                <element signature="n#xacml:Resource#2;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#3;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#4;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#5;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#6;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#7;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#8;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#9;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#10;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#11;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#12;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#13;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#14;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#15;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#xacml:Resource#16;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+                <element signature="n#a-ppl:Rule#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -219,21 +196,28 @@
         <option value="$PROJECT_DIR$/AALtoFOTL.py" />
         <option value="$PROJECT_DIR$/tests/test3.aal" />
         <option value="$PROJECT_DIR$/tests/test1.tspass" />
-        <option value="$PROJECT_DIR$/libs/aal/core/macros.aal" />
-        <option value="$PROJECT_DIR$/AALChecker.py" />
         <option value="$PROJECT_DIR$/FOTLSynthesizer.py" />
         <option value="$PROJECT_DIR$/../AccLabV2/index22.html" />
         <option value="$PROJECT_DIR$/../AccLabV2/index.html" />
         <option value="$PROJECT_DIR$/../AccLabV2/acclab.js" />
         <option value="$PROJECT_DIR$/libs/aal/core/types.aal" />
         <option value="$PROJECT_DIR$/tests/wearable.xml" />
-        <option value="$PROJECT_DIR$/AALCompiler.py" />
+        <option value="$PROJECT_DIR$/tests/testlib.aal" />
+        <option value="$PROJECT_DIR$/aalc.py" />
+        <option value="$PROJECT_DIR$/libs/aal/core/macros.aal" />
+        <option value="$PROJECT_DIR$/AALChecker.py" />
+        <option value="$PROJECT_DIR$/tests/test4.tspass" />
         <option value="$PROJECT_DIR$/grammar/aal/AAL.g4" />
         <option value="$PROJECT_DIR$/tests/test4.aal" />
-        <option value="$PROJECT_DIR$/tests/testlib.aal" />
-        <option value="$PROJECT_DIR$/tests/test4.tspass" />
-        <option value="$PROJECT_DIR$/aalc.py" />
+        <option value="$PROJECT_DIR$/tests/wearable/wtypes.aal" />
+        <option value="$PROJECT_DIR$/tests/wearable/wservices.aal" />
+        <option value="$PROJECT_DIR$/tests/wearable/wactors.aal" />
+        <option value="$PROJECT_DIR$/tests/wearable/wfromAPPL.aal" />
+        <option value="$PROJECT_DIR$/tests/wearable/wLawyers.aal" />
+        <option value="$PROJECT_DIR$/tests/wearable/wviolations.aal" />
         <option value="$PROJECT_DIR$/AALMetaModel.py" />
+        <option value="$PROJECT_DIR$/tests/wearable/wearable.aal" />
+        <option value="$PROJECT_DIR$/AALCompiler.py" />
       </list>
     </option>
   </component>
@@ -351,6 +335,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wearable" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="libs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -402,7 +404,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../AccLabV2" />
-    <property name="options.lastSelected" value="preferences.fileTypes" />
+    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="FullScreen" value="false" />
@@ -414,7 +416,12 @@
       <console-settings />
     </option>
   </component>
-  <component name="RunManager" selected="Python.aalc2">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/wearable" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.aalc">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -677,7 +684,7 @@
       <module name="pyAAL" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/aalc.py" />
-      <option name="PARAMETERS" value="-i tests/test4.aal -t" />
+      <option name="PARAMETERS" value="-i tests/wearable/wearable.aal -t" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <RunnerSettings RunnerId="PyDebugRunner" />
       <RunnerSettings RunnerId="PythonCover" />
@@ -848,7 +855,13 @@
       <option name="project" value="LOCAL" />
       <updated>1432140762006</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="LTL fixing + reparse option">
+      <created>1432213962166</created>
+      <option name="number" value="00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1432213962166</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -862,7 +875,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283859" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3469388" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35157698" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14909478" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -932,7 +945,8 @@
     <MESSAGE value="Wearable usecase" />
     <MESSAGE value="Adding Predicate" />
     <MESSAGE value="Minors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minors" />
+    <MESSAGE value="LTL fixing + reparse option" />
+    <option name="LAST_COMMIT_MESSAGE" value="LTL fixing + reparse option" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -941,55 +955,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tools/visu/tree2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7644">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/visu/ast.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="126">
-          <caret line="0" column="108" selection-start-line="0" selection-start-column="108" selection-end-line="0" selection-end-column="108" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/visu/tree_files/d3.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1037">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/visu/ast_stat.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="978">
-          <caret line="0" column="164" selection-start-line="0" selection-start-column="164" selection-end-line="0" selection-end-column="164" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/visu/tree_files/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1470" max-vertical-offset="2520">
-          <caret line="109" column="10" selection-start-line="109" selection-start-column="10" selection-end-line="109" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/visu/Visu.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26" vertical-offset="252" max-vertical-offset="1365">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/visu/tree.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3634" max-vertical-offset="7854">
-          <caret line="204" column="19" selection-start-line="204" selection-start-column="19" selection-end-line="204" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grammar/tspass/TSPASSParser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.052083332" vertical-offset="4543" max-vertical-offset="37989">
@@ -1121,14 +1086,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libs/aal/core/macros.aal">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="399" max-vertical-offset="1785">
-          <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../AccLabV2/ui/components/Actor.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.88" vertical-offset="3024" max-vertical-offset="11235">
@@ -1226,57 +1183,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AALChecker.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334" vertical-offset="218" max-vertical-offset="8337">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding>
-            <element signature="e#783#809#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grammar/aal/AALParser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-41.37931" vertical-offset="34605" max-vertical-offset="116823">
           <caret line="1706" column="10" selection-start-line="1706" selection-start-column="10" selection-end-line="1706" selection-end-column="10" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AALCompiler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35714287" vertical-offset="19191" max-vertical-offset="24738">
-          <caret line="931" column="26" selection-start-line="931" selection-start-column="26" selection-end-line="931" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/wearable.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5005688" vertical-offset="4684" max-vertical-offset="9471">
-          <caret line="532" column="79" selection-start-line="532" selection-start-column="27" selection-end-line="532" selection-end-column="79" />
-          <folding>
-            <element signature="n#xacml:Resource#1;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#2;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#3;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#4;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#5;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#6;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#7;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#8;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#9;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#10;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#11;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#12;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#13;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#14;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#15;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#xacml:Resource#16;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#a-ppl:Rule#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#a-ppl:Rule#1;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-            <element signature="n#a-ppl:Rule#2;n#a-ppl:Policy#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1296,63 +1207,189 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="6133" max-vertical-offset="8484">
           <caret line="314" column="19" selection-start-line="314" selection-start-column="19" selection-end-line="314" selection-end-column="19" />
           <folding>
-            <marker date="1432213653763" expanded="true" signature="9187:9249" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1432213653763" expanded="true" signature="-1:-1" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/testlib.aal">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="882">
+        <state vertical-scroll-proportion="0.15395895" vertical-offset="0" max-vertical-offset="882">
           <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libs/aal/core/types.aal">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
-          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="20613" max-vertical-offset="31269">
-          <caret line="1000" column="26" selection-start-line="1000" selection-start-column="26" selection-end-line="1000" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test4.tspass">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="294">
-          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test1.aal">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="630" max-vertical-offset="6447">
+        <state vertical-scroll-proportion="-1.2932551" vertical-offset="2016" max-vertical-offset="6447">
           <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grammar/aal/AAL.g4">
+    <entry file="file://$PROJECT_DIR$/tests/tmp_gen.fotl">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4884" max-vertical-offset="6363">
-          <caret line="251" column="41" selection-start-line="251" selection-start-column="25" selection-end-line="251" selection-end-column="41" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="903">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/tmp_gen.tspass">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="669">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test4.tspass">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="36" max-vertical-offset="144">
+          <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test4.aal">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.0327868" vertical-offset="12159" max-vertical-offset="13209">
-          <caret line="528" column="42" selection-start-line="528" selection-start-column="42" selection-end-line="528" selection-end-column="42" />
+        <state vertical-scroll-proportion="24.674772" vertical-offset="0" max-vertical-offset="16542">
+          <caret line="902" column="26" selection-start-line="902" selection-start-column="26" selection-end-line="902" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/wearable/wfromAPPL.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2047" max-vertical-offset="2790">
+          <caret line="149" column="0" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/wearable/wLawyers.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.8024316" vertical-offset="0" max-vertical-offset="2610">
+          <caret line="139" column="2" selection-start-line="139" selection-start-column="2" selection-end-line="139" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/wearable/wtypes.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.2459016" vertical-offset="1507" max-vertical-offset="2178">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/wearable.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2205" max-vertical-offset="10674">
+          <caret line="274" column="31" selection-start-line="274" selection-start-column="31" selection-end-line="274" selection-end-column="31" />
+          <folding>
+            <element signature="n#xacml:Resource#2;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#3;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#4;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#5;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#6;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#7;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#8;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#9;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#10;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#11;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#12;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#13;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#14;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#15;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#xacml:Resource#16;n#xacml:Resources#0;n#xacml:Target#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+            <element signature="n#a-ppl:Rule#0;n#a-ppl:Policy#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/aal/core/types.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.026825633" vertical-offset="0" max-vertical-offset="671">
+          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALChecker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5243" max-vertical-offset="8358">
+          <caret line="256" column="0" selection-start-line="256" selection-start-column="0" selection-end-line="256" selection-end-column="0" />
+          <folding>
+            <element signature="e#783#809#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALCompiler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.4827585" vertical-offset="8048" max-vertical-offset="21582">
+          <caret line="464" column="68" selection-start-line="464" selection-start-column="68" selection-end-line="464" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/wearable/wactors.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.8965516" vertical-offset="6" max-vertical-offset="1350">
+          <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5211" max-vertical-offset="26820">
+          <caret line="319" column="13" selection-start-line="319" selection-start-column="13" selection-end-line="319" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grammar/aal/AAL.g4">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3985" max-vertical-offset="5454">
+          <caret line="251" column="41" selection-start-line="251" selection-start-column="25" selection-end-line="251" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/aal/core/macros.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="441" max-vertical-offset="1890">
+          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/wearable/wviolations.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2071536" vertical-offset="0" max-vertical-offset="918">
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/wearable/wservices.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2101" max-vertical-offset="2772">
+          <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/wearable/wearable.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.433681" vertical-offset="2263" max-vertical-offset="4338">
+          <caret line="35" column="2" selection-start-line="35" selection-start-column="2" selection-end-line="35" selection-end-column="2" />
           <folding />
         </state>
       </provider>

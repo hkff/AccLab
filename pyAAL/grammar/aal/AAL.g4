@@ -121,9 +121,9 @@ M_exec     : 'EXEC' | 'exec';
 
 /** Check **/
 C_clause        : 'clause'       | 'cl';
-C_usage         : 'get_usage'        | 'uc';
-C_audit         : 'get_audit'        | 'aa';
-C_rectification : 'get_rectification'| 'rc';
+C_usage         : 'get_usage'        | 'ue';
+C_audit         : 'get_audit'        | 'ae';
+C_rectification : 'get_rectification'| 're';
 C_violation     : 'get_violation'    | 'vl';
 
 

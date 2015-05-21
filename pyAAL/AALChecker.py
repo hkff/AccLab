@@ -293,7 +293,7 @@ def validate(compiler, c1, c2, resolve=False):
     return ""
 
 
-def validate2(compiler, c1):
+def validate2(compiler, c1, check: bool=False):
     # Monodic test
     print("------------------------- Monodic check -------------------------")
     mc1 = check_monodic(c1)
@@ -306,7 +306,7 @@ def validate2(compiler, c1):
 
     v = False
     verbose = False
-    print("------------------------- Starting Validity check -------------------------")
+    print("------------------------- Starting " + ("Validity" if not check else "") + " check -------------------------")
 
     print("----- Checking c1 :")
     res = compiler.apply_check(code=c1, show=False, verbose=verbose)
@@ -319,25 +319,26 @@ def validate2(compiler, c1):
     if res["res"] == "":
         print(res["print"])
 
-    print("----- Checking ~(c1) :")
-    res = compiler.apply_check(code="~(" + c1 + ")", show=False, verbose=verbose)
-    if res["res"] == "Unsatisfiable":
-        print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
-    else:
-        print(Color("{autored}  -> " + res["res"] + "{/red}"))
+    if not check:
+        print("----- Checking ~(c1) :")
+        res = compiler.apply_check(code="~(" + c1 + ")", show=False, verbose=verbose)
+        if res["res"] == "Unsatisfiable":
+            print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+        else:
+            print(Color("{autored}  -> " + res["res"] + "{/red}"))
 
-    if res["res"] == "":
-        print(res["print"])
+        if res["res"] == "":
+            print(res["print"])
 
-    if res["res"] == "Unsatisfiable":
-        v = True
+        if res["res"] == "Unsatisfiable":
+            v = True
 
-    if v:
-        print(Color("\n{autogreen}[VALIDITY] Formula is valid !{/green}"))
-    else:
-        print(Color("\n{autored}[VALIDITY] Formula is not valid !{/red}"))
+        if v:
+            print(Color("\n{autogreen}[VALIDITY] Formula is valid !{/green}"))
+        else:
+            print(Color("\n{autored}[VALIDITY] Formula is not valid !{/red}"))
 
-    print("------------------------- Validity check End -------------------------\n")
+    print("------------------------- " + ("Validity" if not check else "") + " check End -------------------------\n")
     return ""
 
 

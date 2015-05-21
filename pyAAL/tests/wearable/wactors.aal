@@ -1,0 +1,70 @@
+//=====================================================//
+//================== Defining actors ==================//
+//=====================================================//
+
+/*
+ * Wearable Customer
+ * The end user of the Wearable Service
+ * Individual Cloud Subject
+ * Data Subject
+ */
+AGENT customer TYPES(DataSubject)
+    REQUIRED(createCustomerProfile  login  add  edit  update  delete  submitRTI
+             requestRTI  updateWellbeing  getWellbeingTraining  getWellbeingScore
+             requestStat  requestDataPath  receiveAlerts  receivePVA  receiveBreachNotif)
+    PROVIDED()
+
+/*
+ * Wearable Co
+ * The SME operating the Wearable Service
+ * Organisational Cloud Customer
+ * Data Controller
+ */
+AGENT wearableCo TYPES(DataController)
+    REQUIRED(createBusinessProfile  login  add  edit  update  delete  manageBusinessFormula
+             updateThresholds  viewActiveUsers  requestStat  requestDataCompliance  receivePVA
+             receiveBreachNotif)
+    PROVIDED()
+
+/*
+ * CardioMon
+ * A SaaS SME cloud provider offering the Wearable Service
+ * Cloud Provider
+ * Data Processor
+ */
+AGENT cardioMon TYPES(DataProcessor)
+    REQUIRED()
+    PROVIDED(createCustomerProfile  login  add  edit  update  delete  submitRTI  requestRTI  updateWellbeing
+             getWellbeingTraining  getWellbeingScore  requestStat  requestDataPath  receiveAlerts  receivePVA
+             receiveBreachNotif  createBusinessProfile manageBusinessFormula updateThresholds  viewActiveUsers
+             requestDataCompliance)
+
+/*
+ * Map-on-Web
+ * A SaaS cloud provider allowing the creation of maps overlaid with annotated itineraries, based on annotated GPX traces
+ * Cloud Provider
+ * Data Processor
+ */
+AGENT mapOnWeb TYPES(DataProcessor)
+    REQUIRED()
+    PROVIDED()
+
+/*
+ * DataSpacer
+ * An IaaS cloud provider operating an OpenStack-based cloud environment for processing and hosting different types of data
+ * Cloud Provider
+ * Data Processor
+ */
+AGENT dataSpacer TYPES(DataProcessor)
+    REQUIRED()
+    PROVIDED()
+
+
+// wearableCo employee type
+TYPE WCOemployee EXTENDS(DataController)
+
+// wearableCo employee type
+TYPE WCOAdmin EXTENDS(WCOemployee)
+
+// wearable device
+TYPE WDevice EXTENDS(DataController)

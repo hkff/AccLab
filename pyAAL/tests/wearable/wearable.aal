@@ -1,0 +1,236 @@
+// Loading aal libs
+LOAD "core.types"
+LOAD "core.macros"
+
+LOAD "wearable.wtypes"
+LOAD "wearable.wservices"
+LOAD "wearable.wactors"
+
+//=====================================================//
+//===================== Clauses =======================//
+//=====================================================//
+
+/*
+ * Create Customer Profile
+ * The Wearable Customers must accept a consent form on being aware of the type of personal data collected, processed
+ *  and stored in the cloud.
+ * C1, W1, W2, W3, W4, W5, W7, W9, W10, W11, W12, W13, W14, W15, W17
+ * compliance with privacy policies - monitoring of data practices
+ */
+
+//CLAUSE r1 ( // Missing services)
+
+/*
+ * Log in
+ * All users must be subject to access and usage control rules, concerning personal data access defined in the
+ *  accountability policy for all the data of Table
+ * W6, W8, W11
+ * compliance with privacy policies - monitoring of data practices
+ */
+CLAUSE r2 (
+    EXISTS d:data
+    PERMIT customer.login[cardioMon](d)
+)
+
+
+/*
+ * Manage Profile
+ * An accountability policy should define that the Wearable Customers can read / update / delete the following
+ *  data: username, password, user id, display name, gender, age, height, weight, sugar level, blood pressure,
+ *  heartbeat rate, training activity, country
+ * W5, W6, W8, W11
+ * compliance with privacy policies - monitoring of data practices
+ */
+CLAUSE r3 (
+    FORALL d:data
+    IF ( d.subject == customer)    THEN {
+
+        IF ( @username(d) )        THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+        AND IF ( @password(d) )    THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+        AND IF ( @userId(d) )      THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+        AND IF ( @displayName(d) ) THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+        AND IF ( @gender(d) )      THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+        AND IF ( @age(d) )         THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+        AND IF ( @gender(d) )      THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+        AND IF ( @height(d) )      THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+        AND IF ( @weight(d) )      THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+        AND IF ( @sugarLevel(d) )  THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+        AND IF ( @heartbeat(d) )   THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+        AND IF ( @activity(d) )    THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+        AND IF ( @country(d) )     THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+    }
+
+)
+
+/*
+ * Submit Real-time Information
+ * An accountability policy should define that only the wearable device of a wearable customer can submit sugar level,
+ *  blood pressure and heartbeat rate
+ * W5, W8, W11
+ * compliance with privacy policies - monitoring of data practices
+ */
+CLAUSE r4 (
+    FORALL a:Actor FORALL d:data
+    IF( @blood(d) OR @sugarLevel(d) OR @heartbeat(d) ) THEN {
+        IF (a != customer) THEN {
+            DENY a.submitRTI[cardioMon](d)
+        } AND
+        PERMIT customer.submitRTI[cardioMon](d)
+    }
+)
+
+/*
+ * Update activities
+ * An accountability policy should define that the Wearable Customers must be able to create and modify an activity
+ *  profile per day, for all training activities
+ * W5, W6, W8, W11
+ * compliance with privacy policies - monitoring of data practices
+ */
+CLAUSE r5 (
+    EXISTS d:data
+    PERMIT customer.updateWellbeing[cardioMon](d)
+)
+
+/*
+ * Request Real- time Information
+ * An accountability policy should define that only the Wearable Customers must be able to read their sugar level,
+ *  blood pressure and heartbeat rate
+ * W8, W11
+ * compliance with privacy policies - monitoring of data practices
+ */
+CLAUSE r6 (
+    FORALL d:data
+    IF ( @sugarLevel(d) AND d.subject == customer) THEN {
+        PERMIT customer.read[cardioMon](d)
+    }
+    AND
+    IF ( @sugarLevel(d) AND d.subject != customer) THEN {
+        DENY customer.read[cardioMon](d)
+    }
+)
+
+
+/*
+ * View active users
+ * An accountability policy should define that the Wearable Co employees and the IT Admins of CardioMon have restricted
+ *  access to the personal data of the Wearable Customers and can only read the following personal data: user id,
+ *  display name, gender, age and country
+ * W8, W11
+ * compliance with privacy policies - monitoring of data practices - privacy-by-default
+ */
+CLAUSE r7 (
+    FORALL d:data FORALL u:Actor
+    IF ( @WCOAdmin(u) OR @WCOemployee(u) ) THEN {
+        IF ( @userId(d) OR @displayName(d) OR @gender(d) OR @age(d) OR @country(d) ) THEN
+        {
+            PERMIT u.read[cardioMon](d) PURPOSE (health admin)
+        }
+    }
+)
+
+/*
+ * Request Statistical Visualisation
+ * An accountability policy should define that Map-on-Web can only read the following personal data: age, country,
+ *  sugar level, blood pressure and heartbeat rate
+ * C1, W8, W12
+ * personal data minimization - compliance with privacy policies - monitoring of data practices - privacy-by-default
+ */
+CLAUSE r8 (
+    FORALL d:data
+    IF( @age(d) OR @country(d) OR @blood(d) OR @sugarLevel(d) OR @heartbeat(d) ) THEN {
+        PERMIT mapOnWeb.submitRTI[cardioMon](d)
+    }
+)
+
+/*
+ * Request data handling compliance
+ * A tool has to be implemented to enable analysis of evidence records for specific audits tasks
+ * C2, C3
+ * compliance with privacy policies - monitoring of data practices
+ */
+CLAUSE r9 (
+    EXISTS d:data
+    PERMIT auditor.requestDataCompliance[cardioMon](d)
+)
+
+/*
+ * Receive alerts on excessive wellbeing values
+ * An accountability policy should define that only the Wearable Customers have access to the alerts with respect to
+ *  their wellbeing values exceeding thresholds
+ * W8, W11
+ * personal data minimization - compliance with privacy policies - monitoring of data practices
+ */
+CLAUSE r10 (
+    EXISTS d:data
+    IF ( d.subject == customer ) THEN {
+        PERMIT customer.receiveAlerts[cardioMon](d)
+    }
+
+)
+
+/*
+ * Receive policy violation alert
+ * An accountability policy should define that all the wearable customers, the IT admin of CardioMon and the PO of the
+ *  Wearable Co must be notified of any policy violation incidents
+ * C2, C3, W7, W16
+ * compliance with privacy policies - monitoring of data practices - informing about policy violations
+ *  informing about privacy preferences violations remediation in case of damages
+ */
+CLAUSE r11 (
+    FORALL admins:WCOAdmin EXISTS d:data
+    PERMIT customer.receivePVA[cardioMon](d) AND
+    PERMIT admins.receivePVA[cardioMon](d) AND
+    PERMIT PO.receivePVA[cardioMon](d)
+)
+
+/*
+ * Receive transfer violation alert
+ * An accountability policy should define the allowable location for storing and processing personal data collected by
+ *  the Wearable Service and that all the wearable customers, the IT admin of CardioMon and the PO of the Wearable Co
+ *  must be notified in case of any transfer violation incidents
+ * C2, C3, W17
+ * compliance with privacy policies - monitoring of data practices - informing about policy violations
+ *  informing about privacy preferences violations remediation in case of damages
+ */
+//CLAUSE r12 ()
+
+/*
+ * Receive breach notification
+ * An accountability policy should define that any breach notification should be notified to all the wearable customers,
+ *  the IT admin of CardioMon and the PO of the Wearable Co
+ * C2, C3, W16
+ * compliance with privacy policies - monitoring of data practices
+ *  informing about privacy preferences violations remediation in case of damages
+ */
+CLAUSE r13 (
+    FORALL admins:WCOAdmin EXISTS d:data
+    PERMIT customer.receiveBreachNotif[cardioMon](d) AND
+    PERMIT admins.receiveBreachNotif[cardioMon](d) AND
+    PERMIT PO.receiveBreachNotif[cardioMon](d)
+)

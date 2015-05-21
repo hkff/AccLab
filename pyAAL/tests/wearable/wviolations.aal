@@ -1,0 +1,45 @@
+
+
+//=====================================================//
+//=================== Violations ======================//
+//=====================================================//
+
+
+/*
+ * 1 : Unauthorised Data Access
+ * The Wearable Co employee browses the list of registered wearable customers and requests to access the complete
+ *  record of the personal information of a customer, which is not allowed by the specified policy. CardioMon raises
+ *  a data access exception.
+ */
+
+/*
+ * 2 : Inadequate Data Retention / Deletion
+ * The agreed accountability policy between CardioMon and the Wearable Co defines that the personal data collected from
+ *  the customer’s device must be deleted if being older than 6 months. However, a backup of the CardioMon store is left.
+ */
+
+/*
+ * 3 : Unauthorised Data Location
+ * The Wearable Co has agreed with CardioMon that only data centres in Europe are used for storing the personal data of
+ *  the customers. A sudden hardware failure in DataSpacer results in the CardioMon store being moved to a third country location.
+ */
+
+/*
+ * 4 : Encryption vulnerability
+ * The Map-on-Web uses encrypted communication with CardioMon to access the personal information of the customers
+ *  collected from their devices in order to generate the statistics per geographical area. However, at a specific period
+ *  of time this communication turns to be unencrypted.
+ */
+
+/*
+ * 5 : Right to know vs. Need to know
+ * The Wearable Co employee performs too many requests to access the list of wearable customers and get their profile
+ *  data. Although being an authorized party, the employee invokes the relevant service too many times, indicating an
+ *  abuse of its right, hence a (probable) security violation.
+ */
+
+/*
+ * 6 : Service unavailability
+ * The Wearable Customer requests the visualisation of statistical information, but the communication between
+ *  CardioMon and Map-on-Web is broken.
+ */

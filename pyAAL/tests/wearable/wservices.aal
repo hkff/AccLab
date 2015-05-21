@@ -1,0 +1,149 @@
+//=====================================================//
+//================= Defining services =================//
+//=====================================================//
+
+
+/*
+ * F1 : Create Customer Profile
+ * Create a customer account to the Wearable Service, by determining the credentials for logging into the service and
+ *  providing profile data to be processed by the service
+ * Used by Wearable Customer
+ */
+SERVICE createCustomerProfile
+
+/*
+ * F2 : Create Business User Profile
+ * Create an account for managing the users registered to the Wearable Service and retrieving information about their
+ *  public data submitted to the service
+ * Used by Wearable Co employee
+ */
+SERVICE createBusinessProfile
+
+/*
+ * F3 : Log in
+ * Provide the security mechanism for the user authentication to the service
+ * Used by Wearable Customer / Wearable Co employee
+ */
+SERVICE login
+
+/*
+ * F4 : Manage Profile
+ * Add / edit / update / delete profile information
+ * Used by  Wearable Customer / Wearable Co employee
+ */
+ SERVICE add
+ SERVICE edit
+ SERVICE update
+ SERVICE delete
+
+/*
+ * F5 : Submit Real-time Information
+ * Upload data stream with the recorded wellbeing information per time unit (e.g. per hour or per day) as collected by
+ *  wearable device. Such data involve the heart beat rate, the blood pressure, the sugar blood level, etc. These data
+ *  are associated with the current geographical position of the user.
+ * Used by Wearable Customer
+ */
+SERVICE submitRTI
+
+/*
+ * F6 : Request Real- time Information
+ * Retrieve a timeline visualisation of the wellbeing collected records, along with the typical threshold values for
+ *  the wellbeing metrics per age group and country (for the specific customer)
+ * Used by Wearable Customer
+ */
+SERVICE requestRTI
+
+/*
+ * F7 : Update Wellbeing activities
+ * Specify everyday activities (such as the duration of a running / walking exercise, etc.)
+ * Used by Wearable Customer
+ */
+SERVICE updateWellbeing
+
+/*
+ * F8 : Get wellbeing training
+ * Receive recommendations on the available wellbeing training courses
+ * Used by Wearable Customer
+ */
+SERVICE getWellbeingTraining
+
+/*
+ * F9 : Get wellbeing score
+ * Receive a single value wellbeing score by combining information from the collected real time information and
+ *  wellbeing training activities.
+ * Used by Wearable Customer
+ */
+SERVICE getWellbeingScore
+
+/*
+ * F10 : Manage Business Formula for wellbeing scores
+ * Define the thresholds (per real time data stream, e.g. blood pressure, per age and country) and the weights,
+ *  through which the wellbeing score of a customer is determined
+ * Used by Wearable Co employee
+ */
+SERVICE manageBusinessFormula
+
+/*
+ * F11 : Update Thresholds
+ * Update the threshold for the acceptable values of the wellbeing metrics, possibly customised to geographical
+ *  locations (affected by climate and altitude factors)
+ * Used by Wearable Co employee
+ */
+SERVICE updateThresholds
+
+/*
+ * F12 : View active users
+ * Browse through the list of registered users and part of their profile data
+ * Used by Wearable Co employee
+ */
+SERVICE viewActiveUsers
+
+/*
+ * F13 : Request Statistical Visualisation
+ * Get a map visualisation of the anonymised wellbeing record data (i.e. blood pressure, accountability score, etc.)
+ *  per country and age group
+ * Used by Wearable Customer / Wearable Co employee
+ */
+SERVICE requestStat
+
+/*
+ * F14 : Request data handling compliance
+ * Get an audit report on how data involved in the Wearable Service are handled in the cloud, by presenting relevant
+ *  evidences, such as access logs and listing access violations (if any)
+ * Used by Wearable Co employee
+ */
+SERVICE requestDataCompliance
+
+/*
+ * F15 : Request data disclosure path
+ * Get a summary of the personal data that the Wearable Service is processing for the specific Wearable Customer
+ * Used by Wearable Customer
+ */
+SERVICE requestDataPath
+
+/*
+ * F16 : Receive alerts on excessive wellbeing values
+ * In cases of human body metrics getting exceptional (beyond thresholds) values, raise notifications to the referred user
+ * Used by Wearable Customer
+ */
+SERVICE receiveAlerts
+
+/*
+ * F17 : Receive policy violation alert
+ * Receive a notification on the type of policy violation and detailed information about it
+ * Used by Wearable Customer / Wearable Co employee
+ */
+SERVICE receivePVA
+/*
+ * F18 : Receive transfer violation alert
+ * Receive a notification on the detailed data transfer violation
+ * Used by Wearable Customer / Wearable Co employee
+ */
+SERVICE receiveTVA
+
+/*
+ * F19 : Receive breach notification
+ * Receive security and/or privacy breach notifications
+ * Used by Wearable Customer / Wearable Co employee
+ */
+SERVICE receiveBreachNotif
