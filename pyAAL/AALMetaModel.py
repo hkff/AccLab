@@ -461,9 +461,10 @@ class m_clause(m_declarable):
         return res
 
     def to_ltl(self):
-        ue = str(self.usage.to_ltl()) if self.usage is not None else "false"
-        ae = str(self.audit.to_ltl()) if self.audit.usage is not None else "false"
-        re = str(self.rectification.to_ltl()) if self.rectification.usage is not None else "false"
+        ue = str(self.usage.to_ltl()) if self.usage is not None else ""
+        ae = str(self.audit.to_ltl()) if self.audit.usage is not None else ""
+        re = str(self.rectification.to_ltl()) if self.rectification.usage is not None else ""
+        return ue + "\n" + ae + "\n" + re
         return ae + " & always(" + ue + " | ((~(" + ue + ")) & (always(" + ae + " => (" + re + ")))))"
 
     def to_nnf(self,bool):
@@ -476,7 +477,7 @@ class m_clause(m_declarable):
         ue = str(self.usage.to_natural()) if self.usage is not None else "false "
         ae = str(self.audit.to_natural()) if self.audit.usage is not None else "false "
         re = str(self.rectification.to_natural()) if self.rectification.usage is not None else "false "
-        return "Usage : "+ue + "\nAudit : "+ ae + "\nRectification : " + re +"\n"
+        return "Usage : "+ue + "\nAudit : " + ae + "\nRectification : " + re + "\n"
 
 # Agent
 class m_agent(m_declarable):
@@ -978,8 +979,12 @@ class m_predicate(m_exp):
         pass
 
     def __str__(self):
-        q = [str(x) for x in self.args]
+        q = [str(x) for x in self.args][1:]
         return "@" + str(self.name) + "(" + str(" ".join(q)) + ")"
+
+    def to_ltl(self):
+        q = [str(x) for x in self.args][1:]
+        return str(self.name) + "(" + str(" ".join(q)) + ")"
 
     def children(self):
         return [self.args]
@@ -987,11 +992,21 @@ class m_predicate(m_exp):
     def to_natural(self, kw=True):
         return str(self) + " "
 
+
 # Constant
 class m_constant(m_exp):
+    counter = 0
+
+    def __init__(self):
+        super().__init__()
+        self.counter = m_constant.counter
+        m_constant.counter += 1
+
     def __str__(self):
         return str(self.name)
 
+    def to_ltl(self):
+        return "CTS" + str(self.counter)
 
 # Var Attribute
 class m_varAttr(m_exp):
@@ -1006,17 +1021,16 @@ class m_varAttr(m_exp):
     def to_ltl(self):
         return str(self.attribute) + "(" + str(self.variable) + ")"
 
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         #TODO:
         return str(self.attribute) + "(" + str(self.variable) + ")"
 
     def to_natural(self,kw=True):
-        return str(self.variable)+"'s "+ str(self.attribute)
+        return str(self.variable)+"'s " + str(self.attribute)
 
 #########################
 ####### Condition #######
 #########################
-
 
 # Condition
 class m_condition(m_aexp):
@@ -1035,17 +1049,17 @@ class m_conditionCmp(m_condition):
         return str(self.exp1) + " " + str(self.operator) + " " + str(self.exp2)
 
     def to_ltl(self):
-        return str(self.operator.to_ltl()) + "(" + str(self.exp1.to_ltl()) + ", " + str(self.exp1.to_ltl()) + ")"
+        return str(self.operator.to_ltl()) + "(" + str(self.exp1.to_ltl()) + ", " + str(self.exp2.to_ltl()) + ")"
 
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         if bool:
             return str(self.operator) + "(" + str(self.exp1.to_nnf(True)) + ", " + str(self.exp2.to_nnf(True))
         else:
-            if self.operator==m_booleanOp.O_equal:
-                self.operator=m_booleanOp.O_inequal
+            if self.operator == m_booleanOp.O_equal:
+                self.operator = m_booleanOp.O_inequal
                 return "(" + str(self.exp1.to_nnf(True)) + " " + str(self.operator) + " " + str(self.exp2.to_nnf(True)) + ")"
-            elif self.operator==m_booleanOp.O_or:
-                self.operator=m_booleanOp.O_equal
+            elif self.operator == m_booleanOp.O_or:
+                self.operator = m_booleanOp.O_equal
                 return "(" + str(self.exp1.to_nnf(True)) + " " + str(self.operator) + " " + str(self.exp2.to_nnf(True)) + ")"
 
     def to_natural(self, kw=True):
@@ -1053,8 +1067,6 @@ class m_conditionCmp(m_condition):
             return str(self.exp1.to_natural()) + str(self.operator.to_natural()) + str(self.exp2.to_natural())
         else:
             return "not " + str(self.exp1.to_natural()) + str(self.operator.to_natural()) + str(self.exp2.to_natural())
-
-
 
 
 # Condition combination
@@ -1072,15 +1084,15 @@ class m_conditionComb(m_condition):
         #return str(self.cond1.to_ltl()) + " " + str(self.operator.to_ltl()) + " " + str(self.cond2.to_ltl())
         return str(self.cond1.to_ltl()) + " " + str(self.operator.to_ltl()) + " " + str(self.cond2.to_ltl())
 
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         if bool:
             return str(self.operator) + "(" + str(self.cond1.to_nnf(True)) + ", " + str(self.cond2.to_nnf(True))
         else:
-            if self.operator==m_booleanOp.O_and:
-                self.operator=m_booleanOp.O_or
+            if self.operator == m_booleanOp.O_and:
+                self.operator = m_booleanOp.O_or
                 return "(" + str(self.cond1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.cond2.to_nnf(False)) + ")"
-            elif self.operator==m_booleanOp.O_or:
-                self.operator=m_booleanOp.O_and
+            elif self.operator == m_booleanOp.O_or:
+                self.operator = m_booleanOp.O_and
                 return "(" + str(self.cond1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.cond2.to_nnf(False)) + ")"
 
     def to_natural(self,kw=True):
@@ -1105,15 +1117,15 @@ class m_conditionNotComb(m_condition):
 
     def to_nnf(self, bool):
         if bool:
-            if self.operator==m_booleanOp.O_not:
-                self.operator=None
+            if self.operator == m_booleanOp.O_not:
+                self.operator = None
                 return str(self.exp.to_nnf(False))
         else:
-            if self.operator==m_booleanOp.O_not:
-                self.operator=None
+            if self.operator == m_booleanOp.O_not:
+                self.operator = None
                 return str(self.exp.to_nnf(True))
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         if kw:
             return "" + self.operator.to_natural() + self.exp.to_natural()
         else:
@@ -1136,9 +1148,9 @@ class m_action(m_aexp):
 
     def __str__(self):
         res = str(self.agent1) + "." + str(self.service.name) + \
-              ("[" + str(self.agent2) + "]" if self.agent2 is not None else "") + \
-              "(" + (str(self.args) if self.args is not None else "") + ") " + \
-              (str(self.time) if self.time is not None else "")
+            ("[" + str(self.agent2) + "]" if self.agent2 is not None else "") + \
+            "(" + (str(self.args) if self.args is not None else "") + ") " + \
+            (str(self.time) if self.time is not None else "")
 
         if len(self.purpose) > 0:
             res += " PURPOSE(" + str(self.purpose) + ")"
@@ -1203,6 +1215,7 @@ class m_action(m_aexp):
                       str(self).replace("\"", "'") + '"')
         return p
 
+
 # m_time
 class m_time(aalmmnode):
     def __init__(self):
@@ -1262,7 +1275,7 @@ class sEnum(Enum):
     def to_ltl(self):
         return ""
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         """ Get the natural language translation """
         return ""
 
@@ -1285,7 +1298,6 @@ class sEnum(Enum):
         return res
 
 
-
 # Boolean Op
 class m_booleanOp(sEnum):
     O_and = ("AND" or ",")
@@ -1303,7 +1315,7 @@ class m_booleanOp(sEnum):
     T_until = "UNTIL"
     T_unless = "UNLESS"
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         if self == m_booleanOp.O_and:
             return "and "
         elif self == m_booleanOp.O_or:
@@ -1347,9 +1359,9 @@ class m_booleanOp(sEnum):
         elif self == m_booleanOp.O_not:
             return str(LTLOperators.t_not)
         elif self == m_booleanOp.O_equal:
-            return "<=>"
+            return "EQUAL"
         elif self == m_booleanOp.O_inequal:
-            return "not supported"
+            return "~EQUAL"
         elif self == m_modal.T_until:
             return str(LTLOperators.t_until)
         elif self == m_modal.T_unless:
@@ -1421,9 +1433,9 @@ class m_modal(sEnum):
         elif self == m_modal.T_sometime:
             return str(LTLOperators.t_sometime)
 
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         if bool:
-            return ""+str(self)
+            return "" + str(self)
         else:
             if self==m_modal.T_always:
                 return str(m_modal.T_sometime)

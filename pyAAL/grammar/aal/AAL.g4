@@ -155,7 +155,7 @@ h_attribute  : ID;
 h_comment    : COMMENT NEWLINE | MLCOMMENT NEWLINE;
 h_duration   : INT INT h_colon INT INT;
 h_parameters : h_constant | h_variable;
-h_constant   : INT | '"' STRING '"';
+h_constant   : INT |  STRING;
 h_type       : ID;
 h_variable   : ID (h_colon h_type)?;
 h_predicate  : '@' ID h_lpar ID* h_rpar;

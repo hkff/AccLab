@@ -125,7 +125,7 @@ def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, co
     print("\nExecution time : " + str(exec_time))
 
     bt = Trees.toStringTree(tr, recog=parser)
-    print(bt)
+    # print(bt)
     l = parser.getParseListeners().pop(0)
 
     res = ""
@@ -158,7 +158,8 @@ def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, co
 
 
 # tspassc
-def tspassc(file=None, code="", output="tests/tmp.tspass", use_shell=False, debug: bool=False, synth: bool=False):
+def tspassc(file=None, code="", output="tests/tmp.tspass", use_shell=False, debug: bool=False,
+            synth: bool=False, reparse: bool=False):
     """
     Parse tspass
     :param file: The tspass input file
@@ -185,20 +186,24 @@ def tspassc(file=None, code="", output="tests/tmp.tspass", use_shell=False, debu
 
     res = ""
     if file is not None:  # Handle code from file
-        input_file = FileStream(file)
-        lexer = TSPASSLexer(input_file)
-        stream = CommonTokenStream(lexer)
-        parser = TSPASSParser(stream)
-        parser.buildParseTrees = True
+        if reparse:
+            input_file = FileStream(file)
+            lexer = TSPASSLexer(input_file)
+            stream = CommonTokenStream(lexer)
+            parser = TSPASSParser(stream)
+            parser.buildParseTrees = True
 
-        if synth:  # Adding synthesizer
-            parser.addParseListener(FOTLCompilerListener())
-            tr = parser.program()
+            if synth:  # Adding synthesizer
+                parser.addParseListener(FOTLCompilerListener())
+                tr = parser.program()
+            else:
+                tr = parser.formula()
+
+            bt = Trees2.tspassTree(tr, recog=parser)
+            # print(bt)
         else:
-            tr = parser.formula()
-
-        bt = Trees2.tspassTree(tr, recog=parser)
-        #print(bt)
+            with open(file, mode='r') as f:
+                bt = f.read()
         generated_tspass = file.replace(".tspass", "_gen.tspass")
     else:  # Handle code from string
         generated_tspass = output.replace(".tspass", "_gen.tspass")
@@ -286,6 +291,7 @@ def main(argv):
         "\n  -k \t--check         " + "\t perform a verbose check" +\
         "\n  -l \t--load          " + "\t load a compiled aal file (.aalc) and run a shell" +\
         "\n  -t \t--ltl           " + "\t translate the aal program into FOTL" +\
+        "\n  -r \t--reparse       " + "\t reparse tspass file" +\
         "\n  -r \t--recompile     " + "\t recompile the external files " +\
         "\n  -b \t--no-colors     " + "\t disable colors in output" +\
         "\n  -x \t--compile-stdlib" + "\t compile the standard library" +\
@@ -306,13 +312,14 @@ def main(argv):
     hotswaping = False
     show_ast = False
     synth = False
+    reparse = False
 
     # Checking options
     try:
-        opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaS",
+        opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaSr",
                                    ["help", "input=", "ofile=", "compile", "monodic",
                                    "shell", "check", "load", "recompile", "init",
-                                   "no-colors", "compile-stdlib", "hotswap", "ast", "synth"])
+                                   "no-colors", "compile-stdlib", "hotswap", "ast", "synth", "reparse"])
     except getopt.GetoptError:
         print(helpStr)
         sys.exit(2)
@@ -356,6 +363,8 @@ def main(argv):
             show_ast = True
         elif opt in ("-S", "--synth"):
             synth = True
+        elif opt in ("-r", "--reparse"):
+            reparse = True
 
     # Use hot swapping decoration on all AALMetaModel classes
     # use this option for debug only
@@ -377,11 +386,12 @@ def main(argv):
         shell(l)
 
     elif inputfile.endswith(".aal"):  # Use AAL compiler
-        aalc(inputfile, use_shell=use_shell, check=check, monodic=monodic, compile=compile, recompile=recompile,
+        res = aalc(inputfile, use_shell=use_shell, check=check, monodic=monodic, compile=compile, recompile=recompile,
              to_ltl=to_ltl, show_ast=show_ast)
+        print(res["res"])
 
     elif inputfile.endswith(".tspass"):  # Use tspass compiler
-        res = tspassc(inputfile, use_shell=False, debug=False, synth=synth)
+        res = tspassc(inputfile, use_shell=False, debug=False, synth=synth, reparse=reparse)
         print(res["print"])
 
 

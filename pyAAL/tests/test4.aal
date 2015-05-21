@@ -568,10 +568,44 @@ CLAUSE aal_rule_3 (
 )
 
 /*
-CLAUSE MapOnWeb_Policy (
-
-)
+    <!-- WearableCo's data handling policy -->
 */
+
+//CLAUSE wearableCo_policy (
+//    ref aal_rule_3
+//)
+
+
+/*
+    <!-- Map-On-Web's data handling policy -->
+*/
+CLAUSE MapOnWeb_Policy (
+    //  <!-- Wearable Co is accountable to their customers for how data are processed by Map-On-Web-->
+    FORALL d:data FORALL a:Actor
+    IF ( a.read[mapOnWeb](d) ) THEN
+    {
+         mapOnWeb.log[mapOnWeb]("Timestamp;Action;Purpose;Subject;Resource;")
+    }
+    AND
+    // <!--Personal Data storage period of 6 months -->
+    MUST( mapOnWeb.delete[mapOnWeb](d) BEFORE "6 months")
+
+    AND
+
+     // <!-- Notify Cardio Mon whenever access is denied-->
+    IF (a.read[mapOnWeb](d) AND DENY a.read[mapOnWeb](d) ) THEN
+    {
+        MUST( mapOnWeb.notify[cardioMon]("Unauthorized Personal Data Access Attempt") )
+    }
+
+    AUDITING auditor.audit[mapOnWeb]()
+
+    IF_VIOLATED_THEN
+        // <!--Notification of Cardio Mon about security breach (policy violation) -->
+        MUST(mapOnWeb.notify[cardioMon](""))
+)
+
+
 /*
 CLAUSE km2 (
     PERMIT kim.read[cloudX]() or kim.read[cloudX]()
@@ -585,5 +619,5 @@ call validate2("'km2'")
 EXEC
 """
 #print(self.clause("km2").to_natural())
-print(self.aalprog)
+#print(self.aalprog)
 """
