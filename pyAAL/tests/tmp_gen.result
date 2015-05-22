@@ -15,7 +15,7 @@ For initial clauses:
 20[0:Inp] || SkP3(U) -> SkP2(U) sugarLevel(U)*.    -> 20[0:Inp] || SkP3(temp_zero,U) -> SkP2(temp_zero,U) sugarLevel(temp_zero,U)*.
 22[0:Inp] || SkP2(U) -> SkP1(U) heartbeat(U)*.    -> 22[0:Inp] || SkP2(temp_zero,U) -> SkP1(temp_zero,U) heartbeat(temp_zero,U)*.
 24[0:Inp] || SkP1(U) -> SkP0(U) activity(U)*.    -> 24[0:Inp] || SkP1(temp_zero,U) -> SkP0(temp_zero,U) activity(temp_zero,U)*.
-28[0:Inp] || userId(U) EQUAL(subject(U),customer)* -> read(customer,cardioMon,U).    -> 28[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),customer)* -> read(temp_zero,customer,cardioMon,U).
+28[0:Inp] || userId(U) EQUAL(subject(U),customer)* -> Pread(customer,cardioMon,U).    -> 28[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),customer)* -> Pread(temp_zero,customer,cardioMon,U).
 2[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) -> SkP11(U).    -> 2[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) -> SkP11(temp_zero,U).
 26[0:Inp] || Pdelete(customer,cardioMon,skc0)* Pupdate(customer,cardioMon,skc0) Pread(customer,cardioMon,skc0) SkP0(skc0) -> .    -> 26[0:Inp] || Pdelete(temp_zero,customer,cardioMon,skc0)* Pupdate(temp_zero,customer,cardioMon,skc0) Pread(temp_zero,customer,cardioMon,skc0) SkP0(temp_zero,skc0) -> .
 3[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) SkP11(U) -> SkP10(U).    -> 3[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP11(temp_zero,U) -> SkP10(temp_zero,U).
@@ -56,7 +56,7 @@ Input Problem:
 12[0:Inp] || SkP9(temp_zero,U) -> SkP8(temp_zero,U) displayName(temp_zero,U)*.
 13[0:Inp] || SkP10(temp_zero,U) -> SkP9(temp_zero,U) userId(temp_zero,U)*.
 14[0:Inp] || SkP11(temp_zero,U) -> SkP10(temp_zero,U) password(temp_zero,U)*.
-15[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),customer)* -> read(temp_zero,customer,cardioMon,U).
+15[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),customer)* -> Pread(temp_zero,customer,cardioMon,U).
 16[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) -> SkP11(temp_zero,U).
 17[0:Inp] || Pdelete(temp_zero,customer,cardioMon,skc0)* Pupdate(temp_zero,customer,cardioMon,skc0) Pread(temp_zero,customer,cardioMon,skc0) SkP0(temp_zero,skc0) -> .
 18[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP11(temp_zero,U) -> SkP10(temp_zero,U).
@@ -75,7 +75,7 @@ Input Problem:
  Inferences: IORe=1 IOFc=1 
  Reductions: RObv=1 RTaut=1 RFSub=1 RBSub=1 
  Extras    : No Input Saturation, No Selection, No Splitting, Full Reduction,  Ratio: 5, FuncWeight: 1, VarWeight: 1
- Precedence: div > id > c^l > temp_succ > temp_shield > temp_zero > cardioMon > customer > subject > EQUAL > Pdelete > Pread > Pupdate > activity > age > country > displayName > gender > heartbeat > height > password > read > sugarLevel > userId > username > weight > SkP0 > SkP1 > SkP2 > SkP3 > SkP4 > SkP5 > SkP6 > SkP7 > SkP8 > SkP9 > SkP10 > SkP11 > skc0
+ Precedence: div > id > c^l > temp_succ > temp_shield > temp_zero > cardioMon > customer > subject > EQUAL > Pdelete > Pread > Pupdate > activity > age > country > displayName > gender > heartbeat > height > password > sugarLevel > userId > username > weight > SkP0 > SkP1 > SkP2 > SkP3 > SkP4 > SkP5 > SkP6 > SkP7 > SkP8 > SkP9 > SkP10 > SkP11 > skc0
  Ordering  : KBO
 Processed Problem:
 
@@ -96,7 +96,7 @@ Usable Clauses:
 13[0:Inp] || SkP10(temp_zero,U) -> userId(temp_zero,U)* SkP9(temp_zero,U).
 11[0:Inp] || SkP8(temp_zero,U) -> gender(temp_zero,U)* SkP7(temp_zero,U).
 9[0:Inp] || SkP6(temp_zero,U) -> gender(temp_zero,U)* SkP5(temp_zero,U).
-15[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),customer)* -> read(temp_zero,customer,cardioMon,U).
+15[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),customer)* -> Pread(temp_zero,customer,cardioMon,U).
 16[0:Inp] || Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP11(temp_zero,U).
 17[0:Inp] || SkP0(temp_zero,skc0) Pread(temp_zero,customer,cardioMon,skc0) Pupdate(temp_zero,customer,cardioMon,skc0) Pdelete(temp_zero,customer,cardioMon,skc0)* -> .
 18[0:Inp] || SkP11(temp_zero,U) Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP10(temp_zero,U).
@@ -128,10 +128,10 @@ Number of usable clauses left: 0
 Number of worked-off clauses left: 29
 Number of successful loop searches: 0
 TSPASS allocated 530 KBytes.
-TSPASS spent	0:00:00.00 (0.004s) on the problem.
+TSPASS spent	0:00:00.01 (0.008s) on the problem.
 		0:00:00.00 (0s) for the input.
 		0:00:00.00 (0.004s) for the FLOTTER CNF translation.
-		0:00:00.00 (0s) for inferences.
+		0:00:00.00 (0.004s) for inferences.
 		0:00:00.00 (0s) for the backtracking.
 		0:00:00.00 (0s) for the reduction.
 

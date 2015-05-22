@@ -285,7 +285,33 @@ class m_aalprog(aalmmnode):
         res += "\n".join([str(x) for x in self.checks])+"\n\n"
         return res
 
-    # isDeclared
+    # get_declared
+    def get_declared(self, klass: "class") -> []:
+        """
+        Get declared elements of type klass
+        :param klass: Type of element to check (m_agent, m_data, m_service, _m_type, m_clause, m_macro)
+        :return:
+        """
+        decList = ""
+        if klass == m_agent:
+            decList = "agents"
+        elif klass == m_data:
+            decList = "data"
+        elif klass == m_service:
+            decList = "services"
+        elif klass == m_type:
+            decList = "types"
+        elif klass == m_clause:  # Handle special case for clause
+            res = self.clauses
+            for l in self.libs:
+                res = res + l.aalprog.clauses
+
+        res = self.declarations[decList]
+        for l in self.libs:
+            res = res + l.aalprog.get_declared(klass)
+        return res
+
+    # is_declared
     def isDeclared(self, name: str, klass: "class", ret=bool) -> bool:
         """
         Check if the element with name=name of type klass is declared

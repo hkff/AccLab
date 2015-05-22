@@ -240,12 +240,12 @@ CLAUSE user_pref (
     FORALL d:data
 
     IF(d.subject == customer AND @userId(d)) THEN {
-        customer.read[cardioMon](d)
+        PERMIT customer.read[cardioMon](d)
     }
 
 )
 
-call validate("'r3'" "'user_pref'" )
+call validate( "'user_pref'" "'r3'")
 CHECK c1 (
    ~(clause(user_pref).ue => clause(r3).ue)
 )

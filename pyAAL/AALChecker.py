@@ -64,16 +64,16 @@ pre_cond = ""
 def build_env(mm: m_aalprog=None):
     pre_cond = "\n%%%%%%%%% START EVN %%%%%%%%%%%"
     pre_cond += "\n%%% Types knowledge\n"
-    for x in mm.declarations["types"]:
+    for x in mm.get_declared(m_type):
         pre_cond += str(x.to_ltl()) + " & "
 
     pre_cond += "\n\n%%% Action authorizations \n"
-    for x in mm.declarations["services"]:
+    for x in mm.get_declared(m_service):
         pre_cond += str(x.to_ltl()) + " & "
 
-    pre_cond += "\n\n%%% Actors knowledge \n"
-    for x in mm.declarations["agents"]:
-        pre_cond += str(x.to_ltl()) + " & "
+    # pre_cond += "\n\n%%% Actors knowledge \n"
+    # for x in mm.get_declared(m_agent):
+    #     pre_cond += str(x.to_ltl()) + " & "
 
     pre_cond += "\n%%%%%%%%% END EVN %%%%%%%%%%%\n"
     return pre_cond
