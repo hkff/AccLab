@@ -236,6 +236,8 @@ CLAUSE r13 (
 )
 
 
+
+
 CLAUSE user_pref (
     FORALL d:data
 
@@ -245,9 +247,11 @@ CLAUSE user_pref (
 
 )
 
-call validate( "'user_pref'" "'r3'")
+//call validate( "'user_pref'" "'r3'")
+
 CHECK c1 (
-   ~(clause(user_pref).ue => clause(r3).ue)
+a & b
+//   ~(clause(user_pref).ue => (clause(r3).ue & clause(r4).ue))
 )
 
 APPLY c1()

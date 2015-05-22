@@ -68,3 +68,6 @@ TYPE WCOAdmin EXTENDS(WCOemployee)
 
 // wearable device
 TYPE WDevice EXTENDS(DataController)
+
+// Customer type
+TYPE Customer EXTENDS(DataSubject)

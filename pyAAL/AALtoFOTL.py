@@ -20,6 +20,24 @@ __author__ = 'hkff'
 
 from AALMetaModel import *
 
+# Build environment
+def build_env(prog: m_aalprog=None):
+    pre_cond = "\n%%%%%%%%% START EVN %%%%%%%%%%%"
+    pre_cond += "\n%%% Types knowledge\n"
+    for x in prog.get_declared(m_type):
+        pre_cond += str(x.to_ltl()) + " & "
+
+    pre_cond += "\n\n%%% Action authorizations \n"
+    for x in prog.get_declared(m_service):
+        pre_cond += str(x.to_ltl()) + " & "
+
+    # pre_cond += "\n\n%%% Actors knowledge \n"
+    # for x in mm.get_declared(m_agent):
+    #     pre_cond += str(x.to_ltl()) + " & "
+
+    pre_cond += "\n%%%%%%%%% END EVN %%%%%%%%%%%\n"
+    return pre_cond
+
 
 # AALtoFOTL
 def AALtoFOTL(mm: aalmm=None):
@@ -46,4 +64,4 @@ def AALtoFOTL(mm: aalmm=None):
         qvar          -> quant INTER[var]
     """
 
-    return mm.aalprog.to_ltl()
+    return build_env(mm.aalprog) + "\n" + mm.aalprog.to_ltl()

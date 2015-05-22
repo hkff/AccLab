@@ -1030,6 +1030,11 @@ class AALCompilerListener(AALListener.AALListener):
         # Generating LTL formula
         code = str(chk.code)
         ltl = code
+
+        # Check if buil env
+        if re.finditer('build_env', code):
+            ltl = build_env(self.aalprog) + "\n" + ltl
+
         for x in re.finditer('clause\(\w+\)', code):
             clauseId = x.group().replace('clause(', '').replace(')', '')  # Get clause's id
             cl = self.clause(clauseId)

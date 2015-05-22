@@ -1,18 +1,1 @@
-begin_problem(TranslatedInput).
-list_of_descriptions.
-name({*Translated Input*}).
-author({**}).
-status(unknown).
-description({**}).
-end_of_list.
-
-list_of_symbols.
-functions[(cardioMon,0),(customer,0),(subject,1)].
-predicates[(EQUAL,2),(Pdelete,3),(Pread,3),(Pupdate,3),(activity,1),(age,1),(country,1),(displayName,1),(gender,1),(heartbeat,1),(height,1),(password,1),(sugarLevel,1),(userId,1),(username,1),(weight,1)].
-end_of_list.
-
-list_of_formulae(axioms).
-formula(not(implies(forall([_x],implies(and(EQUAL(subject(_x),customer),userId(_x)),Pread(customer,cardioMon,_x))),forall([_x],implies(EQUAL(subject(_x),customer),and(and(and(and(and(and(and(and(and(and(and(and(implies(username(_x),and(and(Pread(customer,cardioMon,_x),Pupdate(customer,cardioMon,_x)),Pdelete(customer,cardioMon,_x))),implies(password(_x),and(and(Pread(customer,cardioMon,_x),Pupdate(customer,cardioMon,_x)),Pdelete(customer,cardioMon,_x)))),implies(userId(_x),and(and(Pread(customer,cardioMon,_x),Pupdate(customer,cardioMon,_x)),Pdelete(customer,cardioMon,_x)))),implies(displayName(_x),and(and(Pread(customer,cardioMon,_x),Pupdate(customer,cardioMon,_x)),Pdelete(customer,cardioMon,_x)))),implies(gender(_x),and(and(Pread(customer,cardioMon,_x),Pupdate(customer,cardioMon,_x)),Pdelete(customer,cardioMon,_x)))),implies(age(_x),and(and(Pread(customer,cardioMon,_x),Pupdate(customer,cardioMon,_x)),Pdelete(customer,cardioMon,_x)))),implies(gender(_x),and(and(Pread(customer,cardioMon,_x),Pupdate(customer,cardioMon,_x)),Pdelete(customer,cardioMon,_x)))),implies(height(_x),and(and(Pread(customer,cardioMon,_x),Pupdate(customer,cardioMon,_x)),Pdelete(customer,cardioMon,_x)))),implies(weight(_x),and(and(Pread(customer,cardioMon,_x),Pupdate(customer,cardioMon,_x)),Pdelete(customer,cardioMon,_x)))),implies(sugarLevel(_x),and(and(Pread(customer,cardioMon,_x),Pupdate(customer,cardioMon,_x)),Pdelete(customer,cardioMon,_x)))),implies(heartbeat(_x),and(and(Pread(customer,cardioMon,_x),Pupdate(customer,cardioMon,_x)),Pdelete(customer,cardioMon,_x)))),implies(activity(_x),and(and(Pread(customer,cardioMon,_x),Pupdate(customer,cardioMon,_x)),Pdelete(customer,cardioMon,_x)))),implies(country(_x),and(and(Pread(customer,cardioMon,_x),Pupdate(customer,cardioMon,_x)),Pdelete(customer,cardioMon,_x))))))))).
-end_of_list.
-
-end_problem.
+Error: syntax error, unexpected $end

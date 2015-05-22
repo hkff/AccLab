@@ -21,6 +21,7 @@ __author__ = 'hkff'
 from AALMetaModel import *
 from pprint import pprint
 from tools.color import *
+from AALtoFOTL import *
 DEBUG = False
 
 # TODO optimize pre_cond... to remove
@@ -59,24 +60,6 @@ pre_cond += pre_condYears + pre_condDays
 pre_cond += "always( ![a,x,y,z] ~(PERMIT(a, x, y, z) & DENY(a, x, y, z))) &  "  # Translation not valid
 
 pre_cond = ""
-
-# Build environment
-def build_env(mm: m_aalprog=None):
-    pre_cond = "\n%%%%%%%%% START EVN %%%%%%%%%%%"
-    pre_cond += "\n%%% Types knowledge\n"
-    for x in mm.get_declared(m_type):
-        pre_cond += str(x.to_ltl()) + " & "
-
-    pre_cond += "\n\n%%% Action authorizations \n"
-    for x in mm.get_declared(m_service):
-        pre_cond += str(x.to_ltl()) + " & "
-
-    # pre_cond += "\n\n%%% Actors knowledge \n"
-    # for x in mm.get_declared(m_agent):
-    #     pre_cond += str(x.to_ltl()) + " & "
-
-    pre_cond += "\n%%%%%%%%% END EVN %%%%%%%%%%%\n"
-    return pre_cond
 
 
 # Check AAL global
