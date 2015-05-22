@@ -125,7 +125,7 @@ def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, co
     print("\nExecution time : " + str(exec_time))
 
     bt = Trees.toStringTree(tr, recog=parser)
-    print(bt)
+    # print(bt)
     l = parser.getParseListeners().pop(0)
 
     res = ""

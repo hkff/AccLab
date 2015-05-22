@@ -275,7 +275,7 @@ loadlib : M_load STRING;
 
 //****  LTL checking extension ****//
 ltlCheck : M_check ID args? h_lmar check h_rmar;
-check   : formula;
+check   : MCODE; //formula;
 checkApply : M_apply ID h_lpar STRING* h_rpar;
 
 NEGATION    : '~' | 'not';
