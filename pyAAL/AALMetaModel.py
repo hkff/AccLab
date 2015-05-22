@@ -261,6 +261,7 @@ class m_aalprog(aalmmnode):
         self.macroCalls = []
         self.checks = []
         self.checksApply = []
+        self.libs = []
 
     def __str__(self):
         """
@@ -371,6 +372,7 @@ class m_usage(aalmmnode):
     def to_natural(self,kw=True):
         return "".join([str(x.to_natural()) + "" for x in self.actionExp])
 
+
 # Audit
 class m_audit(aalmmnode):
     """
@@ -395,6 +397,7 @@ class m_audit(aalmmnode):
 
     def to_natural(self,kw=True):
         return str(self.usage.to_natural())
+
 
 # Rectification
 class m_rectification(aalmmnode):
@@ -494,6 +497,9 @@ class m_agent(m_declarable):
         return "AGENT " + str(self.name) + " TYPES(" + " ".join(sltypes) + ") REQUIRED(" + " ".join(slrequired) + \
                ") PROVIDED(" + " ".join(slprovided) + ")"
 
+    def to_ltl(self):
+        return "(![x] (" + str(self.name) + "(x)))"
+
 
 # Data
 class m_data(m_agent):
@@ -522,6 +528,9 @@ class m_service(m_declarable):
         slpurpose = [str(elt) for elt in self.purpose]
         return "SERVICE " + str(self.name) + " TYPES(" + " ".join(sltypes) + ") PURPOSE(" + " ".join(slpurpose) + ")"
 
+    def to_ltl(self):
+        return "(![x, y, z] (" + str(self.name) + "(x, y, z) => P" + str(self.name) + "(x, y, z)))"
+
 
 # Type
 class m_type(m_declarable):
@@ -537,6 +546,9 @@ class m_type(m_declarable):
         slactions = [str(elt) for elt in self.actions]
         return "TYPE " + str(self.name) + " EXTENDS(" + " ".join(slsuperTypes) + ") ATTRIBUTES(" + " ".join(
             slattributes) + ") ACTIONS(" + " ".join(slactions) + ")"
+
+    def to_ltl(self):
+        return str(self.name) + "(CTS) "
 
 
 # Macro

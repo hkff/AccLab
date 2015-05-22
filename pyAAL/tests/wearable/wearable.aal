@@ -234,3 +234,23 @@ CLAUSE r13 (
     PERMIT admins.receiveBreachNotif[cardioMon](d) AND
     PERMIT PO.receiveBreachNotif[cardioMon](d)
 )
+
+
+CLAUSE user_pref (
+    FORALL d:data
+
+    IF(d.subject == customer AND @userId(d)) THEN {
+        customer.read[cardioMon](d)
+    }
+
+)
+
+call validate("'r3'" "'user_pref'" )
+CHECK c1 (
+   ~(clause(user_pref).ue => clause(r3).ue)
+)
+
+APPLY c1()
+
+
+

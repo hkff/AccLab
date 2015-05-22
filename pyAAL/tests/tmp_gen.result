@@ -1,516 +1,138 @@
 
 ------------------TEMPORAL-LOGIC-TRANSLATION-START-----------------------
 For initial clauses:
-1[0:Inp] ||  -> ue*.    -> 1[0:Inp] ||  -> ue(temp_zero)*.
-7[0:Inp] ||  -> _P3*.    -> 7[0:Inp] ||  -> _P3(temp_zero)*.
-8[0:Inp] || ue -> _P8*.    -> 8[0:Inp] || ue(temp_zero) -> _P8(temp_zero)*.
+1[0:Inp] ||  -> SkP11(U) username(U)*.    -> 1[0:Inp] ||  -> SkP11(temp_zero,U) username(temp_zero,U)*.
+27[0:Inp] ||  -> EQUAL(subject(skc0),customer)*.    -> 27[0:Inp] ||  -> EQUAL(temp_zero,subject(skc0),customer)*.
+25[0:Inp] || SkP0(skc0) -> country(skc0)*.    -> 25[0:Inp] || SkP0(temp_zero,skc0) -> country(temp_zero,skc0)*.
+4[0:Inp] || SkP11(U) -> SkP10(U) password(U)*.    -> 4[0:Inp] || SkP11(temp_zero,U) -> SkP10(temp_zero,U) password(temp_zero,U)*.
+6[0:Inp] || SkP10(U) -> SkP9(U) userId(U)*.    -> 6[0:Inp] || SkP10(temp_zero,U) -> SkP9(temp_zero,U) userId(temp_zero,U)*.
+8[0:Inp] || SkP9(U) -> SkP8(U) displayName(U)*.    -> 8[0:Inp] || SkP9(temp_zero,U) -> SkP8(temp_zero,U) displayName(temp_zero,U)*.
+10[0:Inp] || SkP8(U) -> SkP7(U) gender(U)*.    -> 10[0:Inp] || SkP8(temp_zero,U) -> SkP7(temp_zero,U) gender(temp_zero,U)*.
+12[0:Inp] || SkP7(U) -> SkP6(U) age(U)*.    -> 12[0:Inp] || SkP7(temp_zero,U) -> SkP6(temp_zero,U) age(temp_zero,U)*.
+14[0:Inp] || SkP6(U) -> SkP5(U) gender(U)*.    -> 14[0:Inp] || SkP6(temp_zero,U) -> SkP5(temp_zero,U) gender(temp_zero,U)*.
+16[0:Inp] || SkP5(U) -> SkP4(U) height(U)*.    -> 16[0:Inp] || SkP5(temp_zero,U) -> SkP4(temp_zero,U) height(temp_zero,U)*.
+18[0:Inp] || SkP4(U) -> SkP3(U) weight(U)*.    -> 18[0:Inp] || SkP4(temp_zero,U) -> SkP3(temp_zero,U) weight(temp_zero,U)*.
+20[0:Inp] || SkP3(U) -> SkP2(U) sugarLevel(U)*.    -> 20[0:Inp] || SkP3(temp_zero,U) -> SkP2(temp_zero,U) sugarLevel(temp_zero,U)*.
+22[0:Inp] || SkP2(U) -> SkP1(U) heartbeat(U)*.    -> 22[0:Inp] || SkP2(temp_zero,U) -> SkP1(temp_zero,U) heartbeat(temp_zero,U)*.
+24[0:Inp] || SkP1(U) -> SkP0(U) activity(U)*.    -> 24[0:Inp] || SkP1(temp_zero,U) -> SkP0(temp_zero,U) activity(temp_zero,U)*.
+28[0:Inp] || userId(U) EQUAL(subject(U),customer)* -> read(customer,cardioMon,U).    -> 28[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),customer)* -> read(temp_zero,customer,cardioMon,U).
+2[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) -> SkP11(U).    -> 2[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) -> SkP11(temp_zero,U).
+26[0:Inp] || Pdelete(customer,cardioMon,skc0)* Pupdate(customer,cardioMon,skc0) Pread(customer,cardioMon,skc0) SkP0(skc0) -> .    -> 26[0:Inp] || Pdelete(temp_zero,customer,cardioMon,skc0)* Pupdate(temp_zero,customer,cardioMon,skc0) Pread(temp_zero,customer,cardioMon,skc0) SkP0(temp_zero,skc0) -> .
+3[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) SkP11(U) -> SkP10(U).    -> 3[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP11(temp_zero,U) -> SkP10(temp_zero,U).
+5[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) SkP10(U) -> SkP9(U).    -> 5[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP10(temp_zero,U) -> SkP9(temp_zero,U).
+7[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) SkP9(U) -> SkP8(U).    -> 7[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP9(temp_zero,U) -> SkP8(temp_zero,U).
+9[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) SkP8(U) -> SkP7(U).    -> 9[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP8(temp_zero,U) -> SkP7(temp_zero,U).
+11[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) SkP7(U) -> SkP6(U).    -> 11[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP7(temp_zero,U) -> SkP6(temp_zero,U).
+13[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) SkP6(U) -> SkP5(U).    -> 13[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP6(temp_zero,U) -> SkP5(temp_zero,U).
+15[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) SkP5(U) -> SkP4(U).    -> 15[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP5(temp_zero,U) -> SkP4(temp_zero,U).
+17[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) SkP4(U) -> SkP3(U).    -> 17[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP4(temp_zero,U) -> SkP3(temp_zero,U).
+19[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) SkP3(U) -> SkP2(U).    -> 19[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP3(temp_zero,U) -> SkP2(temp_zero,U).
+21[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) SkP2(U) -> SkP1(U).    -> 21[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP2(temp_zero,U) -> SkP1(temp_zero,U).
+23[0:Inp] || Pdelete(customer,cardioMon,U)* Pupdate(customer,cardioMon,U) Pread(customer,cardioMon,U) SkP1(U) -> SkP0(U).    -> 23[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP1(temp_zero,U) -> SkP0(temp_zero,U).
 ------------------TEMPORAL-LOGIC-TRANSLATION-STOP------------------------
 ------------------TEMPORAL-LOGIC-TRANSLATION-START-----------------------
 For universal clauses:
-2[0:Inp] ||  -> audit(monitor,mapOnWeb)*.    -> 2[0:Inp] ||  -> audit(U,monitor,mapOnWeb)*.
-5[0:Inp] ||  -> _P(U)*.    -> 5[0:Inp] ||  -> _P(U,V)*.
-3[0:Inp] || delete(U,mapOnWeb,V)* -> _P2.    -> 3[0:Inp] || delete(U,V,mapOnWeb,W)* -> _P2(U).
-6[0:Inp] || read(U,mapOnWeb,V)* -> log(mapOnWeb,mapOnWeb,CTS5)*.    -> 6[0:Inp] || read(U,V,mapOnWeb,W)* -> log(U,mapOnWeb,mapOnWeb,CTS5)*.
-4[0:Inp] || read(U,mapOnWeb,V) -> _P1 Pread(U,mapOnWeb,V)*.    -> 4[0:Inp] || read(U,V,mapOnWeb,W) -> _P1(U) Pread(U,V,mapOnWeb,W)*.
-9[0:Inp] || _P8* -> _R.    -> 9[0:Inp] || _P8(U)* -> _R(U).
-14[0:Inp] || _R -> _P(U)*.    -> 14[0:Inp] || _R(U) -> _P(U,V)*.
-16[0:Inp] || delete(U,mapOnWeb,V)* _R -> _P7.    -> 16[0:Inp] || delete(U,V,mapOnWeb,W)* _R(U) -> _P7(U).
-11[0:Inp] || createCustomerProfile(U,wearableCo,skf0(U))* _R -> _P5.    -> 11[0:Inp] || createCustomerProfile(U,V,wearableCo,skf0(V))* _R(U) -> _P5(U).
-12[0:Inp] || createCustomerProfile(U,wearableCo,skf0(U))* _R -> _P4(U).    -> 12[0:Inp] || createCustomerProfile(U,V,wearableCo,skf0(V))* _R(U) -> _P4(U,V).
-13[0:Inp] || read(U,mapOnWeb,V)* _R -> log(mapOnWeb,mapOnWeb,CTS2)*.    -> 13[0:Inp] || read(U,V,mapOnWeb,W)* _R(U) -> log(U,mapOnWeb,mapOnWeb,CTS2)*.
-15[0:Inp] || read(U,mapOnWeb,V) _R -> _P6 Pread(U,mapOnWeb,V)*.    -> 15[0:Inp] || read(U,V,mapOnWeb,W) _R(U) -> _P6(U) Pread(U,V,mapOnWeb,W)*.
-17[0:Inp] || _L(U) -> sixmonths delete(mapOnWeb,mapOnWeb,U)*.    -> 17[0:Inp] || _L(U,V) -> sixmonths(U) delete(U,mapOnWeb,mapOnWeb,V)*.
-18[0:Inp] || _P(U) -> _waitfor_L(U) _L(U)*.    -> 18[0:Inp] || _P(U,V) -> _waitfor_L(U,V) _L(U,V)*.
-20[0:Inp] || _P1 -> _waitfornotify_1 notify(mapOnWeb,cardioMon,CTS6)*.    -> 20[0:Inp] || _P1(U) -> _waitfornotify_1(U) notify(U,mapOnWeb,cardioMon,CTS6)*.
-22[0:Inp] || _P2 -> _waitfornotify_2 notify(mapOnWeb,cardioMon,CTS7)*.    -> 22[0:Inp] || _P2(U) -> _waitfornotify_2(U) notify(U,mapOnWeb,cardioMon,CTS7)*.
-24[0:Inp] || _P3 -> _waitfornotify_3 notify(mapOnWeb,cardioMon,CTS8)*.    -> 24[0:Inp] || _P3(U) -> _waitfornotify_3(U) notify(U,mapOnWeb,cardioMon,CTS8)*.
-26[0:Inp] || _P4(U) -> _waitfornotify_4(U) notify(wearableCo,U,CTS0)*.    -> 26[0:Inp] || _P4(U,V) -> _waitfornotify_4(U,V) notify(U,wearableCo,V,CTS0)*.
-28[0:Inp] || _P5 -> _waitfornotify_5 notify(wearableCo,DPA,CTS1)*.    -> 28[0:Inp] || _P5(U) -> _waitfornotify_5(U) notify(U,wearableCo,DPA,CTS1)*.
-30[0:Inp] || _P6 -> _waitfornotify_6 notify(mapOnWeb,cardioMon,CTS3)*.    -> 30[0:Inp] || _P6(U) -> _waitfornotify_6(U) notify(U,mapOnWeb,cardioMon,CTS3)*.
-32[0:Inp] || _P7 -> _waitfornotify_7 notify(mapOnWeb,cardioMon,CTS4)*.    -> 32[0:Inp] || _P7(U) -> _waitfornotify_7(U) notify(U,mapOnWeb,cardioMon,CTS4)*.
-42[0:Inp] || _U(U) -> _L(U)* _waitfor_L(U).    -> 42[0:Inp] || _U(U,V) -> _L(U,V)* _waitfor_L(U,V).
-43[0:Inp] || _U1 -> notify(mapOnWeb,cardioMon,CTS6)* _waitfornotify_1.    -> 43[0:Inp] || _U1(U) -> notify(U,mapOnWeb,cardioMon,CTS6)* _waitfornotify_1(U).
-44[0:Inp] || _U2 -> notify(mapOnWeb,cardioMon,CTS7)* _waitfornotify_2.    -> 44[0:Inp] || _U2(U) -> notify(U,mapOnWeb,cardioMon,CTS7)* _waitfornotify_2(U).
-45[0:Inp] || _U3 -> notify(mapOnWeb,cardioMon,CTS8)* _waitfornotify_3.    -> 45[0:Inp] || _U3(U) -> notify(U,mapOnWeb,cardioMon,CTS8)* _waitfornotify_3(U).
-46[0:Inp] || _U4(U) -> notify(wearableCo,U,CTS0)* _waitfornotify_4(U).    -> 46[0:Inp] || _U4(U,V) -> notify(U,wearableCo,V,CTS0)* _waitfornotify_4(U,V).
-47[0:Inp] || _U5 -> notify(wearableCo,DPA,CTS1)* _waitfornotify_5.    -> 47[0:Inp] || _U5(U) -> notify(U,wearableCo,DPA,CTS1)* _waitfornotify_5(U).
-48[0:Inp] || _U6 -> notify(mapOnWeb,cardioMon,CTS3)* _waitfornotify_6.    -> 48[0:Inp] || _U6(U) -> notify(U,mapOnWeb,cardioMon,CTS3)* _waitfornotify_6(U).
-49[0:Inp] || _U7 -> notify(mapOnWeb,cardioMon,CTS4)* _waitfornotify_7.    -> 49[0:Inp] || _U7(U) -> notify(U,mapOnWeb,cardioMon,CTS4)* _waitfornotify_7(U).
 ------------------TEMPORAL-LOGIC-TRANSLATION-STOP------------------------
-Non-Skolem constants contained in the problem: CTS2, CTS0, CTS5, CTS6, CTS7, CTS8, wearableCo, DPA, CTS1, CTS3, cardioMon, CTS4, monitor, mapOnWeb, temp_zero
+Non-Skolem constants contained in the problem: cardioMon, temp_zero, customer
 -------------------------CONSTANT-FLOODING START-------------------------
-Performing constant flooding for the clause 19[0:Inp] || _waitfor_L(U,V)* -> .
-  Constant flooded clauses obtained: 
-    55[0:Inp] || _waitfor_L(U,mapOnWeb)* -> .
-    54[0:Inp] || _waitfor_L(U,monitor)* -> .
-    53[0:Inp] || _waitfor_L(U,CTS4)* -> .
-    52[0:Inp] || _waitfor_L(U,cardioMon)* -> .
-    51[0:Inp] || _waitfor_L(U,CTS3)* -> .
-    50[0:Inp] || _waitfor_L(U,CTS1)* -> .
-    49[0:Inp] || _waitfor_L(U,DPA)* -> .
-    48[0:Inp] || _waitfor_L(U,wearableCo)* -> .
-    47[0:Inp] || _waitfor_L(U,CTS8)* -> .
-    46[0:Inp] || _waitfor_L(U,CTS7)* -> .
-    45[0:Inp] || _waitfor_L(U,CTS6)* -> .
-    44[0:Inp] || _waitfor_L(U,CTS5)* -> .
-    43[0:Inp] || _waitfor_L(U,CTS0)* -> .
-    42[0:Inp] || _waitfor_L(U,CTS2)* -> .
-Performing constant flooding for the clause 27[0:Inp] || _waitfornotify_4(U,V)* -> .
-  Constant flooded clauses obtained: 
-    69[0:Inp] || _waitfornotify_4(U,mapOnWeb)* -> .
-    68[0:Inp] || _waitfornotify_4(U,monitor)* -> .
-    67[0:Inp] || _waitfornotify_4(U,CTS4)* -> .
-    66[0:Inp] || _waitfornotify_4(U,cardioMon)* -> .
-    65[0:Inp] || _waitfornotify_4(U,CTS3)* -> .
-    64[0:Inp] || _waitfornotify_4(U,CTS1)* -> .
-    63[0:Inp] || _waitfornotify_4(U,DPA)* -> .
-    62[0:Inp] || _waitfornotify_4(U,wearableCo)* -> .
-    61[0:Inp] || _waitfornotify_4(U,CTS8)* -> .
-    60[0:Inp] || _waitfornotify_4(U,CTS7)* -> .
-    59[0:Inp] || _waitfornotify_4(U,CTS6)* -> .
-    58[0:Inp] || _waitfornotify_4(U,CTS5)* -> .
-    57[0:Inp] || _waitfornotify_4(U,CTS0)* -> .
-    56[0:Inp] || _waitfornotify_4(U,CTS2)* -> .
 -------------------------CONSTANT-FLOODING STOP--------------------------
 -------------------------CONSTANT-FLOODING START-------------------------
-Performing constant flooding for the clause 16[0:Inp] || _waitfornotify_4(U,V) -> _U4(temp_succ(U),temp_shield(V))*.
-  Constant flooded clauses obtained: 
-    84[0:Inp] || _waitfornotify_4(U,mapOnWeb) -> _U4(temp_succ(U),mapOnWeb)*.
-    83[0:Inp] || _waitfornotify_4(U,monitor) -> _U4(temp_succ(U),monitor)*.
-    82[0:Inp] || _waitfornotify_4(U,CTS4) -> _U4(temp_succ(U),CTS4)*.
-    81[0:Inp] || _waitfornotify_4(U,cardioMon) -> _U4(temp_succ(U),cardioMon)*.
-    80[0:Inp] || _waitfornotify_4(U,CTS3) -> _U4(temp_succ(U),CTS3)*.
-    79[0:Inp] || _waitfornotify_4(U,CTS1) -> _U4(temp_succ(U),CTS1)*.
-    78[0:Inp] || _waitfornotify_4(U,DPA) -> _U4(temp_succ(U),DPA)*.
-    77[0:Inp] || _waitfornotify_4(U,wearableCo) -> _U4(temp_succ(U),wearableCo)*.
-    76[0:Inp] || _waitfornotify_4(U,CTS8) -> _U4(temp_succ(U),CTS8)*.
-    75[0:Inp] || _waitfornotify_4(U,CTS7) -> _U4(temp_succ(U),CTS7)*.
-    74[0:Inp] || _waitfornotify_4(U,CTS6) -> _U4(temp_succ(U),CTS6)*.
-    73[0:Inp] || _waitfornotify_4(U,CTS5) -> _U4(temp_succ(U),CTS5)*.
-    72[0:Inp] || _waitfornotify_4(U,CTS0) -> _U4(temp_succ(U),CTS0)*.
-    71[0:Inp] || _waitfornotify_4(U,CTS2) -> _U4(temp_succ(U),CTS2)*.
-    70[0:Inp] || _waitfornotify_4(U,c^l) -> _U4(temp_succ(U),c^l)*.
-Performing constant flooding for the clause 17[0:Inp] || _waitfor_L(U,V) -> _U(temp_succ(U),temp_shield(V))*.
-  Constant flooded clauses obtained: 
-    99[0:Inp] || _waitfor_L(U,mapOnWeb) -> _U(temp_succ(U),mapOnWeb)*.
-    98[0:Inp] || _waitfor_L(U,monitor) -> _U(temp_succ(U),monitor)*.
-    97[0:Inp] || _waitfor_L(U,CTS4) -> _U(temp_succ(U),CTS4)*.
-    96[0:Inp] || _waitfor_L(U,cardioMon) -> _U(temp_succ(U),cardioMon)*.
-    95[0:Inp] || _waitfor_L(U,CTS3) -> _U(temp_succ(U),CTS3)*.
-    94[0:Inp] || _waitfor_L(U,CTS1) -> _U(temp_succ(U),CTS1)*.
-    93[0:Inp] || _waitfor_L(U,DPA) -> _U(temp_succ(U),DPA)*.
-    92[0:Inp] || _waitfor_L(U,wearableCo) -> _U(temp_succ(U),wearableCo)*.
-    91[0:Inp] || _waitfor_L(U,CTS8) -> _U(temp_succ(U),CTS8)*.
-    90[0:Inp] || _waitfor_L(U,CTS7) -> _U(temp_succ(U),CTS7)*.
-    89[0:Inp] || _waitfor_L(U,CTS6) -> _U(temp_succ(U),CTS6)*.
-    88[0:Inp] || _waitfor_L(U,CTS5) -> _U(temp_succ(U),CTS5)*.
-    87[0:Inp] || _waitfor_L(U,CTS0) -> _U(temp_succ(U),CTS0)*.
-    86[0:Inp] || _waitfor_L(U,CTS2) -> _U(temp_succ(U),CTS2)*.
-    85[0:Inp] || _waitfor_L(U,c^l) -> _U(temp_succ(U),c^l)*.
 -------------------------CONSTANT-FLOODING STOP--------------------------
-Weight of the atom (_waitfor_L U (c^l)) is 3.
-Weight of the atom (_waitfor_L U (CTS2)) is 3.
-Weight of the atom (_waitfor_L U (CTS0)) is 3.
-Weight of the atom (_waitfor_L U (CTS5)) is 3.
-Weight of the atom (_waitfor_L U (CTS6)) is 3.
-Weight of the atom (_waitfor_L U (CTS7)) is 3.
-Weight of the atom (_waitfor_L U (CTS8)) is 3.
-Weight of the atom (_waitfor_L U (wearableCo)) is 3.
-Weight of the atom (_waitfor_L U (DPA)) is 3.
-Weight of the atom (_waitfor_L U (CTS1)) is 3.
-Weight of the atom (_waitfor_L U (CTS3)) is 3.
-Weight of the atom (_waitfor_L U (cardioMon)) is 3.
-Weight of the atom (_waitfor_L U (CTS4)) is 3.
-Weight of the atom (_waitfor_L U (monitor)) is 3.
-Weight of the atom (_waitfor_L U (mapOnWeb)) is 3.
-Weight of the atom (_waitfornotify_4 U (c^l)) is 3.
-Weight of the atom (_waitfornotify_4 U (CTS2)) is 3.
-Weight of the atom (_waitfornotify_4 U (CTS0)) is 3.
-Weight of the atom (_waitfornotify_4 U (CTS5)) is 3.
-Weight of the atom (_waitfornotify_4 U (CTS6)) is 3.
-Weight of the atom (_waitfornotify_4 U (CTS7)) is 3.
-Weight of the atom (_waitfornotify_4 U (CTS8)) is 3.
-Weight of the atom (_waitfornotify_4 U (wearableCo)) is 3.
-Weight of the atom (_waitfornotify_4 U (DPA)) is 3.
-Weight of the atom (_waitfornotify_4 U (CTS1)) is 3.
-Weight of the atom (_waitfornotify_4 U (CTS3)) is 3.
-Weight of the atom (_waitfornotify_4 U (cardioMon)) is 3.
-Weight of the atom (_waitfornotify_4 U (CTS4)) is 3.
-Weight of the atom (_waitfornotify_4 U (monitor)) is 3.
-Weight of the atom (_waitfornotify_4 U (mapOnWeb)) is 3.
-Weight of the atom (_waitfornotify_7 U) is 2.
-Weight of the atom (_waitfornotify_6 U) is 2.
-Weight of the atom (_waitfornotify_5 U) is 2.
-Weight of the atom (_waitfornotify_4 U V) is 3.
-Weight of the atom (_waitfornotify_3 U) is 2.
-Weight of the atom (_waitfornotify_2 U) is 2.
-Weight of the atom (_waitfornotify_1 U) is 2.
-Weight of the atom (_waitfor_L U V) is 3.
-Weight of the atom (_R U) is 2.
-Weight of the temporal successor function set to 4.
+Weight of the temporal successor function set to 1.
 Step clauses:
-135[0:Inp] || s^not-_waitfornotify_4(CTS2)_0 _waitfornotify_4(temp_succ(U),CTS2)* -> .
-134[0:Inp] || s^not-_waitfornotify_4(CTS0)_0 _waitfornotify_4(temp_succ(U),CTS0)* -> .
-133[0:Inp] || s^not-_waitfornotify_4(CTS5)_0 _waitfornotify_4(temp_succ(U),CTS5)* -> .
-132[0:Inp] || s^not-_waitfornotify_4(CTS6)_0 _waitfornotify_4(temp_succ(U),CTS6)* -> .
-131[0:Inp] || s^not-_waitfornotify_4(CTS7)_0 _waitfornotify_4(temp_succ(U),CTS7)* -> .
-130[0:Inp] || s^not-_waitfornotify_4(CTS8)_0 _waitfornotify_4(temp_succ(U),CTS8)* -> .
-129[0:Inp] || s^not-_waitfornotify_4(wearableCo)_0 _waitfornotify_4(temp_succ(U),wearableCo)* -> .
-128[0:Inp] || s^not-_waitfornotify_4(DPA)_0 _waitfornotify_4(temp_succ(U),DPA)* -> .
-127[0:Inp] || s^not-_waitfornotify_4(CTS1)_0 _waitfornotify_4(temp_succ(U),CTS1)* -> .
-126[0:Inp] || s^not-_waitfornotify_4(CTS3)_0 _waitfornotify_4(temp_succ(U),CTS3)* -> .
-125[0:Inp] || s^not-_waitfornotify_4(cardioMon)_0 _waitfornotify_4(temp_succ(U),cardioMon)* -> .
-124[0:Inp] || s^not-_waitfornotify_4(CTS4)_0 _waitfornotify_4(temp_succ(U),CTS4)* -> .
-123[0:Inp] || s^not-_waitfornotify_4(monitor)_0 _waitfornotify_4(temp_succ(U),monitor)* -> .
-122[0:Inp] || s^not-_waitfornotify_4(mapOnWeb)_0 _waitfornotify_4(temp_succ(U),mapOnWeb)* -> .
-121[0:Inp] || s^not-_waitfor_L(CTS2)_0 _waitfor_L(temp_succ(U),CTS2)* -> .
-120[0:Inp] || s^not-_waitfor_L(CTS0)_0 _waitfor_L(temp_succ(U),CTS0)* -> .
-119[0:Inp] || s^not-_waitfor_L(CTS5)_0 _waitfor_L(temp_succ(U),CTS5)* -> .
-118[0:Inp] || s^not-_waitfor_L(CTS6)_0 _waitfor_L(temp_succ(U),CTS6)* -> .
-117[0:Inp] || s^not-_waitfor_L(CTS7)_0 _waitfor_L(temp_succ(U),CTS7)* -> .
-116[0:Inp] || s^not-_waitfor_L(CTS8)_0 _waitfor_L(temp_succ(U),CTS8)* -> .
-115[0:Inp] || s^not-_waitfor_L(wearableCo)_0 _waitfor_L(temp_succ(U),wearableCo)* -> .
-114[0:Inp] || s^not-_waitfor_L(DPA)_0 _waitfor_L(temp_succ(U),DPA)* -> .
-113[0:Inp] || s^not-_waitfor_L(CTS1)_0 _waitfor_L(temp_succ(U),CTS1)* -> .
-112[0:Inp] || s^not-_waitfor_L(CTS3)_0 _waitfor_L(temp_succ(U),CTS3)* -> .
-111[0:Inp] || s^not-_waitfor_L(cardioMon)_0 _waitfor_L(temp_succ(U),cardioMon)* -> .
-110[0:Inp] || s^not-_waitfor_L(CTS4)_0 _waitfor_L(temp_succ(U),CTS4)* -> .
-109[0:Inp] || s^not-_waitfor_L(monitor)_0 _waitfor_L(temp_succ(U),monitor)* -> .
-108[0:Inp] || s^not-_waitfor_L(mapOnWeb)_0 _waitfor_L(temp_succ(U),mapOnWeb)* -> .
-107[0:Inp] || s^not-_waitfor_L(x)_0 _waitfor_L(temp_succ(U),c^l)* -> .
-106[0:Inp] || s^not-_waitfornotify_1_0 _waitfornotify_1(temp_succ(U))* -> .
-105[0:Inp] || s^not-_waitfornotify_2_0 _waitfornotify_2(temp_succ(U))* -> .
-104[0:Inp] || s^not-_waitfornotify_3_0 _waitfornotify_3(temp_succ(U))* -> .
-103[0:Inp] || s^not-_waitfornotify_4(x)_0 _waitfornotify_4(temp_succ(U),c^l)* -> .
-102[0:Inp] || s^not-_waitfornotify_5_0 _waitfornotify_5(temp_succ(U))* -> .
-101[0:Inp] || s^not-_waitfornotify_6_0 _waitfornotify_6(temp_succ(U))* -> .
-100[0:Inp] || s^not-_waitfornotify_7_0 _waitfornotify_7(temp_succ(U))* -> .
-7[0:Inp] || _waitfornotify_7(U) -> _U7(temp_succ(U))*.
-8[0:Inp] || _waitfornotify_6(U) -> _U6(temp_succ(U))*.
-9[0:Inp] || _waitfornotify_5(U) -> _U5(temp_succ(U))*.
-10[0:Inp] || _waitfornotify_3(U) -> _U3(temp_succ(U))*.
-11[0:Inp] || _waitfornotify_2(U) -> _U2(temp_succ(U))*.
-12[0:Inp] || _waitfornotify_1(U) -> _U1(temp_succ(U))*.
-13[0:Inp] || _R(U) -> _R(temp_succ(U))*.
-16[0:Inp] || _waitfornotify_4(U,V) -> _U4(temp_succ(U),temp_shield(V))*.
-17[0:Inp] || _waitfor_L(U,V) -> _U(temp_succ(U),temp_shield(V))*.
-84[0:Inp] || _waitfornotify_4(U,mapOnWeb) -> _U4(temp_succ(U),mapOnWeb)*.
-83[0:Inp] || _waitfornotify_4(U,monitor) -> _U4(temp_succ(U),monitor)*.
-82[0:Inp] || _waitfornotify_4(U,CTS4) -> _U4(temp_succ(U),CTS4)*.
-81[0:Inp] || _waitfornotify_4(U,cardioMon) -> _U4(temp_succ(U),cardioMon)*.
-80[0:Inp] || _waitfornotify_4(U,CTS3) -> _U4(temp_succ(U),CTS3)*.
-79[0:Inp] || _waitfornotify_4(U,CTS1) -> _U4(temp_succ(U),CTS1)*.
-78[0:Inp] || _waitfornotify_4(U,DPA) -> _U4(temp_succ(U),DPA)*.
-77[0:Inp] || _waitfornotify_4(U,wearableCo) -> _U4(temp_succ(U),wearableCo)*.
-76[0:Inp] || _waitfornotify_4(U,CTS8) -> _U4(temp_succ(U),CTS8)*.
-75[0:Inp] || _waitfornotify_4(U,CTS7) -> _U4(temp_succ(U),CTS7)*.
-74[0:Inp] || _waitfornotify_4(U,CTS6) -> _U4(temp_succ(U),CTS6)*.
-73[0:Inp] || _waitfornotify_4(U,CTS5) -> _U4(temp_succ(U),CTS5)*.
-72[0:Inp] || _waitfornotify_4(U,CTS0) -> _U4(temp_succ(U),CTS0)*.
-71[0:Inp] || _waitfornotify_4(U,CTS2) -> _U4(temp_succ(U),CTS2)*.
-70[0:Inp] || _waitfornotify_4(U,c^l) -> _U4(temp_succ(U),c^l)*.
-99[0:Inp] || _waitfor_L(U,mapOnWeb) -> _U(temp_succ(U),mapOnWeb)*.
-98[0:Inp] || _waitfor_L(U,monitor) -> _U(temp_succ(U),monitor)*.
-97[0:Inp] || _waitfor_L(U,CTS4) -> _U(temp_succ(U),CTS4)*.
-96[0:Inp] || _waitfor_L(U,cardioMon) -> _U(temp_succ(U),cardioMon)*.
-95[0:Inp] || _waitfor_L(U,CTS3) -> _U(temp_succ(U),CTS3)*.
-94[0:Inp] || _waitfor_L(U,CTS1) -> _U(temp_succ(U),CTS1)*.
-93[0:Inp] || _waitfor_L(U,DPA) -> _U(temp_succ(U),DPA)*.
-92[0:Inp] || _waitfor_L(U,wearableCo) -> _U(temp_succ(U),wearableCo)*.
-91[0:Inp] || _waitfor_L(U,CTS8) -> _U(temp_succ(U),CTS8)*.
-90[0:Inp] || _waitfor_L(U,CTS7) -> _U(temp_succ(U),CTS7)*.
-89[0:Inp] || _waitfor_L(U,CTS6) -> _U(temp_succ(U),CTS6)*.
-88[0:Inp] || _waitfor_L(U,CTS5) -> _U(temp_succ(U),CTS5)*.
-87[0:Inp] || _waitfor_L(U,CTS0) -> _U(temp_succ(U),CTS0)*.
-86[0:Inp] || _waitfor_L(U,CTS2) -> _U(temp_succ(U),CTS2)*.
-85[0:Inp] || _waitfor_L(U,c^l) -> _U(temp_succ(U),c^l)*.
 --------------------------TSPASS-START-----------------------------
 Input Problem:
-135[0:Inp] || s^not-_waitfornotify_4(CTS2)_0 _waitfornotify_4(temp_succ(U),CTS2)* -> .
-134[0:Inp] || s^not-_waitfornotify_4(CTS0)_0 _waitfornotify_4(temp_succ(U),CTS0)* -> .
-133[0:Inp] || s^not-_waitfornotify_4(CTS5)_0 _waitfornotify_4(temp_succ(U),CTS5)* -> .
-132[0:Inp] || s^not-_waitfornotify_4(CTS6)_0 _waitfornotify_4(temp_succ(U),CTS6)* -> .
-131[0:Inp] || s^not-_waitfornotify_4(CTS7)_0 _waitfornotify_4(temp_succ(U),CTS7)* -> .
-130[0:Inp] || s^not-_waitfornotify_4(CTS8)_0 _waitfornotify_4(temp_succ(U),CTS8)* -> .
-129[0:Inp] || s^not-_waitfornotify_4(wearableCo)_0 _waitfornotify_4(temp_succ(U),wearableCo)* -> .
-128[0:Inp] || s^not-_waitfornotify_4(DPA)_0 _waitfornotify_4(temp_succ(U),DPA)* -> .
-127[0:Inp] || s^not-_waitfornotify_4(CTS1)_0 _waitfornotify_4(temp_succ(U),CTS1)* -> .
-126[0:Inp] || s^not-_waitfornotify_4(CTS3)_0 _waitfornotify_4(temp_succ(U),CTS3)* -> .
-125[0:Inp] || s^not-_waitfornotify_4(cardioMon)_0 _waitfornotify_4(temp_succ(U),cardioMon)* -> .
-124[0:Inp] || s^not-_waitfornotify_4(CTS4)_0 _waitfornotify_4(temp_succ(U),CTS4)* -> .
-123[0:Inp] || s^not-_waitfornotify_4(monitor)_0 _waitfornotify_4(temp_succ(U),monitor)* -> .
-122[0:Inp] || s^not-_waitfornotify_4(mapOnWeb)_0 _waitfornotify_4(temp_succ(U),mapOnWeb)* -> .
-121[0:Inp] || s^not-_waitfor_L(CTS2)_0 _waitfor_L(temp_succ(U),CTS2)* -> .
-120[0:Inp] || s^not-_waitfor_L(CTS0)_0 _waitfor_L(temp_succ(U),CTS0)* -> .
-119[0:Inp] || s^not-_waitfor_L(CTS5)_0 _waitfor_L(temp_succ(U),CTS5)* -> .
-118[0:Inp] || s^not-_waitfor_L(CTS6)_0 _waitfor_L(temp_succ(U),CTS6)* -> .
-117[0:Inp] || s^not-_waitfor_L(CTS7)_0 _waitfor_L(temp_succ(U),CTS7)* -> .
-116[0:Inp] || s^not-_waitfor_L(CTS8)_0 _waitfor_L(temp_succ(U),CTS8)* -> .
-115[0:Inp] || s^not-_waitfor_L(wearableCo)_0 _waitfor_L(temp_succ(U),wearableCo)* -> .
-114[0:Inp] || s^not-_waitfor_L(DPA)_0 _waitfor_L(temp_succ(U),DPA)* -> .
-113[0:Inp] || s^not-_waitfor_L(CTS1)_0 _waitfor_L(temp_succ(U),CTS1)* -> .
-112[0:Inp] || s^not-_waitfor_L(CTS3)_0 _waitfor_L(temp_succ(U),CTS3)* -> .
-111[0:Inp] || s^not-_waitfor_L(cardioMon)_0 _waitfor_L(temp_succ(U),cardioMon)* -> .
-110[0:Inp] || s^not-_waitfor_L(CTS4)_0 _waitfor_L(temp_succ(U),CTS4)* -> .
-109[0:Inp] || s^not-_waitfor_L(monitor)_0 _waitfor_L(temp_succ(U),monitor)* -> .
-108[0:Inp] || s^not-_waitfor_L(mapOnWeb)_0 _waitfor_L(temp_succ(U),mapOnWeb)* -> .
-107[0:Inp] || s^not-_waitfor_L(x)_0 _waitfor_L(temp_succ(U),c^l)* -> .
-106[0:Inp] || s^not-_waitfornotify_1_0 _waitfornotify_1(temp_succ(U))* -> .
-105[0:Inp] || s^not-_waitfornotify_2_0 _waitfornotify_2(temp_succ(U))* -> .
-104[0:Inp] || s^not-_waitfornotify_3_0 _waitfornotify_3(temp_succ(U))* -> .
-103[0:Inp] || s^not-_waitfornotify_4(x)_0 _waitfornotify_4(temp_succ(U),c^l)* -> .
-102[0:Inp] || s^not-_waitfornotify_5_0 _waitfornotify_5(temp_succ(U))* -> .
-101[0:Inp] || s^not-_waitfornotify_6_0 _waitfornotify_6(temp_succ(U))* -> .
-100[0:Inp] || s^not-_waitfornotify_7_0 _waitfornotify_7(temp_succ(U))* -> .
-1[0:Inp] ||  -> _P3(temp_zero)*.
-2[0:Inp] ||  -> ue(temp_zero)*.
-3[0:Inp] ||  -> _P(U,V)*.
-4[0:Inp] ||  -> audit(U,monitor,mapOnWeb)*.
-5[0:Inp] || _P8(U)* -> _R(U).
-6[0:Inp] || ue(temp_zero) -> _P8(temp_zero)*.
-7[0:Inp] || _waitfornotify_7(U) -> _U7(temp_succ(U))*.
-8[0:Inp] || _waitfornotify_6(U) -> _U6(temp_succ(U))*.
-9[0:Inp] || _waitfornotify_5(U) -> _U5(temp_succ(U))*.
-10[0:Inp] || _waitfornotify_3(U) -> _U3(temp_succ(U))*.
-11[0:Inp] || _waitfornotify_2(U) -> _U2(temp_succ(U))*.
-12[0:Inp] || _waitfornotify_1(U) -> _U1(temp_succ(U))*.
-13[0:Inp] || _R(U) -> _R(temp_succ(U))*.
-14[0:Inp] || _R(U) -> _P(U,V)*.
-15[0:Inp] || delete(U,V,mapOnWeb,W)* -> _P2(U).
-16[0:Inp] || _waitfornotify_4(U,V) -> _U4(temp_succ(U),temp_shield(V))*.
-17[0:Inp] || _waitfor_L(U,V) -> _U(temp_succ(U),temp_shield(V))*.
-18[0:Inp] || _U7(U) -> notify(U,mapOnWeb,cardioMon,CTS4)* _waitfornotify_7(U).
-19[0:Inp] || _U6(U) -> notify(U,mapOnWeb,cardioMon,CTS3)* _waitfornotify_6(U).
-20[0:Inp] || _U5(U) -> notify(U,wearableCo,DPA,CTS1)* _waitfornotify_5(U).
-21[0:Inp] || _U3(U) -> notify(U,mapOnWeb,cardioMon,CTS8)* _waitfornotify_3(U).
-22[0:Inp] || _U2(U) -> notify(U,mapOnWeb,cardioMon,CTS7)* _waitfornotify_2(U).
-23[0:Inp] || _U1(U) -> notify(U,mapOnWeb,cardioMon,CTS6)* _waitfornotify_1(U).
-24[0:Inp] || _U(U,V) -> _L(U,V)* _waitfor_L(U,V).
-25[0:Inp] || _P7(U) -> _waitfornotify_7(U) notify(U,mapOnWeb,cardioMon,CTS4)*.
-26[0:Inp] || _P6(U) -> _waitfornotify_6(U) notify(U,mapOnWeb,cardioMon,CTS3)*.
-27[0:Inp] || _P5(U) -> _waitfornotify_5(U) notify(U,wearableCo,DPA,CTS1)*.
-28[0:Inp] || _P3(U) -> _waitfornotify_3(U) notify(U,mapOnWeb,cardioMon,CTS8)*.
-29[0:Inp] || _P2(U) -> _waitfornotify_2(U) notify(U,mapOnWeb,cardioMon,CTS7)*.
-30[0:Inp] || _P1(U) -> _waitfornotify_1(U) notify(U,mapOnWeb,cardioMon,CTS6)*.
-31[0:Inp] || _P(U,V) -> _waitfor_L(U,V) _L(U,V)*.
-32[0:Inp] || _L(U,V) -> sixmonths(U) delete(U,mapOnWeb,mapOnWeb,V)*.
-33[0:Inp] || delete(U,V,mapOnWeb,W)* _R(U) -> _P7(U).
-34[0:Inp] || read(U,V,mapOnWeb,W)* -> log(U,mapOnWeb,mapOnWeb,CTS5)*.
-35[0:Inp] || _U4(U,V) -> notify(U,wearableCo,V,CTS0)* _waitfornotify_4(U,V).
-36[0:Inp] || _P4(U,V) -> _waitfornotify_4(U,V) notify(U,wearableCo,V,CTS0)*.
-37[0:Inp] || createCustomerProfile(U,V,wearableCo,skf0(V))* _R(U) -> _P5(U).
-38[0:Inp] || createCustomerProfile(U,V,wearableCo,skf0(V))* _R(U) -> _P4(U,V).
-39[0:Inp] || read(U,V,mapOnWeb,W) -> _P1(U) Pread(U,V,mapOnWeb,W)*.
-40[0:Inp] || read(U,V,mapOnWeb,W)* _R(U) -> log(U,mapOnWeb,mapOnWeb,CTS2)*.
-41[0:Inp] || read(U,V,mapOnWeb,W) _R(U) -> _P6(U) Pread(U,V,mapOnWeb,W)*.
-84[0:Inp] || _waitfornotify_4(U,mapOnWeb) -> _U4(temp_succ(U),mapOnWeb)*.
-83[0:Inp] || _waitfornotify_4(U,monitor) -> _U4(temp_succ(U),monitor)*.
-82[0:Inp] || _waitfornotify_4(U,CTS4) -> _U4(temp_succ(U),CTS4)*.
-81[0:Inp] || _waitfornotify_4(U,cardioMon) -> _U4(temp_succ(U),cardioMon)*.
-80[0:Inp] || _waitfornotify_4(U,CTS3) -> _U4(temp_succ(U),CTS3)*.
-79[0:Inp] || _waitfornotify_4(U,CTS1) -> _U4(temp_succ(U),CTS1)*.
-78[0:Inp] || _waitfornotify_4(U,DPA) -> _U4(temp_succ(U),DPA)*.
-77[0:Inp] || _waitfornotify_4(U,wearableCo) -> _U4(temp_succ(U),wearableCo)*.
-76[0:Inp] || _waitfornotify_4(U,CTS8) -> _U4(temp_succ(U),CTS8)*.
-75[0:Inp] || _waitfornotify_4(U,CTS7) -> _U4(temp_succ(U),CTS7)*.
-74[0:Inp] || _waitfornotify_4(U,CTS6) -> _U4(temp_succ(U),CTS6)*.
-73[0:Inp] || _waitfornotify_4(U,CTS5) -> _U4(temp_succ(U),CTS5)*.
-72[0:Inp] || _waitfornotify_4(U,CTS0) -> _U4(temp_succ(U),CTS0)*.
-71[0:Inp] || _waitfornotify_4(U,CTS2) -> _U4(temp_succ(U),CTS2)*.
-70[0:Inp] || _waitfornotify_4(U,c^l) -> _U4(temp_succ(U),c^l)*.
-99[0:Inp] || _waitfor_L(U,mapOnWeb) -> _U(temp_succ(U),mapOnWeb)*.
-98[0:Inp] || _waitfor_L(U,monitor) -> _U(temp_succ(U),monitor)*.
-97[0:Inp] || _waitfor_L(U,CTS4) -> _U(temp_succ(U),CTS4)*.
-96[0:Inp] || _waitfor_L(U,cardioMon) -> _U(temp_succ(U),cardioMon)*.
-95[0:Inp] || _waitfor_L(U,CTS3) -> _U(temp_succ(U),CTS3)*.
-94[0:Inp] || _waitfor_L(U,CTS1) -> _U(temp_succ(U),CTS1)*.
-93[0:Inp] || _waitfor_L(U,DPA) -> _U(temp_succ(U),DPA)*.
-92[0:Inp] || _waitfor_L(U,wearableCo) -> _U(temp_succ(U),wearableCo)*.
-91[0:Inp] || _waitfor_L(U,CTS8) -> _U(temp_succ(U),CTS8)*.
-90[0:Inp] || _waitfor_L(U,CTS7) -> _U(temp_succ(U),CTS7)*.
-89[0:Inp] || _waitfor_L(U,CTS6) -> _U(temp_succ(U),CTS6)*.
-88[0:Inp] || _waitfor_L(U,CTS5) -> _U(temp_succ(U),CTS5)*.
-87[0:Inp] || _waitfor_L(U,CTS0) -> _U(temp_succ(U),CTS0)*.
-86[0:Inp] || _waitfor_L(U,CTS2) -> _U(temp_succ(U),CTS2)*.
-85[0:Inp] || _waitfor_L(U,c^l) -> _U(temp_succ(U),c^l)*.
+1[0:Inp] ||  -> EQUAL(temp_zero,subject(skc0),customer)*.
+2[0:Inp] ||  -> SkP11(temp_zero,U) username(temp_zero,U)*.
+3[0:Inp] || SkP0(temp_zero,skc0) -> country(temp_zero,skc0)*.
+4[0:Inp] || SkP1(temp_zero,U) -> SkP0(temp_zero,U) activity(temp_zero,U)*.
+5[0:Inp] || SkP2(temp_zero,U) -> SkP1(temp_zero,U) heartbeat(temp_zero,U)*.
+6[0:Inp] || SkP3(temp_zero,U) -> SkP2(temp_zero,U) sugarLevel(temp_zero,U)*.
+7[0:Inp] || SkP4(temp_zero,U) -> SkP3(temp_zero,U) weight(temp_zero,U)*.
+8[0:Inp] || SkP5(temp_zero,U) -> SkP4(temp_zero,U) height(temp_zero,U)*.
+9[0:Inp] || SkP6(temp_zero,U) -> SkP5(temp_zero,U) gender(temp_zero,U)*.
+10[0:Inp] || SkP7(temp_zero,U) -> SkP6(temp_zero,U) age(temp_zero,U)*.
+11[0:Inp] || SkP8(temp_zero,U) -> SkP7(temp_zero,U) gender(temp_zero,U)*.
+12[0:Inp] || SkP9(temp_zero,U) -> SkP8(temp_zero,U) displayName(temp_zero,U)*.
+13[0:Inp] || SkP10(temp_zero,U) -> SkP9(temp_zero,U) userId(temp_zero,U)*.
+14[0:Inp] || SkP11(temp_zero,U) -> SkP10(temp_zero,U) password(temp_zero,U)*.
+15[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),customer)* -> read(temp_zero,customer,cardioMon,U).
+16[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) -> SkP11(temp_zero,U).
+17[0:Inp] || Pdelete(temp_zero,customer,cardioMon,skc0)* Pupdate(temp_zero,customer,cardioMon,skc0) Pread(temp_zero,customer,cardioMon,skc0) SkP0(temp_zero,skc0) -> .
+18[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP11(temp_zero,U) -> SkP10(temp_zero,U).
+19[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP10(temp_zero,U) -> SkP9(temp_zero,U).
+20[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP9(temp_zero,U) -> SkP8(temp_zero,U).
+21[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP8(temp_zero,U) -> SkP7(temp_zero,U).
+22[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP7(temp_zero,U) -> SkP6(temp_zero,U).
+23[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP6(temp_zero,U) -> SkP5(temp_zero,U).
+24[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP5(temp_zero,U) -> SkP4(temp_zero,U).
+25[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP4(temp_zero,U) -> SkP3(temp_zero,U).
+26[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP3(temp_zero,U) -> SkP2(temp_zero,U).
+27[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP2(temp_zero,U) -> SkP1(temp_zero,U).
+28[0:Inp] || Pdelete(temp_zero,customer,cardioMon,U)* Pupdate(temp_zero,customer,cardioMon,U) Pread(temp_zero,customer,cardioMon,U) SkP1(temp_zero,U) -> SkP0(temp_zero,U).
  This is a first-order Non-Horn problem without equality.
- This is a problem that contains sort information.
- The following monadic predicates have finite extensions: ue, _P3.
- Axiom clauses: 107 Conjecture clauses: 0
+ Axiom clauses: 28 Conjecture clauses: 0
  Inferences: IORe=1 IOFc=1 
  Reductions: RObv=1 RTaut=1 RFSub=1 RBSub=1 
  Extras    : No Input Saturation, No Selection, No Splitting, Full Reduction,  Ratio: 5, FuncWeight: 1, VarWeight: 1
- Precedence: div > id > c^l > temp_succ > temp_shield > temp_zero > CTS0 > CTS1 > CTS2 > CTS3 > CTS4 > CTS5 > CTS6 > CTS7 > CTS8 > DPA > cardioMon > mapOnWeb > monitor > wearableCo > Pread > _L > _P > _P1 > _P2 > _P3 > _P4 > _P5 > _P6 > _P7 > _P8 > _R > _U > _U1 > _U2 > _U3 > _U4 > _U5 > _U6 > _U7 > _waitfor_L > _waitfornotify_1 > _waitfornotify_2 > _waitfornotify_3 > _waitfornotify_4 > _waitfornotify_5 > _waitfornotify_6 > _waitfornotify_7 > audit > createCustomerProfile > delete > log > notify > read > sixmonths > ue > skf0 > s^not-_waitfornotify_7_0 > s^not-_waitfornotify_6_0 > s^not-_waitfornotify_5_0 > s^not-_waitfornotify_4(x)_0 > s^not-_waitfornotify_3_0 > s^not-_waitfornotify_2_0 > s^not-_waitfornotify_1_0 > s^not-_waitfor_L(x)_0 > s^not-_waitfor_L(mapOnWeb)_0 > s^not-_waitfor_L(monitor)_0 > s^not-_waitfor_L(CTS4)_0 > s^not-_waitfor_L(cardioMon)_0 > s^not-_waitfor_L(CTS3)_0 > s^not-_waitfor_L(CTS1)_0 > s^not-_waitfor_L(DPA)_0 > s^not-_waitfor_L(wearableCo)_0 > s^not-_waitfor_L(CTS8)_0 > s^not-_waitfor_L(CTS7)_0 > s^not-_waitfor_L(CTS6)_0 > s^not-_waitfor_L(CTS5)_0 > s^not-_waitfor_L(CTS0)_0 > s^not-_waitfor_L(CTS2)_0 > s^not-_waitfornotify_4(mapOnWeb)_0 > s^not-_waitfornotify_4(monitor)_0 > s^not-_waitfornotify_4(CTS4)_0 > s^not-_waitfornotify_4(cardioMon)_0 > s^not-_waitfornotify_4(CTS3)_0 > s^not-_waitfornotify_4(CTS1)_0 > s^not-_waitfornotify_4(DPA)_0 > s^not-_waitfornotify_4(wearableCo)_0 > s^not-_waitfornotify_4(CTS8)_0 > s^not-_waitfornotify_4(CTS7)_0 > s^not-_waitfornotify_4(CTS6)_0 > s^not-_waitfornotify_4(CTS5)_0 > s^not-_waitfornotify_4(CTS0)_0 > s^not-_waitfornotify_4(CTS2)_0
+ Precedence: div > id > c^l > temp_succ > temp_shield > temp_zero > cardioMon > customer > subject > EQUAL > Pdelete > Pread > Pupdate > activity > age > country > displayName > gender > heartbeat > height > password > read > sugarLevel > userId > username > weight > SkP0 > SkP1 > SkP2 > SkP3 > SkP4 > SkP5 > SkP6 > SkP7 > SkP8 > SkP9 > SkP10 > SkP11 > skc0
  Ordering  : KBO
 Processed Problem:
 
 Worked Off Clauses:
 
 Usable Clauses:
-2[0:Inp] ||  -> ue(temp_zero)*.
-1[0:Inp] ||  -> _P3(temp_zero)*.
-3[0:Inp] ||  -> _P(U,V)*.
-4[0:Inp] ||  -> audit(U,monitor,mapOnWeb)*.
-6[0:Inp] || ue(temp_zero) -> _P8(temp_zero)*.
-5[0:Inp] || _P8(U)* -> _R(U).
-12[0:Inp] || _waitfornotify_1(U) -> _U1(temp_succ(U))*.
-11[0:Inp] || _waitfornotify_2(U) -> _U2(temp_succ(U))*.
-10[0:Inp] || _waitfornotify_3(U) -> _U3(temp_succ(U))*.
-9[0:Inp] || _waitfornotify_5(U) -> _U5(temp_succ(U))*.
-8[0:Inp] || _waitfornotify_6(U) -> _U6(temp_succ(U))*.
-7[0:Inp] || _waitfornotify_7(U) -> _U7(temp_succ(U))*.
-13[0:Inp] || _R(U) -> _R(temp_succ(U))*.
-100[0:Inp] || s^not-_waitfornotify_7_0 _waitfornotify_7(temp_succ(U))* -> .
-101[0:Inp] || s^not-_waitfornotify_6_0 _waitfornotify_6(temp_succ(U))* -> .
-102[0:Inp] || s^not-_waitfornotify_5_0 _waitfornotify_5(temp_succ(U))* -> .
-104[0:Inp] || s^not-_waitfornotify_3_0 _waitfornotify_3(temp_succ(U))* -> .
-105[0:Inp] || s^not-_waitfornotify_2_0 _waitfornotify_2(temp_succ(U))* -> .
-106[0:Inp] || s^not-_waitfornotify_1_0 _waitfornotify_1(temp_succ(U))* -> .
-103[0:Inp] || s^not-_waitfornotify_4(x)_0 _waitfornotify_4(temp_succ(U),c^l)* -> .
-107[0:Inp] || s^not-_waitfor_L(x)_0 _waitfor_L(temp_succ(U),c^l)* -> .
-108[0:Inp] || s^not-_waitfor_L(mapOnWeb)_0 _waitfor_L(temp_succ(U),mapOnWeb)* -> .
-109[0:Inp] || s^not-_waitfor_L(monitor)_0 _waitfor_L(temp_succ(U),monitor)* -> .
-110[0:Inp] || s^not-_waitfor_L(CTS4)_0 _waitfor_L(temp_succ(U),CTS4)* -> .
-111[0:Inp] || s^not-_waitfor_L(cardioMon)_0 _waitfor_L(temp_succ(U),cardioMon)* -> .
-112[0:Inp] || s^not-_waitfor_L(CTS3)_0 _waitfor_L(temp_succ(U),CTS3)* -> .
-113[0:Inp] || s^not-_waitfor_L(CTS1)_0 _waitfor_L(temp_succ(U),CTS1)* -> .
-114[0:Inp] || s^not-_waitfor_L(DPA)_0 _waitfor_L(temp_succ(U),DPA)* -> .
-115[0:Inp] || s^not-_waitfor_L(wearableCo)_0 _waitfor_L(temp_succ(U),wearableCo)* -> .
-116[0:Inp] || s^not-_waitfor_L(CTS8)_0 _waitfor_L(temp_succ(U),CTS8)* -> .
-117[0:Inp] || s^not-_waitfor_L(CTS7)_0 _waitfor_L(temp_succ(U),CTS7)* -> .
-118[0:Inp] || s^not-_waitfor_L(CTS6)_0 _waitfor_L(temp_succ(U),CTS6)* -> .
-119[0:Inp] || s^not-_waitfor_L(CTS5)_0 _waitfor_L(temp_succ(U),CTS5)* -> .
-120[0:Inp] || s^not-_waitfor_L(CTS0)_0 _waitfor_L(temp_succ(U),CTS0)* -> .
-121[0:Inp] || s^not-_waitfor_L(CTS2)_0 _waitfor_L(temp_succ(U),CTS2)* -> .
-122[0:Inp] || s^not-_waitfornotify_4(mapOnWeb)_0 _waitfornotify_4(temp_succ(U),mapOnWeb)* -> .
-123[0:Inp] || s^not-_waitfornotify_4(monitor)_0 _waitfornotify_4(temp_succ(U),monitor)* -> .
-124[0:Inp] || s^not-_waitfornotify_4(CTS4)_0 _waitfornotify_4(temp_succ(U),CTS4)* -> .
-125[0:Inp] || s^not-_waitfornotify_4(cardioMon)_0 _waitfornotify_4(temp_succ(U),cardioMon)* -> .
-126[0:Inp] || s^not-_waitfornotify_4(CTS3)_0 _waitfornotify_4(temp_succ(U),CTS3)* -> .
-127[0:Inp] || s^not-_waitfornotify_4(CTS1)_0 _waitfornotify_4(temp_succ(U),CTS1)* -> .
-128[0:Inp] || s^not-_waitfornotify_4(DPA)_0 _waitfornotify_4(temp_succ(U),DPA)* -> .
-129[0:Inp] || s^not-_waitfornotify_4(wearableCo)_0 _waitfornotify_4(temp_succ(U),wearableCo)* -> .
-130[0:Inp] || s^not-_waitfornotify_4(CTS8)_0 _waitfornotify_4(temp_succ(U),CTS8)* -> .
-131[0:Inp] || s^not-_waitfornotify_4(CTS7)_0 _waitfornotify_4(temp_succ(U),CTS7)* -> .
-132[0:Inp] || s^not-_waitfornotify_4(CTS6)_0 _waitfornotify_4(temp_succ(U),CTS6)* -> .
-133[0:Inp] || s^not-_waitfornotify_4(CTS5)_0 _waitfornotify_4(temp_succ(U),CTS5)* -> .
-134[0:Inp] || s^not-_waitfornotify_4(CTS0)_0 _waitfornotify_4(temp_succ(U),CTS0)* -> .
-135[0:Inp] || s^not-_waitfornotify_4(CTS2)_0 _waitfornotify_4(temp_succ(U),CTS2)* -> .
-85[0:Inp] || _waitfor_L(U,c^l) -> _U(temp_succ(U),c^l)*.
-86[0:Inp] || _waitfor_L(U,CTS2) -> _U(temp_succ(U),CTS2)*.
-87[0:Inp] || _waitfor_L(U,CTS0) -> _U(temp_succ(U),CTS0)*.
-88[0:Inp] || _waitfor_L(U,CTS5) -> _U(temp_succ(U),CTS5)*.
-89[0:Inp] || _waitfor_L(U,CTS6) -> _U(temp_succ(U),CTS6)*.
-90[0:Inp] || _waitfor_L(U,CTS7) -> _U(temp_succ(U),CTS7)*.
-91[0:Inp] || _waitfor_L(U,CTS8) -> _U(temp_succ(U),CTS8)*.
-92[0:Inp] || _waitfor_L(U,wearableCo) -> _U(temp_succ(U),wearableCo)*.
-93[0:Inp] || _waitfor_L(U,DPA) -> _U(temp_succ(U),DPA)*.
-94[0:Inp] || _waitfor_L(U,CTS1) -> _U(temp_succ(U),CTS1)*.
-95[0:Inp] || _waitfor_L(U,CTS3) -> _U(temp_succ(U),CTS3)*.
-96[0:Inp] || _waitfor_L(U,cardioMon) -> _U(temp_succ(U),cardioMon)*.
-97[0:Inp] || _waitfor_L(U,CTS4) -> _U(temp_succ(U),CTS4)*.
-98[0:Inp] || _waitfor_L(U,monitor) -> _U(temp_succ(U),monitor)*.
-99[0:Inp] || _waitfor_L(U,mapOnWeb) -> _U(temp_succ(U),mapOnWeb)*.
-70[0:Inp] || _waitfornotify_4(U,c^l) -> _U4(temp_succ(U),c^l)*.
-71[0:Inp] || _waitfornotify_4(U,CTS2) -> _U4(temp_succ(U),CTS2)*.
-72[0:Inp] || _waitfornotify_4(U,CTS0) -> _U4(temp_succ(U),CTS0)*.
-73[0:Inp] || _waitfornotify_4(U,CTS5) -> _U4(temp_succ(U),CTS5)*.
-74[0:Inp] || _waitfornotify_4(U,CTS6) -> _U4(temp_succ(U),CTS6)*.
-75[0:Inp] || _waitfornotify_4(U,CTS7) -> _U4(temp_succ(U),CTS7)*.
-76[0:Inp] || _waitfornotify_4(U,CTS8) -> _U4(temp_succ(U),CTS8)*.
-77[0:Inp] || _waitfornotify_4(U,wearableCo) -> _U4(temp_succ(U),wearableCo)*.
-78[0:Inp] || _waitfornotify_4(U,DPA) -> _U4(temp_succ(U),DPA)*.
-79[0:Inp] || _waitfornotify_4(U,CTS1) -> _U4(temp_succ(U),CTS1)*.
-80[0:Inp] || _waitfornotify_4(U,CTS3) -> _U4(temp_succ(U),CTS3)*.
-81[0:Inp] || _waitfornotify_4(U,cardioMon) -> _U4(temp_succ(U),cardioMon)*.
-82[0:Inp] || _waitfornotify_4(U,CTS4) -> _U4(temp_succ(U),CTS4)*.
-83[0:Inp] || _waitfornotify_4(U,monitor) -> _U4(temp_succ(U),monitor)*.
-84[0:Inp] || _waitfornotify_4(U,mapOnWeb) -> _U4(temp_succ(U),mapOnWeb)*.
-15[0:Inp] || delete(U,V,mapOnWeb,W)* -> _P2(U).
-17[0:Inp] || _waitfor_L(U,V) -> _U(temp_succ(U),temp_shield(V))*.
-16[0:Inp] || _waitfornotify_4(U,V) -> _U4(temp_succ(U),temp_shield(V))*.
-30[0:Inp] || _P1(U) -> _waitfornotify_1(U) notify(U,mapOnWeb,cardioMon,CTS6)*.
-29[0:Inp] || _P2(U) -> _waitfornotify_2(U) notify(U,mapOnWeb,cardioMon,CTS7)*.
-28[0:Inp] || _P3(U) -> _waitfornotify_3(U) notify(U,mapOnWeb,cardioMon,CTS8)*.
-27[0:Inp] || _P5(U) -> _waitfornotify_5(U) notify(U,wearableCo,DPA,CTS1)*.
-26[0:Inp] || _P6(U) -> _waitfornotify_6(U) notify(U,mapOnWeb,cardioMon,CTS3)*.
-25[0:Inp] || _P7(U) -> _waitfornotify_7(U) notify(U,mapOnWeb,cardioMon,CTS4)*.
-23[0:Inp] || _U1(U) -> _waitfornotify_1(U) notify(U,mapOnWeb,cardioMon,CTS6)*.
-22[0:Inp] || _U2(U) -> _waitfornotify_2(U) notify(U,mapOnWeb,cardioMon,CTS7)*.
-21[0:Inp] || _U3(U) -> _waitfornotify_3(U) notify(U,mapOnWeb,cardioMon,CTS8)*.
-20[0:Inp] || _U5(U) -> _waitfornotify_5(U) notify(U,wearableCo,DPA,CTS1)*.
-19[0:Inp] || _U6(U) -> _waitfornotify_6(U) notify(U,mapOnWeb,cardioMon,CTS3)*.
-18[0:Inp] || _U7(U) -> _waitfornotify_7(U) notify(U,mapOnWeb,cardioMon,CTS4)*.
-24[0:Inp] || _U(U,V) -> _waitfor_L(U,V) _L(U,V)*.
-31[0:Inp] || _P(U,V) -> _L(U,V)* _waitfor_L(U,V).
-32[0:Inp] || _L(U,V) -> sixmonths(U) delete(U,mapOnWeb,mapOnWeb,V)*.
-34[0:Inp] || read(U,V,mapOnWeb,W)* -> log(U,mapOnWeb,mapOnWeb,CTS5)*.
-33[0:Inp] || _R(U) delete(U,V,mapOnWeb,W)* -> _P7(U).
-36[0:Inp] || _P4(U,V) -> _waitfornotify_4(U,V) notify(U,wearableCo,V,CTS0)*.
-35[0:Inp] || _U4(U,V) -> _waitfornotify_4(U,V) notify(U,wearableCo,V,CTS0)*.
-37[0:Inp] || _R(U) createCustomerProfile(U,V,wearableCo,skf0(V))* -> _P5(U).
-38[0:Inp] || _R(U) createCustomerProfile(U,V,wearableCo,skf0(V))* -> _P4(U,V).
-39[0:Inp] || read(U,V,mapOnWeb,W) -> _P1(U) Pread(U,V,mapOnWeb,W)*.
-40[0:Inp] || _R(U) read(U,V,mapOnWeb,W)* -> log(U,mapOnWeb,mapOnWeb,CTS2)*.
-41[0:Inp] || _R(U) read(U,V,mapOnWeb,W) -> _P6(U) Pread(U,V,mapOnWeb,W)*.
+1[0:Inp] ||  -> EQUAL(temp_zero,subject(skc0),customer)*.
+2[0:Inp] ||  -> username(temp_zero,U)* SkP11(temp_zero,U).
+3[0:Inp] || SkP0(temp_zero,skc0) -> country(temp_zero,skc0)*.
+14[0:Inp] || SkP11(temp_zero,U) -> password(temp_zero,U)* SkP10(temp_zero,U).
+12[0:Inp] || SkP9(temp_zero,U) -> displayName(temp_zero,U)* SkP8(temp_zero,U).
+10[0:Inp] || SkP7(temp_zero,U) -> age(temp_zero,U)* SkP6(temp_zero,U).
+8[0:Inp] || SkP5(temp_zero,U) -> height(temp_zero,U)* SkP4(temp_zero,U).
+7[0:Inp] || SkP4(temp_zero,U) -> weight(temp_zero,U)* SkP3(temp_zero,U).
+6[0:Inp] || SkP3(temp_zero,U) -> sugarLevel(temp_zero,U)* SkP2(temp_zero,U).
+5[0:Inp] || SkP2(temp_zero,U) -> heartbeat(temp_zero,U)* SkP1(temp_zero,U).
+4[0:Inp] || SkP1(temp_zero,U) -> activity(temp_zero,U)* SkP0(temp_zero,U).
+13[0:Inp] || SkP10(temp_zero,U) -> userId(temp_zero,U)* SkP9(temp_zero,U).
+11[0:Inp] || SkP8(temp_zero,U) -> gender(temp_zero,U)* SkP7(temp_zero,U).
+9[0:Inp] || SkP6(temp_zero,U) -> gender(temp_zero,U)* SkP5(temp_zero,U).
+15[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),customer)* -> read(temp_zero,customer,cardioMon,U).
+16[0:Inp] || Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP11(temp_zero,U).
+17[0:Inp] || SkP0(temp_zero,skc0) Pread(temp_zero,customer,cardioMon,skc0) Pupdate(temp_zero,customer,cardioMon,skc0) Pdelete(temp_zero,customer,cardioMon,skc0)* -> .
+18[0:Inp] || SkP11(temp_zero,U) Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP10(temp_zero,U).
+19[0:Inp] || SkP10(temp_zero,U) Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP9(temp_zero,U).
+20[0:Inp] || SkP9(temp_zero,U) Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP8(temp_zero,U).
+21[0:Inp] || SkP8(temp_zero,U) Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP7(temp_zero,U).
+22[0:Inp] || SkP7(temp_zero,U) Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP6(temp_zero,U).
+23[0:Inp] || SkP6(temp_zero,U) Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP5(temp_zero,U).
+24[0:Inp] || SkP5(temp_zero,U) Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP4(temp_zero,U).
+25[0:Inp] || SkP4(temp_zero,U) Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP3(temp_zero,U).
+26[0:Inp] || SkP3(temp_zero,U) Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP2(temp_zero,U).
+27[0:Inp] || SkP2(temp_zero,U) Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP1(temp_zero,U).
+28[0:Inp] || SkP1(temp_zero,U) Pread(temp_zero,customer,cardioMon,U) Pupdate(temp_zero,customer,cardioMon,U) Pdelete(temp_zero,customer,cardioMon,U)* -> SkP0(temp_zero,U).
 Eventuality Clauses:
-33[0:Inp] || _waitfornotify_7(U)* -> .
-31[0:Inp] || _waitfornotify_6(U)* -> .
-29[0:Inp] || _waitfornotify_5(U)* -> .
-27[0:Inp] || _waitfornotify_4(U,V)* -> .
-25[0:Inp] || _waitfornotify_3(U)* -> .
-23[0:Inp] || _waitfornotify_2(U)* -> .
-21[0:Inp] || _waitfornotify_1(U)* -> .
-19[0:Inp] || _waitfor_L(U,V)* -> .
-55[0:Inp] || _waitfor_L(U,mapOnWeb)* -> .
-54[0:Inp] || _waitfor_L(U,monitor)* -> .
-53[0:Inp] || _waitfor_L(U,CTS4)* -> .
-52[0:Inp] || _waitfor_L(U,cardioMon)* -> .
-51[0:Inp] || _waitfor_L(U,CTS3)* -> .
-50[0:Inp] || _waitfor_L(U,CTS1)* -> .
-49[0:Inp] || _waitfor_L(U,DPA)* -> .
-48[0:Inp] || _waitfor_L(U,wearableCo)* -> .
-47[0:Inp] || _waitfor_L(U,CTS8)* -> .
-46[0:Inp] || _waitfor_L(U,CTS7)* -> .
-45[0:Inp] || _waitfor_L(U,CTS6)* -> .
-44[0:Inp] || _waitfor_L(U,CTS5)* -> .
-43[0:Inp] || _waitfor_L(U,CTS0)* -> .
-42[0:Inp] || _waitfor_L(U,CTS2)* -> .
-69[0:Inp] || _waitfornotify_4(U,mapOnWeb)* -> .
-68[0:Inp] || _waitfornotify_4(U,monitor)* -> .
-67[0:Inp] || _waitfornotify_4(U,CTS4)* -> .
-66[0:Inp] || _waitfornotify_4(U,cardioMon)* -> .
-65[0:Inp] || _waitfornotify_4(U,CTS3)* -> .
-64[0:Inp] || _waitfornotify_4(U,CTS1)* -> .
-63[0:Inp] || _waitfornotify_4(U,DPA)* -> .
-62[0:Inp] || _waitfornotify_4(U,wearableCo)* -> .
-61[0:Inp] || _waitfornotify_4(U,CTS8)* -> .
-60[0:Inp] || _waitfornotify_4(U,CTS7)* -> .
-59[0:Inp] || _waitfornotify_4(U,CTS6)* -> .
-58[0:Inp] || _waitfornotify_4(U,CTS5)* -> .
-57[0:Inp] || _waitfornotify_4(U,CTS0)* -> .
-56[0:Inp] || _waitfornotify_4(U,CTS2)* -> .
+
 TSPASS 0.95 
 SPASS beiseite: Satisfiable.
 Problem: tests/tmp_gen.fotl 
-TSPASS derived 39 clauses, backtracked 0 clauses and kept 145 clauses.
-Number of input clauses: 107
-Number of eventualities: 36
-Total number of generated clauses: 146
-Number of forward-subsumed clauses: 1
-Number of backward-subsumed clauses: 4
-Total number of subsumed clauses: 5
+TSPASS derived 1 clauses, backtracked 0 clauses and kept 29 clauses.
+Number of input clauses: 28
+Number of eventualities: 0
+Total number of generated clauses: 29
+Number of forward-subsumed clauses: 0
+Number of backward-subsumed clauses: 0
+Total number of subsumed clauses: 0
 Number of tautology clauses: 0
 Number of clauses with different loop search markers: 0
 Number of usable clauses left: 0
-Number of worked-off clauses left: 141
+Number of worked-off clauses left: 29
 Number of successful loop searches: 0
-TSPASS allocated 595 KBytes.
-TSPASS spent	0:00:00.01 (0.012s) on the problem.
+TSPASS allocated 530 KBytes.
+TSPASS spent	0:00:00.00 (0.004s) on the problem.
 		0:00:00.00 (0s) for the input.
 		0:00:00.00 (0.004s) for the FLOTTER CNF translation.
 		0:00:00.00 (0s) for inferences.
 		0:00:00.00 (0s) for the backtracking.
-		0:00:00.00 (0.004s) for the reduction.
+		0:00:00.00 (0s) for the reduction.
 
 --------------------------TSPASS-STOP------------------------------

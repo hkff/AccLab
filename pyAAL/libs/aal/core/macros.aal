@@ -10,7 +10,7 @@ MACRO validate(c1 c2) (
 """
 _c1 = self.clause(c1)
 _c2 = self.clause(c2)
-validate(self, _c1, _c2)
+validate(self, _c1, _c2, verbose=True)
 """
 )
 

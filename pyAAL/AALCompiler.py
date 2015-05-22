@@ -233,7 +233,8 @@ class AALCompilerListener(AALListener.AALListener):
                 self.libs.remove(lib)
 
         # Add the lib
-        self.libs.append(l)
+        self.libs.append(l)  # TODO : remove and replace by aalprog lib
+        self.aalprog.libs.append(l)
 
     # Start parsing
     def enterAalprog(self, ctx):
@@ -404,6 +405,7 @@ class AALCompilerListener(AALListener.AALListener):
             self.aalprog.declarations["agents"].append(ag)  # Add agent to prog declarations
             return ag
         return None
+
 
     # checkDataDec
     def checkDataDec(self, data, declare: bool=True, quant: bool=True) -> None or m_quant or m_data:
@@ -1038,15 +1040,15 @@ class AALCompilerListener(AALListener.AALListener):
                 replace = str(x.group())
                 # Check if we have usage/audit or rectification after
                 tmp = code[end:]
-                if tmp.startswith(".get_usage") or tmp.startswith(".uc"):
+                if tmp.startswith(".get_usage") or tmp.startswith(".ue"):
                     node = cl.usage
-                    replace += (".uc" if tmp.startswith(".uc") else ".get_usage")
-                elif tmp.startswith(".get_audit") or tmp.startswith(".aa"):
+                    replace += (".ue" if tmp.startswith(".ue") else ".get_usage")
+                elif tmp.startswith(".get_audit") or tmp.startswith(".ae"):
                     node = cl.audit
-                    replace += (".aa" if tmp.startswith(".aa") else ".get_audit")
-                elif tmp.startswith(".get_rectification") or tmp.startswith(".rc"):
+                    replace += (".ae" if tmp.startswith(".ae") else ".get_audit")
+                elif tmp.startswith(".get_rectification") or tmp.startswith(".re"):
                     node = cl.rectification
-                    replace += (".rc" if tmp.startswith(".rc") else ".get_rectification")
+                    replace += (".re" if tmp.startswith(".re") else ".get_rectification")
                 else:
                     node = cl
                 ltl = ltl.replace(replace, node.to_ltl())  # Replace clause with its ltl formulae

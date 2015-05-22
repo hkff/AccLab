@@ -58,6 +58,26 @@ pre_cond += pre_condYears + pre_condDays
 
 pre_cond += "always( ![a,x,y,z] ~(PERMIT(a, x, y, z) & DENY(a, x, y, z))) &  "  # Translation not valid
 
+pre_cond = ""
+
+# Build environment
+def build_env(mm: m_aalprog=None):
+    pre_cond = "\n%%%%%%%%% START EVN %%%%%%%%%%%"
+    pre_cond += "\n%%% Types knowledge\n"
+    for x in mm.declarations["types"]:
+        pre_cond += str(x.to_ltl()) + " & "
+
+    pre_cond += "\n\n%%% Action authorizations \n"
+    for x in mm.declarations["services"]:
+        pre_cond += str(x.to_ltl()) + " & "
+
+    pre_cond += "\n\n%%% Actors knowledge \n"
+    for x in mm.declarations["agents"]:
+        pre_cond += str(x.to_ltl()) + " & "
+
+    pre_cond += "\n%%%%%%%%% END EVN %%%%%%%%%%%\n"
+    return pre_cond
+
 
 # Check AAL global
 def check_aal(mm=None, verbose=False):
@@ -220,7 +240,7 @@ def get_vars(aexp: m_aexp, vtype=None):
 
 
 # Check validity
-def validate(compiler, c1, c2, resolve=False):
+def validate(compiler, c1, c2, resolve=False, verbose=False):
     # TODO  check if c1 and c2 exists
 
     # Monodic test
@@ -238,15 +258,14 @@ def validate(compiler, c1, c2, resolve=False):
     print(Color("{autogreen}Monodic check passed ! {/green}"))
 
     v = False
-    verbose = False
     print("------------------------- Starting Validity check -------------------------")
     c1_Id = str(c1.name)
     c2_Id = str(c2.name)
     print("c1 : " + c1_Id + "\nc2 : " + c2_Id)
-    # pre_cond = "always( ![a,x,y,z] ~(PERMIT(a, x, y, z) & DENY(a, x, y, z))) &  "
+    pre_cond = build_env(compiler.aalprog)
 
     print("----- Checking c1 & c2 consistency :")
-    res = compiler.apply_check(code=pre_cond + "clause(" + c1_Id + ").uc & clause(" + c2_Id + ").uc", show=False, verbose=verbose)
+    res = compiler.apply_check(code=pre_cond + "clause(" + c1_Id + ").ue & clause(" + c2_Id + ").ue", show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
 
@@ -259,7 +278,7 @@ def validate(compiler, c1, c2, resolve=False):
         print(res["print"])
 
     print("----- Checking c1 => c2 :")
-    res = compiler.apply_check(code=pre_cond + "clause(" + c2_Id + ").uc => clause(" + c1_Id + ").uc", show=False, verbose=verbose)
+    res = compiler.apply_check(code=pre_cond + "clause(" + c2_Id + ").ue => clause(" + c1_Id + ").ue", show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         v = False
         print(Color("{autored}  -> " + res["res"] + "{/red}"))
@@ -270,7 +289,7 @@ def validate(compiler, c1, c2, resolve=False):
         print(res["print"])
 
     print("----- Checking ~(c1 => c2) :")
-    res = compiler.apply_check(code=pre_cond + "~(clause(" + c2_Id + ").uc => clause(" + c1_Id + ").uc)", show=False, verbose=verbose)
+    res = compiler.apply_check(code=pre_cond + "~(clause(" + c2_Id + ").ue => clause(" + c1_Id + ").ue)", show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
     else:
