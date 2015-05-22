@@ -274,7 +274,7 @@ loadlib : M_load STRING;
 
 
 //****  LTL checking extension ****//
-ltlCheck : M_check ID args? h_lpar check h_rpar;
+ltlCheck : M_check ID args? h_lmar check h_rmar;
 check   : formula;
 checkApply : M_apply ID h_lpar STRING* h_rpar;
 
@@ -287,9 +287,10 @@ CONSTANTS   : 'true' | 'false';
 PREDICATE   : ID;
 
 atom : C_clause h_lpar h_clauseId h_rpar (h_dot (C_usage | C_audit | C_rectification))?
-     | PREDICATE;
+     | PREDICATE | CONSTANTS;
 
-formula  : CONSTANTS NEWLINE* | atom NEWLINE*
+formula  : atom NEWLINE*
+         //CONSTANTS NEWLINE* | atom NEWLINE*
          | formula NEWLINE* (CONJUNCTION | DISJUNCTION | IMPLICATION | EQUIVALENCE) NEWLINE* formula NEWLINE*
          | NEGATION formula NEWLINE*
          //| uQuant formula NEWLINE* | eQuant formula NEWLINE*

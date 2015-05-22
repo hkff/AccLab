@@ -249,12 +249,14 @@ CLAUSE user_pref (
 
 //call validate( "'user_pref'" "'r3'")
 
-CHECK c1 (
-a & b
+CHECK c1() {
+  a => b
+}
+//a & b
 //   ~(clause(user_pref).ue => (clause(r3).ue & clause(r4).ue))
-)
 
-APPLY c1()
+
+//APPLY c1()
 
 
 
