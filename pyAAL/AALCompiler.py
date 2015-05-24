@@ -1064,7 +1064,7 @@ class AALCompilerListener(AALListener.AALListener):
         # exec("from aalc import tspassc")
         res = tspassc(code=ltl, use_shell=False, debug=False, reparse=False)
         if show:
-            print(str(chk.name) + " : " + str(res["print"]))
+            print(Color("{autoblue}" + str(chk.name) + " : " + str(res["print"]) + "{/autoblue}"))
         return res
 
     # Exit macro

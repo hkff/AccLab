@@ -28,7 +28,7 @@ LOAD "wearable.wactors"
  * compliance with privacy policies - monitoring of data practices
  */
 CLAUSE r2 (
-    EXISTS d:data
+    EXISTS d:data FORALL customer:Customer
     PERMIT customer.login[cardioMon](d)
 )
 
@@ -47,43 +47,43 @@ CLAUSE r3 (
         IF ( @username(d) )        THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
-        AND IF ( @password(d) )    THEN {
+        OR IF ( @password(d) )    THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
-        AND IF ( @userId(d) )      THEN {
+        OR IF ( @userId(d) )      THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
-        AND IF ( @displayName(d) ) THEN {
+        OR IF ( @displayName(d) ) THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
-        AND IF ( @gender(d) )      THEN {
+        OR IF ( @gender(d) )      THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
-        AND IF ( @age(d) )         THEN {
+        OR IF ( @age(d) )         THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
-        AND IF ( @height(d) )      THEN {
+        OR IF ( @height(d) )      THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
-        AND IF ( @weight(d) )      THEN {
+        OR IF ( @weight(d) )      THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
-        AND IF ( @sugarLevel(d) )  THEN {
+        OR IF ( @sugarLevel(d) )  THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
-        AND IF ( @heartbeat(d) )   THEN {
+        OR IF ( @heartbeat(d) )   THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
-        AND IF ( @activity(d) )    THEN {
+        OR IF ( @activity(d) )    THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
-        AND IF ( @country(d) )     THEN {
+        OR IF ( @country(d) )     THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
-        AND IF ( @public(d) )     THEN {
+        OR IF ( @public(d) )     THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
-        AND IF ( @sensitive(d) )     THEN {
+        OR IF ( @sensitive(d) )     THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
     }
@@ -255,6 +255,15 @@ CLAUSE r14 (
     }
 )
 
+/*
+ * Custom : Data retention
+ */
+CLAUSE r15 (
+    // Data retention
+    FORALL d:data
+    ALWAYS( mapOnWeb.delete[mapOnWeb](d) BEFORE "6 months" )
+)
+
 //=====================================================//
 //==================== User_pref ======================//
 //=====================================================//
@@ -262,50 +271,94 @@ CLAUSE r14 (
 AGENT kim TYPES(Customer) RS() PS()
 
 
-
-// user want to read/update/delete public and sensitive data
+// Version 1
 CLAUSE up1 (
-    FORALL d:data
+    // user want to read/update/delete public and sensitive data
+    EXISTS d:data
     IF(d.subject == kim) THEN {
          IF(@public(d) OR @sensitive(d)) THEN {
-            PERMIT kim.read[cardioMon](d) //BEFORE "2 months"
+            PERMIT kim.read[cardioMon](d)
             AND PERMIT kim.update[cardioMon](d)
             AND PERMIT kim.delete[cardioMon](d)
-           }
+         }
     }
 )
-
-// user want to read/update/delete public and sensitive data
-CLAUSE up2 (
-    FORALL d:data
-    IF(d.subject == kim) THEN {
-         IF(@sensitive(d)) THEN {
-            DENY mapOnWeb.read[cardioMon](d)
-        }
-        AND IF(@public(d)) THEN {
-            PERMIT mapOnWeb.read[cardioMon](d)
-       }
-    }
-)
-
-
-//call validate("'r14'" "'user_pref'")
-//call validate("'r3'" "'up2'")
-
-//=====================================================//
-//====================== Checks =======================//
-//=====================================================//
-
 
 CHECK c1() {
 """
-  buildenv
-  ~((clause(r3).ue & clause(r14).ue) => (clause(up2).ue ))
+  ~(buildenv (clause(r3).ue) => (clause(up1).ue ))
 """
 }
-
-
 APPLY c1()
 
 
+// Version 2
+CLAUSE up2 (
+    // user want to read/update/delete public and sensitive data
+    EXISTS d:data
+    IF(d.subject == kim) THEN {
+         IF(@public(d) OR @sensitive(d)) THEN {
+            PERMIT kim.read[cardioMon](d)
+            AND PERMIT kim.update[cardioMon](d)
+            AND PERMIT kim.delete[cardioMon](d)
+         }
+    }
+    AND
+    // Deny mapOnWeb to read kim's sensitive data
+    IF(@sensitive(d)) THEN {
+        DENY mapOnWeb.read[cardioMon](d)
+    }
+    AND
+    // Permit mapOnWeb to read kim's public data
+    IF(@public(d)) THEN {
+        PERMIT mapOnWeb.read[cardioMon](d)
+    }
+)
 
+CHECK c2() {
+"""
+  ~(buildenv (clause(r3).ue & clause(r14).ue ) => (clause(up2).ue ))
+"""
+}
+//APPLY c2()
+
+
+// Version 3
+CLAUSE up3 (
+    // user want to read/update/delete public and sensitive data
+    EXISTS d:data
+    IF(d.subject == kim) THEN {
+         IF(@public(d) OR @sensitive(d)) THEN {
+            PERMIT kim.read[cardioMon](d)
+            AND PERMIT kim.update[cardioMon](d)
+            AND PERMIT kim.delete[cardioMon](d)
+         }
+    }
+    AND
+    // Deny mapOnWeb to read kim's sensitive data
+    IF(@sensitive(d)) THEN {
+        DENY mapOnWeb.read[cardioMon](d)
+    }
+    AND
+    // Permit mapOnWeb to read kim's public data
+    IF(@public(d)) THEN {
+        PERMIT mapOnWeb.read[cardioMon](d)
+    }
+    AND
+    IF(d.subject == kim) THEN {
+        // Data retension
+        ALWAYS( mapOnWeb.delete[mapOnWeb](d) BEFORE "6 months" )
+    }
+)
+
+CHECK c3() {
+"""
+  ~(buildenv
+  %(fiveMonths => sixMonths) & (sixMonths => sevenMonths) &
+  (clause(r15).ue & clause(r14).ue & clause(r3).ue ) => (clause(up3).ue ))
+"""
+}
+APPLY c3()
+
+//call validate("'r14'" "'user_pref'")
+//call validate("'r3'" "'up3'")
