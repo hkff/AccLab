@@ -46,7 +46,6 @@ def AALtoFOTL(mm: aalmm=None):
     :param mm:
     :return:
     """
-    # TODO: define Algo
     print("Entering TSPASS translation...")
     """
     INTER[clause] :

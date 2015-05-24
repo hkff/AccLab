@@ -574,7 +574,15 @@ class m_type(m_declarable):
             slattributes) + ") ACTIONS(" + " ".join(slactions) + ")"
 
     def to_ltl(self):
-        return str(self.name) + "(CTS) "
+        supers = "& (![x] ( "
+        for x in self.superTypes:
+            supers += "(" + str(self.name) + "(CTS) => " + str(x) + "(CTS) ) &"
+        if len(supers) > 10:
+            supers = supers[:-1] + "))"
+        else:
+            supers = ""
+
+        return str(self.name) + "(CTS) " + supers
 
 
 # Macro
@@ -618,11 +626,11 @@ class m_ref(aalmmnode):
     def to_ltl(self):
         return self.label # TODO: check
 
-    def to_nnf(self,bool):
-        return self.label # TODO: check
+    def to_nnf(self, bool):
+        return self.label  # TODO: check
 
-    def to_natural(self,kw=True):
-        return str(self.label)+" " # TODO: check
+    def to_natural(self, kw=True):
+        return str(self.label) + " "  # TODO: check
 
 
     # Type test

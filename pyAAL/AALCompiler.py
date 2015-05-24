@@ -827,10 +827,11 @@ class AALCompilerListener(AALListener.AALListener):
         aexp = self.actionExpStack.pop()  # Pop the args
 
         # Handle all qvars
-        for qv in ctx.qvar():  # Reverse to get the right order of vars
-            qvar = self.qvarsStack.pop()
+        # for qv in ctx.qvar():  # Reverse to get the right order of vars
+        #     qvar = self.qvarsStack.pop()
             # TODO: check qvar and qv
-            self.actionExpStack[-1].qvars.insert(0, qvar)
+            # self.actionExpStack[-1].qvars.insert(0, qvar)
+        self.actionExpStack[-1].qvars.insert(0, self.qvarsStack.pop())
 
         self.actionExpStack[-1].actionExp = aexp
 
@@ -1032,8 +1033,9 @@ class AALCompilerListener(AALListener.AALListener):
         ltl = code
 
         # Check if buil env
-        if re.finditer('build_env', code):
-            ltl = build_env(self.aalprog) + "\n" + ltl
+        ltl = ltl.replace('buildenv', build_env(self.aalprog))
+
+        ltl = ltl.replace('"""', '')
 
         for x in re.finditer('clause\(\w+\)', code):
             clauseId = x.group().replace('clause(', '').replace(')', '')  # Get clause's id
@@ -1057,7 +1059,7 @@ class AALCompilerListener(AALListener.AALListener):
                 else:
                     node = cl
                 ltl = ltl.replace(replace, node.to_ltl())  # Replace clause with its ltl formulae
-        if verbose:
+        if not verbose:
             print(ltl)
         # exec("from aalc import tspassc")
         res = tspassc(code=ltl, use_shell=False, debug=False, reparse=False)

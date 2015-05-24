@@ -68,7 +68,7 @@ import pickle
 import getopt
 import time
 import io
-
+import cProfile
 
 # DescriptiveErrorListener
 class DescriptiveErrorListener(ErrorListener):
@@ -397,4 +397,5 @@ def main(argv):
 
 # Call the main
 if __name__ == '__main__':
-    main(sys.argv)
+   # cProfile.run('')
+   main(sys.argv)

@@ -8,7 +8,7 @@
  * Individual Cloud Subject
  * Data Subject
  */
-AGENT customer TYPES(DataSubject)
+AGENT customer2 TYPES(DataSubject)
     REQUIRED(createCustomerProfile  login  add  edit  update  delete  submitRTI
              requestRTI  updateWellbeing  getWellbeingTraining  getWellbeingScore
              requestStat  requestDataPath  receiveAlerts  receivePVA  receiveBreachNotif)

@@ -261,7 +261,7 @@ def validate(compiler, c1, c2, resolve=False, verbose=False):
         print(res["print"])
 
     print("----- Checking c1 => c2 :")
-    res = compiler.apply_check(code=pre_cond + "clause(" + c2_Id + ").ue => clause(" + c1_Id + ").ue", show=False, verbose=verbose)
+    res = compiler.apply_check(code=pre_cond + "clause(" + c1_Id + ").ue => clause(" + c2_Id + ").ue", show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         v = False
         print(Color("{autored}  -> " + res["res"] + "{/red}"))
@@ -272,7 +272,7 @@ def validate(compiler, c1, c2, resolve=False, verbose=False):
         print(res["print"])
 
     print("----- Checking ~(c1 => c2) :")
-    res = compiler.apply_check(code=pre_cond + "~(clause(" + c2_Id + ").ue => clause(" + c1_Id + ").ue)", show=False, verbose=verbose)
+    res = compiler.apply_check(code=pre_cond + "~(clause(" + c1_Id + ").ue => clause(" + c2_Id + ").ue)", show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
     else:

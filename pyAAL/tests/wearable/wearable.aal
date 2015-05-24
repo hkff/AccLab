@@ -42,11 +42,12 @@ CLAUSE r2 (
  * compliance with privacy policies - monitoring of data practices
  */
 CLAUSE r3 (
-    FORALL d:data
+    FORALL d:data FORALL customer:Customer
     IF ( d.subject == customer)    THEN {
 
         IF ( @username(d) )        THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+            AND DENY p.read[cardioMon](d)
         }
         AND IF ( @password(d) )    THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
@@ -237,22 +238,29 @@ CLAUSE r13 (
 
 
 
+//=====================================================//
+//==================== User_pref ======================//
+//=====================================================//
 
 CLAUSE user_pref (
-    FORALL d:data
-
-    IF(d.subject == customer AND @userId(d)) THEN {
-        PERMIT customer.read[cardioMon](d)
+    FORALL d:data EXISTS kim:WDevice
+    IF(d.subject == kim) THEN {
+        IF (@userId(d)) THEN {
+            PERMIT kim.read[cardioMon](d)
+        }
     }
 
 )
 
-call validate( "'user_pref'" "'r3'")
+
+
+
+call validate("'r3'" "'user_pref'")
 
 CHECK c1() {
 """
-  buildenv &
-  ~(clause(user_pref).ue => (clause(r3).ue & clause(r4).ue))
+  buildenv
+  ~((clause(r3).ue & clause(r4).ue)=> (clause(user_pref).ue ))
 """
 }
 

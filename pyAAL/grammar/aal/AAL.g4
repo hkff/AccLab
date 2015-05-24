@@ -232,7 +232,7 @@ actionExp4condition   : condition;
 //actionExp5boolAction  : actionExp booleanOp actionExp;
 actionExp6Author      : author;
 actionExp7ifthen      : ifthen;
-actionExp8qvar        : qvar qvar* actionExp; // Force the first qvar
+actionExp8qvar        : qvar actionExp; // Force the first qvar
 
 
 
