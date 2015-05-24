@@ -524,7 +524,11 @@ class m_agent(m_declarable):
                ") PROVIDED(" + " ".join(slprovided) + ")"
 
     def to_ltl(self):
-        return "(![x] (" + str(self.name) + "(x)))"
+        sltypes = ""
+        for x in self.types:
+            sltypes += str(x.label) + "(" + str(self.name) +") &"
+        return (sltypes[:-1]) if sltypes is not "" else  "Actor(" + str(self.name) +")"
+        # return ("(" + str(self.name) + " => (" + sltypes[:-1] + "))") if sltypes is not "" else str(self.name)
 
 
 # Data
@@ -702,12 +706,12 @@ class m_aexpNotAexp(m_aexp):
     def to_ltl(self):
         return str(self.negation.to_ltl()) + "(" + str(self.actionExpression.to_ltl()) + ")"
 
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         self.remove()
         return str(self.actionExpression.to_nnf(not bool))
 
     def to_natural(self,kw=True):
-        return self.actionExpression.to_natural(kw=not(kw))
+        return self.actionExpression.to_natural(kw=not kw)
 
     def remove(self):
         #self.actionExpression.parent = self.parent
@@ -773,6 +777,7 @@ class m_aexpCondition(m_aexp):
     def to_natural(self,kw=True):
         return str(self.condition.to_natural())
 
+
 # ActionExpComb
 class m_aexpComb(m_aexp):
 
@@ -795,35 +800,35 @@ class m_aexpComb(m_aexp):
 
     def to_nnf(self,bool):
         if bool:
-            return  "(" + str(self.actionExp1.to_nnf(True)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(True)) + ")"
+            return "(" + str(self.actionExp1.to_nnf(True)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(True)) + ")"
         else:
-            if self.operator==m_booleanOp.O_and:
-                self.operator=m_booleanOp.O_or
+            if self.operator == m_booleanOp.O_and:
+                self.operator = m_booleanOp.O_or
                 return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
-            elif self.operator==m_booleanOp.O_or:
-                self.operator=m_booleanOp.O_and
+            elif self.operator == m_booleanOp.O_or:
+                self.operator = m_booleanOp.O_and
                 return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
-            elif self.operator==m_booleanOp.O_onlywhen:
-                self.operator=m_booleanOp.O_and
+            elif self.operator == m_booleanOp.O_onlywhen:
+                self.operator = m_booleanOp.O_and
                 return "(" + str(self.actionExp1.to_nnf(True)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
-            elif self.operator==m_booleanOp.T_unless:
-                self.operator==m_booleanOp.T_until
+            elif self.operator == m_booleanOp.T_unless:
+                self.operator == m_booleanOp.T_until
                 return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
-            elif self.operator==m_booleanOp.T_until:
-                self.operator==m_booleanOp.T_unless
+            elif self.operator == m_booleanOp.T_until:
+                self.operator == m_booleanOp.T_unless
                 return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
 
-    def to_natural(self,kw=True):
-        if self.operator==m_booleanOp.O_and:
+    def to_natural(self, kw=True):
+        if self.operator == m_booleanOp.O_and:
             return str(self.actionExp1.to_natural()) + "and " + str(self.actionExp2.to_natural()) + "are verified, "
-        elif self.operator==m_booleanOp.O_or:
-            return "either " + str(self.actionExp1.to_natural())+"is verified " + "or "  + str(self.actionExp2.to_natural()) + "is verified, "
-        elif self.operator==m_booleanOp.O_onlywhen:
+        elif self.operator == m_booleanOp.O_or:
+            return "either " + str(self.actionExp1.to_natural())+"is verified " + "or " + str(self.actionExp2.to_natural()) + "is verified, "
+        elif self.operator == m_booleanOp.O_onlywhen:
             return "whenever " + str(self.actionExp1.to_natural()) + "is verified, then " + str(self.actionExp2.to_natural()) + "is verified too, "
-        elif self.operator==m_booleanOp.T_unless:
+        elif self.operator == m_booleanOp.T_unless:
             return "(" + str(self.actionExp1.to_nnf(False)) + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
-        elif self.operator==m_booleanOp.T_until:
-            self.operator==m_booleanOp.T_unless
+        elif self.operator == m_booleanOp.T_until:
+            self.operator == m_booleanOp.T_unless
             return "(" + str(self.actionExp1.to_nnf(False)) + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
 
 
@@ -860,7 +865,7 @@ class m_aexpAuthor(m_aexp):
     #      self.action.to_nnf(bool)
     #     return str(self.author) + str(self.action.negate())
 
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         if bool:
             return str(self)
         else:
@@ -933,18 +938,18 @@ class m_qvar(aalmmnode):
         return res
 
     def to_ltl(self):
-        return str(self.quant.to_ltl()) + "[" + str(self.variable.target.name) + "]"
+        return str(self.quant.to_ltl()) + "[" + str(self.variable.target.name) + "] ( " + str(self.variable.target.to_ltl()) + " & "
 
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         if bool:
             return str(self.quant) + "[" + str(self.variable.target.name) + "]"
         else:
             if self.quant == m_quant.Q_forall:
-                self.quant=m_quant.Q_exists
+                self.quant = m_quant.Q_exists
                 self.condition.to_nnf(False)
                 return str(self.quant) + "[" + str(self.variable.target.name) + "]"
             elif self.quant == m_quant.Q_exists:
-                self.quant =m_quant.Q_forall
+                self.quant = m_quant.Q_forall
                 self.condition.to_nnf(False)
                 return str(self.quant) + "[" + str(self.variable.target.name) + "]"
 
@@ -952,7 +957,7 @@ class m_qvar(aalmmnode):
         if self.condition is None:
             return str(self.quant.to_natural(kw=kw)) + str(self.variable.to_natural(kw=kw))
         else:
-            return str(self.quant.to_natural(kw=kw)) + str(self.variable.to_natural(kw=kw)) +" where "+ str(self.condition.to_natural(kw=kw))
+            return str(self.quant.to_natural(kw=kw)) + str(self.variable.to_natural(kw=kw)) + " where " + str(self.condition.to_natural(kw=kw))
 
     # Type test
     def is_a(self, ttype):
@@ -980,15 +985,16 @@ class m_aexpQvar(m_aexp):
 
     def to_ltl(self):
         q = [str(x.to_ltl()) for x in self.qvars]
-        return str(" ".join(q)) + "(" + str(self.actionExp.to_ltl()) + ")"
+        return str(" ".join(q)) + "(" + str(self.actionExp.to_ltl()) + "))"
 
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         q = [str(x.to_nnf(bool)) for x in self.qvars]
         return str(" ".join(q)) + "(" + str(self.actionExp.to_nnf(bool)) + ")"
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         q = [str(x.to_natural()) for x in self.qvars]
         return str(" ".join(q)) + str(self.actionExp.to_natural(kw=kw))
+
 
 # Expression
 class m_exp(aalmmnode):
@@ -1006,6 +1012,9 @@ class m_variable(m_exp):
 
     def __str__(self):
         return str(self.name) + ":" + str(self.type)
+
+    def to_ltl(self):
+        return (str(self.type) + "(" + str(self.name) + ")") if self.type is not None else ""
 
     def children(self):
         return [self.type]
@@ -1431,6 +1440,7 @@ class m_author(sEnum):
         elif self == m_author.A_deny:
             return ""
 
+
 # Quant
 class m_quant(sEnum):
     Q_forall = "FORALL"
@@ -1442,11 +1452,12 @@ class m_quant(sEnum):
         elif self == m_quant.Q_exists:
             return str(LTLOperators.t_exists)
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         if self == m_quant.Q_forall:
             return "for all "
         elif self == m_quant.Q_exists:
             return "it exists "
+
 
 # Modal
 class m_modal(sEnum):

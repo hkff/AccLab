@@ -43,11 +43,9 @@ CLAUSE r2 (
  */
 CLAUSE r3 (
     FORALL d:data FORALL customer:Customer
-    IF ( d.subject == customer)    THEN {
-
+    IF ( d.subject == customer )    THEN {
         IF ( @username(d) )        THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
-            AND DENY p.read[cardioMon](d)
         }
         AND IF ( @password(d) )    THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
@@ -62,9 +60,6 @@ CLAUSE r3 (
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
         AND IF ( @age(d) )         THEN {
-            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
-        }
-        AND IF ( @gender(d) )      THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
         AND IF ( @height(d) )      THEN {
@@ -85,8 +80,13 @@ CLAUSE r3 (
         AND IF ( @country(d) )     THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
+        AND IF ( @public(d) )     THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
+        AND IF ( @sensitive(d) )     THEN {
+            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+        }
     }
-
 )
 
 /*
@@ -97,7 +97,7 @@ CLAUSE r3 (
  * compliance with privacy policies - monitoring of data practices
  */
 CLAUSE r4 (
-    FORALL a:Actor FORALL d:data
+    FORALL a:Actor FORALL d:data FORALL customer:Customer
     IF( @blood(d) OR @sugarLevel(d) OR @heartbeat(d) ) THEN {
         IF (a != customer) THEN {
             DENY a.submitRTI[cardioMon](d)
@@ -114,7 +114,7 @@ CLAUSE r4 (
  * compliance with privacy policies - monitoring of data practices
  */
 CLAUSE r5 (
-    EXISTS d:data
+    EXISTS d:data FORALL customer:Customer
     PERMIT customer.updateWellbeing[cardioMon](d)
 )
 
@@ -126,7 +126,7 @@ CLAUSE r5 (
  * compliance with privacy policies - monitoring of data practices
  */
 CLAUSE r6 (
-    FORALL d:data
+    FORALL d:data FORALL customer:Customer
     IF ( @sugarLevel(d) AND d.subject == customer) THEN {
         PERMIT customer.read[cardioMon](d)
     }
@@ -188,7 +188,7 @@ CLAUSE r9 (
  * personal data minimization - compliance with privacy policies - monitoring of data practices
  */
 CLAUSE r10 (
-    EXISTS d:data
+    EXISTS d:data FORALL customer:Customer
     IF ( d.subject == customer ) THEN {
         PERMIT customer.receiveAlerts[cardioMon](d)
     }
@@ -204,10 +204,12 @@ CLAUSE r10 (
  *  informing about privacy preferences violations remediation in case of damages
  */
 CLAUSE r11 (
-    FORALL admins:WCOAdmin EXISTS d:data
-    PERMIT customer.receivePVA[cardioMon](d) AND
-    PERMIT admins.receivePVA[cardioMon](d) AND
-    PERMIT PO.receivePVA[cardioMon](d)
+    FORALL admins:WCOAdmin EXISTS d:data FORALL customer:Customer
+    IF (d.subject == customer) THEN {
+        PERMIT customer.receivePVA[cardioMon](d) AND
+        PERMIT admins.receivePVA[cardioMon](d) AND
+        PERMIT PO.receivePVA[cardioMon](d)
+    }
 )
 
 /*
@@ -230,37 +232,75 @@ CLAUSE r11 (
  *  informing about privacy preferences violations remediation in case of damages
  */
 CLAUSE r13 (
-    FORALL admins:WCOAdmin EXISTS d:data
-    PERMIT customer.receiveBreachNotif[cardioMon](d) AND
-    PERMIT admins.receiveBreachNotif[cardioMon](d) AND
-    PERMIT PO.receiveBreachNotif[cardioMon](d)
+    FORALL admins:WCOAdmin EXISTS d:data FORALL customer:Customer
+    IF (d.subject == customer) THEN {
+        PERMIT customer.receiveBreachNotif[cardioMon](d) AND
+        PERMIT admins.receiveBreachNotif[cardioMon](d) AND
+        PERMIT PO.receiveBreachNotif[cardioMon](d)
+    }
 )
 
 
+/*
+ * Custom : Allow mapOnWeb to read all public data
+ */
+CLAUSE r14 (
+    FORALL d:data
+    IF (@public(d)) THEN {
+        PERMIT mapOnWeb.read[cardioMon](d)
+    }
+    AND
+    IF(@sensitive(d)) THEN {
+        DENY mapOnWeb.read[cardioMon](d)
+    }
+)
 
 //=====================================================//
 //==================== User_pref ======================//
 //=====================================================//
 
-CLAUSE user_pref (
-    FORALL d:data EXISTS kim:WDevice
-    IF(d.subject == kim) THEN {
-        IF (@userId(d)) THEN {
-            PERMIT kim.read[cardioMon](d)
-        }
-    }
+AGENT kim TYPES(Customer) RS() PS()
 
+
+
+// user want to read/update/delete public and sensitive data
+CLAUSE up1 (
+    FORALL d:data
+    IF(d.subject == kim) THEN {
+         IF(@public(d) OR @sensitive(d)) THEN {
+            PERMIT kim.read[cardioMon](d) //BEFORE "2 months"
+            AND PERMIT kim.update[cardioMon](d)
+            AND PERMIT kim.delete[cardioMon](d)
+           }
+    }
+)
+
+// user want to read/update/delete public and sensitive data
+CLAUSE up2 (
+    FORALL d:data
+    IF(d.subject == kim) THEN {
+         IF(@sensitive(d)) THEN {
+            DENY mapOnWeb.read[cardioMon](d)
+        }
+        AND IF(@public(d)) THEN {
+            PERMIT mapOnWeb.read[cardioMon](d)
+       }
+    }
 )
 
 
+//call validate("'r14'" "'user_pref'")
+//call validate("'r3'" "'up2'")
 
+//=====================================================//
+//====================== Checks =======================//
+//=====================================================//
 
-call validate("'r3'" "'user_pref'")
 
 CHECK c1() {
 """
   buildenv
-  ~((clause(r3).ue & clause(r4).ue)=> (clause(user_pref).ue ))
+  ~((clause(r3).ue & clause(r14).ue) => (clause(up2).ue ))
 """
 }
 

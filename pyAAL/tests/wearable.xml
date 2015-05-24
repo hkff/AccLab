@@ -4,7 +4,7 @@
     xmlns:ob="http://www.a4cloud.eu/a-ppl/obligation" xmlns:a-ppl="http://www.a4cloud.eu/a-ppl"
     xmlns:xacml="urn:oasis:names:tc:xacml:2.0:policy:schema:os" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     PolicyId="WearableCo-Policy" RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides">
-	
+
     <!-- The personal data that will be stored are defined here   -->
     <xacml:Target>
         <xacml:Resources>
@@ -274,7 +274,7 @@
             <xacml:Subjects>
                 <xacml:Subject>
                     <xacml:SubjectMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-<xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Map-On-Web</xacml:AttributeValue>
+                        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Map-On-Web</xacml:AttributeValue>
                         <xacml:SubjectAttributeDesignator 	DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="subject:subject-id"/>
                     </xacml:SubjectMatch>
                 </xacml:Subject>
@@ -326,7 +326,7 @@
                     </xacml:ResourceMatch>
                 </xacml:Resource>
             </xacml:Resources>
-  <xacml:Actions>
+            <xacml:Actions>
                 <xacml:Action>
                     <xacml:ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                         <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</xacml:AttributeValue>
@@ -476,7 +476,7 @@
                                             <ob:StartNow />
                                         </ob:Start>
                                         <ob:MaxDelay>
-                                            <ob:Duration>P0Y0M0DT0H2M0S</ob:Duration>
+                                            <ob:Duration>P0Y6M0DT0H0M0S</ob:Duration>
                                         </ob:MaxDelay>
                                     </ob:TriggerAtTime>
                                 </ob:TriggersSet>

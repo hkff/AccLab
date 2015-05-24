@@ -1,351 +1,393 @@
 
 ------------------TEMPORAL-LOGIC-TRANSLATION-START-----------------------
 For initial clauses:
-5[0:Inp] ||  -> userId(skc0)*.    -> 5[0:Inp] ||  -> userId(temp_zero,skc0)*.
-96[0:Inp] ||  -> Customer(CTS)*.    -> 96[0:Inp] ||  -> Customer(temp_zero,CTS)*.
-98[0:Inp] ||  -> WDevice(CTS)*.    -> 98[0:Inp] ||  -> WDevice(temp_zero,CTS)*.
-100[0:Inp] ||  -> WCOAdmin(CTS)*.    -> 100[0:Inp] ||  -> WCOAdmin(temp_zero,CTS)*.
-102[0:Inp] ||  -> WCOemployee(CTS)*.    -> 102[0:Inp] ||  -> WCOemployee(temp_zero,CTS)*.
-103[0:Inp] ||  -> DataProcessor(CTS)*.    -> 103[0:Inp] ||  -> DataProcessor(temp_zero,CTS)*.
-104[0:Inp] ||  -> DataController(CTS)*.    -> 104[0:Inp] ||  -> DataController(temp_zero,CTS)*.
-105[0:Inp] ||  -> DataSubject(CTS)*.    -> 105[0:Inp] ||  -> DataSubject(temp_zero,CTS)*.
-107[0:Inp] ||  -> country(CTS)*.    -> 107[0:Inp] ||  -> country(temp_zero,CTS)*.
-109[0:Inp] ||  -> wellbeing(CTS)*.    -> 109[0:Inp] ||  -> wellbeing(temp_zero,CTS)*.
-111[0:Inp] ||  -> activity(CTS)*.    -> 111[0:Inp] ||  -> activity(temp_zero,CTS)*.
-113[0:Inp] ||  -> heartbeat(CTS)*.    -> 113[0:Inp] ||  -> heartbeat(temp_zero,CTS)*.
-115[0:Inp] ||  -> blood(CTS)*.    -> 115[0:Inp] ||  -> blood(temp_zero,CTS)*.
-117[0:Inp] ||  -> sugarLevel(CTS)*.    -> 117[0:Inp] ||  -> sugarLevel(temp_zero,CTS)*.
-119[0:Inp] ||  -> weight(CTS)*.    -> 119[0:Inp] ||  -> weight(temp_zero,CTS)*.
-121[0:Inp] ||  -> height(CTS)*.    -> 121[0:Inp] ||  -> height(temp_zero,CTS)*.
-123[0:Inp] ||  -> age(CTS)*.    -> 123[0:Inp] ||  -> age(temp_zero,CTS)*.
-125[0:Inp] ||  -> gender(CTS)*.    -> 125[0:Inp] ||  -> gender(temp_zero,CTS)*.
-127[0:Inp] ||  -> displayName(CTS)*.    -> 127[0:Inp] ||  -> displayName(temp_zero,CTS)*.
-129[0:Inp] ||  -> userId(CTS)*.    -> 129[0:Inp] ||  -> userId(temp_zero,CTS)*.
-131[0:Inp] ||  -> password(CTS)*.    -> 131[0:Inp] ||  -> password(temp_zero,CTS)*.
-133[0:Inp] ||  -> username(CTS)*.    -> 133[0:Inp] ||  -> username(temp_zero,CTS)*.
-135[0:Inp] ||  -> public(CTS)*.    -> 135[0:Inp] ||  -> public(temp_zero,CTS)*.
-137[0:Inp] ||  -> sensitive(CTS)*.    -> 137[0:Inp] ||  -> sensitive(temp_zero,CTS)*.
-138[0:Inp] ||  -> EndUser(CTS)*.    -> 138[0:Inp] ||  -> EndUser(temp_zero,CTS)*.
-139[0:Inp] ||  -> CloudCustomer(CTS)*.    -> 139[0:Inp] ||  -> CloudCustomer(temp_zero,CTS)*.
-140[0:Inp] ||  -> CloudProvider(CTS)*.    -> 140[0:Inp] ||  -> CloudProvider(temp_zero,CTS)*.
-141[0:Inp] ||  -> Auditor(CTS)*.    -> 141[0:Inp] ||  -> Auditor(temp_zero,CTS)*.
-142[0:Inp] ||  -> DwDataController(CTS)*.    -> 142[0:Inp] ||  -> DwDataController(temp_zero,CTS)*.
-146[0:Inp] ||  -> Actor(CTS)*.    -> 146[0:Inp] ||  -> Actor(temp_zero,CTS)*.
-147[0:Inp] ||  -> data(CTS)*.    -> 147[0:Inp] ||  -> data(temp_zero,CTS)*.
-6[0:Inp] ||  -> EQUAL(subject(skc0),U)*.    -> 6[0:Inp] ||  -> EQUAL(temp_zero,subject(skc0),U)*.
-1[0:Inp] || blood(U)* -> SkP0(U).    -> 1[0:Inp] || blood(temp_zero,U)* -> SkP0(temp_zero,U).
-2[0:Inp] || sugarLevel(U)* -> SkP0(U).    -> 2[0:Inp] || sugarLevel(temp_zero,U)* -> SkP0(temp_zero,U).
-3[0:Inp] || heartbeat(U)* -> SkP0(U).    -> 3[0:Inp] || heartbeat(temp_zero,U)* -> SkP0(temp_zero,U).
-4[0:Inp] || Pread(U,cardioMon,skc0)* -> .    -> 4[0:Inp] || Pread(temp_zero,U,cardioMon,skc0)* -> .
-8[0:Inp] || SkP0(U) -> PsubmitRTI(customer,cardioMon,U)*.    -> 8[0:Inp] || SkP0(temp_zero,U) -> PsubmitRTI(temp_zero,customer,cardioMon,U)*.
-49[0:Inp] || requestDataCompliance(U,V,W) -> PrequestDataCompliance(U,V,W)*.    -> 49[0:Inp] || requestDataCompliance(temp_zero,U,V,W) -> PrequestDataCompliance(temp_zero,U,V,W)*.
-50[0:Inp] || viewActiveUsers(U,V,W) -> PviewActiveUsers(U,V,W)*.    -> 50[0:Inp] || viewActiveUsers(temp_zero,U,V,W) -> PviewActiveUsers(temp_zero,U,V,W)*.
-51[0:Inp] || updateThresholds(U,V,W) -> PupdateThresholds(U,V,W)*.    -> 51[0:Inp] || updateThresholds(temp_zero,U,V,W) -> PupdateThresholds(temp_zero,U,V,W)*.
-52[0:Inp] || manageBusinessFormula(U,V,W) -> PmanageBusinessFormula(U,V,W)*.    -> 52[0:Inp] || manageBusinessFormula(temp_zero,U,V,W) -> PmanageBusinessFormula(temp_zero,U,V,W)*.
-53[0:Inp] || createBusinessProfile(U,V,W) -> PcreateBusinessProfile(U,V,W)*.    -> 53[0:Inp] || createBusinessProfile(temp_zero,U,V,W) -> PcreateBusinessProfile(temp_zero,U,V,W)*.
-54[0:Inp] || receiveBreachNotif(U,V,W) -> PreceiveBreachNotif(U,V,W)*.    -> 54[0:Inp] || receiveBreachNotif(temp_zero,U,V,W) -> PreceiveBreachNotif(temp_zero,U,V,W)*.
-55[0:Inp] || receivePVA(U,V,W) -> PreceivePVA(U,V,W)*.    -> 55[0:Inp] || receivePVA(temp_zero,U,V,W) -> PreceivePVA(temp_zero,U,V,W)*.
-56[0:Inp] || receiveAlerts(U,V,W) -> PreceiveAlerts(U,V,W)*.    -> 56[0:Inp] || receiveAlerts(temp_zero,U,V,W) -> PreceiveAlerts(temp_zero,U,V,W)*.
-57[0:Inp] || requestDataPath(U,V,W) -> PrequestDataPath(U,V,W)*.    -> 57[0:Inp] || requestDataPath(temp_zero,U,V,W) -> PrequestDataPath(temp_zero,U,V,W)*.
-58[0:Inp] || requestStat(U,V,W) -> PrequestStat(U,V,W)*.    -> 58[0:Inp] || requestStat(temp_zero,U,V,W) -> PrequestStat(temp_zero,U,V,W)*.
-59[0:Inp] || getWellbeingScore(U,V,W) -> PgetWellbeingScore(U,V,W)*.    -> 59[0:Inp] || getWellbeingScore(temp_zero,U,V,W) -> PgetWellbeingScore(temp_zero,U,V,W)*.
-60[0:Inp] || getWellbeingTraining(U,V,W) -> PgetWellbeingTraining(U,V,W)*.    -> 60[0:Inp] || getWellbeingTraining(temp_zero,U,V,W) -> PgetWellbeingTraining(temp_zero,U,V,W)*.
-61[0:Inp] || updateWellbeing(U,V,W) -> PupdateWellbeing(U,V,W)*.    -> 61[0:Inp] || updateWellbeing(temp_zero,U,V,W) -> PupdateWellbeing(temp_zero,U,V,W)*.
-62[0:Inp] || requestRTI(U,V,W) -> PrequestRTI(U,V,W)*.    -> 62[0:Inp] || requestRTI(temp_zero,U,V,W) -> PrequestRTI(temp_zero,U,V,W)*.
-63[0:Inp] || submitRTI(U,V,W) -> PsubmitRTI(U,V,W)*.    -> 63[0:Inp] || submitRTI(temp_zero,U,V,W) -> PsubmitRTI(temp_zero,U,V,W)*.
-64[0:Inp] || delete(U,V,W) -> Pdelete(U,V,W)*.    -> 64[0:Inp] || delete(temp_zero,U,V,W) -> Pdelete(temp_zero,U,V,W)*.
-65[0:Inp] || update(U,V,W) -> Pupdate(U,V,W)*.    -> 65[0:Inp] || update(temp_zero,U,V,W) -> Pupdate(temp_zero,U,V,W)*.
-66[0:Inp] || edit(U,V,W) -> Pedit(U,V,W)*.    -> 66[0:Inp] || edit(temp_zero,U,V,W) -> Pedit(temp_zero,U,V,W)*.
-67[0:Inp] || add(U,V,W) -> Padd(U,V,W)*.    -> 67[0:Inp] || add(temp_zero,U,V,W) -> Padd(temp_zero,U,V,W)*.
-68[0:Inp] || login(U,V,W) -> Plogin(U,V,W)*.    -> 68[0:Inp] || login(temp_zero,U,V,W) -> Plogin(temp_zero,U,V,W)*.
-69[0:Inp] || createCustomerProfile(U,V,W) -> PcreateCustomerProfile(U,V,W)*.    -> 69[0:Inp] || createCustomerProfile(temp_zero,U,V,W) -> PcreateCustomerProfile(temp_zero,U,V,W)*.
-71[0:Inp] || receiveTVA(U,V,W) -> PreceiveTVA(U,V,W)*.    -> 71[0:Inp] || receiveTVA(temp_zero,U,V,W) -> PreceiveTVA(temp_zero,U,V,W)*.
-92[0:Inp] || audit(U,V,W) -> Paudit(U,V,W)*.    -> 92[0:Inp] || audit(temp_zero,U,V,W) -> Paudit(temp_zero,U,V,W)*.
-93[0:Inp] || write(U,V,W) -> Pwrite(U,V,W)*.    -> 93[0:Inp] || write(temp_zero,U,V,W) -> Pwrite(temp_zero,U,V,W)*.
-94[0:Inp] || read(U,V,W) -> Pread(U,V,W)*.    -> 94[0:Inp] || read(temp_zero,U,V,W) -> Pread(temp_zero,U,V,W)*.
-7[0:Inp] || SkP0(U) PsubmitRTI(V,cardioMon,U)* -> EQUAL(V,customer).    -> 7[0:Inp] || SkP0(temp_zero,U) PsubmitRTI(temp_zero,V,cardioMon,U)* -> EQUAL(temp_zero,V,customer).
-10[0:Inp] || username(U) EQUAL(subject(U),V)* -> Pdelete(V,cardioMon,U).    -> 10[0:Inp] || username(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-11[0:Inp] || username(U) EQUAL(subject(U),V)* -> Pupdate(V,cardioMon,U).    -> 11[0:Inp] || username(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-12[0:Inp] || username(U) EQUAL(subject(U),V)* -> Pread(V,cardioMon,U).    -> 12[0:Inp] || username(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-13[0:Inp] || password(U) EQUAL(subject(U),V)* -> Pdelete(V,cardioMon,U).    -> 13[0:Inp] || password(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-14[0:Inp] || password(U) EQUAL(subject(U),V)* -> Pupdate(V,cardioMon,U).    -> 14[0:Inp] || password(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-15[0:Inp] || password(U) EQUAL(subject(U),V)* -> Pread(V,cardioMon,U).    -> 15[0:Inp] || password(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-16[0:Inp] || userId(U) EQUAL(subject(U),V)* -> Pdelete(V,cardioMon,U).    -> 16[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-17[0:Inp] || userId(U) EQUAL(subject(U),V)* -> Pupdate(V,cardioMon,U).    -> 17[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-18[0:Inp] || userId(U) EQUAL(subject(U),V)* -> Pread(V,cardioMon,U).    -> 18[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-19[0:Inp] || displayName(U) EQUAL(subject(U),V)* -> Pdelete(V,cardioMon,U).    -> 19[0:Inp] || displayName(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-20[0:Inp] || displayName(U) EQUAL(subject(U),V)* -> Pupdate(V,cardioMon,U).    -> 20[0:Inp] || displayName(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-21[0:Inp] || displayName(U) EQUAL(subject(U),V)* -> Pread(V,cardioMon,U).    -> 21[0:Inp] || displayName(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-22[0:Inp] || gender(U) EQUAL(subject(U),V)* -> Pdelete(V,cardioMon,U).    -> 22[0:Inp] || gender(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-23[0:Inp] || gender(U) EQUAL(subject(U),V)* -> Pupdate(V,cardioMon,U).    -> 23[0:Inp] || gender(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-24[0:Inp] || gender(U) EQUAL(subject(U),V)* -> Pread(V,cardioMon,U).    -> 24[0:Inp] || gender(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-25[0:Inp] || age(U) EQUAL(subject(U),V)* -> Pdelete(V,cardioMon,U).    -> 25[0:Inp] || age(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-26[0:Inp] || age(U) EQUAL(subject(U),V)* -> Pupdate(V,cardioMon,U).    -> 26[0:Inp] || age(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-27[0:Inp] || age(U) EQUAL(subject(U),V)* -> Pread(V,cardioMon,U).    -> 27[0:Inp] || age(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-31[0:Inp] || height(U) EQUAL(subject(U),V)* -> Pdelete(V,cardioMon,U).    -> 31[0:Inp] || height(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-32[0:Inp] || height(U) EQUAL(subject(U),V)* -> Pupdate(V,cardioMon,U).    -> 32[0:Inp] || height(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-33[0:Inp] || height(U) EQUAL(subject(U),V)* -> Pread(V,cardioMon,U).    -> 33[0:Inp] || height(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-34[0:Inp] || weight(U) EQUAL(subject(U),V)* -> Pdelete(V,cardioMon,U).    -> 34[0:Inp] || weight(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-35[0:Inp] || weight(U) EQUAL(subject(U),V)* -> Pupdate(V,cardioMon,U).    -> 35[0:Inp] || weight(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-36[0:Inp] || weight(U) EQUAL(subject(U),V)* -> Pread(V,cardioMon,U).    -> 36[0:Inp] || weight(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-37[0:Inp] || sugarLevel(U) EQUAL(subject(U),V)* -> Pdelete(V,cardioMon,U).    -> 37[0:Inp] || sugarLevel(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-38[0:Inp] || sugarLevel(U) EQUAL(subject(U),V)* -> Pupdate(V,cardioMon,U).    -> 38[0:Inp] || sugarLevel(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-39[0:Inp] || sugarLevel(U) EQUAL(subject(U),V)* -> Pread(V,cardioMon,U).    -> 39[0:Inp] || sugarLevel(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-40[0:Inp] || heartbeat(U) EQUAL(subject(U),V)* -> Pdelete(V,cardioMon,U).    -> 40[0:Inp] || heartbeat(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-41[0:Inp] || heartbeat(U) EQUAL(subject(U),V)* -> Pupdate(V,cardioMon,U).    -> 41[0:Inp] || heartbeat(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-42[0:Inp] || heartbeat(U) EQUAL(subject(U),V)* -> Pread(V,cardioMon,U).    -> 42[0:Inp] || heartbeat(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-43[0:Inp] || activity(U) EQUAL(subject(U),V)* -> Pdelete(V,cardioMon,U).    -> 43[0:Inp] || activity(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-44[0:Inp] || activity(U) EQUAL(subject(U),V)* -> Pupdate(V,cardioMon,U).    -> 44[0:Inp] || activity(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-45[0:Inp] || activity(U) EQUAL(subject(U),V)* -> Pread(V,cardioMon,U).    -> 45[0:Inp] || activity(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-46[0:Inp] || country(U) EQUAL(subject(U),V)* -> Pdelete(V,cardioMon,U).    -> 46[0:Inp] || country(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-47[0:Inp] || country(U) EQUAL(subject(U),V)* -> Pupdate(V,cardioMon,U).    -> 47[0:Inp] || country(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-48[0:Inp] || country(U) EQUAL(subject(U),V)* -> Pread(V,cardioMon,U).    -> 48[0:Inp] || country(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-9[0:Inp] || Pread(p,cardioMon,U) username(U) EQUAL(subject(U),V)* -> .    -> 9[0:Inp] || Pread(temp_zero,p,cardioMon,U) username(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> .
+1[0:Inp] ||  -> _P*.    -> 1[0:Inp] ||  -> _P(temp_zero)*.
 ------------------TEMPORAL-LOGIC-TRANSLATION-STOP------------------------
 ------------------TEMPORAL-LOGIC-TRANSLATION-START-----------------------
 For universal clauses:
+3[0:Inp] || _L -> Actor(CTS)*.    -> 3[0:Inp] || _L(U) -> Actor(U,CTS)*.
+4[0:Inp] || _L -> DataSubject(CTS)*.    -> 4[0:Inp] || _L(U) -> DataSubject(U,CTS)*.
+5[0:Inp] || _L -> DataController(CTS)*.    -> 5[0:Inp] || _L(U) -> DataController(U,CTS)*.
+6[0:Inp] || _L -> DataProcessor(CTS)*.    -> 6[0:Inp] || _L(U) -> DataProcessor(U,CTS)*.
+7[0:Inp] || _L -> DwDataController(CTS)*.    -> 7[0:Inp] || _L(U) -> DwDataController(U,CTS)*.
+8[0:Inp] || _L -> Auditor(CTS)*.    -> 8[0:Inp] || _L(U) -> Auditor(U,CTS)*.
+9[0:Inp] || _L -> CloudProvider(CTS)*.    -> 9[0:Inp] || _L(U) -> CloudProvider(U,CTS)*.
+10[0:Inp] || _L -> CloudCustomer(CTS)*.    -> 10[0:Inp] || _L(U) -> CloudCustomer(U,CTS)*.
+11[0:Inp] || _L -> EndUser(CTS)*.    -> 11[0:Inp] || _L(U) -> EndUser(U,CTS)*.
+12[0:Inp] || _L -> sensitive(CTS)*.    -> 12[0:Inp] || _L(U) -> sensitive(U,CTS)*.
+15[0:Inp] || _L -> public(CTS)*.    -> 15[0:Inp] || _L(U) -> public(U,CTS)*.
+18[0:Inp] || _L -> username(CTS)*.    -> 18[0:Inp] || _L(U) -> username(U,CTS)*.
+21[0:Inp] || _L -> password(CTS)*.    -> 21[0:Inp] || _L(U) -> password(U,CTS)*.
+24[0:Inp] || _L -> userId(CTS)*.    -> 24[0:Inp] || _L(U) -> userId(U,CTS)*.
+27[0:Inp] || _L -> displayName(CTS)*.    -> 27[0:Inp] || _L(U) -> displayName(U,CTS)*.
+30[0:Inp] || _L -> gender(CTS)*.    -> 30[0:Inp] || _L(U) -> gender(U,CTS)*.
+33[0:Inp] || _L -> age(CTS)*.    -> 33[0:Inp] || _L(U) -> age(U,CTS)*.
+36[0:Inp] || _L -> height(CTS)*.    -> 36[0:Inp] || _L(U) -> height(U,CTS)*.
+39[0:Inp] || _L -> weight(CTS)*.    -> 39[0:Inp] || _L(U) -> weight(U,CTS)*.
+42[0:Inp] || _L -> sugarLevel(CTS)*.    -> 42[0:Inp] || _L(U) -> sugarLevel(U,CTS)*.
+45[0:Inp] || _L -> blood(CTS)*.    -> 45[0:Inp] || _L(U) -> blood(U,CTS)*.
+48[0:Inp] || _L -> heartbeat(CTS)*.    -> 48[0:Inp] || _L(U) -> heartbeat(U,CTS)*.
+51[0:Inp] || _L -> activity(CTS)*.    -> 51[0:Inp] || _L(U) -> activity(U,CTS)*.
+54[0:Inp] || _L -> wellbeing(CTS)*.    -> 54[0:Inp] || _L(U) -> wellbeing(U,CTS)*.
+57[0:Inp] || _L -> country(CTS)*.    -> 57[0:Inp] || _L(U) -> country(U,CTS)*.
+63[0:Inp] || _L -> WCOemployee(CTS)*.    -> 63[0:Inp] || _L(U) -> WCOemployee(U,CTS)*.
+66[0:Inp] || _L -> WCOAdmin(CTS)*.    -> 66[0:Inp] || _L(U) -> WCOAdmin(U,CTS)*.
+69[0:Inp] || _L -> WDevice(CTS)*.    -> 69[0:Inp] || _L(U) -> WDevice(U,CTS)*.
+121[0:Inp] || _L -> Actor(customer)*.    -> 121[0:Inp] || _L(U) -> Actor(U,customer)*.
+122[0:Inp] || _L -> Actor(auditor)*.    -> 122[0:Inp] || _L(U) -> Actor(U,auditor)*.
+123[0:Inp] || _L -> Actor(PO)*.    -> 123[0:Inp] || _L(U) -> Actor(U,PO)*.
+125[0:Inp] || _L -> DataSubject(customer2)*.    -> 125[0:Inp] || _L(U) -> DataSubject(U,customer2)*.
+126[0:Inp] || _L -> DataController(wearableCo)*.    -> 126[0:Inp] || _L(U) -> DataController(U,wearableCo)*.
+127[0:Inp] || _L -> DataProcessor(cardioMon)*.    -> 127[0:Inp] || _L(U) -> DataProcessor(U,cardioMon)*.
+128[0:Inp] || _L -> DataProcessor(mapOnWeb)*.    -> 128[0:Inp] || _L(U) -> DataProcessor(U,mapOnWeb)*.
+129[0:Inp] || _L -> DataProcessor(dataSpacer)*.    -> 129[0:Inp] || _L(U) -> DataProcessor(U,dataSpacer)*.
+130[0:Inp] || _L -> data(U)*.    -> 130[0:Inp] || _L(U) -> data(U,V)*.
+131[0:Inp] || _L -> Customer(U)*.    -> 131[0:Inp] || _L(U) -> Customer(U,V)*.
+175[0:Inp] || data(skc0)* _L -> sensitive(skc1) public(skc1).    -> 175[0:Inp] || data(U,skc0)* _L(U) -> sensitive(U,skc1) public(U,skc1).
+176[0:Inp] || data(skc0) _L -> EQUAL(subject(skc1),kim)*.    -> 176[0:Inp] || data(U,skc0) _L(U) -> EQUAL(U,subject(skc1),kim)*.
+75[0:Inp] || read(U,V,W) _L -> Pread(U,V,W)*.    -> 75[0:Inp] || read(U,V,W,X) _L(U) -> Pread(U,V,W,X)*.
+76[0:Inp] || write(U,V,W) _L -> Pwrite(U,V,W)*.    -> 76[0:Inp] || write(U,V,W,X) _L(U) -> Pwrite(U,V,W,X)*.
+77[0:Inp] || audit(U,V,W) _L -> Paudit(U,V,W)*.    -> 77[0:Inp] || audit(U,V,W,X) _L(U) -> Paudit(U,V,W,X)*.
+78[0:Inp] || createCustomerProfile(U,V,W) _L -> PcreateCustomerProfile(U,V,W)*.    -> 78[0:Inp] || createCustomerProfile(U,V,W,X) _L(U) -> PcreateCustomerProfile(U,V,W,X)*.
+79[0:Inp] || createBusinessProfile(U,V,W) _L -> PcreateBusinessProfile(U,V,W)*.    -> 79[0:Inp] || createBusinessProfile(U,V,W,X) _L(U) -> PcreateBusinessProfile(U,V,W,X)*.
+80[0:Inp] || login(U,V,W) _L -> Plogin(U,V,W)*.    -> 80[0:Inp] || login(U,V,W,X) _L(U) -> Plogin(U,V,W,X)*.
+81[0:Inp] || add(U,V,W) _L -> Padd(U,V,W)*.    -> 81[0:Inp] || add(U,V,W,X) _L(U) -> Padd(U,V,W,X)*.
+82[0:Inp] || edit(U,V,W) _L -> Pedit(U,V,W)*.    -> 82[0:Inp] || edit(U,V,W,X) _L(U) -> Pedit(U,V,W,X)*.
+83[0:Inp] || update(U,V,W) _L -> Pupdate(U,V,W)*.    -> 83[0:Inp] || update(U,V,W,X) _L(U) -> Pupdate(U,V,W,X)*.
+84[0:Inp] || delete(U,V,W) _L -> Pdelete(U,V,W)*.    -> 84[0:Inp] || delete(U,V,W,X) _L(U) -> Pdelete(U,V,W,X)*.
+85[0:Inp] || submitRTI(U,V,W) _L -> PsubmitRTI(U,V,W)*.    -> 85[0:Inp] || submitRTI(U,V,W,X) _L(U) -> PsubmitRTI(U,V,W,X)*.
+86[0:Inp] || requestRTI(U,V,W) _L -> PrequestRTI(U,V,W)*.    -> 86[0:Inp] || requestRTI(U,V,W,X) _L(U) -> PrequestRTI(U,V,W,X)*.
+87[0:Inp] || updateWellbeing(U,V,W) _L -> PupdateWellbeing(U,V,W)*.    -> 87[0:Inp] || updateWellbeing(U,V,W,X) _L(U) -> PupdateWellbeing(U,V,W,X)*.
+88[0:Inp] || getWellbeingTraining(U,V,W) _L -> PgetWellbeingTraining(U,V,W)*.    -> 88[0:Inp] || getWellbeingTraining(U,V,W,X) _L(U) -> PgetWellbeingTraining(U,V,W,X)*.
+89[0:Inp] || getWellbeingScore(U,V,W) _L -> PgetWellbeingScore(U,V,W)*.    -> 89[0:Inp] || getWellbeingScore(U,V,W,X) _L(U) -> PgetWellbeingScore(U,V,W,X)*.
+90[0:Inp] || manageBusinessFormula(U,V,W) _L -> PmanageBusinessFormula(U,V,W)*.    -> 90[0:Inp] || manageBusinessFormula(U,V,W,X) _L(U) -> PmanageBusinessFormula(U,V,W,X)*.
+91[0:Inp] || updateThresholds(U,V,W) _L -> PupdateThresholds(U,V,W)*.    -> 91[0:Inp] || updateThresholds(U,V,W,X) _L(U) -> PupdateThresholds(U,V,W,X)*.
+92[0:Inp] || viewActiveUsers(U,V,W) _L -> PviewActiveUsers(U,V,W)*.    -> 92[0:Inp] || viewActiveUsers(U,V,W,X) _L(U) -> PviewActiveUsers(U,V,W,X)*.
+93[0:Inp] || requestStat(U,V,W) _L -> PrequestStat(U,V,W)*.    -> 93[0:Inp] || requestStat(U,V,W,X) _L(U) -> PrequestStat(U,V,W,X)*.
+94[0:Inp] || requestDataCompliance(U,V,W) _L -> PrequestDataCompliance(U,V,W)*.    -> 94[0:Inp] || requestDataCompliance(U,V,W,X) _L(U) -> PrequestDataCompliance(U,V,W,X)*.
+95[0:Inp] || requestDataPath(U,V,W) _L -> PrequestDataPath(U,V,W)*.    -> 95[0:Inp] || requestDataPath(U,V,W,X) _L(U) -> PrequestDataPath(U,V,W,X)*.
+96[0:Inp] || receiveAlerts(U,V,W) _L -> PreceiveAlerts(U,V,W)*.    -> 96[0:Inp] || receiveAlerts(U,V,W,X) _L(U) -> PreceiveAlerts(U,V,W,X)*.
+97[0:Inp] || receivePVA(U,V,W) _L -> PreceivePVA(U,V,W)*.    -> 97[0:Inp] || receivePVA(U,V,W,X) _L(U) -> PreceivePVA(U,V,W,X)*.
+98[0:Inp] || receiveTVA(U,V,W) _L -> PreceiveTVA(U,V,W)*.    -> 98[0:Inp] || receiveTVA(U,V,W,X) _L(U) -> PreceiveTVA(U,V,W,X)*.
+99[0:Inp] || receiveBreachNotif(U,V,W) _L -> PreceiveBreachNotif(U,V,W)*.    -> 99[0:Inp] || receiveBreachNotif(U,V,W,X) _L(U) -> PreceiveBreachNotif(U,V,W,X)*.
+132[0:Inp] || sensitive(U) EQUAL(subject(U),V)* _L -> Pread(V,cardioMon,U).    -> 132[0:Inp] || sensitive(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+133[0:Inp] || sensitive(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 133[0:Inp] || sensitive(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+134[0:Inp] || sensitive(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 134[0:Inp] || sensitive(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+135[0:Inp] || public(U) EQUAL(subject(U),V)* _L -> Pread(V,cardioMon,U).    -> 135[0:Inp] || public(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+136[0:Inp] || public(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 136[0:Inp] || public(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+137[0:Inp] || public(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 137[0:Inp] || public(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+138[0:Inp] || country(U) EQUAL(subject(U),V)* _L -> Pread(V,cardioMon,U).    -> 138[0:Inp] || country(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+139[0:Inp] || country(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 139[0:Inp] || country(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+140[0:Inp] || country(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 140[0:Inp] || country(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+141[0:Inp] || activity(U) EQUAL(subject(U),V)* _L -> Pread(V,cardioMon,U).    -> 141[0:Inp] || activity(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+142[0:Inp] || activity(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 142[0:Inp] || activity(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+143[0:Inp] || activity(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 143[0:Inp] || activity(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+144[0:Inp] || heartbeat(U) EQUAL(subject(U),V)* _L -> Pread(V,cardioMon,U).    -> 144[0:Inp] || heartbeat(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+145[0:Inp] || heartbeat(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 145[0:Inp] || heartbeat(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+146[0:Inp] || heartbeat(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 146[0:Inp] || heartbeat(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+147[0:Inp] || sugarLevel(U) EQUAL(subject(U),V)* _L -> Pread(V,cardioMon,U).    -> 147[0:Inp] || sugarLevel(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+148[0:Inp] || sugarLevel(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 148[0:Inp] || sugarLevel(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+149[0:Inp] || sugarLevel(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 149[0:Inp] || sugarLevel(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+150[0:Inp] || weight(U) EQUAL(subject(U),V)* _L -> Pread(V,cardioMon,U).    -> 150[0:Inp] || weight(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+151[0:Inp] || weight(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 151[0:Inp] || weight(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+152[0:Inp] || weight(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 152[0:Inp] || weight(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+153[0:Inp] || height(U) EQUAL(subject(U),V)* _L -> Pread(V,cardioMon,U).    -> 153[0:Inp] || height(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+154[0:Inp] || height(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 154[0:Inp] || height(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+155[0:Inp] || height(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 155[0:Inp] || height(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+156[0:Inp] || age(U) EQUAL(subject(U),V)* _L -> Pread(V,cardioMon,U).    -> 156[0:Inp] || age(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+157[0:Inp] || age(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 157[0:Inp] || age(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+158[0:Inp] || age(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 158[0:Inp] || age(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+159[0:Inp] || gender(U) EQUAL(subject(U),V)* _L -> Pread(V,cardioMon,U).    -> 159[0:Inp] || gender(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+160[0:Inp] || gender(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 160[0:Inp] || gender(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+161[0:Inp] || gender(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 161[0:Inp] || gender(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+162[0:Inp] || displayName(U) EQUAL(subject(U),V)* _L -> Pread(V,cardioMon,U).    -> 162[0:Inp] || displayName(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+163[0:Inp] || displayName(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 163[0:Inp] || displayName(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+164[0:Inp] || displayName(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 164[0:Inp] || displayName(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+165[0:Inp] || userId(U) EQUAL(subject(U),V)* _L -> Pread(V,cardioMon,U).    -> 165[0:Inp] || userId(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+166[0:Inp] || userId(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 166[0:Inp] || userId(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+167[0:Inp] || userId(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 167[0:Inp] || userId(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+168[0:Inp] || password(U) EQUAL(subject(U),V)* _L -> Pread(V,cardioMon,U).    -> 168[0:Inp] || password(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+169[0:Inp] || password(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 169[0:Inp] || password(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+170[0:Inp] || password(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 170[0:Inp] || password(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+172[0:Inp] || username(U) EQUAL(subject(U),V)* _L -> Pupdate(V,cardioMon,U).    -> 172[0:Inp] || username(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+173[0:Inp] || username(U) EQUAL(subject(U),V)* _L -> Pdelete(V,cardioMon,U).    -> 173[0:Inp] || username(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+171[0:Inp] || Pread(U,cardioMon,V) username(V) EQUAL(subject(V),U)* _L -> .    -> 171[0:Inp] || Pread(U,V,cardioMon,W) username(U,W) EQUAL(U,subject(W),V)* _L(U) -> .
+174[0:Inp] || Pdelete(kim,cardioMon,skc1)* Pupdate(kim,cardioMon,skc1) Pread(kim,cardioMon,skc1) data(skc0) _L -> .    -> 174[0:Inp] || Pdelete(U,kim,cardioMon,skc1)* Pupdate(U,kim,cardioMon,skc1) Pread(U,kim,cardioMon,skc1) data(U,skc0) _L(U) -> .
+177[0:Inp] || _P -> _waitfor_L _L*.    -> 177[0:Inp] || _P(U) -> _waitfor_L(U) _L(U)*.
+180[0:Inp] || _U -> _L* _waitfor_L.    -> 180[0:Inp] || _U(U) -> _L(U)* _waitfor_L(U).
 ------------------TEMPORAL-LOGIC-TRANSLATION-STOP------------------------
-Non-Skolem constants contained in the problem: p, customer, cardioMon, temp_zero, CTS
+Non-Skolem constants contained in the problem: kim, CTS, customer, auditor, PO, customer2, wearableCo, cardioMon, mapOnWeb, dataSpacer, temp_zero
 -------------------------CONSTANT-FLOODING START-------------------------
 -------------------------CONSTANT-FLOODING STOP--------------------------
 -------------------------CONSTANT-FLOODING START-------------------------
 -------------------------CONSTANT-FLOODING STOP--------------------------
-Weight of the temporal successor function set to 1.
+Weight of the atom (_waitfor_L U) is 2.
+Weight of the temporal successor function set to 3.
 Step clauses:
+113[0:Inp] || s^not-_waitfor_L_0 _waitfor_L(temp_succ(U))* -> .
+2[0:Inp] || _waitfor_L(U) -> _U(temp_succ(U))*.
 --------------------------TSPASS-START-----------------------------
 Input Problem:
-1[0:Inp] ||  -> data(temp_zero,CTS)*.
-2[0:Inp] ||  -> Actor(temp_zero,CTS)*.
-3[0:Inp] ||  -> DwDataController(temp_zero,CTS)*.
-4[0:Inp] ||  -> Auditor(temp_zero,CTS)*.
-5[0:Inp] ||  -> CloudProvider(temp_zero,CTS)*.
-6[0:Inp] ||  -> CloudCustomer(temp_zero,CTS)*.
-7[0:Inp] ||  -> EndUser(temp_zero,CTS)*.
-8[0:Inp] ||  -> sensitive(temp_zero,CTS)*.
-9[0:Inp] ||  -> public(temp_zero,CTS)*.
-10[0:Inp] ||  -> username(temp_zero,CTS)*.
-11[0:Inp] ||  -> password(temp_zero,CTS)*.
-12[0:Inp] ||  -> userId(temp_zero,CTS)*.
-13[0:Inp] ||  -> displayName(temp_zero,CTS)*.
-14[0:Inp] ||  -> gender(temp_zero,CTS)*.
-15[0:Inp] ||  -> age(temp_zero,CTS)*.
-16[0:Inp] ||  -> height(temp_zero,CTS)*.
-17[0:Inp] ||  -> weight(temp_zero,CTS)*.
-18[0:Inp] ||  -> sugarLevel(temp_zero,CTS)*.
-19[0:Inp] ||  -> blood(temp_zero,CTS)*.
-20[0:Inp] ||  -> heartbeat(temp_zero,CTS)*.
-21[0:Inp] ||  -> activity(temp_zero,CTS)*.
-22[0:Inp] ||  -> wellbeing(temp_zero,CTS)*.
-23[0:Inp] ||  -> country(temp_zero,CTS)*.
-24[0:Inp] ||  -> DataSubject(temp_zero,CTS)*.
-25[0:Inp] ||  -> DataController(temp_zero,CTS)*.
-26[0:Inp] ||  -> DataProcessor(temp_zero,CTS)*.
-27[0:Inp] ||  -> WCOemployee(temp_zero,CTS)*.
-28[0:Inp] ||  -> WCOAdmin(temp_zero,CTS)*.
-29[0:Inp] ||  -> WDevice(temp_zero,CTS)*.
-30[0:Inp] ||  -> Customer(temp_zero,CTS)*.
-31[0:Inp] ||  -> userId(temp_zero,skc0)*.
-32[0:Inp] ||  -> EQUAL(temp_zero,subject(skc0),U)*.
-33[0:Inp] || Pread(temp_zero,U,cardioMon,skc0)* -> .
-34[0:Inp] || heartbeat(temp_zero,U)* -> SkP0(temp_zero,U).
-35[0:Inp] || sugarLevel(temp_zero,U)* -> SkP0(temp_zero,U).
-36[0:Inp] || blood(temp_zero,U)* -> SkP0(temp_zero,U).
-37[0:Inp] || SkP0(temp_zero,U) -> PsubmitRTI(temp_zero,customer,cardioMon,U)*.
-38[0:Inp] || read(temp_zero,U,V,W) -> Pread(temp_zero,U,V,W)*.
-39[0:Inp] || write(temp_zero,U,V,W) -> Pwrite(temp_zero,U,V,W)*.
-40[0:Inp] || audit(temp_zero,U,V,W) -> Paudit(temp_zero,U,V,W)*.
-41[0:Inp] || receiveTVA(temp_zero,U,V,W) -> PreceiveTVA(temp_zero,U,V,W)*.
-42[0:Inp] || createCustomerProfile(temp_zero,U,V,W) -> PcreateCustomerProfile(temp_zero,U,V,W)*.
-43[0:Inp] || login(temp_zero,U,V,W) -> Plogin(temp_zero,U,V,W)*.
-44[0:Inp] || add(temp_zero,U,V,W) -> Padd(temp_zero,U,V,W)*.
-45[0:Inp] || edit(temp_zero,U,V,W) -> Pedit(temp_zero,U,V,W)*.
-46[0:Inp] || update(temp_zero,U,V,W) -> Pupdate(temp_zero,U,V,W)*.
-47[0:Inp] || delete(temp_zero,U,V,W) -> Pdelete(temp_zero,U,V,W)*.
-48[0:Inp] || submitRTI(temp_zero,U,V,W) -> PsubmitRTI(temp_zero,U,V,W)*.
-49[0:Inp] || requestRTI(temp_zero,U,V,W) -> PrequestRTI(temp_zero,U,V,W)*.
-50[0:Inp] || updateWellbeing(temp_zero,U,V,W) -> PupdateWellbeing(temp_zero,U,V,W)*.
-51[0:Inp] || getWellbeingTraining(temp_zero,U,V,W) -> PgetWellbeingTraining(temp_zero,U,V,W)*.
-52[0:Inp] || getWellbeingScore(temp_zero,U,V,W) -> PgetWellbeingScore(temp_zero,U,V,W)*.
-53[0:Inp] || requestStat(temp_zero,U,V,W) -> PrequestStat(temp_zero,U,V,W)*.
-54[0:Inp] || requestDataPath(temp_zero,U,V,W) -> PrequestDataPath(temp_zero,U,V,W)*.
-55[0:Inp] || receiveAlerts(temp_zero,U,V,W) -> PreceiveAlerts(temp_zero,U,V,W)*.
-56[0:Inp] || receivePVA(temp_zero,U,V,W) -> PreceivePVA(temp_zero,U,V,W)*.
-57[0:Inp] || receiveBreachNotif(temp_zero,U,V,W) -> PreceiveBreachNotif(temp_zero,U,V,W)*.
-58[0:Inp] || createBusinessProfile(temp_zero,U,V,W) -> PcreateBusinessProfile(temp_zero,U,V,W)*.
-59[0:Inp] || manageBusinessFormula(temp_zero,U,V,W) -> PmanageBusinessFormula(temp_zero,U,V,W)*.
-60[0:Inp] || updateThresholds(temp_zero,U,V,W) -> PupdateThresholds(temp_zero,U,V,W)*.
-61[0:Inp] || viewActiveUsers(temp_zero,U,V,W) -> PviewActiveUsers(temp_zero,U,V,W)*.
-62[0:Inp] || requestDataCompliance(temp_zero,U,V,W) -> PrequestDataCompliance(temp_zero,U,V,W)*.
-63[0:Inp] || SkP0(temp_zero,U) PsubmitRTI(temp_zero,V,cardioMon,U)* -> EQUAL(temp_zero,V,customer).
-64[0:Inp] || country(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-65[0:Inp] || country(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-66[0:Inp] || country(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-67[0:Inp] || activity(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-68[0:Inp] || activity(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-69[0:Inp] || activity(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-70[0:Inp] || heartbeat(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-71[0:Inp] || heartbeat(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-72[0:Inp] || heartbeat(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-73[0:Inp] || sugarLevel(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-74[0:Inp] || sugarLevel(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-75[0:Inp] || sugarLevel(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-76[0:Inp] || weight(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-77[0:Inp] || weight(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-78[0:Inp] || weight(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-79[0:Inp] || height(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-80[0:Inp] || height(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-81[0:Inp] || height(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-82[0:Inp] || age(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-83[0:Inp] || age(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-84[0:Inp] || age(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-85[0:Inp] || gender(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-86[0:Inp] || gender(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-87[0:Inp] || gender(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-88[0:Inp] || displayName(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-89[0:Inp] || displayName(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-90[0:Inp] || displayName(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-91[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-92[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-93[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-94[0:Inp] || password(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-95[0:Inp] || password(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-96[0:Inp] || password(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-97[0:Inp] || username(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-98[0:Inp] || username(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-99[0:Inp] || username(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-100[0:Inp] || Pread(temp_zero,p,cardioMon,U) username(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> .
- This is a first-order Horn problem without equality.
- Axiom clauses: 100 Conjecture clauses: 0
+113[0:Inp] || s^not-_waitfor_L_0 _waitfor_L(temp_succ(U))* -> .
+1[0:Inp] ||  -> _P(temp_zero)*.
+2[0:Inp] || _waitfor_L(U) -> _U(temp_succ(U))*.
+3[0:Inp] || _L(U) -> Customer(U,V)*.
+4[0:Inp] || _L(U) -> data(U,V)*.
+5[0:Inp] || _L(U) -> DataProcessor(U,dataSpacer)*.
+6[0:Inp] || _L(U) -> DataProcessor(U,mapOnWeb)*.
+7[0:Inp] || _L(U) -> DataProcessor(U,cardioMon)*.
+8[0:Inp] || _L(U) -> DataController(U,wearableCo)*.
+9[0:Inp] || _L(U) -> DataSubject(U,customer2)*.
+10[0:Inp] || _L(U) -> Actor(U,PO)*.
+11[0:Inp] || _L(U) -> Actor(U,auditor)*.
+12[0:Inp] || _L(U) -> Actor(U,customer)*.
+13[0:Inp] || _L(U) -> WDevice(U,CTS)*.
+14[0:Inp] || _L(U) -> WCOAdmin(U,CTS)*.
+15[0:Inp] || _L(U) -> WCOemployee(U,CTS)*.
+16[0:Inp] || _L(U) -> country(U,CTS)*.
+17[0:Inp] || _L(U) -> wellbeing(U,CTS)*.
+18[0:Inp] || _L(U) -> activity(U,CTS)*.
+19[0:Inp] || _L(U) -> heartbeat(U,CTS)*.
+20[0:Inp] || _L(U) -> blood(U,CTS)*.
+21[0:Inp] || _L(U) -> sugarLevel(U,CTS)*.
+22[0:Inp] || _L(U) -> weight(U,CTS)*.
+23[0:Inp] || _L(U) -> height(U,CTS)*.
+24[0:Inp] || _L(U) -> age(U,CTS)*.
+25[0:Inp] || _L(U) -> gender(U,CTS)*.
+26[0:Inp] || _L(U) -> displayName(U,CTS)*.
+27[0:Inp] || _L(U) -> userId(U,CTS)*.
+28[0:Inp] || _L(U) -> password(U,CTS)*.
+29[0:Inp] || _L(U) -> username(U,CTS)*.
+30[0:Inp] || _L(U) -> public(U,CTS)*.
+31[0:Inp] || _L(U) -> sensitive(U,CTS)*.
+32[0:Inp] || _L(U) -> EndUser(U,CTS)*.
+33[0:Inp] || _L(U) -> CloudCustomer(U,CTS)*.
+34[0:Inp] || _L(U) -> CloudProvider(U,CTS)*.
+35[0:Inp] || _L(U) -> Auditor(U,CTS)*.
+36[0:Inp] || _L(U) -> DwDataController(U,CTS)*.
+37[0:Inp] || _L(U) -> DataProcessor(U,CTS)*.
+38[0:Inp] || _L(U) -> DataController(U,CTS)*.
+39[0:Inp] || _L(U) -> DataSubject(U,CTS)*.
+40[0:Inp] || _L(U) -> Actor(U,CTS)*.
+41[0:Inp] || _U(U) -> _L(U)* _waitfor_L(U).
+42[0:Inp] || _P(U) -> _waitfor_L(U) _L(U)*.
+43[0:Inp] || data(U,skc0) _L(U) -> EQUAL(U,subject(skc1),kim)*.
+44[0:Inp] || data(U,skc0)* _L(U) -> sensitive(U,skc1) public(U,skc1).
+45[0:Inp] || receiveBreachNotif(U,V,W,X) _L(U) -> PreceiveBreachNotif(U,V,W,X)*.
+46[0:Inp] || receiveTVA(U,V,W,X) _L(U) -> PreceiveTVA(U,V,W,X)*.
+47[0:Inp] || receivePVA(U,V,W,X) _L(U) -> PreceivePVA(U,V,W,X)*.
+48[0:Inp] || receiveAlerts(U,V,W,X) _L(U) -> PreceiveAlerts(U,V,W,X)*.
+49[0:Inp] || requestDataPath(U,V,W,X) _L(U) -> PrequestDataPath(U,V,W,X)*.
+50[0:Inp] || requestDataCompliance(U,V,W,X) _L(U) -> PrequestDataCompliance(U,V,W,X)*.
+51[0:Inp] || requestStat(U,V,W,X) _L(U) -> PrequestStat(U,V,W,X)*.
+52[0:Inp] || viewActiveUsers(U,V,W,X) _L(U) -> PviewActiveUsers(U,V,W,X)*.
+53[0:Inp] || updateThresholds(U,V,W,X) _L(U) -> PupdateThresholds(U,V,W,X)*.
+54[0:Inp] || manageBusinessFormula(U,V,W,X) _L(U) -> PmanageBusinessFormula(U,V,W,X)*.
+55[0:Inp] || getWellbeingScore(U,V,W,X) _L(U) -> PgetWellbeingScore(U,V,W,X)*.
+56[0:Inp] || getWellbeingTraining(U,V,W,X) _L(U) -> PgetWellbeingTraining(U,V,W,X)*.
+57[0:Inp] || updateWellbeing(U,V,W,X) _L(U) -> PupdateWellbeing(U,V,W,X)*.
+58[0:Inp] || requestRTI(U,V,W,X) _L(U) -> PrequestRTI(U,V,W,X)*.
+59[0:Inp] || submitRTI(U,V,W,X) _L(U) -> PsubmitRTI(U,V,W,X)*.
+60[0:Inp] || delete(U,V,W,X) _L(U) -> Pdelete(U,V,W,X)*.
+61[0:Inp] || update(U,V,W,X) _L(U) -> Pupdate(U,V,W,X)*.
+62[0:Inp] || edit(U,V,W,X) _L(U) -> Pedit(U,V,W,X)*.
+63[0:Inp] || add(U,V,W,X) _L(U) -> Padd(U,V,W,X)*.
+64[0:Inp] || login(U,V,W,X) _L(U) -> Plogin(U,V,W,X)*.
+65[0:Inp] || createBusinessProfile(U,V,W,X) _L(U) -> PcreateBusinessProfile(U,V,W,X)*.
+66[0:Inp] || createCustomerProfile(U,V,W,X) _L(U) -> PcreateCustomerProfile(U,V,W,X)*.
+67[0:Inp] || audit(U,V,W,X) _L(U) -> Paudit(U,V,W,X)*.
+68[0:Inp] || write(U,V,W,X) _L(U) -> Pwrite(U,V,W,X)*.
+69[0:Inp] || read(U,V,W,X) _L(U) -> Pread(U,V,W,X)*.
+70[0:Inp] || username(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+71[0:Inp] || username(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+72[0:Inp] || password(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+73[0:Inp] || password(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+74[0:Inp] || password(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+75[0:Inp] || userId(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+76[0:Inp] || userId(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+77[0:Inp] || userId(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+78[0:Inp] || displayName(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+79[0:Inp] || displayName(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+80[0:Inp] || displayName(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+81[0:Inp] || gender(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+82[0:Inp] || gender(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+83[0:Inp] || gender(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+84[0:Inp] || age(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+85[0:Inp] || age(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+86[0:Inp] || age(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+87[0:Inp] || height(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+88[0:Inp] || height(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+89[0:Inp] || height(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+90[0:Inp] || weight(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+91[0:Inp] || weight(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+92[0:Inp] || weight(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+93[0:Inp] || sugarLevel(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+94[0:Inp] || sugarLevel(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+95[0:Inp] || sugarLevel(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+96[0:Inp] || heartbeat(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+97[0:Inp] || heartbeat(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+98[0:Inp] || heartbeat(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+99[0:Inp] || activity(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+100[0:Inp] || activity(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+101[0:Inp] || activity(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+102[0:Inp] || country(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+103[0:Inp] || country(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+104[0:Inp] || country(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+105[0:Inp] || public(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+106[0:Inp] || public(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+107[0:Inp] || public(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+108[0:Inp] || sensitive(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pdelete(U,W,cardioMon,V).
+109[0:Inp] || sensitive(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pupdate(U,W,cardioMon,V).
+110[0:Inp] || sensitive(U,V) EQUAL(U,subject(V),W)* _L(U) -> Pread(U,W,cardioMon,V).
+111[0:Inp] || Pread(U,V,cardioMon,W) username(U,W) EQUAL(U,subject(W),V)* _L(U) -> .
+112[0:Inp] || Pdelete(U,kim,cardioMon,skc1)* Pupdate(U,kim,cardioMon,skc1) Pread(U,kim,cardioMon,skc1) data(U,skc0) _L(U) -> .
+ This is a first-order Non-Horn problem without equality.
+ This is a problem that contains sort information.
+ The following monadic predicates have finite extensions: _P.
+ Axiom clauses: 113 Conjecture clauses: 0
  Inferences: IORe=1 IOFc=1 
  Reductions: RObv=1 RTaut=1 RFSub=1 RBSub=1 
  Extras    : No Input Saturation, No Selection, No Splitting, Full Reduction,  Ratio: 5, FuncWeight: 1, VarWeight: 1
- Precedence: div > id > c^l > temp_succ > temp_shield > temp_zero > CTS > cardioMon > customer > p > subject > Actor > Auditor > CloudCustomer > CloudProvider > Customer > DataController > DataProcessor > DataSubject > DwDataController > EQUAL > EndUser > Padd > Paudit > PcreateBusinessProfile > PcreateCustomerProfile > Pdelete > Pedit > PgetWellbeingScore > PgetWellbeingTraining > Plogin > PmanageBusinessFormula > Pread > PreceiveAlerts > PreceiveBreachNotif > PreceivePVA > PreceiveTVA > PrequestDataCompliance > PrequestDataPath > PrequestRTI > PrequestStat > PsubmitRTI > Pupdate > PupdateThresholds > PupdateWellbeing > PviewActiveUsers > Pwrite > WCOAdmin > WCOemployee > WDevice > activity > add > age > audit > blood > country > createBusinessProfile > createCustomerProfile > data > delete > displayName > edit > gender > getWellbeingScore > getWellbeingTraining > heartbeat > height > login > manageBusinessFormula > password > public > read > receiveAlerts > receiveBreachNotif > receivePVA > receiveTVA > requestDataCompliance > requestDataPath > requestRTI > requestStat > sensitive > submitRTI > sugarLevel > update > updateThresholds > updateWellbeing > userId > username > viewActiveUsers > weight > wellbeing > write > SkP0 > skc0
+ Precedence: div > id > c^l > temp_succ > temp_shield > temp_zero > CTS > PO > auditor > cardioMon > customer > customer2 > dataSpacer > kim > mapOnWeb > subject > wearableCo > Actor > Auditor > CloudCustomer > CloudProvider > Customer > DataController > DataProcessor > DataSubject > DwDataController > EQUAL > EndUser > Padd > Paudit > PcreateBusinessProfile > PcreateCustomerProfile > Pdelete > Pedit > PgetWellbeingScore > PgetWellbeingTraining > Plogin > PmanageBusinessFormula > Pread > PreceiveAlerts > PreceiveBreachNotif > PreceivePVA > PreceiveTVA > PrequestDataCompliance > PrequestDataPath > PrequestRTI > PrequestStat > PsubmitRTI > Pupdate > PupdateThresholds > PupdateWellbeing > PviewActiveUsers > Pwrite > WCOAdmin > WCOemployee > WDevice > _L > _P > _U > _waitfor_L > activity > add > age > audit > blood > country > createBusinessProfile > createCustomerProfile > data > delete > displayName > edit > gender > getWellbeingScore > getWellbeingTraining > heartbeat > height > login > manageBusinessFormula > password > public > read > receiveAlerts > receiveBreachNotif > receivePVA > receiveTVA > requestDataCompliance > requestDataPath > requestRTI > requestStat > sensitive > submitRTI > sugarLevel > update > updateThresholds > updateWellbeing > userId > username > viewActiveUsers > weight > wellbeing > write > skc0 > skc1 > s^not-_waitfor_L_0
  Ordering  : KBO
 Processed Problem:
 
 Worked Off Clauses:
 
 Usable Clauses:
-30[0:Inp] ||  -> Customer(temp_zero,CTS)*.
-29[0:Inp] ||  -> WDevice(temp_zero,CTS)*.
-28[0:Inp] ||  -> WCOAdmin(temp_zero,CTS)*.
-27[0:Inp] ||  -> WCOemployee(temp_zero,CTS)*.
-26[0:Inp] ||  -> DataProcessor(temp_zero,CTS)*.
-25[0:Inp] ||  -> DataController(temp_zero,CTS)*.
-24[0:Inp] ||  -> DataSubject(temp_zero,CTS)*.
-22[0:Inp] ||  -> wellbeing(temp_zero,CTS)*.
-9[0:Inp] ||  -> public(temp_zero,CTS)*.
-8[0:Inp] ||  -> sensitive(temp_zero,CTS)*.
-7[0:Inp] ||  -> EndUser(temp_zero,CTS)*.
-6[0:Inp] ||  -> CloudCustomer(temp_zero,CTS)*.
-5[0:Inp] ||  -> CloudProvider(temp_zero,CTS)*.
-4[0:Inp] ||  -> Auditor(temp_zero,CTS)*.
-3[0:Inp] ||  -> DwDataController(temp_zero,CTS)*.
-2[0:Inp] ||  -> Actor(temp_zero,CTS)*.
-1[0:Inp] ||  -> data(temp_zero,CTS)*.
-19[0:Inp] ||  -> blood(temp_zero,CTS)*.
-23[0:Inp] ||  -> country(temp_zero,CTS)*.
-21[0:Inp] ||  -> activity(temp_zero,CTS)*.
-17[0:Inp] ||  -> weight(temp_zero,CTS)*.
-16[0:Inp] ||  -> height(temp_zero,CTS)*.
-15[0:Inp] ||  -> age(temp_zero,CTS)*.
-14[0:Inp] ||  -> gender(temp_zero,CTS)*.
-13[0:Inp] ||  -> displayName(temp_zero,CTS)*.
-11[0:Inp] ||  -> password(temp_zero,CTS)*.
-31[0:Inp] ||  -> userId(temp_zero,skc0)*.
-20[0:Inp] ||  -> heartbeat(temp_zero,CTS)*.
-18[0:Inp] ||  -> sugarLevel(temp_zero,CTS)*.
-12[0:Inp] ||  -> userId(temp_zero,CTS)*.
-10[0:Inp] ||  -> username(temp_zero,CTS)*.
-32[0:Inp] ||  -> EQUAL(temp_zero,subject(skc0),U)*.
-33[0:Inp] || Pread(temp_zero,U,cardioMon,skc0)* -> .
-36[0:Inp] || blood(temp_zero,U)* -> SkP0(temp_zero,U).
-35[0:Inp] || sugarLevel(temp_zero,U)* -> SkP0(temp_zero,U).
-34[0:Inp] || heartbeat(temp_zero,U)* -> SkP0(temp_zero,U).
-37[0:Inp] || SkP0(temp_zero,U) -> PsubmitRTI(temp_zero,customer,cardioMon,U)*.
-62[0:Inp] || requestDataCompliance(temp_zero,U,V,W) -> PrequestDataCompliance(temp_zero,U,V,W)*.
-61[0:Inp] || viewActiveUsers(temp_zero,U,V,W) -> PviewActiveUsers(temp_zero,U,V,W)*.
-60[0:Inp] || updateThresholds(temp_zero,U,V,W) -> PupdateThresholds(temp_zero,U,V,W)*.
-59[0:Inp] || manageBusinessFormula(temp_zero,U,V,W) -> PmanageBusinessFormula(temp_zero,U,V,W)*.
-58[0:Inp] || createBusinessProfile(temp_zero,U,V,W) -> PcreateBusinessProfile(temp_zero,U,V,W)*.
-57[0:Inp] || receiveBreachNotif(temp_zero,U,V,W) -> PreceiveBreachNotif(temp_zero,U,V,W)*.
-56[0:Inp] || receivePVA(temp_zero,U,V,W) -> PreceivePVA(temp_zero,U,V,W)*.
-55[0:Inp] || receiveAlerts(temp_zero,U,V,W) -> PreceiveAlerts(temp_zero,U,V,W)*.
-54[0:Inp] || requestDataPath(temp_zero,U,V,W) -> PrequestDataPath(temp_zero,U,V,W)*.
-53[0:Inp] || requestStat(temp_zero,U,V,W) -> PrequestStat(temp_zero,U,V,W)*.
-52[0:Inp] || getWellbeingScore(temp_zero,U,V,W) -> PgetWellbeingScore(temp_zero,U,V,W)*.
-51[0:Inp] || getWellbeingTraining(temp_zero,U,V,W) -> PgetWellbeingTraining(temp_zero,U,V,W)*.
-50[0:Inp] || updateWellbeing(temp_zero,U,V,W) -> PupdateWellbeing(temp_zero,U,V,W)*.
-49[0:Inp] || requestRTI(temp_zero,U,V,W) -> PrequestRTI(temp_zero,U,V,W)*.
-45[0:Inp] || edit(temp_zero,U,V,W) -> Pedit(temp_zero,U,V,W)*.
-44[0:Inp] || add(temp_zero,U,V,W) -> Padd(temp_zero,U,V,W)*.
-43[0:Inp] || login(temp_zero,U,V,W) -> Plogin(temp_zero,U,V,W)*.
-42[0:Inp] || createCustomerProfile(temp_zero,U,V,W) -> PcreateCustomerProfile(temp_zero,U,V,W)*.
-41[0:Inp] || receiveTVA(temp_zero,U,V,W) -> PreceiveTVA(temp_zero,U,V,W)*.
-40[0:Inp] || audit(temp_zero,U,V,W) -> Paudit(temp_zero,U,V,W)*.
-39[0:Inp] || write(temp_zero,U,V,W) -> Pwrite(temp_zero,U,V,W)*.
-48[0:Inp] || submitRTI(temp_zero,U,V,W) -> PsubmitRTI(temp_zero,U,V,W)*.
-47[0:Inp] || delete(temp_zero,U,V,W) -> Pdelete(temp_zero,U,V,W)*.
-46[0:Inp] || update(temp_zero,U,V,W) -> Pupdate(temp_zero,U,V,W)*.
-38[0:Inp] || read(temp_zero,U,V,W) -> Pread(temp_zero,U,V,W)*.
-63[0:Inp] || SkP0(temp_zero,U) PsubmitRTI(temp_zero,V,cardioMon,U)* -> EQUAL(temp_zero,V,customer).
-96[0:Inp] || password(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-95[0:Inp] || password(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-90[0:Inp] || displayName(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-89[0:Inp] || displayName(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-87[0:Inp] || gender(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-86[0:Inp] || gender(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-84[0:Inp] || age(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-83[0:Inp] || age(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-81[0:Inp] || height(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-80[0:Inp] || height(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-78[0:Inp] || weight(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-77[0:Inp] || weight(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-69[0:Inp] || activity(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-68[0:Inp] || activity(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-66[0:Inp] || country(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-65[0:Inp] || country(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-99[0:Inp] || username(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-98[0:Inp] || username(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-93[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-92[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-75[0:Inp] || sugarLevel(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-74[0:Inp] || sugarLevel(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-72[0:Inp] || heartbeat(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pdelete(temp_zero,V,cardioMon,U).
-71[0:Inp] || heartbeat(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pupdate(temp_zero,V,cardioMon,U).
-94[0:Inp] || password(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-88[0:Inp] || displayName(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-85[0:Inp] || gender(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-82[0:Inp] || age(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-79[0:Inp] || height(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-76[0:Inp] || weight(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-67[0:Inp] || activity(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-64[0:Inp] || country(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-97[0:Inp] || username(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-91[0:Inp] || userId(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-73[0:Inp] || sugarLevel(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-70[0:Inp] || heartbeat(temp_zero,U) EQUAL(temp_zero,subject(U),V)* -> Pread(temp_zero,V,cardioMon,U).
-100[0:Inp] || username(temp_zero,U) EQUAL(temp_zero,subject(U),V)* Pread(temp_zero,p,cardioMon,U) -> .
+1[0:Inp] ||  -> _P(temp_zero)*.
+36[0:Inp] || _L(U) -> DwDataController(U,CTS)*.
+35[0:Inp] || _L(U) -> Auditor(U,CTS)*.
+34[0:Inp] || _L(U) -> CloudProvider(U,CTS)*.
+33[0:Inp] || _L(U) -> CloudCustomer(U,CTS)*.
+32[0:Inp] || _L(U) -> EndUser(U,CTS)*.
+20[0:Inp] || _L(U) -> blood(U,CTS)*.
+17[0:Inp] || _L(U) -> wellbeing(U,CTS)*.
+15[0:Inp] || _L(U) -> WCOemployee(U,CTS)*.
+14[0:Inp] || _L(U) -> WCOAdmin(U,CTS)*.
+13[0:Inp] || _L(U) -> WDevice(U,CTS)*.
+39[0:Inp] || _L(U) -> DataSubject(U,CTS)*.
+38[0:Inp] || _L(U) -> DataController(U,CTS)*.
+9[0:Inp] || _L(U) -> DataSubject(U,customer2)*.
+8[0:Inp] || _L(U) -> DataController(U,wearableCo)*.
+40[0:Inp] || _L(U) -> Actor(U,CTS)*.
+37[0:Inp] || _L(U) -> DataProcessor(U,CTS)*.
+29[0:Inp] || _L(U) -> username(U,CTS)*.
+28[0:Inp] || _L(U) -> password(U,CTS)*.
+27[0:Inp] || _L(U) -> userId(U,CTS)*.
+26[0:Inp] || _L(U) -> displayName(U,CTS)*.
+25[0:Inp] || _L(U) -> gender(U,CTS)*.
+24[0:Inp] || _L(U) -> age(U,CTS)*.
+23[0:Inp] || _L(U) -> height(U,CTS)*.
+22[0:Inp] || _L(U) -> weight(U,CTS)*.
+21[0:Inp] || _L(U) -> sugarLevel(U,CTS)*.
+19[0:Inp] || _L(U) -> heartbeat(U,CTS)*.
+18[0:Inp] || _L(U) -> activity(U,CTS)*.
+16[0:Inp] || _L(U) -> country(U,CTS)*.
+12[0:Inp] || _L(U) -> Actor(U,customer)*.
+11[0:Inp] || _L(U) -> Actor(U,auditor)*.
+10[0:Inp] || _L(U) -> Actor(U,PO)*.
+7[0:Inp] || _L(U) -> DataProcessor(U,cardioMon)*.
+6[0:Inp] || _L(U) -> DataProcessor(U,mapOnWeb)*.
+5[0:Inp] || _L(U) -> DataProcessor(U,dataSpacer)*.
+31[0:Inp] || _L(U) -> sensitive(U,CTS)*.
+30[0:Inp] || _L(U) -> public(U,CTS)*.
+2[0:Inp] || _waitfor_L(U) -> _U(temp_succ(U))*.
+113[0:Inp] || s^not-_waitfor_L_0 _waitfor_L(temp_succ(U))* -> .
+3[0:Inp] || _L(U) -> Customer(U,V)*.
+4[0:Inp] || _L(U) -> data(U,V)*.
+42[0:Inp] || _P(U) -> _L(U)* _waitfor_L(U).
+41[0:Inp] || _U(U) -> _waitfor_L(U) _L(U)*.
+43[0:Inp] || _L(U) data(U,skc0) -> EQUAL(U,subject(skc1),kim)*.
+44[0:Inp] || _L(U) data(U,skc0)* -> public(U,skc1) sensitive(U,skc1).
+68[0:Inp] || _L(U) write(U,V,W,X) -> Pwrite(U,V,W,X)*.
+67[0:Inp] || _L(U) audit(U,V,W,X) -> Paudit(U,V,W,X)*.
+66[0:Inp] || _L(U) createCustomerProfile(U,V,W,X) -> PcreateCustomerProfile(U,V,W,X)*.
+65[0:Inp] || _L(U) createBusinessProfile(U,V,W,X) -> PcreateBusinessProfile(U,V,W,X)*.
+64[0:Inp] || _L(U) login(U,V,W,X) -> Plogin(U,V,W,X)*.
+63[0:Inp] || _L(U) add(U,V,W,X) -> Padd(U,V,W,X)*.
+62[0:Inp] || _L(U) edit(U,V,W,X) -> Pedit(U,V,W,X)*.
+59[0:Inp] || _L(U) submitRTI(U,V,W,X) -> PsubmitRTI(U,V,W,X)*.
+58[0:Inp] || _L(U) requestRTI(U,V,W,X) -> PrequestRTI(U,V,W,X)*.
+57[0:Inp] || _L(U) updateWellbeing(U,V,W,X) -> PupdateWellbeing(U,V,W,X)*.
+56[0:Inp] || _L(U) getWellbeingTraining(U,V,W,X) -> PgetWellbeingTraining(U,V,W,X)*.
+55[0:Inp] || _L(U) getWellbeingScore(U,V,W,X) -> PgetWellbeingScore(U,V,W,X)*.
+54[0:Inp] || _L(U) manageBusinessFormula(U,V,W,X) -> PmanageBusinessFormula(U,V,W,X)*.
+53[0:Inp] || _L(U) updateThresholds(U,V,W,X) -> PupdateThresholds(U,V,W,X)*.
+52[0:Inp] || _L(U) viewActiveUsers(U,V,W,X) -> PviewActiveUsers(U,V,W,X)*.
+51[0:Inp] || _L(U) requestStat(U,V,W,X) -> PrequestStat(U,V,W,X)*.
+50[0:Inp] || _L(U) requestDataCompliance(U,V,W,X) -> PrequestDataCompliance(U,V,W,X)*.
+49[0:Inp] || _L(U) requestDataPath(U,V,W,X) -> PrequestDataPath(U,V,W,X)*.
+48[0:Inp] || _L(U) receiveAlerts(U,V,W,X) -> PreceiveAlerts(U,V,W,X)*.
+47[0:Inp] || _L(U) receivePVA(U,V,W,X) -> PreceivePVA(U,V,W,X)*.
+46[0:Inp] || _L(U) receiveTVA(U,V,W,X) -> PreceiveTVA(U,V,W,X)*.
+45[0:Inp] || _L(U) receiveBreachNotif(U,V,W,X) -> PreceiveBreachNotif(U,V,W,X)*.
+69[0:Inp] || _L(U) read(U,V,W,X) -> Pread(U,V,W,X)*.
+61[0:Inp] || _L(U) update(U,V,W,X) -> Pupdate(U,V,W,X)*.
+60[0:Inp] || _L(U) delete(U,V,W,X) -> Pdelete(U,V,W,X)*.
+104[0:Inp] || _L(U) country(U,V) EQUAL(U,subject(V),W)* -> Pread(U,W,cardioMon,V).
+103[0:Inp] || _L(U) country(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+102[0:Inp] || _L(U) country(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+101[0:Inp] || _L(U) activity(U,V) EQUAL(U,subject(V),W)* -> Pread(U,W,cardioMon,V).
+100[0:Inp] || _L(U) activity(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+99[0:Inp] || _L(U) activity(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+98[0:Inp] || _L(U) heartbeat(U,V) EQUAL(U,subject(V),W)* -> Pread(U,W,cardioMon,V).
+97[0:Inp] || _L(U) heartbeat(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+96[0:Inp] || _L(U) heartbeat(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+95[0:Inp] || _L(U) sugarLevel(U,V) EQUAL(U,subject(V),W)* -> Pread(U,W,cardioMon,V).
+94[0:Inp] || _L(U) sugarLevel(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+93[0:Inp] || _L(U) sugarLevel(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+92[0:Inp] || _L(U) weight(U,V) EQUAL(U,subject(V),W)* -> Pread(U,W,cardioMon,V).
+91[0:Inp] || _L(U) weight(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+90[0:Inp] || _L(U) weight(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+89[0:Inp] || _L(U) height(U,V) EQUAL(U,subject(V),W)* -> Pread(U,W,cardioMon,V).
+88[0:Inp] || _L(U) height(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+87[0:Inp] || _L(U) height(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+86[0:Inp] || _L(U) age(U,V) EQUAL(U,subject(V),W)* -> Pread(U,W,cardioMon,V).
+85[0:Inp] || _L(U) age(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+84[0:Inp] || _L(U) age(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+83[0:Inp] || _L(U) gender(U,V) EQUAL(U,subject(V),W)* -> Pread(U,W,cardioMon,V).
+82[0:Inp] || _L(U) gender(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+81[0:Inp] || _L(U) gender(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+80[0:Inp] || _L(U) displayName(U,V) EQUAL(U,subject(V),W)* -> Pread(U,W,cardioMon,V).
+79[0:Inp] || _L(U) displayName(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+78[0:Inp] || _L(U) displayName(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+77[0:Inp] || _L(U) userId(U,V) EQUAL(U,subject(V),W)* -> Pread(U,W,cardioMon,V).
+76[0:Inp] || _L(U) userId(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+75[0:Inp] || _L(U) userId(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+74[0:Inp] || _L(U) password(U,V) EQUAL(U,subject(V),W)* -> Pread(U,W,cardioMon,V).
+73[0:Inp] || _L(U) password(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+72[0:Inp] || _L(U) password(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+71[0:Inp] || _L(U) username(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+70[0:Inp] || _L(U) username(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+110[0:Inp] || _L(U) sensitive(U,V) EQUAL(U,subject(V),W)* -> Pread(U,W,cardioMon,V).
+109[0:Inp] || _L(U) sensitive(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+108[0:Inp] || _L(U) sensitive(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+107[0:Inp] || _L(U) public(U,V) EQUAL(U,subject(V),W)* -> Pread(U,W,cardioMon,V).
+106[0:Inp] || _L(U) public(U,V) EQUAL(U,subject(V),W)* -> Pupdate(U,W,cardioMon,V).
+105[0:Inp] || _L(U) public(U,V) EQUAL(U,subject(V),W)* -> Pdelete(U,W,cardioMon,V).
+111[0:Inp] || _L(U) username(U,V) EQUAL(U,subject(V),W)* Pread(U,W,cardioMon,V) -> .
+112[0:Inp] || _L(U) data(U,skc0) Pread(U,kim,cardioMon,skc1) Pupdate(U,kim,cardioMon,skc1) Pdelete(U,kim,cardioMon,skc1)* -> .
 Eventuality Clauses:
-
+178[0:Inp] || _waitfor_L(U)* -> .
 TSPASS 0.95 
 SPASS beiseite: Unsatisfiable.
 Problem: tests/tmp_gen.fotl 
-TSPASS derived 52 clauses, backtracked 0 clauses and kept 149 clauses.
-Number of input clauses: 100
-Number of eventualities: 0
-Total number of generated clauses: 152
-Number of forward-subsumed clauses: 2
-Number of backward-subsumed clauses: 30
-Total number of subsumed clauses: 32
+TSPASS derived 332 clauses, backtracked 0 clauses and kept 284 clauses.
+Number of input clauses: 113
+Number of eventualities: 1
+Total number of generated clauses: 445
+Number of forward-subsumed clauses: 160
+Number of backward-subsumed clauses: 278
+Total number of subsumed clauses: 438
 Number of tautology clauses: 0
 Number of clauses with different loop search markers: 0
-Number of usable clauses left: 3
-Number of worked-off clauses left: 116
-Number of successful loop searches: 0
-TSPASS allocated 628 KBytes.
+Number of usable clauses left: 0
+Number of worked-off clauses left: 6
+Number of successful loop searches: 1
+TSPASS allocated 691 KBytes.
 TSPASS spent	0:00:00.02 (0.016001s) on the problem.
-		0:00:00.00 (0.004s) for the input.
+		0:00:00.00 (0s) for the input.
 		0:00:00.00 (0.004s) for the FLOTTER CNF translation.
 		0:00:00.00 (0s) for inferences.
 		0:00:00.00 (0s) for the backtracking.

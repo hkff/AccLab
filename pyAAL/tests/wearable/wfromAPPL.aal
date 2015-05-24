@@ -38,7 +38,7 @@ CLAUSE aal_rule_3 (
     IF( @age(d) OR @blood(d) OR @sugarLevel(d) OR @heartbeat(d) OR @country(d)) THEN
     {
         PERMIT mapOnWeb.read[cardioMon](d) AND
-        MUST( mapOnWeb.delete[mapOnWeb](d) BEFORE "P0Y0M0DT0H2M0S")
+        ALWAYS( mapOnWeb.delete[mapOnWeb](d) BEFORE "P0Y0M0DT0H2M0S")
     }
 )
 
@@ -69,7 +69,7 @@ CLAUSE wearableCo_policy (
     // AuthzDownstreamUsage
         //  <!-- Wearable Co is accountable to their customers for how data are processed by Map-On-Web-->
         FORALL d:data FORALL a:Actor
-        IF ( a.read[mapOnWeb](d) ) THEN
+        IF ( a.read[mapOnWeb](d) PURPOSE(health)) THEN
         {
              mapOnWeb.log[mapOnWeb]("Timestamp;Action;Purpose;Subject;Resource;")
         }

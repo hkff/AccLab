@@ -1059,7 +1059,7 @@ class AALCompilerListener(AALListener.AALListener):
                 else:
                     node = cl
                 ltl = ltl.replace(replace, node.to_ltl())  # Replace clause with its ltl formulae
-        if not verbose:
+        if verbose:
             print(ltl)
         # exec("from aalc import tspassc")
         res = tspassc(code=ltl, use_shell=False, debug=False, reparse=False)
