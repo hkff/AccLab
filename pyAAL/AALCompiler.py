@@ -1034,8 +1034,10 @@ class AALCompilerListener(AALListener.AALListener):
 
         # Check if buil env
         ltl = ltl.replace('buildenv', build_env(self.aalprog))
-
         ltl = ltl.replace('"""', '')
+
+        # Check for extra commands
+        verbose = len(re.findall('@verbose', ltl)) > 0
 
         for x in re.finditer('clause\(\w+\)', code):
             clauseId = x.group().replace('clause(', '').replace(')', '')  # Get clause's id

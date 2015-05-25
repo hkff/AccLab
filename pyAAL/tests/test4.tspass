@@ -1,13 +1,28 @@
+%% -*-Latex-*-
+%%% 22/5/2015
+%%% WEARABLE:  Check compliance with a data retention
+%%%% ----------------
+%%%% ATTENTION delete AFTER date means this is the last date to delete, but can be done before
+%%%% of cours can be more complicated with minimal retention date
 
-~(
-sensitive(CTS) & username(p) &
-(![x] (username(x) <=>sensitive(x))) &
-(![x, y, z] (read(x, y, z) => Pread(x, y, z))) &
+%%%%%%%%% -------------- ALWAYS (P => U)
+%%%% ALWAYS I => (ALWAYS (P => U)) <=> ALWAYS ((I&P) => U)
+~(always (
+(![a, d] (two(a, d) => one(a, d))) &
+((![d, w] ((data(d) & subject(d, w) & one(w, d)) => delete(CardioMon, d))))
+=>
+((![d] ((data(d) & subject(d, Kim) & two(Kim, d)) => delete(CardioMon, d))))
+))
 
-  (![d] ( data(d) & (![customer] ( Customer(customer) &
-    ( (EQUAL(subject(d), customer) =>  (username(d) => ((Pread(customer, cardioMon, d))))))))))
 
-  => (![d] ( data(d) & ( (EQUAL(subject(d), kim) =>  (public(d) | sensitive(d) =>
-   ((Pread(kim, cardioMon, d) )))))  ))
 
-)
+
+
+
+
+
+
+
+
+%%%%% --------- endinput
+

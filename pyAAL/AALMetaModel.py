@@ -1231,10 +1231,10 @@ class m_action(m_aexp):
     def to_ltl(self, auth=False):
         args = []
         res = ""
-        if self.time is not None:
-            res += "(~" + str(self.time.to_ltl()) + " => "
         # HANDLE time
-        # res += ("A" if not auth else "") + str(self.service) + (", " if auth else "(")
+        if self.time is not None:
+            res += "(" + str(self.time.to_ltl()) + " => "
+        # HANDLE time
         res += str(self.service) + "("
 
         if self.agent1 is not None:

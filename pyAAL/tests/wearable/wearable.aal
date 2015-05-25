@@ -43,7 +43,7 @@ CLAUSE r2 (
  */
 CLAUSE r3 (
     FORALL d:data FORALL customer:Customer
-    IF ( d.subject == customer )    THEN {
+    IF ( d.subject == customer )   THEN {
         IF ( @username(d) )        THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
@@ -261,7 +261,7 @@ CLAUSE r14 (
 CLAUSE r15 (
     // Data retention
     FORALL d:data
-    ALWAYS( mapOnWeb.delete[mapOnWeb](d) BEFORE "6 months" )
+    mapOnWeb.delete[mapOnWeb](d) BEFORE "6 Months"
 )
 
 //=====================================================//
@@ -289,7 +289,7 @@ CHECK c1() {
   ~(buildenv (clause(r3).ue) => (clause(up1).ue ))
 """
 }
-APPLY c1()
+//APPLY c1()
 
 
 // Version 2
@@ -302,16 +302,16 @@ CLAUSE up2 (
             AND PERMIT kim.update[cardioMon](d)
             AND PERMIT kim.delete[cardioMon](d)
          }
-    }
-    AND
-    // Deny mapOnWeb to read kim's sensitive data
-    IF(@sensitive(d)) THEN {
-        DENY mapOnWeb.read[cardioMon](d)
-    }
-    AND
-    // Permit mapOnWeb to read kim's public data
-    IF(@public(d)) THEN {
-        PERMIT mapOnWeb.read[cardioMon](d)
+        AND
+        // Permit mapOnWeb to read kim's public data
+        IF(@public(d)) THEN {
+            PERMIT mapOnWeb.read[cardioMon](d)
+        }
+        AND
+        // Deny mapOnWeb to read kim's sensitive data
+        IF(@sensitive(d)) THEN {
+            DENY mapOnWeb.read[cardioMon](d)
+        }
     }
 )
 
@@ -326,39 +326,58 @@ CHECK c2() {
 // Version 3
 CLAUSE up3 (
     // user want to read/update/delete public and sensitive data
-    EXISTS d:data
+    FORALL d:data
+/*
     IF(d.subject == kim) THEN {
          IF(@public(d) OR @sensitive(d)) THEN {
             PERMIT kim.read[cardioMon](d)
             AND PERMIT kim.update[cardioMon](d)
             AND PERMIT kim.delete[cardioMon](d)
          }
+        AND
+        // Deny mapOnWeb to read kim's sensitive data
+        IF(@sensitive(d)) THEN {
+            DENY mapOnWeb.read[cardioMon](d)
+        }
+        AND
+        // Permit mapOnWeb to read kim's public data
+        IF(@public(d)) THEN {
+            PERMIT mapOnWeb.read[cardioMon](d)
+        }
     }
-    AND
-    // Deny mapOnWeb to read kim's sensitive data
-    IF(@sensitive(d)) THEN {
-        DENY mapOnWeb.read[cardioMon](d)
-    }
-    AND
-    // Permit mapOnWeb to read kim's public data
-    IF(@public(d)) THEN {
-        PERMIT mapOnWeb.read[cardioMon](d)
-    }
-    AND
+    AND*/
     IF(d.subject == kim) THEN {
         // Data retension
-        ALWAYS( mapOnWeb.delete[mapOnWeb](d) BEFORE "6 months" )
+        mapOnWeb.delete[mapOnWeb](d) BEFORE "6 Months"
     }
 )
 
 CHECK c3() {
 """
-  ~(buildenv
-  %(fiveMonths => sixMonths) & (sixMonths => sevenMonths) &
-  (clause(r15).ue & clause(r14).ue & clause(r3).ue ) => (clause(up3).ue ))
+  buildenv
+  (sixMonths => fiveMonths) & (sevenMonths => sixMonths) &
+  ~(
+    (clause(r15).ue ) => clause(up3).ue
+   )
 """
 }
-APPLY c3()
 
-//call validate("'r14'" "'user_pref'")
+// (clause(r15).ue => (clause(up3).ue) )
+// (clause(r15).ue & clause(r14).ue & clause(r3).ue ) => (clause(up3).ue ))
+//APPLY c3()
+
+
+
+
 //call validate("'r3'" "'up3'")
+CHECK c4() {
+"""
+  @verbose
+~(always(
+    ( (two => one)) &
+   (![d] ( data(d) &  ((one => delete(mapOnWeb, mapOnWeb, d)))))
+=> (![d] ( data(d) & ((two => delete(mapOnWeb, mapOnWeb, d)))))
+))
+"""
+}
+//APPLY c4()
