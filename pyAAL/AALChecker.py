@@ -416,11 +416,11 @@ def solve_auth(compiler, p=None, u=None, verbose=False, resolve=False):
 # Check triggers
 def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
     """
-
-    :param compiler:
-    :param p:
-    :param u:
-    :param verbose:
+    Conflict detection
+    :param compiler: the compiler instance
+    :param p: clause 1
+    :param u: clause 2
+    :param verbose: verbose print
     :param resolve:
     :return:
     """
