@@ -1,0 +1,164 @@
+\documentclass[a4paper,11pt]{report} 
+%\documentclass[a4paper,11pt]{article} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{graphicx} 
+\usepackage{moreverb} 
+\usepackage{verbatim}
+\usepackage[english]{babel}
+%\usepackage[english]{minitoc}
+%\usepackage{mtcoff}
+\usepackage{listings}
+\usepackage{amsmath} 
+%\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{multicol}
+\usepackage[left=2.8cm,right=2.8cm]{geometry}
+\usepackage{hyperref}
+\usepackage{footbib}
+\usepackage{fancyhdr}
+\usepackage{amssymb}
+\usepackage{multicol}
+%\usepackage{titlesec}
+%\usepackage{makeidx}
+\usepackage[Lenny]{fncychap}
+%\setlength {\mtcindent}{24pt}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{draftwatermark}
+
+\definecolor{oliveGreen}{RGB}{85,160,20}
+\definecolor{blockGreenColor}{RGB}{0,153,0}
+
+\newtheorem{defn}{Definition}[section]
+
+\hypersetup{
+	hidelinks,
+     backref=true,    %permet d'ajouter des liens dans...
+     pagebackref=true,%...les bibliographies
+     hyperindex=true, %ajoute des liens dans les index.
+     colorlinks=false, %colorise les liens
+     breaklinks=true, %permet le retour à la ligne dans les liens trop longs
+     urlcolor= blue,  %couleur des hyperliens
+     linkcolor= blue, %couleur des liens internes
+     bookmarks=true,  %créé des signets pour Acrobat
+     pdftitle={{AccLab User Guide}},
+     pdfauthor={Walid BENGHABRIT},
+}
+
+\lstdefinestyle{aal}{
+  language=JAVA,
+  tabsize=8,
+  extendedchars=true,
+  basicstyle=\ttfamily\scriptsize,
+  keywordstyle=\color{blue} \ttfamily,
+  keywordstyle=[2]\color{brown} \ttfamily,
+  keywordstyle=[3]\color{purple} \ttfamily,
+  keywordstyle=[4]\color{orange} \ttfamily,
+  stringstyle=\color{red} \ttfamily,
+  commentstyle=\color{blockGreenColor}\ttfamily\bfseries,
+  identifierstyle=\color{black}\ttfamily,
+  showstringspaces=true,
+ %%% tests pb lstinline avec before space
+    breaklines=true, %%% PB cat code of )
+   columns=flexible,
+ %%%   keepspaces=true, %%% semble ok  DOUBLON ? Purpose,
+  morekeywords={CLAUSE, AGENT, SERVICE, DATA, TYPE, SUBJECT, RS, REQUIRED, PS, PROVIDED, PURPOSE, Agent, Service, Data, Type, SUBJECT, Rs, Required, Ps, Provided,  clause, Agent, Service, Data, Type, SUBJECT, rs, required, ps, provided, purpose, AUDITING, IF_VIOLATED_THEN, AUDIT, Auditing, if_violated_then, auditing, if_violated_then, audit, AFTER, BEFORE, PERMIT, DENY, Permit, Deny, permit, deny, FORALL, EXISTS, WHERE, forall, exists,  where, Forall, Exists, Where, LOAD, MACRO, CALL},
+  keywords=[2]{ALWAYS, SOMETIME, NEXT, UNTIL,  always, sometime, Next, Always, Until, ONLYWHEN, Onlywhen},
+  keywords=[3]{OR, AND, NOT, IF, THEN, If, Then, or, and, not, Or, And, Not},
+  keywords=[4]{Subject, Controller, Processor, Auditor},
+  sensitive=true,
+}
+
+\lstdefinestyle{shell}{
+  language=C,
+  tabsize=8,
+  extendedchars=true,
+  showstringspaces=true,
+  basicstyle=\ttfamily\scriptsize,
+  keywordstyle=\color{black} \ttfamily,
+  keywordstyle=[2]\color{green} \ttfamily,
+  keywordstyle=[3]\color{orange} \ttfamily,
+  keywordstyle=[4]\color{red} \ttfamily,
+  keywords=[2]{},
+  keywords=[3]{WARNING},
+  keywords=[4]{ERROR, at, line},
+}
+
+\lstset{style=aal, escapeinside={(*@}{@*)},keepspaces}
+%\fancypagestyle{chapt}{\fancyhead{}}
+%\fancypagestyle{abstr}{\fancyhead{} \fancyfoot{}}
+
+\renewcommand{\thesection}{\arabic{section}}
+
+
+%==========================%
+%========== Images ========%
+%==========================%
+\newcommand{\linux}{\protect\includegraphics[height=2.2ex,keepaspectratio]{assets/linux_logo.png}}
+\newcommand{\windows}{\protect\includegraphics[height=2.0ex,keepaspectratio]{assets/windows_logo.png}}
+\newcommand{\mac}{\protect\includegraphics[height=2.0ex,keepaspectratio]{assets/mac_logo.png}}
+
+
+
+\SetWatermarkLightness{0.9}
+\SetWatermarkAngle{25}
+\SetWatermarkScale{3}
+\SetWatermarkFontSize{4cm}
+\SetWatermarkText{Draft}
+
+
+\begin{document}
+%==================================================================%
+%=============================== Garde ============================%
+%==================================================================%
+\makeatletter
+\include{parts/garde}
+\makeatother
+
+\tableofcontents
+\addcontentsline{toc}{section}{Table of contents}
+
+
+\newpage
+
+
+\pagestyle{fancyplain}
+%\fancyhead[C]{} 
+%\fancyhead[L]{}
+%\fancyhead[R]{}
+
+%==================================================================%
+%=========================== 0.Introduction =======================%
+%==================================================================%
+%\section{Abstract}
+
+\newpage
+\input{parts/tuto}
+
+\newpage
+\input{parts/aalsyntax}
+
+\newpage
+%\input{parts/acclabkernel}
+
+\newpage
+%\input{parts/wswrapper}
+
+\newpage
+
+
+%==================================================================%
+%============================ References ==========================%
+%==================================================================%
+\newpage
+%\thispagestyle{chapt}
+%\bibliographystyle{abbrv}
+%\bibliography{refs}
+%\mtcaddchapter
+\addcontentsline{toc}{section}{References}
+
+\end{document}

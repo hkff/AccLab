@@ -1,0 +1,293 @@
+\section{Getting started}
+
+\subsection{Basis}
+\begin{itemize}
+  \item To use the ltl prover, you need to put the following executable files (tspass, fotl-translate) in tools/your\_platform/ (linux/mac/win)
+  \item Basic run : python aalc.py (you need python3.4.0 or greater)
+  \item Run an AAL file : python aalc.py -i testfile.aal
+\end{itemize}
+
+{
+\lstset{style=shell}
+\begin{lstlisting}[caption={aalc options}]
+aalc 
+  -h    --help                   display this help and exit
+  -i    --input                  the input file
+  -c    --compile                compile the file, that can be loaded after using -l
+  -m    --monodic                apply monodic check on aal file
+  -s    --shell                  run a shell after handling aal program
+  -k    --check                  perform a verbose check
+  -l    --load                   load a compiled aal file (.aalc) and run a shell
+  -t    --ltl                    translate the aal program into FOTL
+  -r    --recompile              recompile the external files 
+  -b    --no-colors              disable colors in output
+  -x    --compile-stdlib         compile the standard library
+  -d    --hotswap                enable hotswaping (for development only)
+\end{lstlisting}
+
+
+\begin{itemize}
+	\item Run an AAL file (by default, it )
+\begin{lstlisting}
+aalc -i tests/tuto1.aal
+
+[WARNING] Agents declarations missing !
+  -> cloudS at line 20
+  -> cloudY at line 33
+  -> leslie at line 20
+[WARNING] Services declarations missing !
+  -> read at line 13
+  -> notify at line 19
+  -> sensors at line 17
+  -> write at line 15
+  -> log at line 36
+  -> audit at line 20
+  -> sanction at line 21
+  -> delete at line 16
+  -> storage at line 3
+[WARNING] Types declarations missing !
+  -> data at line 11
+  -> DataSubject at line 2
+  -> agent at line 12
+  -> DataProcessor at line 3
+
+Execution time : 0.26976990699768066
+\end{lstlisting}
+
+	\item Perform an advanced check (need to be completed)
+\begin{lstlisting}
+aalc -i tests/tuto1.aal -k
+
+------------------------- Checking Monodic test -------------------------
+
+** DECLARATIONS
+[DECLARED AGENTS] : 5
+[DECLARED SERVICES] : 13
+[DECLARED DATA] : 0
+[DECLARED TYPES] : 4
+
+*** Forwards references check...
+[AGENTS] : 3
+[SERVICES] : 9
+[DATA] : 0
+[TYPES] : 4
+
+** CLAUSES
+[CLAUSES] : 2
+Monodic test :
+Formula is monodic !
+-------------------------- Checking Monodic End -------------------------
+\end{lstlisting}
+
+
+	\item Perform monodic test on all clauses :
+\begin{lstlisting}
+aalc -i tests/tuto1.aal -m
+
+------------------------- Checking Monodic test -------------------------
+Formula is monodic !
+-------------------------- Checking Monodic End -------------------------
+\end{lstlisting}
+
+
+	\item Translate aal program into FOTL (in tspass syntax):
+\begin{lstlisting}
+aalc -i tests/tuto1.aal -t
+
+------------------------- FOTL Translation start -------------------------
+![d] ![a](((((((PERMIT(read, kim, cloudX, d) & PERMIT(read, kim, cloudX, d)) & PERMIT(write, kim, cloudX, d)) & PERMIT(delete, kim, cloudX, d)) & PERMIT(sensors, cloudX, kim, d)) & (~threeYears => Adelete(cloudX, d))) &  ( Aread(a, cloudX, d) => sometime(Anotify(cloudX, kim)))))  ![a] ![d] ![b](((((((((PERMIT(read, a, cloudX, d) & PERMIT (read, a, cloudX, d)) & PERMIT(write, a, cloudX, d)) & PERMIT(delete, a, cloudX, d)) & PERMIT(sensors, cloudX, a, d)) & PERMIT(storage, cloudX, cloudY, d)) & (~twoYears => Adelete(cloudX, d))) &  (Aread(b, cloudX, d) => sometime(Anotify(cloudX, a)))) &  (Astorage(cloudX, cloudY, d) => sometime(Alog(cloudX, cloudX))))) 
+-------------------------- FOTL Translation end --------------------------
+\end{lstlisting}
+
+\end{itemize}
+}
+
+
+\subsection{Using core libraries}
+You can load external AAL files using \texttt{LOAD "aal\_file"}(without the extension) 
+
+\paragraph{core.macros} Contains the basic types declarations (DataSubject, DataController, DataProcessor, ...)
+\begin{lstlisting}
+// Loading libraries
+LOAD "core.types"
+\end{lstlisting}
+
+
+\paragraph{core.macros} Contains some basic macros.
+\begin{lstlisting}
+// Loading libraries
+LOAD "core.macros"
+
+/** ltl check**/
+CALL ltl_check()
+
+// Checking validity c1 => c2
+CALL validate(c1 c2) (
+
+//
+CALL resolve(c1 c2)
+'NOT YET IMPLEMENTED'
+
+// Show the loaded libraries used in the current AAL program
+CALL show_libs()
+
+// Translate 
+CALL ltl(c)
+
+CALL show_clause(c)
+
+CALL to_natural(c)
+\end{lstlisting}
+
+\paragraph{core.eu} Contains the basic types
+\begin{lstlisting}
+// Loading libraries
+LOAD "core.eu"
+
+/** Show all obligations **/
+CALL obligations() 
+
+/* Result :
+
+Obligations list : (L) Legal / (C) Contractual / (E) Ethical 
+
+ L  Obligation 1-3      : Informing about processing, purposes and recipients. 
+ L  Obligation 4        : Informing about rights. 
+ L  Obligation 5        : Data collection purposes. 
+ L  Obligation 6        : The right to access, correct and delete personal data. 
+ L  Obligation 7        : Data storage period. 
+ L  Obligation 8,11-12  : Security and privacy measures. 
+ L  Obligation 9-10     : Rules for data processing by providers. 
+ L  Obligation 13-15    : Consent to processing. 
+ L  Obligation 16       : Informing DPAs. 
+ C  Obligation 17       : Informing about the use of sub-processors. 
+ C  Obligation 18       : Security breach notification. 
+ C  Obligation 19-20    : Evidence on data processing and data deletion. 
+ C  Obligation 21       : Data location. 
+ E  Obligation 22       : Informing about personal data processing. 
+ E  Obligation 23       : Personal data minimization. 
+ E  Obligation 24       : Privacy-by-default. 
+ E  Obligation 25       : Specifying user preferences. 
+ E  Obligation 26       : Monitoring of data practices. 
+ E  Obligation 27       : Compliance with user preferences. 
+ E  Obligation 28       : Compliance with privacy policies. 
+ E  Obligation 29-30    : Informing about policy violations and privacy preferences violations. 
+ E  Obligation 31       : Remediation in case of incidents. 
+*/
+
+
+
+/** Checking if the clauses respect **/
+CALL obligation18()
+
+/* Obligation 18: Security breach notification. */
+  -> No notification in clause kim_policy s rectification at line 15
+  -> No notification in clause cloudX_policy s rectification at line 30
+
+\end{lstlisting}
+
+
+
+
+\subsection{Using the shell}
+The shell is a useful tool for developing 
+
+
+
+{
+\lstset{style=shell}
+
+\begin{itemize}
+	\item Run the shell.
+\begin{lstlisting}
+aalc -i tests/tuto2.aal -s
+
+/* Result : 
+shell >
+
+*/
+\end{lstlisting}
+
+  \item Type help to show the shell help.
+\begin{lstlisting}
+  Shell Help
+ - call(macro, args)   call a macro where /
+         *macro : is the name of the macro
+         *args : a list of string; << ex : ["'args1'", "'args2'", ..."'argsN'"] >>
+ - clauses()           show all declared clauses in the loaded aal program
+ - macros()            show all declared macros in the loaded aal program
+ - quit / q            exit the shell
+ - help / h / man()    show this help
+ - self                the current compiler instance of the loaded aal program
+ - aalprog             the current loaded aal program 
+ - man(arg)            print the help for the given arg
+ - hs(module)          hotswaping : reload the module
+ - r()                 hot-swaping the shell
+\end{lstlisting}
+
+  \item Here an example, we print all clauses in the AAL program.
+\begin{lstlisting}
+shell> clauses()
+
+/* Result :
+kim_policy cloudX_policy 
+
+*/
+\end{lstlisting}
+
+  \item self variable represent the co
+\begin{lstlisting}
+shell> self
+
+/* Result :
+<AALCompiler.AALCompilerListener object at 0x7f8b00ce8630>
+
+*/
+
+shell> man(self)
+
+/* Result :
+printing manual for <class 'AALCompiler.AALCompilerListener'>
+Manual for aal compiler visitor
+ - Attributes
+   -  aalprog      Get the AAL program instance
+   -  file         The AAL source file
+   -  libs         Show the loaded libraries
+   -  libsPath     Print the standard lib path
+ - Methods
+   - load_lib(lib_name)    Load an aal file
+   - clause(clauseId)      Get a clause
+   - show_clauses()        Print all clauses
+   - get_clauses()         Get all clauses (array format)
+   - get_macros()          Get all macros
+
+*/
+
+shell> man(aalprog)
+
+/* Result :
+printing manual for <class 'AALMetaModel.m_aalprog'>
+
+    AAL program class.
+    Note that clauses and macros extends a declarable type, but are not in the declarations dict
+
+    Attributes
+        - clauses: a list that contains all program clauses
+        - declarations: a dictionary that contains lists of typed declarations
+        - comments: a list that contains program's comment
+        - macros: a list that contains program's macros declarations
+        - macroCalls: a list that contains program's comment
+
+*/
+\end{lstlisting}
+
+  \item hotswaping commands are used for debugging purpose only.
+  r() command allows you to reload the shell after 
+
+  hs(module) reloading other modules after 
+  ! IMORTANT : to use hotswaping properly you must enable it explicitly in aalc arguments
+  \texttt{-d / --hotswap},
+
+\end{itemize}
+
+}

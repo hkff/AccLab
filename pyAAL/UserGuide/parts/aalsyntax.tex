@@ -1,0 +1,48 @@
+\section{AAL language}
+\begin{lstlisting}[caption={AAL Syntax}, label=syntax]
+    // AAL CORE
+    AALprogram    ::= (Declaration | Clause | Comment | Macro | MacroCall | EXEC)*
+    Declaration   ::= AgentDec | ServiceDec | DataDec | TypesDec
+    AgentDec      ::= AGENT Id TYPE'('Type*')' REQUIRED'('service*')' PROVIDED'('service*')'
+    ServiceDec    ::= SERVICE Id TYPE'('Type*')' [PURPOSE '(' Id* ')']
+    DataDec       ::= DATA Id TYPE'('Type*')' [REQUIRED'('service*')' PROVIDED'('service*')'] SUBJECT agent
+    Clause        ::= CLAUSE Id '(' [Usage] [Audit Rectification] ')'
+    Usage         ::= ActionExp
+    Audit         ::= AUDITING [ActionExp THEN] agent.audit'['agent']' '()'
+    Rectification ::= IF_VIOLATED_THEN ActionExp (??Usage)
+    ActionExp     ::= Action | NOT ActionExp | Modality ActionExp | Condition 
+                    | ActionExp (AND|OR|ONLYWHEN) ActionExp | Author | Quant*
+                    | IF ActionExp THEN ActionExp
+    Exp           ::= Variable | Constant | Variable.Attribute
+    Condition     ::= [NOT] Exp | Exp ['==' | '!='] Exp | Condition (AND|OR) Condition 
+    Author        ::= (PERMIT | DENY) Action
+    Action        ::= agent.service ['['[agent]']'] '('Exp')' [Time] [Purpose]
+    Quant         ::= (FORALL | EXISTS) Var [WHERE Condition]
+    Variable      ::= Var ':' Type
+    Modality      ::= MUST | MUSTNOT | ALWAYS | NEVER | SOMETIME
+    Time          ::= (AFTER | BEFORE) Date | Time (AND | OR) Time
+    Date          ::= hh ':' mm ':' ss  DD '/' MM '/' YYYY (use string)
+    Type, var, val, attr Id, agent, Constant, Purpose ::= literal
+
+    // AAL Type extension
+    TypesDec      ::= TYPE Id [EXTENDS '(' Type* ')'] ATTRIBUTES '(' AttributeDec* ')' ACTIONS '(' ActionDec* ')'
+    AttributeDec  ::= Id ':' Type
+    ActionDec     ::= Id
+    Type, Id      ::= litteral
+    Affectation   ::= var.id '=' val
+
+    // Reflexion extension
+    Macro         ::= MACRO Id '(' param* ')' '(' mcode ')'
+    MCode         ::= Meta model api + Python3 code (subset)
+    MCall         ::= CALL Id '(' param* ')'
+    LoadLib       ::= LOAD STRING;
+    EXEC   : M_exec MCODE;
+
+    // LTL checking extension
+    Modified version of LTL
+    ltlCheck      ::= M_check ID args? h_lpar check h_rpar;
+    check         ::= formula;
+    checkApply    ::= M_apply ID h_lpar STRING* h_rpar;
+    atom          ::= C_clause h_lpar h_clauseId h_rpar (h_dot (C_usage | C_audit | C_rectification))? ;
+
+\end{lstlisting}
