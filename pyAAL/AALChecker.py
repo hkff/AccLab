@@ -25,28 +25,28 @@ from AALtoFOTL import *
 
 # TODO optimize pre_cond...  to remove
 # -------------------------------------------------------------
-pre_cond = "(oneMonth => twoMonths) & " + "(oneMonth => threeMonths) & " + "(oneMonth => fourMonths) & " +\
-            "(oneMonth => fiveMonths) & " + "(oneMonth => sixMonths) & " + "(oneMonth => sevenMonths) & " +\
-            "(oneMonth => eightMonths) & " + "(oneMonth => nineMonths) & " + "(oneMonth => tenMonths) & " +\
-            "(oneMonth => elevenMonths) & " + "(oneMonth => twelveMonths)\n"
-pre_cond += "(twoMonths => threeMonths) & " + "(twoMonths => fourMonths) & " + "(twoMonths => fiveMonths) & " +\
-            "(twoMonths => sixMonths) & " + "(twoMonths => sevenMonths) & " + "(twoMonths => eightMonths) & " +\
-            "(twoMonths => nineMonths) & " + "(twoMonths => tenMonths) & " + "(twoMonths => elevenMonths) & " +\
+pre_cond = "(oneMonth => twoMonths) & " + "(oneMonth => threeMonths) & " + "(oneMonth => fourMonths) & " + \
+           "(oneMonth => fiveMonths) & " + "(oneMonth => sixMonths) & " + "(oneMonth => sevenMonths) & " + \
+           "(oneMonth => eightMonths) & " + "(oneMonth => nineMonths) & " + "(oneMonth => tenMonths) & " + \
+           "(oneMonth => elevenMonths) & " + "(oneMonth => twelveMonths)\n"
+pre_cond += "(twoMonths => threeMonths) & " + "(twoMonths => fourMonths) & " + "(twoMonths => fiveMonths) & " + \
+            "(twoMonths => sixMonths) & " + "(twoMonths => sevenMonths) & " + "(twoMonths => eightMonths) & " + \
+            "(twoMonths => nineMonths) & " + "(twoMonths => tenMonths) & " + "(twoMonths => elevenMonths) & " + \
             "(twoMonths => twelveMonths)\n"
-pre_cond += "(threeMonths => fourMonths) & " + "(threeMonths => fiveMonths) & " + "(threeMonths => sixMonths) & " +\
-            "(threeMonths => sevenMonths) & " + "(threeMonths => eightMonths) & " + "(threeMonths => nineMonths) & " +\
+pre_cond += "(threeMonths => fourMonths) & " + "(threeMonths => fiveMonths) & " + "(threeMonths => sixMonths) & " + \
+            "(threeMonths => sevenMonths) & " + "(threeMonths => eightMonths) & " + "(threeMonths => nineMonths) & " + \
             "(threeMonths => tenMonths) & " + "(threeMonths => elevenMonths) & " + "(threeMonths => twelveMonths)\n"
-pre_cond += "(fourMonths => fiveMonths) & " + "(fourMonths => sixMonths) & " + "(fourMonths => sevenMonths) & " +\
-            "(fourMonths => eightMonths) & " + "(fourMonths => nineMonths) & " + "(fourMonths => tenMonths) & " +\
+pre_cond += "(fourMonths => fiveMonths) & " + "(fourMonths => sixMonths) & " + "(fourMonths => sevenMonths) & " + \
+            "(fourMonths => eightMonths) & " + "(fourMonths => nineMonths) & " + "(fourMonths => tenMonths) & " + \
             "(fourMonths => elevenMonths) & " + "(fourMonths => twelveMonths)\n"
-pre_cond += "(fiveMonths => sixMonths) & " + "(fiveMonths => sevenMonths) & " + "(fiveMonths => eightMonths) & " +\
-            "(fiveMonths => nineMonths) & " + "(fiveMonths => tenMonths) & " + "(fiveMonths => elevenMonths) & " +\
+pre_cond += "(fiveMonths => sixMonths) & " + "(fiveMonths => sevenMonths) & " + "(fiveMonths => eightMonths) & " + \
+            "(fiveMonths => nineMonths) & " + "(fiveMonths => tenMonths) & " + "(fiveMonths => elevenMonths) & " + \
             "(fiveMonths => twelveMonths)\n"
-pre_cond += "(sixMonths => sevenMonths) & " + "(sixMonths => eightMonths) & " + "(sixMonths => nineMonths) & " +\
+pre_cond += "(sixMonths => sevenMonths) & " + "(sixMonths => eightMonths) & " + "(sixMonths => nineMonths) & " + \
             "(sixMonths => tenMonths) & " + "(sixMonths => elevenMonths) & " + "(sixMonths => twelveMonths)\n"
-pre_cond += "(sevenMonths => eightMonths) & " + "(sevenMonths => nineMonths) & " + "(sevenMonths => tenMonths) & " +\
+pre_cond += "(sevenMonths => eightMonths) & " + "(sevenMonths => nineMonths) & " + "(sevenMonths => tenMonths) & " + \
             "(sevenMonths => elevenMonths) & " + "(sevenMonths => twelveMonths)\n"
-pre_cond += "(eightMonths => nineMonths) & " + "(eightMonths => tenMonths) & " + "(eightMonths => elevenMonths) & " +\
+pre_cond += "(eightMonths => nineMonths) & " + "(eightMonths => tenMonths) & " + "(eightMonths => elevenMonths) & " + \
             "(eightMonths => twelveMonths)\n"
 pre_cond += "(nineMonths => tenMonths) & " + "(nineMonths => elevenMonths) & " + "(nineMonths => twelveMonths)\n"
 pre_cond += "(tenMonths => elevenMonths) & " + "(tenMonths => twelveMonths)\n"
@@ -145,7 +145,7 @@ def check_monodic(node=None, verbose: bool=False):
 
 # TODO: check forwards refs before ! this can make monodic test wrong ??
 # checkMonadic Exp
-def check_monodic_exp(aexp: m_aexp):
+def check_monodic_exp(aexp):
     """
     Check if an action expression is monodic
     :param aexp: the action expression
@@ -201,9 +201,8 @@ def get_vars(aexp: m_aexp, vtype=None):
 
     quant = aexp.walk(filter_type=m_qvar)  # Get all quantification inside the aexp
 
-
     # if DEBUG:
-    #     print(aexp)
+    # print(aexp)
     #     print("---- refs : -----")
     #     for x in refs:
     #         print(str(x) + "  " + str(x.target.__class__))
@@ -339,7 +338,8 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
 
     v = False
 
-    print("------------------------- Starting " + ("Validity" if not check else "") + " check -------------------------")
+    print(
+        "------------------------- Starting " + ("Validity" if not check else "") + " check -------------------------")
     print("----- Checking c1 :")
     res = compiler.apply_check(code=c1, show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
@@ -403,7 +403,8 @@ def solve_auth(compiler, p=None, u=None, verbose=False, resolve=False):
 
         if res["res"] == "Unsatisfiable":
             print(Color("  Authorization <<" + str(x) + ">> found {automagenta}at line " +
-                        str(x.name.parentCtx.getPayload().start.line) + "{/magenta} does not match with user preference"))
+                        str(x.name.parentCtx.getPayload().start.line) +
+                        "{/magenta} does not match with user preference"))
             if resolve:
                 print(Color("{autogreen}    |-> Resolving conflict {/green}"))
                 if x.author == m_author.A_permit:
@@ -441,4 +442,4 @@ def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
                         str(x.name.parentCtx.getPayload().start.line) + "{/magenta} is not guaranteed by provider"))
             if resolve:
                 print(Color("{autogreen}    |-> Resolving conflict {/green}"))
-        # x.parent.remove(x) # TODO remove me from parent
+                # x.parent.remove(x) # TODO remove me from parent

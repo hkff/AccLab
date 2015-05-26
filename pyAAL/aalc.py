@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 __author__ = 'walid'
 # def tspassc(file=None, code="", output="tests/tmp.tspass", use_shell=False, debug=False):
-#     return {"res": "sat", "print": "res"}
+# return {"res": "sat", "print": "res"}
 
 import sys
 import os
@@ -28,8 +28,8 @@ import platform
 # Check environment
 def check_env():
     python_version = platform.python_version()
-    machine = platform.machine()
-    system = platform.system()
+    # machine = platform.machine()
+    # system = platform.system()
 
     if python_version < '3.4':
         print("Python 3.4.x needed :: current version " + python_version)
@@ -43,21 +43,21 @@ def check_env():
         import readline
     except:
         print("[Warning] You need to install readline module to use the shell.\n" +
-                    "Please visit https://pypi.python.org/pypi/readline\n")
+              "Please visit https://pypi.python.org/pypi/readline\n")
 
 # Check the environment
 check_env()
 
 
 # Import others modules
-#from antlr4 import *
+# from antlr4 import *
 from grammar.tspass.TSPASSLexer import TSPASSLexer
 from grammar.tspass.TSPASSParser import TSPASSParser
 from antlr4.error.ErrorListener import ErrorListener
 from grammar.aal.AALLexer import AALLexer
 from grammar.aal.AALParser import AALParser
-#from grammar.AALListener import AALListener
-#from behave import runner
+# from grammar.AALListener import AALListener
+# from behave import runner
 from antlr4.tree.Trees import Trees
 from subprocess import Popen, PIPE
 from ASTprinter import Trees2
@@ -80,6 +80,7 @@ class DescriptiveErrorListener(ErrorListener):
     """
     Error Listener
     """
+
     def __init__(self):
         self.errors = []
 
@@ -148,11 +149,12 @@ def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, co
 
     if compile:  # Compile aal file to aalc
         sys.setrecursionlimit(3000)
-        with open(file+"c", "wb") as f:
+        with open(file + "c", "wb") as f:
             pickle.dump(l, f, pickle.HIGHEST_PROTOCOL)
 
     if show_ast:  # Show AST
         from tools.visu import Visu
+
         Visu.show_ast(l.aalprog)
 
     if use_shell:  # Run the shell
@@ -182,7 +184,7 @@ def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: boo
     elif p.startswith("darwin"):
         os_name = "mac"
     elif p.startswith("win"):
-        os_name = "win"
+        # os_name = "win"
         print(Color("{autored}Windows is not supported yet {/red}"))
         sys.exit(-1)
     else:
@@ -285,27 +287,27 @@ def main(argv):
     inputfile = ""
     outputfile = ""
     helpStr = "Usage : aalc.py [-c] [-i <inputfile>] [-s]"
-    help_str_extended = "AAL tools set. aalc is a part of Acclab tool.\n" +\
-                        "For more information see AccLab home page\n Usage : aalc.py [OPTIONS]" +\
-        "\n  -h \t--help          " + "\t display this help and exit" +\
-        "\n  -i \t--input         " + "\t the input file" +\
-        "\n  -i \t--output         " + "\t the output file" +\
-        "\n  -c \t--compile       " + "\t compile the file, that can be loaded after using -l" +\
-        "\n  -m \t--monodic       " + "\t apply monodic check on aal file" +\
-        "\n  -s \t--shell         " + "\t run a shell after handling aal program" +\
-        "\n  -k \t--check         " + "\t perform a verbose check" +\
-        "\n  -l \t--load          " + "\t load a compiled aal file (.aalc) and run a shell" +\
-        "\n  -t \t--ltl           " + "\t translate the aal program into FOTL" +\
-        "\n  -r \t--reparse       " + "\t reparse tspass file" +\
-        "\n  -r \t--recompile     " + "\t recompile the external files " +\
-        "\n  -b \t--no-colors     " + "\t disable colors in output" +\
-        "\n  -x \t--compile-stdlib" + "\t compile the standard library" +\
-        "\n  -d \t--hotswap       " + "\t enable hotswaping (for development only)" +\
-        "\n  -a \t--ast           " + "\t show ast tree" +\
-        "\n  - \t--sdtlib         " + "\t set the standard library path" +\
-        "\n\nReport aalc bugs to walid.benghabrit@mines-nantes.fr" +\
-        "\nAccLab home page: <http://www.emn.fr/z-info/acclab/>" +\
-        "\naalc is a free software released under GPL 3"
+    help_str_extended = "AAL tools set. aalc is a part of Acclab tool.\n" + \
+                        "For more information see AccLab home page\n Usage : aalc.py [OPTIONS]" + \
+                        "\n  -h \t--help          " + "\t display this help and exit" + \
+                        "\n  -i \t--input         " + "\t the input file" + \
+                        "\n  -i \t--output         " + "\t the output file" + \
+                        "\n  -c \t--compile       " + "\t compile the file, that can be loaded after using -l" + \
+                        "\n  -m \t--monodic       " + "\t apply monodic check on aal file" + \
+                        "\n  -s \t--shell         " + "\t run a shell after handling aal program" + \
+                        "\n  -k \t--check         " + "\t perform a verbose check" + \
+                        "\n  -l \t--load          " + "\t load a compiled aal file (.aalc) and run a shell" + \
+                        "\n  -t \t--ltl           " + "\t translate the aal program into FOTL" + \
+                        "\n  -r \t--reparse       " + "\t reparse tspass file" + \
+                        "\n  -r \t--recompile     " + "\t recompile the external files " + \
+                        "\n  -b \t--no-colors     " + "\t disable colors in output" + \
+                        "\n  -x \t--compile-stdlib" + "\t compile the standard library" + \
+                        "\n  -d \t--hotswap       " + "\t enable hotswaping (for development only)" + \
+                        "\n  -a \t--ast           " + "\t show ast tree" + \
+                        "\n  - \t--sdtlib         " + "\t set the standard library path" + \
+                        "\n\nReport aalc bugs to walid.benghabrit@mines-nantes.fr" + \
+                        "\nAccLab home page: <http://www.emn.fr/z-info/acclab/>" + \
+                        "\naalc is a free software released under GPL 3"
 
     compile = False
     use_shell = False
@@ -329,8 +331,8 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaSr",
                                    ["help", "input=", "output=", "compile", "monodic",
-                                   "shell", "check", "load", "recompile", "init",
-                                   "no-colors", "compile-stdlib", "hotswap", "ast", "synth", "reparse"])
+                                    "shell", "check", "load", "recompile", "init",
+                                    "no-colors", "compile-stdlib", "hotswap", "ast", "synth", "reparse"])
     except getopt.GetoptError:
         print(helpStr)
         sys.exit(2)
@@ -382,6 +384,7 @@ def main(argv):
     if hotswaping:
         import inspect
         import AALMetaModel
+
         for name, obj in inspect.getmembers(AALMetaModel):
             if inspect.isclass(obj):
                 if "AALMetaModel" in str(obj):
@@ -398,7 +401,7 @@ def main(argv):
 
     elif inputfile.endswith(".aal"):  # Use AAL compiler
         res = aalc(inputfile, use_shell=use_shell, check=check, monodic=monodic, compile=compile, recompile=recompile,
-             to_ltl=to_ltl, show_ast=show_ast, libs_path=libs_path)
+                   to_ltl=to_ltl, show_ast=show_ast, libs_path=libs_path)
         print(res["res"])
 
     elif inputfile.endswith(".tspass"):  # Use tspass compiler
@@ -408,5 +411,5 @@ def main(argv):
 
 # Call the main
 if __name__ == '__main__':
-   # cProfile.run('main(sys.argv)')
-   main(sys.argv)
+    # cProfile.run('main(sys.argv)')
+    main(sys.argv)

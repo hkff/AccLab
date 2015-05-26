@@ -495,7 +495,7 @@ class m_clause(m_declarable):
         ae = str(self.audit.to_ltl()) if self.audit.usage is not None else None
         re = str(self.rectification.to_ltl()) if self.rectification.usage is not None else None
         return ue + ("\n & " + ae if ae is not None else "") + ("\n & " + re if re is not None else "")
-        return ae + " & always(" + ue + " | ((~(" + ue + ")) & (always(" + ae + " => (" + re + ")))))"
+        # return ae + " & always(" + ue + " | ((~(" + ue + ")) & (always(" + ae + " => (" + re + ")))))"
 
     def to_nnf(self,bool):
         ue = str(self.usage.to_nnf(bool)) if self.usage is not None else "false"
@@ -527,7 +527,7 @@ class m_agent(m_declarable):
         sltypes = ""
         for x in self.types:
             sltypes += str(x.label) + "(" + str(self.name) +") &"
-        return (sltypes[:-1]) if sltypes is not "" else  "Actor(" + str(self.name) +")"
+        return (sltypes[:-1]) if sltypes is not "" else "Actor(" + str(self.name) + ")"
         # return ("(" + str(self.name) + " => (" + sltypes[:-1] + "))") if sltypes is not "" else str(self.name)
 
 
@@ -591,11 +591,11 @@ class m_type(m_declarable):
 
 # Macro
 class m_macro(aalmmnode):
-    def __init__(self, name="", param=[], code=None):
+    def __init__(self, name="", param=None, code=None):
         super().__init__()
         self.name = name
         self.code = code
-        self.param = param
+        self.param = param if param is not None else []
 
     def __str__(self):
         return "MACRO " + str(self.name) + (" (" + " ".join(self.param) + " )" if len(self.param) > 0 else "") \
@@ -624,11 +624,11 @@ class m_ref(aalmmnode):
     def __str__(self):
         return str(self.label)
 
-    def get_refs(self):
+    def get_refs(self, pprint=False):
         return [self]
 
     def to_ltl(self):
-        return self.label # TODO: check
+        return self.label  # TODO: check
 
     def to_nnf(self, bool):
         return self.label  # TODO: check
@@ -687,8 +687,6 @@ class m_aexpAction(m_aexp):
         neg.actionExpression = act
         self.parent.replace(self, neg)
         return neg
-
-
 
 # ActionExp negation
 class m_aexpNotAexp(m_aexp):
@@ -1316,6 +1314,7 @@ class sEnum(Enum):
         else:
             return None
 
+    # noinspection PyMethodMayBeStatic
     def walk(self, filters: str=None, filter_type: type=None, pprint=False):
         #print("child [" + str(self.__class__) + "] : " + str(self))
         return []

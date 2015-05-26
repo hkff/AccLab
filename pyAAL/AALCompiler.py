@@ -34,14 +34,15 @@ from tools.hottie import hot
 from AALChecker import *
 
 
-
-# Note : To avoid cyclic import
+# Note : To avoid cyclic import
 class AALCompilerListener(AALListener.AALListener):
     def __init__(self, loadlibs: bool=True, serialize: bool=False, file: str="",
                  libs_path="libs/aal/", root_path=None, recompile=False, errors_listener=None):
         pass
 
+
 from aalc import *
+
 
 # This class defines a complete listener for a parse tree produced by AALParser.
 @hot
@@ -113,23 +114,22 @@ class AALCompilerListener(AALListener.AALListener):
         else:
             hot = hottie.identity
 
-
     # Manual
     @staticmethod
     def man():
         doc = "Manual for aal compiler visitor\n" \
-            "{autoblue} - Attributes{/blue}" \
-            "\n\t -  aalprog    " + "\t Get the AAL program instance" \
-            "\n\t -  file       " + "\t The AAL source file" \
-            "\n\t -  libs       " + "\t Show the loaded libraries" \
-            "\n\t -  libsPath   " + "\t Print the standard lib path" \
-            ""\
-            "\n{autoblue} - Methods{/blue}" \
-            "\n\t - load_lib(lib_name)  " + "\t Load an aal file" \
-            "\n\t - clause(clauseId)    " + "\t Load an aal file" \
-            "\n\t - show_clauses()      " + "\t Load an aal file" \
-            "\n\t - get_clauses()       " + "\t Load an aal file" \
-            "\n\t - get_macros()        " + "\t Load an aal file"
+              "{autoblue} - Attributes{/blue}" \
+              "\n\t -  aalprog    " + "\t Get the AAL program instance" \
+                                      "\n\t -  file       " + "\t The AAL source file" \
+                                                              "\n\t -  libs       " + "\t Show the loaded libraries" \
+                                                                                      "\n\t -  libsPath   " + "\t Print the standard lib path" \
+                                                                                                              "" \
+                                                                                                              "\n{autoblue} - Methods{/blue}" \
+                                                                                                              "\n\t - load_lib(lib_name)  " + "\t Load an aal file" \
+                                                                                                                                              "\n\t - clause(clauseId)    " + "\t Load an aal file" \
+                                                                                                                                                                              "\n\t - show_clauses()      " + "\t Load an aal file" \
+                                                                                                                                                                                                              "\n\t - get_clauses()       " + "\t Load an aal file" \
+                                                                                                                                                                                                                                              "\n\t - get_macros()        " + "\t Load an aal file"
 
         print(Color(doc))
         return Color(doc)
@@ -153,8 +153,8 @@ class AALCompilerListener(AALListener.AALListener):
 
         lib_path = lib_name.replace('"', '').replace(".", "/") + ".aal"
         # print(root_path)
+        #  Search in the file scope before
         # FIXME
-        # Search in the file scope before
         if not internal:
             lib_path2 = root_path + lib_path
             # print(lib_path2)
@@ -164,18 +164,18 @@ class AALCompilerListener(AALListener.AALListener):
             elif os.path.exists(lib_path2):
                 found_lib_path = lib_path2
 
-            # for root, dirs, files in os.walk(root_path):
-            #     for file in files:
-            #         tmp = os.path.join(root, file)
-            #         if tmp == lib_path2:
-            #             if self.DEBUG:
-            #                 print("file founded 0 ! " + tmp)
-            #             found_lib_path = lib_path2
-            #         elif tmp == lib_path2 + "c" and not self.recompile:
-            #             if self.DEBUG:
-            #                 print("file founded 0 ! " + tmp)
-            #             found_lib_path = lib_path2 + "c"
-            #             break
+                # for root, dirs, files in os.walk(root_path):
+                #     for file in files:
+                #         tmp = os.path.join(root, file)
+                #         if tmp == lib_path2:
+                #             if self.DEBUG:
+                #                 print("file founded 0 ! " + tmp)
+                #             found_lib_path = lib_path2
+                #         elif tmp == lib_path2 + "c" and not self.recompile:
+                #             if self.DEBUG:
+                #                 print("file founded 0 ! " + tmp)
+                #             found_lib_path = lib_path2 + "c"
+                #             break
 
         if found_lib_path is None:
             # Search in internal libs
@@ -186,18 +186,18 @@ class AALCompilerListener(AALListener.AALListener):
             elif os.path.exists(lib_path2):
                 found_lib_path = lib_path2
 
-            # for root, dirs, files in os.walk(root_path):
-            #     for file in files:
-            #         tmp = os.path.join(root, file)
-            #         if tmp == lib_path2:
-            #             if self.DEBUG:
-            #                 print("file founded ! " + tmp)
-            #             found_lib_path = lib_path2
-            #         elif tmp == lib_path2 + "c" and not self.recompile:
-            #             if self.DEBUG:
-            #                 print("file founded ! " + tmp)
-            #             found_lib_path = lib_path2 + "c"
-            #             break
+                # for root, dirs, files in os.walk(root_path):
+                #     for file in files:
+                #         tmp = os.path.join(root, file)
+                #         if tmp == lib_path2:
+                #             if self.DEBUG:
+                #                 print("file founded ! " + tmp)
+                #             found_lib_path = lib_path2
+                #         elif tmp == lib_path2 + "c" and not self.recompile:
+                #             if self.DEBUG:
+                #                 print("file founded ! " + tmp)
+                #             found_lib_path = lib_path2 + "c"
+                #             break
 
         # Try absolute path
         if os.path.exists(lib_name.replace("\"", "")):
@@ -245,7 +245,7 @@ class AALCompilerListener(AALListener.AALListener):
         :return:
         """
         self.aalprog = m_aalprog()
-        #if self.loadlibs:
+        # if self.loadlibs:
         #    self.load_lib("libs/aal/core/types.aal")
 
     # Exit AALprog
@@ -296,11 +296,11 @@ class AALCompilerListener(AALListener.AALListener):
     def exitUsage(self, ctx):
         if len(self.actionExpStack) == 1:
             self.currentUsage.actionExp.append(self.actionExpStack.pop())
-            #self.currentUsage.children.append(self.currentUsage.actionExp[0])  # Add child
+            # self.currentUsage.children.append(self.currentUsage.actionExp[0])  # Add child
             self.currentUsage.actionExp[0].parent = self.currentUsage  # Set parent
 
         self.currentUsage.parent = self.currentClause  # Set the parent
-        #self.currentClause.children.append(self.currentUsage)  # Add to parent's children
+        # self.currentClause.children.append(self.currentUsage)  # Add to parent's children
 
         if self.isRectification:  # Select usage or rectification or audit
             self.currentRectification.usage = self.currentUsage
@@ -317,7 +317,7 @@ class AALCompilerListener(AALListener.AALListener):
     # Exit Audit
     def exitAudit(self, ctx):
         self.currentAudit.parent = self.currentClause  # Set the parent
-        #self.currentClause.children.append(self.currentAudit)  # Add to parent's children
+        # self.currentClause.children.append(self.currentAudit)  # Add to parent's children
 
         self.currentClause.audit = self.currentAudit
         self.isAudit = False
@@ -330,7 +330,7 @@ class AALCompilerListener(AALListener.AALListener):
     # Exit Rectification
     def exitRectification(self, ctx):
         self.currentRectification.parent = self.currentClause  # Set the parent
-        #self.currentClause.children.append(self.currentRectification)  # Add to parent's children
+        # self.currentClause.children.append(self.currentRectification)  # Add to parent's children
 
         self.currentClause.rectification = self.currentRectification
         self.isRectification = False
@@ -405,7 +405,6 @@ class AALCompilerListener(AALListener.AALListener):
             self.aalprog.declarations["agents"].append(ag)  # Add agent to prog declarations
             return ag
         return None
-
 
     # checkDataDec
     def checkDataDec(self, data, declare: bool=True, quant: bool=True) -> None or m_quant or m_data:
@@ -665,7 +664,7 @@ class AALCompilerListener(AALListener.AALListener):
         dtDec = m_type(name=ctx.ID())  # Declare type (put the ID() to keep context)
 
         # Check if type is already declared
-        #print("Type : " + dtName + " " + str(self.aalprog.isDeclared(dtName, m_type)) + " "+ str(dtName in self.refForwardTypes))
+        # print("Type : " + dtName + " " + str(self.aalprog.isDeclared(dtName, m_type)) + " "+ str(dtName in self.refForwardTypes))
         if self.aalprog.isDeclared(dtName, m_type) is True:
             if dtName in self.refForwardTypes:  # Check if type is in forwards ref
                 del self.refForwardTypes[dtName]  # Remove it to resolve forwards ref
@@ -718,7 +717,7 @@ class AALCompilerListener(AALListener.AALListener):
             tm.time = ctx.time().h_date().STRING()
             ac.time = tm
 
-        # TODO: hanle purpose
+            # TODO: hanle purpose
 
     # Enter ActionExp
     def enterActionExp(self, ctx):
@@ -777,7 +776,7 @@ class AALCompilerListener(AALListener.AALListener):
             if len(p.children) > 0:
                 self.actionExpStack[-1].modality = m_modal.fromStr(p.children[0])
             ax.parent = self.actionExpStack[-1]  # Set parent
-            #self.actionExpStack[-1].children.append(ax)  # Add child
+            # self.actionExpStack[-1].children.append(ax)  # Add child
             self.actionExpStack[-1].actionExpression = ax
 
         else:
@@ -828,9 +827,9 @@ class AALCompilerListener(AALListener.AALListener):
 
         # Handle all qvars
         # for qv in ctx.qvar():  # Reverse to get the right order of vars
-        #     qvar = self.qvarsStack.pop()
-            # TODO: check qvar and qv
-            # self.actionExpStack[-1].qvars.insert(0, qvar)
+        # qvar = self.qvarsStack.pop()
+        # TODO: check qvar and qv
+        # self.actionExpStack[-1].qvars.insert(0, qvar)
         self.actionExpStack[-1].qvars.insert(0, self.qvarsStack.pop())
 
         self.actionExpStack[-1].actionExp = aexp
@@ -863,7 +862,7 @@ class AALCompilerListener(AALListener.AALListener):
 
         currentVar = self.currentVar.pop()
         qvar.name = currentVar.name  # Set the name
-        # Set the target
+        #  Set the target
         ref = m_ref()
         ref.label = currentVar.name
         ref.name = currentVar.name
@@ -991,13 +990,13 @@ class AALCompilerListener(AALListener.AALListener):
     def exitLtlCheck(self, ctx):
         ch = m_ltlCheck()
         ch.name = ctx.ID()
-        #ch.code = ctx.check().getText()
+        # ch.code = ctx.check().getText()
         # Simplified handling (without parsing) (use read file to keep spaces)
         a = ctx.check().start.start
         b = ctx.check().stop.stop
         with open(self.file, mode='r') as f:
             res = f.read()
-        ch.code = res[a:int(b)+1]
+        ch.code = res[a:int(b) + 1]
 
         self.aalprog.checks.append(ch)
         if self.DEBUG:
@@ -1025,10 +1024,11 @@ class AALCompilerListener(AALListener.AALListener):
         """
         """
         from aalc import tspassc
+
         if chk is None:
             chk = m_ltlCheck(name="tmp", code=code)
 
-        # Generating LTL formula
+        #  Generating LTL formula
         code = str(chk.code)
         ltl = code
 
@@ -1094,7 +1094,6 @@ class AALCompilerListener(AALListener.AALListener):
         exec(str(ctx.MCODE()).replace('"""', ''))
         pass
 
-
     # Search a macro
     def macro_find(self, macro_name: str=None, args: []=None, strict=True):
         pass
@@ -1122,7 +1121,7 @@ class AALCompilerListener(AALListener.AALListener):
             code += macro.code.replace('"""', '').replace("return", "__res__ = ")  # FIXME
             exec(code)
             # except:
-            #     print("Macro eval error !")
+            # print("Macro eval error !")
 
         else:
             print("Macro not found !")
@@ -1141,7 +1140,7 @@ class AALCompilerListener(AALListener.AALListener):
     ################## Utils/Shortcuts functions ###################
     ################################################################
 
-    #Meta function
+    # Meta function
     def clause(self, clauseId):
         res = [x for x in self.aalprog.clauses if str(x.name) == str(clauseId)]
         if len(res) > 0:
@@ -1181,6 +1180,7 @@ class AALCompilerListener(AALListener.AALListener):
         from grammar.tspass.TSPASSParser import TSPASSParser
         from ASTprinter import Trees2
         from antlr4.InputStream import InputStream
+
         inputfile = InputStream(ltl_code)
         lexer = TSPASSLexer(inputfile)
         stream = CommonTokenStream(lexer)
@@ -1191,8 +1191,10 @@ class AALCompilerListener(AALListener.AALListener):
         print("\n\n\n BT")
         print(bt)
 
-
+    # Test
+    # noinspection PyMethodMayBeStatic
     def test(self, msg, test, expected):
+        # !IMPORTANT! Do not turn this method into static (self may be used inside eval)
         print(Color("{autoblue}------- " + msg + "{/autoblue}"))
         res = eval(test)  # !IMPORTANT! Do not turn this method into static (self may be used inside eval)
         ret = (res == expected)
@@ -1200,5 +1202,6 @@ class AALCompilerListener(AALListener.AALListener):
             print(Color("{autogreen}OK{/autogreen}"))
         else:
             print(Color("{autored}FAILED{/autoblue}"))
-            print("  Found value " + str(res) + " for test " + str(test) + " while " + str(expected) + " was expected !")
+            print("  Found value " + str(res) + " for test " + str(test) + " while " +
+                  str(expected) + " was expected !")
         return ret
