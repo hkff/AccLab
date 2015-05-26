@@ -15,6 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+__author__ = 'walid'
 
 from antlr4.tree.Trees import Trees, RuleNode, ErrorNode, TerminalNode, Tree, ParseTree
 from antlr4.Utils import escapeWhitespace
@@ -22,8 +23,11 @@ from io import StringIO
 from antlr4 import *
 
 
+# Tree2
 class Trees2(Trees):
-
+    """
+    Prety printer for ANTLR 4, that support aal and tspass files
+    """
     @classmethod
     def tspassTree(cls, t: Tree, ruleNames: list=None, recog: Parser=None):
         res = cls.toStringTree(t=t, ruleNames=ruleNames, recog=recog, lg="tspass")
@@ -66,7 +70,6 @@ class Trees2(Trees):
                 buf.write('')
 
             return buf.getvalue()
-
 
     @classmethod
     def getNodeText(cls, t: Tree, ruleNames: list=None, recog: Parser=None):

@@ -15,13 +15,18 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-
-__author__ = 'hkff'
+__author__ = 'walid'
 
 from AALMetaModel import *
 
+
 # Build environment
 def build_env(prog: m_aalprog=None):
+    """
+
+    :param prog:
+    :return:
+    """
     pre_cond = "\n%%%%%%%%% START EVN %%%%%%%%%%%"
     pre_cond += "\n%%% Types knowledge\n"
     for x in prog.get_declared(m_type):
@@ -42,9 +47,9 @@ def build_env(prog: m_aalprog=None):
 # AALtoFOTL
 def AALtoFOTL(mm: aalmm=None):
     """
-
-    :param mm:
-    :return:
+    Generate the
+    :param mm: aal meta model
+    :return: FOTL formula
     """
     print("Entering TSPASS translation...")
     """

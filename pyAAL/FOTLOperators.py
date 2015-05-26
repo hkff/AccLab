@@ -15,12 +15,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-__author__ = 'hkff'
+__author__ = 'walid'
 
 from enum import Enum
 
 
-class LTLOperators(Enum):
+# FOTL operators
+class FOTLOperators(Enum):
     t_equal = '='
     t_not = '~'
     t_and = '&'

@@ -16,8 +16,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+__author__ = 'walid'
 import AALCompiler
-__author__ = 'hkff'
 from AALChecker import *
 from importlib import reload
 import os

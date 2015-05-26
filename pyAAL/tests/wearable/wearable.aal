@@ -54,7 +54,7 @@ CLAUSE r3 (
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
         OR IF ( @displayName(d) ) THEN {
-            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+            PERMIT customer.read[cardioMon](d) AND DENY customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
         OR IF ( @gender(d) )      THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
@@ -320,7 +320,7 @@ CHECK c2() {
   ~(buildenv (clause(r3).ue & clause(r14).ue ) => (clause(up2).ue ))
 """
 }
-//APPLY c2()
+APPLY c2()
 
 
 // Version 3
@@ -361,14 +361,11 @@ CHECK c3() {
    )
 """
 }
-
-// (clause(r15).ue => (clause(up3).ue) )
-// (clause(r15).ue & clause(r14).ue & clause(r3).ue ) => (clause(up3).ue ))
 //APPLY c3()
 
 
 
-
+// (clause(r15).ue & clause(r14).ue & clause(r3).ue ) => (clause(up3).ue ))
 //call validate("'r3'" "'up3'")
 CHECK c4() {
 """

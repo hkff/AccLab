@@ -63,7 +63,7 @@ TODO doc
 
 
 from enum import Enum
-from LTLOperators import *
+from FOTLOperators import *
 from tools.color import Color
 from tools.hottie import hot
 # TODO: add until to modals
@@ -1399,29 +1399,29 @@ class m_booleanOp(sEnum):
 
     def to_ltl(self):
         if self == m_booleanOp.O_and:
-            return str(LTLOperators.t_and)
+            return str(FOTLOperators.t_and)
         elif self == m_booleanOp.O_or:
-            return str(LTLOperators.t_or)
+            return str(FOTLOperators.t_or)
         elif self == m_booleanOp.O_onlywhen:
             return "not supported"
         elif self == m_booleanOp.O_if:
             return "not supported"
         elif self == m_booleanOp.O_then:
-            return str(LTLOperators.t_implication)
+            return str(FOTLOperators.t_implication)
         elif self == m_booleanOp.O_after:
             return "not supported"
         elif self == m_booleanOp.O_before:
             return "not supported"
         elif self == m_booleanOp.O_not:
-            return str(LTLOperators.t_not)
+            return str(FOTLOperators.t_not)
         elif self == m_booleanOp.O_equal:
             return "EQUAL"
         elif self == m_booleanOp.O_inequal:
             return "~EQUAL"
         elif self == m_modal.T_until:
-            return str(LTLOperators.t_until)
+            return str(FOTLOperators.t_until)
         elif self == m_modal.T_unless:
-            return str(LTLOperators.t_unless)
+            return str(FOTLOperators.t_unless)
 
 # Author
 class m_author(sEnum):
@@ -1448,9 +1448,9 @@ class m_quant(sEnum):
 
     def to_ltl(self):
         if self == m_quant.Q_forall:
-            return str(LTLOperators.t_forall)
+            return str(FOTLOperators.t_forall)
         elif self == m_quant.Q_exists:
-            return str(LTLOperators.t_exists)
+            return str(FOTLOperators.t_exists)
 
     def to_natural(self, kw=True):
         if self == m_quant.Q_forall:
@@ -1481,15 +1481,15 @@ class m_modal(sEnum):
 
     def to_ltl(self):
         if self == m_modal.T_must:
-            return str(LTLOperators.t_sometime)
+            return str(FOTLOperators.t_sometime)
         elif self == m_modal.T_mustnot:
-            return str(LTLOperators.t_always) + "(" + str(LTLOperators.t_not)
+            return str(FOTLOperators.t_always) + "(" + str(FOTLOperators.t_not)
         elif self == m_modal.T_always:
-            return str(LTLOperators.t_always)
+            return str(FOTLOperators.t_always)
         elif self == m_modal.T_never:
-            return str(LTLOperators.t_not) + " " + str(LTLOperators.t_always)
+            return str(FOTLOperators.t_not) + " " + str(FOTLOperators.t_always)
         elif self == m_modal.T_sometime:
-            return str(LTLOperators.t_sometime)
+            return str(FOTLOperators.t_sometime)
 
     def to_nnf(self, bool):
         if bool:

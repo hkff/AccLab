@@ -12,17 +12,6 @@ TYPE public EXTENDS(data)
 TYPE username EXTENDS(sensitive)
 
 /*
-<xacml:Resource>
-    <xacml:ResourceMatch
-        MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-        <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">username</xacml:AttributeValue>
-        <xacml:ResourceAttributeDesignator
-            DataType="http://www.w3.org/2001/XMLSchema#string" AttributeId="resource:resource-type" />
-    </xacml:ResourceMatch>
-</xacml:Resource>
-*/
-
-/*
  * Password
  * The password used as user credentials, along with the username, to log in to the Wearable Service
  * Sensitive PII

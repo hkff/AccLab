@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-__author__ = 'hkff'
+__author__ = 'walid'
 # TODO check p valid and u valid
 
 from AALMetaModel import *
@@ -100,7 +100,8 @@ def check_aal(mm=None, verbose=False):
 def check_monodic(node=None, verbose: bool=False):
     """
 
-    :param node:
+    :param node: an AAL metaModel node
+    :param verbose: verbose output
     :return:
     """
     p = {"monodic": True, "info": []}

@@ -18,6 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from __future__ import absolute_import, division
+__author__ = 'walid'
 from collections import defaultdict
 from functools import wraps
 from inspect import isclass, isfunction
@@ -26,7 +27,6 @@ import sys
 from time import sleep
 from weakref import WeakSet
 
-
 functions = {}
 classes = {}
 instances = defaultdict(WeakSet)
@@ -34,6 +34,11 @@ module_mtimes = {}
 
 
 def identity(obj):
+    """
+    Identity function
+    :param obj: an object
+    :return: the given object
+    """
     return obj
 
 

@@ -15,8 +15,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-__author__ = 'hkff'
-from AALMetaModel import *
+__author__ = 'walid'
+
 import webbrowser
 from http.server import SimpleHTTPRequestHandler
 from http.server import HTTPServer
@@ -26,6 +26,10 @@ from AALMetaModel import *
 
 # Run server in thread
 def run_server():
+    """
+    Run a localhost server on port 9025
+    :return:
+    """
     server_address = ('', 9025)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
     try:
@@ -37,6 +41,11 @@ def run_server():
 
 # Show ast
 def show_ast(aalprog: m_aalprog):
+    """
+    Show the abstract syntax tree of an aal program in a interactive web page
+    :param aalprog: the aal program
+    :return:
+    """
     ast = aalprog.to_ast()
     ast = ast[:-1]
     with open("tools/visu/ast.json", mode='w') as f:
@@ -56,5 +65,8 @@ def show_ast(aalprog: m_aalprog):
     with open("tools/visu/ast_stat.json", mode='w') as f:
         f.write(ast_stat)
 
-    threading.Thread(target=run_server).start()
-    webbrowser.open("http://127.0.0.1:9025/tools/visu/tree.html", new=2)
+    try:
+        threading.Thread(target=run_server).start()
+        webbrowser.open("http://127.0.0.1:9025/tools/visu/tree.html", new=2)
+    except KeyboardInterrupt:
+        print("Stoping server...")

@@ -15,11 +15,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-__author__ = 'hkff'
+__author__ = 'walid'
+
 from grammar.tspass.TSPASSListener import *
+# TODO: in test
 
 
+# Action
 class Action():
+    """
+
+    """
     def __init__(self, action=None, sender=None, receiver=None, data=None):
         self.action = action
         self._action = action

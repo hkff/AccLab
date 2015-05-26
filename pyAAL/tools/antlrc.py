@@ -15,8 +15,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+__author__ = 'walid'
 
-__author__ = 'hkff'
+# A basic script that generate calls antlr on AAL/TSPASS grammar files
+
 import sys
 import os
 

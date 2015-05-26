@@ -24,11 +24,13 @@ import sys
 import os
 import platform
 
+
 # Check environment
 def check_env():
     python_version = platform.python_version()
     machine = platform.machine()
     system = platform.system()
+
     if python_version < '3.4':
         print("Python 3.4.x needed :: current version " + python_version)
         sys.exit(-1)
@@ -42,6 +44,7 @@ def check_env():
         print(Color("{autored}[Warning] You need to install readline module to use the shell.{/red}\n" +
                     "Please visit {autogreen}https://pypi.python.org/pypi/readline{/green}\n"))
 
+# Check the environment
 check_env()
 
 
@@ -53,7 +56,7 @@ from antlr4.error.ErrorListener import ErrorListener
 from grammar.aal.AALLexer import AALLexer
 from grammar.aal.AALParser import AALParser
 #from grammar.AALListener import AALListener
-# from behave import runner
+#from behave import runner
 from antlr4.tree.Trees import Trees
 from subprocess import Popen, PIPE
 from ASTprinter import Trees2
@@ -69,6 +72,7 @@ import getopt
 import time
 import io
 import cProfile
+
 
 # DescriptiveErrorListener
 class DescriptiveErrorListener(ErrorListener):
@@ -285,6 +289,7 @@ def main(argv):
                         "For more information see AccLab home page\n Usage : aalc.py [OPTIONS]" +\
         "\n  -h \t--help          " + "\t display this help and exit" +\
         "\n  -i \t--input         " + "\t the input file" +\
+        "\n  -i \t--output         " + "\t the output file" +\
         "\n  -c \t--compile       " + "\t compile the file, that can be loaded after using -l" +\
         "\n  -m \t--monodic       " + "\t apply monodic check on aal file" +\
         "\n  -s \t--shell         " + "\t run a shell after handling aal program" +\
@@ -313,11 +318,12 @@ def main(argv):
     show_ast = False
     synth = False
     reparse = False
+    outputfile = "tests/tmp.tspass"
 
     # Checking options
     try:
         opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaSr",
-                                   ["help", "input=", "ofile=", "compile", "monodic",
+                                   ["help", "input=", "output=", "compile", "monodic",
                                    "shell", "check", "load", "recompile", "init",
                                    "no-colors", "compile-stdlib", "hotswap", "ast", "synth", "reparse"])
     except getopt.GetoptError:
@@ -391,7 +397,7 @@ def main(argv):
         print(res["res"])
 
     elif inputfile.endswith(".tspass"):  # Use tspass compiler
-        res = tspassc(inputfile, use_shell=False, debug=False, synth=synth, reparse=reparse)
+        res = tspassc(inputfile, output=outputfile, use_shell=False, debug=False, synth=synth, reparse=reparse)
         print(res["print"])
 
 
