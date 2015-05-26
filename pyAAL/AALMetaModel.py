@@ -15,7 +15,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-__author__ = 'hkff'
+__author__ = 'walid'
 
 """
 TODO doc
@@ -1423,6 +1423,7 @@ class m_booleanOp(sEnum):
         elif self == m_modal.T_unless:
             return str(FOTLOperators.t_unless)
 
+
 # Author
 class m_author(sEnum):
     A_permit = "PERMIT"
@@ -1434,7 +1435,7 @@ class m_author(sEnum):
         elif self == m_author.A_deny:
             return "~P"
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         if self == m_author.A_permit:
             return  ""
         elif self == m_author.A_deny:
@@ -1501,6 +1502,7 @@ class m_modal(sEnum):
                 return str(m_modal.T_sometime)
             if self==m_modal.T_sometime:
                 return str(m_modal.T_never)
+
 
 # Get AALMetaModel classes
 def get_mm_classes():

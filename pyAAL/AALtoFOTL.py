@@ -23,9 +23,9 @@ from AALMetaModel import *
 # Build environment
 def build_env(prog: m_aalprog=None):
     """
-
-    :param prog:
-    :return:
+    Build the environment
+    :param prog: AAL program
+    :return: the environment
     """
     pre_cond = "\n%%%%%%%%% START EVN %%%%%%%%%%%"
     pre_cond += "\n%%% Types knowledge\n"
@@ -47,7 +47,7 @@ def build_env(prog: m_aalprog=None):
 # AALtoFOTL
 def AALtoFOTL(mm: aalmm=None):
     """
-    Generate the
+    Generate the FOTL formula of the given aal prgram
     :param mm: aal meta model
     :return: FOTL formula
     """

@@ -1,0 +1,51 @@
+// Loading libraries
+LOAD "core.types"
+LOAD "core.macros"
+LOAD "core.eu"
+
+// Agent Declarations
+AGENT kim TYPES(DataSubject) REQUIRED(access) PROVIDED(sensor)
+AGENT cloudX TYPES(DataProcessor) REQUIRED(storage sensor) PROVIDED(access)
+
+// Service Declarations
+SERVICE sensor TYPES() PURPOSE()
+SERVICE access TYPES() PURPOSE()
+
+/*** Kim's user preference ***/
+CLAUSE kim_policy (
+    FORALL d:data WHERE d.subject == kim
+    FORALL a:agent
+    PERMIT kim.read[cloudX](d)
+    AND PERMIT kim.read[cloudX](d)
+    AND PERMIT kim.write[cloudX](d)
+    AND PERMIT kim.delete[cloudX](d)
+    AND PERMIT cloudX.sensors[kim](d)
+    AND cloudX.delete[d]() BEFORE "3 Years"
+    AND IF(a.read[cloudX](d)) THEN (MUST(cloudX.notify[kim]()))
+    AUDITING leslie.audit[cloudS]()
+    IF_VIOLATED_THEN MUST(leslie.sanction[cloudX]() AND cloudX.delete[d]())
+)
+
+/*** CloudX's policy ***/
+CLAUSE cloudX_policy (
+    FORALL a:agent FORALL d:data WHERE d.subject == a
+    FORALL b:agent
+    PERMIT a.read[cloudX](d)
+    AND PERMIT a.read[cloudX](d)
+    AND PERMIT a.write[cloudX](d)
+    AND PERMIT a.delete[cloudX](d)
+    AND PERMIT cloudX.sensors[a](d)
+    AND PERMIT cloudX.storage[cloudY](d)
+    AND cloudX.delete[d]() BEFORE "2 Years"
+    AND IF(b.read[cloudX](d)) THEN (MUST(cloudX.notify[a]()))
+    AND IF(cloudX.storage[cloudY](d)) THEN (MUST(cloudX.log[cloudX]()))
+    AUDITING leslie.audit[cloudX]()
+    IF_VIOLATED_THEN leslie.sanction[cloudX]()
+)
+
+
+CALL obligations()
+
+CALL obligation31()
+
+CALL obligation()

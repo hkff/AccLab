@@ -22,6 +22,9 @@ from enum import Enum
 
 # FOTL operators
 class FOTLOperators(Enum):
+    """
+    Fotl operators in tspass syntax
+    """
     t_equal = '='
     t_not = '~'
     t_and = '&'

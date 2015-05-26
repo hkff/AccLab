@@ -45,7 +45,7 @@ CLAUSE r3 (
     FORALL d:data FORALL customer:Customer
     IF ( d.subject == customer )   THEN {
         IF ( @username(d) )        THEN {
-            PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
+            DENY customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
         }
         OR IF ( @password(d) )    THEN {
             PERMIT customer.read[cardioMon](d) AND PERMIT customer.update[cardioMon](d) AND PERMIT customer.delete[cardioMon](d)
@@ -354,6 +354,7 @@ CLAUSE up3 (
 
 CHECK c3() {
 """
+  @verbose
   buildenv
   (sixMonths => fiveMonths) & (sevenMonths => sixMonths) &
   ~(
@@ -361,7 +362,7 @@ CHECK c3() {
    )
 """
 }
-//APPLY c3()
+APPLY c3()
 
 
 

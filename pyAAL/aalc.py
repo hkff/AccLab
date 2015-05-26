@@ -36,13 +36,14 @@ def check_env():
         sys.exit(-1)
 
     if sys.platform.startswith("win"):
-        Windows.enable()
+        # Windows.enable()
+        print("WARNING : TSPASS prover will not work under windows")
 
     try:
         import readline
     except:
-        print(Color("{autored}[Warning] You need to install readline module to use the shell.{/red}\n" +
-                    "Please visit {autogreen}https://pypi.python.org/pypi/readline{/green}\n"))
+        print("[Warning] You need to install readline module to use the shell.\n" +
+                    "Please visit https://pypi.python.org/pypi/readline\n")
 
 # Check the environment
 check_env()
@@ -260,12 +261,11 @@ def tspassc(file=None, code="", output="tests/tmp.tspass", use_shell=False, debu
 
 
 # Compile the standard AAL lib
-def compile_stdlib():
+def compile_stdlib(libs_path):
     """
     Compile the standard AAL library (all AAL files in libs/aal/)
     :return:
     """
-    libs_path = "libs/aal/"
     for root, dirs, files in os.walk(libs_path):
         for file in files:
             tmp = os.path.join(root, file)
@@ -302,6 +302,7 @@ def main(argv):
         "\n  -x \t--compile-stdlib" + "\t compile the standard library" +\
         "\n  -d \t--hotswap       " + "\t enable hotswaping (for development only)" +\
         "\n  -a \t--ast           " + "\t show ast tree" +\
+        "\n  - \t--sdtlib         " + "\t set the standard library path" +\
         "\n\nReport aalc bugs to walid.benghabrit@mines-nantes.fr" +\
         "\nAccLab home page: <http://www.emn.fr/z-info/acclab/>" +\
         "\naalc is a free software released under GPL 3"
@@ -319,6 +320,10 @@ def main(argv):
     synth = False
     reparse = False
     outputfile = "tests/tmp.tspass"
+
+    # Check libs path
+    install_path = os.environ.get('PYAAL_INSTALL_DIR')
+    libs_path = (install_path + "/" if install_path is not None else "") + "libs/aal/"
 
     # Checking options
     try:
@@ -340,7 +345,7 @@ def main(argv):
             sys.exit()
         elif opt in ("-i", "--input"):
             inputfile = arg
-        elif opt in ("-o", "--ofile"):
+        elif opt in ("-o", "--output"):
             outputfile = arg
         elif opt in ("-c", "--compile"):
             compile = True
@@ -361,7 +366,7 @@ def main(argv):
         elif opt in ("-b", "--no-colors"):
             disable_all_colors()
         elif opt in ("-x", "--compile-stdlib"):
-            compile_stdlib()
+            compile_stdlib(libs_path)
             return
         elif opt in ("-d", "--hotswap"):
             hotswaping = True
@@ -393,7 +398,7 @@ def main(argv):
 
     elif inputfile.endswith(".aal"):  # Use AAL compiler
         res = aalc(inputfile, use_shell=use_shell, check=check, monodic=monodic, compile=compile, recompile=recompile,
-             to_ltl=to_ltl, show_ast=show_ast)
+             to_ltl=to_ltl, show_ast=show_ast, libs_path=libs_path)
         print(res["res"])
 
     elif inputfile.endswith(".tspass"):  # Use tspass compiler
@@ -403,5 +408,5 @@ def main(argv):
 
 # Call the main
 if __name__ == '__main__':
-   # cProfile.run('')
+   # cProfile.run('main(sys.argv)')
    main(sys.argv)

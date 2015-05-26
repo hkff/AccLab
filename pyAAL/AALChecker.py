@@ -24,7 +24,8 @@ from tools.color import *
 from AALtoFOTL import *
 DEBUG = False
 
-# TODO optimize pre_cond... to remove
+# TODO optimize pre_cond...  to remove
+# -------------------------------------------------------------
 pre_cond = "(oneMonth => twoMonths) & " + "(oneMonth => threeMonths) & " + "(oneMonth => fourMonths) & " +\
             "(oneMonth => fiveMonths) & " + "(oneMonth => sixMonths) & " + "(oneMonth => sevenMonths) & " +\
             "(oneMonth => eightMonths) & " + "(oneMonth => nineMonths) & " + "(oneMonth => tenMonths) & " +\
@@ -59,11 +60,20 @@ pre_cond += pre_condYears + pre_condDays
 
 pre_cond += "always( ![a,x,y,z] ~(PERMIT(a, x, y, z) & DENY(a, x, y, z))) &  "  # Translation not valid
 
+# -------------------------------------------------------------
 pre_cond = ""
 
 
 # Check AAL global
 def check_aal(mm=None, verbose=False):
+    """
+
+    :param mm:
+    :param verbose:
+    :return:
+    """
+    # TODO : make it user friendly
+    # TODO : add some stats
     res = ""
     res += "------------------------- Checking Monodic test -------------------------"
     if verbose:
@@ -99,7 +109,8 @@ def check_aal(mm=None, verbose=False):
 # Check if aal node expression is monodic
 def check_monodic(node=None, verbose: bool=False):
     """
-
+    Check if the node is monodic fragment. A monodic fragment is an FOTL formula that contains at least one
+    free variable inside a temporal modality
     :param node: an AAL metaModel node
     :param verbose: verbose output
     :return:
@@ -136,15 +147,14 @@ def check_monodic(node=None, verbose: bool=False):
     return p
 
 
-# TODO: check forwards refs before ! this can make monodic test wrong
+# TODO: check forwards refs before ! this can make monodic test wrong ??
 # checkMonadic Exp
 def check_monodic_exp(aexp: m_aexp):
     """
-    Check if an expression is monodic
-    :param aexp:
-    :return:
+    Check if an action expression is monodic
+    :param aexp: the action expression
+    :return: {"monodic": boolean , "info": detailled result}
     """
-    # quant modal( at least one var )
     res = True
     info = []
 
@@ -155,6 +165,7 @@ def check_monodic_exp(aexp: m_aexp):
         # TODO: conditions info
         if not res:
             info.append({"exp": aexp, "vars": free_vars})
+
     # Handle in children
     if isinstance(aexp, aalmmnode) or isinstance(aexp, sEnum):
         for child in aexp.children():
@@ -178,10 +189,10 @@ def get_linked_vars(aexp: m_aexp):
 # Get_vars TODO: handle shadowed vars
 def get_vars(aexp: m_aexp, vtype=None):
     """
-
-    :param aexp:
-    :param vtype:
-    :return:
+    Get all variables of type vtype in the action expression aexp
+    :param aexp: the action expression to explore
+    :param vtype: free | linked
+    :return: array of vars
     """
     res = []
     refs = aexp.get_refs()  # Get all used refs in the aexp
@@ -191,7 +202,7 @@ def get_vars(aexp: m_aexp, vtype=None):
         for y in qrefs:
             if str(x.name) == str(y.name) and (x is not y):
                 qrefs.remove(y)
-    #print(qrefs)
+
     quant = aexp.walk(filter_type=m_qvar)  # Get all quantification inside the aexp
 
     if DEBUG:
@@ -208,6 +219,7 @@ def get_vars(aexp: m_aexp, vtype=None):
         for x in quant:
             print(x)
         print("------")
+
     if vtype == "free":  # Get free vars
         # For all quantified vars check if the quantification is not declared inside
         for q in qrefs:
@@ -224,7 +236,16 @@ def get_vars(aexp: m_aexp, vtype=None):
 
 
 # Check validity
-def validate(compiler, c1, c2, resolve=False, verbose=False):
+def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
+    """
+    Perform validity test between two aal clauses
+    :param compiler: the compiler instance
+    :param c1: clause 1
+    :param c2: clause 2
+    :param resolve: try to detect conflicts if exists
+    :param verbose: verbose print
+    :return:
+    """
     # TODO  check if c1 and c2 exists
 
     # Monodic test
@@ -249,7 +270,8 @@ def validate(compiler, c1, c2, resolve=False, verbose=False):
     pre_cond = build_env(compiler.aalprog)
 
     print("----- Checking c1 & c2 consistency :")
-    res = compiler.apply_check(code=pre_cond + "clause(" + c1_Id + ").ue & clause(" + c2_Id + ").ue", show=False, verbose=verbose)
+    res = compiler.apply_check(code=pre_cond + "clause(" + c1_Id + ").ue & clause(" + c2_Id + ").ue",
+                               show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
 
@@ -262,7 +284,8 @@ def validate(compiler, c1, c2, resolve=False, verbose=False):
         print(res["print"])
 
     print("----- Checking c1 => c2 :")
-    res = compiler.apply_check(code="always(" + pre_cond + "clause(" + c1_Id + ").ue => clause(" + c2_Id + ").ue)", show=False, verbose=verbose)
+    res = compiler.apply_check(code="always(" + pre_cond + "clause(" + c1_Id + ").ue => clause(" + c2_Id + ").ue)",
+                               show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         v = False
         print(Color("{autored}  -> " + res["res"] + "{/red}"))
@@ -273,7 +296,8 @@ def validate(compiler, c1, c2, resolve=False, verbose=False):
         print(res["print"])
 
     print("----- Checking ~(c1 => c2) :")
-    res = compiler.apply_check(code="~(always(" + pre_cond + "clause(" + c1_Id + ").ue => clause(" + c2_Id + ").ue))", show=False, verbose=verbose)
+    res = compiler.apply_check(code="~(always(" + pre_cond + "clause(" + c1_Id + ").ue => clause(" + c2_Id + ").ue))",
+                               show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
     else:
@@ -347,8 +371,16 @@ def validate2(compiler, c1, check: bool=False):
 
 # Check authorisations
 def solve_auth(compiler, p=None, u=None, verbose=False, resolve=False):
+    """
+
+    :param compiler:
+    :param p:
+    :param u:
+    :param verbose:
+    :param resolve:
+    :return:
+    """
     print(Color("{autoblue}:: Solving authorization{/blue}"))
-    # pre_cond = "always( ![a,x,y,z] ~(PERMIT(a, x, y, z) & DENY(a, x, y, z))) &  "
     u_Id = str(u.name)
     p_Id = str(p.name)
 
@@ -376,6 +408,15 @@ def solve_auth(compiler, p=None, u=None, verbose=False, resolve=False):
 
 # Check triggers
 def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
+    """
+
+    :param compiler:
+    :param p:
+    :param u:
+    :param verbose:
+    :param resolve:
+    :return:
+    """
     # FIXME this is adhoc
     print(Color("{autoblue}:: Solving trigger{/blue}"))
     # pre_cond = "always( ![a,x,y,z] ~(PERMIT(a, x, y, z) & DENY(a, x, y, z))) &  "
