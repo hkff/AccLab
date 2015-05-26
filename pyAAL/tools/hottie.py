@@ -17,8 +17,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-from __future__ import absolute_import, division
+from __future__ import absolute_import, division  # IMPORTANT : keep this import here
 __author__ = 'walid'
+
+"""
+ MetaProg Papy
+
+ Hotswaping objects at runtime utils.
+ Use it for development only, since it produces an important overhead.
+"""
+
 from collections import defaultdict
 from functools import wraps
 from inspect import isclass, isfunction

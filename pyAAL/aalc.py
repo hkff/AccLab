@@ -163,7 +163,7 @@ def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, co
 
 
 # tspassc
-def tspassc(file=None, code="", output="tests/tmp.tspass", use_shell=False, debug: bool=False,
+def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: bool=False,
             synth: bool=False, reparse: bool=False):
     """
     Parse tspass
@@ -319,7 +319,7 @@ def main(argv):
     show_ast = False
     synth = False
     reparse = False
-    outputfile = "tests/tmp.tspass"
+    outputfile = "tmp.tspass"
 
     # Check libs path
     install_path = os.environ.get('PYAAL_INSTALL_DIR')

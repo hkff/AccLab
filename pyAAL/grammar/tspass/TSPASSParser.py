@@ -47,7 +47,7 @@ def serializedATN():
         buf.write("\2\2\66\u00fc\3\2\2\28\u00fe\3\2\2\2:\u0100\3\2\2\2<=")
         buf.write("\7\32\2\2=\3\3\2\2\2>?\7\17\2\2?\5\3\2\2\2@A\7\t\2\2A")
         buf.write("\7\3\2\2\2BC\7\24\2\2C\t\3\2\2\2DE\7\7\2\2E\13\3\2\2\2")
-        buf.write("FG\7\4\2\2G\r\3\2\2\2HI\7\25\2\2I\17\3\2\2\2JK\7\n\2\2")
+        buf.write("FG\7\3\2\2G\r\3\2\2\2HI\7\25\2\2I\17\3\2\2\2JK\7\n\2\2")
         buf.write("K\21\3\2\2\2LM\7\31\2\2M\23\3\2\2\2NO\5\26\f\2O\25\3\2")
         buf.write("\2\2PQ\b\f\1\2QU\5\30\r\2RT\7 \2\2SR\3\2\2\2TW\3\2\2\2")
         buf.write("US\3\2\2\2UV\3\2\2\2V\u0082\3\2\2\2WU\3\2\2\2XY\5 \21")
@@ -102,18 +102,18 @@ def serializedATN():
         buf.write("\u00de\7\36\2\2\u00da\u00db\7\6\2\2\u00db\u00dd\7\36\2")
         buf.write("\2\u00dc\u00da\3\2\2\2\u00dd\u00e0\3\2\2\2\u00de\u00dc")
         buf.write("\3\2\2\2\u00de\u00df\3\2\2\2\u00df\u00e1\3\2\2\2\u00e0")
-        buf.write("\u00de\3\2\2\2\u00e1\u00e2\7\4\2\2\u00e2+\3\2\2\2\u00e3")
+        buf.write("\u00de\3\2\2\2\u00e1\u00e2\7\3\2\2\u00e2+\3\2\2\2\u00e3")
         buf.write("\u00e4\7\r\2\2\u00e4\u00e5\7\7\2\2\u00e5\u00ea\7\36\2")
         buf.write("\2\u00e6\u00e7\7\6\2\2\u00e7\u00e9\7\36\2\2\u00e8\u00e6")
         buf.write("\3\2\2\2\u00e9\u00ec\3\2\2\2\u00ea\u00e8\3\2\2\2\u00ea")
         buf.write("\u00eb\3\2\2\2\u00eb\u00ed\3\2\2\2\u00ec\u00ea\3\2\2\2")
-        buf.write("\u00ed\u00ee\7\4\2\2\u00ee-\3\2\2\2\u00ef\u00f3\5\62\32")
+        buf.write("\u00ed\u00ee\7\3\2\2\u00ee-\3\2\2\2\u00ef\u00f3\5\62\32")
         buf.write("\2\u00f0\u00f3\5\64\33\2\u00f1\u00f3\5\66\34\2\u00f2\u00ef")
         buf.write("\3\2\2\2\u00f2\u00f0\3\2\2\2\u00f2\u00f1\3\2\2\2\u00f3")
         buf.write("/\3\2\2\2\u00f4\u00f7\58\35\2\u00f5\u00f7\5:\36\2\u00f6")
         buf.write("\u00f4\3\2\2\2\u00f6\u00f5\3\2\2\2\u00f7\61\3\2\2\2\u00f8")
         buf.write("\u00f9\7\27\2\2\u00f9\63\3\2\2\2\u00fa\u00fb\7\20\2\2")
-        buf.write("\u00fb\65\3\2\2\2\u00fc\u00fd\7\3\2\2\u00fd\67\3\2\2\2")
+        buf.write("\u00fb\65\3\2\2\2\u00fc\u00fd\7\4\2\2\u00fd\67\3\2\2\2")
         buf.write("\u00fe\u00ff\7\16\2\2\u00ff9\3\2\2\2\u0100\u0101\7\13")
         buf.write("\2\2\u0101;\3\2\2\2\31U]emu~\u0081\u0087\u008f\u0096\u009b")
         buf.write("\u00a2\u00ab\u00ae\u00b0\u00b7\u00bc\u00c0\u00c5\u00de")
@@ -167,7 +167,7 @@ class TSPASSParser ( Parser ):
     STRING=33
     COMMENT=34
 
-    tokenNames = [ "<INVALID>", "'sometime'", "']'", "'&'", "','", "'['", 
+    tokenNames = [ "<INVALID>", "']'", "'sometime'", "'&'", "','", "'['", 
                    "'not'", "'('", "':'", "'unless'", "'false'", "'?'", 
                    "'until'", "'y'", "'next'", "'true'", "'->'", "'=>'", 
                    "')'", "'.'", "'<->'", "'always'", "'<=>'", "'='", "'x'", 
@@ -432,7 +432,7 @@ class TSPASSParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 68
-            self.match(self.T__25)
+            self.match(self.T__26)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -750,7 +750,7 @@ class TSPASSParser ( Parser ):
                     _alt = self._interp.adaptivePredict(self._input,3,self._ctx)
 
 
-            elif token in [self.T__26, self.T__13, self.T__6]:
+            elif token in [self.T__25, self.T__13, self.T__6]:
                 self.state = 110 
                 self.utOperators()
                 self.state = 111 
@@ -1394,7 +1394,7 @@ class TSPASSParser ( Parser ):
                 _la = self._input.LA(1)
 
             self.state = 223
-            self.match(self.T__25)
+            self.match(self.T__26)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1455,7 +1455,7 @@ class TSPASSParser ( Parser ):
                 _la = self._input.LA(1)
 
             self.state = 235
-            self.match(self.T__25)
+            self.match(self.T__26)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1513,7 +1513,7 @@ class TSPASSParser ( Parser ):
                 self.state = 238 
                 self.snext()
 
-            elif token in [self.T__26]:
+            elif token in [self.T__25]:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 239 
                 self.sometime()
@@ -1687,7 +1687,7 @@ class TSPASSParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 250
-            self.match(self.T__26)
+            self.match(self.T__25)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)

@@ -686,7 +686,7 @@
                     <ob:Flag>false</ob:Flag>
                 </ob:ActionLog>
             </ob:Obligation>
-<!-- Notify DS whenever access is denied -->
+            <!-- Notify DS whenever access is denied -->
             <ob:Obligation elementId="a-ppl_rule_10">
                 <ob:TriggersSet>
                     <ob:TriggerPersonalDataAccessDenied />
