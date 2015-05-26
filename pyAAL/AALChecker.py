@@ -22,7 +22,6 @@ from AALMetaModel import *
 from pprint import pprint
 from tools.color import *
 from AALtoFOTL import *
-DEBUG = False
 
 # TODO optimize pre_cond...  to remove
 # -------------------------------------------------------------
@@ -67,9 +66,9 @@ pre_cond = ""
 # Check AAL global
 def check_aal(mm=None, verbose=False):
     """
-
-    :param mm:
-    :param verbose:
+    Check an AAL program
+    :param mm: AAL metamodel instance
+    :param verbose: verbose print
     :return:
     """
     # TODO : make it user friendly
@@ -103,9 +102,6 @@ def check_aal(mm=None, verbose=False):
     return res
 
 
-##########################
-#### Utils functions #####
-##########################
 # Check if aal node expression is monodic
 def check_monodic(node=None, verbose: bool=False):
     """
@@ -205,20 +201,21 @@ def get_vars(aexp: m_aexp, vtype=None):
 
     quant = aexp.walk(filter_type=m_qvar)  # Get all quantification inside the aexp
 
-    if DEBUG:
-        print(aexp)
-        print("---- refs : -----")
-        for x in refs:
-            print(str(x) + "  " + str(x.target.__class__))
-        print("------")
-        print("---- Qrefs : -----")
-        for x in qrefs:
-            print(x)
-        print("------")
-        print("----- Quants : -----")
-        for x in quant:
-            print(x)
-        print("------")
+
+    # if DEBUG:
+    #     print(aexp)
+    #     print("---- refs : -----")
+    #     for x in refs:
+    #         print(str(x) + "  " + str(x.target.__class__))
+    #     print("------")
+    #     print("---- Qrefs : -----")
+    #     for x in qrefs:
+    #         print(x)
+    #     print("------")
+    #     print("----- Quants : -----")
+    #     for x in quant:
+    #         print(x)
+    #     print("------")
 
     if vtype == "free":  # Get free vars
         # For all quantified vars check if the quantification is not declared inside
@@ -235,7 +232,7 @@ def get_vars(aexp: m_aexp, vtype=None):
         return res
 
 
-# Check validity
+# Check validity between two clauses
 def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
     """
     Perform validity test between two aal clauses
@@ -264,13 +261,13 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
 
     v = False
     print("------------------------- Starting Validity check -------------------------")
-    c1_Id = str(c1.name)
-    c2_Id = str(c2.name)
-    print("c1 : " + c1_Id + "\nc2 : " + c2_Id)
+    c1_id = str(c1.name)
+    c2_id = str(c2.name)
+    print("c1 : " + c1_id + "\nc2 : " + c2_id)
     pre_cond = build_env(compiler.aalprog)
 
     print("----- Checking c1 & c2 consistency :")
-    res = compiler.apply_check(code=pre_cond + "clause(" + c1_Id + ").ue & clause(" + c2_Id + ").ue",
+    res = compiler.apply_check(code=pre_cond + "clause(" + c1_id + ").ue & clause(" + c2_id + ").ue",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
@@ -284,7 +281,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
         print(res["print"])
 
     print("----- Checking c1 => c2 :")
-    res = compiler.apply_check(code="always(" + pre_cond + "clause(" + c1_Id + ").ue => clause(" + c2_Id + ").ue)",
+    res = compiler.apply_check(code="always(" + pre_cond + "clause(" + c1_id + ").ue => clause(" + c2_id + ").ue)",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         v = False
@@ -296,7 +293,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
         print(res["print"])
 
     print("----- Checking ~(c1 => c2) :")
-    res = compiler.apply_check(code="~(always(" + pre_cond + "clause(" + c1_Id + ").ue => clause(" + c2_Id + ").ue))",
+    res = compiler.apply_check(code="~(always(" + pre_cond + "clause(" + c1_id + ").ue => clause(" + c2_id + ").ue))",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
@@ -320,7 +317,16 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
     return ""
 
 
-def validate2(compiler, c1, check: bool=False):
+# Check validity / satisfiability
+def validate2(compiler, c1, check: bool=False, verbose: bool=False):
+    """
+    Perform validity/satisfiability test of an FOTL formula
+    :param compiler: the compiler instance
+    :param c1: formula
+    :param check: True -> performs a sat test; False -> performs a validity test
+    :param verbose: verbose print
+    :return:
+    """
     # Monodic test
     print("------------------------- Monodic check -------------------------")
     mc1 = check_monodic(c1)
@@ -332,9 +338,8 @@ def validate2(compiler, c1, check: bool=False):
     print(Color("{autogreen}Monodic check passed ! {/green}"))
 
     v = False
-    verbose = False
-    print("------------------------- Starting " + ("Validity" if not check else "") + " check -------------------------")
 
+    print("------------------------- Starting " + ("Validity" if not check else "") + " check -------------------------")
     print("----- Checking c1 :")
     res = compiler.apply_check(code=c1, show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
@@ -372,17 +377,17 @@ def validate2(compiler, c1, check: bool=False):
 # Check authorisations
 def solve_auth(compiler, p=None, u=None, verbose=False, resolve=False):
     """
-
-    :param compiler:
-    :param p:
-    :param u:
-    :param verbose:
+    Conflict detection
+    :param compiler: the compiler instance
+    :param p: clause 1
+    :param u: clause 2
+    :param verbose: verbose print
     :param resolve:
     :return:
     """
     print(Color("{autoblue}:: Solving authorization{/blue}"))
-    u_Id = str(u.name)
-    p_Id = str(p.name)
+    u_id = str(u.name)
+    p_id = str(p.name)
 
     quants = p.usage.walk(filter_type=m_qvar)
     quant = ""
@@ -391,13 +396,14 @@ def solve_auth(compiler, p=None, u=None, verbose=False, resolve=False):
 
     authors = p.usage.walk(filter_type=m_aexpAuthor)
     for x in authors:
-        res = compiler.apply_check(code=pre_cond + str(quant) + " " + str(x.to_ltl()) + " & clause(" + u_Id + ").uc", show=False)
+        res = compiler.apply_check(code=pre_cond + str(quant) + " " + str(x.to_ltl()) + " & clause(" + u_id + ").uc",
+                                   show=False)
         if verbose:
             print("  " + str(x) + " & c1" + " : " + res["res"])
 
         if res["res"] == "Unsatisfiable":
-            print(Color("  Authorization <<" + str(x) + ">> found {automagenta}at line " + str(x.name.parentCtx.getPayload().start.line) +\
-                  "{/magenta} does not match with user preference"))
+            print(Color("  Authorization <<" + str(x) + ">> found {automagenta}at line " +
+                        str(x.name.parentCtx.getPayload().start.line) + "{/magenta} does not match with user preference"))
             if resolve:
                 print(Color("{autogreen}    |-> Resolving conflict {/green}"))
                 if x.author == m_author.A_permit:
@@ -420,18 +426,19 @@ def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
     # FIXME this is adhoc
     print(Color("{autoblue}:: Solving trigger{/blue}"))
     # pre_cond = "always( ![a,x,y,z] ~(PERMIT(a, x, y, z) & DENY(a, x, y, z))) &  "
-    u_Id = str(u.name)
-    p_Id = str(p.name)
+    u_id = str(u.name)
+    p_id = str(p.name)
 
     ifthens = u.usage.walk(filter_type=m_aexpIfthen)
     for x in ifthens:
-        res = compiler.apply_check(code=pre_cond + "~(clause(" + p_Id + ").uc => " + x.to_ltl() + ")", show=False, verbose=verbose)
+        res = compiler.apply_check(code=pre_cond + "~(clause(" + p_id + ").uc => " + x.to_ltl() + ")", show=False,
+                                   verbose=verbose)
         if verbose:
             print("  " + str(x) + " & c1" + " : " + res["res"])
 
         if res["res"] == "Satisfiable":
-            print(Color("  Implication <<" + str(x) + ">> found {automagenta}at line " + str(x.name.parentCtx.getPayload().start.line) + \
-                  "{/magenta} is not guaranteed by provider"))
+            print(Color("  Implication <<" + str(x) + ">> found {automagenta}at line " +
+                        str(x.name.parentCtx.getPayload().start.line) + "{/magenta} is not guaranteed by provider"))
             if resolve:
                 print(Color("{autogreen}    |-> Resolving conflict {/green}"))
         # x.parent.remove(x) # TODO remove me from parent

@@ -15,8 +15,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 __author__ = 'walid'
+
 import AALCompiler
 from AALChecker import *
 from importlib import reload
@@ -48,6 +48,7 @@ help_str = Color(help_str)
 
 COMMANDS = ['clauses()', 'macros()', 'quit', 'q', 'h', 'help', 'self', 'aalprog', 'man()', 'call', 'extra']
 RE_SPACE = re.compile('.*\s+$', re.M)
+
 
 # Completer class
 class Completer(object):
