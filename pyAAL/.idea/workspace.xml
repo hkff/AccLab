@@ -2,28 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/test4.aal" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/test4.tspass" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/testlib.aal" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/healthcare.aal" afterPath="$PROJECT_DIR$/examples/healthcare.aal" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/test1.aal" afterPath="$PROJECT_DIR$/examples/test1.aal" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/test2.aal" afterPath="$PROJECT_DIR$/examples/test2.aal" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/tuto1.aal" afterPath="$PROJECT_DIR$/examples/tuto1.aal" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/tuto2.aal" afterPath="$PROJECT_DIR$/examples/tuto2.aal" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/wearable.xml" afterPath="$PROJECT_DIR$/examples/wearable/wearable.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/wearable/wLawyers.aal" afterPath="$PROJECT_DIR$/examples/wearable/wLawyers.aal" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/wearable/wactors.aal" afterPath="$PROJECT_DIR$/examples/wearable/wactors.aal" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/wearable/wearable.aal" afterPath="$PROJECT_DIR$/examples/wearable/wearable.aal" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/wearable/wfromAPPL.aal" afterPath="$PROJECT_DIR$/examples/wearable/wfromAPPL.aal" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/wearable/wservices.aal" afterPath="$PROJECT_DIR$/examples/wearable/wservices.aal" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/wearable/wtypes.aal" afterPath="$PROJECT_DIR$/examples/wearable/wtypes.aal" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/wearable/wviolations.aal" afterPath="$PROJECT_DIR$/examples/wearable/wviolations.aal" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grammar/tspass/TSPASS.tokens" afterPath="$PROJECT_DIR$/grammar/tspass/TSPASS.tokens" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grammar/tspass/TSPASSLexer.py" afterPath="$PROJECT_DIR$/grammar/tspass/TSPASSLexer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grammar/tspass/TSPASSLexer.tokens" afterPath="$PROJECT_DIR$/grammar/tspass/TSPASSLexer.tokens" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grammar/tspass/TSPASSParser.py" afterPath="$PROJECT_DIR$/grammar/tspass/TSPASSParser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/aalc.py" afterPath="$PROJECT_DIR$/aalc.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/hottie.py" afterPath="$PROJECT_DIR$/tools/hottie.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pyAAL.iws" />
@@ -43,6 +22,7 @@
     <SUITE FILE_PATH="coverage/pyAAL$tspasslr.coverage" NAME="tspasslr Coverage Results" MODIFIED="1432650914159" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
     <SUITE FILE_PATH="coverage/pyAAL$aaltlr.coverage" NAME="aaltlr Coverage Results" MODIFIED="1432477382296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
     <SUITE FILE_PATH="coverage/pyAAL$aalc2.coverage" NAME="aalc2 Coverage Results" MODIFIED="1432536010436" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pyAAL$tests.coverage" NAME="tests Coverage Results" MODIFIED="1432651437241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -66,11 +46,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AALCompiler.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AALCompiler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AALCompiler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3768473" vertical-offset="13329" max-vertical-offset="21780">
-              <caret line="749" column="110" selection-start-line="749" selection-start-column="106" selection-end-line="749" selection-end-column="110" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="10251" max-vertical-offset="21780">
+              <caret line="746" column="14" selection-start-line="746" selection-start-column="14" selection-end-line="746" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tests.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tests.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.4924012" vertical-offset="0" max-vertical-offset="658">
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -79,8 +69,8 @@
       <file leaf-file-name="aalc.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/aalc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.814815" vertical-offset="5648" max-vertical-offset="7506">
-              <caret line="321" column="18" selection-start-line="321" selection-start-column="18" selection-end-line="321" selection-end-column="18" />
+            <state vertical-scroll-proportion="-0.6666667" vertical-offset="0" max-vertical-offset="7506">
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="17" selection-end-column="3" />
               <folding>
                 <element signature="e#914#924#0" expanded="true" />
               </folding>
@@ -184,6 +174,7 @@
         <option value="$PROJECT_DIR$/tools/hottie.py" />
         <option value="$PROJECT_DIR$/tests/wearable.xml" />
         <option value="$PROJECT_DIR$/aalc.py" />
+        <option value="$PROJECT_DIR$/tests.py" />
       </list>
     </option>
   </component>
@@ -277,20 +268,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="examples" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -320,7 +297,27 @@
       <recent name="$PROJECT_DIR$/tests/wearable" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.aalc">
+  <component name="RunManager" selected="Python.tests">
+    <configuration default="false" name="tests" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="pyAAL" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <RunnerSettings RunnerId="PythonCover" />
+      <ConfigurationWrapper RunnerId="PythonCover" />
+      <method />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -592,12 +589,18 @@
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.aaltlr" />
       <item index="1" class="java.lang.String" itemvalue="Python.tspasslr" />
       <item index="2" class="java.lang.String" itemvalue="Python.Simul" />
       <item index="3" class="java.lang.String" itemvalue="Python.aalc" />
+      <item index="4" class="java.lang.String" itemvalue="Python.tests" />
     </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Python.tests" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
@@ -820,12 +823,18 @@
       <option name="project" value="LOCAL" />
       <updated>1432650318487</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Examples clean">
+      <created>1432651103861</created>
+      <option name="number" value="00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1432651103861</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-2" y="-23" width="1370" height="795" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -834,9 +843,10 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283859" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36103153" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36103153" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23867069" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1744713" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26359516" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18277946" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -912,7 +922,8 @@
     <MESSAGE value="pyAAL doc" />
     <MESSAGE value="Syntax color (pycharm/intelj/emacs)" />
     <MESSAGE value="Minors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minors" />
+    <MESSAGE value="Examples clean" />
+    <option name="LAST_COMMIT_MESSAGE" value="Examples clean" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1138,6 +1149,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.5022355" vertical-offset="337" max-vertical-offset="1008">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1169,14 +1181,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="671">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="671">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1282,20 +1286,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/README">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="671">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALCompiler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="13329" max-vertical-offset="21780">
+          <caret line="746" column="14" selection-start-line="746" selection-start-column="14" selection-end-line="746" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/aalc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.814815" vertical-offset="5648" max-vertical-offset="7506">
-          <caret line="321" column="18" selection-start-line="321" selection-start-column="18" selection-end-line="321" selection-end-column="18" />
+        <state vertical-scroll-proportion="-0.6666667" vertical-offset="0" max-vertical-offset="7506">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="17" selection-end-column="3" />
           <folding>
             <element signature="e#914#924#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AALCompiler.py">
+    <entry file="file://$PROJECT_DIR$/tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3768473" vertical-offset="13329" max-vertical-offset="21780">
-          <caret line="749" column="110" selection-start-line="749" selection-start-column="106" selection-end-line="749" selection-end-column="110" />
+        <state vertical-scroll-proportion="0.4924012" vertical-offset="0" max-vertical-offset="658">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
         </state>
       </provider>
