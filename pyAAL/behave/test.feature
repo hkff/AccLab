@@ -2,11 +2,11 @@
 Feature: showing off behave
 
   Scenario: run a simple test
-     Given we declare a variable x with a value 5
-      And  we declare a variable y with a value 6
-      And  we calculate the result of x + y
-      When we finish the program
-      Then we run it
+    Given a clause r1
+    And allow bob to use read service provided by alice on data
+    And allow bob to read data on alice
+    When we finish the program
+    Then we run it
 
 
 #  Scenario: kim preference

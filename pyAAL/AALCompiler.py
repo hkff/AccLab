@@ -15,8 +15,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 __author__ = 'walid'
+
 from grammar.aal import AALListener
 # from _pickle import Pickler
 # from AALMetaModel import *
@@ -47,6 +47,7 @@ from aalc import *
 # This class defines a complete listener for a parse tree produced by AALParser.
 @hot
 class AALCompilerListener(AALListener.AALListener):
+
     """
     Attributes :
         - loadlibs:
@@ -78,6 +79,18 @@ class AALCompilerListener(AALListener.AALListener):
     def __init__(self, loadlibs: bool=True, serialize: bool=False, file: str="",
                  libs_path="libs/aal/", root_path=None, recompile=False,
                  hotswaping=False, errors_listener=None):
+        """
+
+        :param loadlibs:
+        :param serialize:
+        :param file:
+        :param libs_path:
+        :param root_path:
+        :param recompile:
+        :param hotswaping:
+        :param errors_listener:
+        :return:
+        """
         self.loadlibs = loadlibs
         self.serialize = serialize
         self.aalmm = aalmm()
@@ -120,16 +133,16 @@ class AALCompilerListener(AALListener.AALListener):
         doc = "Manual for aal compiler visitor\n" \
               "{autoblue} - Attributes{/blue}" \
               "\n\t -  aalprog    " + "\t Get the AAL program instance" \
-                                      "\n\t -  file       " + "\t The AAL source file" \
-                                                              "\n\t -  libs       " + "\t Show the loaded libraries" \
-                                                                                      "\n\t -  libsPath   " + "\t Print the standard lib path" \
-                                                                                                              "" \
-                                                                                                              "\n{autoblue} - Methods{/blue}" \
-                                                                                                              "\n\t - load_lib(lib_name)  " + "\t Load an aal file" \
-                                                                                                                                              "\n\t - clause(clauseId)    " + "\t Load an aal file" \
-                                                                                                                                                                              "\n\t - show_clauses()      " + "\t Load an aal file" \
-                                                                                                                                                                                                              "\n\t - get_clauses()       " + "\t Load an aal file" \
-                                                                                                                                                                                                                                              "\n\t - get_macros()        " + "\t Load an aal file"
+              "\n\t -  file       " + "\t The AAL source file" \
+              "\n\t -  libs       " + "\t Show the loaded libraries" \
+              "\n\t -  libsPath   " + "\t Print the standard lib path" \
+              "" \
+              "\n{autoblue} - Methods{/blue}" \
+              "\n\t - load_lib(lib_name)  " + "\t Load an aal file" \
+              "\n\t - clause(clauseId)    " + "\t Load an aal file" \
+              "\n\t - show_clauses()      " + "\t Load an aal file" \
+              "\n\t - get_clauses()       " + "\t Load an aal file" \
+              "\n\t - get_macros()        " + "\t Load an aal file"
 
         print(Color(doc))
         return Color(doc)
@@ -250,10 +263,6 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Exit AALprog
     def exitAalprog(self, ctx):
-        """
-        :param ctx:
-        :return:
-        """
         self.checkForwardsRef()
         if self.DEBUG:
             print("\n")
@@ -692,6 +701,7 @@ class AALCompilerListener(AALListener.AALListener):
     ####### ActionExp  #######
     ##########################
     # FIXME quantif
+    # Exit Action
     def exitAction(self, ctx):
         ac = m_action()
         ag1 = self.checkAgentDec(ctx.h_agentId()[0].ID())
@@ -1032,12 +1042,14 @@ class AALCompilerListener(AALListener.AALListener):
         code = str(chk.code)
         ltl = code
 
-        # Check if buil env
-        ltl = ltl.replace('buildenv', build_env(self.aalprog))
+        # Check if build env
+        ltl = ltl.replace('@buildenv', build_env(self.aalprog))
         ltl = ltl.replace('"""', '')
 
         # Check for extra commands
-        verbose = len(re.findall('@verbose', ltl)) > 0
+        verbose = len(re.findall('@verbose', ltl)) > 0  # TODO : optimize
+        if verbose:
+            ltl = ltl.replace('@verbose', '')
 
         for x in re.finditer('clause\(\w+\)', code):
             clauseId = x.group().replace('clause(', '').replace(')', '')  # Get clause's id
@@ -1193,8 +1205,15 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Test
     # noinspection PyMethodMayBeStatic
+
     def test(self, msg, test, expected):
-        # !IMPORTANT! Do not turn this method into static (self may be used inside eval)
+        """
+        !IMPORTANT! Do not turn this method into static (self may be used inside eval)
+        :param msg:
+        :param test:
+        :param expected:
+        :return:
+        """
         print(Color("{autoblue}------- " + msg + "{/autoblue}"))
         res = eval(test)  # !IMPORTANT! Do not turn this method into static (self may be used inside eval)
         ret = (res == expected)

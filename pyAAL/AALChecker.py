@@ -74,31 +74,40 @@ def check_aal(mm=None, verbose=False):
     # TODO : make it user friendly
     # TODO : add some stats
     res = ""
-    res += "------------------------- Checking Monodic test -------------------------"
+    res += "------------------------- Start Checking -------------------------"
     if verbose:
-        agentsCount = len(mm.aalprog.declarations["agents"])
-        servicesCount = len(mm.aalprog.declarations["services"])
-        dataCount = len(mm.aalprog.declarations["data"])
-        typesCount = len(mm.aalprog.declarations["types"])
+        agentsCount = len(mm.aalprog.get_declared(m_agent))
+        servicesCount = len(mm.aalprog.get_declared(m_service))
+        dataCount = len(mm.aalprog.get_declared(m_data))
+        typesCount = len(mm.aalprog.get_declared(m_type))
 
         res += "\n\n** DECLARATIONS"
-        res += "\n[DECLARED AGENTS] : " + str(agentsCount) + ""
+        res += "\n[DECLARED AGENTS]   : " + str(agentsCount) + ""
         res += "\n[DECLARED SERVICES] : " + str(servicesCount) + ""
-        res += "\n[DECLARED DATA] : " + str(dataCount) + ""
-        res += "\n[DECLARED TYPES] : " + str(typesCount) + ""
+        res += "\n[DECLARED DATA]     : " + str(dataCount) + ""
+        res += "\n[DECLARED TYPES]    : " + str(typesCount) + ""
 
-        res += "\n\n*** Forwards references check..."
-        res += "\n[AGENTS] : " + str(len(mm.refForwardAgents))
+        res += "\n\n*** Forwards references check"
+        res += "\n[AGENTS]   : " + str(len(mm.refForwardAgents))
         res += "\n[SERVICES] : " + str(len(mm.refForwardServices))
-        res += "\n[DATA] : " + str(len(mm.refForwardData))
-        res += "\n[TYPES] : " + str(len(mm.refForwardTypes))
+        res += "\n[DATA]     : " + str(len(mm.refForwardData))
+        res += "\n[TYPES]    : " + str(len(mm.refForwardTypes))
+
+        res += "\n\n** LOADED libraries"
+        res += "\n[LIBS] : " + str(len(mm.aalprog.libs))
 
         res += "\n\n** CLAUSES"
         res += "\n[CLAUSES] : " + str(len(mm.aalprog.clauses))
-        res += "\nMonodic test :"
-    p = check_monodic(mm.aalprog)
-    res += "\n" + p["print"]
-    res += "-------------------------- Checking Monodic End -------------------------"
+
+        res += "\nMonodic test :\n"
+
+    # p = check_monodic(mm.aalprog)
+    # TODO : add export to org mode
+    for c in mm.aalprog.clauses:
+        res += "|" + str(c.name) + " | " + check_monodic(c)["tmonodic"] + " | \n"
+    # res += "\n" + p["print"]
+
+    res += "-------------------------- Checking End -------------------------"
     return res
 
 
@@ -124,11 +133,14 @@ def check_monodic(node=None, verbose: bool=False):
         p = check_monodic_exp(node)
 
     if p["monodic"]:
-        res = Color("{autogreen}Formula is monodic !{/green}\n")
+        res = Color("{autogreen}Formula is monodic !{/green}")
     else:
-        res = Color("{autored}Formula is not monodic !{/red}\n")
+        res = Color("{autored}Formula is not monodic !{/red}")
+
+    p["tmonodic"] = res
 
     if not p["monodic"]:
+        res += "\n"
         for info in p["info"]:
             res += " - found " + str(len(info["vars"])) + " free variables in [" + str(info["exp"]) + "]\n"
             tmp = [str(x.label) + " -> " + str(x.target) + " at line " +

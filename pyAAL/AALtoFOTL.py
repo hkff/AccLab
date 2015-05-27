@@ -30,17 +30,17 @@ def build_env(prog: m_aalprog=None):
     pre_cond = "\n%%%%%%%%% START EVN %%%%%%%%%%%"
     pre_cond += "\n%%% Types knowledge\n"
     for x in prog.get_declared(m_type):
-        pre_cond += str(x.to_ltl()) + " & "
+        pre_cond += str(x.to_ltl()) + " & \n"
 
     pre_cond += "\n\n%%% Action authorizations \n"
     for x in prog.get_declared(m_service):
-        pre_cond += str(x.to_ltl()) + " & "
+        pre_cond += str(x.to_ltl()) + " & \n"
 
     pre_cond += "\n\n%%% Actors knowledge \n"
     for x in prog.get_declared(m_agent):
-        pre_cond += str(x.to_ltl()) + " & "
+        pre_cond += str(x.to_ltl()) + " & \n"
 
-    pre_cond += "\n%%%%%%%%% END EVN %%%%%%%%%%%\n"
+    pre_cond += "\n%%%%%%%%% END EVN %%%%%%%%%%%\n\n"
     return pre_cond
 
 

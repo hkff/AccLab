@@ -17,10 +17,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 __author__ = 'walid'
 
-"""
-TODO doc
-"""
-
 '''
     // AAL CORE
     AALprogram    ::= (Declaration | Clause | Comment | Macro | MacroCall)*
@@ -266,7 +262,7 @@ class m_aalprog(aalmmnode):
     def __str__(self):
         """
         Print AAL program in pretty format
-        :return: return the formate string
+        :return: return the formated string
         """
         res = ""
         res += "// Types Declarations\n"
@@ -392,10 +388,10 @@ class m_usage(aalmmnode):
     def to_ltl(self):
         return "".join([str(x.to_ltl()) + " " for x in self.actionExp])
 
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         return "".join([str(x.to_nnf(bool)) + " " for x in self.actionExp])
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         return "".join([str(x.to_natural()) + "" for x in self.actionExp])
 
 
@@ -497,17 +493,18 @@ class m_clause(m_declarable):
         return ue + ("\n & " + ae if ae is not None else "") + ("\n & " + re if re is not None else "")
         # return ae + " & always(" + ue + " | ((~(" + ue + ")) & (always(" + ae + " => (" + re + ")))))"
 
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         ue = str(self.usage.to_nnf(bool)) if self.usage is not None else "false"
         ae = str(self.audit.to_nnf(bool)) if self.audit.usage is not None else "false"
         re = str(self.rectification.to_nnf(bool)) if self.rectification.usage is not None else "false"
         return ue + ae + re
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         ue = str(self.usage.to_natural()) if self.usage is not None else "false "
         ae = str(self.audit.to_natural()) if self.audit.usage is not None else "false "
         re = str(self.rectification.to_natural()) if self.rectification.usage is not None else "false "
         return "Usage : "+ue + "\nAudit : " + ae + "\nRectification : " + re + "\n"
+
 
 # Agent
 class m_agent(m_declarable):
@@ -526,7 +523,7 @@ class m_agent(m_declarable):
     def to_ltl(self):
         sltypes = ""
         for x in self.types:
-            sltypes += str(x.label) + "(" + str(self.name) +") &"
+            sltypes += str(x.label) + "(" + str(self.name) + ") &"
         return (sltypes[:-1]) if sltypes is not "" else "Actor(" + str(self.name) + ")"
         # return ("(" + str(self.name) + " => (" + sltypes[:-1] + "))") if sltypes is not "" else str(self.name)
 
@@ -688,6 +685,7 @@ class m_aexpAction(m_aexp):
         self.parent.replace(self, neg)
         return neg
 
+
 # ActionExp negation
 class m_aexpNotAexp(m_aexp):
     def __init__(self):
@@ -769,10 +767,10 @@ class m_aexpCondition(m_aexp):
         return str(self.condition.to_ltl())
 
     #[NOT] Exp | Exp ['==' | '!='] Exp | Condition (AND|OR) Condition
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         return str(self.condition.to_nnf(bool))
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         return str(self.condition.to_natural())
 
 
@@ -796,7 +794,7 @@ class m_aexpComb(m_aexp):
 
 
 
-    def to_nnf(self,bool):
+    def to_nnf(self, bool):
         if bool:
             return "(" + str(self.actionExp1.to_nnf(True)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(True)) + ")"
         else:
@@ -828,7 +826,6 @@ class m_aexpComb(m_aexp):
         elif self.operator == m_booleanOp.T_until:
             self.operator == m_booleanOp.T_unless
             return "(" + str(self.actionExp1.to_nnf(False)) + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
-
 
     def replace(self, child, node):
         if child == self.actionExp1:
@@ -876,6 +873,7 @@ class m_aexpAuthor(m_aexp):
         neg = m_aexpNotAexp()
         neg.actionExpression = self
         self.parent.replace(self, neg)
+
 
 # ActionExp ifthen
 class m_aexpIfthen(m_aexp):
@@ -1062,6 +1060,7 @@ class m_constant(m_exp):
     def to_ltl(self):
         return "CTS" + str(self.counter)
 
+
 # Var Attribute
 class m_varAttr(m_exp):
     def __init__(self):
@@ -1079,13 +1078,13 @@ class m_varAttr(m_exp):
         #TODO:
         return str(self.attribute) + "(" + str(self.variable) + ")"
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         return str(self.variable)+"'s " + str(self.attribute)
+
 
 #########################
 ####### Condition #######
 #########################
-
 # Condition
 class m_condition(m_aexp):
     pass
@@ -1167,7 +1166,8 @@ class m_conditionNotComb(m_condition):
         return (str(self.operator) if self.operator is not None else "") + " " + str(self.exp)
 
     def to_ltl(self):
-        return ((str(self.operator) if self.operator is not None else "") + "(" + str(self.exp.to_ltl()) + ")") if self.operator is not None else str(self.exp.to_ltl())
+        return ((str(self.operator) if self.operator is not None else "") + "(" + str(self.exp.to_ltl()) + ")") \
+            if self.operator is not None else str(self.exp.to_ltl())
 
     def to_nnf(self, bool):
         if bool:
@@ -1297,6 +1297,7 @@ class m_time(aalmmnode):
         res = res.replace("12 ", "twelve")
         res = res.replace(" ", "")
         return res
+
 
 #########################
 ##### Enumerations ######
@@ -1434,9 +1435,9 @@ class m_author(sEnum):
         elif self == m_author.A_deny:
             return "~P"
 
-    def to_natural(self, kw=True):
+    def to_natural(self, kw=True):  # TODO
         if self == m_author.A_permit:
-            return  ""
+            return ""
         elif self == m_author.A_deny:
             return ""
 
@@ -1503,6 +1504,9 @@ class m_modal(sEnum):
                 return str(m_modal.T_never)
 
 
+#########################
+# Utils functions
+#########################
 # Get AALMetaModel classes
 def get_mm_classes():
     import inspect
@@ -1515,7 +1519,7 @@ def get_mm_classes():
     return res
 
 
-# pprint for AAL code in terminal
+# pprint for AAL code in terminal  # TODO make it clean or remove
 def aal_pprint(code):
     keywords1 = [',','after','and','before','exists','forall','if','not','onlywhen','or','then','where']
     keywords2 = ['agent','apply','auditing','call','check','clause','data','if_violated_then','load','macro','service','type','types']

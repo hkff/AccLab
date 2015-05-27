@@ -1,3 +1,2 @@
-x = 5
-y = 6
-print(xy)
+CLAUSE r1 (
+PERMIT bob.read[alice](data)PERMIT bob.read[alice](data)
