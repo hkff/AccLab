@@ -346,6 +346,15 @@ class AALListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by AALParser#behavior.
+    def enterBehavior(self, ctx):
+        pass
+
+    # Exit a parse tree produced by AALParser#behavior.
+    def exitBehavior(self, ctx):
+        pass
+
+
     # Enter a parse tree produced by AALParser#type_super.
     def enterType_super(self, ctx):
         pass

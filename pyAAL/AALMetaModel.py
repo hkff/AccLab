@@ -265,6 +265,7 @@ class m_aalprog(aalmmnode):
         self.checks = []
         self.checksApply = []
         self.libs = []
+        self.behaviors = []
 
     def __str__(self):
         """
@@ -286,6 +287,8 @@ class m_aalprog(aalmmnode):
         res += "\n".join([str(x) for x in self.macros])+"\n\n"
         res += "// Checks \n"
         res += "\n".join([str(x) for x in self.checks])+"\n\n"
+        res += "// Behaviors \n"
+        res += "\n".join([str(x) for x in self.behaviors])+"\n\n"
         return res
 
     # get_declared
@@ -374,6 +377,7 @@ class m_aalprog(aalmmnode):
         res.extend(self.macroCalls)
         res.extend(self.checks)
         res.extend(self.checksApply)
+        res.extend(self.behaviors)
         return res
 
 
@@ -680,6 +684,22 @@ class m_ltlCheck(aalmmnode):
 
     def __str__(self):
         return "CHECK " + str(self.name) + " (" + str(self.code) + ")"
+
+
+# Behavior
+class m_behavior(aalmmnode):
+    def __init__(self, init=False, name=None):
+        super().__init__(name)
+        self.actionExp = None
+
+    def __str__(self):
+        return "BEHAVIOR " + str(self.name) + " (\n " + str(self.actionExp) + "\n)"
+
+    def children(self):
+        return [self.actionExp]
+
+    def to_ltl(self):
+        return self.actionExp.to_ltl()
 
 
 # Declarable Reference

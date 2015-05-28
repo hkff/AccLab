@@ -114,6 +114,7 @@ class AALCompilerListener(AALListener.AALListener):
         self.DEBUG = False
         self.isRectification = False
         self.isAudit = False
+        self.isBehavior = False
         self.libsPath = libs_path
         self.file = file
         self.output = ""
@@ -696,6 +697,19 @@ class AALCompilerListener(AALListener.AALListener):
             for x in ctx.type_actions().ID():
                 dtDec.actions.append(x)
         self.aalprog.declarations["types"].append(dtDec)  # Add type declaration to prog
+
+    # Enter Behavior
+    def enterBehavior(self, ctx):
+        self.isBehavior = True
+
+    # Exit Behavior
+    def exitBehavior(self, ctx):
+        name = str(ctx.ID())
+        behavior = m_behavior(name=name)
+        behavior.actionExp = self.actionExpStack.pop()
+        self.aalprog.behaviors.append(behavior)
+        self.isBehavior = False
+
 
     ##########################
     ####### ActionExp  #######

@@ -1,7 +1,7 @@
 grammar AAL;
 /*
      // AAL CORE
-    AALprogram    ::= (Declaration | Clause | Comment | Macro | MacroCall | loadlib | ltlCheck | checkApply | exec)*
+    AALprogram    ::= (Declaration | Clause | Comment | Macro | MacroCall | loadlib | ltlCheck | checkApply | exec | Behavior)
 
     Declaration   ::= AgentDec | ServiceDec | DataDec | TypesDec | varDec
     AgentDec      ::= AGENT Id TYPE '(' Type *')' REQUIRED'('service*')' PROVIDED'('service*')'
@@ -54,6 +54,9 @@ grammar AAL;
     Exex          ::= EXEC MCode
 
     // LTL checking extension
+
+    // Behavior
+    Behavior    ::= ActionExp
 */
 
 //-------------------------------------------------------//
@@ -118,6 +121,7 @@ M_load     : 'LOAD' | 'load';
 M_check    : 'CHECK' | 'check';
 M_apply    : 'APPLY' | 'apply';
 M_exec     : 'EXEC' | 'exec';
+M_behavior : 'BEHAVIOR'  | 'behavior';
 
 /** Check **/
 C_clause        : 'clause'       | 'cl';
@@ -178,7 +182,7 @@ MLCOMMENT : '/*' (.)*? '*/' -> channel(HIDDEN);
 //------------------------------------------------------//
 
 main        : aalprog;
-aalprog     : (clause | declaration | h_comment | macro | macroCall | loadlib | ltlCheck | checkApply | exec)*;
+aalprog     : (clause | declaration | h_comment | macro | macroCall | loadlib | ltlCheck | checkApply | exec | behavior)*;
 declaration : (agentDec | serviceDec | dataDec | typeDec | varDec) NEWLINE?;
 
 
@@ -272,6 +276,8 @@ exec   : M_exec MCODE;
 
 loadlib : M_load STRING;
 
+//****  Behavior ****//
+behavior :  M_behavior ID h_lpar actionExp h_rpar;
 
 //****  LTL checking extension ****//
 ltlCheck : M_check ID args? h_lmar check h_rmar;
