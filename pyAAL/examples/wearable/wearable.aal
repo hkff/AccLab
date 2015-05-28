@@ -291,7 +291,7 @@ CHECK c1() {
   ~( @buildenv (clause(r3).ue) => (clause(up1).ue ))
 """
 }
-//APPLY c1()
+APPLY c1()
 
 // Version 2
 CLAUSE up2 (

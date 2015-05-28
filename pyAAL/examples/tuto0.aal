@@ -1,0 +1,58 @@
+// Loading types library
+LOAD "core.types"
+LOAD "core.macros"
+
+// Declaring services
+SERVICE read
+SERVICE store
+SERVICE delete
+
+// Declaring actors
+AGENT alice TYPES(Actor) REQUIRED(read store delete) PROVIDED()
+AGENT bob   TYPES(Actor) REQUIRED(read store delete) PROVIDED()
+AGENT css   TYPES(Actor) REQUIRED() PROVIDED(read store delete)
+
+/*
+ * Cloud storage service provider policy
+ *
+ */
+CLAUSE css_policy (
+    FORALL d:data FORALL a:Actor
+    IF (d.subject == a) THEN {
+        PERMIT a.read[css](d)
+    }
+    AND
+    IF (d.subject != a) THEN {
+        DENY a.read[css](d)
+    }
+//    AND
+//    PERMIT css.read[css](d)
+)
+
+/*
+ * Alice's requirement
+ *
+ */
+CLAUSE alice_pref (
+    FORALL d:data FORALL a:Actor
+    // Alice want to be able to read all her data stored on css
+    IF (d.subject == alice) THEN {
+        PERMIT alice.read[css](d)
+    }
+    AND
+    IF (d.subject == alice) THEN {
+        DENY bob.read[css](d)
+    }
+)
+
+//CALL validate("'css_policy'" "'alice_pref'")
+
+CHECK c1() {
+"""
+  @verbose
+  ~( @buildenv
+    (clause(css_policy).ue)  => (clause(alice_pref).ue )
+   )
+"""
+}
+APPLY c1()

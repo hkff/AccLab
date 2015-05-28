@@ -98,15 +98,15 @@ class aalmmnode():
             ""\
             "\n{autoblue} - Methods{/blue}" \
             "\n\t - isDeclared(name, klass, ret=bool)    " + "\t Check if element 'name' with type 'klass is declared" \
-            "\n\t - children()                           " + "\t " \
-            "\n\t - get_refs(pprint=bool)                " + "\t " \
-            "\n\t - walk(filters=bool, filter_type=bool) " + "\t " \
+            "\n\t - children()                           " + "\t " Get children nodes\
+            "\n\t - get_refs(pprint=bool)                " + "\t " Get references\
+            "\n\t - walk(filters=bool, filter_type=bool) " + "\t " AST tree walker\
             "\n\t - man()                                " + "\t Print this manual" \
             "\n\t - to_ltl()                             " + "\t Translate to ltl"
     """
     def __init__(self, name: str=None):
         """
-        :param name:
+        :param name: Node name
         :return:
         """
         self.name = name
@@ -120,8 +120,8 @@ class aalmmnode():
         """
         Iterate tree in pre-order wide-first search order
 
-        :param filters:
-        :param filter_type:
+        :param filters: filter by python expression
+        :param filter_type: Filter by class
         :return:
         """
         children = self.children()
@@ -155,7 +155,6 @@ class aalmmnode():
     def remove(self):
         """
         Remove child
-        Param child
         :return:
         """
         pass
@@ -163,8 +162,8 @@ class aalmmnode():
     def replace(self, child, node):
         """
         Replace child
-        :param child:
-        :param node:
+        :param child: the child node
+        :param node: the replacement node
         :return:
         """
         pass
@@ -189,16 +188,21 @@ class aalmmnode():
         """ Get LTL translation """
         pass
 
-    def to_nnf(self,bool):
+    def to_nnf(self, negated):
         """
-
-        :param bool: true if action is not negated, false if action is negated
-        :return:negation propagated action
+        Transform node to negative normal forme
+        :param negated: true if action is not negated, false if action is negated
+        :return: negation propagated action
         """
         return
 
-    def to_natural(self,kw=True):
-        """ Get the natural language translation """
+    def to_natural(self, kw=True):
+        """
+        Get the natural language translation
+
+        :param kw:
+        :return:
+        """
         res = ""
         children = self.children()
         for c in children:
@@ -215,11 +219,14 @@ class aalmmnode():
         """ print the doc of the class"""
         return Color(cls.__doc__)
 
-    # Type test
     def is_a(self, ttype):
+        """
+        Subtype test
+        :param ttype: class
+        :return:
+        """
         pass
 
-    # Get AST
     def to_ast(self):
         """ Get AST Format """
         # return ("<" + str(self.__class__) + "> ".join([ (str(x.to_ast()) if isinstance(x, aalmmnode) else "")
@@ -286,7 +293,7 @@ class m_aalprog(aalmmnode):
         """
         Get declared elements of type klass
         :param klass: Type of element to check (m_agent, m_data, m_service, _m_type, m_clause, m_macro)
-        :return:
+        :return: list of declared element of class "klass"
         """
         decList = ""
         if klass == m_agent:
@@ -348,7 +355,7 @@ class m_aalprog(aalmmnode):
     def to_ltl(self):
         return "".join([str(x.to_ltl()) + " " for x in self.clauses])
 
-    def to_nnf(self, bool):
+    def to_nnf(self, negated):
         return "".join([str(x.to_nnf(True)) + " " for x in self.clauses])
 
     def to_natural(self, kw=True):
@@ -373,7 +380,10 @@ class m_aalprog(aalmmnode):
 # Usage
 class m_usage(aalmmnode):
     """
-    Usage class. Contains a list of action expressions
+    Usage class.
+
+    Attributes
+        - actionExp: a list of expresions
     """
     def __init__(self, name=None):
         super().__init__(name)
@@ -388,8 +398,8 @@ class m_usage(aalmmnode):
     def to_ltl(self):
         return "".join([str(x.to_ltl()) + " " for x in self.actionExp])
 
-    def to_nnf(self, bool):
-        return "".join([str(x.to_nnf(bool)) + " " for x in self.actionExp])
+    def to_nnf(self, negated):
+        return "".join([str(x.to_nnf(negated)) + " " for x in self.actionExp])
 
     def to_natural(self, kw=True):
         return "".join([str(x.to_natural()) + "" for x in self.actionExp])
@@ -398,7 +408,10 @@ class m_usage(aalmmnode):
 # Audit
 class m_audit(aalmmnode):
     """
-    Audit class. Contains a list of action expressions
+    Audit class.
+
+    Attributes
+        - usage: a m_usage object
     """
     def __init__(self, name=None):
         super().__init__(name)
@@ -414,17 +427,20 @@ class m_audit(aalmmnode):
     def to_ltl(self):
         return self.usage.to_ltl()  #"".join([str(x.to_ltl()) + " " for x in self.actionExp])
 
-    def to_nnf(self,bool):
-        return self.usage.to_nnf(bool)
+    def to_nnf(self, negated):
+        return self.usage.to_nnf(negated)
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         return str(self.usage.to_natural())
 
 
 # Rectification
 class m_rectification(aalmmnode):
     """
-    Rectificaiton class. Contains an usage object
+    Rectificaiton class.
+
+    Attributes
+        - usage: a m_usage object
     """
     def __init__(self, name=None):
         super().__init__(name)
@@ -439,10 +455,10 @@ class m_rectification(aalmmnode):
     def to_ltl(self):
         return self.usage.to_ltl()
 
-    def to_nnf(self,bool):
-        return self.usage.to_nnf(bool)
+    def to_nnf(self, negated):
+        return self.usage.to_nnf(negated)
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         return self.usage.to_natural()
 
 
@@ -452,11 +468,16 @@ class m_rectification(aalmmnode):
 
 # Declarable element class
 class m_declarable(aalmmnode):
+    """
+    Declarable class
+
+    Attributes
+        - types: object types
+    """
     def __init__(self, name=None):
         super().__init__(name)
         self.types = []
 
-    # Type test
     def is_a(self, ttype):
         t = [str(x.label) for x in self.types]
         return ttype in t
@@ -464,7 +485,16 @@ class m_declarable(aalmmnode):
 
 # Clause
 class m_clause(m_declarable):
-    def __init__(self, init=False, name=None, usage: m_usage=None, audit: m_audit=None, rectification: m_rectification=None):
+    """
+    Clause class extends m_m_declarable.
+
+    Attributes
+        - usage: the usage expression
+        - audit: the audit expression
+        - rectification: the rectification expression
+    """
+    def __init__(self, init=False, name=None, usage: m_usage=None,
+                 audit: m_audit=None, rectification: m_rectification=None):
         super().__init__(name)
         self.usage = usage if usage is not None else m_usage()
         self.audit = audit if audit is not None else m_audit()
@@ -493,10 +523,10 @@ class m_clause(m_declarable):
         return ue + ("\n & " + ae if ae is not None else "") + ("\n & " + re if re is not None else "")
         # return ae + " & always(" + ue + " | ((~(" + ue + ")) & (always(" + ae + " => (" + re + ")))))"
 
-    def to_nnf(self, bool):
-        ue = str(self.usage.to_nnf(bool)) if self.usage is not None else "false"
-        ae = str(self.audit.to_nnf(bool)) if self.audit.usage is not None else "false"
-        re = str(self.rectification.to_nnf(bool)) if self.rectification.usage is not None else "false"
+    def to_nnf(self, negated):
+        ue = str(self.usage.to_nnf(negated)) if self.usage is not None else "false"
+        ae = str(self.audit.to_nnf(negated)) if self.audit.usage is not None else "false"
+        re = str(self.rectification.to_nnf(negated)) if self.rectification.usage is not None else "false"
         return ue + ae + re
 
     def to_natural(self, kw=True):
@@ -508,6 +538,13 @@ class m_clause(m_declarable):
 
 # Agent
 class m_agent(m_declarable):
+    """
+    Agent class extends m_declarable
+
+    Attributes
+        - provided: a list of services
+        - required: a list of services
+    """
     def __init__(self, name=None):
         super().__init__(name)
         self.required = []
@@ -530,6 +567,12 @@ class m_agent(m_declarable):
 
 # Data
 class m_data(m_agent):
+    """
+    Data class extends m_agent.
+
+    Attributes
+        - subject: agent
+    """
     def __init__(self, name=None):
         super().__init__(name)
         self.required = []
@@ -546,6 +589,12 @@ class m_data(m_agent):
 
 # Service
 class m_service(m_declarable):
+    """
+    Service class extends m_declarable.
+
+    Attributes
+        - purpose: a list of purposes
+    """
     def __init__(self, name=None):
         super().__init__(name)
         self.purpose = []
@@ -561,6 +610,14 @@ class m_service(m_declarable):
 
 # Type
 class m_type(m_declarable):
+    """
+    Type class extends m_m_declarable.
+
+    Attributes
+        - superTypes: a list of super types
+        - attributes: a list of attributes
+        - actions: a list of actions
+    """
     def __init__(self, name=None):
         super().__init__(name)
         self.superTypes = []
@@ -588,6 +645,14 @@ class m_type(m_declarable):
 
 # Macro
 class m_macro(aalmmnode):
+    """
+    Macro class
+
+    Attributes
+        - name: macro name
+        - code: macro code
+        - param: macro parameters
+    """
     def __init__(self, name="", param=None, code=None):
         super().__init__()
         self.name = name
@@ -601,6 +666,13 @@ class m_macro(aalmmnode):
 
 # LTLCheck
 class m_ltlCheck(aalmmnode):
+    """
+    ltlcheck class.
+
+    Attributes
+        - name: check name
+        - code: check code
+    """
     def __init__(self, name=None, code=None):
         super().__init__()
         self.name = name
@@ -612,6 +684,14 @@ class m_ltlCheck(aalmmnode):
 
 # Declarable Reference
 class m_ref(aalmmnode):
+    """
+    Reference class.
+
+    Attributes
+        - name: ref name
+        - label: ref label == name
+        - target: targeted object
+    """
     def __init__(self, label=None, target=None):
         super().__init__()
         self.name = label
@@ -627,19 +707,17 @@ class m_ref(aalmmnode):
     def to_ltl(self):
         return self.label  # TODO: check
 
-    def to_nnf(self, bool):
+    def to_nnf(self, negated):
         return self.label  # TODO: check
 
     def to_natural(self, kw=True):
         return str(self.label) + " "  # TODO: check
 
-
-    # Type test
     def is_a(self, ttype):
         return self.target.is_a(ttype)
 
-        # def children(self):
-        #     return [self.target]
+    # def children(self):
+    #     return [self.target]
 
 
 #########################

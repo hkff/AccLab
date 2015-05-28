@@ -1,82 +1,126 @@
 \section{Getting started}
 
-\subsection{Basis}
+\subsection{Install AccLab}
 \begin{itemize}
   \item To use the ltl prover, you need to put the following executable files (tspass, fotl-translate) in tools/your\_platform/ (linux/mac/win)
   \item Basic run : python aalc.py (you need python3.4.0 or greater)
   \item Run an AAL file : python aalc.py -i testfile.aal
 \end{itemize}
 
+
+%%%%%%%%%%
+%% aalc
+%%%%%%%%%%
+\subsection{Using AAL compiler "aalc"}
 {
 \lstset{style=shell}
 \begin{lstlisting}[caption={aalc options}]
 aalc 
   -h    --help                   display this help and exit
   -i    --input                  the input file
+  -i    --output                 the output file
   -c    --compile                compile the file, that can be loaded after using -l
   -m    --monodic                apply monodic check on aal file
   -s    --shell                  run a shell after handling aal program
   -k    --check                  perform a verbose check
   -l    --load                   load a compiled aal file (.aalc) and run a shell
   -t    --ltl                    translate the aal program into FOTL
-  -r    --recompile              recompile the external files 
+  -r    --reparse                reparse tspass file
+  -r    --recompile              recompile the external files
   -b    --no-colors              disable colors in output
   -x    --compile-stdlib         compile the standard library
   -d    --hotswap                enable hotswaping (for development only)
+  -a    --ast                    show ast tree
+\end{lstlisting}
+}
+
+%%%%%%%%%%%%%%%%%%
+%% first aal prog
+%%%%%%%%%%%%%%%%%%
+\subsection{Writing your first AAL program}
+Let consider the following senario :
+we have three actors :
+\begin{itemize}
+    \item cloud storage service : let call it \texttt{css} which is a cloud service provider
+    \item alice and bob : an end users that uses css service
+\end{itemize}
+
+The \texttt{css} offers the following services : read (a user reads some data form css server),
+store (a user stores some data into css server), delete (a user deletes some data from css server).
+\texttt{css} allows users to read/store/delete only their data on his server, and don't allow them to read other
+customers data. \texttt{css} can also read and delete any data from his server.
+
+Alice want to check if \texttt{css} policy respect her privacy. Typically she want to know if she is allowed to
+performs some actions and if bob can read here data.
+
+
+\begin{enumerate}[a.]
+
+    \item \textbf{Declaring services}
+The services are the
+\begin{lstlisting}
+SERVICE read
+SERVICE store
+SERVICE delete
+\end{lstlisting}
+
+    \item \textbf{Declaring actors} : first we need to declare our actors
+\begin{lstlisting}
+// Agents declaration
+AGENT alice
+AGENT bob
+AGENT css
+\end{lstlisting}
+
+    \item \textbf{Linking services and actors}
+First we need to declare our actors
+\begin{lstlisting}
+AGENT alice TYPES() REQUIRED(read store delete) PROVIDED()
+AGENT bob   TYPES() REQUIRED(read store delete) PROVIDED()
+AGENT css   TYPES() REQUIRED() PROVIDED(read store delete)
 \end{lstlisting}
 
 
+    \item \textbf{Defining policies}
+First we need to declare our actors
+\begin{lstlisting}
+/*
+ *
+ */
+CLAUSE css_policy (
+
+)
+
+/*
+ *
+ */
+CLAUSE alice_policy (
+
+)
+\end{lstlisting}
+
+    \item \textbf{Writing checks}
+First we need to declare our actors
+\begin{lstlisting}
+CALL validate("'css_policy'" "'alice_pref'")
+\end{lstlisting}
+\end{enumerate}
+
+
+\subsection{Running the program}
+{
 \begin{itemize}
 	\item Run an AAL file (by default, it )
 \begin{lstlisting}
-aalc -i tests/tuto1.aal
-
-[WARNING] Agents declarations missing !
-  -> cloudS at line 20
-  -> cloudY at line 33
-  -> leslie at line 20
-[WARNING] Services declarations missing !
-  -> read at line 13
-  -> notify at line 19
-  -> sensors at line 17
-  -> write at line 15
-  -> log at line 36
-  -> audit at line 20
-  -> sanction at line 21
-  -> delete at line 16
-  -> storage at line 3
-[WARNING] Types declarations missing !
-  -> data at line 11
-  -> DataSubject at line 2
-  -> agent at line 12
-  -> DataProcessor at line 3
+aalc -i examples/tuto0.aal
 
 Execution time : 0.26976990699768066
 \end{lstlisting}
 
-	\item Perform an advanced check (need to be completed)
+	\item Perform an detailed check
 \begin{lstlisting}
 aalc -i tests/tuto1.aal -k
 
-------------------------- Checking Monodic test -------------------------
-
-** DECLARATIONS
-[DECLARED AGENTS] : 5
-[DECLARED SERVICES] : 13
-[DECLARED DATA] : 0
-[DECLARED TYPES] : 4
-
-*** Forwards references check...
-[AGENTS] : 3
-[SERVICES] : 9
-[DATA] : 0
-[TYPES] : 4
-
-** CLAUSES
-[CLAUSES] : 2
-Monodic test :
-Formula is monodic !
--------------------------- Checking Monodic End -------------------------
 \end{lstlisting}
 
 
@@ -103,6 +147,8 @@ aalc -i tests/tuto1.aal -t
 }
 
 
+
+
 \subsection{Using core libraries}
 You can load external AAL files using \texttt{LOAD "aal\_file"}(without the extension) 
 
@@ -111,6 +157,7 @@ You can load external AAL files using \texttt{LOAD "aal\_file"}(without the exte
 // Loading libraries
 LOAD "core.types"
 \end{lstlisting}
+
 
 
 \paragraph{core.macros} Contains some basic macros.
@@ -191,7 +238,6 @@ CALL obligation18()
 
 \subsection{Using the shell}
 The shell is a useful tool for developing 
-
 
 
 {
