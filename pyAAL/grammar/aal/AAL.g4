@@ -245,7 +245,8 @@ qvar        : quant h_variable (O_where condition)?;
 booleanOp   : O_and | O_or | O_onlywhen | T_until | T_unless;
 author      : (A_permit | A_deny) action NEWLINE?;
 ifthen      : O_if h_lpar actionExp h_rpar O_then h_lmar actionExp h_rmar
-            | O_if actionExp O_then actionExp;
+            | O_if actionExp O_then actionExp
+            | O_if actionExp IMPLICATION actionExp;
 
 
 exp : h_variable

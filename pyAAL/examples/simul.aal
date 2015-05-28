@@ -1,0 +1,9 @@
+Agent bob
+Agent alice
+
+BEHAVIOR bob (
+    PERMIT bob.read[alice](d),
+    bob.write[d](d),
+    IF bob.notify[d](d) => PERMIT bob.read[d](d),
+    IF bob.notify[d](d) => PERMIT bob.read[d](d)
+)
