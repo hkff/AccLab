@@ -51,6 +51,7 @@ CHECK c1() {
 """
   @verbose
   ~( @buildenv
+
     (clause(css_policy).ue)  => (clause(alice_pref).ue )
    )
 """

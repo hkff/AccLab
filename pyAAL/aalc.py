@@ -403,7 +403,7 @@ def main(argv):
         res = aalc(inputfile, use_shell=use_shell, check=check, monodic=monodic, compile=compile, recompile=recompile,
                    to_ltl=to_ltl, show_ast=show_ast, libs_path=libs_path)
         print(res["res"])
-        generate_simulation(res["mm"].aalprog)
+        # generate_simulation(res["mm"].aalprog)
 
     elif inputfile.endswith(".tspass"):  # Use tspass compiler
         res = tspassc(inputfile, output=outputfile, use_shell=False, debug=False, synth=synth, reparse=reparse)
