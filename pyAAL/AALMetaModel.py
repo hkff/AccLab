@@ -190,7 +190,7 @@ class aalmmnode():
 
     def to_nnf(self, negated):
         """
-        Transform node to negative normal forme
+        Transform node to negative normal form
         :param negated: true if action is not negated, false if action is negated
         :return: negation propagated action
         """
@@ -318,7 +318,7 @@ class m_aalprog(aalmmnode):
         return res
 
     # is_declared
-    def isDeclared(self, name: str, klass: "class", ret=bool) -> bool:
+    def isDeclared(self, name: str, klass: "klass", ret=bool) -> bool:
         """
         Check if the element with name=name of type klass is declared
         :param name: Name of declarable element to check
@@ -752,6 +752,12 @@ class m_aexp(aalmmnode):
 
 # ActionExpr Action
 class m_aexpAction(m_aexp):
+    """
+    m_aexpAction class
+
+    Attributes
+        - action: the action
+    """
     def __init__(self):
         super().__init__()
         self.action = None
@@ -765,14 +771,14 @@ class m_aexpAction(m_aexp):
     def to_ltl(self):
         return str(self.action.to_ltl())
 
-    def to_nnf(self,bool):
+    def to_nnf(self, negated):
 
-        if bool:
+        if negated:
             return str(self)
         else:
             return str(self.negate())
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         return self.action.to_natural(kw=kw)
 
     def negate(self):
@@ -798,13 +804,13 @@ class m_aexpNotAexp(m_aexp):
         return [self.negation, self.actionExpression]
 
     def to_ltl(self):
-        return str(self.negation.to_ltl()) + "(" + str(self.actionExpression.to_ltl()) + ")"
+        return "~" + "(" + str(self.actionExpression.to_ltl()) + ")"
 
-    def to_nnf(self, bool):
+    def to_nnf(self, negated):
         self.remove()
-        return str(self.actionExpression.to_nnf(not bool))
+        return str(self.actionExpression.to_nnf(not negated))
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         return self.actionExpression.to_natural(kw=not kw)
 
     def remove(self):
@@ -835,10 +841,10 @@ class m_aexpModal(m_aexp):
     def to_ltl(self):
         return str(self.modality.to_ltl()) + "(" + str(self.actionExpression.to_ltl()) + ")"
 
-    def to_nnf(self,bool):
-        return str(self.modality.to_nnf(bool)) + "(" + str(self.actionExpression.to_nnf(bool)) + ")"
+    def to_nnf(self, negated):
+        return str(self.modality.to_nnf(negated)) + "(" + str(self.actionExpression.to_nnf(negated)) + ")"
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         return str(self.modality)+" " + str(self.actionExpression.to_natural(kw=kw))
 
     def replace(self, child, node):
@@ -865,8 +871,8 @@ class m_aexpCondition(m_aexp):
         return str(self.condition.to_ltl())
 
     #[NOT] Exp | Exp ['==' | '!='] Exp | Condition (AND|OR) Condition
-    def to_nnf(self, bool):
-        return str(self.condition.to_nnf(bool))
+    def to_nnf(self, negated):
+        return str(self.condition.to_nnf(negated))
 
     def to_natural(self, kw=True):
         return str(self.condition.to_natural())
@@ -890,40 +896,47 @@ class m_aexpComb(m_aexp):
     def to_ltl(self):
         return "(" + str(self.actionExp1.to_ltl()) + " " + str(self.operator.to_ltl()) + " " + str(self.actionExp2.to_ltl()) + ")"
 
-
-
-    def to_nnf(self, bool):
-        if bool:
-            return "(" + str(self.actionExp1.to_nnf(True)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(True)) + ")"
+    def to_nnf(self, negated):
+        if negated:
+            return "(" + str(self.actionExp1.to_nnf(True)) + " " + str(self.operator) + " " + \
+                   str(self.actionExp2.to_nnf(True)) + ")"
         else:
             if self.operator == m_booleanOp.O_and:
                 self.operator = m_booleanOp.O_or
-                return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
+                return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " +\
+                       str(self.actionExp2.to_nnf(False)) + ")"
             elif self.operator == m_booleanOp.O_or:
                 self.operator = m_booleanOp.O_and
-                return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
+                return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " +\
+                       str(self.actionExp2.to_nnf(False)) + ")"
             elif self.operator == m_booleanOp.O_onlywhen:
                 self.operator = m_booleanOp.O_and
-                return "(" + str(self.actionExp1.to_nnf(True)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
+                return "(" + str(self.actionExp1.to_nnf(True)) + " " + str(self.operator) + " " +\
+                       str(self.actionExp2.to_nnf(False)) + ")"
             elif self.operator == m_booleanOp.T_unless:
                 self.operator == m_booleanOp.T_until
-                return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
+                return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " +\
+                       str(self.actionExp2.to_nnf(False)) + ")"
             elif self.operator == m_booleanOp.T_until:
                 self.operator == m_booleanOp.T_unless
-                return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
+                return "(" + str(self.actionExp1.to_nnf(False)) + " " + str(self.operator) + " " +\
+                       str(self.actionExp2.to_nnf(False)) + ")"
 
     def to_natural(self, kw=True):
         if self.operator == m_booleanOp.O_and:
             return str(self.actionExp1.to_natural()) + "and " + str(self.actionExp2.to_natural()) + "are verified, "
         elif self.operator == m_booleanOp.O_or:
-            return "either " + str(self.actionExp1.to_natural())+"is verified " + "or " + str(self.actionExp2.to_natural()) + "is verified, "
+            return "either " + str(self.actionExp1.to_natural())+"is verified " + "or " +\
+                   str(self.actionExp2.to_natural()) + "is verified, "
         elif self.operator == m_booleanOp.O_onlywhen:
-            return "whenever " + str(self.actionExp1.to_natural()) + "is verified, then " + str(self.actionExp2.to_natural()) + "is verified too, "
+            return "whenever " + str(self.actionExp1.to_natural()) + "is verified, then " +\
+                   str(self.actionExp2.to_natural()) + "is verified too, "
         elif self.operator == m_booleanOp.T_unless:
-            return "(" + str(self.actionExp1.to_nnf(False)) + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
+            return "(" + str(self.actionExp1.to_nnf(False)) + str(self.operator) + " " +\
+                   str(self.actionExp2.to_nnf(False)) + ")"
         elif self.operator == m_booleanOp.T_until:
-            self.operator == m_booleanOp.T_unless
-            return "(" + str(self.actionExp1.to_nnf(False)) + str(self.operator) + " " + str(self.actionExp2.to_nnf(False)) + ")"
+            return "(" + str(self.actionExp1.to_nnf(False)) + str(self.operator) + " " +\
+                   str(self.actionExp2.to_nnf(False)) + ")"
 
     def replace(self, child, node):
         if child == self.actionExp1:
@@ -958,14 +971,14 @@ class m_aexpAuthor(m_aexp):
     #      self.action.to_nnf(bool)
     #     return str(self.author) + str(self.action.negate())
 
-    def to_nnf(self, bool):
-        if bool:
+    def to_nnf(self, negated):
+        if negated:
             return str(self)
         else:
             return str(self.negate())
 
-    def to_natural(self,kw=True):
-        return str(self.author.to_natural()) + str(self.action.to_natural(kw=self.author==m_author.A_permit,auth=True))
+    def to_natural(self, kw=True):
+        return str(self.author.to_natural()) + str(self.action.to_natural(kw=self.author == m_author.A_permit, auth=True))
 
     def negate(self):
         neg = m_aexpNotAexp()
@@ -982,7 +995,7 @@ class m_aexpIfthen(m_aexp):
 
     def __str__(self):
         return str(m_booleanOp.O_if) + " (" + str(self.condition) + ") " + str(m_booleanOp.O_then) + " (" + \
-               str(self.branchTrue) + ")"
+            str(self.branchTrue) + ")"
 
     def children(self):
         return [self.condition, self.branchTrue]
@@ -991,11 +1004,12 @@ class m_aexpIfthen(m_aexp):
         return " (" + str(self.condition.to_ltl()) + " " + str(m_booleanOp.O_then.to_ltl()) + " " + \
                str(self.branchTrue.to_ltl()) + ")"
 
-    def to_nnf(self,bool):
-        self.branchTrue.to_nnf(bool)
-        return "(" + str(self.condition.to_nnf(True)) + " " + str(m_booleanOp.O_then) +" " + str(self.branchTrue.to_nnf(bool))
+    def to_nnf(self, negated):
+        self.branchTrue.to_nnf(negated)
+        return "(" + str(self.condition.to_nnf(True)) + " " + str(m_booleanOp.O_then) + " " + \
+               str(self.branchTrue.to_nnf(negated))
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         return "if " + self.condition.to_natural() + "then " + self.branchTrue.to_natural(kw=False)
 
     def replace(self, child, node):
@@ -1032,10 +1046,11 @@ class m_qvar(aalmmnode):
         return res
 
     def to_ltl(self):
-        return str(self.quant.to_ltl()) + "[" + str(self.variable.target.name) + "] ( " + str(self.variable.target.to_ltl()) + " & "
+        return str(self.quant.to_ltl()) + "[" + str(self.variable.target.name) + "] ( " + \
+               str(self.variable.target.to_ltl()) + " & "
 
-    def to_nnf(self, bool):
-        if bool:
+    def to_nnf(self, negated):
+        if negated:
             return str(self.quant) + "[" + str(self.variable.target.name) + "]"
         else:
             if self.quant == m_quant.Q_forall:
@@ -1047,11 +1062,12 @@ class m_qvar(aalmmnode):
                 self.condition.to_nnf(False)
                 return str(self.quant) + "[" + str(self.variable.target.name) + "]"
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         if self.condition is None:
             return str(self.quant.to_natural(kw=kw)) + str(self.variable.to_natural(kw=kw))
         else:
-            return str(self.quant.to_natural(kw=kw)) + str(self.variable.to_natural(kw=kw)) + " where " + str(self.condition.to_natural(kw=kw))
+            return str(self.quant.to_natural(kw=kw)) + str(self.variable.to_natural(kw=kw)) + " where " + \
+                   str(self.condition.to_natural(kw=kw))
 
     # Type test
     def is_a(self, ttype):
@@ -1081,9 +1097,9 @@ class m_aexpQvar(m_aexp):
         q = [str(x.to_ltl()) for x in self.qvars]
         return str(" ".join(q)) + "(" + str(self.actionExp.to_ltl()) + "))"
 
-    def to_nnf(self, bool):
-        q = [str(x.to_nnf(bool)) for x in self.qvars]
-        return str(" ".join(q)) + "(" + str(self.actionExp.to_nnf(bool)) + ")"
+    def to_nnf(self, negated):
+        q = [str(x.to_nnf(negated)) for x in self.qvars]
+        return str(" ".join(q)) + "(" + str(self.actionExp.to_nnf(negated)) + ")"
 
     def to_natural(self, kw=True):
         q = [str(x.to_natural()) for x in self.qvars]
@@ -1094,7 +1110,6 @@ class m_aexpQvar(m_aexp):
 class m_exp(aalmmnode):
     def __init__(self):
         super().__init__()
-        pass
 
 
 # Variable
@@ -1102,7 +1117,6 @@ class m_variable(m_exp):
     def __init__(self):
         super().__init__()
         self.type = None
-        pass
 
     def __str__(self):
         return str(self.name) + ":" + str(self.type)
@@ -1126,7 +1140,6 @@ class m_predicate(m_exp):
     def __init__(self):
         super().__init__()
         self.args = []
-        pass
 
     def __str__(self):
         q = [str(x) for x in self.args][1:]
@@ -1172,12 +1185,11 @@ class m_varAttr(m_exp):
     def to_ltl(self):
         return str(self.attribute) + "(" + str(self.variable) + ")"
 
-    def to_nnf(self, bool):
-        #TODO:
+    def to_nnf(self, negated):
         return str(self.attribute) + "(" + str(self.variable) + ")"
 
     def to_natural(self, kw=True):
-        return str(self.variable)+"'s " + str(self.attribute)
+        return str(self.variable) + "'s " + str(self.attribute)
 
 
 #########################
@@ -1200,18 +1212,31 @@ class m_conditionCmp(m_condition):
         return str(self.exp1) + " " + str(self.operator) + " " + str(self.exp2)
 
     def to_ltl(self):
-        return str(self.operator.to_ltl()) + "(" + str(self.exp1.to_ltl()) + ", " + str(self.exp2.to_ltl()) + ")"
+        # Test the case var.attr == x
+        if isinstance(self.exp1, m_varAttr):
+            if self.operator == m_booleanOp.O_equal:
+                return str(self.exp1.attribute) + "(" + str(self.exp1.variable) + ", " + \
+                       str(self.exp2.to_ltl()) + ")"
+            elif self.operator == m_booleanOp.O_inequal:
+                return "~" + str(self.exp1.attribute) + "(" + str(self.exp1.variable) + ", " + \
+                       str(self.exp2.to_ltl()) + ")"
+        else:
+            # Other cases
+            return str(self.operator.to_ltl()) + "(" + str(self.exp1.to_ltl()) + ", " + \
+                   str(self.exp2.to_ltl()) + ")"
 
-    def to_nnf(self, bool):
-        if bool:
+    def to_nnf(self, negated):
+        if negated:
             return str(self.operator) + "(" + str(self.exp1.to_nnf(True)) + ", " + str(self.exp2.to_nnf(True))
         else:
             if self.operator == m_booleanOp.O_equal:
                 self.operator = m_booleanOp.O_inequal
-                return "(" + str(self.exp1.to_nnf(True)) + " " + str(self.operator) + " " + str(self.exp2.to_nnf(True)) + ")"
+                return "(" + str(self.exp1.to_nnf(True)) + " " + str(self.operator) + " " + \
+                       str(self.exp2.to_nnf(True)) + ")"
             elif self.operator == m_booleanOp.O_or:
                 self.operator = m_booleanOp.O_equal
-                return "(" + str(self.exp1.to_nnf(True)) + " " + str(self.operator) + " " + str(self.exp2.to_nnf(True)) + ")"
+                return "(" + str(self.exp1.to_nnf(True)) + " " + str(self.operator) + " " + \
+                       str(self.exp2.to_nnf(True)) + ")"
 
     def to_natural(self, kw=True):
         if kw:
@@ -1232,21 +1257,22 @@ class m_conditionComb(m_condition):
         return str(self.cond1) + " " + str(self.operator) + " \n" + str(self.cond2)
 
     def to_ltl(self):
-        #return str(self.cond1.to_ltl()) + " " + str(self.operator.to_ltl()) + " " + str(self.cond2.to_ltl())
         return str(self.cond1.to_ltl()) + " " + str(self.operator.to_ltl()) + " " + str(self.cond2.to_ltl())
 
-    def to_nnf(self, bool):
-        if bool:
+    def to_nnf(self, negated):
+        if negated:
             return str(self.operator) + "(" + str(self.cond1.to_nnf(True)) + ", " + str(self.cond2.to_nnf(True))
         else:
             if self.operator == m_booleanOp.O_and:
                 self.operator = m_booleanOp.O_or
-                return "(" + str(self.cond1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.cond2.to_nnf(False)) + ")"
+                return "(" + str(self.cond1.to_nnf(False)) + " " + str(self.operator) + " " + \
+                       str(self.cond2.to_nnf(False)) + ")"
             elif self.operator == m_booleanOp.O_or:
                 self.operator = m_booleanOp.O_and
-                return "(" + str(self.cond1.to_nnf(False)) + " " + str(self.operator) + " " + str(self.cond2.to_nnf(False)) + ")"
+                return "(" + str(self.cond1.to_nnf(False)) + " " + str(self.operator) + " " + \
+                       str(self.cond2.to_nnf(False)) + ")"
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         if kw:
             return self.cond1.to_natural() + self.operator.to_natural() + self.cond2.to_natural()
         else:
@@ -1267,8 +1293,8 @@ class m_conditionNotComb(m_condition):
         return ((str(self.operator) if self.operator is not None else "") + "(" + str(self.exp.to_ltl()) + ")") \
             if self.operator is not None else str(self.exp.to_ltl())
 
-    def to_nnf(self, bool):
-        if bool:
+    def to_nnf(self, negated):
+        if negated:
             if self.operator == m_booleanOp.O_not:
                 self.operator = None
                 return str(self.exp.to_nnf(False))
@@ -1324,7 +1350,7 @@ class m_action(m_aexp):
             res.append(self.purpose)
         return res
 
-    def to_ltl(self, auth=False):
+    def to_ltl(self):
         args = []
         res = ""
         # HANDLE time
@@ -1350,14 +1376,14 @@ class m_action(m_aexp):
 
     def to_natural(self, kw=True, auth=False):
         if kw:
-            res = str(self.agent1) + (" is allowed to use " if auth else " use ") + str(self.service.name)+" service of " + \
-                (str(self.agent2) if self.agent2 is not None else " ") + \
-                " " + ("to " + str(self.service.name)+" "+str(self.args)+" " if self.args is not None else "") + "" + \
+            res = str(self.agent1) + (" is allowed to use " if auth else " use ") + str(self.service.name) + \
+                " service of " + (str(self.agent2) if self.agent2 is not None else " ") + " " + \
+                ("to " + str(self.service.name) + " " + str(self.args) + " " if self.args is not None else "") + \
                 (str(self.time) if self.time is not None else "")
         else:
-            res = str(self.agent1) + (" is not allowed to use " if auth else " use ") + str(self.service.name)+" service of " + \
-                (str(self.agent2) if self.agent2 is not None else " ") + \
-                " " + ("to " + str(self.service.name)+" "+str(self.args)+" " if self.args is not None else "") + "" + \
+            res = str(self.agent1) + (" is not allowed to use " if auth else " use ") + str(self.service.name) + \
+                " service of " + (str(self.agent2) if self.agent2 is not None else " ") + \
+                " " + ("to " + str(self.service.name) + " " + str(self.args) + " " if self.args is not None else "") + \
                 (str(self.time) if self.time is not None else "")
         return res
 
@@ -1379,7 +1405,7 @@ class m_time(aalmmnode):
         res = str(self.action) + " " + str(self.time)
         return res
 
-    def to_ltl(self, auth=False):
+    def to_ltl(self):
         res = str(self.time).replace("\"", "")
         res = res.replace("1 ", "one")
         res = res.replace("2 ", "two")
@@ -1466,34 +1492,14 @@ class m_booleanOp(sEnum):
     O_inequal = "!="
     O_true = "TRUE"
     O_false = "FALSE"
-    T_until = "UNTIL"
-    T_unless = "UNLESS"
 
     def to_natural(self, kw=True):
-        if self == m_booleanOp.O_and:
-            return "and "
-        elif self == m_booleanOp.O_or:
-            return "or "
-        elif self == m_booleanOp.O_onlywhen:
-            return "onlywhen "
-        elif self == m_booleanOp.O_if:
-            return "if "
-        elif self == m_booleanOp.O_then:
-            return "then "
-        elif self == m_booleanOp.O_after:
-            return "after "
-        elif self == m_booleanOp.O_before:
-            return "before "
-        elif self == m_booleanOp.O_not:
-            return "not "
-        elif self == m_booleanOp.O_equal:
+        if self == m_booleanOp.O_equal:
             return " is "
         elif self == m_booleanOp.O_inequal:
             return " is not "
-        elif self == m_modal.T_until:
-            return "until "
-        elif self == m_modal.T_unless:
-            return "unless "
+        else:
+            return str(self).lower()
 
     def to_ltl(self):
         if self == m_booleanOp.O_and:
@@ -1534,10 +1540,7 @@ class m_author(sEnum):
             return "~P"
 
     def to_natural(self, kw=True):  # TODO
-        if self == m_author.A_permit:
-            return ""
-        elif self == m_author.A_deny:
-            return ""
+        return ""
 
 
 # Quant
@@ -1565,8 +1568,10 @@ class m_modal(sEnum):
     T_always = "ALWAYS"
     T_never = "NEVER"
     T_sometime = "SOMETIME"
+    T_until = "UNTIL"
+    T_unless = "UNLESS"
 
-    def to_natural(self,kw=True):
+    def to_natural(self, kw=True):
         if self == m_modal.T_must:
             return "must : "
         elif self == m_modal.T_mustnot:
@@ -1590,15 +1595,15 @@ class m_modal(sEnum):
         elif self == m_modal.T_sometime:
             return str(FOTLOperators.t_sometime)
 
-    def to_nnf(self, bool):
-        if bool:
-            return "" + str(self)
+    def to_nnf(self, negated):
+        if negated:
+            return str(self)
         else:
-            if self==m_modal.T_always:
+            if self == m_modal.T_always:
                 return str(m_modal.T_sometime)
-            if self==m_modal.T_never:
+            if self == m_modal.T_never:
                 return str(m_modal.T_sometime)
-            if self==m_modal.T_sometime:
+            if self == m_modal.T_sometime:
                 return str(m_modal.T_never)
 
 
@@ -1619,15 +1624,16 @@ def get_mm_classes():
 
 # pprint for AAL code in terminal  # TODO make it clean or remove
 def aal_pprint(code):
-    keywords1 = [',','after','and','before','exists','forall','if','not','onlywhen','or','then','where']
-    keywords2 = ['agent','apply','auditing','call','check','clause','data','if_violated_then','load','macro','service','type','types']
-    keywords3 = ['always','must','mustnot','never','sometime','until']
-    keywords4 = ['aa','actions','attributes','deny','extends','get_audit','get_rectification','get_usage',
-                 'permit','provided','ps','purpose','rc','required','rs','uc']
+    keywords1 = [',', 'after', 'and', 'before', 'exists', 'forall', 'if', 'not', 'onlywhen', 'or', 'then', 'where']
+    keywords2 = ['agent', 'apply', 'auditing', 'call', 'check', 'clause', 'data', 'if_violated_then', 'load', 'macro',
+                 'service', 'type', 'types']
+    keywords3 = ['always', 'must', 'mustnot', 'never', 'sometime', 'until']
+    keywords4 = ['aa', 'actions', 'attributes', 'deny', 'extends', 'get_audit', 'get_rectification', 'get_usage', 
+                 'permit', 'provided', 'ps', 'purpose', 'rc', 'required', 'rs', 'uc']
 
     res = code
     for key in keywords1:
-        key =  " " + key + " "
+        key = " " + key + " "
         res = res.replace(" " + key + " ", " {autoyellow}" + key + "{/yellow} ")
         res = res.replace(key.upper(), " {autoyellow}" + key.upper() + "{/yellow} ")
 

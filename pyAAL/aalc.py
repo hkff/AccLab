@@ -92,7 +92,8 @@ class DescriptiveErrorListener(ErrorListener):
 
 # aalc
 def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, compile: bool=False,
-         libs_path="libs/aal/", root_path=None, recompile: bool=False, to_ltl: bool=False, show_ast: bool=False):
+         libs_path="libs/aal/", root_path=None, recompile: bool=False, to_ltl: bool=False,
+         show_ast: bool=False):
     """
     Parse AAL.
     :param file: The AAL input file
@@ -227,7 +228,8 @@ def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: boo
         pprint(bt)
 
     # FOTL Translate
-    p = Popen(['tools/' + os_name + '/fotl-translate', generated_tspass], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    p = Popen(['tools/' + os_name + '/fotl-translate', generated_tspass],
+              stdout=PIPE, stderr=PIPE, stdin=PIPE)
     fotl = p.stdout.read().decode("utf-8")
     if fotl == "":
         fotl = p.stderr.read().decode("utf-8")
@@ -240,7 +242,8 @@ def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: boo
         f.write(fotl)
 
     # TSPASS
-    p = Popen(['tools/' + os_name + '/tspass', fotl_file], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    p = Popen(['tools/' + os_name + '/tspass', fotl_file],
+              stdout=PIPE, stderr=PIPE, stdin=PIPE)
     tspass = p.stdout.read().decode("utf-8")
     if tspass == "":
         tspass = p.stderr.read().decode("utf-8")

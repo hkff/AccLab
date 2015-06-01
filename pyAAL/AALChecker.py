@@ -23,41 +23,6 @@ from pprint import pprint
 from tools.color import *
 from AALtoFOTL import *
 
-# TODO optimize pre_cond...  to remove
-# -------------------------------------------------------------
-pre_cond = "(oneMonth => twoMonths) & " + "(oneMonth => threeMonths) & " + "(oneMonth => fourMonths) & " + \
-           "(oneMonth => fiveMonths) & " + "(oneMonth => sixMonths) & " + "(oneMonth => sevenMonths) & " + \
-           "(oneMonth => eightMonths) & " + "(oneMonth => nineMonths) & " + "(oneMonth => tenMonths) & " + \
-           "(oneMonth => elevenMonths) & " + "(oneMonth => twelveMonths)\n"
-pre_cond += "(twoMonths => threeMonths) & " + "(twoMonths => fourMonths) & " + "(twoMonths => fiveMonths) & " + \
-            "(twoMonths => sixMonths) & " + "(twoMonths => sevenMonths) & " + "(twoMonths => eightMonths) & " + \
-            "(twoMonths => nineMonths) & " + "(twoMonths => tenMonths) & " + "(twoMonths => elevenMonths) & " + \
-            "(twoMonths => twelveMonths)\n"
-pre_cond += "(threeMonths => fourMonths) & " + "(threeMonths => fiveMonths) & " + "(threeMonths => sixMonths) & " + \
-            "(threeMonths => sevenMonths) & " + "(threeMonths => eightMonths) & " + "(threeMonths => nineMonths) & " + \
-            "(threeMonths => tenMonths) & " + "(threeMonths => elevenMonths) & " + "(threeMonths => twelveMonths)\n"
-pre_cond += "(fourMonths => fiveMonths) & " + "(fourMonths => sixMonths) & " + "(fourMonths => sevenMonths) & " + \
-            "(fourMonths => eightMonths) & " + "(fourMonths => nineMonths) & " + "(fourMonths => tenMonths) & " + \
-            "(fourMonths => elevenMonths) & " + "(fourMonths => twelveMonths)\n"
-pre_cond += "(fiveMonths => sixMonths) & " + "(fiveMonths => sevenMonths) & " + "(fiveMonths => eightMonths) & " + \
-            "(fiveMonths => nineMonths) & " + "(fiveMonths => tenMonths) & " + "(fiveMonths => elevenMonths) & " + \
-            "(fiveMonths => twelveMonths)\n"
-pre_cond += "(sixMonths => sevenMonths) & " + "(sixMonths => eightMonths) & " + "(sixMonths => nineMonths) & " + \
-            "(sixMonths => tenMonths) & " + "(sixMonths => elevenMonths) & " + "(sixMonths => twelveMonths)\n"
-pre_cond += "(sevenMonths => eightMonths) & " + "(sevenMonths => nineMonths) & " + "(sevenMonths => tenMonths) & " + \
-            "(sevenMonths => elevenMonths) & " + "(sevenMonths => twelveMonths)\n"
-pre_cond += "(eightMonths => nineMonths) & " + "(eightMonths => tenMonths) & " + "(eightMonths => elevenMonths) & " + \
-            "(eightMonths => twelveMonths)\n"
-pre_cond += "(nineMonths => tenMonths) & " + "(nineMonths => elevenMonths) & " + "(nineMonths => twelveMonths)\n"
-pre_cond += "(tenMonths => elevenMonths) & " + "(tenMonths => twelveMonths)\n"
-pre_cond += "(elevenMonths => twelveMonths)\n"
-
-pre_condYears = pre_cond.replace("Month", "Year")
-pre_condDays = pre_cond.replace("Month", "Day")
-
-pre_cond += pre_condYears + pre_condDays
-
-pre_cond += "always( ![a,x,y,z] ~(PERMIT(a, x, y, z) & DENY(a, x, y, z))) &  "  # Translation not valid
 
 # -------------------------------------------------------------
 pre_cond = ""
@@ -231,7 +196,7 @@ def get_vars(aexp: m_aexp, vtype=None):
     if vtype == "free":  # Get free vars
         # For all quantified vars check if the quantification is not declared inside
         for q in qrefs:
-            if not (q.target in quant):
+            if q.target not in quant:
                 res.append(q)
         return res
 

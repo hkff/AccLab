@@ -37,23 +37,23 @@ CLAUSE alice_pref (
     FORALL d:data FORALL a:Actor
     // Alice want to be able to read all her data stored on css
     IF (d.subject == alice) THEN {
-        PERMIT alice.read[css](d)
-    }
-    AND
-    IF (d.subject == alice) THEN {
+        PERMIT alice.read[css](d) AND
         DENY bob.read[css](d)
     }
 )
 
-//CALL validate("'css_policy'" "'alice_pref'")
+CALL validate("'css_policy'" "'alice_pref'")
 
 CHECK c1() {
 """
   @verbose
   ~( @buildenv
+     (![f] (subject(f, alice) => ~subject(f, bob))) &
 
-    (clause(css_policy).ue)  => (clause(alice_pref).ue )
+    (clause(css_policy).ue)
+=>
+    (clause(alice_pref).ue)
    )
 """
 }
-APPLY c1()
+//APPLY c1()

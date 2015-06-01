@@ -1,3 +1,4 @@
+
 ;; define several class of keywords
 (setq aal-keywords '("AGENT" "apply" "auditing" "behavior" "call" "check" "clause" "data" "exec" "if_violated_then" "load" "macro" "of" "service" "type" "types") )
 (setq aal-types '("float" "integer" "key" "list" "rotation" "string" "vector"))
@@ -21,7 +22,7 @@
 
 ;; create the list for font-lock.
 ;; each class of keyword is given a particular face
-(setq aal2-font-lock-keywords
+(setq aal-font-lock-keywords
   `(
     (,aal-type-regexp . font-lock-type-face)
     (,aal-constant-regexp . font-lock-constant-face)
@@ -39,7 +40,7 @@
   "Major mode for editing AAL (Abstract Accountability Language)…"
 
   ;; code for syntax highlighting
-  (setq font-lock-defaults '((aal2-font-lock-keywords)))
+  (setq font-lock-defaults '((aal-font-lock-keywords)))
 
   ;; clear memory
   (setq aal-keywords-regexp nil)
