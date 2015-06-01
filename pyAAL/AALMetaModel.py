@@ -963,8 +963,7 @@ class m_aexpAuthor(m_aexp):
         return [self.author, self.action]
 
     def to_ltl(self):
-        # return str(self.author.to_ltl()) + "(" + str(self.action.to_ltl(auth=True)) + ")"
-        return str(self.author.to_ltl()) + str(self.action.to_ltl(auth=True))
+        return str(self.author.to_ltl()) + str(self.action.to_ltl())
 
     #    def to_nnf(self,bool):
     #       #TODO: check
