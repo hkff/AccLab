@@ -1173,7 +1173,7 @@ class AALCompilerListener(AALListener.AALListener):
         if len(res) > 0:
             return res[0]
         else:
-            print("Clause" + clauseId + " not found !")
+            print("Clause " + clauseId + " not found !")
             return None
 
     def show_clauses(self):

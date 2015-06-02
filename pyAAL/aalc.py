@@ -80,7 +80,6 @@ class DescriptiveErrorListener(ErrorListener):
     """
     Error Listener
     """
-
     def __init__(self):
         self.errors = []
 

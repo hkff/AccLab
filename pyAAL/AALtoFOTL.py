@@ -19,7 +19,6 @@ __author__ = 'walid'
 
 from AALMetaModel import *
 
-
 # Build environment
 def build_env(prog: m_aalprog=None):
     """
@@ -40,6 +39,22 @@ def build_env(prog: m_aalprog=None):
     for x in prog.get_declared(m_agent):
         pre_cond += str(x.to_ltl()) + " & \n"
 
+    pre_cond += "\n\n%%% Time knowledge \n"
+    times = []
+    index = 0
+    for x in prog.walk(filter_type=m_time):
+        index = 0
+        # print(str(x) + " " + str(x.to_days()))
+        if len(times) == 0:
+            times.append(x)
+        else:
+            for y in times:
+                if y.compare(x) == 1:
+                    times.insert(index, x)
+                    break
+                index += 1
+    # print([str(x.time) + " " for x in times])
+
     pre_cond += "\n%%%%%%%%% END EVN %%%%%%%%%%%\n\n"
     return pre_cond
 
@@ -48,7 +63,7 @@ def build_env(prog: m_aalprog=None):
 def AALtoFOTL(mm: aalmm=None):
     """
     Generate the FOTL formula of the given aal prgram
-    :param mm: aal meta model
+    :param mm: AAL meta model / or AAL prog
     :return: FOTL formula
     """
     print("Entering TSPASS translation...")
@@ -67,5 +82,8 @@ def AALtoFOTL(mm: aalmm=None):
         ifthen        -> INTER[actionExp1] => INTER[actionExp2]
         qvar          -> quant INTER[var]
     """
-
-    return build_env(mm.aalprog) + "\n" + mm.aalprog.to_ltl()
+    print(mm)
+    if isinstance(mm, m_aalprog):
+        return build_env(mm) + "\n" + mm.to_ltl()
+    else:
+        return build_env(mm.aalprog) + "\n" + mm.aalprog.to_ltl()

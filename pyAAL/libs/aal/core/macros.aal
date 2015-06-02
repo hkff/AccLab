@@ -1,28 +1,55 @@
-/** ltl check**/
-MACRO ltl_check (
+/*
+ * fotl check
+ */
+MACRO fotl_check (
 """
-print(self.aalprog.to_ltl())
+print(AALtoFOTL(self.aalprog))
 """
 )
 
+
+/*
+ * Checking validity
+ */
 MACRO validate(c1 c2) (
-// Checking validity
 """
 _c1 = self.clause(c1)
 _c2 = self.clause(c2)
-validate(self, _c1, _c2, verbose=False)
+if _c1 is not None and _c2 is not None:
+    validate(self, _c1, _c2, verbose=False)
 """
 )
 
+
+/*
+ * Checking validity : verbose mode
+ */
 MACRO vvalidate(c1 c2) (
-// Checking validity
 """
 _c1 = self.clause(c1)
 _c2 = self.clause(c2)
-validate(self, _c1, _c2, verbose=True)
+if _c1 is not None and _c2 is not None:
+    validate(self, _c1, _c2, verbose=True)
 """
 )
 
+
+/*
+ * Checking validity and auto resolve conflicts
+ */
+MACRO resolve(c1 c2) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+if _c1 is not None and _c2 is not None:
+    validate(self, _c1, _c2, resolve=True)
+"""
+)
+
+
+/*
+ *
+ */
 MACRO validate2(c1) (
 // Checking validity
 """
@@ -31,21 +58,22 @@ validate2(self, _c1)
 """
 )
 
+
+/*
+ * Checking satisfiability
+ */
 MACRO sat(c1) (
-// Checking satisfiability
 """
-_c1 = self.clause(c1).to_ltl()
-validate2(self, _c1, True)
-"""
-)
-
-MACRO resolve(c1 c2) (
-// Checking validity and auto resolve conflicts
-"""
-validate(self, c1, c2, resolve=True)
+_c1 = self.clause(c1)
+if _c1 is not None:
+    validate2(self, _c1.to_ltl(), True)
 """
 )
 
+
+/*
+ * Show all loaded libs
+ */
 MACRO show_libs (
 """
 print("loaded libs....")
@@ -56,28 +84,45 @@ print("\n")
 )
 
 
-MACRO ltl (c) (
+/*
+ * Translate clause c to FOTL
+ */
+MACRO fotl(c) (
 """
-//print(isinstance(c, m_clause) )
 cl = self.clause(c)
-print(cl.to_ltl())
+if cl is not None:
+    print(cl.to_ltl())
 """
 )
 
+
+/*
+ * Print a clause
+ */
 MACRO show_clause(c) (
 """
 cl = self.clause(c)
-print(cl)
+if cl is not None:
+    print(cl)
 """
 )
 
+
+/*
+ * Get natural language translation of a clause
+ */
 MACRO to_natural(c) (
 """
-print("koko")
-print(self.clause(c).to_natural())
+cl = self.clause(c)
+if cl is not None:
+    print(cl.to_natural())
 """
 )
 
+
+/*
+ * Evaluate an FOTL expression
+ */
 MACRO do(a) (
 """
 self.apply_check(code= AALtoFOTL(l) + " & " + a , verbose=False, show=True)["print"]
@@ -85,6 +130,9 @@ self.apply_check(code= AALtoFOTL(l) + " & " + a , verbose=False, show=True)["pri
 )
 
 
+/*
+ * Disable agents declarations
+ */
 MACRO skip_defs() (
 """
 def exitAgentDec(ctx):

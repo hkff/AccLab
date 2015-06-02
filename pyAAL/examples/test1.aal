@@ -40,8 +40,6 @@ TYPE tot ATTRIBUTES(a b c) ACTIONS()
 tot d
 
 
-
-
 /*** Kim's user preference ***/
 CLAUSE kim_policy (
     FORALL file:foo WHERE file.subject == kim FORALL x:data

@@ -537,9 +537,9 @@ class m_clause(m_declarable):
         return ue + ae + re
 
     def to_natural(self, kw=True):
-        ue = str(self.usage.to_natural()) if self.usage is not None else "false "
-        ae = str(self.audit.to_natural()) if self.audit.usage is not None else "false "
-        re = str(self.rectification.to_natural()) if self.rectification.usage is not None else "false "
+        ue = str(self.usage.to_natural()) if self.usage is not None else "Not specified "
+        ae = str(self.audit.to_natural()) if self.audit.usage is not None else "Not specified "
+        re = str(self.rectification.to_natural()) if self.rectification.usage is not None else "Not specified "
         return "Usage : "+ue + "\nAudit : " + ae + "\nRectification : " + re + "\n"
 
 
@@ -897,7 +897,8 @@ class m_aexpComb(m_aexp):
         return [self.actionExp1, self.operator, self.actionExp2]
 
     def to_ltl(self):
-        return "(" + str(self.actionExp1.to_ltl()) + " " + str(self.operator.to_ltl()) + " " + str(self.actionExp2.to_ltl()) + ")"
+        return "(" + str(self.actionExp1.to_ltl()) + " " + str(self.operator.to_ltl()) + " " +\
+               str(self.actionExp2.to_ltl()) + ")"
 
     def to_nnf(self, negated):
         if negated:
@@ -927,13 +928,13 @@ class m_aexpComb(m_aexp):
 
     def to_natural(self, kw=True):
         if self.operator == m_booleanOp.O_and:
-            return str(self.actionExp1.to_natural()) + "and " + str(self.actionExp2.to_natural()) + "are verified, "
+            return str(self.actionExp1.to_natural()) + "and " + str(self.actionExp2.to_natural())
         elif self.operator == m_booleanOp.O_or:
-            return "either " + str(self.actionExp1.to_natural())+"is verified " + "or " +\
-                   str(self.actionExp2.to_natural()) + "is verified, "
+            return "either " + str(self.actionExp1.to_natural())+" " + "or " +\
+                   str(self.actionExp2.to_natural()) + ", "
         elif self.operator == m_booleanOp.O_onlywhen:
-            return "whenever " + str(self.actionExp1.to_natural()) + "is verified, then " +\
-                   str(self.actionExp2.to_natural()) + "is verified too, "
+            return "whenever " + str(self.actionExp1.to_natural()) + ", then " +\
+                   str(self.actionExp2.to_natural()) + " too, "
         elif self.operator == m_booleanOp.T_unless:
             return "(" + str(self.actionExp1.to_nnf(False)) + str(self.operator) + " " +\
                    str(self.actionExp2.to_nnf(False)) + ")"
@@ -966,7 +967,7 @@ class m_aexpAuthor(m_aexp):
         return [self.author, self.action]
 
     def to_ltl(self):
-        return str(self.author.to_ltl()) + str(self.action.to_ltl())
+        return str(self.action.to_ltl(auth=str(self.author.to_ltl())))
 
     #    def to_nnf(self,bool):
     #       #TODO: check
@@ -1049,7 +1050,7 @@ class m_qvar(aalmmnode):
 
     def to_ltl(self):
         return str(self.quant.to_ltl()) + "[" + str(self.variable.target.name) + "] ( " + \
-               str(self.variable.target.to_ltl()) + " & "
+            str(self.variable.target.to_ltl()) + " & "
 
     def to_nnf(self, negated):
         if negated:
@@ -1352,13 +1353,15 @@ class m_action(m_aexp):
             res.append(self.purpose)
         return res
 
-    def to_ltl(self):
+    def to_ltl(self, auth=""):
         args = []
         res = ""
         # HANDLE time
         if self.time is not None:
             res += "(" + str(self.time.to_ltl()) + " => "
-        # HANDLE time
+
+        if auth != "":
+            res += auth
         res += str(self.service) + "("
 
         if self.agent1 is not None:
@@ -1378,14 +1381,12 @@ class m_action(m_aexp):
 
     def to_natural(self, kw=True, auth=False):
         if kw:
-            res = str(self.agent1) + (" is allowed to use " if auth else " use ") + str(self.service.name) + \
+            res = str(self.agent1) + (" is allowed to use " if auth else " uses ") + str(self.service.name) + \
                 " service of " + (str(self.agent2) if self.agent2 is not None else " ") + " " + \
-                ("to " + str(self.service.name) + " " + str(self.args) + " " if self.args is not None else "") + \
                 (str(self.time) if self.time is not None else "")
         else:
             res = str(self.agent1) + (" is not allowed to use " if auth else " use ") + str(self.service.name) + \
                 " service of " + (str(self.agent2) if self.agent2 is not None else " ") + \
-                " " + ("to " + str(self.service.name) + " " + str(self.args) + " " if self.args is not None else "") + \
                 (str(self.time) if self.time is not None else "")
         return res
 
@@ -1406,6 +1407,30 @@ class m_time(aalmmnode):
     def __str__(self):
         res = str(self.action) + " " + str(self.time)
         return res
+
+    def compare(self, t):
+        a = self.to_days()
+        b = t.to_days()
+        # print(str(a) + " " + str(b))
+        if a < b:
+            return 1
+        elif a > b:
+            return -1
+        else:
+            return 0
+
+    def to_days(self):
+        tmp = str(self.time).replace("\"", "")
+        if tmp.lower().find("year"):
+            i = int(tmp.split(" ")[0])
+            # print("------------ " + str(i))
+            return i * 12 * 28
+        elif tmp.lower().find("month"):
+            i = int(tmp.split(" ")[0])
+            # print("------------ " + str(i))
+            return i * 28
+        elif tmp.lower().find("day"):
+            return int(tmp.split(" ")[0])
 
     def to_ltl(self):
         res = str(self.time).replace("\"", "")
