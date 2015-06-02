@@ -12,8 +12,7 @@
 %% aalc
 %%%%%%%%%%
 \subsection{Using AAL compiler "aalc"}
-{
-\lstset{style=shell}
+{\lstset{style=shell}
 \begin{lstlisting}[caption={aalc options}]
 aalc 
   -h    --help                   display this help and exit
@@ -84,70 +83,175 @@ AGENT css   TYPES() REQUIRED() PROVIDED(read store delete)
 First we need to declare our actors
 \begin{lstlisting}
 /*
- *
+ * Cloud storage service provider policy
  */
 CLAUSE css_policy (
+    FORALL d:data FORALL a:Actor
 
+    // Allow users to read their data
+    IF (d.subject == a) THEN {
+        PERMIT a.read[css](d)
+    } AND
+
+    // Deny access to read other
+    IF (d.subject != a) THEN {
+        DENY a.read[css](d)
+    } AND
+
+    // Allow css to read/delete stored data
+    PERMIT css.read[css](d) AND
+    PERMIT css.delete[css](d)
 )
 
 /*
- *
+ * Alice's preferences
  */
 CLAUSE alice_policy (
-
+    FORALL d:data
+    // Alice want to be able to read all her data stored on css
+    IF (d.subject == alice) THEN {
+        PERMIT alice.read[css](d)
+    }
 )
 \end{lstlisting}
 
     \item \textbf{Writing checks}
-First we need to declare our actors
+Now we want to check if \texttt{Alice}'s privacy preferences are respected by the \texttt{css} policy.
+To do this, we can call the macro \texttt{validate} and passing the the clauses names as arguments.
+Important : Note that the order of arguments is important.
 \begin{lstlisting}
-CALL validate("'css_policy'" "'alice_pref'")
+CALL validate("css_policy" "alice_pref")
 \end{lstlisting}
+
 \end{enumerate}
 
 
 \subsection{Running the program}
-{
-\begin{itemize}
-	\item Run an AAL file (by default, it )
-\begin{lstlisting}
-aalc -i examples/tuto0.aal
 
-Execution time : 0.26976990699768066
+\begin{itemize}
+	\item Run the AAL program
+{\lstset{style=shell}
+\begin{lstlisting}
+root@root/:$ python aalc -i examples/tuto0.aal
+
+------------------------- Monodic check -------------------------
+Monodic check passed !
+------------------------- Starting Validity check -------------------------
+c1 : css_policy
+c2 : alice_pref
+----- Checking c1 & c2 consistency :
+  -> Satisfiable
+----- Checking c1 => c2 :
+  -> Satisfiable
+----- Checking ~(c1 => c2) :
+  -> Unsatisfiable
+
+[VALIDITY] Formula is valid !
+------------------------- Validity check End -------------------------
+
+File : examples/tuto0.aal
+
+Execution time : 0.24277639389038086
 \end{lstlisting}
+
+Here the result of
 
 	\item Perform an detailed check
 \begin{lstlisting}
-aalc -i tests/tuto1.aal -k
+root@root/:$ python aalc -i examples/tuto0.aal -k
 
+------------------------- Start Checking -------------------------
+
+** DECLARATIONS
+[DECLARED AGENTS]   : 3
+[DECLARED SERVICES] : 6
+[DECLARED DATA]     : 0
+[DECLARED TYPES]    : 10
+
+*** Forwards references check
+[AGENTS]   : 0
+[SERVICES] : 0
+[DATA]     : 0
+[TYPES]    : 0
+
+** LOADED libraries
+[LIBS] : 2
+
+** CLAUSES
+[CLAUSES] : 2
+Monodic test :
+|css_policy | Formula is monodic ! |
+|alice_pref | Formula is monodic ! |
+-------------------------- Checking End -------------------------
 \end{lstlisting}
 
 
 	\item Perform monodic test on all clauses :
 \begin{lstlisting}
-aalc -i tests/tuto1.aal -m
+root@root/:$ python aalc -i examples/tuto0.aal -m
 
-------------------------- Checking Monodic test -------------------------
-Formula is monodic !
--------------------------- Checking Monodic End -------------------------
+------------------------- Start Checking -------------------------
+|css_policy | Formula is monodic ! |
+|alice_pref | Formula is monodic ! |
+-------------------------- Checking End -------------------------
 \end{lstlisting}
 
 
-	\item Translate aal program into FOTL (in tspass syntax):
+	\item Translate AAL program into FOTL (in tspass syntax):
 \begin{lstlisting}
-aalc -i tests/tuto1.aal -t
+root@root/:$ python aalc -i examples/tuto0.aal -t
 
 ------------------------- FOTL Translation start -------------------------
-![d] ![a](((((((PERMIT(read, kim, cloudX, d) & PERMIT(read, kim, cloudX, d)) & PERMIT(write, kim, cloudX, d)) & PERMIT(delete, kim, cloudX, d)) & PERMIT(sensors, cloudX, kim, d)) & (~threeYears => Adelete(cloudX, d))) &  ( Aread(a, cloudX, d) => sometime(Anotify(cloudX, kim)))))  ![a] ![d] ![b](((((((((PERMIT(read, a, cloudX, d) & PERMIT (read, a, cloudX, d)) & PERMIT(write, a, cloudX, d)) & PERMIT(delete, a, cloudX, d)) & PERMIT(sensors, cloudX, a, d)) & PERMIT(storage, cloudX, cloudY, d)) & (~twoYears => Adelete(cloudX, d))) &  (Aread(b, cloudX, d) => sometime(Anotify(cloudX, a)))) &  (Astorage(cloudX, cloudY, d) => sometime(Alog(cloudX, cloudX))))) 
+
+%%%%%%%%% START EVN %%%%%%%%%%%
+%%% Types knowledge
+data(CTS)  &
+Actor(CTS)  &
+DataSubject(CTS)  &
+DataController(CTS)  &
+DataProcessor(CTS)  &
+DwDataController(CTS)  &
+Auditor(CTS)  &
+CloudProvider(CTS)  &
+CloudCustomer(CTS)  &
+EndUser(CTS)  &
+
+
+%%% Action authorizations
+(![x, y, z] (read(x, y, z) => Pread(x, y, z))) &
+(![x, y, z] (store(x, y, z) => Pstore(x, y, z))) &
+(![x, y, z] (delete(x, y, z) => Pdelete(x, y, z))) &
+(![x, y, z] (read(x, y, z) => Pread(x, y, z))) &
+(![x, y, z] (write(x, y, z) => Pwrite(x, y, z))) &
+(![x, y, z] (audit(x, y, z) => Paudit(x, y, z))) &
+
+
+%%% Actors knowledge
+Actor(alice)  &
+Actor(bob)  &
+Actor(css)  &
+
+%%%%%%%%% END EVN %%%%%%%%%%%
+
+%% Clause : css_policy
+always(![d] ( data(d) & (![a] ( Actor(a) & (((( (subject(d, a) => Pread(a, css, d)) &
+(~subject(d, a) => ~Pread(a, css, d))) & Pread(css, css, d)) & Pdelete(css, css, d)))))) )
+%% Clause : alice_pref
+always(![d] ( data(d) & ( (subject(d, alice) => Pread(alice, css, d)))) )
+
+
 -------------------------- FOTL Translation end --------------------------
 \end{lstlisting}
-
-\end{itemize}
 }
+\end{itemize}
 
 
 
 
+
+%%%%%%%%%%%%%%%%%%
+%% Core libs
+%%%%%%%%%%%%%%%%%%
 \subsection{Using core libraries}
 You can load external AAL files using \texttt{LOAD "aal\_file"}(without the extension) 
 
@@ -233,8 +337,17 @@ CALL obligation18()
 \end{lstlisting}
 
 
+%%%%%%%%%%%%%%%%%%
+%% Advenced checks
+%%%%%%%%%%%%%%%%%%
+\subsection{Advanced checks}
+dzd
 
 
+
+%%%%%%%%%%%%%%%%%%
+%% Using shell
+%%%%%%%%%%%%%%%%%%
 \subsection{Using the shell}
 The shell is a useful tool for developing 
 

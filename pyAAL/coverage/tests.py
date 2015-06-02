@@ -18,6 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 __author__ = 'walid'
 
 from aalc import *
+import cProfile
 
-# Coverage tests
-main(['aalc.py', '-i', 'examples/wearable/wearable.aal'])
+# Coverage tests (to run with python Coverage)
+cmd = "main(['aalc.py', '-i', 'examples/wearable/wearable.aal'])"
+
+# Run it with profiler
+cProfile.run(cmd)

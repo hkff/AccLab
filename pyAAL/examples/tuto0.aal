@@ -1,4 +1,10 @@
-// Loading types library
+/**
+ * AccLab UserGuide : Getting started
+ * Tuto0
+ * Author : Walid Benghabrit
+ */
+
+// Loading types & macros libraries
 LOAD "core.types"
 LOAD "core.macros"
 
@@ -14,46 +20,35 @@ AGENT css   TYPES(Actor) REQUIRED() PROVIDED(read store delete)
 
 /*
  * Cloud storage service provider policy
- *
  */
 CLAUSE css_policy (
     FORALL d:data FORALL a:Actor
+
+    // Allow users to read their data
     IF (d.subject == a) THEN {
         PERMIT a.read[css](d)
-    }
-    AND
+    } AND
+
+    // Deny access to read other
     IF (d.subject != a) THEN {
         DENY a.read[css](d)
-    }
-//    AND
-//    PERMIT css.read[css](d)
+    } AND
+
+    // Allow css to read/delete stored data
+    PERMIT css.read[css](d) AND
+    PERMIT css.delete[css](d)
 )
 
 /*
- * Alice's requirement
- *
+ * Alice's preferences
  */
 CLAUSE alice_pref (
-    FORALL d:data FORALL a:Actor
+    FORALL d:data
     // Alice want to be able to read all her data stored on css
     IF (d.subject == alice) THEN {
-        PERMIT alice.read[css](d) AND
-        DENY bob.read[css](d)
+        PERMIT alice.read[css](d)
     }
 )
 
-CALL validate("'css_policy'" "'alice_pref'")
-
-CHECK c1() {
-"""
-  @verbose
-  ~( @buildenv
-     (![f] (subject(f, alice) => ~subject(f, bob))) &
-
-    (clause(css_policy).ue)
-=>
-    (clause(alice_pref).ue)
-   )
-"""
-}
-//APPLY c1()
+// Call validate macro to perform the compliance check
+CALL validate("css_policy" "alice_pref")

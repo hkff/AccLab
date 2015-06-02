@@ -17,4 +17,6 @@ TYPE EndUser          EXTENDS() ATTRIBUTES() ACTIONS()
 //=====================================================//
 SERVICE read
 SERVICE write
+SERVICE delete
+SERVICE update
 SERVICE audit

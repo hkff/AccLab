@@ -1061,8 +1061,8 @@ class AALCompilerListener(AALListener.AALListener):
         ltl = ltl.replace('"""', '')
 
         # Check for extra commands
-        verbose = len(re.findall('@verbose', ltl)) > 0  # TODO : optimize
-        if verbose:
+        _verbose = len(re.findall('@verbose', ltl)) > 0  # TODO : optimize
+        if _verbose:
             ltl = ltl.replace('@verbose', '')
 
         for x in re.finditer('clause\(\w+\)', code):
@@ -1143,7 +1143,8 @@ class AALCompilerListener(AALListener.AALListener):
             if macro.param is not None:
                 params = iter(macro.param)
                 for x in args:
-                    code += str(next(params)) + " = " + str(x).replace('"', '') + "\n"
+                    # code += str(next(params)) + " = " + str(x).replace('"', '') + "\n"
+                    code += str(next(params)) + " = " + str(x) + "\n"
             code += macro.code.replace('"""', '').replace("return", "__res__ = ")  # FIXME
             exec(code)
             # except:

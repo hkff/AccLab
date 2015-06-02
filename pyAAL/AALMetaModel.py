@@ -356,7 +356,10 @@ class m_aalprog(aalmmnode):
 
     # To ltl
     def to_ltl(self):
-        return "".join([str(x.to_ltl()) + " " for x in self.clauses])
+        res = ""
+        for x in self.clauses:
+            res += "%% Clause : " + str(x.name) + "\n" + str(x.to_ltl()) + "\n"
+        return res
 
     def to_nnf(self, negated):
         return "".join([str(x.to_nnf(True)) + " " for x in self.clauses])
