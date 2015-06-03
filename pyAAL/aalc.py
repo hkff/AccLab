@@ -53,7 +53,6 @@ from antlr4.error.ErrorListener import ErrorListener
 from grammar.aal.AALLexer import AALLexer
 from grammar.aal.AALParser import AALParser
 # from grammar.AALListener import AALListener
-# from behave import runner
 from antlr4.tree.Trees import Trees
 from subprocess import Popen, PIPE
 from ASTprinter import Trees2
@@ -325,10 +324,10 @@ def main(argv):
 
     # Checking options
     try:
-        opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaSr",
+        opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaSru",
                                    ["help", "input", "output", "compile", "monodic", "check",
-                                    "shell", "load", "fotl", "recompile", "init",
-                                    "no-colors", "compile-stdlib", "hotswap", "ast", "synth", "reparse"])
+                                    "shell", "load", "fotl", "recompile", "init", "no-colors",
+                                    "compile-stdlib", "hotswap", "ast", "synth", "reparse", "ui"])
     except getopt.GetoptError:
         print(helpStr)
         sys.exit(2)
@@ -374,6 +373,10 @@ def main(argv):
             synth = True
         elif opt in ("-r", "--reparse"):
             reparse = True
+        elif opt in ("-u", "--ui"):
+            # Start server
+            from ui.Server import start_ui
+            start_ui()
 
     # Use hot swapping decoration on all AALMetaModel classes
     # use this option for debug only
