@@ -1,5 +1,5 @@
 """
-<one line to give the program's name and a brief idea of what it does.>
+Visu visualisation of AAL ast in web page
 Copyright (C) 2014 Walid Benghabrit
 
 This program is free software: you can redistribute it and/or modify

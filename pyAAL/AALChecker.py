@@ -1,5 +1,5 @@
 """
-<one line to give the program's name and a brief idea of what it does.>
+AALChecker contains validation methods
 Copyright (C) 2014 Walid Benghabrit
 
 This program is free software: you can redistribute it and/or modify
@@ -22,10 +22,6 @@ from AALMetaModel import *
 from pprint import pprint
 from tools.color import *
 from AALtoFOTL import *
-
-
-# -------------------------------------------------------------
-pre_cond = ""
 
 
 # Check AAL global
@@ -371,6 +367,7 @@ def solve_auth(compiler, p=None, u=None, verbose=False, resolve=False):
     for x in quants:
         quant += str(x.to_ltl())
 
+    pre_cond = build_env(compiler.aalprog)
     authors = p.usage.walk(filter_type=m_aexpAuthor)
     for x in authors:
         res = compiler.apply_check(code=pre_cond + str(quant) + " " + str(x.to_ltl()) + " & clause(" + u_id + ").uc",
@@ -403,7 +400,7 @@ def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
     """
     # FIXME this is adhoc
     print(Color("{autoblue}:: Solving trigger{/blue}"))
-    # pre_cond = "always( ![a,x,y,z] ~(PERMIT(a, x, y, z) & DENY(a, x, y, z))) &  "
+    pre_cond = build_env(compiler.aalprog)
     u_id = str(u.name)
     p_id = str(p.name)
 

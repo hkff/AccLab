@@ -1,5 +1,5 @@
 """
-<one line to give the program's name and a brief idea of what it does.>
+AALtoFOTL AAL translation to FOTL
 Copyright (C) 2014 Walid Benghabrit
 
 This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 __author__ = 'walid'
 
 from AALMetaModel import *
+
 
 # Build environment
 def build_env(prog: m_aalprog=None):

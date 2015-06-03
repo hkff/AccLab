@@ -1,15 +1,12 @@
 grammar AAL;
 /*
-     // AAL CORE
-    AALprogram    ::= (Declaration | Clause | Comment | Macro | MacroCall | loadlib | ltlCheck | checkApply | exec | Behavior)
-
+    // AAL CORE
+    AALprogram    ::= (Declaration | Clause | Comment | Macro | MacroCall | Loadlib | LtlCheck | CheckApply | Exec | Behavior)
     Declaration   ::= AgentDec | ServiceDec | DataDec | TypesDec | varDec
-    AgentDec      ::= AGENT Id TYPE '(' Type *')' REQUIRED'('service*')' PROVIDED'('service*')'
-    ServiceDec    ::= SERVICE Id TYPE'('Type*')' [PURPOSE '(' Id* ')']
-    DataDec       ::= DATA Id TYPE'('Type*')' [REQUIRED'('service*')' PROVIDED'('service*')'] SUBJECT agent
-
+    AgentDec      ::= AGENT Id [TYPES '(' Type *')' REQUIRED'('service*')' PROVIDED'('service*')']
+    ServiceDec    ::= SERVICE Id [TYPES '(' Type* ')'] [PURPOSE '(' Id* ')']
+    DataDec       ::= DATA Id TYPES '(' Type* ')' [REQUIRED'('service*')' PROVIDED'('service*')'] SUBJECT agent
     VarDec        ::= Type_Id Id [attr_Id '(' value* ')']*
-
     Clause        ::= CLAUSE Id '(' [Usage] [Audit Rectification] ')'
     Usage         ::= ActionExp
     Audit         ::= AUDITING Usage
@@ -22,8 +19,7 @@ grammar AAL;
                     | ActionExp (AND|OR|ONLYWHEN|UNTIL|UNLESS) ActionExp
                     | Author
                     | Quant*
-                    | IF ActionExp THEN ActionExp
-
+                    | IF '(' ActionExp ')' THEN '{' ActionExp '}'
 
     Exp           ::= Variable | Constant | Variable.Attribute
     Condition     ::= [NOT] Exp | Exp ['==' | '!='] Exp | Condition (AND|OR) Condition
@@ -33,9 +29,7 @@ grammar AAL;
     Variable      ::= Var ':' Type
     Modality      ::= MUST | MUSTNOT | ALWAYS | NEVER | SOMETIME
     Time          ::= (AFTER | BEFORE) Date | Time (AND | OR) Time
-
-
-    Date          ::= hh ':' mm ':' ss  DD '/' MM '/' YYYY (use string)
+    Date          ::= STRING
     Type, var, val, attr Id, agent, Constant, Purpose ::= literal
 
 
@@ -48,15 +42,18 @@ grammar AAL;
 
     // Reflexion extension
     Macro         ::= MACRO Id '(' param* ')' '(' mcode ')'
-    MCode         ::= Meta model api + Python3 code (subset)
+    MCode         ::= """ Meta model api + Python3 code (subset) """
     MCall         ::= CALL Id '(' param* ')'
     LoadLib       ::= LOAD STRING;
-    Exex          ::= EXEC MCode
+    Exec          ::= EXEC MCode
 
     // LTL checking extension
+    LtlCheck     ::= CHECK Id '(' param* ')' '(' check ')'
+    check        ::= FOTL_formula + clause(Id) [.ue | .ae | .re]
+    CheckApply   ::= APPLY Id '(' param* ')'
 
-    // Behavior
-    Behavior    ::= ActionExp
+    // Behavior extension
+    Behavior    ::= BEHAVIOR Id '(' ActionExp ')'
 */
 
 //-------------------------------------------------------//

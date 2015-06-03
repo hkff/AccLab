@@ -1,5 +1,5 @@
 """
-<one line to give the program's name and a brief idea of what it does.>
+AALMetaModel
 Copyright (C) 2014 Walid Benghabrit
 
 This program is free software: you can redistribute it and/or modify
@@ -19,18 +19,19 @@ __author__ = 'walid'
 
 '''
     // AAL CORE
-    AALprogram    ::= (Declaration | Clause | Comment | Macro | MacroCall)*
-    Declaration   ::= AgentDec | ServiceDec | DataDec
-    AgentDec      ::= AGENT Id TYPE'('Type*')' REQUIRED'('service*')' PROVIDED'('service*')'
-    ServiceDec    ::= SERVICE Id TYPE'('Type*')' [PURPOSE '(' Id* ')']
-    DataDec       ::= DATA Id TYPE'('Type*')' [REQUIRED'('service*')' PROVIDED'('service*')'] SUBJECT agent
+    AALprogram    ::= (Declaration | Clause | Comment | Macro | MacroCall | Loadlib | LtlCheck | CheckApply | Exec | Behavior)
+    Declaration   ::= AgentDec | ServiceDec | DataDec | TypesDec | varDec
+    AgentDec      ::= AGENT Id [TYPES '(' Type *')' REQUIRED'('service*')' PROVIDED'('service*')']
+    ServiceDec    ::= SERVICE Id [TYPES '(' Type* ')'] [PURPOSE '(' Id* ')']
+    DataDec       ::= DATA Id TYPES '(' Type* ')' [REQUIRED'('service*')' PROVIDED'('service*')'] SUBJECT agent
+    VarDec        ::= Type_Id Id [attr_Id '(' value* ')']*
     Clause        ::= CLAUSE Id '(' [Usage] [Audit Rectification] ')'
     Usage         ::= ActionExp
-    Audit         ::= AUDITING [ActionExp THEN] agent.audit'['agent']' '()'
-    Rectification ::= IF_VIOLATED_THEN ActionExp (??Usage)
+    Audit         ::= AUDITING Usage
+    Rectification ::= IF_VIOLATED_THEN Usage
     ActionExp     ::= Action | NOT ActionExp | Modality ActionExp | Condition
-                    | ActionExp (AND|OR|ONLYWHEN|UNTIL|UNLESS) ActionExp | Author | Quant*
-                    | IF ActionExp THEN ActionExp
+                    | ActionExp (AND|OR|ONLYWHEN|UNTIL|UNLESS) ActionExp
+                    | Author | Quant* | IF '(' ActionExp ')' THEN '{' ActionExp '}'
     Exp           ::= Variable | Constant | Variable.Attribute
     Condition     ::= [NOT] Exp | Exp ['==' | '!='] Exp | Condition (AND|OR) Condition
     Author        ::= (PERMIT | DENY) Action
@@ -39,22 +40,29 @@ __author__ = 'walid'
     Variable      ::= Var ':' Type
     Modality      ::= MUST | MUSTNOT | ALWAYS | NEVER | SOMETIME
     Time          ::= (AFTER | BEFORE) Date | Time (AND | OR) Time
-    Date          ::= hh ':' mm ':' ss  DD '/' MM '/' YYYY (use string)
+    Date          ::= STRING
     Type, var, val, attr Id, agent, Constant, Purpose ::= literal
-
 
     // AAL Type extension
     TypesDec      ::= TYPE Id [EXTENDS '(' Type* ')'] ATTRIBUTES '(' AttributeDec* ')' ACTIONS '(' ActionDec* ')'
     AttributeDec  ::= Id ':' Type
     ActionDec     ::= Id
     Type, Id      ::= litteral
-    Affectation   ::= var.id '=' val
-
 
     // Reflexion extension
     Macro         ::= MACRO Id '(' param* ')' '(' mcode ')'
-    MCode         ::= Meta model api + Python3 code (subset)
+    MCode         ::= """ Meta model api + Python3 code (subset) """
     MCall         ::= CALL Id '(' param* ')'
+    LoadLib       ::= LOAD STRING;
+    Exec          ::= EXEC MCode
+
+    // FOTL checking extension
+    LtlCheck     ::= CHECK Id '(' param* ')' '(' check ')'
+    check        ::= FOTL_formula + clause(Id) [.ue | .ae | .re]
+    CheckApply   ::= APPLY Id '(' param* ')'
+
+    // Behavior extension
+    Behavior    ::= BEHAVIOR Id '(' ActionExp ')'
 '''
 
 
@@ -64,7 +72,6 @@ from tools.color import Color
 from tools.hottie import hot
 # TODO: add until to modals
 # TODO: handle quantifications scope
-# TODO: complete children walk
 
 
 ##########################
@@ -102,7 +109,7 @@ class aalmmnode():
             "\n\t - get_refs(pprint=bool)                " + "\t " Get references\
             "\n\t - walk(filters=bool, filter_type=bool) " + "\t " AST tree walker\
             "\n\t - man()                                " + "\t Print this manual" \
-            "\n\t - to_ltl()                             " + "\t Translate to ltl"
+            "\n\t - to_ltl()                             " + "\t Translate to fotl"
     """
     def __init__(self, name: str=None):
         """

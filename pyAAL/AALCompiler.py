@@ -1,5 +1,5 @@
 """
-<one line to give the program's name and a brief idea of what it does.>
+AALCompiler ANTLR listener for AAL language
 Copyright (C) 2014 Walid Benghabrit
 
 This program is free software: you can redistribute it and/or modify
@@ -40,57 +40,49 @@ class AALCompilerListener(AALListener.AALListener):
                  libs_path="libs/aal/", root_path=None, recompile=False, errors_listener=None):
         pass
 
-
 from aalc import *
 
 
 # This class defines a complete listener for a parse tree produced by AALParser.
 @hot
 class AALCompilerListener(AALListener.AALListener):
-
     """
     Attributes :
-        - loadlibs:
-        - serialize:
-        - aalmm:
-        - aalprog:
-        - currentclause:
-        - currentusage:
-        - currentaudit:
-        - currentrectification:
-        - currentaction:
-        - currentvar:
-        - refforwardagents:
-        - refforwarddata:
-        - refforwardservices:
-        - refforwardtypes:
-        - actionexpstack:
-        - expstack:
-        - condstack:
-        - quantstack:
-        - libs:
-        - debug:
-        - isrectification:
-        - libsPath:
-
-    Methods :
+        - loadlibs: boolean, enable or disable library loading
+        - serialize = serialize
+        - aalmm: Current AAL meta model instance
+        - aalprog = m_aalprog()
+        - currentClause = m_clause()
+        - currentUsage = m_usage()
+        - currentAudit = m_audit()
+        - currentRectification = m_rectification()
+        - currentAction = m_action()
+        - currentVar = []
+        - refForwardAgents = dict()
+        - refForwardData = dict()
+        - refForwardServices = dict()
+        - refForwardTypes = dict()
+        - actionExpStack = []
+        - expStack = []
+        - condStack = []
+        - quantStack = []
+        - qvarsStack = []
+        - libs: libraries array
+        - DEBUG: False
+        - isRectification = False
+        - isAudit = False
+        - isBehavior = False
+        - libsPath = libs_path
+        - file = file
+        - output = ""
+        - recompile = recompile
+        - root_path = root_path
+        - errors_listener = errors_listener
     """
     # Initializer
     def __init__(self, loadlibs: bool=True, serialize: bool=False, file: str="",
                  libs_path="libs/aal/", root_path=None, recompile=False,
                  hotswaping=False, errors_listener=None):
-        """
-
-        :param loadlibs:
-        :param serialize:
-        :param file:
-        :param libs_path:
-        :param root_path:
-        :param recompile:
-        :param hotswaping:
-        :param errors_listener:
-        :return:
-        """
         self.loadlibs = loadlibs
         self.serialize = serialize
         self.aalmm = aalmm()
@@ -140,10 +132,10 @@ class AALCompilerListener(AALListener.AALListener):
               "" \
               "\n{autoblue} - Methods{/blue}" \
               "\n\t - load_lib(lib_name)  " + "\t Load an aal file" \
-              "\n\t - clause(clauseId)    " + "\t Load an aal file" \
-              "\n\t - show_clauses()      " + "\t Load an aal file" \
-              "\n\t - get_clauses()       " + "\t Load an aal file" \
-              "\n\t - get_macros()        " + "\t Load an aal file"
+              "\n\t - clause(clauseId)    " + "\t Lookup for clause cluaseId" \
+              "\n\t - show_clauses()      " + "\t Show all clauses (names" \
+              "\n\t - get_clauses()       " + "\t Get all clauses (objects)" \
+              "\n\t - get_macros()        " + "\t Get all macros (objects)"
 
         print(Color(doc))
         return Color(doc)
@@ -155,7 +147,8 @@ class AALCompilerListener(AALListener.AALListener):
     # Load lib
     def load_lib(self, lib_name: str, internal: bool=False):
         """
-        :param lib_name: lib name
+        Load a library in the current program
+        :param lib_name: library name
         :return:
         """
         found_lib_path = None
@@ -247,17 +240,11 @@ class AALCompilerListener(AALListener.AALListener):
                 self.libs.remove(lib)
 
         # Add the lib
-        self.libs.append(l)  # TODO : remove and replace by aalprog lib
+        self.libs.append(l)  # FIXME : may be removed ??
         self.aalprog.libs.append(l)
 
     # Start parsing
     def enterAalprog(self, ctx):
-        """
-        Entering the aal program
-        We need to load core libs of AAL
-        :param ctx:
-        :return:
-        """
         self.aalprog = m_aalprog()
         # if self.loadlibs:
         #    self.load_lib("libs/aal/core/types.aal")
@@ -273,7 +260,7 @@ class AALCompilerListener(AALListener.AALListener):
         # Serialize result
         if self.serialize:
             sys.setrecursionlimit(3000)
-            with open("toto.aalc", "wb") as f:
+            with open(self.file + "c", "wb") as f:
                 pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
     # Enter ClauseR
@@ -282,11 +269,6 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Exit ClauseR
     def exitClause(self, ctx):
-        """
-        Exit a clause
-        :param ctx:
-        :return:
-        """
         self.currentClause.name = ctx.h_clauseId().ID()
         # Check if clause is already declared
         if self.aalprog.isDeclared(self.currentClause.name, m_clause) is True:
@@ -346,11 +328,9 @@ class AALCompilerListener(AALListener.AALListener):
         self.isRectification = False
 
     # Check forwards ref
-    def checkForwardsRef(self):
+    def checkForwardsRef(self) -> None:
         """
         Check forwards references.
-
-        TODO: detailed result
         :return:
         """
         # Disable check in lib context
@@ -452,7 +432,7 @@ class AALCompilerListener(AALListener.AALListener):
         return None
 
     # checkServiceDec
-    def checkServiceDec(self, service, declare=True, quant=True):
+    def checkServiceDec(self, service, declare=True, quant=True) -> None or m_quant or m_service:
         """
         Check and declare a service
         :param service: the service to declare
@@ -484,7 +464,7 @@ class AALCompilerListener(AALListener.AALListener):
         return None
 
     # checkTypeDec
-    def checkTypeDec(self, ttype, declare=True, quant=True):
+    def checkTypeDec(self, ttype, declare=True, quant=True) -> None or m_quant or m_type:
         """
         Check and declare a type
         :param ttype: the ttype to declare
@@ -516,7 +496,7 @@ class AALCompilerListener(AALListener.AALListener):
         return None
 
     # Check var
-    def checkVarDec(self, var, quant=True):
+    def checkVarDec(self, var, quant=True) -> None or m_agent or m_service or m_data or m_type:
         res = self.checkAgentDec(var, declare=False, quant=quant)
         if res is not None:
             return res
@@ -531,14 +511,8 @@ class AALCompilerListener(AALListener.AALListener):
             return res
         return res
 
-    # FIXME Critical bug in grammar : Agent / Data is type are considered at declarations !
     # Exit agent declaration
     def exitAgentDec(self, ctx):
-        """
-        Exit agent declaration
-        :param ctx:
-        :return
-        """
         agName = str(ctx.h_agentId().ID())
         agDec = m_agent(name=ctx.h_agentId().ID())  # Declare agent (put the ID() to keep context)
 
@@ -577,15 +551,9 @@ class AALCompilerListener(AALListener.AALListener):
                 agDec.provided.append(ref)
 
         self.aalprog.declarations["agents"].append(agDec)  # Add agent declaration to prog
-        pass
 
     # Exit service declaration
     def exitServiceDec(self, ctx):
-        """
-        Exit service declaration
-        :param ctx:
-        :return
-        """
         sv_name = str(ctx.h_serviceId().ID())
         sv_dec = m_service(name=ctx.h_serviceId().ID())  # Declare service (put the ID() to keep context)
 
@@ -610,15 +578,9 @@ class AALCompilerListener(AALListener.AALListener):
             sv_dec.purpose.append(purpose.ID())
 
         self.aalprog.declarations["services"].append(sv_dec)  # Add service declaration to prog
-        pass
 
     # Exit data declaration
     def exitDataDec(self, ctx):
-        """
-        Exit data declaration
-        :param ctx:
-        :return
-        """
         dtName = str(ctx.h_dataId().ID())
         dt_dec = m_data(name=ctx.h_dataId().ID())  # Declare data (put the ID() to keep context)
 
@@ -661,15 +623,9 @@ class AALCompilerListener(AALListener.AALListener):
             dt_dec.subject = ctx.h_agentId().ID()
 
         self.aalprog.declarations["data"].append(dt_dec)  # Add data declaration to prog
-        pass
 
-    # Exit Type declaration TODO complete
+    # Exit Type declaration
     def exitTypeDec(self, ctx):
-        """
-        Exit Type declaration
-        :param ctx:
-        :return
-        """
         dtName = str(ctx.ID())
         dtDec = m_type(name=ctx.ID())  # Declare type (put the ID() to keep context)
 
@@ -740,7 +696,6 @@ class AALCompilerListener(AALListener.AALListener):
 
             tm.time = ctx.time().h_date().STRING()
             ac.time = tm
-
             # TODO: hanle purpose
 
     # Enter ActionExp
@@ -749,11 +704,6 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Exit ActionEXp
     def exitActionExp(self, ctx):
-        """
-        Exit actionExp
-        :param ctx:
-        :return
-        """
         if ctx.booleanOp() is not None:  # Handle booleanOp
             aex = m_aexpComb()
             aex.operator = m_booleanOp.fromStr(ctx.booleanOp().children[0])
@@ -932,9 +882,7 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Condition
     def exitCondition(self, ctx):
-        """
-        We handle to third case here
-        """
+        # We handle to third case here
         if len(ctx.condition()) > 0:
             cond = m_conditionComb()
             cond.cond2 = self.condStack.pop()  # Set the second param
@@ -953,9 +901,7 @@ class AALCompilerListener(AALListener.AALListener):
         self.expStack.append(exp)  # Push the exp
 
     def exitExp(self, ctx):
-        """
-        Test all cases
-        """
+        # Test all cases
         # Update exp
         if ctx.h_variable() is not None:  # Test variable
             ref = m_ref()
@@ -1046,6 +992,7 @@ class AALCompilerListener(AALListener.AALListener):
     # Apply check
     def apply_check(self, chk=None, code=None, verbose=False, show=True):
         """
+        Apply an FOTL check
         """
         from aalc import tspassc
 
@@ -1104,6 +1051,7 @@ class AALCompilerListener(AALListener.AALListener):
         self.new_macro(ctx.ID(), tmp, ctx.MCODE())
 
     # TODO complete
+    # Exit macro call
     def exitMacroCall(self, ctx):
         # Check if there is parsing errors
         if len(self.errors()) > 0:
@@ -1118,7 +1066,6 @@ class AALCompilerListener(AALListener.AALListener):
     # Exit exec
     def exitExec(self, ctx):
         exec(str(ctx.MCODE()).replace('"""', ''))
-        pass
 
     # Search a macro
     def macro_find(self, macro_name: str=None, args: []=None, strict=True):
@@ -1136,7 +1083,7 @@ class AALCompilerListener(AALListener.AALListener):
 
         if len(macro) > 0:
             macro = macro[0]
-            # Securing env call TODO
+            # TODO Securing env call
             # Macro code is stored with comments to avoid arbitrary exec
             # try:
             code = ""
@@ -1157,7 +1104,6 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Exit load lib
     def exitLoadlib(self, ctx):
-        # TODO: load lib
         lib_name = str(ctx.STRING())
         self.load_lib(lib_name, internal=False)
         if self.DEBUG:
@@ -1190,6 +1136,13 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Create a new macro
     def new_macro(self, name, param, code):
+        """
+        Create a new macro
+        :param name: macro name
+        :param param: macro arguments
+        :param code: macro code
+        :return:
+        """
         # TODO handle redef
         macro = m_macro()
         macro.name = name

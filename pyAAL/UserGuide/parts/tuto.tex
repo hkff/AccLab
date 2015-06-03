@@ -23,7 +23,7 @@ aalc
   -s    --shell                  run a shell after handling aal program
   -k    --check                  perform a verbose check
   -l    --load                   load a compiled aal file (.aalc) and run a shell
-  -t    --ltl                    translate the aal program into FOTL
+  -t    --fotl                   translate the aal program into FOTL
   -r    --reparse                reparse tspass file
   -r    --recompile              recompile the external files
   -b    --no-colors              disable colors in output
@@ -255,86 +255,21 @@ always(![d] ( data(d) & ( (subject(d, alice) => Pread(alice, css, d)))) )
 \subsection{Using core libraries}
 You can load external AAL files using \texttt{LOAD "aal\_file"}(without the extension) 
 
-\paragraph{core.macros} Contains the basic types declarations (DataSubject, DataController, DataProcessor, ...)
+\paragraph{core.types} Contains the basic types declarations (Actor, DataSubject, DataController, DataProcessor, ...)
 \begin{lstlisting}
-// Loading libraries
 LOAD "core.types"
 \end{lstlisting}
 
 
-
-\paragraph{core.macros} Contains some basic macros.
+\paragraph{core.macros} Contains some useful macros.
 \begin{lstlisting}
-// Loading libraries
+// Loading lib
 LOAD "core.macros"
 
-/** ltl check**/
-CALL ltl_check()
-
-// Checking validity c1 => c2
-CALL validate(c1 c2) (
-
-//
-CALL resolve(c1 c2)
-'NOT YET IMPLEMENTED'
-
-// Show the loaded libraries used in the current AAL program
-CALL show_libs()
-
-// Translate 
-CALL ltl(c)
-
-CALL show_clause(c)
-
-CALL to_natural(c)
-\end{lstlisting}
-
-\paragraph{core.eu} Contains the basic types
-\begin{lstlisting}
-// Loading libraries
-LOAD "core.eu"
-
-/** Show all obligations **/
-CALL obligations() 
-
-/* Result :
-
-Obligations list : (L) Legal / (C) Contractual / (E) Ethical 
-
- L  Obligation 1-3      : Informing about processing, purposes and recipients. 
- L  Obligation 4        : Informing about rights. 
- L  Obligation 5        : Data collection purposes. 
- L  Obligation 6        : The right to access, correct and delete personal data. 
- L  Obligation 7        : Data storage period. 
- L  Obligation 8,11-12  : Security and privacy measures. 
- L  Obligation 9-10     : Rules for data processing by providers. 
- L  Obligation 13-15    : Consent to processing. 
- L  Obligation 16       : Informing DPAs. 
- C  Obligation 17       : Informing about the use of sub-processors. 
- C  Obligation 18       : Security breach notification. 
- C  Obligation 19-20    : Evidence on data processing and data deletion. 
- C  Obligation 21       : Data location. 
- E  Obligation 22       : Informing about personal data processing. 
- E  Obligation 23       : Personal data minimization. 
- E  Obligation 24       : Privacy-by-default. 
- E  Obligation 25       : Specifying user preferences. 
- E  Obligation 26       : Monitoring of data practices. 
- E  Obligation 27       : Compliance with user preferences. 
- E  Obligation 28       : Compliance with privacy policies. 
- E  Obligation 29-30    : Informing about policy violations and privacy preferences violations. 
- E  Obligation 31       : Remediation in case of incidents. 
-*/
-
-
-
-/** Checking if the clauses respect **/
-CALL obligation18()
-
-/* Obligation 18: Security breach notification. */
-  -> No notification in clause kim_policy s rectification at line 15
-  -> No notification in clause cloudX_policy s rectification at line 30
 
 \end{lstlisting}
+
+
 
 
 %%%%%%%%%%%%%%%%%%
@@ -358,7 +293,7 @@ The shell is a useful tool for developing
 \begin{itemize}
 	\item Run the shell.
 \begin{lstlisting}
-aalc -i tests/tuto2.aal -s
+aalc -i examples/tuto1.aal -s
 
 /* Result : 
 shell >

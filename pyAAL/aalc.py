@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3.4
 """
-<one line to give the program's name and a brief idea of what it does.>
+aalc main AccLab prgram
 Copyright (C) 2014 Walid Benghabrit
 
 This program is free software: you can redistribute it and/or modify
@@ -35,10 +35,6 @@ def check_env():
         print("Python 3.4.x needed :: current version " + python_version)
         sys.exit(-1)
 
-    if sys.platform.startswith("win"):
-        # Windows.enable()
-        print("WARNING : TSPASS prover will not work under windows")
-
     try:
         import readline
     except:
@@ -67,7 +63,6 @@ from AALChecker import *
 from pprint import *
 from FOTLSynthesizer import *
 from AALtoFOTL import *
-from simul.SimulGenerator import *
 from shell import *
 import pickle
 import getopt
@@ -299,7 +294,7 @@ def main(argv):
                         "\n  -s \t--shell         " + "\t run a shell after handling aal program" + \
                         "\n  -k \t--check         " + "\t perform a verbose check" + \
                         "\n  -l \t--load          " + "\t load a compiled aal file (.aalc) and run a shell" + \
-                        "\n  -t \t--ltl           " + "\t translate the aal program into FOTL" + \
+                        "\n  -t \t--fotl          " + "\t translate the aal program into FOTL" + \
                         "\n  -r \t--reparse       " + "\t reparse tspass file" + \
                         "\n  -r \t--recompile     " + "\t recompile the external files " + \
                         "\n  -b \t--no-colors     " + "\t disable colors in output" + \
@@ -325,14 +320,14 @@ def main(argv):
     outputfile = "tmp.tspass"
 
     # Check libs path
-    install_path = os.environ.get('PYAAL_INSTALL_DIR')
+    install_path = os.environ.get('ACCLAB_PATH')
     libs_path = (install_path + "/" if install_path is not None else "") + "libs/aal/"
 
     # Checking options
     try:
         opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaSr",
-                                   ["help", "input=", "output=", "compile", "monodic",
-                                    "shell", "check", "load", "recompile", "init",
+                                   ["help", "input", "output", "compile", "monodic", "check",
+                                    "shell", "load", "fotl", "recompile", "init",
                                     "no-colors", "compile-stdlib", "hotswap", "ast", "synth", "reparse"])
     except getopt.GetoptError:
         print(helpStr)
@@ -360,7 +355,7 @@ def main(argv):
             use_shell = True
         elif opt in ("-l", "--load"):
             load = True
-        elif opt in ("-t", "--ltl"):
+        elif opt in ("-t", "--fotl"):
             to_ltl = True
         elif opt in ("-r", "--recompile"):
             recompile = True
@@ -404,7 +399,6 @@ def main(argv):
         res = aalc(inputfile, use_shell=use_shell, check=check, monodic=monodic, compile=compile, recompile=recompile,
                    to_ltl=to_ltl, show_ast=show_ast, libs_path=libs_path)
         print(res["res"])
-        # generate_simulation(res["mm"].aalprog)
 
     elif inputfile.endswith(".tspass"):  # Use tspass compiler
         res = tspassc(inputfile, output=outputfile, use_shell=False, debug=False, synth=synth, reparse=reparse)

@@ -48,13 +48,13 @@ if _c1 is not None and _c2 is not None:
 
 
 /*
- *
+ * Validate a single clause
  */
 MACRO validate2(c1) (
-// Checking validity
 """
-_c1 = self.clause(c1).to_ltl()
-validate2(self, _c1)
+_c1 = self.clause(c1)
+if _c1 is not None:
+    validate2(self, _c1.to_ltl())
 """
 )
 

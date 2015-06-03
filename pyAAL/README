@@ -26,9 +26,11 @@ TSPASS binaries are provided for linux x64 and mac x64 in the
 folder tools/_platformeName_/ . For other platformes you have
 to compile tspass source code.
 The last version of TSPASS can be found in :
-http://lat.inf.tu-dresden.de/~michel/software/tspass/
+<http://lat.inf.tu-dresden.de/~michel/software/tspass/>
 The source code for TSPASS version 0.95-0.17 is provided
 with this tool.
+AAL Syntax highlighting modes for emacs, intellij, nano, eclipse,
+can be found in tools/utils/
 
 Licensing
 ---------
@@ -40,10 +42,10 @@ Contacts
 
 Developers :
   - Walid Benghabrit     <Walid.Benghabrit@mines-nantes.fr>
-  - Pr.Jean-Claude Royer <Jean-Claude.Royer@mines-nantes.fr>
 
 Contributors :
 * Kernel
+  - Pr.Jean-Claude Royer
   - Pierre Teilhard
 
 * UI :
@@ -51,8 +53,9 @@ Contributors :
   - Julie Spens
 
 * Theory :
-  - Hervé Grall
-  - Mohamed Sellami
+  - Pr.Jean-Claude Royer
+  - Dr. Hervé Grall
+  - Dr. Mohamed Sellami
 
 -------------------------------------------------------------------------------
 Copyright (C) 2014-2015 Walid Benghabrit
