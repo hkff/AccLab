@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3.4
 """
-aalc main AccLab prgram
+aalc version 1.0 main AccLab prgram
 Copyright (C) 2014 Walid Benghabrit
 
 This program is free software: you can redistribute it and/or modify
@@ -63,6 +63,7 @@ from pprint import *
 from FOTLSynthesizer import *
 from AALtoFOTL import *
 from shell import *
+import datetime
 import pickle
 import getopt
 import time
@@ -101,6 +102,8 @@ def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, co
     :return: {"res": the result, "mm": the metamodel instance}
     """
     from AALCompiler import AALCompilerListener
+
+    print("-------- aalc " + " starting at : " + str(datetime.datetime.now()) + "  File : " + str(file) + " --------\n")
 
     inputfile = FileStream(file)
     lexer = AALLexer(inputfile)
@@ -300,6 +303,7 @@ def main(argv):
                         "\n  -x \t--compile-stdlib" + "\t compile the standard library" + \
                         "\n  -d \t--hotswap       " + "\t enable hotswaping (for development only)" + \
                         "\n  -a \t--ast           " + "\t show ast tree" + \
+                        "\n  -u \t--gui            " + "\t run the gui" + \
                         "\n\nReport aalc bugs to walid.benghabrit@mines-nantes.fr" + \
                         "\nAccLab home page: <http://www.emn.fr/z-info/acclab/>" + \
                         "\naalc is a free software released under GPL 3"
@@ -327,7 +331,7 @@ def main(argv):
         opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaSru",
                                    ["help", "input", "output", "compile", "monodic", "check",
                                     "shell", "load", "fotl", "recompile", "init", "no-colors",
-                                    "compile-stdlib", "hotswap", "ast", "synth", "reparse", "ui"])
+                                    "compile-stdlib", "hotswap", "ast", "synth", "reparse", "gui"])
     except getopt.GetoptError:
         print(helpStr)
         sys.exit(2)
@@ -373,7 +377,7 @@ def main(argv):
             synth = True
         elif opt in ("-r", "--reparse"):
             reparse = True
-        elif opt in ("-u", "--ui"):
+        elif opt in ("-u", "--gui"):
             # Start server
             from ui.Server import start_ui
             start_ui()

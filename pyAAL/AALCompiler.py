@@ -211,7 +211,7 @@ class AALCompilerListener(AALListener.AALListener):
             found_lib_path = lib_name.replace("\"", "")
 
         if found_lib_path is None:
-            print(Color("{autored}Error lib not found !{/red}"))
+            print(Color("{autored}[ERROR]{/red} lib " + str(lib_name) + " not found !"))
             return
 
         if found_lib_path.endswith(".aalc"):
@@ -272,7 +272,8 @@ class AALCompilerListener(AALListener.AALListener):
         self.currentClause.name = ctx.h_clauseId().ID()
         # Check if clause is already declared
         if self.aalprog.isDeclared(self.currentClause.name, m_clause) is True:
-            print("Error clause already declared !")
+            print(Color("{autored}[ERROR]{/red} clause " + self.currentClause.name + "{automagenta} at line " +
+                        str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
             return
 
         self.aalprog.clauses.append(self.currentClause)  # Add the clause to the aalProg clauses
@@ -336,7 +337,6 @@ class AALCompilerListener(AALListener.AALListener):
         # Disable check in lib context
         if not self.loadlibs:
             return
-        print("File : " + str(self.file))
         if len(self.refForwardAgents) > 0:
             print(Color("{autoyellow}[WARNING]{/yellow} Agents declarations missing !"))
             for d in self.refForwardAgents:
@@ -521,7 +521,8 @@ class AALCompilerListener(AALListener.AALListener):
             if agName in self.refForwardAgents:  # Check if agent is in forwards ref
                 del self.refForwardAgents[agName]  # Remove it to resolve forwards ref
             else:  # The agent was effectively declared
-                print("Error agent already declared !")
+                print(Color("{autored}[ERROR]{/red} agent " + agName + "{automagenta} at line " +
+                            str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
                 return
 
         # Handling types
@@ -562,7 +563,8 @@ class AALCompilerListener(AALListener.AALListener):
             if sv_name in self.refForwardServices:  # Check if service is in forwards ref
                 del self.refForwardServices[sv_name]  # Remove it to resolve forwards ref
             else:  # The service was effectively declared
-                print("Error service already declared !")
+                print(Color("{autored}[ERROR]{/red} service " + sv_name + "{automagenta} at line " +
+                            str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
                 return
 
         # Handling types
@@ -589,7 +591,8 @@ class AALCompilerListener(AALListener.AALListener):
             if dtName in self.refForwardData:  # Check if data is in forwards ref
                 del self.refForwardData[dtName]  # Remove it to resolve forwards ref
             else:  # The data was effectively declared
-                print("Error data already declared !")
+                print(Color("{autored}[ERROR]{/red} data " + dtName + "{automagenta} at line " +
+                            str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
                 return
 
         # Handling types
@@ -635,7 +638,8 @@ class AALCompilerListener(AALListener.AALListener):
             if dtName in self.refForwardTypes:  # Check if type is in forwards ref
                 del self.refForwardTypes[dtName]  # Remove it to resolve forwards ref
             else:  # The data was effectively declared
-                print("Error data already declared !")
+                print(Color("{autored}[ERROR]{/red} type " + dtName + "{automagenta} at line " +
+                            str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
                 return
 
         # Handle type superTypes
@@ -1098,7 +1102,7 @@ class AALCompilerListener(AALListener.AALListener):
             # print("Macro eval error !")
 
         else:
-            print("Macro not found !")
+            print(Color("{autored}[ERROR]{/red} Macro not found !"))
 
         return __res__
 
