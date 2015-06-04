@@ -1,0 +1,140 @@
+%% -*-Latex-*-
+%%% 12/5/2015
+%%%% with behaviour
+
+%%%%
+~((
+%%%%   IDENTITIES 
+(always (kim(Kim) & sandra(Sandra) & other(Other))
+            & (![a] ~(kim(a) <=> sandra(a)))
+            & (![a] ~(kim(a) <=> other(a))))
+%%% DATA KNOWLEDGE
+& (always ![d] ((~(subjectKim(d) & subjectOther(d))) & (~(subjectSandra(d) & subjectOther(d)))))
+%%% AUTHORISATIONS (deny incomplete)
+%%%%%% always P 
+& (always ![d]  (
+    (subjectKim(d) => ~Presearch (hospital , d)) 
+    & (subjectOther(d) => Presearch(hospital, d))
+    & (subjectSandra(d) => Presearch(hospital, d))
+    & (subjectKim(d) => Pgive(hospital, Kim, d))
+    & ((~subjectKim(d)) => ~Pgive(hospital, Kim, d)) 
+    & (subjectOther(d) => Pgive(hospital, Other, d))
+    &  (subjectKim(d) => Psensor(Kim, cloudX, d))
+    &  (subjectOther(d) => Psensor(Other, cloudX, d))
+    &  (subjectKim(d) => Pcommunicate(Kim, Sandra, d))
+    &  ((~subjectKim(d)) => ~Pcommunicate(Kim, Sandra, d))
+    & ((subjectKim(d) | subjectOther(d)) => Ptransfer(cloudX , cloudZ, d))
+    & ((subjectKim(d) | subjectOther(d)) => Pstore(cloudX , cloudY, d))
+    & ((subjectKim(d) | subjectOther(d)) => Ptransfer2X(cloudZ , cloudX, d))
+    & ((subjectKim(d) | subjectOther(d)) => Psend(cloudZ, hospital, d))
+    & ((subjectKim(d) | subjectOther(d)) => Pput(cloudY, cloudX, d))
+    & (subjectKim(d) => PaddIdent(Sandra, d))
+    & ((subjectSandra(d) | subjectKim(d)) => Pupload(Sandra, cloudZ, d))
+    & (subjectOther(d)  => ~Pupload(Sandra, cloudZ, d))
+    & (subjectKim(d) => (Pread(Kim, d) & Pread(Sandra, d)))
+    & (subjectKim(d) => (![a] ((~kim(a) & ~sandra(a)) => ~Pread(a, d))))
+    & (subjectKim(d) => Pwrite(Kim, d))
+    & (subjectKim(d) => (![a] ((~kim(a)) => (~Pwrite(a, d)))))
+    & (subjectOther(d) =>  (Pread(Other, d) & Pwrite(Other, d)))
+    & (subjectOther(d) => (![a] ((~other(a)) => (~Pwrite(a, d) & ~Pread(a,d)))))
+))
+%%%% INVARIANT is needed 
+& (always ![d] (
+(![a] (~write(a, d) | Pwrite(a, d)))
+& (![a] (~read(a, d) | Pread(a, d)))
+& (~sensor(Kim,cloudX, d) | Psensor(Kim,cloudX, d))
+& (~research(hospital, d) | Presearch(hospital, d))
+& (~store(cloudX , cloudY, d) | Pstore(cloudX , cloudY, d))
+& (~communicate(Kim, Sandra, d) | Pcommunicate(Kim, Sandra, d))
+& (~addIdent(Sandra, d) | PaddIdent(Sandra, d))
+& (~upload(Sandra, cloudZ, d) | Pupload(Sandra, cloudZ, d))
+& (~transfer(cloudX , cloudZ, d) | Ptransfer(cloudX , cloudZ, d))
+& (~send(cloudZ, hospital, d) | Psend(cloudZ, hospital, d))
+& (~give(hospital, Kim, d) | Pgive(hospital, Kim, d))
+& (~transfer2X(cloudZ, cloudX, d) | Ptransfer2X(cloudZ, cloudX, d))
+& (~put(cloudY, cloudX, d) | Pput(cloudY, cloudX, d))
+))
+%% %% %%%% BEHAVIOR unconstrained
+& (always ![d] (sensor(Kim, cloudX, d) 
+    %%% should constraint the communication
+          & (subjectKim(d) => communicate(Kim, Sandra, d) )
+          & upload(Sandra, cloudZ, d)
+    &  (![a] (sensor(a,cloudX, d) => sometime transfer(cloudX , cloudZ, d)))
+    &  (![a] (sensor(a,cloudX, d) => sometime store(cloudX , cloudY, d)))
+    &  (store(cloudX , cloudY, d) => sometime put(cloudY, cloudX, d))
+    &  (put(cloudY, cloudX, d) => sometime sensor(Kim,cloudX, d))
+    &  (put(cloudY, cloudX, d) => sometime transfer(cloudX , cloudZ, d))
+    &  (communicate(Kim, Sandra, d) => sometime upload(Sandra, cloudZ, d))
+    &  (communicate(Kim, Sandra, d) => sometime addIdent(Sandra, d))
+    &  (upload(Sandra, cloudZ, d) => sometime send(cloudZ, hospital, d))
+    &  (upload(Sandra, cloudZ, d) => sometime transfer2X(cloudZ, cloudX, d))
+    &  (transfer(cloudX , cloudZ, d)  => sometime send(cloudZ, hospital, d))
+    &  (transfer(cloudX , cloudZ, d)  => sometime transfer2X(cloudZ, cloudX, d))
+    &  (transfer2X(cloudZ, cloudX, d) => sometime transfer(cloudX , cloudZ, d))
+    &  (transfer2X(cloudZ, cloudX, d) => sometime send(cloudZ, hospital, d))
+    &  (send(cloudZ, hospital, d)  => sometime research(hospital, d))
+    &  (send(cloudZ, hospital, d) => sometime give(hospital, Kim, d))
+    &  (send(cloudZ, hospital, d) => sometime give(hospital, Other, d))
+    &  (![a] (give(hospital, a, d) => sometime sensor(Kim,cloudX, d)))
+    &  (![a] (give(hospital, a, d) => sometime sensor(Other,cloudX, d)))
+    &  (give(hospital, Kim, d) => sometime communicate(Kim, Sandra, d))
+))
+) %%% END COND is SAT
+=>
+%%% ------- PROPERTIES 
+
+%%%%%%  ---------  hospital: any data from Kim or from Sandra  can be received via send to hospital [1 - 2]
+%%% (![d] (sometime ((subjectKim(d) | subjectSandra(d)) => send(cloudZ, hospital, d)))) %%% VALID
+%%% (![d] (sometime ((subjectKim(d) | subjectSandra(d) | subjectOther(d)) => send(cloudZ, hospital, d)))) %%% VALID
+
+%%%%% --------- Kim receives Kim's data [3 - 8]
+%%% (sometime ?[d] (subjectKim(d) => (sometime give(hospital, Kim, d)))) %%% VALID 
+%%% (?[d] sometime (subjectKim(d) => (sometime give(hospital, Kim, d)))) %%% VALID
+%%% (![d] (sometime (subjectKim(d) => give(hospital, Kim, d)))) %%%VALID
+%%%% ---------  Kim receives shared data with Sandra
+%%% (![d] (sometime ((subjectKim(d) & subjectSandra(d)) => give(hospital, Kim, d)))) %%%VALID
+%%%% ---------  Kim cannot receive Sandra's proper data
+%%% (![d] (always ~(subjectSandra(d) & ~subjectKim(d) & give(hospital, Kim, d)))) %%% VALID
+%%% another formulation
+%%% ~(?[d] (sometime (((~subjectKim(d)) & subjectSandra(d)) & give(hospital, Kim, d)))) %%% VALID 
+
+%%%%%% ---------  What Sandra can receive ? [9 - 14]
+%%%% data from Kim quite obvious via communicate
+%%% (![d] (always (subjectKim(d) => communicate(Kim, Sandra, d)))) %%%VALID
+%%% and shared data
+%%% (![d] (always ((subjectKim(d) & subjectSandra(d)) => communicate(Kim, Sandra, d)))) %%%VALID
+%%% data from Sandra and not from Kim ?
+%%% (?[d] (sometime (~subjectKim(d) & subjectSandra(d) & communicate(Kim, Sandra, d)))) %%% sat ONLY
+%%% ~(?[d] (sometime (~subjectKim(d) & subjectSandra(d) & communicate(Kim, Sandra, d)))) %%% VALID
+%%% (![d] (always ~(~subjectKim(d) & subjectSandra(d) & communicate(Kim, Sandra, d)))) %%% VALID
+%%% (![d] (always (subjectKim(d) | ~subjectSandra(d) | ~communicate(Kim, Sandra, d)))) %%% VALID
+
+%%%%%% ---------  What kinds of data is reaching cloudX ? (incomplete ...) [15 - 17]
+%%% (![d] (sometime ((subjectKim(d) | subjectSandra(d)) => (sensor(Kim, cloudX, d) | transfer2X(cloudZ, cloudX, d) | put(cloudY, cloudX, d))))) %%% VALID
+%%% (![d] (always ((subjectKim(d) | subjectSandra(d)) => (sensor(Kim, cloudX, d) | transfer2X(cloudZ, cloudX, d) | put(cloudY, cloudX, d))))) %%% VALID
+%%% (![d] (always ((subjectKim(d) | subjectSandra(d) | subjectOther(d)) => (sensor(Kim, cloudX, d) | transfer2X(cloudZ, cloudX, d) | put(cloudY, cloudX, d) | sensor(Other, cloudX, d))))) %%% VALID
+
+%%%%% --------- Other receive Kim's data or Sandra's data ? [18 - 22]
+%%% (sometime ?[d]  (subjectKim(d) => ~give(hospital, Other, d))) %%% VALID
+%%% (![d] sometime (subjectKim(d) => ~give(hospital, Other, d))) %%% VALID
+%%% (![d] sometime ((subjectKim(d) | subjectSandra(d)) => ~give(hospital, Other, d))) %%% sat 
+%%% (![d] always ~((subjectKim(d) | subjectSandra(d)) & give(hospital, Other, d))) %%% sat 
+
+%%%%% -------- hospital cannot do research on Kim data [23 - 25]
+%%% (![d] always ((subjectKim(d) & send(cloudZ, hospital, d)) => ~research(hospital, d))) %%% VALID
+%%% (![d] always (~(subjectKim(d)  & research(hospital, d)))) %%% VALID
+%%% (![d] always (subjectKim(d) => ~research(hospital, d))) %%% VALID
+
+%%%%% --------- hospital can do research on Sandra or Other data [26 - 27]
+%%% (?[d] (sometime ((subjectSandra(d) | subjectOther(d)) => research(hospital, d)))) %%% VALID
+%%% (?[d]  ((subjectSandra(d) | subjectOther(d)) => sometime research(hospital, d))) %%% VALID
+
+%%%%% --------- hospital can receive data from the three agents [28 - 32]
+%%% (?[d] sometime  (subjectOther(d) => (send(cloudZ, hospital, d) & Psend(cloudZ, hospital, d)))) %%% VALID
+%%% (?[d] sometime  (subjectKim(d) => (send(cloudZ, hospital, d) & Psend(cloudZ, hospital, d)))) %%% VALID
+%%% (?[d] sometime  (subjectSandra(d) => (send(cloudZ, hospital, d) & Psend(cloudZ, hospital, d)))) %%% VALID
+%%% (?[d] sometime  ((subjectOther(d) | subjectKim(d) | subjectSandra(d)) => (send(cloudZ, hospital, d) & Psend(cloudZ, hospital, d)))) %%% VALID
+%%% (?[d] sometime  ((subjectOther(d) | subjectKim(d) | subjectSandra(d)) => send(cloudZ, hospital, d))) %%% VALID
+
+) %%% end of imply
+

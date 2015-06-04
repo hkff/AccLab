@@ -31,7 +31,7 @@ agent = actor.extend({
 
 	view: function() {
 		// Agent
-		this.cmp_agent = $('<div class="btn-components fa fa-user fa-2x"></div>')
+		this.cmp_agent = $('<div title="Agent" class="btn-components fa fa-user fa-2x"></div>')
 		this.cmp_agent.click(this.addElement);
 		this.parent.componentsPanel.append(this.cmp_agent);
 	},

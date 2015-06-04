@@ -243,15 +243,42 @@ visualEditor.ui.fileManager = {
 	 * @returns {*}
 	 */
 	openAceEditor: function(id, type) {
-		var inPlaceAALEditor = ace.edit(id);
+		var editor = ace.edit(id);
+
+		var snippetManager = ace.require("ace/snippets").snippetManager;
+		var config = ace.require("ace/config");
+
+		/*
+		ace.config.loadModule("ace/snippets/AAL", function(m) {
+			if (m) {
+				snippetManager.files.AAL = m;
+				m.snippetText += "\nsnippet mm\n	@ManyToMany\n	${1}\nsnippet mo\n	@ManyToOne\n"; // if you have snippets in the ace snippet format
+				m.snippets = snippetManager.parseSnippetFile(m.snippetText);
+
+				// or do this if you already have them parsed
+				m.snippets.push({
+					content: "${1:class_name}.prototype.${2:method_name} = function(${3:first_argument}) {    ${4:// body...}",
+					name: "proto",
+					tabTrigger: "proto"
+				});
+
+				snippetManager.register(m.snippets, m.scope);
+			}
+		});*/
+		editor.setOptions({
+        	enableBasicAutocompletion: true,
+        	//enableSnippets: true,
+        	enableLiveAutocompletion: false
+    	});
+
 		// monokai
-	    inPlaceAALEditor.setTheme("ace/theme/monokai");
+	    editor.setTheme("ace/theme/monokai");
 		if(type == "AAL" || type == "TSPASS")
-			inPlaceAALEditor.getSession().setMode("ace/mode/" + type);
+			editor.getSession().setMode("ace/mode/" + type);
 		else
-			inPlaceAALEditor.getSession().setMode("ace/mode/plain_text");
-	    inPlaceAALEditor.setFontSize(14);
-	    return inPlaceAALEditor;
+			editor.getSession().setMode("ace/mode/plain_text");
+	    editor.setFontSize(14);
+	    return editor;
 	},
 
 	/**

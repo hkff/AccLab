@@ -13,8 +13,8 @@
     </options>
     <keywords keywords=",;after;and;before;exists;forall;if;not;onlywhen;or;then;where" ignore_case="true" />
     <keywords2 keywords="agent;apply;auditing;behavior;call;check;clause;data;exec;if_violated_then;load;macro;of;service;type;types" />
-    <keywords3 keywords="always;must;mustnot;never;sometime;until" />
-    <keywords4 keywords="aa;actions;attributes;deny;extends;get_audit;get_rectification;get_usage;permit;provided;ps;purpose;rc;required;rs;subject;uc" />
+    <keywords3 keywords="always;must;mustnot;never;sometime;until;unless;next" />
+    <keywords4 keywords="ae;actions;attributes;deny;extends;get_audit;get_rectification;get_usage;permit;provided;ps;purpose;re;required;rs;subject;ue" />
   </highlighting>
   <extensionMap>
     <mapping ext="aal" />

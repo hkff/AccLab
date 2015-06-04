@@ -1,0 +1,339 @@
+%% -*-Latex-*-
+%%% 19/5/2015
+%%% WEARABLE: better user preferences for the compliant customer
+%%%% ----------------
+%%% version fixed after  Customer.tspass
+
+%%%%%%% STEP1 for a simple general Customer user preferences
+%% (always (
+%% %%%% Knowledge
+%% customer(Kim) &
+%% %%%% Data type definitions
+%% (![d] ((data(d) <=> (public(d) | sensitive(d))) 
+%%                & (public(d) <=> (display(d) | gender(d) | country(d))) 
+%%                & (sensitive(d) <=> (username(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+%%                                      | userid(d) | blood(d) | heart(d) | training(d)))))
+%% & %%% action authorizations
+%% ((![a, d] (read(a, d) => Pread(a, d))) &
+%%  (![a, d] (write(a, d) => Pwrite(a, d))) &
+%%  (![a, d] (update(a, d) => Pupdate(a, d))) &
+%%  (![a, d] (delete(a, d) => Pdelete(a, d))))
+%% & %%%  acces right preferences for Kim 
+%% (![d] ((data(d) & subject(d, Kim)) 
+%%                      => (Pread(Kim, d) & Pwrite(Kim, d) & Pdelete(Kim, d) & Pupdate(Kim, d)))) &
+%% (![d] ((data(d) & subject(d, Kim)) 
+%%                      => (~Pwrite(CardioMon, d) & ~Pdelete(CardioMon, d) & ~Pupdate(CardioMon, d) &
+%%                          ~Pwrite(Employee, d) & ~Pdelete(Employee, d) & ~Pupdate(Employee, d) &
+%%                          ~Pwrite(MapOnWeb, d) & ~Pdelete(MapOnWeb, d) & ~Pupdate(MapOnWeb, d)))) &
+%% %%%% FIXED here                     
+%% (![u] (((username(u) | password(u) | height(u) | weight(u) | training(u)) & subject(u, Kim)) 
+%%                      => (~Pread(CardioMon, u) & ~Pread(Employee, u) & ~Pread(MapOnWeb, u)))) &
+%% (![u] ((userid(u) & subject(u, Kim)) 
+%%                      => (Pread(CardioMon, u) & Pread(Employee, u) & ~Pread(MapOnWeb, u)))) &
+%% (![u] ((age(u) & subject(u, Kim)) 
+%%                      => (Pread(CardioMon, u) & Pread(Employee, u) & Pread(MapOnWeb, u)))) &                     
+%% (![u] (((sugarlevel(u) | blood(u) | heart(u)) & subject(u, Kim)) 
+%%                      => (~Pread(CardioMon, u) & ~Pread(Employee, u) & Pread(MapOnWeb, u)))) &
+%% %%% --                     
+%% (![u] ((public(u) & subject(u, Kim)) 
+%%                      => (Pread(CardioMon, u)  & Pread(Employee, u) & Pread(MapOnWeb, u))))
+%% ))
+%%%% 
+%%%% SAT  (0.008675s)
+
+%%%% CHECK COMPLIANCE TODO revoir parenthesage faux a la fin 
+%%%%%%%%% -------------- ALWAYS (P => U)
+%%%% ALWAYS I => (ALWAYS (P => U)) <=> ALWAYS ((I&P) => U)
+%% ~(always ((
+%% %%%% Knowledge
+%% customer(Kim) &
+%% %%%% Data type definitions
+%% (![d] ((data(d) <=> (public(d) | sensitive(d))) 
+%%                & (public(d) <=> (display(d) | gender(d) | country(d))) 
+%%                & (sensitive(d) <=> (username(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+%%                                      | userid(d) | blood(d) | heart(d) | training(d)))))
+%% & %%% action authorizations
+%% ((![a, d] (read(a, d) => Pread(a, d))) &
+%%  (![a, d] (write(a, d) => Pwrite(a, d))) &
+%%  (![a, d] (update(a, d) => Pupdate(a, d))) &
+%%  (![a, d] (delete(a, d) => Pdelete(a, d))))
+%% & %%%  acces right from the table Customer
+%% (![d, w]  ((customer(w) & data(d) & subject(d, w)) 
+%%                      => (Pread(w, d) & Pwrite(w, d) & Pdelete(w, d) & Pupdate(w, d))))
+%% & %%%  acces right from the table CardioMon                                  
+%% (![u,w] ((customer(w) & username(u) & subject(u, w)) 
+%%                      => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & password(u) & subject(u, w)) 
+%%                      => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & userid(u) & subject(u, w)) 
+%%                      => (Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & display(u) & subject(u, w)) 
+%%                      => (Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & gender(u) & subject(u, w)) 
+%%                      => (Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & age(u) & subject(u, w)) 
+%%                      => (Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & height(u) & subject(u, w)) 
+%%                      => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & weight(u) & subject(u, w)) 
+%%                      => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & sugarlevel(u) & subject(u, w)) 
+%%                      => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & blood(u) & subject(u, w)) 
+%%                      => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & heart(u) & subject(u, w)) 
+%%                      => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & training(u) & subject(u, w)) 
+%%                      => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & country(u) & subject(u, w)) 
+%%                      => (Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) 
+%% & %%%  acces right from the table Employee                                  
+%% (![u,w] ((customer(w) & username(u) & subject(u, w)) 
+%%                      => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & password(u) & subject(u, w)) 
+%%                      => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & userid(u) & subject(u, w)) 
+%%                      => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & display(u) & subject(u, w)) 
+%%                      => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & gender(u) & subject(u, w)) 
+%%                      => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & age(u) & subject(u, w)) 
+%%                      => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & height(u) & subject(u, w)) 
+%%                      => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & weight(u) & subject(u, w)) 
+%%                      => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & sugarlevel(u) & subject(u, w)) 
+%%                      => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & blood(u) & subject(u, w)) 
+%%                      => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & heart(u) & subject(u, w)) 
+%%                      => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & training(u) & subject(u, w)) 
+%%                      => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & country(u) & subject(u, w)) 
+%%                      => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u))))
+%% & %%%  acces right from the table MapOnWeb                                  
+%% (![u,w] ((customer(w) & username(u) & subject(u, w)) 
+%%                      => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & password(u) & subject(u, w)) 
+%%                      => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & userid(u) & subject(u, w)) 
+%%                      => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & display(u) & subject(u, w)) 
+%%                      => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & gender(u) & subject(u, w)) 
+%%                      => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & age(u) & subject(u, w)) 
+%%                      => (Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & height(u) & subject(u, w)) 
+%%                      => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & weight(u) & subject(u, w)) 
+%%                      => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & sugarlevel(u) & subject(u, w)) 
+%%                      => (Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & blood(u) & subject(u, w)) 
+%%                      => (Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & heart(u) & subject(u, w)) 
+%%                      => (Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & training(u) & subject(u, w)) 
+%%                      => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & country(u) & subject(u, w)) 
+%%                      => (Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) 
+%% ) =>
+%% %%%  acces right preferences for Kim                      
+%% %% ((![d] ((data(d) & subject(d, Kim)) 
+%% %%                      => (Pread(Kim, d) & Pwrite(Kim, d) & Pdelete(Kim, d) & Pupdate(Kim, d)))) &
+%% %% (![d] ((data(d) & subject(d, Kim)) 
+%% %%                      => (~Pwrite(CardioMon, d) & ~Pdelete(CardioMon, d) & ~Pupdate(CardioMon, d) &
+%% %%                          ~Pwrite(Employee, d) & ~Pdelete(Employee, d) & ~Pupdate(Employee, d) &
+%% %%                          ~Pwrite(MapOnWeb, d) & ~Pdelete(MapOnWeb, d) & ~Pupdate(MapOnWeb, d)))) &
+%% %% (![u] (((username(u) | password(u) | height(u) | weight(u) | training(u)) & subject(u, Kim)) 
+%% %%                      => (~Pread(CardioMon, u) & ~Pread(Employee, u) & ~Pread(MapOnWeb, u)))) &
+%% %% (![u] ((userid(u) & subject(u, Kim)) 
+%% %%                      => (Pread(CardioMon, u) & Pread(Employee, u) & ~Pread(MapOnWeb, u))))  &
+%% %% (![u] ((age(u) & subject(u, Kim)) 
+%% %%                      => (Pread(CardioMon, u) & Pread(Employee, u) & Pread(MapOnWeb, u))))  &   
+%% %% (![u] (((sugarlevel(u) | blood(u) | heart(u)) & subject(u, Kim)) 
+%% %%                      => (~Pread(CardioMon, u) & ~Pread(Employee, u) & Pread(MapOnWeb, u))))  &
+%% (![u] ((public(u) & subject(u, Kim)) 
+%%                      => (Pread(CardioMon, u)  & Pread(Employee, u) & Pread(MapOnWeb, u)))) %% )
+%% ))
+%%%% SAT (0.064142s)
+%%%% NOT SAT !!! failed in (1.33967s)
+%%%% 1) masking all Kim's but one VALID
+%%%% 2) VALID
+%%%% 3) VALID
+%%%% 4) VALID
+%%%% 5) VALID
+%%%% 6) VALID
+%%%% 7) SAT !!!
+                     
+%%%% and we can see that Kim's is not aligned with the access rights table
+%%%% We should fix this last line
+%% (![u] ((public(u) & subject(u, Kim)) 
+%%                      => (Pread(CardioMon, u)  & Pread(Employee, u) & Pread(MapOnWeb, u))))
+%%%  replacing it by
+%% (![u] ((country(u) & subject(u, Kim)) 
+%%                      => (Pread(CardioMon, u)  & Pread(Employee, u) & Pread(MapOnWeb, u)))) &
+%% (![u] (((display(u) | gender(u)) & subject(u, Kim)) 
+%%                      => (Pread(CardioMon, u)  & Pread(Employee, u) & ~Pread(MapOnWeb, u))))
+
+%%%% CHECK COMPLIANCE successful
+%%%%%%%%% -------------- ALWAYS (P => U)
+%%%% ALWAYS I => (ALWAYS (P => U)) <=> ALWAYS ((I&P) => U)
+~(always ((
+%%%% Knowledge
+customer(Kim) &
+%%%% Data type definitions
+(![d] ((data(d) <=> (public(d) | sensitive(d))) 
+               & (public(d) <=> (display(d) | gender(d) | country(d))) 
+               & (sensitive(d) <=> (username(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+                                     | userid(d) | blood(d) | heart(d) | training(d)))))
+& %%% action authorizations
+((![a, d] (read(a, d) => Pread(a, d))) &
+ (![a, d] (write(a, d) => Pwrite(a, d))) &
+ (![a, d] (update(a, d) => Pupdate(a, d))) &
+ (![a, d] (delete(a, d) => Pdelete(a, d))))
+& %%%  acces right from the table Customer
+(![d, w]  ((customer(w) & data(d) & subject(d, w)) 
+                     => (Pread(w, d) & Pwrite(w, d) & Pdelete(w, d) & Pupdate(w, d))))
+& %%%  acces right from the table CardioMon                                  
+(![u,w] ((customer(w) & username(u) & subject(u, w)) 
+                     => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+(![u,w] ((customer(w) & password(u) & subject(u, w)) 
+                     => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+(![u,w] ((customer(w) & userid(u) & subject(u, w)) 
+                     => (Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+(![u,w] ((customer(w) & display(u) & subject(u, w)) 
+                     => (Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+(![u,w] ((customer(w) & gender(u) & subject(u, w)) 
+                     => (Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+(![u,w] ((customer(w) & age(u) & subject(u, w)) 
+                     => (Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+(![u,w] ((customer(w) & height(u) & subject(u, w)) 
+                     => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+(![u,w] ((customer(w) & weight(u) & subject(u, w)) 
+                     => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+(![u,w] ((customer(w) & sugarlevel(u) & subject(u, w)) 
+                     => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+(![u,w] ((customer(w) & blood(u) & subject(u, w)) 
+                     => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+(![u,w] ((customer(w) & heart(u) & subject(u, w)) 
+                     => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+(![u,w] ((customer(w) & training(u) & subject(u, w)) 
+                     => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+(![u,w] ((customer(w) & country(u) & subject(u, w)) 
+                     => (Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) 
+& %%%  acces right from the table Employee                                  
+(![u,w] ((customer(w) & username(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & password(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & userid(u) & subject(u, w)) 
+                     => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & display(u) & subject(u, w)) 
+                     => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & gender(u) & subject(u, w)) 
+                     => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & age(u) & subject(u, w)) 
+                     => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & height(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & weight(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & sugarlevel(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & blood(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & heart(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & training(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & country(u) & subject(u, w)) 
+                     => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u))))
+& %%%  acces right from the table MapOnWeb                                  
+(![u,w] ((customer(w) & username(u) & subject(u, w)) 
+                     => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & password(u) & subject(u, w)) 
+                     => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & userid(u) & subject(u, w)) 
+                     => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & display(u) & subject(u, w)) 
+                     => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & gender(u) & subject(u, w)) 
+                     => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & age(u) & subject(u, w)) 
+                     => (Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & height(u) & subject(u, w)) 
+                     => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & weight(u) & subject(u, w)) 
+                     => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & sugarlevel(u) & subject(u, w)) 
+                     => (Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & blood(u) & subject(u, w)) 
+                     => (Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & heart(u) & subject(u, w)) 
+                     => (Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & training(u) & subject(u, w)) 
+                     => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & country(u) & subject(u, w)) 
+                     => (Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) 
+) =>
+%% %%%  acces right preferences for Kim  
+%% ((![d] ((data(d) & subject(d, Kim)) 
+%%                      => (Pread(Kim, d) & Pwrite(Kim, d) & Pdelete(Kim, d) & Pupdate(Kim, d)))) &
+%% (![d] ((data(d) & subject(d, Kim)) 
+%%                      => (~Pwrite(CardioMon, d) & ~Pdelete(CardioMon, d) & ~Pupdate(CardioMon, d) &
+%%                          ~Pwrite(Employee, d) & ~Pdelete(Employee, d) & ~Pupdate(Employee, d) &
+%%                          ~Pwrite(MapOnWeb, d) & ~Pdelete(MapOnWeb, d) & ~Pupdate(MapOnWeb, d)))) &
+%% (![u] (((username(u) | password(u) | height(u) | weight(u) | training(u)) & subject(u, Kim)) 
+%%                      => (~Pread(CardioMon, u) & ~Pread(Employee, u) & ~Pread(MapOnWeb, u)))) &
+%% (![u] ((userid(u) & subject(u, Kim)) 
+%%                      => (Pread(CardioMon, u) & Pread(Employee, u) & ~Pread(MapOnWeb, u))))  &
+%% (![u] ((age(u) & subject(u, Kim)) 
+%%                      => (Pread(CardioMon, u) & Pread(Employee, u) & Pread(MapOnWeb, u))))  &   
+%% (![u] (((sugarlevel(u) | blood(u) | heart(u)) & subject(u, Kim)) 
+%%                      => (~Pread(CardioMon, u) & ~Pread(Employee, u) & Pread(MapOnWeb, u))))  &
+%% %%% FIXED here
+%% (![u] ((country(u) & subject(u, Kim)) 
+%%                      => (Pread(CardioMon, u)  & Pread(Employee, u) & Pread(MapOnWeb, u)))) &
+%% (![u] (((display(u) | gender(u)) & subject(u, Kim)) 
+%%                      => (Pread(CardioMon, u)  & Pread(Employee, u) & ~Pread(MapOnWeb, u))))
+%% )
+%%%                     
+%%%% SAT (0.064357s)
+%%%% NOT SAT (1.35979s)
+%%%  acces right preferences for Kim   with ?
+(?[cm, weco, mow]
+((![d] ((data(d) & subject(d, Kim)) 
+                     => (Pread(Kim, d) & Pwrite(Kim, d) & Pdelete(Kim, d) & Pupdate(Kim, d)))) &
+(![d] ((data(d) & subject(d, Kim)) 
+                     => (~Pwrite(cm, d) & ~Pdelete(cm, d) & ~Pupdate(cm, d) &
+                         ~Pwrite(weco, d) & ~Pdelete(weco, d) & ~Pupdate(weco, d) &
+                         ~Pwrite(mow, d) & ~Pdelete(mow, d) & ~Pupdate(mow, d)))) &
+(![u] (((username(u) | password(u) | height(u) | weight(u) | training(u)) & subject(u, Kim)) 
+                     => (~Pread(cm, u) & ~Pread(weco, u) & ~Pread(mow, u)))) &
+(![u] ((userid(u) & subject(u, Kim)) 
+                     => (Pread(cm, u) & Pread(weco, u) & ~Pread(mow, u))))  &
+(![u] ((age(u) & subject(u, Kim)) 
+                     => (Pread(cm, u) & Pread(weco, u) & Pread(mow, u))))  &   
+(![u] (((sugarlevel(u) | blood(u) | heart(u)) & subject(u, Kim)) 
+                     => (~Pread(cm, u) & ~Pread(weco, u) & Pread(mow, u))))  &
+%%% FIXED here
+(![u] ((country(u) & subject(u, Kim)) 
+                     => (Pread(cm, u)  & Pread(weco, u) & Pread(mow, u)))) &
+(![u] (((display(u) | gender(u)) & subject(u, Kim)) 
+                     => (Pread(cm, u)  & Pread(weco, u) & ~Pread(mow, u))))
+))
+%%%%%
+%%%% SAT (0.040157s)
+%%%% NOT SAT    134724/ (105.972s)                   
+%%%%
+))
+
+
+
+%%%%% --------- endinput                                     
+

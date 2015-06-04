@@ -1,0 +1,76 @@
+%% -*-Latex-*-
+%%% 19/5/2015
+%%% WEARABLE:  wearable Employee Co
+%%%% ----------------
+%%% version without locations/transfers only access rights
+%%% as described in the slides from Vassilis (the access right table)
+
+%%%%%%%%% -------------- ALWAYS (P => U)
+%%%% ALWAYS I => (ALWAYS (P => U)) <=> ALWAYS ((I&P) => U)
+
+
+%%%%%%% for Employee
+(always (
+%%%% Data type definitions
+(![d] ((data(d) <=> (public(d) | sensitive(d))) 
+               & (public(d) <=> (display(d) | gender(d) | country(d))) 
+               & (sensitive(d) <=> (username(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+                                     | userid(d) | blood(d) | heart(d) | training(d)))))
+& %%% action authorizations
+((![a, d] (read(a, d) => Pread(a, d))) &
+ (![a, d] (write(a, d) => Pwrite(a, d))) &
+ (![a, d] (update(a, d) => Pupdate(a, d))) &
+ (![a, d] (delete(a, d) => Pdelete(a, d))))
+& %%%  acces right from the table Employee                                  
+(![u,w] ((customer(w) & username(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & password(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & userid(u) & subject(u, w)) 
+                     => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & display(u) & subject(u, w)) 
+                     => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & gender(u) & subject(u, w)) 
+                     => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & age(u) & subject(u, w)) 
+                     => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & height(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & weight(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & sugarlevel(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & blood(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & heart(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & training(u) & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & country(u) & subject(u, w)) 
+                     => (Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) 
+))
+%%%% 
+%%%% SAT (0.014226s) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     
+%%%%% --------- endinput                                     
+

@@ -1,0 +1,81 @@
+%% -*-Latex-*-
+%%% 22/5/2015
+%%% WEARABLE:  system usage policy = conjunction of three and line ``Manage profile'' Table 6 p47 D47.1
+%%%% ----------------
+
+%%%%%%% system policy
+(always (
+%%%% Knowledge
+customer(Kim) & processor(CardioMon) & processor(MapOnWeb) & controller(Employee)
+& cardio(CardioMon) & ~cardio(MapOnWeb) %%% to distinguish the processors
+& %%% +CLASSIC: and he has some data 
+display(dis) & subject(dis, Kim) & gender(female) & subject(female, Kim) & country(germany) & subject(germany, Kim) &
+username(kim) & subject(kim, Kim) & age(xxx) & subject(xxx, Kim) & sugarlevel(brown) & subject(brown, Kim) &
+password(yyy) & subject(yyy, Kim) & weight(quat) & subject(quat, Kim) & height(dix) & subject(dix, Kim) &
+userid(kim123) & subject(kim123, Kim) & blood(A0) & subject(A0, Kim) & heart(good) & subject(good, Kim) &
+training(once) & subject(once, Kim) &
+%%%% Adding role disjunctions
+(![a] (~(customer(a) & processor(a)) & ~(customer(a) & controller(a)))) 
+& %%%% Data type definitions from Table 2 page 14 of D47.1
+(![d] ((data(d) <=> (public(d) | sensitive(d))) 
+               & (public(d) <=> (display(d) | gender(d) | country(d))) 
+               & (sensitive(d) <=> (username(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+                                     | userid(d) | blood(d) | heart(d) | training(d)))))
+& %%% action authorizations
+((![a, d] (read(a, d) => Pread(a, d))) &
+ (![a, d] (write(a, d) => Pwrite(a, d))) &
+ (![a, d] (update(a, d) => Pupdate(a, d))) &
+ (![a, d] (delete(a, d) => Pdelete(a, d))))
+& %%%  acces rights for  Customer line ``Manage profile'' Table 6 p47 D47.1
+(![d, w]  ((customer(w) & data(d) & subject(d, w)) 
+                     => (Pread(w, d) & Pwrite(w, d) & Pdelete(w, d) & Pupdate(w, d))))
+& %%%  acces rights for  CardioMon                                  
+(![u,w] ((customer(w) & (username(u) | password(u) | height(u) | weight(u)
+                                     | sugarlevel(u) | blood(u) | heart(u) | training(u))   & subject(u, w)) 
+                     => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+(![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+                     => Pread(CardioMon, u))) &
+(![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+                     => (~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u))))
+& %%%  acces rights for  Employee                                  
+(![u,w] ((customer(w) & (username(u) | password(u) | height(u) | weight(u)
+                                     | sugarlevel(u) | blood(u) | heart(u) | training(u))   & subject(u, w)) 
+                     => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+                     => Pread(Employee, u))) &
+(![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+                     => (~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u))))
+& %%%  acces rights for  MapOnWeb                                  
+(![u,w] ((customer(w) & (username(u) | password(u) | height(u) | weight(u) | gender(u)
+                                     | userid(u) | display(u) | training(u))   & subject(u, w)) 
+                     => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & (sugarlevel(u) | country(u) | blood(u) | heart(u) | age(u)) & subject(u, w)) 
+                     => Pread(MapOnWeb, u))) &
+(![u,w] ((customer(w) & (sugarlevel(u) | country(u) | blood(u) | heart(u) | age(u)) & subject(u, w)) 
+                     => (~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u))))
+))
+%%%% 
+%%%% SAT  (0.09171s)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     
+%%%%% --------- endinput                                     
+

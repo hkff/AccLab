@@ -1,0 +1,294 @@
+%% -*-Latex-*-
+%%% 22/5/2015
+%%% WEARABLE:  Customer preferences and try compliance
+%%%% ----------------
+
+%%%%%%% STEP1 for  simple  Customer user preferences with explicit agents
+%%%%%% try to write simple separated cunjunctions is better
+%% (always (
+%% %%%% Knowledge
+%% customer(Kim) & processor(CardioMon) & processor(MapOnWeb) & controller(Employee)
+%% & cardio(CardioMon) & ~cardio(MapOnWeb) %%% to distinguish the processors
+%% & %%% +CLASSIC: and he has some data 
+%% display(dis) & subject(dis, Kim) & gender(female) & subject(female, Kim) & country(germany) & subject(germany, Kim) &
+%% username(kim) & subject(kim, Kim) & age(xxx) & subject(xxx, Kim) & sugarlevel(brown) & subject(brown, Kim) &
+%% password(yyy) & subject(yyy, Kim) & weight(quat) & subject(quat, Kim) & height(dix) & subject(dix, Kim) &
+%% userid(kim123) & subject(kim123, Kim) & blood(A0) & subject(A0, Kim) & heart(good) & subject(good, Kim) &
+%% training(once) & subject(once, Kim) 
+%% & %%%% Adding role disjunctions
+%% (![a] (~(customer(a) & processor(a)) & ~(customer(a) & controller(a)))) 
+%% & %%%% Data type definitions
+%% (![d] ((data(d) <=> (public(d) | sensitive(d))) 
+%%                & (public(d) <=> (display(d) | gender(d) | country(d))) 
+%%                & (sensitive(d) <=> (username(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+%%                                      | userid(d) | blood(d) | heart(d) | training(d)))))
+%% & %%% action authorizations
+%% ((![a, d] (read(a, d) => Pread(a, d))) &
+%%  (![a, d] (write(a, d) => Pwrite(a, d))) &
+%%  (![a, d] (update(a, d) => Pupdate(a, d))) &
+%%  (![a, d] (delete(a, d) => Pdelete(a, d))))
+%% & 
+%% ( %%%  acces rights preferences for Kim
+%%   (![d] ((data(d) & subject(d, Kim)) => (Pread(Kim, d) & Pwrite(Kim, d) & Pdelete(Kim, d) & Pupdate(Kim, d)))) &
+%%   %%%% controller 
+%%   (![d] ((data(d) & subject(d, Kim)) => (~Pwrite(Employee, d) & ~Pdelete(Employee, d) & ~Pupdate(Employee, d)))) &
+%%   (![u] ((sensitive(u) & subject(u, Kim)) => ~Pread(Employee, u))) & 
+%%   (![u] ((public(u) & subject(u, Kim)) => Pread(Employee, u))) &
+%%   %%%% processor CardioMon
+%%   (![d] ((data(d) & subject(d, Kim)) => (~Pwrite(CardioMon, d) & ~Pdelete(CardioMon, d) & ~Pupdate(CardioMon, d)))) &
+%%   (![u] ((sensitive(u) & subject(u, Kim)) => ~Pread(CardioMon, u))) & 
+%%   (![u] ((public(u) & subject(u, Kim)) => Pread(CardioMon, u))) &
+%%   %%%% processor MapOnWeb
+%%   (![d] ((data(d) & subject(d, Kim)) => (~Pwrite(MapOnWeb, d) & ~Pdelete(MapOnWeb, d) & ~Pupdate(MapOnWeb, d))))  &
+%%   (![u] ((sensitive(u) & subject(u, Kim)) =>  ~Pread(MapOnWeb, u))) & 
+%%   (![u] ((public(u) & subject(u, Kim)) => Pread(MapOnWeb, u)))
+%% )
+%% ))
+%%%% 
+%%%% SAT (0.011281s)
+
+%%%% STEP2  check compliance with policy.tspass
+%%%%%%%%% -------------- ALWAYS (P => U)
+%%%% ALWAYS I => (ALWAYS (P => U)) <=> ALWAYS ((I&P) => U)
+%% ~(always ((
+%% %%%% Knowledge
+%% customer(Kim) & processor(CardioMon) & processor(MapOnWeb) & controller(Employee)
+%% & cardio(CardioMon) & ~cardio(MapOnWeb) %%% to distinguish the processors
+%% & %%% +CLASSIC: and he has some data 
+%% display(dis) & subject(dis, Kim) & gender(female) & subject(female, Kim) & country(germany) & subject(germany, Kim) &
+%% username(kim) & subject(kim, Kim) & age(xxx) & subject(xxx, Kim) & sugarlevel(brown) & subject(brown, Kim) &
+%% password(yyy) & subject(yyy, Kim) & weight(quat) & subject(quat, Kim) & height(dix) & subject(dix, Kim) &
+%% userid(kim123) & subject(kim123, Kim) & blood(A0) & subject(A0, Kim) & heart(good) & subject(good, Kim) &
+%% training(once) & subject(once, Kim) 
+%% & %%%% Adding role disjunctions
+%% (![a] (~(customer(a) & processor(a)) & ~(customer(a) & controller(a)))) 
+%% & %%%% Data type definitions from Table 2 page 14 of D47.1
+%% (![d] ((data(d) <=> (public(d) | sensitive(d))) 
+%%                & (public(d) <=> (display(d) | gender(d) | country(d))) 
+%%                & (sensitive(d) <=> (username(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+%%                                      | userid(d) | blood(d) | heart(d) | training(d)))))
+%% & %%% action authorizations
+%% ((![a, d] (read(a, d) => Pread(a, d))) &
+%%  (![a, d] (write(a, d) => Pwrite(a, d))) &
+%%  (![a, d] (update(a, d) => Pupdate(a, d))) &
+%%  (![a, d] (delete(a, d) => Pdelete(a, d))))
+%% & %%%  acces rights for  Customer line ``Manage profile'' Table 6 p47 D47.1
+%% (![d, w]  ((customer(w) & data(d) & subject(d, w)) 
+%%                      => (Pread(w, d) & Pwrite(w, d) & Pdelete(w, d) & Pupdate(w, d))))
+%% & %%%  acces rights for  CardioMon                                  
+%% (![u,w] ((customer(w) & (username(u) | password(u) | height(u) | weight(u)
+%%                                      | sugarlevel(u) | blood(u) | heart(u) | training(u))   & subject(u, w)) 
+%%                      => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+%%                      => Pread(CardioMon, u))) &
+%% (![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+%%                      => (~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u))))
+%% & %%%  acces rights for  Employee                                  
+%% (![u,w] ((customer(w) & (username(u) | password(u) | height(u) | weight(u)
+%%                                      | sugarlevel(u) | blood(u) | heart(u) | training(u))   & subject(u, w)) 
+%%                      => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+%%                      => Pread(Employee, u))) &
+%% (![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+%%                      => (~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u))))
+%% & %%%  acces rights for  MapOnWeb                                  
+%% (![u,w] ((customer(w) & (username(u) | password(u) | height(u) | weight(u) | gender(u)
+%%                                      | userid(u) | display(u) | training(u))   & subject(u, w)) 
+%%                      => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & (sugarlevel(u) | country(u) | blood(u) | heart(u) | age(u)) & subject(u, w)) 
+%%                      => Pread(MapOnWeb, u))) &
+%% (![u,w] ((customer(w) & (sugarlevel(u) | country(u) | blood(u) | heart(u) | age(u)) & subject(u, w)) 
+%%                      => (~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u))))
+%% ) %%%% --- cond
+%% =>
+%% ( %%%  acces rights preferences for Kim
+%%   (![d] ((data(d) & subject(d, Kim)) => (Pread(Kim, d) & Pwrite(Kim, d) & Pdelete(Kim, d) & Pupdate(Kim, d)))) &
+%%   %%%% controller 
+%%   (![d] ((data(d) & subject(d, Kim)) => (~Pwrite(Employee, d) & ~Pdelete(Employee, d) & ~Pupdate(Employee, d)))) &
+%%   (![u] ((sensitive(u) & subject(u, Kim)) => ~Pread(Employee, u))) & 
+%%   (![u] ((public(u) & subject(u, Kim)) => Pread(Employee, u))) &
+%%   %%%% processor CardioMon
+%%   (![d] ((data(d) & subject(d, Kim)) => (~Pwrite(CardioMon, d) & ~Pdelete(CardioMon, d) & ~Pupdate(CardioMon, d)))) &
+%%   (![u] ((sensitive(u) & subject(u, Kim)) => ~Pread(CardioMon, u))) & 
+%%   (![u] ((public(u) & subject(u, Kim)) => Pread(CardioMon, u))) &
+%%   %%%% processor MapOnWeb
+%%   (![d] ((data(d) & subject(d, Kim)) => (~Pwrite(MapOnWeb, d) & ~Pdelete(MapOnWeb, d) & ~Pupdate(MapOnWeb, d))))  &
+%%   (![u] ((sensitive(u) & subject(u, Kim)) =>  ~Pread(MapOnWeb, u))) & 
+%%   (![u] ((public(u) & subject(u, Kim)) => Pread(MapOnWeb, u)))
+%% )
+%% ))
+%%%% 
+%%%% NOT SAT (0.395521s) only sat !!!! thus look for conflicts
+
+%%%% STEP3 checking for conflicting clauses
+%%%%%%%%% -------------- ALWAYS (P & U)
+%% (always ((
+%% %%%% +CLASSIC: Knowledge 
+%% customer(Kim) & processor(CardioMon) & processor(MapOnWeb) & controller(Employee)
+%% & cardio(CardioMon) & ~cardio(MapOnWeb) %%% to distinguish the processors
+%% & %%%  add Kim has some data 
+%% display(dis) & subject(dis, Kim) & gender(female) & subject(female, Kim) & country(germany) & subject(germany, Kim) &
+%% username(kim) & subject(kim, Kim) & age(xxx) & subject(xxx, Kim) & sugarlevel(brown) & subject(brown, Kim) &
+%% password(yyy) & subject(yyy, Kim) & weight(quat) & subject(quat, Kim) & height(dix) & subject(dix, Kim) &
+%% userid(kim123) & subject(kim123, Kim) & blood(A0) & subject(A0, Kim) & heart(good) & subject(good, Kim) &
+%% training(once) & subject(once, Kim) 
+%% %%%% Adding role disjunctions
+%% & (![a] (~(customer(a) & processor(a)) & ~(customer(a) & controller(a)))) 
+%% & %%%% Data type definitions from Table 2 page 14 of D47.1
+%% (![d] ((data(d) <=> (public(d) | sensitive(d))) 
+%%                & (public(d) <=> (display(d) | gender(d) | country(d))) 
+%%                & (sensitive(d) <=> (username(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+%%                                      | userid(d) | blood(d) | heart(d) | training(d)))))
+%% & %%% action authorizations
+%% ((![a, d] (read(a, d) => Pread(a, d))) &
+%%  (![a, d] (write(a, d) => Pwrite(a, d))) &
+%%  (![a, d] (update(a, d) => Pupdate(a, d))) &
+%%  (![a, d] (delete(a, d) => Pdelete(a, d))))
+%% & %%%  acces rights for  Customer line ``Manage profile'' Table 6 p47 D47.1
+%% (![d, w]  ((customer(w) & data(d) & subject(d, w)) 
+%%                      => (Pread(w, d) & Pwrite(w, d) & Pdelete(w, d) & Pupdate(w, d))))
+%% & %%%  acces rights for  CardioMon                                  
+%% (![u,w] ((customer(w) & (username(u) | password(u) | height(u) | weight(u)
+%%                                      | sugarlevel(u) | blood(u) | heart(u) | training(u))   & subject(u, w)) 
+%%                      => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+%%                      => Pread(CardioMon, u))) &
+%% (![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+%%                      => (~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u))))
+%% & %%%  acces rights for  Employee                                  
+%% (![u,w] ((customer(w) & (username(u) | password(u) | height(u) | weight(u)
+%%                                      | sugarlevel(u) | blood(u) | heart(u) | training(u))   & subject(u, w)) 
+%%                      => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+%% (![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+%%                      => Pread(Employee, u))) &
+%% (![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+%%                      => (~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u))))
+%% & %%%  acces rights for  MapOnWeb                                  
+%% (![u,w] ((customer(w) & (username(u) | password(u) | height(u) | weight(u) | gender(u)
+%%                                      | userid(u) | display(u) | training(u))   & subject(u, w)) 
+%%                      => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & (sugarlevel(u) | country(u) | blood(u) | heart(u) | age(u)) & subject(u, w)) 
+%%                      => Pread(MapOnWeb, u))) &
+%% (![u,w] ((customer(w) & (sugarlevel(u) | country(u) | blood(u) | heart(u) | age(u)) & subject(u, w)) 
+%%                      => (~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u))))
+%% ) %%%% --- cond
+%% &
+%% ( %%%  acces rights preferences for Kim
+%%   (![d] ((data(d) & subject(d, Kim)) => (Pread(Kim, d) & Pwrite(Kim, d) & Pdelete(Kim, d) & Pupdate(Kim, d)))) &
+%%   %%%% controller 
+%%   (![d] ((data(d) & subject(d, Kim)) => (~Pwrite(Employee, d) & ~Pdelete(Employee, d) & ~Pupdate(Employee, d)))) &
+%%   (![u] ((sensitive(u) & subject(u, Kim)) => ~Pread(Employee, u))) & 
+%%   (![u] ((public(u) & subject(u, Kim)) => Pread(Employee, u))) &
+%%   %%%% processor CardioMon
+%%   (![d] ((data(d) & subject(d, Kim)) => (~Pwrite(CardioMon, d) & ~Pdelete(CardioMon, d) & ~Pupdate(CardioMon, d)))) &
+%%   (![u] ((sensitive(u) & subject(u, Kim)) => ~Pread(CardioMon, u))) & 
+%%   (![u] ((public(u) & subject(u, Kim)) => Pread(CardioMon, u))) &
+%%   %%%% processor MapOnWeb
+%%   (![d] ((data(d) & subject(d, Kim)) => (~Pwrite(MapOnWeb, d) & ~Pdelete(MapOnWeb, d) & ~Pupdate(MapOnWeb, d))))  &
+%%   (![u] ((sensitive(u) & subject(u, Kim)) =>  ~Pread(MapOnWeb, u))) & 
+%%   (![u] ((public(u) & subject(u, Kim)) => Pread(MapOnWeb, u)))
+%% )
+%% ))
+%%%% 
+%%%% +CLASSIC: we need facts asserting data and properties existence
+%%%% UNSAT (0.05331s)
+
+%%%% STEP4 masking to isolate minimal core unsat
+(always ((
+%%%% +CLASSIC: Knowledge 
+customer(Kim) & processor(CardioMon) & processor(MapOnWeb) & controller(Employee)
+& cardio(CardioMon) & ~cardio(MapOnWeb) %%% to distinguish the processors
+& %%%  add Kim has some data 
+display(dis) & subject(dis, Kim) & gender(female) & subject(female, Kim) & country(germany) & subject(germany, Kim) &
+username(kim) & subject(kim, Kim) & age(xxx) & subject(xxx, Kim) & sugarlevel(brown) & subject(brown, Kim) &
+password(yyy) & subject(yyy, Kim) & weight(quat) & subject(quat, Kim) & height(dix) & subject(dix, Kim) &
+userid(kim123) & subject(kim123, Kim) & blood(A0) & subject(A0, Kim) & heart(good) & subject(good, Kim) &
+training(once) & subject(once, Kim)
+%%%% Adding role disjunctions
+& (![a] (~(customer(a) & processor(a)) & ~(customer(a) & controller(a)))) 
+& %%%% Data type definitions from Table 2 page 14 of D47.1
+(![d] ((data(d) <=> (public(d) | sensitive(d))) 
+                %%& (public(d) <=> (display(d) | gender(d) | country(d))) 
+               & (sensitive(d) <=> (username(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+                                     | userid(d) | blood(d) | heart(d) | training(d)))))
+%% & %%% action authorizations
+%% ((![a, d] (read(a, d) => Pread(a, d))) &
+%%  (![a, d] (write(a, d) => Pwrite(a, d))) &
+%%  (![a, d] (update(a, d) => Pupdate(a, d))) &
+%%  (![a, d] (delete(a, d) => Pdelete(a, d))))
+%% & %%%  acces rights for  Customer line ``Manage profile'' Table 6 p47 D47.1
+%% (![d, w]  ((customer(w) & data(d) & subject(d, w)) 
+%%                      => (Pread(w, d) & Pwrite(w, d) & Pdelete(w, d) & Pupdate(w, d))))
+%% & %%%  acces rights for  CardioMon                                  
+%% (![u,w] ((customer(w) & (username(u) | password(u) | height(u) | weight(u)
+%%                                      | sugarlevel(u) | blood(u) | heart(u) | training(u))   & subject(u, w)) 
+%%                      => (~Pread(CardioMon, u) & ~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u)))) &
+%% (![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+%%                      => Pread(CardioMon, u))) &
+%% (![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+%%                      => (~Pwrite(CardioMon, u) & ~Pdelete(CardioMon, u) & ~Pupdate(CardioMon, u))))
+& %%%  acces rights for  Employee                                  
+%% (![u,w] ((customer(w) & (username(u) | password(u) | height(u) | weight(u)
+%%                                      | sugarlevel(u) | blood(u) | heart(u) | training(u))   & subject(u, w)) 
+%%                      => (~Pread(Employee, u) & ~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u)))) &
+(![u,w] ((customer(w) & (%% userid(u) | country(u) | display(u) | gender(u) |
+                                     age(u)) & subject(u, w)) 
+                     => Pread(Employee, u))) %% &
+%% (![u,w] ((customer(w) & (userid(u) | country(u) | display(u) | gender(u) | age(u)) & subject(u, w)) 
+%%                      => (~Pwrite(Employee, u) & ~Pdelete(Employee, u) & ~Pupdate(Employee, u))))
+%% & %%%  acces rights for  MapOnWeb                                  
+%% (![u,w] ((customer(w) & (username(u) | password(u) | height(u) | weight(u) | gender(u)
+%%                                      | userid(u) | display(u) | training(u))   & subject(u, w)) 
+%%                      => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+%% (![u,w] ((customer(w) & (sugarlevel(u) | country(u) | blood(u) | heart(u) | age(u)) & subject(u, w)) 
+%%                      => Pread(MapOnWeb, u))) &
+%% (![u,w] ((customer(w) & (sugarlevel(u) | country(u) | blood(u) | heart(u) | age(u)) & subject(u, w)) 
+%%                      => (~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u))))
+) %%%% --- cond
+&
+( %%%  acces rights preferences for Kim
+  %% (![d] ((data(d) & subject(d, Kim)) => (Pread(Kim, d) & Pwrite(Kim, d) & Pdelete(Kim, d) & Pupdate(Kim, d))))%%  &
+  %% %%%% controller 
+  %% (![d] ((data(d) & subject(d, Kim)) => (~Pwrite(Employee, d) & ~Pdelete(Employee, d) & ~Pupdate(Employee, d)))) %% &
+  (![u] ((sensitive(u) & subject(u, Kim)) => ~Pread(Employee, u)))%%  & 
+  %% (![u] ((public(u) & subject(u, Kim)) => Pread(Employee, u))) &
+  %% %%%% processor CardioMon
+  %% (![d] ((data(d) & subject(d, Kim)) => (~Pwrite(CardioMon, d) & ~Pdelete(CardioMon, d) & ~Pupdate(CardioMon, d)))) &
+  %% (![u] ((sensitive(u) & subject(u, Kim)) => ~Pread(CardioMon, u))) & 
+  %% (![u] ((public(u) & subject(u, Kim)) => Pread(CardioMon, u))) &
+  %% %%%% processor MapOnWeb
+  %% (![d] ((data(d) & subject(d, Kim)) => (~Pwrite(MapOnWeb, d) & ~Pdelete(MapOnWeb, d) & ~Pupdate(MapOnWeb, d))))  &
+  %% (![u] ((sensitive(u) & subject(u, Kim)) =>  ~Pread(MapOnWeb, u))) & 
+  %% (![u] ((public(u) & subject(u, Kim)) => Pread(MapOnWeb, u)))
+)
+))
+%%%% 
+%%%% masking
+%%%%% 1) only first clause of Kim  => SAT
+%%%%  2) snd clause of Kim => SAT 
+%%%%  3) 3th clause of Kim => UNSAT 
+%%%%  4) masking CardioMon and MapOnWeb clauses still UNSAT
+%%%%  5) masking public data and authorisations => UNSAT
+%%%%  6) masking Customer clause and first/third of Employee => UNSAT
+%%%% Then we can fix this problem about reading some sensitive data
+%%%% conflict exists with userid and age only and this can be checked with Table 6
+%%%                     => see result in Customer1.tspass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     
+%%%%% --------- endinput                                     
+

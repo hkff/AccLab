@@ -1,0 +1,273 @@
+%% -*-Latex-*-
+%%% 13/5/2015
+%%% Tests locations and transfers for D433.3 
+%%%% ----------------
+
+
+%%%%%%% STEP1 : inconsistency found on CloudStorage declaration
+(always
+(
+%%% data informations
+nom(nomx) & subject(Kim, nomx) & password(passx) & subject(Kim, passx)  & age(agex) & subject(Kim, agex) & sugarlevel(slx) & subject(Kim, slx)
+& %%% data knowledge
+% GOAL: europe(Kim) & germany(Hospital) & unitedkingdom(Researcher) & france(CloudStorage) & belgium(Toubib))
+(europe(Kim) & germany(Hospital) & latvia(Researcher) & italy(CloudStorage) & us(Toubib))
+%%%(europe(Kim) & germany(Hospital) & latvia(Researcher) & france(CloudStorage) & us(Toubib))
+ %& %%% Locations
+ %(![p] ((europe(p) <=> (germany(p) | france(p) | italy(p) | austria(p) | belgium(p) | bulgaria(p) | cyprus(p)
+ %               | croatia(p) | denmark(p) | spain(p) | estonia(p) | finland(p) | greece(p) | hungary(p)
+ %               | irland(p) | latvia(p) | lithuania(p) | luxembourg(p) | malta(p) | netherlands(p) | poland(p)
+ %               | portugal(p) | czechrepublic(p) | romania(p) | unitedkingdom(p) | slovakia(p) | slovenia(p) | sweden(p)))
+ %               & (location(p) <=> (us(p) | europe(p) | asia(p) | africa(p) | manyothers(p)))))
+& %%% need disjunction of countries
+(![p]  (~(italy(p) & france(p)) & ~(germany(p) & unitedkingdom(p)) &  ~(latvia(p) & unitedkingdom(p)) &  ~(us(p) & europe(p))   ))         
+& %%%% Data definitions
+(![d] ((data(d) <=> (public(d) | sensitive(d))) 
+               & (public(d) <=> (display(d) | gender(d) | country(d))) 
+               & (sensitive(d) <=> (nom(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+                                     | iduser(d) | blood(d) | heart(d) | training(d)))
+                                     & (alldata(d) <=> (data(d) | statistics(d) | medicalrecord(d)))))
+& %%% action authorizations
+(%(![p, h, d] (input(p, h, d) => Pinput(p, h, d))) &
+ %(![p, h, n] (query(p, h, n) => Pquery(p, h, n))) &
+ %(![h, p, d] (get(h, p, d) => Pget(h, p, d))) &
+ %(![h, t, n, ag, sl] (send(h, t, n, ag, sl) => Psend(h, t, n, ag, sl))) &
+ (![h, s, a] (store(h, s, a) => Pstore(h, s, a)))  %&
+ %(![r, ag, sl] (correlate(r, ag, sl) => Pcorrelate(r, ag, sl)))
+ )
+& %%% *** generalize user preferences  and add proper actions
+  %%%  generalized user preferences, constraint monodic, could add more concluding facts
+ (![p, n] ((nom(n) & subject(p, n) & germany(Hospital) & europe(p)) => input(p, Hospital, n))) &
+ %(![p, pass] ((germany(Hospital) & password(pass) & subject(p, pass) & europe(p)) =>  (next ?[d] input(p, Hospital, d)))) &
+ %(![p, ag] ((germany(Hospital)  & age(ag) & subject(p, ag) & europe(p)) => (next next ?[d] input(p, Hospital, d)))) &
+ %(![p, sl] ((germany(Hospital) & sugarlevel(sl) & subject(p, sl) & europe(p)) => (next next next ?[d] input(p, Hospital, d)))) &           
+  %(![p, n] ((nom(n) & subject(p, n) & named(p, n) & germany(Hospital)) => query(p, Hospital, n))) &
+  % ---  3 get cases generalized                           
+  %(![src, tar, a] ((alldata(a) & europe(src) & europe(tar)) => Pget(src, tar, a))) &
+  %(![src, tar, a] ((~europe(src) | ~europe(tar)) => ~Pget(src, tar, a))) & 
+  %(![t, n, ag, sl] ((germany(Hospital) & europe(t) & nom(n) & age(ag) & sugarlevel(sl)) => Psend(Hospital, t, n, ag, sl))) & 
+  %(![t, n, ag, sl] (((~germany(Hospital) | ~europe(t))) => ~Psend(Hospital, t, n, ag, sl))) & 
+  (![s, a] ((france(s) & alldata(a) & germany(Hospital))  => Pstore(Hospital, s, a))) & 
+  (![s, a] ((~france(s) | ~germany(Hospital))  => ~Pstore(Hospital, s, a))) & 
+  %(![r, ag, sl] ((unitedkingdom(r) & age(ag) & sugarlevel(sl)) => Pcorrelate(r, ag, sl))) & 
+  %(![r, ag, sl] (~unitedkingdom(r) => ~Pcorrelate(r, ag , sl))) & 
+%%%% Hospital and other actions 
+%%%% on input store 
+(![p, d] ((data(d) & input(p, Hospital, d)) => sometime store(Hospital, CloudStorage, d)))  %&
+%%%% on inputs send,  constraint monodic
+%(![p] (((?[d] input(p, Hospital, d)) & (next next ?[d] input(p, Hospital, d)) & (next next next ?[d] input(p, Hospital, d)))  => (sometime ?[n1, ag1 , sl1] send(Hospital, Toubib, n1, ag1, sl1)))) &
+%%% on send ... get 
+%(![n, ag, sl] (send(Hospital, Toubib, n, ag, sl) => sometime ?[m] (medicalrecord(m) & get(Toubib, Researcher, m)))) &
+%%%% on get ... correlate
+%(![m] ((medicalrecord(m) & get(Toubib, Researcher, m)) => sometime ?[ag, sl] (age(ag) & sugarlevel(sl) & correlate(Researcher, ag, sl))))
+) 
+)
+%%%% UNSAT 0.032401s
+%%%% masking: Pget/Psend/Pcorrelate send/get/correlate/query actions only one input still unsat 
+%%% correction: change italy -> france => sat cette partie
+
+%%%%%%% STEP2 : inconsistency found on Toubib location
+%% (always
+%% (
+%% %%% data informations
+%% nom(nomx) & subject(Kim, nomx) & password(passx) & subject(Kim, passx)  & age(agex) & subject(Kim, agex) & sugarlevel(slx) & subject(Kim, slx)
+%% & %%% data knowledge
+%% %(europe(Kim) & germany(Hospital) & latvia(Researcher) & france(CloudStorage) & us(Toubib))
+%% (europe(Kim) & germany(Hospital) & latvia(Researcher) & france(CloudStorage) & belgium(Toubib))
+%% & %%% Locations
+%% (![p] ((europe(p) <=> (germany(p) | france(p) | italy(p) | austria(p) | belgium(p) | bulgaria(p) | cyprus(p)
+%%               | croatia(p) | denmark(p) | spain(p) | estonia(p) | finland(p) | greece(p) | hungary(p)
+%%               | irland(p) | latvia(p) | lithuania(p) | luxembourg(p) | malta(p) | netherlands(p) | poland(p)
+%%               | portugal(p) | czechrepublic(p) | romania(p) | unitedkingdom(p) | slovakia(p) | slovenia(p) | sweden(p)))
+%%               & (location(p) <=> (us(p) | europe(p) | asia(p) | africa(p) | manyothers(p)))))
+%% & %%% need disjunction of countries
+%% (![p]  (~(italy(p) & france(p)) & ~(germany(p) & unitedkingdom(p)) &  ~(latvia(p) & unitedkingdom(p)) &  ~(us(p) & europe(p))   ))         
+%% & %%%% Data definitions
+%% (![d] ((data(d) <=> (public(d) | sensitive(d))) 
+%%                & (public(d) <=> (display(d) | gender(d) | country(d))) 
+%%                & (sensitive(d) <=> (nom(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+%%                                      | iduser(d) | blood(d) | heart(d) | training(d)))
+%%                                      & (alldata(d) <=> (data(d) | statistics(d) | medicalrecord(d)))))
+%% & %%% action authorizations
+%% ((![p, h, d] (input(p, h, d) => Pinput(p, h, d))) &
+%%  %(![p, h, n] (query(p, h, n) => Pquery(p, h, n))) &
+%%  %(![h, p, d] (get(h, p, d) => Pget(h, p, d))) &
+%%  (![h, t, n, ag, sl] (send(h, t, n, ag, sl) => Psend(h, t, n, ag, sl))) &
+%%  (![h, s, a] (store(h, s, a) => Pstore(h, s, a)))  %&
+%%  %(![r, ag, sl] (correlate(r, ag, sl) => Pcorrelate(r, ag, sl)))
+%%  )
+%% & %%% generalize user preferences  and add proper actions
+%%   %%% generalized user preferences, constraint monodic, could add concluding facts
+%%     (![p, n] ((nom(n) & subject(p, n) & germany(Hospital) & europe(p)) => input(p, Hospital, n))) &
+%%   %(![p, pass] ((germany(Hospital) & password(pass) & subject(p, pass) & europe(p)) =>  (next ?[d] input(p, Hospital, d)))) &
+%%   %(![p, ag] ((germany(Hospital)  & age(ag) & subject(p, ag) & europe(p)) => (next next ?[d] input(p, Hospital, d)))) &
+%%   %(![p, sl] ((germany(Hospital) & sugarlevel(sl) & subject(p, sl) & europe(p)) => (next next next ?[d] input(p, Hospital, d)))) &                                     
+%%   %(![p, n] ((nom(n) & subject(p, n) & named(p, n) & germany(Hospital)) => query(p, Hospital, n))) &
+%%   % ---  3 get cases generalized                           
+%%   %(![src, tar, a] ((alldata(a) & europe(src) & europe(tar)) => Pget(src, tar, a))) &
+%%   %(![src, tar, a] ((~europe(src) | ~europe(tar)) => ~Pget(src, tar, a))) & 
+%%   (![t, n, ag, sl] ((germany(Hospital) & europe(t) & nom(n) & age(ag) & sugarlevel(sl)) => Psend(Hospital, t, n, ag, sl))) & 
+%%   (![t, n, ag, sl] (((~germany(Hospital) | ~europe(t))) => ~Psend(Hospital, t, n, ag, sl))) & 
+%%   (![s, a] ((france(s) & alldata(a) & germany(Hospital))  => Pstore(Hospital, s, a))) & 
+%%   (![s, a] ((~france(s) | ~germany(Hospital))  => ~Pstore(Hospital, s, a))) & 
+%%   %(![r, ag, sl] ((unitedkingdom(r) & age(ag) & sugarlevel(sl)) => Pcorrelate(r, ag, sl))) & 
+%%   %(![r, ag, sl] (~unitedkingdom(r) => ~Pcorrelate(r, ag , sl))) & 
+%% %%%% Hospital and other actions 
+%% %%%% on input store 
+%% (![p, d] ((data(d) & input(p, Hospital, d)) => sometime store(Hospital, CloudStorage, d)))  &
+%% %%%% on inputs send,  constraint monodic
+%% (![p] (((?[d] input(p, Hospital, d)) & (next next ?[d] input(p, Hospital, d)) & (next next next ?[d] input(p, Hospital, d)))  => (sometime ?[n1, ag1 , sl1] send(Hospital, Toubib, n1, ag1, sl1)))) %&
+%% %%% on send ... get 
+%% %(![m] ((medicalrecord(m) & get(Toubib, Researcher, m)) => sometime ?[ag, sl] (age(ag) & sugarlevel(sl) & correlate(Researcher, ag, sl))))
+%% %%%% on get ... correlate 
+%% %(![m] ((medicalrecord(m) & get(Toubib, Researcher, m)) => sometime ?[ag, sl] (age(ag) & sugarlevel(sl) & correlate(Researcher, ag, sl))))
+%% )
+%% )
+%%%% unmask actions send/Psend
+%%%% UNSAT 30060/6s
+%%% correction: us -> belgium for Toubib => sat
+
+%%%%%%% STEP3 : inconsistency found on Researcher
+%% (always
+%% (
+%% %%% data informations
+%% nom(nomx) & subject(Kim, nomx) & password(passx) & subject(Kim, passx)  & age(agex) & subject(Kim, agex) & sugarlevel(slx) & subject(Kim, slx)
+%% & %%% data knowledge
+%% %(europe(Kim) & germany(Hospital) & latvia(Researcher) & france(CloudStorage) & belgium(Toubib))
+%% (europe(Kim) & germany(Hospital) & unitedkingdom(Researcher) & france(CloudStorage) & belgium(Toubib))
+%% & %%% Locations
+%% (![p] ((europe(p) <=> (germany(p) | france(p) | italy(p) | austria(p) | belgium(p) | bulgaria(p) | cyprus(p)
+%%               | croatia(p) | denmark(p) | spain(p) | estonia(p) | finland(p) | greece(p) | hungary(p)
+%%               | irland(p) | latvia(p) | lithuania(p) | luxembourg(p) | malta(p) | netherlands(p) | poland(p)
+%%               | portugal(p) | czechrepublic(p) | romania(p) | unitedkingdom(p) | slovakia(p) | slovenia(p) | sweden(p)))
+%%               & (location(p) <=> (us(p) | europe(p) | asia(p) | africa(p) | manyothers(p)))))
+%% & %%% need disjunction of countries
+%% (![p]  (~(italy(p) & france(p)) & ~(germany(p) & unitedkingdom(p)) &  ~(latvia(p) & unitedkingdom(p)) &  ~(us(p) & europe(p))   ))         
+%% & %%%% Data definitions
+%% (![d] ((data(d) <=> (public(d) | sensitive(d))) 
+%%                & (public(d) <=> (display(d) | gender(d) | country(d))) 
+%%                & (sensitive(d) <=> (nom(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+%%                                      | iduser(d) | blood(d) | heart(d) | training(d)))
+%%                                      & (alldata(d) <=> (data(d) | statistics(d) | medicalrecord(d)))))
+%% & %%% action authorizations
+%% ((![p, h, d] (input(p, h, d) => Pinput(p, h, d))) &
+%%  (![p, h, n] (query(p, h, n) => Pquery(p, h, n))) &
+%%  (![h, p, d] (get(h, p, d) => Pget(h, p, d))) &
+%%  (![h, t, n, ag, sl] (send(h, t, n, ag, sl) => Psend(h, t, n, ag, sl))) &
+%%  (![h, s, a] (store(h, s, a) => Pstore(h, s, a)))  &
+%%  (![r, ag, sl] (correlate(r, ag, sl) => Pcorrelate(r, ag, sl)))
+%%  )
+%% & %%% generalize user preferences  and add proper actions
+%%   %%% user pref generalized (+lack europe(p)), constraint monodic, could add concluding facts
+%%     (![p, n] ((nom(n) & subject(p, n) & germany(Hospital) & europe(p)) => input(p, Hospital, n))) &
+%%    (![p, pass] ((germany(Hospital) & password(pass) & subject(p, pass) & europe(p)) =>  (next ?[d] input(p, Hospital, d)))) &
+%%    (![p, ag] ((germany(Hospital)  & age(ag) & subject(p, ag) & europe(p)) => (next next ?[d] input(p, Hospital, d)))) &
+%%    (![p, sl] ((germany(Hospital) & sugarlevel(sl) & subject(p, sl) & europe(p)) => (next next next ?[d] input(p, Hospital, d)))) &    
+%%   (![p, n] ((nom(n) & subject(p, n) & named(p, n) & germany(Hospital)) => query(p, Hospital, n))) &
+%%   % ---  3 get cases generalized                           
+%%   (![src, tar, a] ((alldata(a) & europe(src) & europe(tar)) => Pget(src, tar, a))) &
+%%   (![src, tar, a] ((~europe(src) | ~europe(tar)) => ~Pget(src, tar, a))) & 
+%%   (![t, n, ag, sl] ((germany(Hospital) & europe(t) & nom(n) & age(ag) & sugarlevel(sl)) => Psend(Hospital, t, n, ag, sl))) & 
+%%   (![t, n, ag, sl] (((~germany(Hospital) | ~europe(t))) => ~Psend(Hospital, t, n, ag, sl))) & 
+%%   (![s, a] ((france(s) & alldata(a) & germany(Hospital))  => Pstore(Hospital, s, a))) & 
+%%   (![s, a] ((~france(s) | ~germany(Hospital))  => ~Pstore(Hospital, s, a)))  & 
+%%   (![r, ag, sl] ((unitedkingdom(r) & age(ag) & sugarlevel(sl)) => Pcorrelate(r, ag, sl))) & 
+%%   (![r, ag, sl] (~unitedkingdom(r) => ~Pcorrelate(r, ag , sl))) & 
+%% %%%% Hospital and other actions 
+%% %%%% on input store 
+%% (![p, d] ((data(d) & input(p, Hospital, d)) => sometime store(Hospital, CloudStorage, d)))  &
+%% %%%% on inputs send,  constraint monodic
+%% (![p] (((?[d] input(p, Hospital, d)) & (next next ?[d] input(p, Hospital, d)) & (next next next ?[d] input(p, Hospital, d)))  => (sometime ?[n1, ag1 , sl1] send(Hospital, Toubib, n1, ag1, sl1)))) &
+%% %%% on send ... get 
+%% (![n, ag, sl] (send(Hospital, Toubib, n, ag, sl) => sometime ?[m] (medicalrecord(m) & get(Toubib, Researcher, m)))) &
+%% %%%% on get ... correlate 
+%% (![m] ((medicalrecord(m) & get(Toubib, Researcher, m)) => sometime ?[ag, sl] (age(ag) & sugarlevel(sl) & correlate(Researcher, ag, sl))))
+%% ) 
+%% )
+%%%% unmask: get/input  sat but with correlate last action 
+%%%% UNSAT 
+%%% correction: latvia -> unitedkindom for Researcher SAT/14788/4s
+
+%%%%% STEP4 ----- compliance ALWAYS (P => U)
+%% ~(always (
+%% (
+%% %%% data informations
+%% nom(nomx) & subject(Kim, nomx) & password(passx) & subject(Kim, passx)  & age(agex) & subject(Kim, agex) & sugarlevel(slx) & subject(Kim, slx)
+%% & %%% data knowledge
+%% (europe(Kim) & germany(Hospital) & unitedkingdom(Researcher) & france(CloudStorage) & belgium(Toubib))
+%% & %%% Locations
+%% (![p] ((europe(p) <=> (germany(p) | france(p) | italy(p) | austria(p) | belgium(p) | bulgaria(p) | cyprus(p)
+%%               | croatia(p) | denmark(p) | spain(p) | estonia(p) | finland(p) | greece(p) | hungary(p)
+%%               | irland(p) | latvia(p) | lithuania(p) | luxembourg(p) | malta(p) | netherlands(p) | poland(p)
+%%               | portugal(p) | czechrepublic(p) | romania(p) | unitedkingdom(p) | slovakia(p) | slovenia(p) | sweden(p)))
+%%               & (location(p) <=> (us(p) | europe(p) | asia(p) | africa(p) | manyothers(p)))))
+%% & %%% need disjunction of countries
+%% (![p]  (~(italy(p) & france(p)) & ~(germany(p) & unitedkingdom(p)) &  ~(latvia(p) & unitedkingdom(p)) &  ~(us(p) & europe(p))   ))         
+%% & %%%% Data definitions
+%% (![d] ((data(d) <=> (public(d) | sensitive(d))) 
+%%                & (public(d) <=> (display(d) | gender(d) | country(d))) 
+%%                & (sensitive(d) <=> (nom(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+%%                                      | iduser(d) | blood(d) | heart(d) | training(d)))
+%%                                      & (alldata(d) <=> (data(d) | statistics(d) | medicalrecord(d)))))
+%% & %%% action authorizations
+%% ((![p, h, d] (input(p, h, d) => Pinput(p, h, d))) &
+%%  (![p, h, n] (query(p, h, n) => Pquery(p, h, n))) &
+%%  (![h, p, d] (get(h, p, d) => Pget(h, p, d))) &
+%%  (![h, t, n, ag, sl] (send(h, t, n, ag, sl) => Psend(h, t, n, ag, sl))) &
+%%  (![h, s, a] (store(h, s, a) => Pstore(h, s, a)))  &
+%%  (![r, ag, sl] (correlate(r, ag, sl) => Pcorrelate(r, ag, sl)))
+%%  )
+%% & %%%  generalize user preferences  and add proper actions
+%%   %%%  generalized user preferences, constraint monodic, could add concluding facts
+%%     (![p, n] ((nom(n) & subject(p, n) & germany(Hospital) & europe(p)) => input(p, Hospital, n))) &
+%%    (![p, pass] ((germany(Hospital) & password(pass) & subject(p, pass) & europe(p)) =>  (next ?[d] input(p, Hospital, d)))) &
+%%    (![p, ag] ((germany(Hospital)  & age(ag) & subject(p, ag) & europe(p)) => (next next ?[d] input(p, Hospital, d)))) &
+%%    (![p, sl] ((germany(Hospital) & sugarlevel(sl) & subject(p, sl) & europe(p)) => (next next next ?[d] input(p, Hospital, d)))) &   
+%%   (![p, n] ((nom(n) & subject(p, n) & named(p, n) & germany(Hospital)) => query(p, Hospital, n))) &
+%%   % ---  3 get cases generalized                           
+%%   (![src, tar, a] ((alldata(a) & europe(src) & europe(tar)) => Pget(src, tar, a))) &
+%%   (![src, tar, a] ((~europe(src) | ~europe(tar)) => ~Pget(src, tar, a))) & 
+%%   (![t, n, ag, sl] ((germany(Hospital) & europe(t) & nom(n) & age(ag) & sugarlevel(sl)) => Psend(Hospital, t, n, ag, sl))) & 
+%%   (![t, n, ag, sl] (((~germany(Hospital) | ~europe(t))) => ~Psend(Hospital, t, n, ag, sl))) & 
+%%   (![s, a] ((france(s) & alldata(a) & germany(Hospital))  => Pstore(Hospital, s, a))) & 
+%%   (![s, a] ((~france(s) | ~germany(Hospital))  => ~Pstore(Hospital, s, a))) & 
+%%   (![r, ag, sl] ((unitedkingdom(r) & age(ag) & sugarlevel(sl)) => Pcorrelate(r, ag, sl))) & 
+%%   (![r, ag, sl] (~unitedkingdom(r) => ~Pcorrelate(r, ag , sl))) & 
+%% %%%% Hospital and other actions 
+%% %%%% on input store 
+%% (![p, d] ((data(d) & input(p, Hospital, d)) => sometime store(Hospital, CloudStorage, d)))  &
+%% %%%% on inputs send,  constraint monodic
+%% (![p] (((?[d] input(p, Hospital, d)) & (next next ?[d] input(p, Hospital, d)) & (next next next ?[d] input(p, Hospital, d)))  => (sometime ?[n1, ag1 , sl1] send(Hospital, Toubib, n1, ag1, sl1)))) &
+%% %%% on send ... get 
+%% (![n, ag, sl] (send(Hospital, Toubib, n, ag, sl) => sometime ?[m] (medicalrecord(m) & get(Toubib, Researcher, m)))) &
+%% %%%% on get ... correlate 
+%% (![m] ((medicalrecord(m) & get(Toubib, Researcher, m)) => sometime ?[ag, sl] (age(ag) & sugarlevel(sl) & correlate(Researcher, ag, sl))))
+%% ) %%% END COND     SAT
+%% => 
+%% %%%% Kim preferences 
+%% ( (![n] ((nom(n) & subject(Kim, n) & germany(Hospital)) => input(Kim, Hospital, n))) & 
+%% (![ag] ((germany(Hospital) & password(pass) & subject(Kim, pass)) => (next ?[d] input(Kim, Hospital, d))))  &
+%% (![pass] ((germany(Hospital)  & age(ag) & subject(Kim, ag)) => (next next ?[d] input(Kim, Hospital, d)))) &
+%% (![sl] ((germany(Hospital) & sugarlevel(sl) & subject(Kim, sl)) => (next next next ?[d] input(Kim, Hospital, d))))  &
+%% (![n] ((nom(n) & subject(Kim, n) & named(Kim, n) & germany(Hospital)) => query(Kim, Hospital, n))) &
+%%   %%% get peut spec
+%%   (![src, tar, a] ((alldata(a) & subject(Kim, a) & europe(src) & europe(tar)) => Pget(src, tar, a))) &
+%%   (![src, tar, a] ((alldata(a) & subject(Kim, a) & (~europe(src) | ~europe(tar))) => ~Pget(src, tar, a))) & 
+%%   (![t, n, ag, sl] ((germany(Hospital) & europe(t) & nom(n) & age(ag) & sugarlevel(sl) & subject(Kim, ag) & subject(Kim, n) & subject(Kim, sl)) => Psend(Hospital, t, n, ag, sl))) & 
+%%   (![t, n, ag, sl] ((nom(n) & age(ag) & sugarlevel(sl) & subject(Kim, ag) & subject(Kim, n) & subject(Kim, sl) & (~germany(Hospital) | ~europe(t))) => ~Psend(Hospital, t, n, ag, sl))) & 
+%%   (![s, a] ((france(s) & alldata(a) & subject(Kim, a) & germany(Hospital))  => Pstore(Hospital, s, a))) & 
+%%   (![s, a] ((alldata(a) & subject(Kim, a) & (~france(s) | ~germany(Hospital)))  => ~Pstore(Hospital, s, a))) & 
+%%   (![r, ag, sl] ((unitedkingdom(r) & age(ag) & sugarlevel(sl) & subject(Kim, ag) & subject(Kim, sl)) => Pcorrelate(r, ag, sl))) & 
+%%   (![r, ag, sl] ((age(ag) & sugarlevel(sl) & subject(Kim, ag) & subject(Kim, sl) & ~unitedkingdom(r)) => ~Pcorrelate(r, ag , sl)))
+%% )
+%% %%% --                                     
+%% ))
+%% %%%% VALID 3390/0.2s
+
+
+
+
+
+
+
+%%%%% --------- endinput                                     

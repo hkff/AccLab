@@ -1,0 +1,17 @@
+%% -*-Latex-*-
+%%% 12/5/2015
+%%% tspass file 
+%%% test audit sufficient + TSPASS spent  on the problem.
+%%%% ----------------------------
+
+%%%% P
+%%% ~((always sometime audit) => (always audit)) %%% sat sat : (0.003059s)
+%%% ~((always audit) => (always sometime audit)) %%% VALID : (0.003299s)
+%%% always audit est toujours suffisant
+
+%%% U1
+%%%~((always (notify => audit)) => (always sometime audit)) %%% sat sat : (0.00329s)
+%%%~((always ((~notify => (sometime audit)) &  (notify => audit))) => (always sometime audit)) %%% VALID :(0.004671s)
+
+%%%% P.ae => U1.ae 
+~((always audit) => (always ((~notify => (sometime audit)) &  (notify => audit)))) %%% VALID : (0.00418s)

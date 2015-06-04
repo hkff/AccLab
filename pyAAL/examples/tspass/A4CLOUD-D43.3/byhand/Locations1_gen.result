@@ -1,0 +1,298 @@
+
+------------------TEMPORAL-LOGIC-TRANSLATION-START-----------------------
+For initial clauses:
+------------------TEMPORAL-LOGIC-TRANSLATION-STOP------------------------
+------------------TEMPORAL-LOGIC-TRANSLATION-START-----------------------
+For universal clauses:
+33[0:Inp] ||  -> us(Toubib)*.    -> 33[0:Inp] ||  -> us(U,Toubib)*.
+34[0:Inp] ||  -> italy(CloudStorage)*.    -> 34[0:Inp] ||  -> italy(U,CloudStorage)*.
+35[0:Inp] ||  -> latvia(Researcher)*.    -> 35[0:Inp] ||  -> latvia(U,Researcher)*.
+36[0:Inp] ||  -> germany(Hospital)*.    -> 36[0:Inp] ||  -> germany(U,Hospital)*.
+37[0:Inp] ||  -> europe(Kim)*.    -> 37[0:Inp] ||  -> europe(U,Kim)*.
+39[0:Inp] ||  -> sugarlevel(slx)*.    -> 39[0:Inp] ||  -> sugarlevel(U,slx)*.
+41[0:Inp] ||  -> age(agex)*.    -> 41[0:Inp] ||  -> age(U,agex)*.
+43[0:Inp] ||  -> password(passx)*.    -> 43[0:Inp] ||  -> password(U,passx)*.
+45[0:Inp] ||  -> nom(nomx)*.    -> 45[0:Inp] ||  -> nom(U,nomx)*.
+38[0:Inp] ||  -> subject(Kim,slx)*.    -> 38[0:Inp] ||  -> subject(U,Kim,slx)*.
+40[0:Inp] ||  -> subject(Kim,agex)*.    -> 40[0:Inp] ||  -> subject(U,Kim,agex)*.
+42[0:Inp] ||  -> subject(Kim,passx)*.    -> 42[0:Inp] ||  -> subject(U,Kim,passx)*.
+44[0:Inp] ||  -> subject(Kim,nomx)*.    -> 44[0:Inp] ||  -> subject(U,Kim,nomx)*.
+7[0:Inp] || data(U) -> alldata(U)*.    -> 7[0:Inp] || data(U,V) -> alldata(U,V)*.
+8[0:Inp] || statistics(U) -> alldata(U)*.    -> 8[0:Inp] || statistics(U,V) -> alldata(U,V)*.
+9[0:Inp] || medicalrecord(U) -> alldata(U)*.    -> 9[0:Inp] || medicalrecord(U,V) -> alldata(U,V)*.
+11[0:Inp] || nom(U)* -> sensitive(U).    -> 11[0:Inp] || nom(U,V)* -> sensitive(U,V).
+12[0:Inp] || age(U)* -> sensitive(U).    -> 12[0:Inp] || age(U,V)* -> sensitive(U,V).
+13[0:Inp] || sugarlevel(U) -> sensitive(U)*.    -> 13[0:Inp] || sugarlevel(U,V) -> sensitive(U,V)*.
+14[0:Inp] || password(U)* -> sensitive(U).    -> 14[0:Inp] || password(U,V)* -> sensitive(U,V).
+15[0:Inp] || weight(U) -> sensitive(U)*.    -> 15[0:Inp] || weight(U,V) -> sensitive(U,V)*.
+16[0:Inp] || height(U)* -> sensitive(U).    -> 16[0:Inp] || height(U,V)* -> sensitive(U,V).
+17[0:Inp] || iduser(U)* -> sensitive(U).    -> 17[0:Inp] || iduser(U,V)* -> sensitive(U,V).
+18[0:Inp] || blood(U)* -> sensitive(U).    -> 18[0:Inp] || blood(U,V)* -> sensitive(U,V).
+19[0:Inp] || heart(U)* -> sensitive(U).    -> 19[0:Inp] || heart(U,V)* -> sensitive(U,V).
+20[0:Inp] || training(U) -> sensitive(U)*.    -> 20[0:Inp] || training(U,V) -> sensitive(U,V)*.
+22[0:Inp] || display(U)* -> public(U).    -> 22[0:Inp] || display(U,V)* -> public(U,V).
+23[0:Inp] || gender(U)* -> public(U).    -> 23[0:Inp] || gender(U,V)* -> public(U,V).
+24[0:Inp] || country(U)* -> public(U).    -> 24[0:Inp] || country(U,V)* -> public(U,V).
+26[0:Inp] || public(U) -> data(U)*.    -> 26[0:Inp] || public(U,V) -> data(U,V)*.
+27[0:Inp] || sensitive(U) -> data(U)*.    -> 27[0:Inp] || sensitive(U,V) -> data(U,V)*.
+29[0:Inp] || europe(U)* us(U) -> .    -> 29[0:Inp] || europe(U,V)* us(U,V) -> .
+30[0:Inp] || unitedkingdom(U) latvia(U)* -> .    -> 30[0:Inp] || unitedkingdom(U,V) latvia(U,V)* -> .
+31[0:Inp] || unitedkingdom(U) germany(U)* -> .    -> 31[0:Inp] || unitedkingdom(U,V) germany(U,V)* -> .
+32[0:Inp] || france(U)* italy(U) -> .    -> 32[0:Inp] || france(U,V)* italy(U,V) -> .
+2[0:Inp] || Pstore(Hospital,U,V)* -> france(U).    -> 2[0:Inp] || Pstore(U,Hospital,V,W)* -> france(U,V).
+28[0:Inp] || data(U)* -> sensitive(U) public(U).    -> 28[0:Inp] || data(U,V)* -> sensitive(U,V) public(U,V).
+6[0:Inp] || store(U,V,W) -> Pstore(U,V,W)*.    -> 6[0:Inp] || store(U,V,W,X) -> Pstore(U,V,W,X)*.
+10[0:Inp] || alldata(U)* -> medicalrecord(U) statistics(U) data(U).    -> 10[0:Inp] || alldata(U,V)* -> medicalrecord(U,V) statistics(U,V) data(U,V).
+25[0:Inp] || public(U) -> country(U)* gender(U) display(U).    -> 25[0:Inp] || public(U,V) -> country(U,V)* gender(U,V) display(U,V).
+1[0:Inp] || data(U) input(V,Hospital,U)* -> _P(U).    -> 1[0:Inp] || data(U,V) input(U,W,Hospital,V)* -> _P(U,V).
+4[0:Inp] || germany(Hospital) alldata(U) france(V) -> Pstore(Hospital,V,U)*.    -> 4[0:Inp] || germany(U,Hospital) alldata(U,V) france(U,W) -> Pstore(U,Hospital,W,V)*.
+5[0:Inp] || germany(Hospital) nom(U) europe(V) subject(V,U) -> input(V,Hospital,U)*.    -> 5[0:Inp] || germany(U,Hospital) nom(U,V) europe(U,W) subject(U,W,V) -> input(U,W,Hospital,V)*.
+21[0:Inp] || sensitive(U) -> training(U) heart(U) blood(U) iduser(U) height(U) weight(U) password(U) sugarlevel(U) age(U)* nom(U).    -> 21[0:Inp] || sensitive(U,V) -> training(U,V) heart(U,V) blood(U,V) iduser(U,V) height(U,V) weight(U,V) password(U,V) sugarlevel(U,V) age(U,V)* nom(U,V).
+46[0:Inp] || _P(U) -> _waitforstore(U) store(Hospital,CloudStorage,U)*.    -> 46[0:Inp] || _P(U,V) -> _waitforstore(U,V) store(U,Hospital,CloudStorage,V)*.
+49[0:Inp] || _U(U) -> store(Hospital,CloudStorage,U)* _waitforstore(U).    -> 49[0:Inp] || _U(U,V) -> store(U,Hospital,CloudStorage,V)* _waitforstore(U,V).
+------------------TEMPORAL-LOGIC-TRANSLATION-STOP------------------------
+Non-Skolem constants contained in the problem: Toubib, CloudStorage, Researcher, Hospital, Kim, slx, agex, passx, nomx
+-------------------------CONSTANT-FLOODING START-------------------------
+Performing constant flooding for the clause 47[0:Inp] || _waitforstore(U,V)* -> .
+  Constant flooded clauses obtained: 
+    56[0:Inp] || _waitforstore(U,nomx)* -> .
+    55[0:Inp] || _waitforstore(U,passx)* -> .
+    54[0:Inp] || _waitforstore(U,agex)* -> .
+    53[0:Inp] || _waitforstore(U,slx)* -> .
+    52[0:Inp] || _waitforstore(U,Kim)* -> .
+    51[0:Inp] || _waitforstore(U,Hospital)* -> .
+    50[0:Inp] || _waitforstore(U,Researcher)* -> .
+    49[0:Inp] || _waitforstore(U,CloudStorage)* -> .
+    48[0:Inp] || _waitforstore(U,Toubib)* -> .
+-------------------------CONSTANT-FLOODING STOP--------------------------
+-------------------------CONSTANT-FLOODING START-------------------------
+Performing constant flooding for the clause 36[0:Inp] || _waitforstore(U,V) -> _U(temp_succ(U),temp_shield(V))*.
+  Constant flooded clauses obtained: 
+    66[0:Inp] || _waitforstore(U,nomx) -> _U(temp_succ(U),nomx)*.
+    65[0:Inp] || _waitforstore(U,passx) -> _U(temp_succ(U),passx)*.
+    64[0:Inp] || _waitforstore(U,agex) -> _U(temp_succ(U),agex)*.
+    63[0:Inp] || _waitforstore(U,slx) -> _U(temp_succ(U),slx)*.
+    62[0:Inp] || _waitforstore(U,Kim) -> _U(temp_succ(U),Kim)*.
+    61[0:Inp] || _waitforstore(U,Hospital) -> _U(temp_succ(U),Hospital)*.
+    60[0:Inp] || _waitforstore(U,Researcher) -> _U(temp_succ(U),Researcher)*.
+    59[0:Inp] || _waitforstore(U,CloudStorage) -> _U(temp_succ(U),CloudStorage)*.
+    58[0:Inp] || _waitforstore(U,Toubib) -> _U(temp_succ(U),Toubib)*.
+    57[0:Inp] || _waitforstore(U,c^l) -> _U(temp_succ(U),c^l)*.
+-------------------------CONSTANT-FLOODING STOP--------------------------
+Weight of the atom (_waitforstore U (c^l)) is 3.
+Weight of the atom (_waitforstore U (Toubib)) is 3.
+Weight of the atom (_waitforstore U (CloudStorage)) is 3.
+Weight of the atom (_waitforstore U (Researcher)) is 3.
+Weight of the atom (_waitforstore U (Hospital)) is 3.
+Weight of the atom (_waitforstore U (Kim)) is 3.
+Weight of the atom (_waitforstore U (slx)) is 3.
+Weight of the atom (_waitforstore U (agex)) is 3.
+Weight of the atom (_waitforstore U (passx)) is 3.
+Weight of the atom (_waitforstore U (nomx)) is 3.
+Weight of the atom (_waitforstore U V) is 3.
+Weight of the temporal successor function set to 4.
+Step clauses:
+76[0:Inp] || s^not-_waitforstore(Toubib)_0 _waitforstore(temp_succ(U),Toubib)* -> .
+75[0:Inp] || s^not-_waitforstore(CloudStorage)_0 _waitforstore(temp_succ(U),CloudStorage)* -> .
+74[0:Inp] || s^not-_waitforstore(Researcher)_0 _waitforstore(temp_succ(U),Researcher)* -> .
+73[0:Inp] || s^not-_waitforstore(Hospital)_0 _waitforstore(temp_succ(U),Hospital)* -> .
+72[0:Inp] || s^not-_waitforstore(Kim)_0 _waitforstore(temp_succ(U),Kim)* -> .
+71[0:Inp] || s^not-_waitforstore(slx)_0 _waitforstore(temp_succ(U),slx)* -> .
+70[0:Inp] || s^not-_waitforstore(agex)_0 _waitforstore(temp_succ(U),agex)* -> .
+69[0:Inp] || s^not-_waitforstore(passx)_0 _waitforstore(temp_succ(U),passx)* -> .
+68[0:Inp] || s^not-_waitforstore(nomx)_0 _waitforstore(temp_succ(U),nomx)* -> .
+67[0:Inp] || s^not-_waitforstore(x)_0 _waitforstore(temp_succ(U),c^l)* -> .
+36[0:Inp] || _waitforstore(U,V) -> _U(temp_succ(U),temp_shield(V))*.
+66[0:Inp] || _waitforstore(U,nomx) -> _U(temp_succ(U),nomx)*.
+65[0:Inp] || _waitforstore(U,passx) -> _U(temp_succ(U),passx)*.
+64[0:Inp] || _waitforstore(U,agex) -> _U(temp_succ(U),agex)*.
+63[0:Inp] || _waitforstore(U,slx) -> _U(temp_succ(U),slx)*.
+62[0:Inp] || _waitforstore(U,Kim) -> _U(temp_succ(U),Kim)*.
+61[0:Inp] || _waitforstore(U,Hospital) -> _U(temp_succ(U),Hospital)*.
+60[0:Inp] || _waitforstore(U,Researcher) -> _U(temp_succ(U),Researcher)*.
+59[0:Inp] || _waitforstore(U,CloudStorage) -> _U(temp_succ(U),CloudStorage)*.
+58[0:Inp] || _waitforstore(U,Toubib) -> _U(temp_succ(U),Toubib)*.
+57[0:Inp] || _waitforstore(U,c^l) -> _U(temp_succ(U),c^l)*.
+--------------------------TSPASS-START-----------------------------
+Input Problem:
+76[0:Inp] || s^not-_waitforstore(Toubib)_0 _waitforstore(temp_succ(U),Toubib)* -> .
+75[0:Inp] || s^not-_waitforstore(CloudStorage)_0 _waitforstore(temp_succ(U),CloudStorage)* -> .
+74[0:Inp] || s^not-_waitforstore(Researcher)_0 _waitforstore(temp_succ(U),Researcher)* -> .
+73[0:Inp] || s^not-_waitforstore(Hospital)_0 _waitforstore(temp_succ(U),Hospital)* -> .
+72[0:Inp] || s^not-_waitforstore(Kim)_0 _waitforstore(temp_succ(U),Kim)* -> .
+71[0:Inp] || s^not-_waitforstore(slx)_0 _waitforstore(temp_succ(U),slx)* -> .
+70[0:Inp] || s^not-_waitforstore(agex)_0 _waitforstore(temp_succ(U),agex)* -> .
+69[0:Inp] || s^not-_waitforstore(passx)_0 _waitforstore(temp_succ(U),passx)* -> .
+68[0:Inp] || s^not-_waitforstore(nomx)_0 _waitforstore(temp_succ(U),nomx)* -> .
+67[0:Inp] || s^not-_waitforstore(x)_0 _waitforstore(temp_succ(U),c^l)* -> .
+1[0:Inp] ||  -> nom(U,nomx)*.
+2[0:Inp] ||  -> password(U,passx)*.
+3[0:Inp] ||  -> age(U,agex)*.
+4[0:Inp] ||  -> sugarlevel(U,slx)*.
+5[0:Inp] ||  -> europe(U,Kim)*.
+6[0:Inp] ||  -> germany(U,Hospital)*.
+7[0:Inp] ||  -> latvia(U,Researcher)*.
+8[0:Inp] ||  -> italy(U,CloudStorage)*.
+9[0:Inp] ||  -> us(U,Toubib)*.
+10[0:Inp] ||  -> subject(U,Kim,nomx)*.
+11[0:Inp] ||  -> subject(U,Kim,passx)*.
+12[0:Inp] ||  -> subject(U,Kim,agex)*.
+13[0:Inp] ||  -> subject(U,Kim,slx)*.
+14[0:Inp] || sensitive(U,V) -> data(U,V)*.
+15[0:Inp] || public(U,V) -> data(U,V)*.
+16[0:Inp] || country(U,V)* -> public(U,V).
+17[0:Inp] || gender(U,V)* -> public(U,V).
+18[0:Inp] || display(U,V)* -> public(U,V).
+19[0:Inp] || training(U,V) -> sensitive(U,V)*.
+20[0:Inp] || heart(U,V)* -> sensitive(U,V).
+21[0:Inp] || blood(U,V)* -> sensitive(U,V).
+22[0:Inp] || iduser(U,V)* -> sensitive(U,V).
+23[0:Inp] || height(U,V)* -> sensitive(U,V).
+24[0:Inp] || weight(U,V) -> sensitive(U,V)*.
+25[0:Inp] || password(U,V)* -> sensitive(U,V).
+26[0:Inp] || sugarlevel(U,V) -> sensitive(U,V)*.
+27[0:Inp] || age(U,V)* -> sensitive(U,V).
+28[0:Inp] || nom(U,V)* -> sensitive(U,V).
+29[0:Inp] || medicalrecord(U,V) -> alldata(U,V)*.
+30[0:Inp] || statistics(U,V) -> alldata(U,V)*.
+31[0:Inp] || data(U,V) -> alldata(U,V)*.
+32[0:Inp] || france(U,V)* italy(U,V) -> .
+33[0:Inp] || unitedkingdom(U,V) germany(U,V)* -> .
+34[0:Inp] || unitedkingdom(U,V) latvia(U,V)* -> .
+35[0:Inp] || europe(U,V)* us(U,V) -> .
+36[0:Inp] || _waitforstore(U,V) -> _U(temp_succ(U),temp_shield(V))*.
+37[0:Inp] || Pstore(U,Hospital,V,W)* -> france(U,V).
+38[0:Inp] || data(U,V)* -> sensitive(U,V) public(U,V).
+39[0:Inp] || store(U,V,W,X) -> Pstore(U,V,W,X)*.
+40[0:Inp] || _U(U,V) -> store(U,Hospital,CloudStorage,V)* _waitforstore(U,V).
+41[0:Inp] || _P(U,V) -> _waitforstore(U,V) store(U,Hospital,CloudStorage,V)*.
+42[0:Inp] || data(U,V) input(U,W,Hospital,V)* -> _P(U,V).
+43[0:Inp] || public(U,V) -> country(U,V)* gender(U,V) display(U,V).
+44[0:Inp] || alldata(U,V)* -> medicalrecord(U,V) statistics(U,V) data(U,V).
+45[0:Inp] || germany(U,Hospital) alldata(U,V) france(U,W) -> Pstore(U,Hospital,W,V)*.
+46[0:Inp] || germany(U,Hospital) nom(U,V) europe(U,W) subject(U,W,V) -> input(U,W,Hospital,V)*.
+47[0:Inp] || sensitive(U,V) -> training(U,V) heart(U,V) blood(U,V) iduser(U,V) height(U,V) weight(U,V) password(U,V) sugarlevel(U,V) age(U,V)* nom(U,V).
+66[0:Inp] || _waitforstore(U,nomx) -> _U(temp_succ(U),nomx)*.
+65[0:Inp] || _waitforstore(U,passx) -> _U(temp_succ(U),passx)*.
+64[0:Inp] || _waitforstore(U,agex) -> _U(temp_succ(U),agex)*.
+63[0:Inp] || _waitforstore(U,slx) -> _U(temp_succ(U),slx)*.
+62[0:Inp] || _waitforstore(U,Kim) -> _U(temp_succ(U),Kim)*.
+61[0:Inp] || _waitforstore(U,Hospital) -> _U(temp_succ(U),Hospital)*.
+60[0:Inp] || _waitforstore(U,Researcher) -> _U(temp_succ(U),Researcher)*.
+59[0:Inp] || _waitforstore(U,CloudStorage) -> _U(temp_succ(U),CloudStorage)*.
+58[0:Inp] || _waitforstore(U,Toubib) -> _U(temp_succ(U),Toubib)*.
+57[0:Inp] || _waitforstore(U,c^l) -> _U(temp_succ(U),c^l)*.
+ This is a first-order Non-Horn problem without equality.
+ Axiom clauses: 67 Conjecture clauses: 0
+ Inferences: IORe=1 IOFc=1 
+ Reductions: RObv=1 RTaut=1 RFSub=1 RBSub=1 
+ Extras    : No Input Saturation, No Selection, No Splitting, Full Reduction,  Ratio: 5, FuncWeight: 1, VarWeight: 1
+ Precedence: div > id > c^l > temp_succ > temp_shield > temp_zero > CloudStorage > Hospital > Kim > Researcher > Toubib > agex > nomx > passx > slx > Pstore > _P > _U > _waitforstore > age > alldata > blood > country > data > display > europe > france > gender > germany > heart > height > iduser > input > italy > latvia > medicalrecord > nom > password > public > sensitive > statistics > store > subject > sugarlevel > training > unitedkingdom > us > weight > s^not-_waitforstore(x)_0 > s^not-_waitforstore(nomx)_0 > s^not-_waitforstore(passx)_0 > s^not-_waitforstore(agex)_0 > s^not-_waitforstore(slx)_0 > s^not-_waitforstore(Kim)_0 > s^not-_waitforstore(Hospital)_0 > s^not-_waitforstore(Researcher)_0 > s^not-_waitforstore(CloudStorage)_0 > s^not-_waitforstore(Toubib)_0
+ Ordering  : KBO
+Processed Problem:
+
+Worked Off Clauses:
+
+Usable Clauses:
+9[0:Inp] ||  -> us(U,Toubib)*.
+8[0:Inp] ||  -> italy(U,CloudStorage)*.
+7[0:Inp] ||  -> latvia(U,Researcher)*.
+5[0:Inp] ||  -> europe(U,Kim)*.
+4[0:Inp] ||  -> sugarlevel(U,slx)*.
+3[0:Inp] ||  -> age(U,agex)*.
+2[0:Inp] ||  -> password(U,passx)*.
+6[0:Inp] ||  -> germany(U,Hospital)*.
+1[0:Inp] ||  -> nom(U,nomx)*.
+13[0:Inp] ||  -> subject(U,Kim,slx)*.
+12[0:Inp] ||  -> subject(U,Kim,agex)*.
+11[0:Inp] ||  -> subject(U,Kim,passx)*.
+10[0:Inp] ||  -> subject(U,Kim,nomx)*.
+67[0:Inp] || s^not-_waitforstore(x)_0 _waitforstore(temp_succ(U),c^l)* -> .
+68[0:Inp] || s^not-_waitforstore(nomx)_0 _waitforstore(temp_succ(U),nomx)* -> .
+69[0:Inp] || s^not-_waitforstore(passx)_0 _waitforstore(temp_succ(U),passx)* -> .
+70[0:Inp] || s^not-_waitforstore(agex)_0 _waitforstore(temp_succ(U),agex)* -> .
+71[0:Inp] || s^not-_waitforstore(slx)_0 _waitforstore(temp_succ(U),slx)* -> .
+72[0:Inp] || s^not-_waitforstore(Kim)_0 _waitforstore(temp_succ(U),Kim)* -> .
+73[0:Inp] || s^not-_waitforstore(Hospital)_0 _waitforstore(temp_succ(U),Hospital)* -> .
+74[0:Inp] || s^not-_waitforstore(Researcher)_0 _waitforstore(temp_succ(U),Researcher)* -> .
+75[0:Inp] || s^not-_waitforstore(CloudStorage)_0 _waitforstore(temp_succ(U),CloudStorage)* -> .
+76[0:Inp] || s^not-_waitforstore(Toubib)_0 _waitforstore(temp_succ(U),Toubib)* -> .
+30[0:Inp] || statistics(U,V) -> alldata(U,V)*.
+29[0:Inp] || medicalrecord(U,V) -> alldata(U,V)*.
+31[0:Inp] || data(U,V) -> alldata(U,V)*.
+18[0:Inp] || display(U,V)* -> public(U,V).
+17[0:Inp] || gender(U,V)* -> public(U,V).
+16[0:Inp] || country(U,V)* -> public(U,V).
+15[0:Inp] || public(U,V) -> data(U,V)*.
+14[0:Inp] || sensitive(U,V) -> data(U,V)*.
+24[0:Inp] || weight(U,V) -> sensitive(U,V)*.
+23[0:Inp] || height(U,V)* -> sensitive(U,V).
+22[0:Inp] || iduser(U,V)* -> sensitive(U,V).
+21[0:Inp] || blood(U,V)* -> sensitive(U,V).
+20[0:Inp] || heart(U,V)* -> sensitive(U,V).
+19[0:Inp] || training(U,V) -> sensitive(U,V)*.
+27[0:Inp] || age(U,V)* -> sensitive(U,V).
+26[0:Inp] || sugarlevel(U,V) -> sensitive(U,V)*.
+25[0:Inp] || password(U,V)* -> sensitive(U,V).
+28[0:Inp] || nom(U,V)* -> sensitive(U,V).
+57[0:Inp] || _waitforstore(U,c^l) -> _U(temp_succ(U),c^l)*.
+58[0:Inp] || _waitforstore(U,Toubib) -> _U(temp_succ(U),Toubib)*.
+59[0:Inp] || _waitforstore(U,CloudStorage) -> _U(temp_succ(U),CloudStorage)*.
+60[0:Inp] || _waitforstore(U,Researcher) -> _U(temp_succ(U),Researcher)*.
+61[0:Inp] || _waitforstore(U,Hospital) -> _U(temp_succ(U),Hospital)*.
+62[0:Inp] || _waitforstore(U,Kim) -> _U(temp_succ(U),Kim)*.
+63[0:Inp] || _waitforstore(U,slx) -> _U(temp_succ(U),slx)*.
+64[0:Inp] || _waitforstore(U,agex) -> _U(temp_succ(U),agex)*.
+65[0:Inp] || _waitforstore(U,passx) -> _U(temp_succ(U),passx)*.
+66[0:Inp] || _waitforstore(U,nomx) -> _U(temp_succ(U),nomx)*.
+34[0:Inp] || latvia(U,V)* unitedkingdom(U,V) -> .
+33[0:Inp] || germany(U,V)* unitedkingdom(U,V) -> .
+35[0:Inp] || us(U,V) europe(U,V)* -> .
+32[0:Inp] || italy(U,V) france(U,V)* -> .
+36[0:Inp] || _waitforstore(U,V) -> _U(temp_succ(U),temp_shield(V))*.
+37[0:Inp] || Pstore(U,Hospital,V,W)* -> france(U,V).
+38[0:Inp] || data(U,V)* -> public(U,V) sensitive(U,V).
+39[0:Inp] || store(U,V,W,X) -> Pstore(U,V,W,X)*.
+41[0:Inp] || _P(U,V) -> _waitforstore(U,V) store(U,Hospital,CloudStorage,V)*.
+40[0:Inp] || _U(U,V) -> _waitforstore(U,V) store(U,Hospital,CloudStorage,V)*.
+43[0:Inp] || public(U,V) -> display(U,V) gender(U,V) country(U,V)*.
+44[0:Inp] || alldata(U,V)* -> data(U,V) statistics(U,V) medicalrecord(U,V).
+42[0:Inp] || data(U,V) input(U,W,Hospital,V)* -> _P(U,V).
+45[0:Inp] || france(U,V) alldata(U,W) germany(U,Hospital) -> Pstore(U,Hospital,V,W)*.
+46[0:Inp] || europe(U,V) nom(U,W) germany(U,Hospital) subject(U,V,W) -> input(U,V,Hospital,W)*.
+47[0:Inp] || sensitive(U,V) -> nom(U,V) age(U,V)* sugarlevel(U,V) password(U,V) weight(U,V) height(U,V) iduser(U,V) blood(U,V) heart(U,V) training(U,V).
+Eventuality Clauses:
+47[0:Inp] || _waitforstore(U,V)* -> .
+56[0:Inp] || _waitforstore(U,nomx)* -> .
+55[0:Inp] || _waitforstore(U,passx)* -> .
+54[0:Inp] || _waitforstore(U,agex)* -> .
+53[0:Inp] || _waitforstore(U,slx)* -> .
+52[0:Inp] || _waitforstore(U,Kim)* -> .
+51[0:Inp] || _waitforstore(U,Hospital)* -> .
+50[0:Inp] || _waitforstore(U,Researcher)* -> .
+49[0:Inp] || _waitforstore(U,CloudStorage)* -> .
+48[0:Inp] || _waitforstore(U,Toubib)* -> .
+TSPASS 0.95 
+SPASS beiseite: Unsatisfiable.
+Problem: examples/tspass/A4CLOUD-D43.3/byhand/Locations1_gen.fotl 
+TSPASS derived 104 clauses, backtracked 0 clauses and kept 162 clauses.
+Number of input clauses: 67
+Number of eventualities: 10
+Total number of generated clauses: 171
+Number of forward-subsumed clauses: 0
+Number of backward-subsumed clauses: 86
+Total number of subsumed clauses: 86
+Number of tautology clauses: 8
+Number of clauses with different loop search markers: 0
+Number of usable clauses left: 4
+Number of worked-off clauses left: 72
+Number of successful loop searches: 1
+TSPASS allocated 545 KBytes.
+TSPASS spent	0:00:00.01 (0.008998s) on the problem.
+		0:00:00.00 (0.000999s) for the input.
+		0:00:00.00 (0.001s) for the FLOTTER CNF translation.
+		0:00:00.00 (0s) for inferences.
+		0:00:00.00 (0s) for the backtracking.
+		0:00:00.00 (0.001999s) for the reduction.
+
+--------------------------TSPASS-STOP------------------------------

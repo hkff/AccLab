@@ -1,0 +1,51 @@
+%% -*-Latex-*-
+%%% 22/5/2015
+%%% WEARABLE:  MapOnWeb from ``Request statistical visualisation'' line in Table 6 D47.1 page 48
+%%%% ----------------
+
+%%%%%%% for MapOnWeb
+(always (
+%%%% Data type definitions from Table 2 page 14 of D47.1
+(![d] ((data(d) <=> (public(d) | sensitive(d))) 
+               & (public(d) <=> (display(d) | gender(d) | country(d))) 
+               & (sensitive(d) <=> (username(d) | age(d) | sugarlevel(d) | password(d) | weight(d) | height(d) 
+                                     | userid(d) | blood(d) | heart(d) | training(d)))))
+& %%% action authorizations
+((![a, d] (read(a, d) => Pread(a, d))) &
+ (![a, d] (write(a, d) => Pwrite(a, d))) &
+ (![a, d] (update(a, d) => Pupdate(a, d))) &
+ (![a, d] (delete(a, d) => Pdelete(a, d))))
+& %%%  acces rights for  MapOnWeb                                  
+(![u,w] ((customer(w) & (username(u) | password(u) | height(u) | weight(u) | gender(u)
+                                     | userid(u) | display(u) | training(u))   & subject(u, w)) 
+                     => (~Pread(MapOnWeb, u) & ~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u)))) &
+(![u,w] ((customer(w) & (sugarlevel(u) | country(u) | blood(u) | heart(u) | age(u)) & subject(u, w)) 
+                     => Pread(MapOnWeb, u))) &
+(![u,w] ((customer(w) & (sugarlevel(u) | country(u) | blood(u) | heart(u) | age(u)) & subject(u, w)) 
+                     => (~Pwrite(MapOnWeb, u) & ~Pdelete(MapOnWeb, u) & ~Pupdate(MapOnWeb, u))))
+))
+%%%% 
+%%%% SAT  (0.006746s)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     
+%%%%% --------- endinput                                     
+

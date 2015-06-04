@@ -9,6 +9,7 @@ ace.define('ace/mode/AAL', function(require, exports, module) {
 
     var Mode = function() {
         this.$tokenizer = new Tokenizer(new aalHighlightRules().getRules());
+        this.$keywordList = aalHighlightRules.$keywordList;
     };
     oop.inherits(Mode, TextMode);
 
@@ -35,28 +36,17 @@ ace.define('ace/mode/aal_highlight_rules', function(require, exports, module) {
 
         // Keywords
         var keywords = (
-                " CLAUSE AGENT SERVICE DATA TYPE TYPES SUBJECT RS REQUIRED PS PROVIDED PURPOSE MACRO CALL LOAD"+
-                " Clause Agent Service Data Type Types SUBJECT Rs Required Ps Provided Purpose Macro Call Load"+
-                " clause Agent service data type types SUBJECT rs required ps provided purpose macro call load"+
-                
-                " AUDITING IF_VIOLATED_THEN AUDIT"+
-                " Auditing if_violated_then Audit"+
-                " auditing if_violated_then audit"+
-                /*
-                " OR AND NOT THEN ONLYWHEN FORALL EXISTS IF"+
-                " or and not then onlywhen forall exists if"+
-                " Or And Not Then Onlywhen Forall Exists If"+
-                */
-                " AFTER BEFORE"+
+            //", AFTER AND BEFORE EXISTS FORALL IF NOT ONLYWHEN OR THEN WHERE" +
+            //"AGENT APPLY AUDITING BEHAVIOR CALL CHECK CLAUSE DATA EXEC IF_VIOLATED_THEN LOAD MACRO OF SERVICE TYPE TYPES" +
+            //"ALWAYS MUST MUSTNOT NEVER SOMETIME UNTIL UNLESS NEXT" +
+            //"AE ACTIONS ATTRIBUTES DENY EXTENDS GET_AUDIT GET_RECTIFICATION GET_USAGE PERMIT PROVIDED PS PURPOSE RE REQUIRED RS SUBJECT UE"
+            ", AFTER AND BEFORE EXISTS FORALL IF NOT ONLYWHEN OR THEN WHERE" +
+            "APPLY AUDITING BEHAVIOR CALL CHECK CLAUSE EXEC IF_VIOLATED_THEN LOAD MACRO OF TYPES" +
+            "ae ACTIONS ATTRIBUTES DENY EXTENDS GET_AUDIT GET_RECTIFICATION GET_USAGE PERMIT PROVIDED PS PURPOSE RE REQUIRED RS SUBJECT UE"
+        );
 
-                " PERMIT DENY"+
-                " Permit Deny"+
-                " permit deny"+
+        this.$keywordList = keywords;
 
-                " MAY MUST MUSTNOT ALWAYS"+
-                " may must mustnot always"+
-                " May Must Mustnot Always");
-        
         // Predifined Types
         var types = ("Subject Controller Processor Auditor");
         
@@ -64,24 +54,18 @@ ace.define('ace/mode/aal_highlight_rules', function(require, exports, module) {
         var operators = ("OR AND NOT THEN ONLYWHEN FORALL EXISTS IF WHERE");
 
         // Reflexion api functions
-        var langFunctions = ("getClauses getDeclarations");
-
-        // Compound keywords        
-        var compoundKeywords = "foo";
-
+        var langFunctions = ("getClauses getDeclarations clause");
 
         // Keyword mapper
         var keywordMapper = this.createKeywordMapper({
-          //  "keyword.clause" : "Clause",
-            "variable.language": "this AGENT BEFORE",
+            "variable.language": "this AGENT SERVICE DATA TYPE",
             "keyword": keywords,
-            "constant.language": "TRUE FALSE NULL SPACE",
+            "constant.language": "true false TRUE FALSE NULL SPACE",
             "support.type": types,
             "support.reflexion.functions": langFunctions,
             "constant.library": langFunctions,
-            //"keyword.operator": operators,
-            //"variable.language": operators
-            "variable.parameter": operators,
+            "keyword.operator": "ALWAYS MUST MUSTNOT NEVER SOMETIME UNTIL UNLESS NEXT",
+            "variable.parameter": operators
         }, "text", false, " ");
         
 
@@ -101,7 +85,7 @@ ace.define('ace/mode/aal_highlight_rules', function(require, exports, module) {
                 {token : "constant.numeric", regex: "[+-]?\\d+\\b"},
                 
                 //{token : "variable.parameter", regex : /sy|pa?\d\d\d\d\|t\d\d\d\.|innnn/}, 
-                {token : "keyword", regex : compoundKeywords}, 
+                //{token : "keyword", regex : compoundKeywords},
                 //{token : "variable.parameter", regex : /\w+-\w+(?:-\w+)*/}, 
                 //{token : keywordMapper, regex : "\\b\\w+\\b"},
                 {token : keywordMapper, regex : "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"},

@@ -1,0 +1,62 @@
+%% -*-Latex-*-
+%%% 10/4/2015
+%%% Version V1: natural accountability 
+%%%% ----------------
+
+%%%%%%%%% -------------- usage
+%%%% ALWAYS P.ue => U.ue
+%% ~( always (
+%% %%% data knowledge
+%% patient(Kim) &
+%% %%% *** Pinput(d) =
+%% (![p] (patient(p) => (
+%% (![d] 
+%%    ((data(d) & subject(p, d)) => (Pinput(p, Hospital, d)
+%%    & Psend(Hospital, Toubib, d)
+%%    & Pstore(Hospital, CloudStorage, d)
+%%    & Pput(CloudStorage, Hospital, d) 
+%%    & Pget(Hospital, p, d))))
+%% & (![n, ag, su] 
+%%   ((subject(p, n) & subject(p, ag) & subject(p, su) & nom(n) & age(ag) & sugarlevel(su)) => Pcompute(Toubib, n, ag, su)))
+%% & (![m] (medicalrecord(m) => (get(Toubib, Researcher, m) & Pcollect(Toubib, Hospital, m) & Pstore(Hospital, CloudStorage, m)  & Pput(CloudStorage, Hospital, m))))
+%% & (![m] (medicalrecord(m) => Pextract(Researcher, m)))
+%% & (![ag, su] ((age(ag) & sugarlevel(su)) => Pcorrelate(Researcher, ag, su)))
+%% & (![s] (statistics(s) => (in(Researcher, Toubib, s) & Pstore(Hospital, CloudStorage, s) & Pput(CloudStorage, Hospital, s))))
+%% ))))
+%% =>
+%% %%%*** U=
+%% ((![d] 
+%%   ((data(d) & subject(Kim, d)) => (Pinput(Kim, Hospital, d) 
+%%    & Psend(Hospital, Toubib, d)
+%%    & Pstore(Hospital, CloudStorage, d)
+%%    & Pput(CloudStorage, Hospital, d) 
+%%    & Pget(Hospital, Kim, d))))
+%% & (![n, ag, su] 
+%% ((subject(Kim, n) & subject(Kim, ag) & subject(Kim, su) & nom(n) & age(ag) & sugarlevel(su)) => Pcompute(Toubib, n, ag, su)))
+%% )
+%% )
+%%% VALID
+
+%%%%%%%%%----------------- AUDIT
+%%%% P.ae = always auditor.audit()
+%%%% U.ae = always IF Kim.notify[auditor](message) THEN auditor.audit()
+
+%% ~(always audit(auditor) => (always notify(Kim, auditor, message) =>  audit(auditor))) %%%VALID
+
+
+%%%%%%%%-----------------RECTIFICATION
+%%% P.re = auditor.sanction[hospital]() AND Hospital.credit[Kim](ten) AND auditor.notify[Kim]()
+%%% U.re = auditor.sanction[hospital]() AND Hospital.credit[Kim](ten) 
+
+%% ~(always ((sanction(auditor, Hospital) & credit(Hospital, Kim, ten) & notify(auditor, Kim))
+%% => (sanction(auditor, Hospital) & credit(Hospital, Kim, ten))))
+
+
+
+%% %%%% ---------------
+%%          #id   #top   #qv  #cl  #time
+%% user     162    1   14    78 (0.008814s)
+%% audit    13     2    0     4  (0.00266s)
+%% rectif   17     1    0   26 (0.003596s)
+%% comp     192    4   14    108 (0.01496s)
+%% %%%% ---------------

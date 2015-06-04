@@ -1,0 +1,85 @@
+%% -*-Latex-*-
+%%% 26/4/2015
+%%% Version V1 graph version 4
+%%%% ----
+
+%%%%% ============ always INV & Usage & Behavior => PROP
+~(
+(
+%%%% Knowledge
+(always (![d] ((data(d) <=> ((nom(d) | age(d) | sugarlevel(d) | password(d))))
+            & (alldata(d) <=> (data(d) | statistics(d) | medicalrecord(d)))))) 
+%%%% INV 
+& (always (![d,p,n,ag,su,a,m,s] (
+     (~get(Hospital, p, d) | Pget(Hospital, p, d))
+     & (~input(p, Hospital, d) | Pinput(p, Hospital, d))
+     & (~query(p, Hospital, n) | Pquery(p, Hospital, n))
+     & (~collect(Toubib, Hospital, m) | Pcollect(Toubib, Hospital, m))
+     & (~in(Researcher, Hospital, s) | Pin(Researcher, Hospital, s))
+     & (~put(CloudStorage, Hospital, d) | Pput(CloudStorage, Hospital, d))
+     & (~send(Hospital, Toubib, n, ag, su) | Psend(Hospital, Toubib, n, ag, su))
+     & (~compute(Toubib, n, ag, su) | Pcompute(Toubib, n, ag, su))
+     & (~get(Toubib, Researcher, m) | Pget(Toubib, Researcher, m))
+     & (~extract(Researcher, m) | Pextract(Researcher, m))
+     & (~correlate(Researcher, ag, su) | Pcorrelate(Researcher, ag, su))
+     & (~store(Hospital, CloudStorage, a) | Pstore(Hospital, CloudStorage, a))
+     & (~get(Hospital, CloudStorage, n) | Pget(Hospital, CloudStorage, n))
+     & (~restore(CloudStorage, a, n) | Prestore(CloudStorage, a, n)))))
+& %%%% Usage
+(always ((![p] (![d] (![n, ag, su] (
+      ((subject(d, p) & named(p, n) & data(d) & nom(n)) => (Pinput(p, Hospital, d) & Pquery(p, Hospital, n)))
+       & ((nom(n) & age(ag) & sugarlevel(su)) => Psend(Hospital, Toubib, n, ag, su))
+       & (~password(d) => Pstore(Hospital, CloudStorage, d))
+       & (password(d) => ~Pstore(Hospital, CloudStorage, d))
+       & (data(d) => Pput(CloudStorage, Hospital, d))
+       & (data(d) => Pget(Hospital, p, d))
+       & ((subject(n, p) & subject(ag, p) & subject(su, p) & nom(n) & age(ag) & sugarlevel(su)) => Pcompute(Toubib, n, ag, su))
+       ))))
+  & (![n] (nom(n) => Pget(Hospital, CloudStorage, n)))
+  & (![m] (medicalrecord(m) => (Pget(Toubib, Researcher, m) & Pcollect(Toubib, Hospital, m) & Pstore(Hospital, CloudStorage, m) & Pextract(Researcher, m))))
+  & (![ag, su] ((age(ag) & sugarlevel(su)) => Pcorrelate(Researcher, ag, su)))
+  & (![s] (statistics(s) => (Pin(Researcher, Toubib, s) & Pstore(Hospital, CloudStorage, s))))
+  & (![a, n] (nom(n) & (age(a) | nom(a) | password(a) | sugarlevel(a) | medicalrecord(a) | statistics(a)) => Prestore(CloudStorage, a, n)))
+))
+& %%% Behavior 
+(always (![p] ((?[np] (input(p, Hospital, np) & named(p, np) & subject(np, p) & nom(np)))
+               & (next ?[passp] (input(p, Hospital, passp) & password(passp) & subject(passp, p)))
+               & (next next ?[agp] (input(p, Hospital, agp) & age(agp) & subject(agp, p)))
+               & (next next next ?[sup] (input(p, Hospital, sup) & sugarlevel(sup) & subject(sup, p)))
+     )))
+%%%  Hospital
+& (always (![p] (((?[d1] put(CloudStorage, Hospital, d1)) => (sometime ?[d] get(Hospital, p, d))) &
+                 (![d] ((~password(d) & input(p, Hospital, d)) => sometime store(Hospital, CloudStorage, d))) &
+                 (![n] (query(p, Hospital, n) => sometime get(Hospital, CloudStorage, n))) &
+              (![n] (get(Hospital, CloudStorage, n) => sometime ?[a] restore(CloudStorage, a, n))))))
+       & (always ![n, ag, su] send(Hospital, Toubib, n, ag, su)) 
+       & (always ![m] (collect(Toubib, Hospital, m) => sometime store(Hospital, CloudStorage, m)))
+       & (always ![s] (in(Researcher, Hospital, s) => sometime store(Hospital, CloudStorage, s)))
+%%% Toubib
+& (always ![n, ag, su] (compute(Toubib, n, ag, su) => sometime ?[m] (collect(Toubib, Hospital, m) & get(Toubib, Researcher, m))))
+%%% Researcher
+& (always ![m] (get(Toubib, Researcher, m) => sometime extract(Researcher, m)))
+& (always ![m] (extract(Researcher, m) => sometime ?[ag, su] correlate(Researcher, ag, su)))
+& (always ![ag, su] (correlate(Researcher, ag, su) => sometime ?[s] in(Researcher, CloudStorage, s)))
+%%% CloudStorage
+& (always (![d, n] ((restore(CloudStorage, d, n) & store(Hospital, CloudStorage, d)) => sometime put(CloudStorage, Hospital, d))))
+%%% behaviour chaining
+& (always ![d] (~get(Hospital, Kim, d) until put(CloudStorage, Hospital, d)))
+& (always ![d] (~put(CloudStorage, Hospital, d) until (?[n] restore(CloudStorage, d, n))))
+& (always ![d] ((![n] ~restore(CloudStorage, d, n)) until (![n1] get(Hospital, CloudStorage, n1))))
+& (always ![d] (~password(d) => ((![n] ~restore(CloudStorage, d, n)) until store(Hospital, CloudStorage, d)))) 
+& (always ![d] (~password(d) => ((![n] ~get(Hospital, CloudStorage, n)) until store(Hospital, CloudStorage, d)))) 
+& (always ![n] (~get(Hospital, CloudStorage, n) until get(Kim, Hospital, n)))
+& (always ![d] (~store(Hospital, CloudStorage, d) until input(Kim, Hospital, d))) %%% manque le cas OR ici
+)
+%%%% SAT  
+=>
+%%%% -------------------prop2
+(always ![d, n] ((subject(n, Kim) & named(Kim, n) & ~password(d) & input(Kim, Hospital, d))
+                  => (sometime query(Kim, Hospital, n)
+                     => (sometime ?[dr] (get(Hospital, Kim, dr) => ~password(dr)))))) %%% VALID
+)
+
+%%% derniere formule ajustement id avec ! & ~ ? | =>
+%%%% nb id=719  nbop=42  nbvarqt=65  clauses=458  time=(0.043244s)
+

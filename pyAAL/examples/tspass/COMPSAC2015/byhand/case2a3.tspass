@@ -1,0 +1,157 @@
+%% -*-Latex-*-
+%%% 28/5/2015 
+%%%%=================================
+
+%%%% CORRECTION 1 see case2a1.tspass
+%%%% CORRECTION 2 :  prop 20 and 21
+%%%% data from Kim or Sandra are not permitted to give from Hopital to Other
+%%% and we also need to add the invariant related to this action (~give(hospital, Other, d) | Pgive(hospital, Other, d))
+%%%% CORRECTION 3 : if we assume data existence we find some inconsistencies between the behavior
+%%%%% and the authorizations then condition is unsat and all properties are trivial ...
+%%%% upload/research/give to Kim/give to Other/communicate to Sandra should be constrained
+%%%% then the properties are checked and valid
+
+%%%%=================================
+
+%%%%
+~(
+(
+%%%%   IDENTITIES 
+(always (kim(Kim) & sandra(Sandra) & other(Other))
+            & (![a] ~(kim(a) <=> sandra(a)))
+            & (![a] ~(kim(a) <=> other(a))))
+%%% DATA KNOWLEDGE
+& (always ![d] ((~(subjectKim(d) & subjectOther(d))) & (~(subjectSandra(d) & subjectOther(d)))))
+& (always (subjectKim(dkim) & subjectSandra(dsandra) & subjectOther(dother))) %%% data existence 
+%%% AUTHORISATIONS (deny incomplete)
+%%%%%% P
+& (always ![d]  (
+    (subjectKim(d) => ~Presearch (hospital , d)) 
+    & (subjectOther(d) => Presearch(hospital, d))
+    & (subjectSandra(d) => Presearch(hospital, d))
+    & (subjectKim(d) => Pgive(hospital, Kim, d))
+    & ((~subjectKim(d)) => ~Pgive(hospital, Kim, d)) 
+    & (subjectOther(d) => Pgive(hospital, Other, d))
+    & (subjectKim(d) => ~Pgive(hospital, Other, d))
+    & (subjectSandra(d) => ~Pgive(hospital, Other, d))
+    &  (subjectKim(d) => Psensor(Kim, cloudX, d))
+    &  (subjectOther(d) => Psensor(Other, cloudX, d))
+    &  (subjectKim(d) => Pcommunicate(Kim, Sandra, d))
+    &  ((~subjectKim(d)) => ~Pcommunicate(Kim, Sandra, d))
+    & ((subjectKim(d) | subjectOther(d)) => Ptransfer(cloudX , cloudZ, d))
+    & ((subjectKim(d) | subjectOther(d)) => Pstore(cloudX , cloudY, d))
+    & ((subjectKim(d) | subjectOther(d)) => Ptransfer2X(cloudZ , cloudX, d))
+    & ((subjectKim(d) | subjectOther(d)) => Psend(cloudZ, hospital, d))
+    & ((subjectKim(d) | subjectOther(d)) => Pput(cloudY, cloudX, d))
+    & (subjectKim(d) => PaddIdent(Sandra, d))
+    & ((subjectSandra(d) | subjectKim(d)) => Pupload(Sandra, cloudZ, d))
+    & (subjectOther(d)  => ~Pupload(Sandra, cloudZ, d))
+    & (subjectKim(d) => (Pread(Kim, d) & Pread(Sandra, d)))
+    & (subjectKim(d) => (![a] ((~kim(a) & ~sandra(a)) => ~Pread(a, d))))
+    & (subjectKim(d) => Pwrite(Kim, d))
+    & (subjectKim(d) => (![a] ((~kim(a)) => (~Pwrite(a, d)))))
+    & (subjectOther(d) =>  (Pread(Other, d) & Pwrite(Other, d)))
+    & (subjectOther(d) => (![a] ((~other(a)) => (~Pwrite(a, d) & ~Pread(a,d)))))
+))
+%%%% INVARIANT is needed 
+& (always ![d] (
+(![a] (~write(a, d) | Pwrite(a, d)))
+& (![a] (~read(a, d) | Pread(a, d)))
+& (~sensor(Kim,cloudX, d) | Psensor(Kim,cloudX, d))
+& (~research(hospital, d) | Presearch(hospital, d))
+& (~sensor(Kim,cloudX, d) | Psensor(Kim,cloudX, d))
+& (~store(cloudX , cloudY, d) | Pstore(cloudX , cloudY, d))
+& (~communicate(Kim, Sandra, d) | Pcommunicate(Kim, Sandra, d))
+& (~addIdent(Sandra, d) | PaddIdent(Sandra, d))
+& (~upload(Sandra, cloudZ, d) | Pupload(Sandra, cloudZ, d))
+& (~transfer(cloudX , cloudZ, d) | Ptransfer(cloudX , cloudZ, d))
+& (~send(cloudZ, hospital, d) | Psend(cloudZ, hospital, d))
+& (~give(hospital, Kim, d) | Pgive(hospital, Kim, d))
+& (~transfer2X(cloudZ, cloudX, d) | Ptransfer2X(cloudZ, cloudX, d))
+& (~put(cloudY, cloudX, d) | Pput(cloudY, cloudX, d))
+& (~give(hospital, Other, d) | Pgive(hospital, Other, d))
+))
+%% %% %%%% BEHAVIOR unconstrained
+& (always ![d] (sensor(Kim, cloudX, d) 
+    %%% should constraint the communication
+     & (subjectKim(d) => communicate(Kim, Sandra, d) )
+     & ((subjectSandra(d) | subjectKim(d))  =>  upload(Sandra, cloudZ, d)) %%%% HERE
+     &  (![a] (sensor(a,cloudX, d) => sometime transfer(cloudX , cloudZ, d))) 
+     &  (![a] (sensor(a,cloudX, d) => sometime store(cloudX , cloudY, d)))
+     &  (store(cloudX , cloudY, d) => sometime put(cloudY, cloudX, d))
+     &  (put(cloudY, cloudX, d) => sometime sensor(Kim,cloudX, d))
+     &  (put(cloudY, cloudX, d) => sometime transfer(cloudX , cloudZ, d))
+     &  (communicate(Kim, Sandra, d) => sometime upload(Sandra, cloudZ, d))
+     &  (communicate(Kim, Sandra, d) => sometime addIdent(Sandra, d))
+     &  (upload(Sandra, cloudZ, d) => sometime send(cloudZ, hospital, d)) 
+     &  (upload(Sandra, cloudZ, d) => sometime transfer2X(cloudZ, cloudX, d))
+    &  (transfer(cloudX , cloudZ, d)  => sometime send(cloudZ, hospital, d))
+    &  (transfer(cloudX , cloudZ, d)  => sometime transfer2X(cloudZ, cloudX, d))
+    &  (transfer2X(cloudZ, cloudX, d) => sometime transfer(cloudX , cloudZ, d))
+    &  (transfer2X(cloudZ, cloudX, d) => sometime send(cloudZ, hospital, d))
+    &  (send(cloudZ, hospital, d)  => sometime (~subjectKim(d) => research(hospital, d))) %%% HERE
+    &  (send(cloudZ, hospital, d) => sometime (subjectKim(d) => give(hospital, Kim, d))) %%% HERE
+    &  (send(cloudZ, hospital, d) => sometime (subjectOther(d) => give(hospital, Other, d))) %%% HERE
+    &  (![a] (give(hospital, a, d) => sometime sensor(Kim,cloudX, d)))
+    &  (![a] (give(hospital, a, d) => sometime sensor(Other,cloudX, d)))
+    &  (give(hospital, Kim, d) => sometime (subjectKim(d) => communicate(Kim, Sandra, d))) %%% HERE
+))
+) %%% END COND is SAT (0.048394s) 
+=>
+%%% ------- PROPERTIES 
+
+%%% Note (time user / nb clause generated)
+%%%%%%  ---------  hospital: any data from Kim or from Sandra  can be received via send to hospital [1 - 2]
+%%%(![d] (sometime ((subjectKim(d) | subjectSandra(d)) => send(cloudZ, hospital, d)))) %%% VALID 738/(0.054293s)
+%%%(![d] (sometime ((subjectKim(d) | subjectSandra(d) | subjectOther(d)) => send(cloudZ, hospital, d)))) %%% VALID 765/(0.058188s)
+
+%%%%% --------- Kim receives Kim's data [3 - 8]
+%%%(sometime ?[d] (subjectKim(d) => (sometime give(hospital, Kim, d)))) %%% VALID 450/(0.044187s)
+%%%(?[d] sometime (subjectKim(d) => (sometime give(hospital, Kim, d)))) %%% VALID 488/(0.050241s)
+%%%(![d] (sometime (subjectKim(d) => give(hospital, Kim, d)))) %%%VALID 740/ (0.056827s) 
+%%%% ---------  Kim receives shared data with Sandra
+%%%(![d] (sometime ((subjectKim(d) & subjectSandra(d)) => give(hospital, Kim, d)))) %%%VALID 510/(0.047727s)
+%%%% ---------  Kim cannot receive Sandra's proper data
+%%%(![d] (always ~(subjectSandra(d) & ~subjectKim(d) & give(hospital, Kim, d)))) %%% VALID 625/(0.057137s)
+%%% another formulation
+%%%~(?[d] (sometime (((~subjectKim(d)) & subjectSandra(d)) & give(hospital, Kim, d)))) %%% VALID 625/(0.054738s)  
+
+%%%%%% ---------  What Sandra can receive ? [9 - 14]
+%%%% data from Kim quite obvious via communicate
+%%%(![d] (always (subjectKim(d) => communicate(Kim, Sandra, d)))) %%%VALID 663/(0.055698s) 
+%%% and shared data
+%%%(![d] (always ((subjectKim(d) & subjectSandra(d)) => communicate(Kim, Sandra, d)))) %%%VALID 755/(0.060302s)
+%%%(![d] always ((~subjectKim(d) & subjectSandra(d)) => ~communicate(Kim, Sandra, d))) %%% VALID 622/(0.055771s)
+%%%~(?[d] (sometime (~subjectKim(d) & subjectSandra(d) & communicate(Kim, Sandra, d)))) %%% VALID 622/(0.054757s)
+%%%(![d] (always ~(~subjectKim(d) & subjectSandra(d) & communicate(Kim, Sandra, d)))) %%% VALID 622/ (0.05565s)
+%%%(![d] (always (subjectKim(d) | ~subjectSandra(d) | ~communicate(Kim, Sandra, d)))) %%% VALID 622/(0.053481s)
+
+%%%%%% ---------  What kinds of data is reaching cloudX ? (incomplete ...) [15 - 17]
+%%%(![d] (sometime ((subjectKim(d) | subjectSandra(d)) => (sensor(Kim, cloudX, d) | transfer2X(cloudZ, cloudX, d) | put(cloudY, cloudX, d))))) %%% VALID 471/ (0.048394s) 
+%%%(![d] (always ((subjectKim(d) | subjectSandra(d)) => (sensor(Kim, cloudX, d) | transfer2X(cloudZ, cloudX, d) | put(cloudY, cloudX, d))))) %%% VALID 515/(0.050314s)
+%%%(![d] (always ((subjectKim(d) | subjectSandra(d) | subjectOther(d)) => (sensor(Kim, cloudX, d) | transfer2X(cloudZ, cloudX, d) | put(cloudY, cloudX, d) | sensor(Other, cloudX, d))))) %%% VALID 516/ (0.049311s
+
+%%%%% --------- Other receive Kim's data or Sandra's data ? [18 - 22]
+%%%(sometime ?[d]  (subjectKim(d) => ~give(hospital, Other, d))) %%% VALID 435/(0.042396s)
+%%%(![d] sometime (subjectKim(d) => ~give(hospital, Other, d))) %%% VALID 433/(0.051579s)
+%%%(![d] sometime ((subjectKim(d) | subjectSandra(d)) => ~give(hospital, Other, d))) %%%  VALID 524/(0.04857s)
+%%%(![d] always ~((subjectKim(d) | subjectSandra(d)) & give(hospital, Other, d))) %%% VALID 718/(0.057274s)
+
+%%%%% -------- hospital cannot do research on Kim data [23 - 25]
+%%%(![d] always ((subjectKim(d) & send(cloudZ, hospital, d)) => ~research(hospital, d))) %%% VALID 672/(0.057108s)
+%%%(![d] always (~(subjectKim(d)  & research(hospital, d)))) %%% VALID 663/(0.054875s)
+%%%(![d] always (subjectKim(d) => ~research(hospital, d))) %%% VALID 663/(0.054068s)
+
+%%%%% --------- hospital can do research on Sandra or Other data [26 - 27]
+%%%(?[d] (sometime ((subjectSandra(d) | subjectOther(d)) => research(hospital, d)))) %%% VALID 483/(0.046522s)
+%%%(?[d]  ((subjectSandra(d) | subjectOther(d)) => sometime research(hospital, d))) %%% VALID 646/(0.047223s)
+
+%%%%% --------- hospital can receive data from the three agents [28 - 32]
+%%%(?[d] sometime  (subjectOther(d) => (send(cloudZ, hospital, d) & Psend(cloudZ, hospital, d)))) %%% VALID 473/ (0.047085s)
+%%%(?[d] sometime  (subjectKim(d) => (send(cloudZ, hospital, d) & Psend(cloudZ, hospital, d)))) %%% VALID 473/(0.045459s)
+%%%(?[d] sometime  (subjectSandra(d) => (send(cloudZ, hospital, d) & Psend(cloudZ, hospital, d)))) %%% VALID 462/(0.045704s)
+%%%(?[d] sometime  ((subjectOther(d) | subjectKim(d) | subjectSandra(d)) => (send(cloudZ, hospital, d) & Psend(cloudZ, hospital, d)))) %%% VALID 733/(0.053437s)
+%%%(?[d] sometime  ((subjectOther(d) | subjectKim(d) | subjectSandra(d)) => send(cloudZ, hospital, d))) %%% VALID 708/(0.053938s)
+
+) %%% end of imply
+

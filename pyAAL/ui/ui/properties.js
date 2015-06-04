@@ -501,7 +501,7 @@ visualEditor.ui.properties = {
 		for (var i=0; i<list2.length; i++) {
 			propel[0].selectize.setTextboxValue(list2[i]);
 			propel[0].selectize.createItem();
-		};
+		}
 		propel[0].selectize.close();
 	},
 
@@ -549,10 +549,10 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 	    this.inPlaceAALEditor.setTheme("ace/theme/monokai");
 	    this.inPlaceAALEditor.getSession().setMode("ace/mode/AAL");
 
-		this.templateAALBtn = $('<div id="templateAALBtn" class="btn-action fa fa-code fa-lg"/>');
+		this.templateAALBtn = $('<div title="Clause template" id="templateAALBtn" class="btn-action fa fa-code fa-lg"/>');
 		$("#inPlaceAALEditor-tools").append(this.templateAALBtn);
 
-		this.clearAALBtn = $('<div id="clearAALBtn" class="btn-action fa fa-file-o fa-lg"/>');
+		this.clearAALBtn = $('<div title="Clear" id="clearAALBtn" class="btn-action fa fa-file-o fa-lg"/>');
 		$("#inPlaceAALEditor-tools").append(this.clearAALBtn);
 	},
 

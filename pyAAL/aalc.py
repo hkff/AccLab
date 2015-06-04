@@ -174,6 +174,9 @@ def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: boo
     :param synth: Synthesize monitors specifications from a global FOTL formula
     :return:
     """
+
+    print("-------- tspassc " + " starting at : " + str(datetime.datetime.now()) + "  File : " + str(file) + " --------\n")
+
     # TODO add binaries for win
     p = sys.platform
     if p.startswith("linux"):

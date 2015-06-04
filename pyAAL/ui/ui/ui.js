@@ -47,7 +47,6 @@ visualEditor.ui = {
 		this.outlinePanel    = $('#' + outlinePanel);
 		this.inplacePanel    = $('#' + inplacePanel);
 
-
 		//visualEditor.ui.canvas = new visualEditor.ui.gridEditor(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.properties.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.tools.init(grid, actionsPanel, componentsPanel, propertiesPanel);
@@ -76,10 +75,9 @@ visualEditor.ui = {
 	 * Update all panels states
 	 */
 	updatePanel: function() {
+		var file = "";
 		if(visualEditor.ui.activeTab != null)
-			var file = visualEditor.ui.activeTab.container.title;
-		else
-			var file = "";
+			file = visualEditor.ui.activeTab.container.title;
 
 		var fileType = file.split('.').pop().toLowerCase();
 		// If it is not a diagram, disable gui elements
@@ -104,7 +102,8 @@ visualEditor.ui = {
 	 * @param node
 	 */
 	enableNode: function(node) {
-		node.css("opacity", "1.0");
+		//node.css("opacity", "1.0");
+		node.children().fadeTo('slow', 1.0);
 	},
 
 	/**
@@ -112,21 +111,21 @@ visualEditor.ui = {
 	 * @param node
 	 */
 	disableNode: function(node) {
-		//var node = $("#toolbox_window");
-		node.css("opacity", "0.2");
-	   	/*node.append("<div id='overlay'></div>");
-		$("#overlay")
+		node.children().fadeTo('slow', .0);
+		//node.css("opacity", "0.3");
+	   	/*node.append("<div id='overlay-" + node[0].id + "'></div>");
+		$("#overlay-" + node[0].id)
 		  .css({
 			 'opacity' : 0.4,
 			 'position': 'fixed',
-			 'top': 0,
-			 'left': 0,
+			 'top': node.top, //window.innerHeight - node.height(),
+			 'left': window.innerWidth - node.width(),
 			 'background-color': 'black',
 			 'width': node.width(),
 			 'height': node.height(),
 			 'z-index': 5000
 		  });
-*/
+		*/
 	},
 
 	/**

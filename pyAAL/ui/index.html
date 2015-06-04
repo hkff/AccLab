@@ -46,6 +46,7 @@
     <script src="./libs/StackBlur.js"></script>
     <script src="./libs/jquery-ui-1.8.23.custom.min.js"></script>
     <script src="./libs/jquery.browser.js"></script>
+    <script src="./libs/shortcut.js"></script>
 
     <!-- Toolbar -->  
     <script src="./libs/toolbar/jquery.toolbar.min.js"></script>
@@ -53,6 +54,7 @@
     <!--<link href="./libs/toolbar/bootstrap.icons.css" rel="stylesheet" />-->
 
     <script src="./libs/ace/src-min-noconflict/ace.js"></script>
+    <script src="./libs/ace/src-min-noconflict/ext-language_tools.js"></script>
 
     <!-- Selectize -->
     <script src="./libs/selectize/selectize.js"></script>
@@ -100,8 +102,6 @@
     <div id="properties_window" caption="Properties" class="properties-window"></div>
     <div id="problems_window" caption="Problems" class="problems-window"></div>
     <div id="editor1_window" caption="demo.acd" class="editor1-window editor-host"></div>
-    <!--<div id="editor2_window" caption="Steering.cpp" class="editor2-window editor-host"></div>-->
-    <!--<div id="infovis" caption="Dock Tree Visualizer" class="editor2-window editor-host"></div>-->
     <div id="output_window" caption="Output" class="output-window editor-host"></div>
     <div id="toolbox_window" caption="Tools" class="toolbox-window"></div>
     <div id="componentbox_window" caption="Components" class="componentbox-window"></div>
@@ -130,16 +130,20 @@
             // Panels get a titlebar and a close button, and can also be
             // converted to a floating dialog box which can be dragged / resized
             this.solution = new dockspawn.PanelContainer($("#solution_window")[0], dockManager);
+            this.solution.elementButtonClose.innerHTML = "";
             this.outline = new dockspawn.PanelContainer($("#outline_window")[0], dockManager);
+            this.outline.elementButtonClose.innerHTML = "";
             this.components = new dockspawn.PanelContainer($("#componentbox_window")[0], dockManager);
+            this.components.elementButtonClose.innerHTML = "";
             this.toolbox = new dockspawn.PanelContainer($("#toolbox_window")[0], dockManager);
+            this.toolbox.elementButtonClose.innerHTML = "";
             this.properties = new dockspawn.PanelContainer($("#properties_window")[0], dockManager);
+            this.properties.elementButtonClose.innerHTML = "";
             this.inplaceAAL = new dockspawn.PanelContainer($("#inPlaceAALEditor")[0], dockManager);
+            this.inplaceAAL.elementButtonClose.innerHTML = "";
             this.output = new dockspawn.PanelContainer($("#output_window")[0], dockManager);
-
+            this.output.elementButtonClose.innerHTML = "";
 //            this.editor1 = new dockspawn.PanelContainer($("#editor1_window")[0], dockManager);
-//            this.editor2 = new dockspawn.PanelContainer($("#editor2_window")[0], dockManager);
-//            this.infovis = new dockspawn.PanelContainer($("#infovis")[0], dockManager);
 
             // Dock the panels on the dock manager
             this.documentNode = dockManager.context.model.documentManagerNode;
@@ -164,7 +168,6 @@
                 visualEditor.ui.activeTab = page.activeTab;
                 visualEditor.ui.updatePanel();
             }
-
         }
 
         visualEditor.init("editor1_window", "toolbox_window", "componentbox_window",

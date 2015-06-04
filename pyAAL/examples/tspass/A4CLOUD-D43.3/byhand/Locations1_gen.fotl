@@ -1,0 +1,22 @@
+begin_problem(TranslatedInput).
+list_of_descriptions.
+name({*Translated Input*}).
+author({**}).
+status(unknown).
+description({**}).
+end_of_list.
+
+list_of_symbols.
+functions[(CloudStorage,0),(Hospital,0),(Kim,0),(Researcher,0),(Toubib,0),(agex,0),(nomx,0),(passx,0),(slx,0)].
+predicates[(Pstore,3),(_P,1),(_U,1),(_waitforstore,1),(age,1),(alldata,1),(blood,1),(country,1),(data,1),(display,1),(europe,1),(france,1),(gender,1),(germany,1),(heart,1),(height,1),(iduser,1),(input,3),(italy,1),(latvia,1),(medicalrecord,1),(nom,1),(password,1),(public,1),(sensitive,1),(statistics,1),(store,3),(subject,2),(sugarlevel,1),(training,1),(unitedkingdom,1),(us,1),(weight,1)].
+end_of_list.
+
+list_of_formulae(axioms).
+formula(always(and(nom(nomx),and(subject(Kim,nomx),and(password(passx),and(subject(Kim,passx),and(age(agex),and(subject(Kim,agex),and(sugarlevel(slx),and(subject(Kim,slx),and(and(europe(Kim),and(germany(Hospital),and(latvia(Researcher),and(italy(CloudStorage),us(Toubib))))),and(forall([_x],and(or(not(italy(_x)),not(france(_x))),and(or(not(germany(_x)),not(unitedkingdom(_x))),and(or(not(latvia(_x)),not(unitedkingdom(_x))),or(not(us(_x)),not(europe(_x))))))),and(forall([_x],and(and(or(not(data(_x)),or(public(_x),sensitive(_x))),or(and(not(public(_x)),not(sensitive(_x))),data(_x))),and(and(or(not(public(_x)),or(display(_x),or(gender(_x),country(_x)))),or(and(not(display(_x)),and(not(gender(_x)),not(country(_x)))),public(_x))),and(and(or(not(sensitive(_x)),or(nom(_x),or(age(_x),or(sugarlevel(_x),or(password(_x),or(weight(_x),or(height(_x),or(iduser(_x),or(blood(_x),or(heart(_x),training(_x))))))))))),or(and(not(nom(_x)),and(not(age(_x)),and(not(sugarlevel(_x)),and(not(password(_x)),and(not(weight(_x)),and(not(height(_x)),and(not(iduser(_x)),and(not(blood(_x)),and(not(heart(_x)),not(training(_x))))))))))),sensitive(_x))),and(or(not(alldata(_x)),or(data(_x),or(statistics(_x),medicalrecord(_x)))),or(and(not(data(_x)),and(not(statistics(_x)),not(medicalrecord(_x)))),alldata(_x))))))),and(forall([_x],forall([_y],forall([_z],or(not(store(_x,_y,_z)),Pstore(_x,_y,_z))))),and(forall([_x],forall([_y],or(or(not(nom(_y)),or(not(subject(_x,_y)),or(not(germany(Hospital)),not(europe(_x))))),input(_x,Hospital,_y)))),and(forall([_x],forall([_y],or(or(not(france(_x)),or(not(alldata(_y)),not(germany(Hospital)))),Pstore(Hospital,_x,_y)))),and(forall([_x],forall([_y],or(and(france(_x),germany(Hospital)),not(Pstore(Hospital,_x,_y))))),forall([_x],forall([_y],or(or(not(data(_y)),not(input(_x,Hospital,_y))),_P(_y))))))))))))))))))))).
+formula(always(forall([_x],implies(and(_P(_x),not(store(Hospital,CloudStorage,_x))),_waitforstore(_x))))).
+formula(always(forall([_x],sometime(not(_waitforstore(_x)))))).
+formula(always(forall([_x],implies(_waitforstore(_x),next(_U(_x)))))).
+formula(always(forall([_x],implies(_U(_x),or(_waitforstore(_x),store(Hospital,CloudStorage,_x)))))).
+end_of_list.
+
+end_problem.

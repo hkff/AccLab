@@ -78,8 +78,6 @@ visualEditor.ui.tools = {
 		this.tools.push(new visualEditor.ui.tools.separatorTool());
 		this.tools.push(new visualEditor.ui.tools.genAALTool());
 		this.tools.push(new visualEditor.ui.tools.genTSPASSTool());
-		//this.tools.push(new visualEditor.ui.tools.genAPPLTool());
-		
 	},
 
 	/**
@@ -146,7 +144,7 @@ visualEditor.ui.tools.selectTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.selectTool",
 	
 	view: function(parent) {
-		this.selectBtn = $('<div id="selectBtn" class="btn-action fa fa-hand-o-up fa-lg"/>');
+		this.selectBtn = $('<div title="Selection mode" id="selectBtn" class="btn-action fa fa-hand-o-up fa-lg"/>');
 		parent.actionsPanel.append(this.selectBtn);	
 	},
 
@@ -166,7 +164,7 @@ visualEditor.ui.tools.panneTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.panneTool",
 
 	view: function(parent) {
-		this.panneBtn = $('<div id="panneBtn" class="btn-action fa fa-arrows fa-lg"/>');
+		this.panneBtn = $('<div title="Move mode" id="panneBtn" class="btn-action fa fa-arrows fa-lg"/>');
 		parent.actionsPanel.append(this.panneBtn);
 	},
 
@@ -186,7 +184,7 @@ visualEditor.ui.tools.mselectTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.mselectTool",
 
 	view: function(parent) {
-		this.mselectBtn = $('<div id="mselectBtn" class="btn-action fa fa-square fa-lg"/>');
+		this.mselectBtn = $('<div title="Multiple Selection Mode" id="mselectBtn" class="btn-action fa fa-square fa-lg"/>');
 		parent.actionsPanel.append(this.mselectBtn);
 	},
 
@@ -208,7 +206,7 @@ visualEditor.ui.tools.copyTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.copyTool",
 
 	view: function(parent) {
-		this.copyBtn = $('<div id="copyBtn" class="btn-action fa fa-copy fa-lg"/>');
+		this.copyBtn = $('<div title="Duplicate" id="copyBtn" class="btn-action fa fa-copy fa-lg"/>');
 		parent.actionsPanel.append(this.copyBtn);
 	},
 
@@ -231,7 +229,7 @@ visualEditor.ui.tools.deleteTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.deleteTool",
 
 	view: function(parent) {
-		this.deleteBtn = $('<div id="deleteBtn" class="btn-action fa fa-trash-o fa-lg"/>');
+		this.deleteBtn = $('<div title="Delete" id="deleteBtn" class="btn-action fa fa-trash-o fa-lg"/>');
 		parent.actionsPanel.append(this.deleteBtn);
 
 	},
@@ -254,7 +252,7 @@ visualEditor.ui.tools.lockTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.lockTool",
 
 	view: function(parent) {
-		this.lockBtn = $('<div id="lockBtn" class="btn-action fa fa-lock fa-lg"/>');
+		this.lockBtn = $('<div title="Lock diagram" id="lockBtn" class="btn-action fa fa-lock fa-lg"/>');
 		parent.actionsPanel.append(this.lockBtn);
 
 	},
@@ -275,15 +273,18 @@ visualEditor.ui.tools.zoomInTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.zoomInTool",
 
 	view: function(parent) {
-		this.zoomInBtn = $('<div id="zoomInBtn" class="btn-action fa fa-search-plus fa-lg"/>');
+		this.zoomInBtn = $('<div title="Zoom in (Page_up)" id="zoomInBtn" class="btn-action fa fa-search-plus fa-lg"/>');
 		parent.actionsPanel.append(this.zoomInBtn);
 		
 	},
 
 	control: function(parent) {
-		this.zoomInBtn.click(function(e){
+		var fx = function(e){
 			visualEditor.ui.canvas.setZoom(visualEditor.ui.canvas.getZoom()*0.7, true);	
-		});
+		};
+
+		this.zoomInBtn.click(fx);
+		shortcut.add("Page_up", fx);
 	}
 });
 
@@ -296,15 +297,17 @@ visualEditor.ui.tools.zoomOutTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.zoomOutTool",
 
 	view: function(parent) {
-		this.zoomOutBtn = $('<div id="zoomOutBtn" class="btn-action fa fa-search-minus fa-lg"/>');
+		this.zoomOutBtn = $('<div title="Zoom out (Page_down)" id="zoomOutBtn" class="btn-action fa fa-search-minus fa-lg"/>');
 		parent.actionsPanel.append(this.zoomOutBtn);
 
 	},
 
 	control: function(parent) {
-		this.zoomOutBtn.click(function(e){
+		var fx = function(e){
 			visualEditor.ui.canvas.setZoom(visualEditor.ui.canvas.getZoom()*1.3, true);	
-		});
+		};
+		this.zoomOutBtn.click(fx);
+		shortcut.add("Page_down", fx);
 	}
 });
 
@@ -317,7 +320,7 @@ visualEditor.ui.tools.zoomOriginTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.zoomOriginTool",
 
 	view: function(parent) {
-		this.zoomOriginBtn = $('<div id="zoomOriginBtn" class="btn-action fa fa-search fa-lg"/>');
+		this.zoomOriginBtn = $('<div title="Original size" id="zoomOriginBtn" class="btn-action fa fa-search fa-lg"/>');
 		parent.actionsPanel.append(this.zoomOriginBtn);
 
 	},
@@ -338,7 +341,7 @@ visualEditor.ui.tools.undoTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.undoTool",
 
 	view: function(parent) {
-		this.undoBtn = $('<div id="undoBtn" class="btn-action fa fa-undo fa-lg"/>');
+		this.undoBtn = $('<div title="Undo" id="undoBtn" class="btn-action fa fa-undo fa-lg"/>');
 		parent.actionsPanel.append(this.undoBtn);
 
 	},
@@ -359,7 +362,7 @@ visualEditor.ui.tools.redoTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.redoTool",
 
 	view: function(parent) {
-		this.redoBtn = $('<div id="redoBtn" class="btn-action fa fa-repeat fa-lg"/>');
+		this.redoBtn = $('<div title="Redo" id="redoBtn" class="btn-action fa fa-repeat fa-lg"/>');
 		parent.actionsPanel.append(this.redoBtn);
 
 	},
@@ -380,40 +383,43 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.saveTool",
 
 	view: function(parent) {
-		this.saveBtn = $('<div id="saveBtn" class="btn-action fa fa-save fa-lg"/>');
+		this.saveBtn = $('<div title="Save (ctrl+S)" id="saveBtn" class="btn-action fa fa-save fa-lg"/>');
 		parent.actionsPanel.append(this.saveBtn);
 
 	},
 
 	control: function(parent) {
-		this.saveBtn.click(function(e){
+
+		var fx = function(e) {
 			var file = visualEditor.ui.activeTab.container.title;
 			var fileType = file.split('.').pop().toLowerCase();
-			switch(fileType) {
+			switch (fileType) {
 				case "aal":
 					var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
 					visualEditor.ui.fileManager.saveFile(file, editor.getValue());
-				break;
+					break;
 
 				case "acd":
 					var writer = new draw2d.io.json.Writer();
-					writer.marshal(visualEditor.ui.canvas, function(json){
+					writer.marshal(visualEditor.ui.canvas, function (json) {
 						// convert the json object into string representation
-						var jsonTxt = JSON.stringify(json,null,2);
+						var jsonTxt = JSON.stringify(json, null, 2);
 						// insert the json string into a DIV for preview or post
 						visualEditor.ui.savedCanvas = jsonTxt;
-					
+
 						var file = visualEditor.ui.activeTab.container.title;
 						visualEditor.ui.fileManager.saveFile(file, jsonTxt);
 					});
-		 		break;
+					break;
 
 				default:
 					var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
 					visualEditor.ui.fileManager.saveFile(file, editor.getValue());
-				break;
+					break;
 			}
-		});
+		}
+		this.saveBtn.click(fx);
+		shortcut.add("Ctrl+S", fx);
 	}
 });
 
@@ -426,7 +432,7 @@ visualEditor.ui.tools.groupTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.groupTool",
 
 	view: function(parent) {
-		this.groupBtn = $('<div id="groupBtn" class="btn-action fa fa-link fa-lg"/>');
+		this.groupBtn = $('<div title="Group" id="groupBtn" class="btn-action fa fa-link fa-lg"/>');
 		parent.actionsPanel.append(this.groupBtn);
 
 	},
@@ -449,7 +455,7 @@ visualEditor.ui.tools.ungroupTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.ungroupTool",
 
 	view: function(parent) {
-		this.ungroupBtn = $('<div id="ungroupBtn" class="btn-action fa fa-unlink fa-lg"/>');
+		this.ungroupBtn = $('<div title="Ungroup" id="ungroupBtn" class="btn-action fa fa-unlink fa-lg"/>');
 		parent.actionsPanel.append(this.ungroupBtn);
 
 	},
@@ -472,19 +478,22 @@ visualEditor.ui.tools.fullScreenTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.fullScreenTool",
 
 	view: function(parent) {
-		this.fullScreenBtn = $('<div id="fullScreenBtn" class="btn-action fa fa-arrows-alt fa-lg"/>');
+		this.fullScreenBtn = $('<div title="Fullscreen (F11)" id="fullScreenBtn" class="btn-action fa fa-arrows-alt fa-lg"/>');
 		parent.actionsPanel.append(this.fullScreenBtn);
 	},
 
 	control: function(parent) {
-		this.fullScreenBtn.click(function(e){
+		var fx = function(e){
 			if (screenfull.enabled){
 				if(screenfull.isFullscreen)
 					screenfull.exit();
 				else
 					screenfull.request();
 			}
-		});
+		};
+
+		this.fullScreenBtn.click(fx);
+		shortcut.add("F11", fx);
 	}
 });
 
@@ -497,7 +506,7 @@ visualEditor.ui.tools.clearTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.clearTool",
 
 	view: function(parent) {
-		this.clearBtn = $('<div id="clearBtn" class="btn-action fa fa-eraser fa-lg"/>');
+		this.clearBtn = $('<div title="Clear diagram" id="clearBtn" class="btn-action fa fa-eraser fa-lg"/>');
 		parent.actionsPanel.append(this.clearBtn);
 	},
 
@@ -520,15 +529,17 @@ visualEditor.ui.tools.genAALTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.genAALTool",
 	
 	view: function(parent) {
-		this.genAALBtn = $('<div id="genAALBtn" class="btn-action fa fa-file-text-o fa-lg"/>');
+		this.genAALBtn = $('<div title="Generate AAL file (ctrl+G)" id="genAALBtn" class="btn-action fa fa-file-text-o fa-lg"/>');
 		parent.actionsPanel.append(this.genAALBtn);
 	},
 
 	control: function(parent) {
-		this.genAALBtn.click(function(e){
+		var fx = function(e){
 			var active = visualEditor.ui.activeTab.container.title;
 			visualEditor.ui.fileManager.showGeneratedAAL(active);
-		});
+		};
+		this.genAALBtn.click(fx);
+		shortcut.add("Ctrl+G", fx);
 	}
 });
 
@@ -541,12 +552,12 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.genTSPASSTool",
 	
 	view: function(parent) {
-		this.genTSPASSTool = $('<div id="genTSPASSBtn" class="btn-action fa fa-cog fa-lg"/>');
+		this.genTSPASSTool = $('<div title="Compile (ctrl+Enter)" id="genTSPASSBtn" class="btn-action fa fa-cog fa-lg"/>');
 		parent.actionsPanel.append(this.genTSPASSTool);
 	},
 
 	control: function(parent) {
-		this.genTSPASSTool.click(function(e){
+		var fx = function(e){
 			//var active = visualEditor.ui.activeTab.container.title;
 			//visualEditor.ui.fileManager.showGeneratedTSPASS(active);
             var file = visualEditor.ui.activeTab.container.title;
@@ -565,28 +576,9 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 					$("#output_window").empty().append(response)
 				}
 			});
-		});
-	}
-});
+		};
 
-
-//////////////////////////////////////////////////////////
-//
-//  GenerateAPPLTool
-//
-//////////////////////////////////////////////////////////
-visualEditor.ui.tools.genAPPLTool = visualEditor.ui.tool.extend({
-	NAME : "visualEditor.ui.tools.genAPPLTool",
-	
-	view: function(parent) {
-		this.genAPPLTool = $('<div id="genAPPLBtn" class="btn-action fa fa-file-code-o fa-lg"/>');
-		parent.actionsPanel.append(this.genAPPLTool);
-	},
-
-	control: function(parent) {
-		this.genAPPLTool.click(function(e){
-			var active = visualEditor.ui.activeTab.container.title;
-			visualEditor.ui.fileManager.showGeneratedAPPL(active);
-		});
+		this.genTSPASSTool.click(fx);
+		shortcut.add("Ctrl+Enter", fx);
 	}
 });

@@ -31,7 +31,7 @@ data = actor.extend({
 
 	view: function() {
 		// Agent
-		this.cmp_data = $('<div class="btn-components fa fa-database fa-2x"></div>')
+		this.cmp_data = $('<div title="Data" class="btn-components fa fa-database fa-2x"></div>')
 		this.cmp_data.click(this.addElement);
 		this.parent.componentsPanel.append(this.cmp_data);
 	},
