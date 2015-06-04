@@ -1,53 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/ui/ui/ui.js" line="82" />
+    <bookmark url="file://$PROJECT_DIR$/ui/ui/ui.js" line="100" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/snippets/AAL.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-22-05-2015/CardioMon.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-May-2015/CardioMon.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-May-2015/CardioMon_gen.fotl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-May-2015/CardioMon_gen.result" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-May-2015/CardioMon_gen.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-22-05-2015/Customer.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-May-2015/Customer.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-22-05-2015/Customer1.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-May-2015/Customer1.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-22-05-2015/Customer2.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-22-05-2015/Employee.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-May-2015/Employee.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/ISC-submission/byhand/ISC-accountability.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/ISC-submission/byhand/ISC-prop1-ext.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/ISC-submission/byhand/ISC-prop1.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/ISC-submission/byhand/ISC-prop2-ext.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/ISC-submission/byhand/ISC-prop2.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/A4CLOUD-D43.3/byhand/Locations1.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/A4CLOUD-D43.3/byhand/Locations1_gen.fotl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/A4CLOUD-D43.3/byhand/Locations1_gen.result" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/A4CLOUD-D43.3/byhand/Locations1_gen.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-22-05-2015/MapOnWeb.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-May-2015/MapOnWeb.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/COMPSAC2015/byhand/audit.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/COMPSAC2015/byhand/case.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/COMPSAC2015/byhand/case1.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/COMPSAC2015/byhand/case2a.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/COMPSAC2015/byhand/case2a1.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/COMPSAC2015/byhand/case2a2.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/COMPSAC2015/byhand/case2a3.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-22-05-2015/policy.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tspass/wearable/byhand-May-2015/policy.tspass" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/libs/shortcut.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/utils/pycharm/AAL.xml" afterPath="$PROJECT_DIR$/tools/utils/pycharm/AAL.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/healthcare/healthcare.aal" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/healthcare/healthcare.acd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/libs/toastr/toastr.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/libs/toastr/toastr.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/components/Agent.js" afterPath="$PROJECT_DIR$/ui/ui/components/Agent.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/components/Data.js" afterPath="$PROJECT_DIR$/ui/ui/components/Data.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/components/Policy.js" afterPath="$PROJECT_DIR$/ui/ui/components/Policy.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/aalc.py" afterPath="$PROJECT_DIR$/aalc.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/Server.py" afterPath="$PROJECT_DIR$/ui/Server.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/fileManager.js" afterPath="$PROJECT_DIR$/ui/ui/fileManager.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/index.html" afterPath="$PROJECT_DIR$/ui/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-AAL.js" afterPath="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-AAL.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/properties.js" afterPath="$PROJECT_DIR$/ui/ui/properties.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/tools.js" afterPath="$PROJECT_DIR$/ui/ui/tools.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/ui.js" afterPath="$PROJECT_DIR$/ui/ui/ui.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -98,11 +65,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ui.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ui.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1557" max-vertical-offset="2916">
-              <caret line="88" column="48" selection-start-line="88" selection-start-column="48" selection-end-line="88" selection-end-column="48" />
+            <state vertical-scroll-proportion="0.52238804" vertical-offset="783" max-vertical-offset="3348">
+              <caret line="61" column="44" selection-start-line="61" selection-start-column="44" selection-end-line="61" selection-end-column="44" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -122,11 +89,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="3.5625" vertical-offset="0" max-vertical-offset="3348">
-              <caret line="114" column="36" selection-start-line="114" selection-start-column="36" selection-end-line="114" selection-end-column="36" />
+            <state vertical-scroll-proportion="-4.0" vertical-offset="702" max-vertical-offset="3438">
+              <caret line="45" column="21" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -135,8 +102,8 @@
       <file leaf-file-name="tools.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="9704" max-vertical-offset="10620">
-              <caret line="554" column="26" selection-start-line="554" selection-start-column="13" selection-end-line="554" selection-end-column="26" />
+            <state vertical-scroll-proportion="-14.925926" vertical-offset="9965" max-vertical-offset="10638">
+              <caret line="576" column="48" selection-start-line="576" selection-start-column="48" selection-end-line="576" selection-end-column="48" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -147,45 +114,35 @@
       <file leaf-file-name="fileManager.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4720" max-vertical-offset="5922">
-              <caret line="255" column="76" selection-start-line="255" selection-start-column="76" selection-end-line="255" selection-end-column="76" />
-              <folding>
-                <marker date="1433449239014" expanded="true" signature="1660:1729" placeholder="..." />
-                <marker date="1433449239014" expanded="true" signature="3032:3042" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mode-AAL.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-AAL.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="580" max-vertical-offset="2196">
-              <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="properties.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/ui/properties.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="5670" max-vertical-offset="10674">
-              <caret line="329" column="10" selection-start-line="329" selection-start-column="10" selection-end-line="329" selection-end-column="10" />
+            <state vertical-scroll-proportion="-8.259259" vertical-offset="3107" max-vertical-offset="7218">
+              <caret line="185" column="20" selection-start-line="185" selection-start-column="20" selection-end-line="185" selection-end-column="48" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1433445205659" expanded="true" signature="6978:6995" placeholder="..." />
+                <marker date="1433458692588" expanded="true" signature="1660:1729" placeholder="..." />
+                <marker date="1433458692588" expanded="true" signature="3128:3138" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="components.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/ui/components/components.js">
+      <file leaf-file-name="api.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="535" max-vertical-offset="1206">
-              <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1449" max-vertical-offset="2286">
+              <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Server.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/Server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="676" max-vertical-offset="2196">
+              <caret line="42" column="19" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
+              <folding>
+                <element signature="e#686#734#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -234,7 +191,6 @@
         <option value="$PROJECT_DIR$/README" />
         <option value="$PROJECT_DIR$/ui/diagramEditor.js" />
         <option value="$PROJECT_DIR$/AALCompiler.py" />
-        <option value="$PROJECT_DIR$/ui/Server.py" />
         <option value="$PROJECT_DIR$/ui/api.py" />
         <option value="$PROJECT_DIR$/ui/ui/components/Actor.js" />
         <option value="$PROJECT_DIR$/ui/ui/grid.js" />
@@ -243,17 +199,18 @@
         <option value="$PROJECT_DIR$/ui/ui/components/Ports2.js" />
         <option value="$PROJECT_DIR$/ui/style.css" />
         <option value="$PROJECT_DIR$/aalc.py" />
-        <option value="$PROJECT_DIR$/ui/ui/components/Agent.js" />
-        <option value="$PROJECT_DIR$/ui/ui/components/Data.js" />
-        <option value="$PROJECT_DIR$/ui/ui/components/Policy.js" />
         <option value="$PROJECT_DIR$/ui/ui/properties.js" />
         <option value="$PROJECT_DIR$/tools/utils/pycharm/AAL.xml" />
         <option value="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/snippets/AAL.js" />
         <option value="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-AAL.js" />
+        <option value="$PROJECT_DIR$/ui/Server.py" />
+        <option value="$PROJECT_DIR$/ui/ui/components/Agent.js" />
+        <option value="$PROJECT_DIR$/ui/ui/components/Data.js" />
+        <option value="$PROJECT_DIR$/ui/ui/components/Policy.js" />
+        <option value="$PROJECT_DIR$/ui/index.html" />
         <option value="$PROJECT_DIR$/ui/ui/fileManager.js" />
         <option value="$PROJECT_DIR$/ui/ui/tools.js" />
         <option value="$PROJECT_DIR$/ui/ui/ui.js" />
-        <option value="$PROJECT_DIR$/ui/index.html" />
       </list>
     </option>
   </component>
@@ -379,46 +336,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="libs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -441,11 +358,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ace" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src-min-noconflict" />
+              <option name="myItemId" value="toastr" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -459,7 +372,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -473,33 +394,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
+              <option name="myItemId" value="libs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
+              <option name="myItemId" value="aal" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="pycharm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
+              <option name="myItemId" value="core" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -514,6 +417,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="healthcare" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -549,6 +470,7 @@
       <recent name="$PROJECT_DIR$/UserGuide/assets" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ui/libs/css" />
       <recent name="$PROJECT_DIR$/ui/ui" />
       <recent name="$PROJECT_DIR$/coverage" />
       <recent name="$PROJECT_DIR$/tests/wearable" />
@@ -1211,7 +1133,13 @@
       <option name="project" value="LOCAL" />
       <updated>1433430129146</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Minors + tspass examples">
+      <created>1433454224676</created>
+      <option name="number" value="00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1433454224676</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -1241,6 +1169,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32808024" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1918429" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1250,7 +1179,6 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34240687" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39971346" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1277,7 +1205,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Monodic check fixes" />
     <MESSAGE value="Implementing remove function for m_aexpNotAexp and replace function for m_aexp*" />
     <MESSAGE value="Implementing negate function for aexpAction" />
     <MESSAGE value="Adding Actors" />
@@ -1302,7 +1229,8 @@
     <MESSAGE value="Cleanup" />
     <MESSAGE value="Minors" />
     <MESSAGE value="Adding AccLab ui" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding AccLab ui" />
+    <MESSAGE value="Minors + tspass examples" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minors + tspass examples" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1315,6 +1243,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.609538" vertical-offset="1093" max-vertical-offset="2952">
           <caret line="165" column="0" selection-start-line="165" selection-start-column="0" selection-end-line="165" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1366,20 +1295,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7705167" vertical-offset="5577" max-vertical-offset="21672">
           <caret line="338" column="18" selection-start-line="338" selection-start-column="18" selection-end-line="338" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.9508197" vertical-offset="0" max-vertical-offset="2358">
-          <caret line="110" column="23" selection-start-line="110" selection-start-column="23" selection-end-line="110" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/Server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7585693" vertical-offset="481" max-vertical-offset="2178">
-          <caret line="55" column="32" selection-start-line="55" selection-start-column="32" selection-end-line="55" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1463,6 +1379,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="658">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1561,34 +1480,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/components/Agent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="193" max-vertical-offset="1404">
-          <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/components/Policy.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="1602">
-          <caret line="35" column="45" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/components/Data.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41791046" vertical-offset="0" max-vertical-offset="1098">
-          <caret line="33" column="43" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/grammar/aal/AAL.g4">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.8508472" vertical-offset="2862" max-vertical-offset="5562">
@@ -1645,6 +1536,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/properties.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5670" max-vertical-offset="10674">
+          <caret line="329" column="10" selection-start-line="329" selection-start-column="10" selection-end-line="329" selection-end-column="10" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1433445205659" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-AAL.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="580" max-vertical-offset="2196">
+          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/utils/pycharm/README">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="603">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1449" max-vertical-offset="2286">
+          <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ui/ui/components/components.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="535" max-vertical-offset="1206">
@@ -1653,14 +1579,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/properties.js">
+    <entry file="file://$PROJECT_DIR$/ui/ui/components/Agent.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5670" max-vertical-offset="10674">
-          <caret line="329" column="10" selection-start-line="329" selection-start-column="10" selection-end-line="329" selection-end-column="10" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1433445205659" expanded="true" signature="6978:6995" placeholder="..." />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1080">
+          <caret line="33" column="55" selection-start-line="33" selection-start-column="55" selection-end-line="33" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/components/Data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1116">
+          <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/components/Policy.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1278">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1674,29 +1613,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
+    <entry file="file://$PROJECT_DIR$/ui/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4072" max-vertical-offset="5922">
-          <caret line="255" column="76" selection-start-line="255" selection-start-column="76" selection-end-line="255" selection-end-column="76" />
+        <state vertical-scroll-proportion="-4.0" vertical-offset="702" max-vertical-offset="3438">
+          <caret line="45" column="21" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/Server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="676" max-vertical-offset="2196">
+          <caret line="42" column="19" selection-start-line="42" selection-start-column="19" selection-end-line="42" selection-end-column="19" />
           <folding>
-            <marker date="1433449239014" expanded="true" signature="1660:1729" placeholder="..." />
-            <marker date="1433449239014" expanded="true" signature="3032:3042" placeholder="..." />
+            <element signature="e#686#734#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-AAL.js">
+    <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="580" max-vertical-offset="2196">
-          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="-8.259259" vertical-offset="3107" max-vertical-offset="7218">
+          <caret line="185" column="20" selection-start-line="185" selection-start-column="20" selection-end-line="185" selection-end-column="48" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1433458692588" expanded="true" signature="1660:1729" placeholder="..." />
+            <marker date="1433458692588" expanded="true" signature="3128:3138" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="9704" max-vertical-offset="10620">
-          <caret line="554" column="26" selection-start-line="554" selection-start-column="13" selection-end-line="554" selection-end-column="26" />
+        <state vertical-scroll-proportion="-14.925926" vertical-offset="9965" max-vertical-offset="10638">
+          <caret line="576" column="48" selection-start-line="576" selection-start-column="48" selection-end-line="576" selection-end-column="48" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -1705,27 +1655,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1557" max-vertical-offset="2916">
-          <caret line="88" column="48" selection-start-line="88" selection-start-column="48" selection-end-line="88" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.52238804" vertical-offset="783" max-vertical-offset="3348">
+          <caret line="61" column="44" selection-start-line="61" selection-start-column="44" selection-end-line="61" selection-end-column="44" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/utils/pycharm/README">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="603">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.5625" vertical-offset="0" max-vertical-offset="3348">
-          <caret line="114" column="36" selection-start-line="114" selection-start-column="36" selection-end-line="114" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>

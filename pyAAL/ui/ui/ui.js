@@ -53,6 +53,24 @@ visualEditor.ui = {
 		visualEditor.ui.outline.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.fileManager.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.components.init(grid, actionsPanel, componentsPanel, propertiesPanel);
+
+		toastr.options = {
+		  "closeButton": false,
+		  "debug": false,
+		  "newestOnTop": false,
+		  "progressBar": false,
+		  "positionClass": "toast-top-center",
+		  "preventDuplicates": false,
+		  "onclick": null,
+		  "showDuration": "200",
+		  "hideDuration": "700",
+		  "timeOut": "2000",
+		  "extendedTimeOut": "1000",
+		  "showEasing": "swing",
+		  "hideEasing": "linear",
+		  "showMethod": "fadeIn",
+		  "hideMethod": "fadeOut"
+		}
 	},
 
 	// Events
@@ -87,6 +105,12 @@ visualEditor.ui = {
 			this.disableNode(this.componentsPanel);
 			this.disableNode(this.outlinePanel);
 			this.disableNode(this.inplacePanel);
+
+			if(file != "") {
+				$(visualEditor.ui.tools.tools[11].button).fadeTo('slow', 1.0);
+				$(visualEditor.ui.tools.tools[14].button).fadeTo('slow', 1.0);
+				$(visualEditor.ui.tools.tools[18].button).fadeTo('slow', 1.0);
+			}
 		} else {
 			// Enable them
 			this.enableNode(this.propertiesPanel);
@@ -111,7 +135,7 @@ visualEditor.ui = {
 	 * @param node
 	 */
 	disableNode: function(node) {
-		node.children().fadeTo('slow', .0);
+		node.children().fadeTo('slow', .15);
 		//node.css("opacity", "0.3");
 	   	/*node.append("<div id='overlay-" + node[0].id + "'></div>");
 		$("#overlay-" + node[0].id)

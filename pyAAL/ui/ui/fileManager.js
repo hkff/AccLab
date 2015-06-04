@@ -61,8 +61,9 @@ visualEditor.ui.fileManager = {
 		  '<div id="fmm-open"  data-options="iconCls:\'fa fa-folder-open\'" class="menu-item cmenuBtn">Open</div>'+
 		  '<div id="fmm-rename" data-options="iconCls:\'fa fa-edit\'" class="menu-item cmenuBtn" >Rename</div>'+
 		  //'<div class="menu-sep"></div>'+
-		  '<div id="fmm-delete" data-options="iconCls:\'fa fa-times\'" class="menu-item cmenuBtn">Delete</div>'+ '</div>' +
-		  '<div id="fmm-refresh" data-options="iconCls:\'fa fa-refresh\'" class="menu-item cmenuBtn">Refresh</div>'+ '</div>';
+		  '<div id="fmm-delete" data-options="iconCls:\'fa fa-times\'" class="menu-item cmenuBtn">Delete</div>'+
+		  '<div id="fmm-refresh" data-options="iconCls:\'fa fa-refresh\'" class="menu-item cmenuBtn">Refresh</div>'+
+		  '<div id="fmm-compile" data-options="iconCls:\'fa fa-cog\'" class="menu-item cmenuBtn">Compile</div>'+ '</div>';
 		$('body').append(this.ctMenu);
 
 		$("#explorer").tree({
@@ -106,17 +107,47 @@ visualEditor.ui.fileManager = {
 		// Context menu actions
 		$('#fmm-new-diagram').click(function(e){
 			var node = $("#explorer").tree('getSelected');
-			//var path = _this.getAbsPath(node);
-			var file = "toto.acd";
+			var file;
+			do {
+				file=prompt("Enter file name");
+			}
+			while(file.length < 0);
+			file = file + ".acd";
+			var path = _this.getAbsPath(node);
+			file = path.replace(node.text, "") + file;
+
 			_this.createFile(file);
 			_this.openFile(file);
 		});
 
 		$('#fmm-new-aal').click(function(e){
 			var node = $("#explorer").tree('getSelected');
-			var file = "newFile.aal";
+			var file;
+			do {
+				file=prompt("Enter file name");
+			}
+			while(file.length < 0);
+			file = file + ".aal";
+			var path = _this.getAbsPath(node);
+			file = path.replace(node.text, "") + file;
+
 			_this.createFile(file);
 			_this.openFile(file);
+		});
+
+		$('#fmm-rename').click(function(e){
+			var node = $("#explorer").tree('getSelected');
+			var file;
+			do {
+				file=prompt("Enter file name");
+			}
+			while(file.length < 0);
+			var path = _this.getAbsPath(node);
+			console.log(node.text)
+			console.log(path)
+
+			//_this.createFile(file);
+			//_this.openFile(file);
 		});
 
 		$('#fmm-open').click(function(e){
@@ -134,6 +165,27 @@ visualEditor.ui.fileManager = {
 		$('#fmm-refresh').click(function(e){
 			// Update explorer
 			$("#explorer").tree("reload");
+		});
+
+		$('#fmm-compile').click(function(e){
+			var node = $("#explorer").tree('getSelected');
+			var file = _this.getAbsPath(node);
+            var dType = "text";
+			var action = "compileAAL";
+			var fileType = file.split('.').pop().toLowerCase();
+			if(fileType == "tspass")
+				action = "compileFOTL";
+
+			$.ajax({
+				dataType: dType,
+				type:'POST',
+				url: visualEditor.backend,
+				data: {action: action, file: file},
+				success: function(response){
+					$("#output_window").empty().append(response);
+					toastr.info('Compiling...');
+				}
+			});
 		});
 	},
 
@@ -202,7 +254,7 @@ visualEditor.ui.fileManager = {
 	createFile: function(file) {
 		var fileType = file.split('.').pop().toLowerCase();
 		var dType = "text";
-		var data = "";
+		var data = " ";
 		if(fileType == "acd"){
 			dType = "json";
 			data = "[]";
@@ -334,6 +386,7 @@ visualEditor.ui.fileManager = {
 					data: {action: "write", file: file, data: data},
 					success: function(response){
 				  		console.log(response)
+						toastr.success('File saved !');
 					}
 				});
 				break;

@@ -40,6 +40,7 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             return "Method error"
 
     def handle_req(self, args, method):
+        print(args)
         res = "Error"
         val = self.get_arg(args, "action", method)
         if val == "list":

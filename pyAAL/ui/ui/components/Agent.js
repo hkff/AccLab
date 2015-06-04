@@ -31,9 +31,10 @@ agent = actor.extend({
 
 	view: function() {
 		// Agent
-		this.cmp_agent = $('<div title="Agent" class="btn-components fa fa-user fa-2x"></div>')
+		this.cmp_agent = $('<div title="Agent (shift+A)" class="btn-components fa fa-user fa-2x"></div>')
 		this.cmp_agent.click(this.addElement);
 		this.parent.componentsPanel.append(this.cmp_agent);
+        shortcut.add("Shift+A", this.addElement);
 	},
 
 	addElement: function() {
