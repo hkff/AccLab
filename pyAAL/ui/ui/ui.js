@@ -144,10 +144,8 @@ visualEditor.ui = {
 	 * @param node
 	 */
 	enableNode: function(node) {
-		//node.css("opacity", "1.0");
 		node.children().fadeTo('slow', 1.0);
 		node[0].removeEventListener("click", this.stoper, true);
-		//node.show();
 	},
 
 	/**
@@ -155,24 +153,8 @@ visualEditor.ui = {
 	 * @param node
 	 */
 	disableNode: function(node) {
-		console.log(node)
 		node.children().fadeTo('slow', .15);
 		node[0].addEventListener("click", this.stoper, true);
-		//node.hide();
-		//node.css("opacity", "0.3");
-	   	/*node.append("<div id='overlay-" + node[0].id + "'></div>");
-		$("#overlay-" + node[0].id)
-		  .css({
-			 'opacity' : 0.4,
-			 'position': 'fixed',
-			 'top': node.top, //window.innerHeight - node.height(),
-			 'left': window.innerWidth - node.width(),
-			 'background-color': 'black',
-			 'width': node.width(),
-			 'height': node.height(),
-			 'z-index': 5000
-		  });
-		*/
 	},
 
 	/**

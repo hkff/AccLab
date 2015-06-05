@@ -683,26 +683,26 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
                 "</p><div class='rule'>" +
                     "<b id='agentDec' class='keyword hint--top hint--info' style='float: left;' data-hint='Click to insert Agent declaration'>AGENT</b>"  +
                     "<input id='agentIdDec' list='agents' type='text' class='select' placeholder='agent_Id'>" +
-                    "<b class='keyword'>TYPE</b>(AgentType*) " +
+                    "<b class='keyword'>TYPES</b>(Type*) " +
                     "<b class='keyword'>RS</b>(service*) <b class='keyword'>PS</b>(service*)<br><br>" +
                 "</div>" +
                 "<div class='rule'>" +
                     "<b id='serviceDec' class='keyword hint--top hint--info' style='float:left;' data-hint='Click to insert Service declaration'>SERVICE</b>" +
                     "<input id='serviceIdDec' list='services' type='text' class='select' placeholder='service_Id'>" +
-                    "<b class='keyword'>TYPE</b>(Type*) [Purpose]<br><br>" +
+                    "<b class='keyword'>TYPES</b>(Type*) [Purpose]<br><br>" +
                 "</div>" +
                 "<div class='rule'>" +
                     "<b id='dataDec' class='keyword  hint--top hint--info' style='float:left;' data-hint='Click to insert Data declaration'>DATA</b>" +
                     "<input id='dataIdDec' list='data' type='text' class='select' placeholder='data_Id'>" +
-                    "<b class='keyword' style='float:left;'> TYPE </b> <p style='float:left;'> &nbsp;(Type*) &nbsp;</p> " +
-                    "<b class='keyword' style='float:left;'> SUBJECT </b> " +
+                    "<b class='keyword' style='float:left;'> TYPES </b>(Type*) " +
+                    "<b class='keyword' > SUBJECT </b> " +
                     "<input id='agentIdDataDec' list='agents' type='text' class='select' placeholder='agent_Id'>" +
                     "<br>" +
                 "</div>" +
             "<br>" +
             "<div class='rule'>" +
                 "<b class='coms'>/** Clause **/</b><br>" +
-                "<b id='clause' class='keyword hint--top hint--info' data-hint='Click to insert Clause'>CLAUSE</b> clauseName :<br>" +
+                "<b id='clause' class='keyword hint--top hint--info' data-hint='Click to insert Clause'>CLAUSE</b> clauseName (<br>" +
             "</div>" +
                 "" +
                 "<div id='usage' class='rule' style='margin-left: 10px;' title='Click to insert Usage'>" +
@@ -712,17 +712,12 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
         	"<!-- Audit -->" +
                 "<div class='rule' style='margin-left: 10px;'>" +
                     "<b class='coms'>//Audit</b><br>" +
-                    "<b id='audit' class='keyword' style='float:left;'>AUDITING</b> " +
-                    "<p style='float:left;'>[<b class='ref'>Usage</b><b class='keyword'>THEN</b>]</p>" +
-                    "<input id='agent1IdAudit' list='agents' type='text' class='select' placeholder='agent_Id'>    " +
-                    "<b style='float:left'>.</b><b style='float:left'>audit[</b>" +
-                    "<input id='agent2IdAudit' list='agents' type='text' class='select' placeholder='agent_Id'>" +
-                    "<b style='float:left'>]</b>()<br>" +
+                    "<b id='audit' class='keyword' style='float:left;'>AUDITING</b> <b class='ref'>Usage</b><br><br>" +
                 "</div>" +
         	"<!-- Rectification -->        " +
                 "<div class='rule' style='margin-left: 0px;'>" +
                     "<b class='coms'>//Rectification</b><br>    " +
-                    "<b class='keyword' id='rectification'>IF_VIOLATED_THEN</b> <b class='ref'>Usage</b><br>" +
+                    "<b class='keyword' id='rectification'>IF_VIOLATED_THEN</b> <b class='ref'>Usage</b>)<br>" +
                 "</div>" +
             "</div>" +
             "<br>" +
@@ -805,7 +800,6 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
 		shortcut.add("Ctrl+M", fx);
 	}
 });
-
 
 /**
  * Insert text in current ace editor

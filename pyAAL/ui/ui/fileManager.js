@@ -71,7 +71,7 @@ visualEditor.ui.fileManager = {
 			checkbox:false,
 			url: visualEditor.backend + "?action=list",
 
-			onContextMenu: function(e,node){
+			onContextMenu: function(e, node){
 				e.preventDefault();
 				$(this).tree('select', node.target);
 				$('#fmm').menu('show',{
@@ -210,6 +210,12 @@ visualEditor.ui.fileManager = {
 		if(fileType == "acd")
 			dType = "json";
 
+		if(this.isOpened(file) != -1)
+			return;
+
+		if(this.isDir(file))
+			return;
+
 		// Ajax request
         $.ajax({
 			dataType: dType,
@@ -223,8 +229,7 @@ visualEditor.ui.fileManager = {
 				$(document.body).append(editor);
 				var editor4 = new dockspawn.PanelContainer($("#"+id)[0], dockManager);
 				var editor4Node  = dockManager.dockFill(documentNode, editor4);
-		
-				console.log(file + "  "+fileType)
+
 				switch(fileType) {
 					case "acd":
 						// Load ACD diagram
@@ -245,6 +250,27 @@ visualEditor.ui.fileManager = {
 				}
 			}
 		});
+	},
+
+	/**
+	 * Check is a file is opened
+	 * @param file
+	 */
+	isOpened: function(file) {
+		var lng = documentNode.children.length;
+		for(var i=0; i<lng; i++) {
+			if(file == documentNode.children[i].container.title)
+				return i;
+		}
+		return -1;
+	},
+
+	/**
+	 * Check it is a dir
+	 * @param file
+	 */
+	isDir: function(file) {
+		return file.split('.').length <= 1;
 	},
 
 	/**
