@@ -34,7 +34,7 @@ CLAUSE c1(
     ALWAYS(
         PERMIT bob.read[a](d) AND
         DENY bob.send[a](d) AND
-        not (not (bob.read[a](d))) AND
-        ALWAYS (not (bob.write[a]()))
+        NOT (NOT (bob.read[a](d))) AND
+        ALWAYS (NOT (bob.write[a]()))
     )
 )

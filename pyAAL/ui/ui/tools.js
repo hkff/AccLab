@@ -78,6 +78,8 @@ visualEditor.ui.tools = {
 		this.tools.push(new visualEditor.ui.tools.separatorTool());
 		this.tools.push(new visualEditor.ui.tools.genAALTool());
 		this.tools.push(new visualEditor.ui.tools.genTSPASSTool());
+		this.tools.push(new visualEditor.ui.tools.keyboardShortcutsTool());
+		this.tools.push(new visualEditor.ui.tools.AALSyntaxTool());
 	},
 
 	/**
@@ -583,3 +585,235 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 		shortcut.add("Ctrl+Enter", fx);
 	}
 });
+
+//////////////////////////////////////////////////////////
+//
+//  keyboardShortcutsTool
+//
+//////////////////////////////////////////////////////////
+visualEditor.ui.tools.keyboardShortcutsTool = visualEditor.ui.tool.extend({
+	NAME : "visualEditor.ui.tools.keyboardShortcutsTool",
+
+	view: function(parent) {
+		this.button = $('<div title="Keyboard Shortcuts (ctrl+k)" id="ksBtn" class="btn-action fa fa-keyboard-o fa-lg"/>');
+		parent.actionsPanel.append(this.button);
+	},
+
+	control: function(parent) {
+		var fx = function(e){
+			var p = "<div id='keyboardShortcuts'>" +
+			"<style>.keyword{color:orange;}</style>" +
+			"<div style='width:500px; overflow: hidden;'>" +
+			"	<b>Shortcuts</b><br>" +
+			"	<ul style='list-style: disc inside; list-style-type: disc;list-style-position: inside;" +
+			"list-style-image: initial;padding-left: 0px;margin-bottom: 0px;line-height: normal;}'>" +
+					"<li><b class='keyword'>CTRL+S -</b> Save current file</li>" +
+					"<li><b class='keyword'>CTRL+F -</b> Find in current editor</li>" +
+					"<li><b class='keyword'>CTRL+H -</b> Advanced Search / Search &amp; Replace</li>" +
+					"<li><b class='keyword'>CTRL+A -</b> Select all</li>" +
+					"<li><b class='keyword'>CTRL+D -</b> Delete current line(s)</li>" +
+					"<li><b class='keyword'>CTRL+P -</b> Find matching element [{()}]</li>" +
+					"<li><b class='keyword'>CTRL+L -</b> Go To Line</li>" +
+					"<li><b class='keyword'>CTRL+ENTER -</b> Compile</li>" +
+					"<li><b class='keyword'>CTRL+G -</b> Generate AAL file from diagram</li>" +
+					"<li><b class='keyword'>CTRL+M -</b> AAL Syntax</li>" +
+					"<li><b class='keyword'>CTRL+K -</b> Keyboard shortcuts</li>" +
+					"<li><b class='keyword'>F11 -</b> Full screen</li>" +
+					"<li><b class='keyword'>ALT+Up-</b>Arrow - Move current line(s) up</li>" +
+					"<li><b class='keyword'>ALT+Down-</b>Arrow - Move current line(s) down</li>" +
+					"<li><b class='keyword'>ALT+Shift+Up-</b>Arrow - Copy current line(s) above current</li>" +
+					"<li><b class='keyword'>ALT+Shift+Down-</b>Arrow - Copy current line(s) below current</li>" +
+					"<li><b class='keyword'>CTRL+Space bar -</b> Autocomplete</li>" +
+					"<li><b class='keyword'>CTRL+Click -</b> Multiedit</li>" +
+			"</ul>" +
+			"</div></div>";
+
+			toastr.info(p, "", {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": true,
+  				"showDuration": "3000",
+			  	"hideDuration": "1000",
+			  	"timeOut": 0,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-right"
+			});
+			$(".toast-info").css("width", "500px")
+
+			//var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
+			//editor.insert("55", editor.selection.getCursor());
+
+		};
+		this.button.click(fx);
+		shortcut.add("Ctrl+K", fx);
+	}
+});
+
+//////////////////////////////////////////////////////////
+//
+//  AALSyntaxTool
+//
+//////////////////////////////////////////////////////////
+visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
+	NAME : "visualEditor.ui.tools.AALSyntaxTool",
+
+	view: function(parent) {
+		this.button = $('<div title="AAL Syntax (ctrl+M)" id="aalSyntaxBtn" class="btn-action fa fa-file-code-o fa-lg"/>');
+		parent.actionsPanel.append(this.button);
+	},
+
+	control: function(parent) {
+		var fx = function(e){
+			var p =
+			"<div id='modal-content'>" +
+            "<div style='width:450px'>" +
+            "<style>" +
+                ".keyword{color:orange; padding-right: 5px;} " +
+                ".rule {padding-bottom: 0px;} " +
+                ".coms {color: green;} " +
+                ".ref {color: yellow;}" +
+                ".select {width: 60px; height: 18px; float: left; border: none;" +
+                         "margin-right: 5px; margin-left: 5px; margin-top: 0px;" +
+                         "font-size: 12px; padding-left: 3px; padding: 0px 0px;}" +
+            "</style>" +
+            "<b>AAL syntax</b>" +
+            "<p>" +
+        	"<!-- Declarations -->" +
+                "<b class='coms'>/** Declarations **/</b><br>" +
+                "</p><div class='rule'>" +
+                    "<b id='agentDec' class='keyword hint--top hint--info' style='float: left;' data-hint='Click to insert Agent declaration'>AGENT</b>"  +
+                    "<input id='agentIdDec' list='agents' type='text' class='select' placeholder='agent_Id'>" +
+                    "<b class='keyword'>TYPE</b>(AgentType*) " +
+                    "<b class='keyword'>RS</b>(service*) <b class='keyword'>PS</b>(service*)<br><br>" +
+                "</div>" +
+                "<div class='rule'>" +
+                    "<b id='serviceDec' class='keyword hint--top hint--info' style='float:left;' data-hint='Click to insert Service declaration'>SERVICE</b>" +
+                    "<input id='serviceIdDec' list='services' type='text' class='select' placeholder='service_Id'>" +
+                    "<b class='keyword'>TYPE</b>(Type*) [Purpose]<br><br>" +
+                "</div>" +
+                "<div class='rule'>" +
+                    "<b id='dataDec' class='keyword  hint--top hint--info' style='float:left;' data-hint='Click to insert Data declaration'>DATA</b>" +
+                    "<input id='dataIdDec' list='data' type='text' class='select' placeholder='data_Id'>" +
+                    "<b class='keyword' style='float:left;'> TYPE </b> <p style='float:left;'> &nbsp;(Type*) &nbsp;</p> " +
+                    "<b class='keyword' style='float:left;'> SUBJECT </b> " +
+                    "<input id='agentIdDataDec' list='agents' type='text' class='select' placeholder='agent_Id'>" +
+                    "<br>" +
+                "</div>" +
+            "<br>" +
+            "<div class='rule'>" +
+                "<b class='coms'>/** Clause **/</b><br>" +
+                "<b id='clause' class='keyword hint--top hint--info' data-hint='Click to insert Clause'>CLAUSE</b> clauseName :<br>" +
+            "</div>" +
+                "" +
+                "<div id='usage' class='rule' style='margin-left: 10px;' title='Click to insert Usage'>" +
+                    "<b class='coms'>// Usage</b><br>" +
+                   "[&nbsp;(<b class='keyword'>FORALL</b>&nbsp;|&nbsp;<b class='keyword'>EXISTS</b>)&nbsp;var:Type]* &nbsp;ActionExp <br>" +
+                "</div>" +
+        	"<!-- Audit -->" +
+                "<div class='rule' style='margin-left: 10px;'>" +
+                    "<b class='coms'>//Audit</b><br>" +
+                    "<b id='audit' class='keyword' style='float:left;'>AUDITING</b> " +
+                    "<p style='float:left;'>[<b class='ref'>Usage</b><b class='keyword'>THEN</b>]</p>" +
+                    "<input id='agent1IdAudit' list='agents' type='text' class='select' placeholder='agent_Id'>    " +
+                    "<b style='float:left'>.</b><b style='float:left'>audit[</b>" +
+                    "<input id='agent2IdAudit' list='agents' type='text' class='select' placeholder='agent_Id'>" +
+                    "<b style='float:left'>]</b>()<br>" +
+                "</div>" +
+        	"<!-- Rectification -->        " +
+                "<div class='rule' style='margin-left: 0px;'>" +
+                    "<b class='coms'>//Rectification</b><br>    " +
+                    "<b class='keyword' id='rectification'>IF_VIOLATED_THEN</b> <b class='ref'>Usage</b><br>" +
+                "</div>" +
+            "</div>" +
+            "<br>" +
+            "<b class='coms'>/** ActionExp **/</b><br>" +
+        "" +
+        "<!-- Action -->" +
+            "<div class='rule' title='Click to insert action'>" +
+                "<b class='coms'>// Action</b><br>" +
+                "<input id='may' type='checkbox' value='may' style='float: left; margin-top: 3px;'>" +
+                "<b id='action' class='keyword hint--top hint--info' style='float: left;' data-hint='Click to insert action'>MAY</b>" +
+                "<input id='agent1IdAction' list='agents' type='text' class='select' placeholder='agent_Id'>" +
+                "<b style='float:left'>.</b>" +
+                "<input id='serviceIdAction' list='services' type='text' class='select' placeholder='service_Id'>" +
+                "<b style='float:left'>[</b>" +
+                "<input id='agent2IdAction' list='agents' type='text' class='select' placeholder='agent_Id'>" +
+                "<b style='float:left'>]</b>(Exp) [Time] [Purpose] <br>" +
+            "</div><br>" +
+            "|&nbsp; <b class='keyword'>NOT</b> ActionExp <br>" +
+            "|&nbsp;" +
+               "(<b class='keyword' title='Click to insert must modality'>MUST</b>&nbsp;|&nbsp;" +
+               "<b class='keyword' title='Click to insert mustnot modality'>MUSTNOT</b>&nbsp;|&nbsp;" +
+               "<b class='keyword' title='Click to insert always modality'>ALWAYS</b>) ActionExp <br>" +
+            "|&nbsp; Condition <br>" +
+            "|&nbsp; ActionExp (<b class='keyword'>AND|OR|THEN|ONLYWHEN</b>) ActionExp <br>" +
+            "<p></p>" +
+            "<!---------------  Script -------------------->" +
+            "<script>" +
+                "$('#agentDec').click(function(){" +
+                    "insertSnippet('AGENT '+$('#agentIdDec').val()+' TYPE(AgentType*) RS(service*) PS(service*)\\n');" +
+                    "$('#agentIdDec').val('');" +
+                "});" +
+                "$('#serviceDec').click(function(){" +
+                    "insertSnippet('SERVICE '+$('#serviceIdDec').val()+' TYPE(Type*) [Purpose]\\n');" +
+                    "$('#serviceIdDec').val('');" +
+                "});" +
+                "$('#dataDec').click(function(){" +
+                    "insertSnippet('DATA '+$('#dataIdDec').val()+' TYPE(Type*) SUBJECT '+$('#agentIdDataDec').val()+'\\n');" +
+                    "$('#dataIdDec').val('');" +
+                    "$('#agentIdDataDec').val('');" +
+                "});" +
+                "$('#clause').click(function(){insertSnippet('CLAUSE clauseName :\\nUsageExp\\nAUDITING [Usage THEN] agent1.audit[agent2]()\\nIF_VIOLATED_THEN Usage')});" +
+                "$('#usage').click(function(){" +
+                "});" +
+                "$('#audit').click(function(){" +
+                    "insertSnippet('AUDITING [Usage THEN] '+$('#agent1IdAudit').val()+'.audit['+" +
+                        "$('#agent2IdAudit').val()+']()');" +
+                    "$('#agent1IdAudit').val('');" +
+                    "$('#agent2IdAudit').val('');" +
+                "});" +
+                "$('#rectification').click(function(){insertSnippet('IF_VIOLATED_THEN Usage')});" +
+                "$('#action').click(function(){" +
+                    "insertSnippet(" +
+                        "(($('#may').is(':checked'))? 'MAY ' : '') +" +
+                        "(($('#agent1IdAction').val() == '')? 'agentId': $('#agent1IdAction').val())+" +
+                        "'.'+" +
+                        "(($('#serviceIdAction').val() == '')? 'ServiceId': $('#serviceIdAction').val())+" +
+                        "'['+" +
+                        "(($('#agent2IdAction').val() == '')? 'agentId':$('#agent2IdAction').val()) +'](Exp)');" +
+                    "" +
+                    "$('#agent1IdAction').val('');" +
+                    "$('#agent2IdAction').val('');" +
+                    "$('#serviceIdAction').val('');" +
+                "});" +
+            "</script>" +
+            "</div>" ;
+
+			toastr.info(p, "", {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": false,
+  				"showDuration": "3000",
+			  	"hideDuration": "1000",
+			  	"timeOut": 0,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-right"
+			});
+			$(".toast-info").css("width", "500px")
+		};
+		this.button.click(fx);
+		shortcut.add("Ctrl+M", fx);
+	}
+});
+
+
+/**
+ * Insert text in current ace editor
+ * @param s
+ */
+function insertSnippet(s) {
+	if(visualEditor.ui.activeTab != null) {
+		var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
+		editor.insert(s, editor.selection.getCursor());
+	}
+}

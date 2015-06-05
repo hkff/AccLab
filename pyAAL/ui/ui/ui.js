@@ -55,21 +55,21 @@ visualEditor.ui = {
 		visualEditor.ui.components.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 
 		toastr.options = {
-		  "closeButton": false,
-		  "debug": false,
-		  "newestOnTop": false,
-		  "progressBar": false,
-		  "positionClass": "toast-top-center",
-		  "preventDuplicates": false,
-		  "onclick": null,
-		  "showDuration": "200",
-		  "hideDuration": "700",
-		  "timeOut": "2000",
-		  "extendedTimeOut": "1000",
-		  "showEasing": "swing",
-		  "hideEasing": "linear",
-		  "showMethod": "fadeIn",
-		  "hideMethod": "fadeOut"
+			"closeButton": false,
+			"debug": false,
+			"newestOnTop": false,
+			"progressBar": false,
+			"positionClass": "toast-top-center",
+			"preventDuplicates": false,
+			"onclick": null,
+			"showDuration": "200",
+			"hideDuration": "700",
+			"timeOut": "2000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
 		}
 	},
 
@@ -116,9 +116,13 @@ visualEditor.ui = {
 			this.disableNode(this.inplacePanel);
 
 			if(file != "") {
-				$(visualEditor.ui.tools.tools[11].button).show(); //fadeTo('slow', 1.0);
-				$(visualEditor.ui.tools.tools[14].button).show(); //fadeTo('slow', 1.0);
-				$(visualEditor.ui.tools.tools[18].button).show(); //fadeTo('slow', 1.0);
+				$(visualEditor.ui.tools.tools[11].button).show();
+				$(visualEditor.ui.tools.tools[14].button).show();
+				$(visualEditor.ui.tools.tools[18].button).show();
+				$(visualEditor.ui.tools.tools[19].button).show();
+			}
+			if(fileType == "aal") {
+				$(visualEditor.ui.tools.tools[20].button).show();
 			}
 		} else {
 			// Enable them
@@ -130,7 +134,8 @@ visualEditor.ui = {
 			this.enableNode(this.componentsPanel);
 			this.enableNode(this.outlinePanel);
 			this.enableNode(this.inplacePanel);
-			$(visualEditor.ui.tools.tools[18].button).hide(); //fadeTo('fast', .15);
+			$(visualEditor.ui.tools.tools[18].button).hide();
+			$(visualEditor.ui.tools.tools[20].button).hide();
 		}
 	},
 
