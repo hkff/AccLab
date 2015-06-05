@@ -118,7 +118,6 @@ draw2d.shape.basic.Rectangle.extend({
      */
     getPersistentAttributes : function() {
         var memento = this._super();
-        console.log("getpa")
         // add all decorations to the memento
         memento.tlabeltxt          = this.tlabel.text;
         memento.policy             = this.policy;
@@ -139,7 +138,6 @@ draw2d.shape.basic.Rectangle.extend({
      * @returns 
      */
     setPersistentAttributes : function(memento) {
-        console.log("setpa")
         this._super(memento);
         
         // remove all decorations created in the constructor of this element
@@ -198,7 +196,6 @@ draw2d.shape.basic.Rectangle.extend({
     },
 
     onDragEnter: function(draggedFigure) {
-        console.log("draaaaaaag")
         visualEditor.ui.selectedNode = this;
         $(visualEditor.ui).trigger('nodeSelected');
          // redirect the dragEnter handling to the hybrid port
@@ -366,9 +363,7 @@ draw2d.shape.basic.Rectangle.extend({
      */
     removeRservice: function(name) {
         this.getOutputPorts().data.forEach(function(e){
-            console.log("inloop "+name + " "+e.plabel.text)
             if(e.plabel && e.plabel.text == name){
-                console.log("removed "+name + " "+e.plabel.text)
                 e.parent.removePort(e);
                 e.parent.inputPorts.remove(e);
                 e.parent.outputPorts.remove(e);
@@ -386,7 +381,6 @@ draw2d.shape.basic.Rectangle.extend({
     removePservice: function(name) {
         this.getInputPorts().data.forEach(function(e){
             if(e.plabel && e.plabel.text == name){
-                console.log(name + " "+e.plabel.text)
                 e.parent.removePort(e);
                 e.parent.inputPorts.remove(e);
                 e.parent.outputPorts.remove(e);
@@ -428,14 +422,10 @@ draw2d.shape.basic.Rectangle.extend({
      * 
      */
     updateServices: function(newServices, services, addFunction, removeFunction) {
-        console.log(services.data)
-        console.log(newServices.data)
-
         var cmd = newServices.getSize() - services.getSize();
         
         // Positions swap
         if(cmd ==  0){
-            console.log("swap")
             // Clear all services
             for (var i = 0; i < newServices.getSize(); i++) {
                 removeFunction.call(this, newServices.get(i));
@@ -448,10 +438,8 @@ draw2d.shape.basic.Rectangle.extend({
         }else 
         if(cmd == 1){
             // Add new service
-            console.log("add")
             for (var i = 0; i < newServices.getSize(); i++) {
                 e = newServices.get(i);
-                console.log(services.contains(e)+ " "+e)
                 if(!services.contains(e)){
                     addFunction.call(this, e);
                     i = newServices.getSize();
@@ -459,10 +447,8 @@ draw2d.shape.basic.Rectangle.extend({
             }
         }else{
             // Remove a service
-            console.log("remove")
             for (var i = 0; i < services.getSize(); i++) {
                 e = services.get(i);
-                console.log(services.contains(e)+ " "+e)
                 if(!newServices.contains(e)){
                     removeFunction.call(this, e);
                 }
@@ -478,9 +464,8 @@ draw2d.shape.basic.Rectangle.extend({
      * TODO : Need to be optimized
      */
     refresh: function() {
-        console.log("inside "+this.DEFAULT_bgColor)
         this.setBackgroundColor(this.DEFAULT_bgColor);
-        this.getOutputPorts().data.forEach(function(e){console.log(e.parent.DEFAULT_psColor); e.setBackgroundColor(e.parent.DEFAULT_rsColor); });
+        this.getOutputPorts().data.forEach(function(e){ e.setBackgroundColor(e.parent.DEFAULT_rsColor); });
         this.getInputPorts().data.forEach(function(e){ e.setBackgroundColor(e.parent.DEFAULT_psColor); });
 
         this.tlabel.setFontColor(this.DEFAULT_labelColor);
@@ -532,7 +517,7 @@ draw2d.shape.basic.Rectangle.extend({
     setRotationAngle: function(angle) {
         this._super(angle);
         // Rotate children
-        this.getOutputPorts().data.forEach(function(e){ console.log(angle);e.setRotationAngle(angle); });
+        this.getOutputPorts().data.forEach(function(e){ e.setRotationAngle(angle); });
         this.getInputPorts().data.forEach(function(e){ e.setRotationAngle(angle); });
     }
 

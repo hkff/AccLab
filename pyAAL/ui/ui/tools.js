@@ -53,7 +53,6 @@ visualEditor.ui.tools = {
 		this.control(this);
 	},
 
-
 	/**
 	 * @method
 	 * Register tools
@@ -112,7 +111,6 @@ visualEditor.ui.tool = Class.extend({
 	NAME : "visualEditor.ui.tool",
 	
 	view: function(parent) {
-		
 	},
 
 	control: function(parent) {
@@ -638,11 +636,7 @@ visualEditor.ui.tools.keyboardShortcutsTool = visualEditor.ui.tool.extend({
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-right"
 			});
-			$(".toast-info").css("width", "500px")
-
-			//var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
-			//editor.insert("55", editor.selection.getCursor());
-
+			$(".toast-info").css("width", "500px");
 		};
 		this.button.click(fx);
 		shortcut.add("Ctrl+K", fx);
@@ -758,7 +752,7 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
                     "$('#dataIdDec').val('');" +
                     "$('#agentIdDataDec').val('');" +
                 "});" +
-                "$('#clause').click(function(){insertSnippet('CLAUSE clauseName :\\nUsageExp\\nAUDITING [Usage THEN] agent1.audit[agent2]()\\nIF_VIOLATED_THEN Usage')});" +
+                "$('#clause').click(function(){insertSnippet('CLAUSE clauseName (\\n\\tUsageExp\\n\\tAUDITING Usage\\n\\tIF_VIOLATED_THEN Usage\\n)')});" +
                 "$('#usage').click(function(){" +
                 "});" +
                 "$('#audit').click(function(){" +
@@ -794,7 +788,7 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-right"
 			});
-			$(".toast-info").css("width", "500px")
+			$(".toast-info").css("width", "500px");
 		};
 		this.button.click(fx);
 		shortcut.add("Ctrl+M", fx);

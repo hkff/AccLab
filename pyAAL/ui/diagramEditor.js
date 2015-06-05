@@ -109,8 +109,5 @@ window.onload = function() {
         visualEditor.ui.updatePanel();
     }
 
-    visualEditor.init("editor1_window", "toolbox_window", "componentbox_window",
-        "properties_window", "outline_window", "inPlaceAALEditor");
-    $("#pg").propertygrid("sort");
-    visualEditor.ui.updatePanel();
+
 }

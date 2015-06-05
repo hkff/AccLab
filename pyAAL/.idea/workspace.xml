@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/outline.js" afterPath="$PROJECT_DIR$/ui/ui/outline.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../build.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/components/Actor.js" afterPath="$PROJECT_DIR$/ui/ui/components/Actor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/diagramEditor.js" afterPath="$PROJECT_DIR$/ui/diagramEditor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/index.html" afterPath="$PROJECT_DIR$/ui/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/tools.js" afterPath="$PROJECT_DIR$/ui/ui/tools.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pyAAL.iws" />
@@ -54,87 +58,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ui.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="81" max-vertical-offset="3438">
-              <caret line="145" column="32" selection-start-line="145" selection-start-column="32" selection-end-line="145" selection-end-column="32" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/ui/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5" vertical-offset="432" max-vertical-offset="2250">
-              <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="diagramEditor.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/diagramEditor.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1251" max-vertical-offset="1854">
-              <caret line="107" column="47" selection-start-line="107" selection-start-column="47" selection-end-line="107" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tools.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="tools.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="13612" max-vertical-offset="14742">
-              <caret line="802" column="0" selection-start-line="802" selection-start-column="0" selection-end-line="802" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.45084745" vertical-offset="13882" max-vertical-offset="14634">
+              <caret line="786" column="27" selection-start-line="786" selection-start-column="27" selection-end-line="786" selection-end-column="27" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1433537689955" expanded="true" signature="17133:17163" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="19833:19844" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="20628:20640" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="21129:21140" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="21549:21560" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="21774:21785" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="22388:22406" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="22737:22755" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="22875:22886" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="23050:23067" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="23612:23641" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="23723:23735" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="23922:23932" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="24087:24097" placeholder="..." />
-                <marker date="1433537689955" expanded="true" signature="24247:24257" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fileManager.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1234" max-vertical-offset="7686">
-              <caret line="79" column="19" selection-start-line="76" selection-start-column="16" selection-end-line="79" selection-end-column="19" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <marker date="1433537562131" expanded="true" signature="1660:1729" placeholder="..." />
-                <marker date="1433537562131" expanded="true" signature="3129:3139" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="properties.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/ui/properties.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10674">
-              <caret line="550" column="0" selection-start-line="550" selection-start-column="0" selection-end-line="550" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <marker date="1433445205659" expanded="true" signature="6978:6995" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="17129:17159" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="19689:19700" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="20484:20496" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="20985:20996" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="21405:21416" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="21630:21641" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="22244:22262" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="22593:22611" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="22731:22742" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="22906:22923" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="23468:23497" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="23579:23591" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="23778:23788" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="23943:23953" placeholder="..." />
+                <marker date="1433539979562" expanded="true" signature="24103:24113" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -146,18 +91,6 @@
             <state vertical-scroll-proportion="0.0" vertical-offset="9249" max-vertical-offset="30492">
               <caret line="538" column="43" selection-start-line="538" selection-start-column="43" selection-end-line="538" selection-end-column="43" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AALChecker.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AALChecker.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="6218" max-vertical-offset="7686">
-              <caret line="360" column="19" selection-start-line="360" selection-start-column="19" selection-end-line="360" selection-end-column="19" />
-              <folding>
-                <element signature="e#751#777#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -188,7 +121,6 @@
         <option value="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-tspass.js" />
         <option value="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-fotl.js" />
         <option value="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-TSPASS.js" />
-        <option value="$PROJECT_DIR$/ui/ui/components/Actor.js" />
         <option value="$PROJECT_DIR$/ui/ui/grid.js" />
         <option value="$PROJECT_DIR$/ui/ui/components/components.js" />
         <option value="$PROJECT_DIR$/ui/ui/components/Ports2.js" />
@@ -222,10 +154,11 @@
         <option value="$PROJECT_DIR$/ui/test.js" />
         <option value="$PROJECT_DIR$/ui/ui/ui.js" />
         <option value="$PROJECT_DIR$/ui/ui/fileManager.js" />
-        <option value="$PROJECT_DIR$/ui/index.html" />
-        <option value="$PROJECT_DIR$/ui/diagramEditor.js" />
-        <option value="$PROJECT_DIR$/ui/ui/tools.js" />
         <option value="$PROJECT_DIR$/ui/ui/outline.js" />
+        <option value="$PROJECT_DIR$/ui/diagramEditor.js" />
+        <option value="$PROJECT_DIR$/ui/index.html" />
+        <option value="$PROJECT_DIR$/ui/ui/components/Actor.js" />
+        <option value="$PROJECT_DIR$/ui/ui/tools.js" />
       </list>
     </option>
   </component>
@@ -334,61 +267,21 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UserGuide" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -409,6 +302,7 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Custom" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="jsx.switch.disabled" value="true" />
+    <property name="ChangesBrowser.SHOW_FLATTEN" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -1123,7 +1017,13 @@
       <option name="project" value="LOCAL" />
       <updated>1433537915398</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="Minors">
+      <created>1433538132429</created>
+      <option name="number" value="00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1433538132429</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -1224,13 +1124,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/grammar/aal/AAL.g4">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.8508472" vertical-offset="2862" max-vertical-offset="5562">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/snippets/plain_text.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="590">
@@ -1270,20 +1163,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="535" max-vertical-offset="1206">
           <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/components/Agent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1080">
-          <caret line="33" column="55" selection-start-line="33" selection-start-column="55" selection-end-line="33" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/components/Data.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1116">
-          <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -1527,14 +1406,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="9249" max-vertical-offset="30492">
-          <caret line="538" column="43" selection-start-line="538" selection-start-column="43" selection-end-line="538" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/tuto1.aal">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="864" max-vertical-offset="1566">
@@ -1559,72 +1430,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1635" max-vertical-offset="3438">
-          <caret line="145" column="32" selection-start-line="145" selection-start-column="32" selection-end-line="145" selection-end-column="32" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/properties.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="10674">
-          <caret line="550" column="0" selection-start-line="550" selection-start-column="0" selection-end-line="550" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1433445205659" expanded="true" signature="6978:6995" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1234" max-vertical-offset="7686">
-          <caret line="79" column="19" selection-start-line="76" selection-start-column="16" selection-end-line="79" selection-end-column="19" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1433537562131" expanded="true" signature="1660:1729" placeholder="..." />
-            <marker date="1433537562131" expanded="true" signature="3129:3139" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="13612" max-vertical-offset="14742">
-          <caret line="802" column="0" selection-start-line="802" selection-start-column="0" selection-end-line="802" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1433537689955" expanded="true" signature="17133:17163" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="19833:19844" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="20628:20640" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="21129:21140" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="21549:21560" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="21774:21785" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="22388:22406" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="22737:22755" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="22875:22886" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="23050:23067" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="23612:23641" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="23723:23735" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="23922:23932" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="24087:24097" placeholder="..." />
-            <marker date="1433537689955" expanded="true" signature="24247:24257" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/diagramEditor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1251" max-vertical-offset="1854">
-          <caret line="107" column="47" selection-start-line="107" selection-start-column="47" selection-end-line="107" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/ui/outline.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.8305085" vertical-offset="0" max-vertical-offset="3006">
@@ -1639,11 +1444,111 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/properties.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="12.569491" vertical-offset="2484" max-vertical-offset="10674">
+          <caret line="550" column="0" selection-start-line="550" selection-start-column="0" selection-end-line="550" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1433445205659" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/components/Agent.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.37313432" vertical-offset="477" max-vertical-offset="1080">
+          <caret line="33" column="55" selection-start-line="33" selection-start-column="55" selection-end-line="33" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/components/Data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5074627" vertical-offset="0" max-vertical-offset="1116">
+          <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/components/Actor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3321492" vertical-offset="8219" max-vertical-offset="9522">
+          <caret line="467" column="56" selection-start-line="467" selection-start-column="56" selection-end-line="467" selection-end-column="56" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/diagramEditor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2686567" vertical-offset="927" max-vertical-offset="1800">
+          <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6237288" vertical-offset="1072" max-vertical-offset="7686">
+          <caret line="80" column="14" selection-start-line="80" selection-start-column="14" selection-end-line="80" selection-end-column="14" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1433537562131" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1433537562131" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ui/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5" vertical-offset="432" max-vertical-offset="2250">
-          <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.5625" vertical-offset="1782" max-vertical-offset="2358">
+          <caret line="117" column="4" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="4.19403" vertical-offset="81" max-vertical-offset="3438">
+          <caret line="145" column="32" selection-start-line="145" selection-start-column="32" selection-end-line="145" selection-end-column="32" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="9249" max-vertical-offset="30492">
+          <caret line="538" column="43" selection-start-line="538" selection-start-column="43" selection-end-line="538" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45084745" vertical-offset="13882" max-vertical-offset="14634">
+          <caret line="786" column="27" selection-start-line="786" selection-start-column="27" selection-end-line="786" selection-end-column="27" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1433539979562" expanded="true" signature="17129:17159" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="19689:19700" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="20484:20496" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="20985:20996" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="21405:21416" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="21630:21641" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="22244:22262" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="22593:22611" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="22731:22742" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="22906:22923" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="23468:23497" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="23579:23591" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="23778:23788" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="23943:23953" placeholder="..." />
+            <marker date="1433539979562" expanded="true" signature="24103:24113" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
