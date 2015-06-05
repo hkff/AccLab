@@ -321,21 +321,22 @@ The construction CHECK allows you to write directly FOTL formula mixed with somm
 
 \begin{lstlisting}
 CHECK c1() {
+% Comments in Checks starts with '%'
 
+% Enable verbose mode
 @verbose
 ~(
     % Build the environment
     @buildenv
 
     % Add extra condition
-    (![f] (subject(f, alice) => ~subject(f, bob))) &
+    (![f] ((subject(f, alice) )=> ~subject(f, bob))) &
 
-    % The check P => U
-    (clause(css_policy).ue)
+    % The check ~ P => U
+    (clause(css_policy))
     =>
-    (clause(alice_pref).ue)
+    (clause(alice_pref))
 )
-
 }
 APPLY c1()
 \end{lstlisting}

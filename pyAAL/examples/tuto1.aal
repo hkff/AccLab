@@ -60,6 +60,9 @@ CALL validate("css_policy" "alice_pref")
 // Extended check
 CHECK c1() {
 """
+% Comments in Checks starts with '%'
+
+% Enable verbose mode
 @verbose 
 ~(
     % Build the environment

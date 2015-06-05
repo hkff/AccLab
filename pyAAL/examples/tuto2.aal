@@ -18,6 +18,8 @@ AGENT alice TYPES(Actor) REQUIRED(read store delete) PROVIDED()
 AGENT bob   TYPES(Actor) REQUIRED(read store delete) PROVIDED()
 AGENT css   TYPES(Actor) REQUIRED() PROVIDED(read store delete)
 
+LOG log
+
 /*
  * Cloud storage service provider policy
  */
@@ -38,7 +40,7 @@ CLAUSE css_policy (
     PERMIT css.read[css](d) AND
     PERMIT css.delete[css](d)
 
-    AUDITING bob.audit[css](d)
+    AUDITING dpa.audit[css](log)
     IF_VIOLATED_THEN MUST(dpa.sanction[css](d) AND css.delete[css](d))
 )
 
@@ -55,7 +57,7 @@ CLAUSE alice_pref (
         DENY bob.read[css](d)
     }
 
-    AUDITING dpa.audit[css](d)
+    AUDITING dpa.audit[css](log)
     IF_VIOLATED_THEN MUST(dpa.sanction[css](d) AND css.delete[css](d))
 )
 

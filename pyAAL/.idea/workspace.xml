@@ -5,45 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/UserGuide/assets/gui/interface0.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/UserGuide/assets/gui/interface1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/UserGuide/assets/gui/interface2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/UserGuide/assets/gui/interface3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/UserGuide/assets/gui/interface4.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/UserGuide/assets/gui/interface5.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/UserGuide/assets/gui/interface6.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/UserGuide/assets/gui/interface7.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/UserGuide/assets/gui/interface8.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/UserGuide/assets/gui/interface9.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/utils/nano/README" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/utils/nano/aal.nanorc" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/utils/ace/mode-AAL.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tuto0a.aal" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/tuto0a.acd" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tools/utils/pycharm/AAL.xml" afterPath="$PROJECT_DIR$/tools/utils/intellij/AAL.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tools/utils/pycharm/README" afterPath="$PROJECT_DIR$/tools/utils/intellij/README" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tools/utils/pycharm/TSPASS.xml" afterPath="$PROJECT_DIR$/tools/utils/intellij/TSPASS.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/UserGuide/UserGuide.pdf" afterPath="$PROJECT_DIR$/UserGuide/UserGuide.pdf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AALChecker.py" afterPath="$PROJECT_DIR$/AALChecker.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AALCompiler.py" afterPath="$PROJECT_DIR$/AALCompiler.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AALMetaModel.py" afterPath="$PROJECT_DIR$/AALMetaModel.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README" afterPath="$PROJECT_DIR$/README" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/Server.py" afterPath="$PROJECT_DIR$/ui/Server.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/UserGuide/UserGuide.tex" afterPath="$PROJECT_DIR$/UserGuide/UserGuide.tex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/utils/emacs/aal-emacs-mode.lisp" afterPath="$PROJECT_DIR$/tools/utils/emacs/aal-emacs-mode.lisp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/aalc.py" afterPath="$PROJECT_DIR$/aalc.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/UserGuide/parts/aalsyntax.tex" afterPath="$PROJECT_DIR$/UserGuide/parts/aalsyntax.tex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/UserGuide/parts/acclab.tex" afterPath="$PROJECT_DIR$/UserGuide/parts/acclab.tex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/api.py" afterPath="$PROJECT_DIR$/ui/api.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/diagramEditor.js" afterPath="$PROJECT_DIR$/ui/diagramEditor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-AAL.js" afterPath="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-AAL.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shell.py" afterPath="$PROJECT_DIR$/shell.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/tools.js" afterPath="$PROJECT_DIR$/ui/ui/tools.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/healthcare.aal" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/test2.aal" afterPath="$PROJECT_DIR$/examples/test2.aal" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/UserGuide/parts/tuto.tex" afterPath="$PROJECT_DIR$/UserGuide/parts/tuto.tex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/tuto0.aal" afterPath="$PROJECT_DIR$/examples/tuto0.aal" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/tuto1.aal" afterPath="$PROJECT_DIR$/examples/tuto1.aal" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/tuto2.aal" afterPath="$PROJECT_DIR$/examples/tuto2.aal" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/ui.js" afterPath="$PROJECT_DIR$/ui/ui/ui.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pyAAL.iws" />
@@ -111,31 +77,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Server.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/Server.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1093" max-vertical-offset="2160">
-              <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="tuto1.aal" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/tuto1.aal">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1512">
-              <caret line="70" column="18" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="864" max-vertical-offset="1566">
+              <caret line="73" column="18" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tuto2.aal" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tuto2.aal" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/tuto2.aal">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6780924" vertical-offset="571" max-vertical-offset="1242">
-              <caret line="57" column="13" selection-start-line="57" selection-start-column="13" selection-end-line="57" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="625" max-vertical-offset="1278">
+              <caret line="60" column="13" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -145,17 +101,17 @@
         <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="9249" max-vertical-offset="30492">
-              <caret line="530" column="18" selection-start-line="530" selection-start-column="18" selection-end-line="530" selection-end-column="18" />
+              <caret line="538" column="43" selection-start-line="538" selection-start-column="43" selection-end-line="538" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AALChecker.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AALChecker.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AALChecker.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4079" max-vertical-offset="7686">
-              <caret line="234" column="67" selection-start-line="234" selection-start-column="67" selection-end-line="234" selection-end-column="67" />
+            <state vertical-scroll-proportion="0.31610942" vertical-offset="7028" max-vertical-offset="7686">
+              <caret line="402" column="7" selection-start-line="402" selection-start-column="7" selection-end-line="402" selection-end-column="7" />
               <folding>
                 <element signature="e#751#777#0" expanded="true" />
               </folding>
@@ -221,12 +177,12 @@
         <option value="$PROJECT_DIR$/aalc.py" />
         <option value="$PROJECT_DIR$/ui/Server.py" />
         <option value="$PROJECT_DIR$/ui/diagramEditor.js" />
-        <option value="$PROJECT_DIR$/UserGuide/parts/tuto.tex" />
         <option value="$PROJECT_DIR$/UserGuide/parts/acclab.tex" />
-        <option value="$PROJECT_DIR$/AALMetaModel.py" />
         <option value="$PROJECT_DIR$/AALChecker.py" />
         <option value="$PROJECT_DIR$/examples/tuto1.aal" />
         <option value="$PROJECT_DIR$/examples/tuto2.aal" />
+        <option value="$PROJECT_DIR$/UserGuide/parts/tuto.tex" />
+        <option value="$PROJECT_DIR$/AALMetaModel.py" />
       </list>
     </option>
   </component>
@@ -350,24 +306,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="UserGuide" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="UserGuide" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="parts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1077,7 +1015,13 @@
       <option name="project" value="LOCAL" />
       <updated>1433459023441</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Minors">
+      <created>1433518594908</created>
+      <option name="number" value="00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1433518594908</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -1107,6 +1051,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32808024" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16993958" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1116,7 +1061,6 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34240687" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39971346" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1165,11 +1109,11 @@
     <MESSAGE value="Adding Behavior" />
     <MESSAGE value="Bug fix" />
     <MESSAGE value="Cleanup" />
-    <MESSAGE value="Minors" />
     <MESSAGE value="Adding AccLab ui" />
     <MESSAGE value="Minors + tspass examples" />
     <MESSAGE value="Toaster" />
-    <option name="LAST_COMMIT_MESSAGE" value="Toaster" />
+    <MESSAGE value="Minors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minors" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1511,25 +1455,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/Server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1093" max-vertical-offset="2160">
-          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/diagramEditor.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.26825634" vertical-offset="0" max-vertical-offset="671">
           <caret line="29" column="26" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UserGuide/parts/tuto.tex">
-      <provider selected="true" editor-type-id="LaTeXFileEditor">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tmp_gen.fotl">
@@ -1548,37 +1479,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AALChecker.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4079" max-vertical-offset="7686">
-          <caret line="234" column="67" selection-start-line="234" selection-start-column="67" selection-end-line="234" selection-end-column="67" />
-          <folding>
-            <element signature="e#751#777#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="9249" max-vertical-offset="30492">
-          <caret line="530" column="18" selection-start-line="530" selection-start-column="18" selection-end-line="530" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/tuto1.aal">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1512">
-          <caret line="70" column="18" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="864" max-vertical-offset="1566">
+          <caret line="73" column="18" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/examples/tuto2.aal">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6780924" vertical-offset="571" max-vertical-offset="1242">
-          <caret line="57" column="13" selection-start-line="57" selection-start-column="13" selection-end-line="57" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="625" max-vertical-offset="1278">
+          <caret line="60" column="13" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/Server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8390462" vertical-offset="1093" max-vertical-offset="2160">
+          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UserGuide/parts/tuto.tex">
+      <provider selected="true" editor-type-id="LaTeXFileEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="9249" max-vertical-offset="30492">
+          <caret line="538" column="43" selection-start-line="538" selection-start-column="43" selection-end-line="538" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALChecker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31610942" vertical-offset="7028" max-vertical-offset="7686">
+          <caret line="402" column="7" selection-start-line="402" selection-start-column="7" selection-end-line="402" selection-end-column="7" />
+          <folding>
+            <element signature="e#751#777#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

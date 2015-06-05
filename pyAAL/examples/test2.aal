@@ -38,12 +38,3 @@ CLAUSE c1(
         ALWAYS (not (bob.write[a]()))
     )
 )
-
-EXEC
-"""
-for x in self.aalprog.walk(filter_type=m_aexpNotAexp):
-    x.remove()
-
-#for x in self.aalprog.walk(filter_type=m_aexpAction):
-#    x.negate()
-"""
