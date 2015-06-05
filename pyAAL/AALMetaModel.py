@@ -534,8 +534,11 @@ class m_clause(m_declarable):
         ue = ("always(" + str(self.usage.to_ltl()) + ")") if self.usage is not None else ""
         ae = str(self.audit.to_ltl()) if self.audit.usage is not None else None
         re = str(self.rectification.to_ltl()) if self.rectification.usage is not None else None
-        return ue + ("\n & " + ae if ae is not None else "") + ("\n & " + re if re is not None else "")
-        # return ae + " & always(" + ue + " | ((~(" + ue + ")) & (always(" + ae + " => (" + re + ")))))"
+        # return ue + ("\n & " + ae if ae is not None else "") + ("\n & " + re if re is not None else "")
+        if ae is not None and re is not None:
+            return ae + " & always(" + ue + " | ((~(" + ue + ")) & (always(" + ae + " => (" + re + "))))) \n"
+        else:
+            return ue
 
     def to_nnf(self, negated):
         ue = str(self.usage.to_nnf(negated)) if self.usage is not None else "false"

@@ -29,7 +29,7 @@ The last version of TSPASS can be found in :
 <http://lat.inf.tu-dresden.de/~michel/software/tspass/>
 The source code for TSPASS version 0.95-0.17 is provided
 with this tool.
-AAL Syntax highlighting modes for emacs, intellij, nano, eclipse,
+AAL Syntax highlighting modes for emacs, intellij, nano and ace,
 can be found in tools/utils/
 If you want to run aalc using a symbolic link you need to set
 the environment variable ACCLAB_PATH

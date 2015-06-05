@@ -26,6 +26,7 @@ import threading
 from ui.api import *
 
 base_dir = "examples"
+server_port = 8000
 
 
 # HTTPRequestHandler
@@ -99,9 +100,10 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
 
 # Run server
 def run(server_class=HTTPServer, handler_class=HTTPRequestHandler):
-    server_address = ('', 8000)
+    global server_port
+    server_address = ('', server_port)
     httpd = server_class(server_address, handler_class)
-
+    print("Server start on port " + str(server_port))
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
@@ -110,7 +112,9 @@ def run(server_class=HTTPServer, handler_class=HTTPRequestHandler):
 
 
 # Start ui
-def start_ui():
+def start_ui(port=8000):
+    global server_port
+    server_port = port
     # Open the index page in a web browser
     threading.Thread(target=run).start()
-    webbrowser.open("http://127.0.0.1:8000/ui", new=2)
+    webbrowser.open("http://127.0.0.1:" + str(server_port) + "/ui", new=2)

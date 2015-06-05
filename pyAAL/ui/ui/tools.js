@@ -567,6 +567,7 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 			if(fileType == "tspass")
 				action = "compileFOTL";
 
+			toastr.info('Compiling...');
 			$.ajax({
 				dataType: dType,
 				type:'POST',
@@ -574,7 +575,6 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 				data: {action: action, file: file},
 				success: function(response){
 					$("#output_window").empty().append(response);
-					toastr.info('Compiling...');
 				}
 			});
 		};

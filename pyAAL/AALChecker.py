@@ -239,7 +239,8 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
     pre_cond = build_env(compiler.aalprog)
 
     print("----- Checking c1 & c2 consistency :")
-    res = compiler.apply_check(code=pre_cond + "clause(" + c1_id + ").ue & clause(" + c2_id + ").ue",
+    res = compiler.apply_check(code=pre_cond + "\n%%  " + c1_id + "\nclause(" + c1_id + ") " + "\n & \n\n%%  " +
+                                    c2_id + "\nclause(" + c2_id + ")",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
@@ -253,7 +254,8 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
         print(res["print"])
 
     print("----- Checking c1 => c2 :")
-    res = compiler.apply_check(code="always(" + pre_cond + "clause(" + c1_id + ").ue => clause(" + c2_id + ").ue)",
+    res = compiler.apply_check(code="always(" + pre_cond + "\n%%  " + c1_id + "\nclause(" + c1_id
+                                    + ")\n =>\n\n " + "%%  " + c2_id + "\nclause(" + c2_id + "))",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         v = False
@@ -265,7 +267,8 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
         print(res["print"])
 
     print("----- Checking ~(c1 => c2) :")
-    res = compiler.apply_check(code="~(always(" + pre_cond + "clause(" + c1_id + ").ue => clause(" + c2_id + ").ue))",
+    res = compiler.apply_check(code="~(always(" + pre_cond + "\n%%  " + c1_id + "\nclause(" + c1_id
+                                    + ")\n =>\n\n " + "%%  " + c2_id + "\nclause(" + c2_id + ")))",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))

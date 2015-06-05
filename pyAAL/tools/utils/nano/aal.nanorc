@@ -1,0 +1,15 @@
+# AAL mode.
+##
+syntax "aal" "\.aal$"
+magic "AAL "
+
+color green "\<(Actor|DataSubject|DataController|DataProcessor|DwDataController|Auditor|CloudProvider|CloudCustomer|EndUser)\>"
+color red "\<(,|AFTER|AND|BEFORE|EXISTS|FORALL|IF|NOT|ONLYWHEN|OR|THEN|WHERE)\>"
+color cyan "\<(AGENT|DATA|SERVICE|TYPE|APPLY|AUDITING|BEHAVIOR|CALL|CHECK|CLAUSE|EXEC|IF_VIOLATED_THEN|LOAD|MACRO|OF|TYPES|PROVIDED|PS|PURPOSE|REQUIRED|RS)\>"
+color red ""[^"]*""
+color yellow "\<(ae|ACTIONS|ATTRIBUTES|DENY|EXTENDS|get_rectification|get_audit|get_usage|PERMIT|re|ue)\>"
+color magenta "\<(ALWAYS|MUST|MUSTNOT|NEVER|SOMETIME|UNTIL|UNLESS|NEXT)\>"
+color brightblue "//.*"
+color brightblue start="/\*" end="\*/"
+color brightblue start="/\*\*" end="\*/"
+color ,green "[[:space:]]+$"

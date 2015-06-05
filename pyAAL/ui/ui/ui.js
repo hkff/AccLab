@@ -89,6 +89,11 @@ visualEditor.ui = {
 		visualEditor.ui.outline.canvasToTree();
 	},
 
+	stoper: function(e) {
+		e.stopPropagation();
+		e.preventDefault()
+	},
+
 	/**
 	 * Update all panels states
 	 */
@@ -98,26 +103,34 @@ visualEditor.ui = {
 			file = visualEditor.ui.activeTab.container.title;
 
 		var fileType = file.split('.').pop().toLowerCase();
+		var tt = visualEditor.ui.tools.tools;
 		// If it is not a diagram, disable gui elements
 		if(fileType != "acd") {
 			this.disableNode(this.propertiesPanel);
-			this.disableNode(this.actionsPanel);
+			//this.disableNode(this.actionsPanel);
+			for(var i=0; i<tt.length; i++) {
+				$(tt[i].button).hide();
+			}
 			this.disableNode(this.componentsPanel);
 			this.disableNode(this.outlinePanel);
 			this.disableNode(this.inplacePanel);
 
 			if(file != "") {
-				$(visualEditor.ui.tools.tools[11].button).fadeTo('slow', 1.0);
-				$(visualEditor.ui.tools.tools[14].button).fadeTo('slow', 1.0);
-				$(visualEditor.ui.tools.tools[18].button).fadeTo('slow', 1.0);
+				$(visualEditor.ui.tools.tools[11].button).show(); //fadeTo('slow', 1.0);
+				$(visualEditor.ui.tools.tools[14].button).show(); //fadeTo('slow', 1.0);
+				$(visualEditor.ui.tools.tools[18].button).show(); //fadeTo('slow', 1.0);
 			}
 		} else {
 			// Enable them
 			this.enableNode(this.propertiesPanel);
-			this.enableNode(this.actionsPanel);
+			//this.enableNode(this.actionsPanel);
+			for(var i=0; i<tt.length; i++) {
+				$(tt[i].button).show();
+			}
 			this.enableNode(this.componentsPanel);
 			this.enableNode(this.outlinePanel);
 			this.enableNode(this.inplacePanel);
+			$(visualEditor.ui.tools.tools[18].button).hide(); //fadeTo('fast', .15);
 		}
 	},
 
@@ -128,6 +141,8 @@ visualEditor.ui = {
 	enableNode: function(node) {
 		//node.css("opacity", "1.0");
 		node.children().fadeTo('slow', 1.0);
+		node[0].removeEventListener("click", this.stoper, true);
+		//node.show();
 	},
 
 	/**
@@ -135,7 +150,10 @@ visualEditor.ui = {
 	 * @param node
 	 */
 	disableNode: function(node) {
+		console.log(node)
 		node.children().fadeTo('slow', .15);
+		node[0].addEventListener("click", this.stoper, true);
+		//node.hide();
 		//node.css("opacity", "0.3");
 	   	/*node.append("<div id='overlay-" + node[0].id + "'></div>");
 		$("#overlay-" + node[0].id)

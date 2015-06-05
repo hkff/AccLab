@@ -1,11 +1,16 @@
 \section{Getting started}
 
 \subsection{Install AccLab}
-\begin{itemize}
-  \item To use the ltl prover, you need to put the following executable files (tspass, fotl-translate) in tools/your\_platform/ (linux/mac/win)
-  \item Basic run : python aalc.py (you need python3.4.0 or greater)
-  \item Run an AAL file : python aalc.py -i testfile.aal
-\end{itemize}
+To use the ltl prover, you need to put the following executable files (tspass, fotl-translate) in
+\texttt{tools/your\_platform/ (linux/mac/win)}
+TSPASS binaries are provided for linux x64 and mac x64 in the folder \texttt{tools/\_platformeName\_/}.
+For other platformes you have to compile tspass source code.
+The last version of TSPASS can be found in :
+{\small{<http://lat.inf.tu-dresden.de/~michel/software/tspass/>}}. The source code for TSPASS version 0.95-0.17
+is provided with this tool.
+AAL Syntax highlighting modes for emacs, intellij, nano and ace, can be found in \texttt{tools/utils/}.
+If you want to run aalc using a symbolic link you need to set the environment variable \texttt{ACCLAB\_PATH} :
+\texttt{export ACCLAB\_PATH=<AccLab\_install\_dir>}. You need python3.4.0 or greater.
 
 
 %%%%%%%%%%
@@ -14,6 +19,7 @@
 \subsection{Using AAL compiler "aalc"}
 {\lstset{style=shell}
 \begin{lstlisting}[caption={aalc options}]
+root@root/:$ python aalc
 aalc 
   -h    --help                   display this help and exit
   -i    --input                  the input file
@@ -30,7 +36,7 @@ aalc
   -x    --compile-stdlib         compile the standard library
   -d    --hotswap                enable hotswaping (for development only)
   -a    --ast                    show ast tree
-  -u    --gui                    run the gui (BETA)
+  -u    --gui [port]             run the gui on the specified port (default 8000)
 \end{lstlisting}
 }
 
@@ -55,14 +61,6 @@ performs some actions and if bob can read here data.
 
 \begin{enumerate}[a.]
 
-    \item \textbf{Declaring services}
-The services are the
-\begin{lstlisting}
-SERVICE read
-SERVICE store
-SERVICE delete
-\end{lstlisting}
-
     \item \textbf{Declaring actors} : first we need to declare our actors
 \begin{lstlisting}
 // Agents declaration
@@ -71,17 +69,22 @@ AGENT bob
 AGENT css
 \end{lstlisting}
 
-    \item \textbf{Linking services and actors}
-First we need to declare our actors
+    \item \textbf{Declaring services} the services used are :
 \begin{lstlisting}
-AGENT alice TYPES() REQUIRED(read store delete) PROVIDED()
-AGENT bob   TYPES() REQUIRED(read store delete) PROVIDED()
-AGENT css   TYPES() REQUIRED() PROVIDED(read store delete)
+SERVICE read
+SERVICE store
+SERVICE delete
+\end{lstlisting}
+
+    \item \textbf{Linking services and actors}
+\begin{lstlisting}
+AGENT alice TYPES(Actor) REQUIRED(read store delete) PROVIDED()
+AGENT bob   TYPES(Actor) REQUIRED(read store delete) PROVIDED()
+AGENT css   TYPES(Actor) REQUIRED() PROVIDED(read store delete)
 \end{lstlisting}
 
 
     \item \textbf{Defining policies}
-First we need to declare our actors
 \begin{lstlisting}
 /*
  * Cloud storage service provider policy
@@ -247,9 +250,6 @@ always(![d] ( data(d) & ( (subject(d, alice) => Pread(alice, css, d)))) )
 \end{itemize}
 
 
-
-
-
 %%%%%%%%%%%%%%%%%%
 %% Core libs
 %%%%%%%%%%%%%%%%%%
@@ -261,13 +261,10 @@ You can load external AAL files using \texttt{LOAD "aal\_file"}(without the exte
 LOAD "core.types"
 \end{lstlisting}
 
-
 \paragraph{core.macros} Contains some useful macros.
 \begin{lstlisting}
 // Loading lib
 LOAD "core.macros"
-
-
 \end{lstlisting}
 
 
@@ -277,16 +274,78 @@ LOAD "core.macros"
 %% Advenced checks
 %%%%%%%%%%%%%%%%%%
 \subsection{Advanced checks}
-dzd
+
+\begin{lstlisting}
+/*
+ * Alice's preferences
+ */
+CLAUSE alice_policy (
+    FORALL d:data
+    // Alice want to be able to read all her data stored on css
+    IF (d.subject == alice) THEN {
+        PERMIT alice.read[css](d)
+
+        // Bob cannot read Alice's data
+        DENY bob.read[css](d)
+    }
+)
+\end{lstlisting}
+The previous call to validate macro will gives : Satisfiable.
+
+Why ? Because the predicate subject is not exclusive :
+subject of d can be alice and bob at the same time.
+
+A simple way to fix it is to add the condition that the subject of d is not bob :
+\begin{lstlisting}
+    IF (d.subject == alice AND d.subject != bob) THEN {
+    ....
+\end{lstlisting}
 
 
+Or we can to add the following condition manually to our check :
+\begin{lstlisting}
+(![f] (subject(f, alice) => ~subject(f, bob))) &
+\end{lstlisting}
+
+The construction CHECK allows you to write directly FOTL formula mixed with somme AAL constructions.
+
+\begin{itemize}
+    \item @verbose (print the generated formula)
+    \item @buildenv (build the environment, which is a set of preconditions generated from the AAL program)
+    \item clause(c) : get the fotl translation of clause "c"
+    \item clause(c).ue : get the fotl translation of usage part of the clause "c"
+    \item clause(c).ae : get the fotl translation of audit part of the clause "c"
+    \item clause(c).re : get the fotl translation of rectification part of the clause "c"
+    \item APPLY chk() : call the check "chk"
+\end{itemize}
+
+\begin{lstlisting}
+CHECK c1() {
+
+@verbose
+~(
+    % Build the environment
+    @buildenv
+
+    % Add extra condition
+    (![f] (subject(f, alice) => ~subject(f, bob))) &
+
+    % The check P => U
+    (clause(css_policy).ue)
+    =>
+    (clause(alice_pref).ue)
+)
+
+}
+APPLY c1()
+\end{lstlisting}
+The result is Unsatisfiable so the formula is valide.
 
 %%%%%%%%%%%%%%%%%%
 %% Using shell
 %%%%%%%%%%%%%%%%%%
 \subsection{Using the shell}
-The shell is a useful tool for developing 
-
+The shell is a useful tool for developing :
 
 {
 \lstset{style=shell}
@@ -294,72 +353,65 @@ The shell is a useful tool for developing
 \begin{itemize}
 	\item Run the shell.
 \begin{lstlisting}
-aalc -i examples/tuto1.aal -s
-
-/* Result : 
+root@root/:$ python aalc -i examples/tuto0.aal -s
+....
 shell >
-
-*/
 \end{lstlisting}
 
   \item Type help to show the shell help.
 \begin{lstlisting}
+shell >help
   Shell Help
- - call(macro, args)   call a macro where /
-         *macro : is the name of the macro
-         *args : a list of string; << ex : ["'args1'", "'args2'", ..."'argsN'"] >>
- - clauses()           show all declared clauses in the loaded aal program
- - macros()            show all declared macros in the loaded aal program
- - quit / q            exit the shell
- - help / h / man()    show this help
- - self                the current compiler instance of the loaded aal program
- - aalprog             the current loaded aal program 
- - man(arg)            print the help for the given arg
- - hs(module)          hotswaping : reload the module
- - r()                 hot-swaping the shell
+ - call(macro, args)    call a macro where /
+                         *macro : is the name of the macro
+                         *args : a list of string; <<ex :["'args1'", "'args2'", ..."'argsN'"]>>
+ - clauses()            show all declared clauses in the loaded aal program
+ - macros()             show all declared macros in the loaded aal program
+ - load(lib)            load the librarie lib
+ - quit / q             exit the shell
+ - help / h / man()     show this help
+ - self                 the current compiler instance of the loaded aal program
+ - aalprog              the current loaded aal program
+ - man(arg)             print the help for the given arg
+ - hs(module)           hotswaping : reload the module
+ - r()                  hot-swaping the shell
 \end{lstlisting}
 
   \item Here an example, we print all clauses in the AAL program.
 \begin{lstlisting}
 shell> clauses()
+css_policy alice_pref
 
-/* Result :
-kim_policy cloudX_policy 
-
-*/
 \end{lstlisting}
 
-  \item self variable represent the co
+  \item self variable refers to the compiler instance.
 \begin{lstlisting}
 shell> self
-
-/* Result :
 <AALCompiler.AALCompilerListener object at 0x7f8b00ce8630>
+\end{lstlisting}
 
-*/
-
+    \item man can be called on any element, it will show its documentation.
+\begin{lstlisting}
 shell> man(self)
-
-/* Result :
 printing manual for <class 'AALCompiler.AALCompilerListener'>
 Manual for aal compiler visitor
  - Attributes
-   -  aalprog      Get the AAL program instance
-   -  file         The AAL source file
-   -  libs         Show the loaded libraries
-   -  libsPath     Print the standard lib path
+         -  aalprog      Get the AAL program instance
+         -  file         The AAL source file
+         -  libs         Show the loaded libraries
+         -  libsPath     Print the standard lib path
  - Methods
-   - load_lib(lib_name)    Load an aal file
-   - clause(clauseId)      Get a clause
-   - show_clauses()        Print all clauses
-   - get_clauses()         Get all clauses (array format)
-   - get_macros()          Get all macros
+         - load_lib(lib_name)    Load an aal file
+         - clause(clauseId)      Lookup for clause cluaseId
+         - show_clauses()        Show all clauses (names
+         - get_clauses()         Get all clauses (objects)
+         - get_macros()          Get all macros (objects)
 
-*/
+\end{lstlisting}
 
+    \item AAL program instance
+\begin{lstlisting}
 shell> man(aalprog)
-
-/* Result :
 printing manual for <class 'AALMetaModel.m_aalprog'>
 
     AAL program class.
@@ -368,20 +420,45 @@ printing manual for <class 'AALMetaModel.m_aalprog'>
     Attributes
         - clauses: a list that contains all program clauses
         - declarations: a dictionary that contains lists of typed declarations
-        - comments: a list that contains program's comment
-        - macros: a list that contains program's macros declarations
-        - macroCalls: a list that contains program's comment
-
-*/
+        - comments: a list that contains program s comment
+        - macros: a list that contains program s macros declarations
+        - macroCalls: a list that contains program s comment
 \end{lstlisting}
 
-  \item hotswaping commands are used for debugging purpose only.
-  r() command allows you to reload the shell after 
+    \item Calling a macro
+\begin{lstlisting}
+call("validate", ["'css_policy'", "'alice_pref'"])
+------------------------- Monodic check -------------------------
+Monodic check passed !
+------------------------- Starting Validity check -------------------------
+c1 : css_policy
+c2 : alice_pref
+----- Checking c1 & c2 consistency :
+  -> Satisfiable
+----- Checking c1 => c2 :
+  -> Satisfiable
+----- Checking ~(c1 => c2) :
+  -> Satisfiable
+:: Solving trigger
 
-  hs(module) reloading other modules after 
+[VALIDITY] Formula is not valid !
+------------------------- Validity check End -------------------------
+\end{lstlisting}
+
+    \item Defining a new macro
+\begin{lstlisting}
+shell> self.new_macro("toto", ["p"], """print(p)""")
+shell> call("toto", ["'4'"])
+4
+\end{lstlisting}
+
+
+  \item hotswaping commands are used for debugging purpose only.
+  r() command allows you to reload the shell without exiting it after source code modification.
+
+  \item hs(module) reloading other modules after source code modification without exiting.
   ! IMORTANT : to use hotswaping properly you must enable it explicitly in aalc arguments
   \texttt{-d / --hotswap},
 
 \end{itemize}
-
 }

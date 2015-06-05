@@ -1,0 +1,6 @@
+# AAL syntax highlighter for nano
+
+- copy aal.nanorc into /usr/share/nano/
+
+- add the following line to ~/.nanorc :
+include /usr/share/nano/sh.nanorc

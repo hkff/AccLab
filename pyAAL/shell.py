@@ -126,15 +126,19 @@ def shell(listener):
             args = []
         return self.macro_call(macro, args)
 
+    # Get clauses
     def clauses():
         return self.get_clauses()
 
+    # Get macros
     def macros():
         return self.get_macros()
 
+    # Reload shell
     def r():
         return reload(shell)
 
+    # Reload a module
     def hs(module):
         res = reload(module)
         # Use hot swaping decoration on all AALMetaModel classes

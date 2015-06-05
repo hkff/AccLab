@@ -30,6 +30,7 @@ var visualEditor = {
      * Initialize function
      */
     init: function(grid, actionsPanel, componentsPanel, propertiesPanel, outlinePanel, inplacePanel) {
+    	this.backend = window.location.origin;
     	// init workspace
         visualEditor.ui.init(grid, actionsPanel, componentsPanel, propertiesPanel, outlinePanel, inplacePanel);
     },

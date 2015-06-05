@@ -1015,6 +1015,7 @@ class AALCompilerListener(AALListener.AALListener):
         _verbose = len(re.findall('@verbose', ltl)) > 0  # TODO : optimize
         if _verbose:
             ltl = ltl.replace('@verbose', '')
+            verbose = True
 
         for x in re.finditer('clause\(\w+\)', code):
             clauseId = x.group().replace('clause(', '').replace(')', '')  # Get clause's id
@@ -1102,7 +1103,7 @@ class AALCompilerListener(AALListener.AALListener):
             # print("Macro eval error !")
 
         else:
-            print(Color("{autored}[ERROR]{/red} Macro not found !"))
+            print(Color("{autored}[ERROR]{/red} Macro '" + macro_name + "' not found !"))
 
         return __res__
 

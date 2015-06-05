@@ -45,7 +45,7 @@ CLAUSE css_policy (
 CLAUSE alice_pref (
     FORALL d:data
     // Alice want to be able to read all her data stored on css
-    IF (d.subject == alice) THEN {
+    IF (d.subject == alice AND d.subject != bob) THEN {
         PERMIT alice.read[css](d)
         AND
         // Bob cannot read Alice's data
@@ -60,18 +60,18 @@ CALL validate("css_policy" "alice_pref")
 // Extended check
 CHECK c1() {
 """
-@verbose
+@verbose 
 ~(
     % Build the environment
     @buildenv
 
     % Add extra condition
-    (![f] (subject(f, alice) => ~subject(f, bob))) &
+    (![f] ((subject(f, alice) )=> ~subject(f, bob))) &
 
-    % The check P => U
-    (clause(css_policy).ue)
+    % The check ~ P => U
+    (clause(css_policy))
     =>
-    (clause(alice_pref).ue)
+    (clause(alice_pref))
 )
 """
 }

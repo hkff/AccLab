@@ -52,5 +52,3 @@ CLAUSE alice_pref (
 
 // Call validate macro to perform the compliance check
 CALL validate("css_policy" "alice_pref")
-//CALL to_natural("css_policy")
-//CALL do("a => b")

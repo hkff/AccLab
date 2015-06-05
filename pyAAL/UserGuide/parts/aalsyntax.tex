@@ -34,7 +34,7 @@
 
     // Reflexion extension
     Macro         ::= MACRO Id '(' param* ')' '(' mcode ')'
-    MCode         ::= """ Meta model api + Python3 code (subset) """
+    MCode         ::= '"""' Meta model api + Python3 code (subset) '"""'
     MCall         ::= CALL Id '(' param* ')'
     LoadLib       ::= LOAD STRING;
     Exec          ::= EXEC MCode
@@ -48,3 +48,5 @@
     Behavior    ::= BEHAVIOR Id '(' ActionExp ')'
 
 \end{lstlisting}
+
+TODO : details

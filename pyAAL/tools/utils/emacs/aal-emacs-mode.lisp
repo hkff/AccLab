@@ -1,10 +1,10 @@
-
 ;; define several class of keywords
-(setq aal-keywords '("AGENT" "apply" "auditing" "behavior" "call" "check" "clause" "data" "exec" "if_violated_then" "load" "macro" "of" "service" "type" "types") )
-(setq aal-types '("float" "integer" "key" "list" "rotation" "string" "vector"))
-(setq aal-constants '("always" "must" "mustnot" "never" "sometime" "until"))
-(setq aal-events '("after" "and" "before" "exists" "forall" "if" "not" "onlywhen" "or" "then" "where"))
-(setq aal-functions '("ae" "actions" "attributes" "deny" "extends" "get_audit" "get_rectification" "get_usage" "permit" "provided" "ps" "purpose" "re" "required" "rs" "subject" "ue"))
+(setq aal-keywords '("AGENT" "APPLY" "AUDITING" "BEHAVIOR" "CALL" "CHECK" "CLAUSE" "DATA" "EXEC" "IF_VIOLATED_THEN" "LOAD" "MACRO" "OF" "SERVICE" "TYPE" "TYPES" "," "AFTER" "AND" "BEFORE" "EXISTS" "FORALL" "IF" "NOT" "ONLYWHEN" "OR" "THEN" "WHERE" "PROVIDED" "PS" "PURPOSE" "REQUIRED" "RS") )
+(setq aal-types '("Actor" "DataSubject" "DataController" "DataProcessor" "DwDataController" "Auditor" "CloudProvider" "CloudCustomer" "EndUser"))
+(setq aal-constants '("ALWAYS" "MUST" "MUSTNOT" "NEVER" "SOMETIME" "UNTIL" "UNLESS" "NEXT"))
+(setq aal-events '())
+(setq aal-functions '("ae" "actions" "attributes" "DENY" "EXTENDS" "get_audit" "get_rectification" "get_usage" "PERMIT"
+ "re" "subject" "ue"))
 
 ;; create the regex string for each class of keywords
 (setq aal-keywords-regexp (regexp-opt aal-keywords 'words))
@@ -34,13 +34,36 @@
     ;; would be highlighted.
 ))
 
+;; command to comment/uncomment text
+(defun aal-comment-dwim (arg)
+  "Comment or uncomment current line or region in a smart way.
+For detail, see `comment-dwim'."
+  (interactive "*P")
+  (require 'newcomment)
+  (let (
+        (comment-start "//") (comment-end " ")
+        )
+    (comment-dwim arg)))
+
+;; syntax table
+(defvar aal-syntax-table nil "Syntax table for `aal-mode'.")
+(setq aal-syntax-table
+      (let ((synTable (make-syntax-table)))
+	(modify-syntax-entry ?\n "> b" synTable)
+	(modify-syntax-entry ?\/ ". 12b" synTable)
+	(modify-syntax-entry ?\/ ". 14" synTable)
+	(modify-syntax-entry ?* ". 23" synTable)
+        synTable))
+
 ;; define the mode
-(define-derived-mode aal-mode fundamental-mode
+(define-derived-mode aal-mode prog-mode
   "aal mode"
   "Major mode for editing AAL (Abstract Accountability Language)…"
+  :syntax-table aal-syntax-table
 
   ;; code for syntax highlighting
   (setq font-lock-defaults '((aal-font-lock-keywords)))
+  (define-key aal-mode-map [remap comment-dwim] 'aal-comment-dwim)
 
   ;; clear memory
   (setq aal-keywords-regexp nil)

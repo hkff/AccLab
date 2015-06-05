@@ -118,8 +118,25 @@ def api_compile_aal(f):
 
 # Compile tspass
 def api_compile_tspass(f):
+    # Save current context
+    sysout = sys.stdout
+    syserr = sys.stderr
+
+    # Capture the output
+    reportSIO = StringIO()
+    reportEIO = StringIO()
+    sys.stdout = reportSIO
+    sys.stderr = reportEIO
+
     try:
         res = tspassc(file=base_dir + "/" + f, output="tmp.tspass")["print"]
     except:
         res = "Compilation Error"
+
+    res += "\n" + reportSIO.getvalue() + "\n" + reportEIO.getvalue()
+
+    # Restore context
+    sys.stdout = sysout
+    sys.stderr = syserr
+
     return res.replace("\n", "<br>")

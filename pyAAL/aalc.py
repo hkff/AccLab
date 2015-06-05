@@ -175,7 +175,7 @@ def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: boo
     :return:
     """
 
-    print("-------- tspassc " + " starting at : " + str(datetime.datetime.now()) + "  File : " + str(file) + " --------\n")
+    # print("-------- tspassc " + " starting at : " + str(datetime.datetime.now()) + "  File : " + str(file) + " --------\n")
 
     # TODO add binaries for win
     p = sys.platform
@@ -293,7 +293,7 @@ def main(argv):
                         "For more information see AccLab home page\n Usage : aalc.py [OPTIONS]" + \
                         "\n  -h \t--help          " + "\t display this help and exit" + \
                         "\n  -i \t--input         " + "\t the input file" + \
-                        "\n  -i \t--output         " + "\t the output file" + \
+                        "\n  -i \t--output        " + "\t the output file" + \
                         "\n  -c \t--compile       " + "\t compile the file, that can be loaded after using -l" + \
                         "\n  -m \t--monodic       " + "\t apply monodic check on aal file" + \
                         "\n  -s \t--shell         " + "\t run a shell after handling aal program" + \
@@ -306,7 +306,7 @@ def main(argv):
                         "\n  -x \t--compile-stdlib" + "\t compile the standard library" + \
                         "\n  -d \t--hotswap       " + "\t enable hotswaping (for development only)" + \
                         "\n  -a \t--ast           " + "\t show ast tree" + \
-                        "\n  -u \t--gui            " + "\t run the gui" + \
+                        "\n  -u \t--gui [port]    " + "\t run the gui on the specified port (default 8000)" + \
                         "\n\nReport aalc bugs to walid.benghabrit@mines-nantes.fr" + \
                         "\nAccLab home page: <http://www.emn.fr/z-info/acclab/>" + \
                         "\naalc is a free software released under GPL 3"
@@ -331,7 +331,7 @@ def main(argv):
 
     # Checking options
     try:
-        opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaSru",
+        opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaSru:",
                                    ["help", "input", "output", "compile", "monodic", "check",
                                     "shell", "load", "fotl", "recompile", "init", "no-colors",
                                     "compile-stdlib", "hotswap", "ast", "synth", "reparse", "gui"])
@@ -383,7 +383,13 @@ def main(argv):
         elif opt in ("-u", "--gui"):
             # Start server
             from ui.Server import start_ui
-            start_ui()
+            port = 8000
+            try:
+                port = int(arg)
+            except:
+                print("Warning invalide port number, running on port 8000")
+                port = 8000
+            start_ui(port)
 
     # Use hot swapping decoration on all AALMetaModel classes
     # use this option for debug only
