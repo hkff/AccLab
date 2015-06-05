@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/libs/css/hint.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/fileManager.js" afterPath="$PROJECT_DIR$/ui/ui/fileManager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/tools.js" afterPath="$PROJECT_DIR$/ui/ui/tools.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/ui.js" afterPath="$PROJECT_DIR$/ui/ui/ui.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/outline.js" afterPath="$PROJECT_DIR$/ui/ui/outline.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pyAAL.iws" />
@@ -72,8 +69,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ui/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.875" vertical-offset="432" max-vertical-offset="2250">
-              <caret line="116" column="10" selection-start-line="116" selection-start-column="10" selection-end-line="116" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.5" vertical-offset="432" max-vertical-offset="2250">
+              <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -193,7 +190,6 @@
         <option value="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-TSPASS.js" />
         <option value="$PROJECT_DIR$/ui/ui/components/Actor.js" />
         <option value="$PROJECT_DIR$/ui/ui/grid.js" />
-        <option value="$PROJECT_DIR$/ui/ui/outline.js" />
         <option value="$PROJECT_DIR$/ui/ui/components/components.js" />
         <option value="$PROJECT_DIR$/ui/ui/components/Ports2.js" />
         <option value="$PROJECT_DIR$/ui/style.css" />
@@ -229,6 +225,7 @@
         <option value="$PROJECT_DIR$/ui/index.html" />
         <option value="$PROJECT_DIR$/ui/diagramEditor.js" />
         <option value="$PROJECT_DIR$/ui/ui/tools.js" />
+        <option value="$PROJECT_DIR$/ui/ui/outline.js" />
       </list>
     </option>
   </component>
@@ -1120,7 +1117,13 @@
       <option name="project" value="LOCAL" />
       <updated>1433526948616</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="Minors">
+      <created>1433537915398</created>
+      <option name="number" value="00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1433537915398</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -1147,13 +1150,14 @@
     <frame x="-2" y="-3" width="1370" height="748" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32808024" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32698414" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32808024" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32698414" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25931233" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34240687" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16993958" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -1161,14 +1165,13 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32698414" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18202417" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39888683" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39971346" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25931233" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23867069" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39888683" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1446,20 +1449,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/outline.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0" vertical-offset="27" max-vertical-offset="3024">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1433429041700" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1433429041700" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1433429041700" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1433429041700" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/aalc.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5318" max-vertical-offset="7776">
@@ -1636,10 +1625,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/outline.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.8305085" vertical-offset="0" max-vertical-offset="3006">
+          <caret line="60" column="38" selection-start-line="60" selection-start-column="38" selection-end-line="60" selection-end-column="38" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1433538106406" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1433538106406" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1433538106406" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1433538106406" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ui/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.875" vertical-offset="432" max-vertical-offset="2250">
-          <caret line="116" column="10" selection-start-line="116" selection-start-column="10" selection-end-line="116" selection-end-column="10" />
+        <state vertical-scroll-proportion="0.5" vertical-offset="432" max-vertical-offset="2250">
+          <caret line="40" column="43" selection-start-line="40" selection-start-column="43" selection-end-line="40" selection-end-column="43" />
           <folding />
         </state>
       </provider>

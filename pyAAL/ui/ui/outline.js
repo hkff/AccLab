@@ -64,7 +64,6 @@ visualEditor.ui.outline = {
 				});},
 
 			formatter:function(node){
-				//console.log(node)
 				var s = node.text;
 				if(node.children){
 					s += ' <span style=\'color:gray\'>(' + node.children.length + ')</span>';
