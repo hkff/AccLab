@@ -26,17 +26,19 @@ CLAUSE css_policy (
 
     // Allow users to read their data
     IF (d.subject == a) THEN {
-        PERMIT a.read[css](d)
+        PERMIT a.read[css](d) BEFORE "5 Months"
     } AND
 
     // Deny access to read other
     IF (d.subject != a) THEN {
-        DENY a.read[css](d) BEFORE "1 year"
+        DENY a.read[css](d)
     } AND
 
     // Allow css to read/delete stored data
-    PERMIT css.read[css](d) BEFORE "2 Days" AND
-    PERMIT css.delete[css](d) BEFORE "5 Months"
+    PERMIT css.read[css](d) AND
+    PERMIT css.delete[css](d)
+//    AUDITING dpa.audit[css](log)
+//    IF_VIOLATED_THEN MUST(dpa.sanction[css](d) AND css.delete[css](d))
 )
 
 /*
@@ -48,7 +50,21 @@ CLAUSE alice_pref (
     IF (d.subject == alice) THEN {
         PERMIT alice.read[css](d) BEFORE "6 Months"
     }
+//    AUDITING dpa.audit[css](log)
+//    IF_VIOLATED_THEN MUST(dpa.sanction[css](d) AND css.delete[css](d))
 )
 
 // Call validate macro to perform the compliance check
 CALL validate("css_policy" "alice_pref")
+
+CHECK c(){
+"""
+@verbose
+~(
+@buildenv
+clause(css_policy).ue => clause(alice_pref).ue
+)
+"""
+}
+
+APPLY c()

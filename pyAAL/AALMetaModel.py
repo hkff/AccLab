@@ -531,7 +531,7 @@ class m_clause(m_declarable):
         return res
 
     def to_ltl(self):
-        ue = ("always(" + str(self.usage.to_ltl()) + ")") if self.usage is not None else ""
+        ue = ("(" + str(self.usage.to_ltl()) + ")") if self.usage is not None else ""
         ae = str(self.audit.to_ltl()) if self.audit.usage is not None else None
         re = str(self.rectification.to_ltl()) if self.rectification.usage is not None else None
         # return ue + ("\n & " + ae if ae is not None else "") + ("\n & " + re if re is not None else "")
@@ -1421,7 +1421,6 @@ class m_time(aalmmnode):
     def compare(self, t):
         a = self.to_days()
         b = t.to_days()
-        # print(str(a) + " " + str(b))
         if a < b:
             return 1
         elif a > b:
@@ -1431,15 +1430,13 @@ class m_time(aalmmnode):
 
     def to_days(self):
         tmp = str(self.time).replace("\"", "")
-        if tmp.lower().find("year"):
+        if tmp.lower().find("year") != -1:
             i = int(tmp.split(" ")[0])
-            # print("------------ " + str(i))
             return i * 12 * 28
-        elif tmp.lower().find("month"):
+        elif tmp.lower().find("month") != -1:
             i = int(tmp.split(" ")[0])
-            # print("------------ " + str(i))
             return i * 28
-        elif tmp.lower().find("day"):
+        elif tmp.lower().find("day") != -1:
             return int(tmp.split(" ")[0])
 
     def to_ltl(self):

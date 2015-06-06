@@ -20,6 +20,19 @@ __author__ = 'walid'
 from AALMetaModel import *
 
 
+# Time array to set
+def time_to_set(times):
+    res = []
+    lng = len(times)
+    for x in range(0, lng):
+        for y in range(x+1, lng):
+            if str(times[x].time) == str(times[y].time):
+                break
+        if y+1 == lng:
+            res.append(times[x])
+    return res
+
+
 # Build environment
 def build_env(prog: m_aalprog=None):
     """
@@ -43,9 +56,9 @@ def build_env(prog: m_aalprog=None):
     pre_cond += "\n\n%%% Time knowledge \n"
     times = []
     index = 0
-    for x in prog.walk(filter_type=m_time):
+    tmp = time_to_set(prog.walk(filter_type=m_time))
+    for x in tmp:
         index = 0
-        # print(str(x) + " " + str(x.to_days()))
         if len(times) == 0:
             times.append(x)
         else:
@@ -54,8 +67,14 @@ def build_env(prog: m_aalprog=None):
                     times.insert(index, x)
                     break
                 index += 1
-    # print([str(x.time) + " " for x in times])
+            if index == len(times):
+                times.append(x)
 
+    times = times[::-1]
+    # print([str(x.time) + " " for x in times])
+    for i in range(0, len(times)):
+        for j in range(i+1, len(times)):
+            pre_cond += "" + str(times[i].to_ltl()) + " => " + str(times[j].to_ltl()) + " & "
     pre_cond += "\n%%%%%%%%% END EVN %%%%%%%%%%%\n\n"
     return pre_cond
 
