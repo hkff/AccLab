@@ -22,7 +22,7 @@ import cProfile
 
 # Coverage tests (to run with python Coverage)
 # cmd = "main(['aalc.py', '-i', 'examples/test1.aal'])"
-main(['aalc.py', '-i', 'examples/test1.aal', '-t', '-k'])
+main(['aalc.py', '-i', 'examples/test2.aal', '-t', '-k'])
 
 # Run it with profiler
 # cProfile.run(cmd)

@@ -82,21 +82,6 @@ CLAUSE c0 (
 AUDITING ALWAYS(IF(Kim.notify[auditor]()) THEN (auditor.audit[cloudX]()))
 IF_VIOLATED_THEN auditor.sanction[cloudX]()
 
-//AUDITING ALWAYS IF Kim.notify[auditor]() THEN auditor.audit[cloudX]()
-//IF_VIOLATED_THEN auditor.sanction[cloudX]()
-
-
-/*
-
-    FORALL file:data WHERE file.subject==alice
-    EXISTS a:agent
-    PERMIT alice.read[cloudS](d)
-    AND PERMIT alice.write[cloudS](file)
-    AND DENY cloudS.store[a](file)
-    //AND IF (alice.read[cloudS](file) == "pp") THEN (MUST(cloudS.notify[cloudS]()))
-*/
-)
-
 EXEC
 """
 #print(self.clause("kim_policy").to_ast())

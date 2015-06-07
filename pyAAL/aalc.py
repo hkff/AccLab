@@ -306,7 +306,7 @@ def main(argv):
                         "\n  -x \t--compile-stdlib" + "\t compile the standard library" + \
                         "\n  -d \t--hotswap       " + "\t enable hotswaping (for development only)" + \
                         "\n  -a \t--ast           " + "\t show ast tree" + \
-                        "\n  -u \t--gui [port]    " + "\t run the gui on the specified port (default 8000)" + \
+                        "\n  -u \t--gui [port]    " + "\t run the gui on the specified port" + \
                         "\n\nReport aalc bugs to walid.benghabrit@mines-nantes.fr" + \
                         "\nAccLab home page: <http://www.emn.fr/z-info/acclab/>" + \
                         "\naalc is a free software released under GPL 3"
