@@ -5,12 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/tspass/A4CLOUD-D43.3/byhand/Locations1_gen.fotl" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/tspass/A4CLOUD-D43.3/byhand/Locations1_gen.result" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/examples/tspass/A4CLOUD-D43.3/byhand/Locations1_gen.tspass" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AALMetaModel.py" afterPath="$PROJECT_DIR$/AALMetaModel.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AALtoFOTL.py" afterPath="$PROJECT_DIR$/AALtoFOTL.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/components/Actor.js" afterPath="$PROJECT_DIR$/ui/ui/components/Actor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/Server.py" afterPath="$PROJECT_DIR$/ui/Server.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/UserGuide/parts/aalsyntax.tex" afterPath="$PROJECT_DIR$/UserGuide/parts/aalsyntax.tex" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/api.py" afterPath="$PROJECT_DIR$/ui/api.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/diagramEditor.js" afterPath="$PROJECT_DIR$/ui/diagramEditor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/fileManager.js" afterPath="$PROJECT_DIR$/ui/ui/fileManager.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/healthcare/healthcare.aal" afterPath="$PROJECT_DIR$/examples/healthcare/healthcare.aal" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/healthcare/healthcare.acd" afterPath="$PROJECT_DIR$/examples/healthcare/healthcare.acd" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/tools.js" afterPath="$PROJECT_DIR$/ui/ui/tools.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/tuto0.aal" afterPath="$PROJECT_DIR$/examples/tuto0.aal" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/tuto2.aal" afterPath="$PROJECT_DIR$/examples/tuto2.aal" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/ui.js" afterPath="$PROJECT_DIR$/ui/ui/ui.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/wearable/wearable.aal" afterPath="$PROJECT_DIR$/examples/wearable/wearable.aal" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pyAAL.iws" />
@@ -62,65 +70,72 @@
       <file leaf-file-name="tools.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="13342" max-vertical-offset="14634">
-              <caret line="784" column="22" selection-start-line="784" selection-start-column="22" selection-end-line="784" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="12701" max-vertical-offset="15390">
+              <caret line="718" column="46" selection-start-line="718" selection-start-column="46" selection-end-line="718" selection-end-column="46" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1433539979562" expanded="true" signature="17129:17159" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="19689:19700" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="20484:20496" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="20985:20996" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="21405:21416" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="21630:21641" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="22244:22262" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="22593:22611" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="22731:22742" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="22906:22923" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="23468:23497" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="23579:23591" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="23778:23788" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="23943:23953" placeholder="..." />
-                <marker date="1433539979562" expanded="true" signature="24103:24113" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="17129:17159" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="19689:19700" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="23494:23506" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="23995:24006" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="24415:24426" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="24640:24651" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="25250:25268" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="25599:25617" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="25737:25748" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="25912:25929" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="26470:26499" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="26581:26593" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="26780:26790" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="26945:26955" placeholder="..." />
+                <marker date="1433692436642" expanded="true" signature="27105:27115" placeholder="..." />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Server.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ui/Server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.33557048" vertical-offset="1564" max-vertical-offset="2160">
+              <caret line="104" column="31" selection-start-line="104" selection-start-column="31" selection-end-line="104" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="api.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/api.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2592">
+              <caret line="28" column="10" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="aalsyntax.tex" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/UserGuide/parts/aalsyntax.tex">
+          <provider selected="true" editor-type-id="LaTeXFileEditor">
+            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="test1.aal" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/test1.aal">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5490">
+            <state vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="5490">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tuto1.aal" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/tuto1.aal">
+      <file leaf-file-name="AALMetaModel.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="963" max-vertical-offset="1566">
-              <caret line="73" column="18" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tuto0.aal" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/examples/tuto0.aal">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.1208054" vertical-offset="466" max-vertical-offset="1368">
-              <caret line="63" column="1" selection-start-line="63" selection-start-column="1" selection-end-line="63" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AALtoFOTL.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AALtoFOTL.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="461" max-vertical-offset="2070">
-              <caret line="73" column="4" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="9274" max-vertical-offset="30456">
+              <caret line="539" column="68" selection-start-line="539" selection-start-column="68" selection-end-line="539" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -139,8 +154,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/FOTLSynthesizer.py" />
-        <option value="$PROJECT_DIR$/ASTprinter.py" />
         <option value="$PROJECT_DIR$/tools/antlrc.py" />
         <option value="$PROJECT_DIR$/tools/hottie.py" />
         <option value="$PROJECT_DIR$/tools/visu/Visu.py" />
@@ -163,33 +176,35 @@
         <option value="$PROJECT_DIR$/tools/utils/nano/README" />
         <option value="$PROJECT_DIR$/README" />
         <option value="$PROJECT_DIR$/shell.py" />
-        <option value="$PROJECT_DIR$/UserGuide/parts/aalsyntax.tex" />
         <option value="$PROJECT_DIR$/tools/utils/nano/aal.nanorc" />
         <option value="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-AAL.js" />
         <option value="$PROJECT_DIR$/tools/utils/ace/mode-AAL.js" />
         <option value="$PROJECT_DIR$/UserGuide/UserGuide.tex" />
-        <option value="$PROJECT_DIR$/ui/api.py" />
         <option value="$PROJECT_DIR$/AALCompiler.py" />
         <option value="$PROJECT_DIR$/aalc.py" />
-        <option value="$PROJECT_DIR$/ui/Server.py" />
         <option value="$PROJECT_DIR$/UserGuide/parts/acclab.tex" />
         <option value="$PROJECT_DIR$/AALChecker.py" />
         <option value="$PROJECT_DIR$/examples/tuto1.aal" />
-        <option value="$PROJECT_DIR$/examples/tuto2.aal" />
         <option value="$PROJECT_DIR$/UserGuide/parts/tuto.tex" />
         <option value="$PROJECT_DIR$/ui/ui/properties.js" />
         <option value="$PROJECT_DIR$/ui/test.js" />
-        <option value="$PROJECT_DIR$/ui/ui/ui.js" />
-        <option value="$PROJECT_DIR$/ui/ui/fileManager.js" />
         <option value="$PROJECT_DIR$/ui/ui/outline.js" />
-        <option value="$PROJECT_DIR$/ui/diagramEditor.js" />
         <option value="$PROJECT_DIR$/ui/index.html" />
-        <option value="$PROJECT_DIR$/ui/ui/components/Actor.js" />
-        <option value="$PROJECT_DIR$/ui/ui/tools.js" />
         <option value="$PROJECT_DIR$/toto" />
-        <option value="$PROJECT_DIR$/AALMetaModel.py" />
-        <option value="$PROJECT_DIR$/examples/tuto0.aal" />
         <option value="$PROJECT_DIR$/AALtoFOTL.py" />
+        <option value="$PROJECT_DIR$/AALMetaModel.py" />
+        <option value="$PROJECT_DIR$/UserGuide/parts/aalsyntax.tex" />
+        <option value="$PROJECT_DIR$/examples/tuto0.aal" />
+        <option value="$PROJECT_DIR$/examples/tuto2.aal" />
+        <option value="$PROJECT_DIR$/examples/wearable/wearable.aal" />
+        <option value="$PROJECT_DIR$/examples/healthcare/healthcare.aal" />
+        <option value="$PROJECT_DIR$/ui/diagramEditor.js" />
+        <option value="$PROJECT_DIR$/ui/ui/fileManager.js" />
+        <option value="$PROJECT_DIR$/ui/ui/components/Actor.js" />
+        <option value="$PROJECT_DIR$/ui/ui/ui.js" />
+        <option value="$PROJECT_DIR$/ui/ui/tools.js" />
+        <option value="$PROJECT_DIR$/ui/api.py" />
+        <option value="$PROJECT_DIR$/ui/Server.py" />
       </list>
     </option>
   </component>
@@ -201,7 +216,7 @@
     <scope name="Code" pattern="!file[pyAAL]:antlr4//*&amp;&amp;!file[pyAAL]:.idea//*&amp;&amp;!file[pyAAL]:UserGuide//*&amp;&amp;!file[pyAAL]:libs//*&amp;&amp;!file[pyAAL]:grammar//*&amp;&amp;!file[pyAAL]:coverage//*&amp;&amp;!file[pyAAL]:behave//*&amp;&amp;!file[pyAAL]:examples//*&amp;&amp;!file[pyAAL]:tools/linux//*&amp;&amp;!file[pyAAL]:tools/mac//*&amp;&amp;!file[pyAAL]:tools/utils//*&amp;&amp;!file[pyAAL]:tools/visu//*" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1364" />
+    <option name="width" value="1358" />
     <option name="height" value="741" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -267,7 +282,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -286,22 +300,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="examples" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -1044,7 +1045,13 @@
       <option name="project" value="LOCAL" />
       <updated>1433540121049</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Times fixing">
+      <created>1433618049020</created>
+      <option name="number" value="00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1433618049020</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -1068,15 +1075,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1364" height="741" extended-state="4" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1358" height="741" extended-state="4" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32698414" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15326253" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1554878" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3258427" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32698414" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18202417" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1090,7 +1098,6 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25931233" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23867069" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32698414" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39888683" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1111,7 +1118,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Implementing negate function for aexpAction" />
     <MESSAGE value="Adding Actors" />
     <MESSAGE value="Adding Proxy" />
     <MESSAGE value="FOTLSynthesizer init" />
@@ -1136,7 +1142,8 @@
     <MESSAGE value="Minors + tspass examples" />
     <MESSAGE value="Toaster" />
     <MESSAGE value="Minors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minors" />
+    <MESSAGE value="Times fixing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Times fixing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1145,37 +1152,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/snippets/AAL.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1220339" vertical-offset="0" max-vertical-offset="590">
-          <caret line="4" column="68" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/components/components.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="535" max-vertical-offset="1206">
-          <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/LICENCE">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="12240">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/simul/Simul.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.0746269" vertical-offset="648" max-vertical-offset="2124">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/simul/Actors.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.0135593" vertical-offset="1188" max-vertical-offset="3438">
@@ -1269,11 +1245,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UserGuide/parts/aalsyntax.tex">
-      <provider selected="true" editor-type-id="LaTeXFileEditor">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-AAL.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.34346506" vertical-offset="494" max-vertical-offset="2124">
@@ -1288,11 +1259,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UserGuide/UserGuide.tex">
-      <provider selected="true" editor-type-id="LaTeXFileEditor">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/aalc.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5318" max-vertical-offset="7776">
@@ -1303,13 +1269,6 @@
     <entry file="file://$PROJECT_DIR$/UserGuide/parts/acclab.tex">
       <provider selected="true" editor-type-id="LaTeXFileEditor">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.4605067" vertical-offset="1921" max-vertical-offset="2592">
-          <caret line="15" column="55" selection-start-line="15" selection-start-column="55" selection-end-line="15" selection-end-column="55" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tmp_gen.fotl">
@@ -1326,13 +1285,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/Server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8390462" vertical-offset="1093" max-vertical-offset="2160">
-          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/UserGuide/parts/tuto.tex">
       <provider selected="true" editor-type-id="LaTeXFileEditor">
         <state />
@@ -1341,13 +1293,6 @@
     <entry file="file://$PROJECT_DIR$/ui/libs/css/hint.min.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="590">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/grid.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.484746" vertical-offset="2646" max-vertical-offset="3780">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
@@ -1366,13 +1311,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/properties.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="12.569491" vertical-offset="2484" max-vertical-offset="10674">
-          <caret line="550" column="0" selection-start-line="550" selection-start-column="0" selection-end-line="550" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/ui/components/Agent.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.37313432" vertical-offset="477" max-vertical-offset="1080">
@@ -1387,41 +1325,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/components/Actor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3321492" vertical-offset="8219" max-vertical-offset="9522">
-          <caret line="467" column="56" selection-start-line="467" selection-start-column="56" selection-end-line="467" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/diagramEditor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2686567" vertical-offset="927" max-vertical-offset="1800">
-          <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6237288" vertical-offset="1072" max-vertical-offset="7686">
-          <caret line="80" column="14" selection-start-line="80" selection-start-column="14" selection-end-line="80" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5625" vertical-offset="1782" max-vertical-offset="2358">
           <caret line="117" column="4" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.19403" vertical-offset="81" max-vertical-offset="3438">
-          <caret line="145" column="32" selection-start-line="145" selection-start-column="32" selection-end-line="145" selection-end-column="32" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1432,28 +1339,152 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
+    <entry file="file://$PROJECT_DIR$/AALCompiler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="13342" max-vertical-offset="14634">
-          <caret line="784" column="22" selection-start-line="784" selection-start-column="22" selection-end-line="784" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="17880" max-vertical-offset="21690">
+          <caret line="1010" column="44" selection-start-line="1010" selection-start-column="44" selection-end-line="1010" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALChecker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="954" max-vertical-offset="7632">
+          <caret line="360" column="19" selection-start-line="360" selection-start-column="19" selection-end-line="360" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UserGuide/UserGuide.tex">
+      <provider selected="true" editor-type-id="LaTeXFileEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/tuto0a.acd">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4374">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/tuto0a.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.05704698" vertical-offset="34" max-vertical-offset="900">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/wearable/wearable.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.0806174" vertical-offset="4619" max-vertical-offset="5958">
+          <caret line="324" column="12" selection-start-line="324" selection-start-column="12" selection-end-line="324" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/tuto1.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.66442955" vertical-offset="648" max-vertical-offset="1566">
+          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/tuto2.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27181208" vertical-offset="630" max-vertical-offset="1278">
+          <caret line="44" column="1" selection-start-line="44" selection-start-column="1" selection-end-line="44" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/tuto0.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9395973" vertical-offset="196" max-vertical-offset="1080">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALtoFOTL.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49496645" vertical-offset="893" max-vertical-offset="2070">
+          <caret line="66" column="42" selection-start-line="66" selection-start-column="42" selection-end-line="66" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/simul.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="596">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="9274" max-vertical-offset="30456">
+          <caret line="539" column="68" selection-start-line="539" selection-start-column="68" selection-end-line="539" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/properties.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="7704" max-vertical-offset="10332">
+          <caret line="454" column="107" selection-start-line="454" selection-start-column="103" selection-end-line="454" selection-end-column="107" />
+          <folding>
+            <marker date="1433445205659" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33557048" vertical-offset="3184" max-vertical-offset="3780">
+          <caret line="188" column="0" selection-start-line="188" selection-start-column="0" selection-end-line="188" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1433539979562" expanded="true" signature="17129:17159" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="19689:19700" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="20484:20496" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="20985:20996" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="21405:21416" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="21630:21641" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="22244:22262" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="22593:22611" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="22731:22742" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="22906:22923" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="23468:23497" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="23579:23591" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="23778:23788" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="23943:23953" placeholder="..." />
-            <marker date="1433539979562" expanded="true" signature="24103:24113" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/components/Actor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30035973" vertical-offset="4927" max-vertical-offset="8946">
+          <caret line="302" column="24" selection-start-line="302" selection-start-column="24" selection-end-line="302" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/diagramEditor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09060403" vertical-offset="324" max-vertical-offset="2106">
+          <caret line="21" column="20" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/grid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="5.001715" vertical-offset="0" max-vertical-offset="3780">
+          <caret line="181" column="21" selection-start-line="181" selection-start-column="21" selection-end-line="181" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/healthcare/healthcare.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.55574614" vertical-offset="306" max-vertical-offset="1728">
+          <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1465,56 +1496,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/tuto1.aal">
+    <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="864" max-vertical-offset="1566">
-          <caret line="73" column="18" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.36363637" vertical-offset="4972" max-vertical-offset="7380">
+          <caret line="307" column="38" selection-start-line="307" selection-start-column="38" selection-end-line="307" selection-end-column="38" />
+          <folding>
+            <marker date="1433689823344" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1433689823344" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UserGuide/parts/aalsyntax.tex">
+      <provider selected="true" editor-type-id="LaTeXFileEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="12701" max-vertical-offset="15390">
+          <caret line="718" column="46" selection-start-line="718" selection-start-column="46" selection-end-line="718" selection-end-column="46" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1433692436642" expanded="true" signature="17129:17159" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="19689:19700" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="23494:23506" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="23995:24006" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="24415:24426" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="24640:24651" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="25250:25268" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="25599:25617" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="25737:25748" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="25912:25929" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="26470:26499" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="26581:26593" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="26780:26790" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="26945:26955" placeholder="..." />
+            <marker date="1433692436642" expanded="true" signature="27105:27115" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2592">
+          <caret line="28" column="10" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AALChecker.py">
+    <entry file="file://$PROJECT_DIR$/ui/Server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="954" max-vertical-offset="7632">
-          <caret line="360" column="19" selection-start-line="360" selection-start-column="19" selection-end-line="360" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AALCompiler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="17880" max-vertical-offset="21690">
-          <caret line="1010" column="44" selection-start-line="1010" selection-start-column="44" selection-end-line="1010" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/tuto2.aal">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21979865" vertical-offset="625" max-vertical-offset="1278">
-          <caret line="42" column="4" selection-start-line="42" selection-start-column="4" selection-end-line="43" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4562607" vertical-offset="25132" max-vertical-offset="30438">
-          <caret line="1414" column="17" selection-start-line="1414" selection-start-column="13" selection-end-line="1414" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AALtoFOTL.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="461" max-vertical-offset="2070">
-          <caret line="73" column="4" selection-start-line="73" selection-start-column="4" selection-end-line="73" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/tuto0.aal">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.1208054" vertical-offset="466" max-vertical-offset="1368">
-          <caret line="63" column="1" selection-start-line="63" selection-start-column="1" selection-end-line="63" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.33557048" vertical-offset="1564" max-vertical-offset="2160">
+          <caret line="104" column="31" selection-start-line="104" selection-start-column="31" selection-end-line="104" selection-end-column="31" />
           <folding />
         </state>
       </provider>

@@ -295,13 +295,13 @@ draw2d.shape.basic.Rectangle.extend({
     },
 
     /**
-     * 
-     *
+     * Get required services
+     * @returns {*}
      */
     getRservices: function() {
         return this.rservices;
         // TODO : remove
-        res = [];
+        var res = [];
         this.getOutputPorts().data.forEach(function(e){
             if(e.plabel)
                 res.push(e.plabel.text);
@@ -310,13 +310,13 @@ draw2d.shape.basic.Rectangle.extend({
     },
 
     /**
-     * 
-     * 
+     * Get provided services
+     * @returns {*}
      */
     getPservices: function() {
         return this.pservices;
         // TODO : remove
-        res = [];
+        var res = [];
         this.getInputPorts().data.forEach(function(e){
             if(e.plabel)
                 res.push(e.plabel.text);
@@ -325,15 +325,14 @@ draw2d.shape.basic.Rectangle.extend({
     },
 
     /**
-     * 
-     * 
+     * Get types
+     * @returns {*}
      */
     getTypes: function() {
         return this.types;
     },
 
     /**
-     * 
      * Add provided service in leftLocator
      */
     addPservice: function(name) {
@@ -341,16 +340,13 @@ draw2d.shape.basic.Rectangle.extend({
     },
 
     /**
-     * 
      * Add required service in rightLocator
      */
     addRservice: function(name) {
         this.createPort("rs", this.rightLocator, name);
     },
 
-
     /**
-     * 
      * Add a type
      */
     addType: function(name) {
@@ -358,7 +354,6 @@ draw2d.shape.basic.Rectangle.extend({
     },
 
     /**
-     * 
      * Remove the required service "name"
      */
     removeRservice: function(name) {
@@ -375,7 +370,6 @@ draw2d.shape.basic.Rectangle.extend({
     },
 
     /**
-     * 
      * Remove the provided service "name"
      */
     removePservice: function(name) {
@@ -392,7 +386,6 @@ draw2d.shape.basic.Rectangle.extend({
     },
 
     /**
-     * 
      * Remove the type "name"
      */
     removeType: function(name) {
@@ -418,9 +411,6 @@ draw2d.shape.basic.Rectangle.extend({
         $(visualEditor.ui).trigger('nodeUpdated');
     },
 
-    /**
-     * 
-     */
     updateServices: function(newServices, services, addFunction, removeFunction) {
         var cmd = newServices.getSize() - services.getSize();
         
@@ -439,7 +429,7 @@ draw2d.shape.basic.Rectangle.extend({
         if(cmd == 1){
             // Add new service
             for (var i = 0; i < newServices.getSize(); i++) {
-                e = newServices.get(i);
+                var e = newServices.get(i);
                 if(!services.contains(e)){
                     addFunction.call(this, e);
                     i = newServices.getSize();
@@ -448,16 +438,14 @@ draw2d.shape.basic.Rectangle.extend({
         }else{
             // Remove a service
             for (var i = 0; i < services.getSize(); i++) {
-                e = services.get(i);
+                var e = services.get(i);
                 if(!newServices.contains(e)){
                     removeFunction.call(this, e);
                 }
             }
         }
 
-
         $(visualEditor.ui).trigger('nodeUpdated');
-
     },
 
     /**
@@ -474,7 +462,6 @@ draw2d.shape.basic.Rectangle.extend({
 
         $(visualEditor.ui).trigger('nodeUpdated');
     },
-
 
     /**
      * return a tree in JSON format of the actor
@@ -520,5 +507,4 @@ draw2d.shape.basic.Rectangle.extend({
         this.getOutputPorts().data.forEach(function(e){ e.setRotationAngle(angle); });
         this.getInputPorts().data.forEach(function(e){ e.setRotationAngle(angle); });
     }
-
 });

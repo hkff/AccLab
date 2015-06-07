@@ -41,7 +41,7 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             return "Method error"
 
     def handle_req(self, args, method):
-        print(args)
+        # print(args)
         res = "Error"
         val = self.get_arg(args, "action", method)
         if val == "list":
@@ -59,13 +59,13 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         return res
 
     def do_GET(self):
-        print("[GET] " + self.path)
+        # print("[GET] " + self.path)
         # Handle request
         res = "Error"
         p = self.path
         k = urlparse(p).query
         args = parse_qs(k)
-        print(args)
+        # print(args)
         if "action" in args.keys():
             self.send_response(200)
             self.send_header("Content-type", "text/html")
@@ -76,7 +76,7 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             super().do_GET()
 
     def do_POST(self):
-        print("[POST] " + self.path)
+        # print("[POST] " + self.path)
         # Handle request
         res = "Error"
         k = urlparse(self.path).query

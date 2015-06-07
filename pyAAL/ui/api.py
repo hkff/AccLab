@@ -54,7 +54,6 @@ def api_readFile(f):
 # Write file
 def api_writeFile(f, d):
     with open(base_dir + "/" + f, "w+") as fd:
-        print(d)
         return str(fd.write(d))
 
 
@@ -135,6 +134,7 @@ def api_compile_tspass(f):
 
     res += "\n" + reportSIO.getvalue() + "\n" + reportEIO.getvalue()
 
+    print(res)
     # Restore context
     sys.stdout = sysout
     sys.stderr = syserr

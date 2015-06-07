@@ -536,7 +536,8 @@ class m_clause(m_declarable):
         re = str(self.rectification.to_ltl()) if self.rectification.usage is not None else None
         # return ue + ("\n & " + ae if ae is not None else "") + ("\n & " + re if re is not None else "")
         if ae is not None and re is not None:
-            return ae + " & always(" + ue + " | ((~(" + ue + ")) & (always(" + ae + " => (" + re + "))))) \n"
+            # return ae + " & always(" + ue + " | ((~(" + ue + ")) & (always(" + ae + " => (" + re + "))))) \n"
+            return ae + " & always(" + ue + " | ((~(" + ue + ")) & ((" + ae + " => (" + re + "))))) \n"
         else:
             return ue
 

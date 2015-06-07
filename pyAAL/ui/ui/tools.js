@@ -660,7 +660,7 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
 		var fx = function(e){
 			var p =
 			"<div id='modal-content'>" +
-            "<div style='width:450px'>" +
+            "<div style='width:950px'>" +
             "<style>" +
                 ".keyword{color:orange; padding-right: 5px;} " +
                 ".rule {padding-bottom: 0px;} " +
@@ -671,9 +671,66 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
                          "font-size: 12px; padding-left: 3px; padding: 0px 0px;}" +
             "</style>" +
             "<b>AAL syntax</b>" +
-            "<p>" +
+            "<pre>" +
+				"<b class='coms'>// AAL core</b>" +
+				"\nAALprogram    ::= (Declaration | Clause | Comment | Macro | MacroCall | Loadlib" +
+                    "| LtlCheck | CheckApply | Exec)" +
+				"\nDeclaration   ::= AgentDec | ServiceDec | DataDec | TypesDec | varDec" +
+				"\nAgentDec      ::= AGENT Id [TYPES '(' Type *')' REQUIRED'('service*')' PROVIDED'('service*')']" +
+				"\nServiceDec    ::= SERVICE Id [TYPES '(' Type* ')'] [PURPOSE '(' Id* ')']" +
+				"\nDataDec       ::= DATA Id TYPES '(' Type* ')' [REQUIRED'('service*')' PROVIDED'('service*')'] SUBJECT agent" +
+				"\nVarDec        ::= Type_Id Id [attr_Id '(' value* ')']*" +
+				"\nClause        ::= CLAUSE Id '(' [Usage] [Audit Rectification] ')'" +
+				"\nUsage         ::= ActionExp" +
+				"\nAudit         ::= AUDITING Usage" +
+				"\nRectification ::= IF_VIOLATED_THEN Usage" +
+				"\nActionExp     ::= Action | NOT ActionExp | Modality ActionExp | Condition" +
+			    "\n               | ActionExp (AND|OR|ONLYWHEN|UNTIL|UNLESS) ActionExp" +
+			    "\n               | Author | Quant* | IF '(' ActionExp ')' THEN '{' ActionExp '}'" +
+				"\nExp           ::= Variable | Constant | Variable.Attribute" +
+				"\nCondition     ::= [NOT] Exp | Exp ['==' | '!='] Exp | Condition (AND|OR) Condition" +
+				"\nAuthor        ::= (PERMIT | DENY) Action" +
+				"\nAction        ::= agent.service ['['[agent]']'] '('Exp')' [Time] [Purpose]" +
+				"\nQuant         ::= (FORALL | EXISTS) Var [WHERE Condition]" +
+				"\nVariable      ::= Var ':' Type" +
+				"\nModality      ::= MUST | MUSTNOT | ALWAYS | NEVER | SOMETIME" +
+				"\nTime          ::= (AFTER | BEFORE) Date | Time (AND | OR) Time" +
+				"\nDate          ::= STRING" +
+				"\nType, var, val, attr Id, agent, Constant, Purpose ::= literal" +
+				"\n<b class='coms'>// AAL Type extension</b>" +
+				"\nTypesDec      ::= TYPE Id [EXTENDS '(' Type* ')'] ATTRIBUTES '(' AttributeDec* ')' ACTIONS '(' ActionDec* ')'" +
+				"\nAttributeDec  ::= Id ':' Type" +
+				"\nActionDec     ::= Id" +
+				"\nType, Id      ::= litteral" +
+				"\n<b class='coms'>// Reflexion extension</b>" +
+				"\nMacro         ::= MACRO Id '(' param* ')' '(' mcode ')'" +
+				"\nMCode         ::= '\"\"\"' Meta model api + Python3 code (subset) '\"\"\"'" +
+				"\nMCall         ::= CALL Id '(' param* ')'" +
+				"\nLoadLib       ::= LOAD STRING;" +
+				"\nExec          ::= EXEC MCode" +
+				"\n<b class='coms'>// FOTL checking extension</b>" +
+				"\nLtlCheck     ::= CHECK Id '(' param* ')' '(' check ')'" +
+				"\ncheck        ::= FOTL_formula + clause(Id) [.ue | .ae | .re]" +
+				"\nCheckApply   ::= APPLY Id '(' param* ')'" +
+			"</pre></div>" ;
+
+				toastr.info(p, "", {
+					"closeButton": true,
+					"preventDuplicates": true,
+					"tapToDismiss": true,
+					"showDuration": "3000",
+					"hideDuration": "1000",
+					"timeOut": 0,
+					"extendedTimeOut": 0,
+					"positionClass": "toast-top-right"
+				});
+				$(".toast-info").css("width", "950px");
+			};
+			this.button.click(fx);
+			shortcut.add("Ctrl+M", fx);
+/*
         	"<!-- Declarations -->" +
-                "<b class='coms'>/** Declarations **/</b><br>" +
+                "<b class='coms'>/ Declarations /</b><br>" +
                 "</p><div class='rule'>" +
                     "<b id='agentDec' class='keyword hint--top hint--info' style='float: left;' data-hint='Click to insert Agent declaration'>AGENT</b>"  +
                     "<input id='agentIdDec' list='agents' type='text' class='select' placeholder='agent_Id'>" +
@@ -695,7 +752,7 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
                 "</div>" +
             "<br>" +
             "<div class='rule'>" +
-                "<b class='coms'>/** Clause **/</b><br>" +
+                "<b class='coms'>/ Clause /</b><br>" +
                 "<b id='clause' class='keyword hint--top hint--info' data-hint='Click to insert Clause'>CLAUSE</b> clauseName (<br>" +
             "</div>" +
                 "" +
@@ -715,7 +772,7 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
                 "</div>" +
             "</div>" +
             "<br>" +
-            "<b class='coms'>/** ActionExp **/</b><br>" +
+            "<b class='coms'>/ ActionExp /</b><br>" +
         "" +
         "<!-- Action -->" +
             "<div class='rule' title='Click to insert action'>" +
@@ -776,22 +833,7 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
                     "$('#serviceIdAction').val('');" +
                 "});" +
             "</script>" +
-            "</div>" ;
-
-			toastr.info(p, "", {
-				"closeButton": true,
-				"preventDuplicates": true,
-				"tapToDismiss": false,
-  				"showDuration": "3000",
-			  	"hideDuration": "1000",
-			  	"timeOut": 0,
-			  	"extendedTimeOut": 0,
-				"positionClass": "toast-top-right"
-			});
-			$(".toast-info").css("width", "500px");
-		};
-		this.button.click(fx);
-		shortcut.add("Ctrl+M", fx);
+*/
 	}
 });
 

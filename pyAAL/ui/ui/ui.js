@@ -167,14 +167,33 @@ visualEditor.ui = {
 		
 		// Handle declarations
 		aal += "/***************************\n *       Declarations\n ****************************/\n";
-		for (var i=0; i<figs.getSize(); i++) {
+		aal += "// Actors\n";
+		for(var i=0; i<figs.getSize(); i++) {
 			tmp = figs.get(i);
 			aal += tmp.getAALDeclaration()+"\n";
 		}
 
+		aal += "\n// Services\n";
+		var services = "";
+		for(var i=0; i<figs.getSize(); i++) {
+			tmp = figs.get(i);
+			services += tmp.getRservices().data + ",";
+			services += tmp.getPservices().data;
+		}
+
+		var servicesTmp = services.split(",");
+		var servicesTmp2 = [];
+		$.each(servicesTmp, function(i, el){
+    		if($.inArray(el, servicesTmp2) === -1 && el != "") servicesTmp2.push(el);
+		});
+
+		for(var i=0; i<servicesTmp2.length; i++) {
+			aal += "SERVICE " + servicesTmp2[i] + "\n";
+		}
+
 		// Handle clauses
 		aal += "\n/***************************\n *       Clauses\n ****************************/\n";
-		for (var i=0; i<figs.getSize(); i++) {
+		for(var i=0; i<figs.getSize(); i++) {
 			tmp = figs.get(i);
 			var tmp_policy = tmp.getPolicy();
 			if(tmp_policy != "")

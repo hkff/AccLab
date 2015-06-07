@@ -309,6 +309,7 @@ visualEditor.ui.fileManager = {
 		var f = file.replace(".acd", ".aal");
         this.saveFile(f, aal);
         this.openFile(f);
+		toastr.success('AAL file generated !');
 
 		// Update explorer
 		$("#explorer").tree("reload");
@@ -398,7 +399,8 @@ visualEditor.ui.fileManager = {
 							url: visualEditor.backend,
 							data: {action: "write", file: file, data: data},
 							success: function(response){
-						  		console.log(response)
+						  		//console.log(response)
+								toastr.success('File saved !');
 							}
 						});
 					});
@@ -411,7 +413,7 @@ visualEditor.ui.fileManager = {
 					url: visualEditor.backend,
 					data: {action: "write", file: file, data: data},
 					success: function(response){
-				  		console.log(response)
+				  		//console.log(response)
 						toastr.success('File saved !');
 					}
 				});

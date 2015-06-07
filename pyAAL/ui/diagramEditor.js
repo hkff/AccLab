@@ -108,6 +108,4 @@ window.onload = function() {
         visualEditor.ui.activeTab = page.activeTab;
         visualEditor.ui.updatePanel();
     }
-
-
 }

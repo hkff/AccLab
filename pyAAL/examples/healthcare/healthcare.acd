@@ -26,7 +26,7 @@
     "stroke": 1,
     "radius": 0,
     "tlabeltxt": "kim",
-    "policy": "Clause kim_policy (\n {Usage}\n AUDITING {actions}\n IF_VIOLATED_THEN {actions}\n)",
+    "policy": "/*** Kim's user preference ***/\nCLAUSE kim_policy (\n    FORALL file:data WHERE file.subject == kim\n    PERMIT kim.read[cloudX](file)\n    AND cloudX.delete[file]() BEFORE \"3 Years\"\n    AUDITING DPA.audit[cloudS]()\n    IF_VIOLATED_THEN MUST(DPA.sanction[cloudS]())\n)",
     "pservices": {
       "data": []
     },
@@ -78,7 +78,7 @@
     "stroke": 1,
     "radius": 0,
     "tlabeltxt": "cloudX",
-    "policy": "Clause cloudX_policy (\n {Usage}\n AUDITING {actions}\n IF_VIOLATED_THEN {actions}\n)",
+    "policy": "/*** CloudX's policy ***/\nCLAUSE cloudX_policy (\n    FORALL a:agent FORALL file:data WHERE file.subject == a\n    DENY a.read[cloudX](file)\n    AND cloudX.delete[file]() BEFORE \"2 Years\"\n    AUDITING DPA.audit[cloudS]()\n    IF_VIOLATED_THEN DPA.sanction[cloudS]()\n)\n",
     "pservices": {
       "data": [
         "sensor",
@@ -137,7 +137,7 @@
     "stroke": 1,
     "radius": 0,
     "tlabeltxt": "cloudY",
-    "policy": "Clause cloudY_policy (\n {Usage}\n AUDITING {actions}\n IF_VIOLATED_THEN {actions}\n)",
+    "policy": "/*** CloudY's policy ***/\nCLAUSE cloudY_policy (\n    FORALL a:agent FORALL file:data WHERE file.subject == a\n    PERMIT a.read[cloudS](file)\n    AUDITING DPA.audit[cloudS]()\n    IF_VIOLATED_THEN DPA.sanction[cloudS]()\n)\n",
     "pservices": {
       "data": [
         "storage",
@@ -212,7 +212,7 @@
     "stroke": 1,
     "radius": 0,
     "tlabeltxt": "cloudZ",
-    "policy": "Clause cloudZ_policy (\n {Usage}\n AUDITING {actions}\n IF_VIOLATED_THEN {actions}\n)",
+    "policy": "/*** CloudZ's policy ***/\nCLAUSE cloudZ_policy (\n    FORALL a:agent FORALL file:data WHERE file.subject == a\n\n    PERMIT a.read[cloudS](file)\n    AND PERMIT a.write[cloudS](file)\n    AUDITING DPA.audit[cloudS]()\n    IF_VIOLATED_THEN DPA.sanction[cloudS]()\n)\n",
     "pservices": {
       "data": [
         "getData",
@@ -266,7 +266,7 @@
     "stroke": 1,
     "radius": 0,
     "tlabeltxt": "sandra",
-    "policy": "Clause sandra_policy (\n {Usage}\n AUDITING {actions}\n IF_VIOLATED_THEN {actions}\n)",
+    "policy": "/*** Sandra's user preference ***/\nCLAUSE sandra_policy (\n    FORALL file:data WHERE file.subject == alice\n    EXISTS a:agent\n    PERMIT alice.read[cloudS](d)\n    AND PERMIT alice.write[cloudS](file)\n    AUDITING DPA.audit[cloudS]()\n    IF_VIOLATED_THEN MUST(DPA.sanction[cloudS]() AND cloudS.delete[file]())\n)\n",
     "pservices": {
       "data": []
     },
@@ -328,7 +328,7 @@
     "stroke": 1,
     "radius": 0,
     "tlabeltxt": "hospital",
-    "policy": "Clause hospital_policy (\n {Usage}\n AUDITING {actions}\n IF_VIOLATED_THEN {actions}\n)",
+    "policy": "/*** Hospital's policy ***/\nCLAUSE hospital_policy (\n    FORALL a:agent FORALL file:data WHERE file.subject == a\n    PERMIT a.read[cloudS](file)\n    AUDITING DPA.audit[cloudS]()\n    IF_VIOLATED_THEN DPA.sanction[cloudS]()\n)\n",
     "pservices": {
       "data": [
         "report",
@@ -380,7 +380,7 @@
     "stroke": 1,
     "radius": 0,
     "tlabeltxt": "leslie",
-    "policy": "Clause leslie_policy (\n {Usage}\n AUDITING {actions}\n IF_VIOLATED_THEN {actions}\n)",
+    "policy": "",
     "pservices": {
       "data": []
     },

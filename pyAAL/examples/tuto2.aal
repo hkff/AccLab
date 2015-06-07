@@ -40,8 +40,8 @@ CLAUSE css_policy (
     PERMIT css.read[css](d) AND
     PERMIT css.delete[css](d)
 
-    AUDITING dpa.audit[css](log)
-    IF_VIOLATED_THEN MUST(dpa.sanction[css](d) AND css.delete[css](d))
+//    AUDITING dpa.audit[css](log)
+//    IF_VIOLATED_THEN MUST(dpa.sanction[css](d) AND css.delete[css](d))
 )
 
 /*
