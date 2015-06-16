@@ -1,3 +1,6 @@
+LOAD "core.macros"
+
+/*
 Agent bob
 Agent alice
 
@@ -7,3 +10,10 @@ BEHAVIOR bob (
     IF bob.notify[d](d) => PERMIT bob.read[d](d),
     IF bob.notify[d](d) => PERMIT bob.read[d](d)
 )
+*/
+
+CLAUSE Kim_policy (
+FORALL ag:Age IF (ag.subject==Kim AND Hospital.location==Germany) THEN { MUST (Kim.input[Hospital](ag)) }
+
+)
+

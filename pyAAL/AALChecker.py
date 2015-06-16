@@ -231,7 +231,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
         return
     print(Color("{autogreen}Monodic check passed ! {/green}"))
 
-    v = False
+    v = True
     print("------------------------- Starting Validity check -------------------------")
     c1_id = str(c1.name)
     c2_id = str(c2.name)
@@ -244,6 +244,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
+        v= v and False
 
         solve_auth(compiler, p=c2, u=c1, resolve=resolve)
         # return
@@ -258,7 +259,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
                                     + ")\n =>\n\n " + "%%  " + c2_id + "\nclause(" + c2_id + "))",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
-        v = False
+        v = v and False
         print(Color("{autored}  -> " + res["res"] + "{/red}"))
     else:
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
@@ -279,7 +280,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
         print(res["print"])
 
     if res["res"] == "Unsatisfiable":
-        v = True
+        v = v and True
     else:
         solve_triggers(compiler, p=c2, u=c1, resolve=resolve)
 

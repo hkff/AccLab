@@ -1,12 +1,12 @@
-// Load libs
-LOAD "core.types"
-
 /***************************
  *       Declarations
  ****************************/
+// Actors
 AGENT alice TYPES() REQUIRED(read store delete ) PROVIDED()
 AGENT css TYPES() REQUIRED(backup ) PROVIDED(read store delete )
 AGENT ebs TYPES() REQUIRED() PROVIDED(backup )
+
+// Services
 SERVICE read
 SERVICE store
 SERVICE delete
@@ -41,5 +41,3 @@ CLAUSE css_policy (
     PERMIT css.delete[css](d)
 )
 
-LOAD "core.macros"
-CALL validate("css_policy" "alice_policy")
