@@ -1,0 +1,238 @@
+[
+  {
+    "type": "AgentUI",
+    "id": "06ae0732-0900-7cb8-6add-ab87cb3f90b9",
+    "x": 116,
+    "y": 83,
+    "width": 50,
+    "height": 50,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "read",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "store",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "delete",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      }
+    ],
+    "bgColor": "#A0A0A0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "alice",
+    "policy": "CLAUSE alice_policy (\n    FORALL d:data\n    // Alice want to be able to read all her data stored on css\n    IF (d.subject == alice) THEN {\n        PERMIT alice.read[css](d)\n    }\n)",
+    "pservices": {
+      "data": []
+    },
+    "rservices": {
+      "data": [
+        "read",
+        "store",
+        "delete"
+      ]
+    },
+    "types": {
+      "data": []
+    },
+    "DEFAULT_bgColor": "#0d0d0d",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "AgentUI",
+    "id": "a64292db-93df-e7af-0eda-c99e3fd5147f",
+    "x": 429,
+    "y": 83,
+    "width": 50,
+    "height": 50,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "read",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "store",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "delete",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "backup",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      }
+    ],
+    "bgColor": "#A0A0A0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "css",
+    "policy": "CLAUSE css_policy (\n    FORALL d:data FORALL a:Actor\n\n    // Allow users to read their data\n    IF (d.subject == a) THEN {\n        PERMIT a.read[css](d)\n    } AND\n\n    // Deny access to read other\n    IF (d.subject != a) THEN {\n        DENY a.read[css](d)\n    } AND\n\n    // Allow css to read/delete stored data\n    PERMIT css.read[css](d) AND\n    PERMIT css.delete[css](d)\n)",
+    "pservices": {
+      "data": [
+        "read",
+        "store",
+        "delete"
+      ]
+    },
+    "rservices": {
+      "data": [
+        "backup"
+      ]
+    },
+    "types": {
+      "data": []
+    },
+    "DEFAULT_bgColor": "#0d0d0d",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "AgentUI",
+    "id": "6aa7e586-ccbd-b9d8-1c59-3b11a5cf32cf",
+    "x": 420,
+    "y": 228,
+    "width": 50,
+    "height": 50,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "backup",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      }
+    ],
+    "bgColor": "#A0A0A0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "ebs",
+    "policy": "",
+    "pservices": {
+      "data": [
+        "backup"
+      ]
+    },
+    "rservices": {
+      "data": []
+    },
+    "types": {
+      "data": []
+    },
+    "DEFAULT_bgColor": "#0d0d0d",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "2ce30722-2e66-e0a3-5fb2-df142d42b235",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "06ae0732-0900-7cb8-6add-ab87cb3f90b9",
+      "port": "read"
+    },
+    "target": {
+      "node": "a64292db-93df-e7af-0eda-c99e3fd5147f",
+      "port": "read"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "6bbc3d09-bd73-be97-4d09-e48dc9e7d140",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "06ae0732-0900-7cb8-6add-ab87cb3f90b9",
+      "port": "store"
+    },
+    "target": {
+      "node": "a64292db-93df-e7af-0eda-c99e3fd5147f",
+      "port": "store"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "4a1bbc6e-fc57-f280-a8db-fb98abac0652",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "06ae0732-0900-7cb8-6add-ab87cb3f90b9",
+      "port": "delete"
+    },
+    "target": {
+      "node": "a64292db-93df-e7af-0eda-c99e3fd5147f",
+      "port": "delete"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "95c9c698-915b-87da-1821-71622adc60f9",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "a64292db-93df-e7af-0eda-c99e3fd5147f",
+      "port": "backup"
+    },
+    "target": {
+      "node": "6aa7e586-ccbd-b9d8-1c59-3b11a5cf32cf",
+      "port": "backup"
+    }
+  }
+]

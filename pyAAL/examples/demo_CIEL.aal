@@ -1,0 +1,45 @@
+LOAD "core.types"
+/***************************
+ *       Declarations
+ ****************************/
+// Actors
+AGENT alice TYPES() REQUIRED(read store delete ) PROVIDED()
+AGENT css TYPES() REQUIRED(backup ) PROVIDED(read store delete )
+AGENT ebs TYPES() REQUIRED() PROVIDED(backup )
+
+// Services
+SERVICE read
+SERVICE store
+SERVICE delete
+SERVICE backup
+
+/***************************
+ *       Clauses
+ ****************************/
+CLAUSE alice_policy (
+    FORALL d:data
+    // Alice want to be able to read all her data stored on css
+    IF (d.subject == alice) THEN {
+        PERMIT alice.read[css](d)
+    }
+)
+
+CLAUSE css_policy (
+    FORALL d:data FORALL a:Actor
+
+    // Allow users to read their data
+    IF (d.subject == a) THEN {
+        DENY a.read[css](d)
+    } AND
+
+    // Deny access to read other
+    IF (d.subject != a) THEN {
+        DENY a.read[css](d)
+    } AND
+
+    // Allow css to read/delete stored data
+    PERMIT css.read[css](d) AND
+    PERMIT css.delete[css](d)
+)
+LOAD "core.macros"
+CALL validate("css_policy" "alice_policy")
