@@ -244,9 +244,10 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
-        v= v and False
+        v = v and False
 
-        solve_auth(compiler, p=c2, u=c1, resolve=resolve)
+        solve_auth(compiler, p=c1, u=c2, resolve=resolve)
+        solve_triggers(compiler, p=c1, u=c2, resolve=resolve)
         # return
     else:
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
@@ -275,6 +276,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
     else:
         print(Color("{autored}  -> " + res["res"] + "{/red}"))
+        v = v and False
 
     if res["res"] == "":
         print(res["print"])
@@ -282,7 +284,8 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
     if res["res"] == "Unsatisfiable":
         v = v and True
     else:
-        solve_triggers(compiler, p=c2, u=c1, resolve=resolve)
+        solve_auth(compiler, p=c1, u=c2, resolve=resolve)
+        solve_triggers(compiler, p=c1, u=c2, resolve=resolve)
 
     if v:
         print(Color("\n{autogreen}[VALIDITY] Formula is valid !{/green}"))
@@ -373,22 +376,25 @@ def solve_auth(compiler, p=None, u=None, verbose=False, resolve=False):
 
     pre_cond = build_env(compiler.aalprog)
     authors = p.usage.walk(filter_type=m_aexpAuthor)
-    for x in authors:
-        res = compiler.apply_check(code=pre_cond + str(quant) + " " + str(x.to_ltl()) + " & clause(" + u_id + ").uc",
-                                   show=False)
-        if verbose:
-            print("  " + str(x) + " & c1" + " : " + res["res"])
 
-        if res["res"] == "Unsatisfiable":
-            print(Color("  Authorization <<" + str(x) + ">> found {automagenta}at line " +
-                        str(x.name.parentCtx.getPayload().start.line) +
-                        "{/magenta} does not match with user preference"))
-            if resolve:
-                print(Color("{autogreen}    |-> Resolving conflict {/green}"))
-                if x.author == m_author.A_permit:
-                    x.author = m_author.A_deny
-                else:
-                    x.author = m_author.A_permit
+    for op in ["&", "=>"]:
+        for x in authors:
+            res = compiler.apply_check(code=pre_cond + str(quant) +
+                                        "( " + str(x.to_ltl()) + " " + op +" clause(" + u_id + ").uc )",
+                                       show=False, verbose=False)
+            if verbose:
+                print("  " + str(x) + " " + op + " c1" + " : " + res["res"])
+
+            if res["res"] == "Unsatisfiable":
+                print(Color("  Authorization <<" + str(x) + ">> found {automagenta}at line " +
+                            str(x.name.parentCtx.getPayload().start.line) +
+                            "{/magenta} does not match with user preference"))
+                if resolve:
+                    print(Color("{autogreen}    |-> Resolving conflict {/green}"))
+                    if x.author == m_author.A_permit:
+                        x.author = m_author.A_deny
+                    else:
+                        x.author = m_author.A_permit
 
 
 # Check triggers

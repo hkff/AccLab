@@ -41,5 +41,14 @@ CLAUSE css_policy (
     PERMIT css.read[css](d) AND
     PERMIT css.delete[css](d)
 )
+
+CLAUSE css2 (
+    FORALL d:data FORALL a:Actor
+    IF (d.subject == a) THEN {
+        DENY a.read[css](d)
+    }
+)
+
 LOAD "core.macros"
-CALL validate("css_policy" "alice_policy")
+//CALL validate("css_policy" "alice_policy")
+CALL validate("css2" "alice_policy")
