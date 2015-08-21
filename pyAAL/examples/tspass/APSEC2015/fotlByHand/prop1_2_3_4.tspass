@@ -1,0 +1,104 @@
+%% -*-Latex-*-
+%%% 20/7/2015
+%%% Version V6: + location +chaining put complexe
+%%% proofs of properties prop1 2 3 and 4
+%%%% ----------------
+
+%%%% NOTE the always in condition was distributed on the condition
+%%%%%%%%% -------------- usage
+~(
+(
+%%%%% LOCATIONS
+(always (![p] ((europe(p) <=> (germany(p) | france(p) | italy(p) | austria(p) | belgium(p) | bulgaria(p) | cyprus(p)
+               | croatia(p) | denmark(p) | spain(p) | estonia(p) | finland(p) | greece(p) | hungary(p)
+               | irland(p) | latvia(p) | lithuania(p) | luxembourg(p) | malta(p) | netherlands(p) | poland(p)
+               | portugal(p) | czechrepublic(p) | romania(p) | unitedkingdom(p) | slovakia(p) | slovenia(p) | sweden(p)))
+               & (location(p) <=> (us(p) | europe(p) | asia(p) | africa(p) | manyothers(p))))))
+& (always (europe(Kim) & germany(Hospital) & europe(Researcher) & europe(Toubib) & europe(CloudStorage)))
+& %%%% DATA KNOWLEDGE
+(always (![d] ((data(d) <=> ((nom(d) | age(d) | sugarlevel(d) | password(d))))
+               & (alldata(d) <=> (data(d) | statistics(d) | medicalrecord(d))))))
+& (always (patient(Kim) & nom(KimName) & subject(KimName, Kim) & isKim(Kim)))
+& (always (![d, p] ((subject(d, Kim) & subject(d, p)) => isKim(p))))
+& (![d] always (subject(d, Kim) => always subject(d, Kim))) 
+& %%% *** Cglobal
+(always (
+   (![p, d] ((patient(p) & data(d) & subject(d, p) & europe(p)) => Pinput(p, Hospital, d)))
+  & (![p, d] ((~data(d) | ~subject(d, p)  | ~europe(p) | ~patient(p)) => ~Pinput(p, Hospital, d)))
+  & (![d, p] ((data(d) & subject(d, p)) =>  Pput(CloudStorage, Hospital, d)))
+  & (![d, p] ((~data(d) | ~subject(d, p)) =>  ~Pput(CloudStorage, Hospital, d)))
+  & (![p, d] ((patient(p) & data(d) & subject(d, p) & europe(p)) => Pget(Hospital, p, d)))
+  & (![p, d] ((~data(d) | ~subject(d, p) | ~europe(p) | ~patient(p)) => ~Pget(Hospital, p, d)))
+  & (![t, a] ((alldata(a)  & ~password(a) & europe(t)) => Pstore(Hospital, t, a)))
+  & (![t, a] ((~alldata(a) | password(a) | ~europe(t)) => ~Pstore(Hospital, t, a)))
+  & (![p, n] ((patient(p) & nom(n) & subject(n, p) & europe(p)) => Pquery(p, Hospital, n)))
+  & (![p, n] ((~nom(n) | ~subject(n, p) | ~europe(p) | ~patient(p)) => ~Pquery(p, Hospital, n)))
+  & (![t, n, ag, su] ((nom(n) & age(ag) & sugarlevel(su) & europe(t)) => Psend(Hospital, t, n, ag, su)))
+  & (![t, n, ag, su] ((nom(n) & age(ag) & sugarlevel(su) & ~europe(t)) => ~Psend(Hospital, t, n, ag, su)))
+  & (![m] (medicalrecord(m) => (Pget(Toubib, Researcher, m) & Pcollect(Toubib, Hospital, m)))) 
+  & (![s] (statistics(s) => Pin(Researcher, Toubib, s)))
+))
+& %%% Action/Permission invariant
+(always (![d,p,n,ag,su,a,m,s] (
+    (get(Hospital, p, d) => Pget(Hospital, p, d))
+  & (input(p, Hospital, d) => Pinput(p, Hospital, d))
+  & (query(p, Hospital, n) => Pquery(p, Hospital, n))
+  & (collect(Toubib, Hospital, m) => Pcollect(Toubib, Hospital, m))
+  & (in(Researcher, Hospital, s) => Pin(Researcher, Hospital, s))
+  & (put(CloudStorage, Hospital, d) => Pput(CloudStorage, Hospital, d))
+  & (send(Hospital, Toubib, n, ag, su) => Psend(Hospital, Toubib, n, ag, su))
+  & (get(Toubib, Researcher, m) => Pget(Toubib, Researcher, m))
+  & (store(Hospital, CloudStorage, a) => Pstore(Hospital, CloudStorage, a)))))
+& %%%% BEHAVIOUR
+%%% Patient with conditions 
+(always (![p] ((?[np] ((subject(np, p) & nom(np)) => input(p, Hospital, np)))
+               & (next ?[passp] ((password(passp) & subject(passp, p)) => input(p, Hospital, passp)))
+               & (next next ?[agp] ((age(agp) & subject(agp, p)) => input(p, Hospital, agp)))
+               & (next next next ?[sup] ((sugarlevel(sup) & subject(sup, p)) => input(p, Hospital, sup)))
+               & (?[n] ((subject(n, p) & nom(n)) => query(p, Hospital, n)))
+)))
+%% %% %%% chez Hospital
+& (always (![d] (put(CloudStorage, Hospital, d) => sometime ?[p] (subject(d, p) & get(Hospital, p, d)))))
+& (always (![p, d] ((data(d) & ~password(d) & input(p, Hospital, d)) => sometime store(Hospital, CloudStorage, d))))
+& (always ![p, n, ag, su] ((input(p, Hospital, n) & next next input(p, Hospital, ag) & next next next input(p, Hospital, su))
+               => next next next next ?[n, ag, su] send(Hospital, Toubib, n, ag, su)))
+& (always ![m] (((medicalrecord(m) & collect(Toubib, Hospital, m)) => sometime store(Hospital, CloudStorage, m))))
+& (always ![s] ((statistics(s) & in(Researcher, Hospital, s)) => sometime store(Hospital, CloudStorage, s)))
+& (always ![p, n] (query(p, Hospital, n) => sometime get(Hospital, CloudStorage, n)))
+%% %%% chez Toubib
+& (always ![n, ag, su] (send(Hospital, Toubib, n, ag, su) => sometime ?[m] (collect(Toubib, Hospital, m) & get(Toubib, Researcher, m))))
+%% %%% chez Researcher
+& (always ![m] (get(Toubib, Researcher, m) => sometime ?[s] in(Researcher, CloudStorage, s)))
+%% %% %%% chez CloudStorage 
+& (always (![d] (store(Hospital, CloudStorage, d)
+                    => (sometime  ((?[n] get(Hospital, CloudStorage, n))
+                               => sometime (?[p] (subject(d, p) & put(CloudStorage, Hospital, d))))))))
+%%% ADD reverse behaviour for some interactions
+%%%% get/query  
+& (always (![n] (~get(Hospital, CloudStorage, n) until (?[p] query(p, Hospital, n)))))
+%%% put/get 
+& (always (![d] ((![p] ~get(Hospital, p, d)) until put(CloudStorage, Hospital, d))))
+%%% sequence store;get;put 
+& (always ![d] (~(?[n] get(Hospital, CloudStorage, n)) until store(Hospital, CloudStorage, d)))
+& (always ![d] (~(?[p] (subject(d, p) & put(CloudStorage, Hospital, d))) until (?[n] get(Hospital, CloudStorage, n))))
+) %%% COND is SAT 4335656/(2124.61s)
+=>
+%%%%% ------------------ test data transfer
+%%%% (prop1)
+%%%(~(?[pass] sometime (store(Hospital, CloudStorage, pass) & password(pass)))) %%% VALID 1319/(0.076042s)
+
+%%%% Kim never receives data from another patient  (prop2)
+%%% (always ![d, p] ((patient(p) & subject(d, p) & ~subject(d, Kim)) => ~get(Hospital, Kim, d))) %%% VALID 527/(0.044944s)
+
+%%% (prop3)
+%%%% (always ![d, p1, p2] ((patient(p1) & patient(p2) & subject(d, p1) & ~subject(d, p2)) => ~get(Hospital, p2, d))) %%%  VALID 527/(0.045135s)
+
+%%% (prop4)
+%%%% more ? pb du lien n (version bug dans locationsa.tspass ?)
+(always ![d] (((sometime (data(d) & ~password(d) & subject(d, Kim) & input(Kim, Hospital, d))) &
+               (sometime  (?[n] (subject(n, Kim) & nom(n) & query(Kim, Hospital, n)))) &
+               (sometime (store(Hospital, CloudStorage, d) & (sometime ?[n2] get(Hospital, CloudStorage, n2)))))
+       => (sometime ?[p] (get(Hospital, p, d) & isKim(p) & subject(d, p))))) %%% VALID 7819/(0.326052s)
+
+) %%% end
+

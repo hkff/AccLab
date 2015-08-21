@@ -1,0 +1,57 @@
+%% -*-Latex-*-
+%%% 20/7/2015
+%%% Version V6: + location +chaining put complexe
+%%%% test natural compliance for audit and rectification
+%%%% ----------------
+
+
+%%%%%%%%% -------------- audit
+%% ~(
+%% %%%% CONTEXTE COND
+%% (
+%% %%%%% LOCATIONS
+%% (always (![p] ((europe(p) <=> (germany(p) | france(p) | italy(p) | austria(p) | belgium(p) | bulgaria(p) | cyprus(p)
+%%                | croatia(p) | denmark(p) | spain(p) | estonia(p) | finland(p) | greece(p) | hungary(p)
+%%                | irland(p) | latvia(p) | lithuania(p) | luxembourg(p) | malta(p) | netherlands(p) | poland(p)
+%%                | portugal(p) | czechrepublic(p) | romania(p) | unitedkingdom(p) | slovakia(p) | slovenia(p) | sweden(p)))
+%%                & (location(p) <=> (us(p) | europe(p) | asia(p) | africa(p) | manyothers(p))))))
+%% & (always (europe(Kim) & germany(Hospital) & europe(Researcher) & europe(Toubib) & europe(CloudStorage)))
+%% & %%%% DATA KNOWLEDGE
+%% (always (![d] ((data(d) <=> ((nom(d) | age(d) | sugarlevel(d) | password(d))))
+%%                & (alldata(d) <=> (data(d) | statistics(d) | medicalrecord(d))))))
+%% & (always (patient(Kim) & nom(KimName) & subject(KimName, Kim) & isKim(Kim)))
+%% & (always (![d, p] ((subject(d, Kim) & subject(d, p)) => isKim(p))))
+%%                & (![d] always (subject(d, Kim) => always subject(d, Kim)))
+%% )               
+%% =>
+%% %%% audit comparison
+%% ((always audit(auditor)) => (always notify(Kim, auditor, message) =>  audit(auditor)))
+%% )
+%%%%% VALID 81/(0.009007s)
+
+%%%%% -----------------rectification
+~(
+%%%% CONTEXTE COND
+(
+%%%%% LOCATIONS
+(always (![p] ((europe(p) <=> (germany(p) | france(p) | italy(p) | austria(p) | belgium(p) | bulgaria(p) | cyprus(p)
+               | croatia(p) | denmark(p) | spain(p) | estonia(p) | finland(p) | greece(p) | hungary(p)
+               | irland(p) | latvia(p) | lithuania(p) | luxembourg(p) | malta(p) | netherlands(p) | poland(p)
+               | portugal(p) | czechrepublic(p) | romania(p) | unitedkingdom(p) | slovakia(p) | slovenia(p) | sweden(p)))
+               & (location(p) <=> (us(p) | europe(p) | asia(p) | africa(p) | manyothers(p))))))
+& (always (europe(Kim) & germany(Hospital) & europe(Researcher) & europe(Toubib) & europe(CloudStorage)))
+& %%%% DATA KNOWLEDGE
+(always (![d] ((data(d) <=> ((nom(d) | age(d) | sugarlevel(d) | password(d))))
+               & (alldata(d) <=> (data(d) | statistics(d) | medicalrecord(d))))))
+& (always (patient(Kim) & nom(KimName) & subject(KimName, Kim) & isKim(Kim)))
+& (always (![d, p] ((subject(d, Kim) & subject(d, p)) => isKim(p))))
+               & (![d] always (subject(d, Kim) => always subject(d, Kim)))
+)               
+=>
+(always ((sanction(auditor, Hospital) & credit(Hospital, Kim, ten) & alert(auditor, Kim))
+ => (sanction(auditor, Hospital) & credit(Hospital, Kim, ten))))
+)
+%%%% VALID 149/(0.0107s)
+   
+
+
