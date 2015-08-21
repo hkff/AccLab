@@ -56,6 +56,11 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             res = api_compile_aal(self.get_arg(args, "file", method))
         elif val == "compileFOTL":
             res = api_compile_tspass(self.get_arg(args, "file", method))
+        elif val == "listTemplates":
+            res = api_listDir("ui/templates")
+            res = res.replace(".json", "")
+        elif val == "getTemplate":
+            res = api_getTemplate("ui/templates/" + self.get_arg(args, "file", method))
         return res
 
     def do_GET(self):

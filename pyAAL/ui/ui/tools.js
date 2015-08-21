@@ -79,6 +79,7 @@ visualEditor.ui.tools = {
 		this.tools.push(new visualEditor.ui.tools.genTSPASSTool());
 		this.tools.push(new visualEditor.ui.tools.keyboardShortcutsTool());
 		this.tools.push(new visualEditor.ui.tools.AALSyntaxTool());
+		this.tools.push(new visualEditor.ui.tools.templatesTool());
 	},
 
 	/**
@@ -846,4 +847,96 @@ function insertSnippet(s) {
 		var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
 		editor.insert(s, editor.selection.getCursor());
 	}
+}
+
+//////////////////////////////////////////////////////////
+//
+//  templatesTool
+//
+//////////////////////////////////////////////////////////
+
+visualEditor.ui.Template = {
+	name: "Name",
+	desc: "",
+	vars: {},
+	aal: "",
+	html: "Template test",
+	xacml: "",
+
+	render: function() {
+
+	}
+}
+
+visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
+	NAME : "visualEditor.ui.tools.templatesTool",
+
+	view: function(parent) {
+		this.button = $('<div title="Templates (ctrl+t)" id="tmpBtn" class="btn-action fa fa-magic fa-lg"/>');
+		parent.actionsPanel.append(this.button);
+	},
+
+	control: function(parent) {
+		var fx = function(e){
+			var p = "<div>" +
+			"<div style='width:19%; float: left;'>" +
+			"	<b>Templates</b>" +
+			"<ul id='tt' class='easyui-tree' style='margin-top: 8px;'>" +
+			"</div>" +
+			"<div id='templateContent' style='background: #b1b4aa; width: 80%; height: 500px; float: right;'> </div>"+
+			"</div>";
+
+			toastr.info(p, "", {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": false,
+  				"showDuration": "3000",
+			  	"hideDuration": "1000",
+			  	"timeOut": 0,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-right"
+			});
+			$(".toast-info").css("width", "800px");
+
+			$("#tt").tree({
+				animate: true,
+				checkbox:false,
+				url: visualEditor.backend + "?action=listTemplates",
+
+				onDblClick: function(node){
+					loadTemplate(node.text + ".json");
+				},
+
+				formatter:function(node){
+					var s = node.text;
+					if(node.children){
+						s += ' <span style=\'color:gray\'>(' + node.children.length + ')</span>';
+					}
+					return s;
+				},
+
+				onLoadSuccess: function(node, data){
+					$("#tt").tree("collapseAll");
+				}
+			});
+		};
+		this.button.click(fx);
+		shortcut.add("Ctrl+t", fx);
+	}
+});
+
+/**
+ * Load a template from the backend
+ * @param template
+ */
+function loadTemplate(template) {
+	$.ajax({
+		dataType: 'text',
+		type:'POST',
+		url: visualEditor.backend,
+		data: {action: "getTemplate", file: template},
+		success: function(response){
+			$("#templateContent").html(response);
+		}
+	});
 }

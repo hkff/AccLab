@@ -50,6 +50,10 @@ def api_readFile(f):
     with open(base_dir + "/" + f) as fd:
         return fd.read()
 
+# Read file
+def api_getTemplate(f):
+    with open(f) as fd:
+        return fd.read()
 
 # Write file
 def api_writeFile(f, d):

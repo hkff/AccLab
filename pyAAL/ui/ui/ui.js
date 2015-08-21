@@ -123,6 +123,7 @@ visualEditor.ui = {
 			}
 			if(fileType == "aal") {
 				$(visualEditor.ui.tools.tools[20].button).show();
+				$(visualEditor.ui.tools.tools[21].button).show();
 			}
 		} else {
 			// Enable them
@@ -136,6 +137,7 @@ visualEditor.ui = {
 			this.enableNode(this.inplacePanel);
 			$(visualEditor.ui.tools.tools[18].button).hide();
 			$(visualEditor.ui.tools.tools[20].button).hide();
+			$(visualEditor.ui.tools.tools[21].button).hide();
 		}
 	},
 
