@@ -246,6 +246,7 @@ visualEditor.ui.fileManager = {
 					    var inPlaceAALEditor = visualEditor.ui.fileManager.openAceEditor(id, fileType.toUpperCase());
 					    inPlaceAALEditor.setValue(response);
 					    inPlaceAALEditor.clearSelection();
+						visualEditor.activeEditor = inPlaceAALEditor;
 						break;
 				}
 			}

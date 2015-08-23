@@ -856,23 +856,90 @@ function insertSnippet(s) {
 //////////////////////////////////////////////////////////
 
 visualEditor.ui.Template = {
-	name: "Name",
-	desc: "",
-	vars: {},
-	aal: "",
-	html: "Template test",
-	xacml: "",
+	/**
+	 * Template scheme
+     * TODO import from template.json
+	 **/
+    "name": "Name",
+    "desc": "",
+    "vars": [
+      {"name": "Field1", "id": "Filed1", "type": "input", "pre": "Text before", "post": "Text after"},
+      {"name": "Field2", "id": "Filed2", "type": "select", "pre": "Text before", "post": "Text after"}
+    ],
+    "aal": "",
+    "html": "Template test {vars}",
+    "xacml": "",
 
-	render: function() {
+    // Helpers
+    generateBtn: "<div style='text-align: center;'><button onclick='visualEditor.activeEditor.insert(visualEditor.ui.Template.genAAL" +
+    "(visualEditor.ui.Template.current))' style='height: 25px;' class='fa fa-magic'>Generate</button></div>",
+    current: null,
 
-	}
+    /**
+     * Returns the generated html for the given var
+     * @param varObj
+     */
+    renderVar: function(varObj) {
+        return "<div class='templateVar'><div class='templateVarName'>" + varObj.name + "</div>" +
+            varObj.pre +
+            ((varObj.type != "select")?("<input type='" + varObj.type + "' id='" + varObj.id + "'/>"):
+            ("<select id='" + varObj.id + "'> </select>"))+
+            varObj.post + "</div>";
+    },
+
+    /**
+     * Render the template (using the html field
+     * @param template
+     * @param target
+     */
+	render: function(template, target) {
+        // Set current template
+        this.current = template;
+
+        // handling vars
+        var vars = {};
+        for(var i=0; i<template.vars.length; i++)
+            vars[template.vars[i].id] = this.renderVar(template.vars[i]);
+
+        //
+        // Generating html
+        //
+        var tmp = "";
+        Object.keys(vars).forEach(function(e){ tmp += "<div class='varGroupe'>" + vars[e] + "</div>";});
+
+        var html =
+            "<div class='templateName'>" + template.name + "</div>" +
+            "<div class='templateDesc'>" + template.desc +"</div>" +
+            template.html;
+
+        // Handle vars
+        html = html.replace("{vars}", tmp);
+        // Handle genBtn
+        html = html.replace("{genBtn}", "<div class='varGroupe'>" +
+            visualEditor.ui.Template.generateBtn + "</div>");
+        // Handle vars one by one
+        for(var i=0; i<template.vars.length; i++)
+            html = html.replace("{"+template.vars[i].id+"}", vars[template.vars[i].id]);
+
+
+        // Rendering
+        $("#" + target).html(html);
+	},
+
+    /**
+     * Generate AAL
+     * @param template
+     */
+    genAAL: function(template) {
+        return template.aal;
+    }
 }
 
 visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.templatesTool",
 
 	view: function(parent) {
-		this.button = $('<div title="Templates (ctrl+t)" id="tmpBtn" class="btn-action fa fa-magic fa-lg"/>');
+		this.button = $('<div title="Templates (ctrl+x)" id="tmpBtn" class="btn-action fa fa-magic fa-lg"/>');
 		parent.actionsPanel.append(this.button);
 	},
 
@@ -881,9 +948,9 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 			var p = "<div>" +
 			"<div style='width:19%; float: left;'>" +
 			"	<b>Templates</b>" +
-			"<ul id='tt' class='easyui-tree' style='margin-top: 8px;'>" +
+			"<ul id='tt' class='easyui-tree unselectable'>" +
 			"</div>" +
-			"<div id='templateContent' style='background: #b1b4aa; width: 80%; height: 500px; float: right;'> </div>"+
+			"<div id='templateContent' style=''> </div>"+
 			"</div>";
 
 			toastr.info(p, "", {
@@ -921,7 +988,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 			});
 		};
 		this.button.click(fx);
-		shortcut.add("Ctrl+t", fx);
+		shortcut.add("Ctrl+x", fx);
 	}
 });
 
@@ -936,7 +1003,8 @@ function loadTemplate(template) {
 		url: visualEditor.backend,
 		data: {action: "getTemplate", file: template},
 		success: function(response){
-			$("#templateContent").html(response);
+            var obj = jQuery.parseJSON(response);
+            visualEditor.ui.Template.render(obj, "templateContent");
 		}
 	});
 }

@@ -268,3 +268,63 @@ body {
 .cmenuBtn {
   height: 20px;
 }
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Templates style */
+
+#tt {
+    margin-top: 8px;
+}
+
+#templateContent {
+    color:#000000;
+    background: #e0e3d9;
+    width: 80%;
+    height: 300px;
+    float: right;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    overflow: auto;
+    border-radius: 5px;
+}
+
+.templateName {
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.templateDesc {
+    font-style: italic;
+    padding-bottom: 10px;
+}
+
+.templateVarName {
+
+}
+
+.templateVar {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    float: left;
+}
+
+.varsHeader {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.varGroupe {
+    clear:both;
+    padding-top: 5px;
+}

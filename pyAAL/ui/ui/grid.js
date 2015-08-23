@@ -79,6 +79,7 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 	        	//console.log("changed ")
 	     	}
 	     	else{
+				// ??
      		}
      	});
 	},

@@ -1,0 +1,10 @@
+{
+    "name": "Ressource",
+	"desc": "Declare a ressource",
+	"vars": [
+      {"name": "Resssource Name", "id": "Filed1", "type": "input", "pre": "Text before", "post": "Text after"}
+    ],
+	"aal": "TYPE {Field1} EXTENDS(data)",
+	"html": "{vars} <br> {genBtn}",
+	"xacml": ""
+}

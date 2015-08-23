@@ -1,8 +1,11 @@
 {
     "name": "Name",
-	"desc": "",
-	"vars": {},
-	"aal": "",
-	"html": "Template test",
+	"desc": "Template description",
+	"vars": [
+      {"name": "Field1", "id": "Filed1", "type": "input", "pre": "Text before", "post": "Text after"},
+	  {"name": "Field2", "id": "Filed2", "type": "checkbox", "pre": "Text before", "post": "Text after"}
+    ],
+	"aal": "test",
+	"html": "All vars {vars} <br> Var by id {Field1} <br> {genBtn}",
 	"xacml": ""
 }

@@ -1,0 +1,15 @@
+{
+    "name": "Authorizations",
+	"desc": "Allow or prohibit an agent the access to a specific ressource.<br> dzdzdz",
+	"vars": [
+      {"name": "", "id": "read", "type": "checkbox", "pre": "", "post": "Read"},
+	  {"name": "", "id": "write", "type": "checkbox", "pre": "", "post": "Write"},
+      {"name": "", "id": "update", "type": "checkbox", "pre": "", "post": "Update"},
+      {"name": "", "id": "delete", "type": "checkbox", "pre": "", "post": "Delete"},
+      {"name": "", "id": "action", "type": "checkbox", "pre": "", "post": "Action"},
+      {"name": "", "id": "owner", "type": "select", "pre": "Owner ", "post": ""}
+    ],
+	"aal": "TYPE {Read}\n EXTENDS(data)",
+	"html": "<div class='varGroupe'>{owner} </div> <div class='varGroupe'><h4 class='varsHeader'>Standard Actions :</h4> {read} {write} {update} {delete} </div> <div class='varGroupe'><h4 class='varsHeader'>Other Actions :</h4> {action} </div> {genBtn}",
+	"xacml": ""
+}

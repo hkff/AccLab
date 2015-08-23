@@ -22,8 +22,9 @@
 var visualEditor = {
     path          : "curpath",
 	/*currentCanvas : null,
-    activeTab     : null,
+	activeTab     : null,
     canvas        : [],*/
+    activeEditor     : null,
     backend       : "http://127.0.0.1:8000/",
 
     /**
@@ -108,4 +109,8 @@ window.onload = function() {
         visualEditor.ui.activeTab = page.activeTab;
         visualEditor.ui.updatePanel();
     }
+
+    // TO REMOVE
+    visualEditor.ui.fileManager.openFile("tuto2.aal");
+    $("#tmpBtn").click();
 }
