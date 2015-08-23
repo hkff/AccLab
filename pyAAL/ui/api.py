@@ -144,3 +144,16 @@ def api_compile_tspass(f):
     sys.stderr = syserr
 
     return res.replace("\n", "<br>")
+
+
+# Get AAL declaration in JSON format
+def api_getAALDec(f):
+    try:
+        mm = aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="examples")["mm"]
+    except:
+        res = "Compilation Error"
+
+    agents = ",".join(['"' + str(x.name) + '"' for x in mm.aalprog.declarations["agents"]])
+    services = ",".join(['"' + str(x.name) + '"' for x in mm.aalprog.declarations["services"]])
+    res = '{"agents" : [' + agents + '], "services" : [' + services + ']}'
+    return res

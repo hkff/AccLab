@@ -61,6 +61,8 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             res = res.replace(".json", "")
         elif val == "getTemplate":
             res = api_getTemplate("ui/templates/" + self.get_arg(args, "file", method))
+        elif val == "getAALdec":
+            res = api_getAALDec(self.get_arg(args, "file", method))
         return res
 
     def do_GET(self):

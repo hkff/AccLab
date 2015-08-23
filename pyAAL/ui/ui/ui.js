@@ -30,6 +30,7 @@ visualEditor.ui = {
 	canvas          : null,
 	selectedNode    : null,
 	activeTab       : null,
+    currentAAL      : null,
 
 	/**
 	 * init function
@@ -202,5 +203,22 @@ visualEditor.ui = {
 				aal += tmp_policy + "\n\n";
 		}
 		return aal;
-	}
+	},
+
+    /**
+     * Analyse opened AAL file and update info
+     */
+	analyseAAL: function (aalFile) {
+        $.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "getAALdec", file: aalFile},
+            success: function(response){
+                var obj = jQuery.parseJSON(response);
+                visualEditor.ui.currentAAL = obj;
+            }
+	    });
+    }
+
 };

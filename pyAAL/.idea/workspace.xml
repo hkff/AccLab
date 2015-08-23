@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/ui/ui/ui.js" line="106" />
+    <bookmark url="file://$PROJECT_DIR$/ui/ui/ui.js" line="107" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/templates/Authorizations.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/templates/Ressource.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/diagramEditor.js" afterPath="$PROJECT_DIR$/ui/diagramEditor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/fileManager.js" afterPath="$PROJECT_DIR$/ui/ui/fileManager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/grid.js" afterPath="$PROJECT_DIR$/ui/ui/grid.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/index.html" afterPath="$PROJECT_DIR$/ui/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/style.css" afterPath="$PROJECT_DIR$/ui/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/templates/Authorizations.json" afterPath="$PROJECT_DIR$/ui/templates/Authorizations.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/templates/Ressource.json" afterPath="$PROJECT_DIR$/ui/templates/Ressource.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/Server.py" afterPath="$PROJECT_DIR$/ui/Server.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/api.py" afterPath="$PROJECT_DIR$/ui/api.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/templates/template.json" afterPath="$PROJECT_DIR$/ui/templates/template.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/tools.js" afterPath="$PROJECT_DIR$/ui/ui/tools.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/ui.js" afterPath="$PROJECT_DIR$/ui/ui/ui.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pyAAL.iws" />
@@ -59,18 +57,78 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="tools.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tools.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6671642">
-              <caret line="907" column="98" selection-start-line="907" selection-start-column="98" selection-end-line="907" selection-end-column="98" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="935" column="104" selection-start-line="935" selection-start-column="104" selection-end-line="935" selection-end-column="104" />
               <folding>
-                <marker date="1440336097613" expanded="true" signature="17191:17221" placeholder="..." />
-                <marker date="1440336097613" expanded="true" signature="19751:19762" placeholder="..." />
-                <marker date="1440336097613" expanded="true" signature="31034:31053" placeholder="..." />
-                <marker date="1440336097613" expanded="true" signature="33447:33470" placeholder="..." />
-                <marker date="1440336097613" expanded="true" signature="34237:34247" placeholder="..." />
+                <marker date="1440361408167" expanded="true" signature="17191:17221" placeholder="..." />
+                <marker date="1440361408167" expanded="true" signature="19751:19762" placeholder="..." />
+                <marker date="1440361408167" expanded="true" signature="31034:31053" placeholder="..." />
+                <marker date="1440361408167" expanded="true" signature="33771:33794" placeholder="..." />
+                <marker date="1440361408167" expanded="true" signature="34561:34571" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ui.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="aalc.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/aalc.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="86" column="4" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Server.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/Server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="63" column="30" selection-start-line="63" selection-start-column="21" selection-end-line="63" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="api.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/api.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="147" column="0" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AALCompiler.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AALCompiler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1132" column="0" selection-start-line="1132" selection-start-column="0" selection-end-line="1132" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AALMetaModel.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="491" column="29" selection-start-line="491" selection-start-column="25" selection-end-line="491" selection-end-column="29" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -79,27 +137,27 @@
         <entry file="file://$PROJECT_DIR$/ui/templates/template.json">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-4.2580647">
-              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+              <caret line="6" column="100" selection-start-line="6" selection-start-column="100" selection-end-line="6" selection-end-column="100" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/style.css">
+      <file leaf-file-name="Ressource.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/templates/Ressource.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="295" column="19" selection-start-line="295" selection-start-column="19" selection-end-line="295" selection-end-column="19" />
+            <state vertical-scroll-proportion="-6.387097">
+              <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Authorizations.json" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Authorizations.json" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ui/templates/Authorizations.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.5161295">
-              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.50190115">
+              <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -157,18 +215,18 @@
         <option value="$PROJECT_DIR$/aalc.py" />
         <option value="$PROJECT_DIR$/AALChecker.py" />
         <option value="$PROJECT_DIR$/examples/demo_CIEL.aal" />
+        <option value="$PROJECT_DIR$/ui/ui/grid.js" />
+        <option value="$PROJECT_DIR$/ui/index.html" />
+        <option value="$PROJECT_DIR$/ui/diagramEditor.js" />
+        <option value="$PROJECT_DIR$/ui/style.css" />
+        <option value="$PROJECT_DIR$/ui/templates/template.json" />
+        <option value="$PROJECT_DIR$/ui/ui/fileManager.js" />
+        <option value="$PROJECT_DIR$/ui/Server.py" />
         <option value="$PROJECT_DIR$/ui/ui/ui.js" />
         <option value="$PROJECT_DIR$/ui/api.py" />
-        <option value="$PROJECT_DIR$/ui/Server.py" />
-        <option value="$PROJECT_DIR$/ui/ui/grid.js" />
-        <option value="$PROJECT_DIR$/ui/ui/fileManager.js" />
-        <option value="$PROJECT_DIR$/ui/templates/Ressource.json" />
-        <option value="$PROJECT_DIR$/ui/index.html" />
-        <option value="$PROJECT_DIR$/ui/templates/template.json" />
-        <option value="$PROJECT_DIR$/ui/diagramEditor.js" />
-        <option value="$PROJECT_DIR$/ui/templates/Authorizations.json" />
-        <option value="$PROJECT_DIR$/ui/style.css" />
         <option value="$PROJECT_DIR$/ui/ui/tools.js" />
+        <option value="$PROJECT_DIR$/ui/templates/Ressource.json" />
+        <option value="$PROJECT_DIR$/ui/templates/Authorizations.json" />
       </list>
     </option>
   </component>
@@ -182,9 +240,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-1" />
-    <option name="y" value="-34" />
+    <option name="y" value="26" />
     <option name="width" value="1368" />
-    <option name="height" value="803" />
+    <option name="height" value="713" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -691,12 +749,6 @@
       <option name="number" value="Default" />
       <updated>1423228113584</updated>
     </task>
-    <task id="LOCAL-00017" summary="Minors">
-      <created>1431957560458</created>
-      <option name="number" value="00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1431957560458</updated>
-    </task>
     <task id="LOCAL-00018" summary="Wearable usecase">
       <created>1432134164885</created>
       <option name="number" value="00018" />
@@ -985,7 +1037,13 @@
       <option name="project" value="LOCAL" />
       <updated>1436279945494</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Templates Rendering V1">
+      <created>1440336351726</created>
+      <option name="number" value="00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1440336351728</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -1009,22 +1067,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="-34" width="1368" height="803" extended-state="6" />
+    <frame x="-1" y="26" width="1368" height="713" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16012084" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34146342" sideWeight="0.504483" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962963" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32685184" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18202417" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16361679" sideWeight="0.49551705" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16239317" sideWeight="0.49551705" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32698414" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39971346" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1073,7 +1131,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Adding Actors" />
     <MESSAGE value="Adding Proxy" />
     <MESSAGE value="FOTLSynthesizer init" />
     <MESSAGE value="Clean" />
@@ -1098,7 +1155,8 @@
     <MESSAGE value="Toaster" />
     <MESSAGE value="Times fixing" />
     <MESSAGE value="Minors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minors" />
+    <MESSAGE value="Templates Rendering V1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Templates Rendering V1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1212,13 +1270,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6415094">
-          <caret line="539" column="68" selection-start-line="539" selection-start-column="68" selection-end-line="539" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/coverage/tests.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.69463086">
@@ -1282,13 +1333,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AALCompiler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="996" column="8" selection-start-line="996" selection-start-column="8" selection-end-line="996" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -1363,32 +1407,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/aalc.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="303" column="24" selection-start-line="303" selection-start-column="24" selection-end-line="303" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="12" selection-start-line="57" selection-start-column="4" selection-end-line="57" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/ui/properties.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="454" column="107" selection-start-line="454" selection-start-column="103" selection-end-line="454" selection-end-column="107" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/grid.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="81" column="21" selection-start-line="81" selection-start-column="21" selection-end-line="81" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -1401,42 +1423,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.04378531">
-          <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/Server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.518851">
-          <caret line="79" column="13" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/templates/Ressource.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20912547">
-          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.41825095">
           <caret line="104" column="57" selection-start-line="104" selection-start-column="57" selection-end-line="104" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="10.021841">
-          <caret line="311" column="21" selection-start-line="311" selection-start-column="13" selection-end-line="311" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -1449,14 +1439,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/templates/Authorizations.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.5161295">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1465,25 +1447,108 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/grid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.035821">
+          <caret line="81" column="21" selection-start-line="81" selection-start-column="21" selection-end-line="81" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.3429084">
+          <caret line="317" column="0" selection-start-line="317" selection-start-column="0" selection-end-line="317" selection-end-column="0" />
+          <folding>
+            <marker date="1440336731825" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1440336731825" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="491" column="29" selection-start-line="491" selection-start-column="25" selection-end-line="491" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALCompiler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1132" column="0" selection-start-line="1132" selection-start-column="0" selection-end-line="1132" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/Server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="30" selection-start-line="63" selection-start-column="21" selection-end-line="63" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ui/templates/template.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.2580647">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+          <caret line="6" column="100" selection-start-line="6" selection-start-column="100" selection-end-line="6" selection-end-column="100" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="147" column="0" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/aalc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="86" column="4" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6671642">
-          <caret line="907" column="98" selection-start-line="907" selection-start-column="98" selection-end-line="907" selection-end-column="98" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="935" column="104" selection-start-line="935" selection-start-column="104" selection-end-line="935" selection-end-column="104" />
           <folding>
-            <marker date="1440336097613" expanded="true" signature="17191:17221" placeholder="..." />
-            <marker date="1440336097613" expanded="true" signature="19751:19762" placeholder="..." />
-            <marker date="1440336097613" expanded="true" signature="31034:31053" placeholder="..." />
-            <marker date="1440336097613" expanded="true" signature="33447:33470" placeholder="..." />
-            <marker date="1440336097613" expanded="true" signature="34237:34247" placeholder="..." />
+            <marker date="1440361408167" expanded="true" signature="17191:17221" placeholder="..." />
+            <marker date="1440361408167" expanded="true" signature="19751:19762" placeholder="..." />
+            <marker date="1440361408167" expanded="true" signature="31034:31053" placeholder="..." />
+            <marker date="1440361408167" expanded="true" signature="33771:33794" placeholder="..." />
+            <marker date="1440361408167" expanded="true" signature="34561:34571" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/templates/Ressource.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.387097">
+          <caret line="9" column="1" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/templates/Authorizations.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.50190115">
+          <caret line="12" column="34" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>

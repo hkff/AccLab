@@ -931,7 +931,12 @@ visualEditor.ui.Template = {
      * @param template
      */
     genAAL: function(template) {
-        return template.aal;
+        var aal = template.aal;
+        for(var i=0; i<template.vars.length; i++) {
+            aal = aal.replace("{"+template.vars[i].id+"}", eval("$('#"+template.vars[i].id+"').val()" ));
+        }
+        console.log(aal)
+        return aal;
     }
 }
 
@@ -945,6 +950,9 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 
 	control: function(parent) {
 		var fx = function(e){
+            // Get AAL info
+            visualEditor.ui.analyseAAL(visualEditor.ui.activeTab.panel.title);
+
 			var p = "<div>" +
 			"<div style='width:19%; float: left;'>" +
 			"	<b>Templates</b>" +
