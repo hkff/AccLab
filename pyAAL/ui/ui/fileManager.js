@@ -56,6 +56,7 @@ visualEditor.ui.fileManager = {
 		this.ctMenu =
 		  '<div id="fmm" class="easyui-menu menu-top menu" style="width: 137px; display: none; left: 94px; top: 150px; z-index: 110009;">'+
 		  '<div class="menu-line"></div>'+
+          '<div id="fmm-new-folder" data-options="iconCls:\'fa fa-folder\'" class="menu-item cmenuBtn" >New Folder</div>'+
 		  '<div id="fmm-new-diagram" data-options="iconCls:\'fa fa-edit\'" class="menu-item cmenuBtn" >New Diagram</div>'+
 		  '<div id="fmm-new-aal" data-options="iconCls:\'fa fa-file-code-o\'" class="menu-item cmenuBtn" >New AAL file</div>'+
 		  '<div id="fmm-open"  data-options="iconCls:\'fa fa-folder-open\'" class="menu-item cmenuBtn">Open</div>'+
@@ -105,6 +106,20 @@ visualEditor.ui.fileManager = {
 	 */
 	control: function(_this) {
 		// Context menu actions
+        $('#fmm-new-folder').click(function(e){
+			var node = $("#explorer").tree('getSelected');
+			var file;
+			do {
+				file=prompt("Enter folder name");
+			}
+			while(file.length < 0);
+
+			var path = _this.getAbsPath(node);
+			file = path.replace(node.text, "") + file;
+
+			_this.createFolder(file);
+		});
+
 		$('#fmm-new-diagram').click(function(e){
 			var node = $("#explorer").tree('getSelected');
 			var file;
@@ -291,6 +306,27 @@ visualEditor.ui.fileManager = {
 			type:'POST',
 			url: visualEditor.backend,
 			data: {action: "write", file: file, data: data},
+			success: function(response){
+				// Notify
+				console.log(response)
+			}
+		});
+
+		// Update explorer
+		$("#explorer").tree("reload");
+	},
+
+	/**
+	 * Create folder
+	 * @param file
+	 */
+	createFolder: function(file) {
+		var dType = "text";
+        $.ajax({
+			dataType: dType,
+			type:'POST',
+			url: visualEditor.backend,
+			data: {action: "createDir", file: file},
 			success: function(response){
 				// Notify
 				console.log(response)

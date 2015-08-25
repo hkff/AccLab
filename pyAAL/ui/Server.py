@@ -63,6 +63,8 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             res = api_getTemplate("ui/templates/" + self.get_arg(args, "file", method))
         elif val == "getAALdec":
             res = api_getAALDec(self.get_arg(args, "file", method))
+        elif val == "createDir":
+            res = api_createFolder(self.get_arg(args, "file", method))
         return res
 
     def do_GET(self):

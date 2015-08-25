@@ -19,7 +19,7 @@ __author__ = 'walid'
 
 import os
 from urllib.parse import *
-import sys
+import sys, shutil
 from io import StringIO
 from aalc import *
 
@@ -40,8 +40,10 @@ def api_listDir(wpath):
             tmp += api_listDir(wpath + '/' + d)
         tmp += '},'
 
-    tmp = tmp[:-1]
+    if tmp[-1] == ",":
+        tmp = tmp[:-1]
     tmp += ']'
+
     return tmp
 
 
@@ -50,10 +52,12 @@ def api_readFile(f):
     with open(base_dir + "/" + f) as fd:
         return fd.read()
 
+
 # Read file
 def api_getTemplate(f):
     with open(f) as fd:
         return fd.read()
+
 
 # Write file
 def api_writeFile(f, d):
@@ -66,6 +70,16 @@ def api_deleteFile(f):
     file = base_dir + "/" + f
     if os.path.isfile(file):
         os.remove(file)
+    elif os.path.isdir(file):
+        shutil.rmtree(file)
+
+
+# Create Folder
+def api_createFolder(d):
+    if not os.path.exists(base_dir + "/" + d):
+        return str(os.makedirs(base_dir + "/" + d))
+    else:
+        return "Directory exists !"
 
 
 # Convert terminal colors to colored div
