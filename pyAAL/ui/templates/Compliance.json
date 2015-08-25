@@ -1,0 +1,15 @@
+{
+    "name": "Compliance",
+	"desc": "Checks if two clauses are compliant.",
+	"vars": [
+      {"name": "", "id": "c1", "type": "select", "pre": " Clause 1 ", "post": " ", "src": "{aal.clauses}"},
+      {"name": "", "id": "c2", "type": "select", "pre": " Clause 2 ", "post": "", "src": "{aal.clauses}"}
+    ],
+	"aal": [
+      "CALL validate(\"{c1}.val\" \"{c2}.val\")"
+    ],
+	"html": [
+      "<div class='varGroupe'> {c1} {c2} </div> {genBtn}"
+    ],
+	"xacml": ""
+}

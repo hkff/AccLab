@@ -155,5 +155,6 @@ def api_getAALDec(f):
 
     agents = ",".join(['"' + str(x.name) + '"' for x in mm.aalprog.declarations["agents"]])
     services = ",".join(['"' + str(x.name) + '"' for x in mm.aalprog.declarations["services"]])
-    res = '{"agents" : [' + agents + '], "services" : [' + services + ']}'
+    clauses = ",".join(['"' + str(x.name) + '"' for x in mm.aalprog.clauses])
+    res = '{"agents" : [' + agents + '], "services" : [' + services + '], "clauses" : [' + clauses+ ']}'
     return res

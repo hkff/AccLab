@@ -110,9 +110,8 @@ window.onload = function() {
         visualEditor.ui.updatePanel();
     }
 
-    // TO REMOVE
-    visualEditor.ui.fileManager.openFile("tuto2.aal");
-    $("#tmpBtn").click();
+    // TODO REMOVE
+    //visualEditor.ui.fileManager.openFile("tuto2.aal");
 }
 
 /**

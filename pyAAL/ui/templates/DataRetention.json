@@ -3,18 +3,17 @@
 	"desc": "Specify the retention period for a specific resource.",
 	"vars": [
       {"name": "", "id": "period", "type": "text", "pre": "<h4>Delete before </h4>", "post": ""},
-      {"name": "", "id": "resource", "type": "text", "pre": " ", "post": " Resource"},
-      {"name": "", "id": "owner", "type": "text", "pre": " ", "post": " Owner"},
-      {"name": "", "id": "user", "type": "text", "pre": " ", "post": " User"}
+      {"name": "", "id": "resource", "type": "text", "pre": " Resource ", "post": "  "},
+      {"name": "", "id": "owner", "type": "select", "pre": " Owner ", "post": " ", "src": "{aal.agents}"},
+      {"name": "", "id": "user", "type": "select", "pre": " User ", "post": " ", "src": "{aal.agents}"}
     ],
 	"aal": [
-      "{{ (({period}.val != '')?'MUST( {owner}.val.delete[{owner}.val]({resource}.val) BEFORE {period}.val)':'') }}"
+      "{{ (('{resource}.val' == '')? 'FORALL d:data\\nIF (d.subject == {user}.val)' : 'IF ({resource}.val.subject == {user}.val)') }}",
+      "THEN {\n\t MUST( {owner}.val.delete[{owner}.val]({resource}.val) BEFORE '{period}.val') \n}"
     ],
 	"html": [
-      "<div class='varGroupe'> {resource} </div>",
-      "<div class='varGroupe'> {user} </div>",
-      "<div class='varGroupe'> {owner} </div>",
-      "<div class='varGroupe'> {period}</div> {genBtn}"
+      "<div class='varGroupe'> {resource} {owner} {user}</div>",
+      "<div class='varGroupe'> {period}</div><script>$('#period').datepicker();</script> {genBtn}"
     ],
 	"xacml": ""
 }

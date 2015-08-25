@@ -384,7 +384,6 @@ def main(argv):
         elif opt in ("-r", "--reparse"):
             reparse = True
         elif opt in ("--no-browser"):
-            print("dddd")
             nobrowser = True
         elif opt in ("-u", "--gui"):
             run_gui = True

@@ -881,10 +881,24 @@ visualEditor.ui.Template = {
      * @param varObj
      */
     renderVar: function(varObj) {
-        return "<div class='templateVar'><div class='templateVarName'>" + varObj.name + "</div>" +
+        // Generating options for select
+        if(varObj.type === "select"){
+            var options = "";
+            var src = varObj.src;
+            // Replacing agents/services/clauses #NOTE : do not try to optimize
+            src = src.replace("{aal.agents}",  JSON.stringify(visualEditor.ui.currentAAL.agents));
+            src = src.replace("{aal.services}",  JSON.stringify(visualEditor.ui.currentAAL.services));
+            src = src.replace("{aal.clauses}",  JSON.stringify(visualEditor.ui.currentAAL.clauses));
+            src = JSON.parse(src);
+
+            for(var i=0; i<src.length; i++)
+                options += "<option value='" + src[i] + "'>" + src[i] + "</option>";
+        }
+
+        return "<div class='templateVar'>" + //<div class='templateVarName'>" + varObj.name + "</div>" +
             varObj.pre +
-            ((varObj.type != "select")?("<input type='" + varObj.type + "' id='" + varObj.id + "'/>"):
-            ("<select id='" + varObj.id + "'> </select>"))+
+            ((varObj.type != "select")?("<input type='" + varObj.type + "' id='" + varObj.id +  "' name='" + varObj.name + "'/>"):
+            ("<select id='" + varObj.id + "'>" + options +" </select>"))+
             varObj.post + "</div>";
     },
 
@@ -939,10 +953,11 @@ visualEditor.ui.Template = {
 
         // Handle evals
         var evals = aal.match(/{{.*}}/gm);
-        console.log(evals)
-        for(var i=0; i<evals.length; i++) {
-            var e = replaceAll("}}", "", replaceAll("{{", "", evals[i]));
-            aal = aal.replace(evals[i], eval(e));
+        if (evals != null) {
+            for(var i=0; i<evals.length; i++) {
+                var e = replaceAll("}}", "", replaceAll("{{", "", evals[i]));
+                aal = aal.replace(evals[i], eval(e));
+            }
         }
         return aal;
     }
@@ -987,6 +1002,10 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 				url: visualEditor.backend + "?action=listTemplates",
 
 				onDblClick: function(node){
+					loadTemplate(node.text + ".json");
+				},
+
+                onClick: function(node){
 					loadTemplate(node.text + ".json");
 				},
 

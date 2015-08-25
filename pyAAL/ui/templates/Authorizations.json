@@ -6,27 +6,33 @@
 	  {"name": "", "id": "write", "type": "checkbox", "pre": "", "post": "Write"},
       {"name": "", "id": "update", "type": "checkbox", "pre": "", "post": "Update"},
       {"name": "", "id": "delete", "type": "checkbox", "pre": "", "post": "Delete"},
-      {"name": "", "id": "action", "type": "text", "pre": "Action ", "post": ""},
-      {"name": "", "id": "resource", "type": "text", "pre": " ", "post": " Resource"},
-      {"name": "", "id": "owner", "type": "text", "pre": " ", "post": " Owner"},
-      {"name": "", "id": "user", "type": "text", "pre": " ", "post": " User"},
-      {"name": "", "id": "permit", "type": "checkbox", "pre": "", "post": "Permit"}
+      {"name": "", "id": "action", "type": "select", "pre": "Action ", "post": "", "src": "{aal.services}"},
+      {"name": "", "id": "useaction", "type": "checkbox", "pre": " ", "post": " Use custom action"},
+      {"name": "", "id": "resource", "type": "text", "pre": " Resource ", "post": " "},
+      {"name": "", "id": "owner", "type": "select", "pre": " Owner ", "post": " ", "src": "{aal.agents}"},
+      {"name": "", "id": "user", "type": "select", "pre": " User ", "post": " ", "src": "{aal.agents}"},
+      {"name": "a", "id": "permit", "type": "radio", "pre": "", "post": "Permit"},
+      {"name": "a", "id": "deny", "type": "radio", "pre": "", "post": "Deny"}
     ],
 	"aal": [
-      "{{ (({read}.checked)?'\\nPERMIT {user}.val.read[{owner}.val]({resource}.val)':'') }}",
-      "\n{{ (({read}.checked && {write}.checked)?'AND ':'') + (({write}.checked)?'PERMIT {user}.val.write[{owner}.val]({resource}.val)':'') }}",
-      "\n{{ (({update}.checked && ({read}.checked || {write}.checked )) ?'AND ':'') + (({update}.checked)?'PERMIT {user}.val.update[{owner}.val]({resource}.val)':'') }}",
-      "\n{{ (({delete}.checked && ({read}.checked || {write}.checked || {update}.checked))?'AND ':'') + (({delete}.checked)?'PERMIT {user}.val.delete[{owner}.val]({resource}.val)':'') }}",
+      "{{ (({read}.checked)?'\\n' + (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.read[{owner}.val]({resource}.val)':'') }}",
+      "+{{ (({read}.checked && {write}.checked)?'\\nAND ':'') + (({write}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ",
+        "' {user}.val.write[{owner}.val]({resource}.val)') : '') }}",
+      "+{{ (({update}.checked && ({read}.checked || {write}.checked )) ?'\\nAND ':'') + (({update}.checked)? ( (({deny}.checked)?'DENY':'PERMIT')",
+        " + ' {user}.val.update[{owner}.val]({resource}.val)') : '') }}",
+      "+{{ (({delete}.checked && ({read}.checked || {write}.checked || {update}.checked))?'\\nAND ':'') + (({delete}.checked)? ",
+        "( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.delete[{owner}.val]({resource}.val)') : '') }}",
 
-      "\n{{ (({permit}.checked && ({read}.checked || {write}.checked || {update}.checked ||{delete}.checked))?'AND ':'') + (({permit}.checked)?'PERMIT {user}.val.{action}.val[{owner}.val]({resource}.val)':'') }}"
+      "+{{ (({useaction}.checked && ({read}.checked || {write}.checked || {update}.checked ||{delete}.checked))?'\\nAND ':'') +",
+        " (({useaction}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.{action}.val[{owner}.val]({resource}.val)') : '') }}"
+
     ],
 	"html": [
-      "<div class='varGroupe'> {resource} </div>",
-      "<div class='varGroupe'> {user} </div>",
-      "<div class='varGroupe'> {owner} </div>",
+      "<div class='varGroupe'> {resource} {owner} {user}</div>",
+      "<div class='varGroupe'> <h4 class='varsHeader'>Authorization :</h4> {permit} {deny} </div>",
       "<div class='varGroupe'><h4 class='varsHeader'>Standard Actions :</h4>",
       " {read} {write} {update} {delete} </div> ",
-      "<div class='varGroupe'><h4 class='varsHeader'>Other Actions :</h4> {action} {permit}</div> {genBtn}"
+      "<div class='varGroupe'><h4 class='varsHeader'>Other Actions :</h4> {action} {useaction}</div> {genBtn}"
     ],
 	"xacml": ""
 }
