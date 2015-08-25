@@ -1,6 +1,6 @@
 {
-    "name": "Authorizations",
-	"desc": "Allow or prohibit an agent the access to a specific resource.",
+    "name": "Actions log",
+	"desc": "Log event when a specific action is performed.",
 	"vars": [
       {"name": "", "id": "read", "type": "checkbox", "pre": "", "post": "Read"},
 	  {"name": "", "id": "write", "type": "checkbox", "pre": "", "post": "Write"},
@@ -10,15 +10,18 @@
       {"name": "", "id": "resource", "type": "text", "pre": " ", "post": " Resource"},
       {"name": "", "id": "owner", "type": "text", "pre": " ", "post": " Owner"},
       {"name": "", "id": "user", "type": "text", "pre": " ", "post": " User"},
-      {"name": "", "id": "permit", "type": "checkbox", "pre": "", "post": "Permit"}
+      {"name": "", "id": "permit", "type": "checkbox", "pre": "", "post": ""}
     ],
 	"aal": [
-      "{{ (({read}.checked)?'\\nPERMIT {user}.val.read[{owner}.val]({resource}.val)':'') }}",
-      "\n{{ (({read}.checked && {write}.checked)?'AND ':'') + (({write}.checked)?'PERMIT {user}.val.write[{owner}.val]({resource}.val)':'') }}",
-      "\n{{ (({update}.checked && ({read}.checked || {write}.checked )) ?'AND ':'') + (({update}.checked)?'PERMIT {user}.val.update[{owner}.val]({resource}.val)':'') }}",
-      "\n{{ (({delete}.checked && ({read}.checked || {write}.checked || {update}.checked))?'AND ':'') + (({delete}.checked)?'PERMIT {user}.val.delete[{owner}.val]({resource}.val)':'') }}",
+      "IF( ",
+      "\n\t{{ (({read}.checked)?'PERMIT {user}.val.read[{owner}.val]({resource}.val)':'') }}",
+      "\n\t{{ (({read}.checked && {write}.checked)?'OR ':'') + (({write}.checked)?'PERMIT {user}.val.write[{owner}.val]({resource}.val)':'') }}",
+      "\n\t{{ (({update}.checked && ({read}.checked || {write}.checked )) ?'OR ':'') + (({update}.checked)?'PERMIT {user}.val.update[{owner}.val]({resource}.val)':'') }}",
+      "\n\t{{ (({delete}.checked && ({read}.checked || {write}.checked || {update}.checked))?'OR ':'') + (({delete}.checked)?'PERMIT {user}.val.delete[{owner}.val]({resource}.val)':'') }}",
 
-      "\n{{ (({permit}.checked && ({read}.checked || {write}.checked || {update}.checked ||{delete}.checked))?'AND ':'') + (({permit}.checked)?'PERMIT {user}.val.{action}.val[{owner}.val]({resource}.val)':'') }}"
+      "\n\t{{ (({permit}.checked && ({read}.checked || {write}.checked || {update}.checked ||{delete}.checked))?'OR ':'') + (({permit}.checked)?'PERMIT {user}.val.{action}.val[{owner}.val]({resource}.val)':'') }}",
+      "\n) THEN { \n\tMUST({owner}.val.log[{owner}.val]({resource}.val)) \n}"
+
     ],
 	"html": [
       "<div class='varGroupe'> {resource} </div>",

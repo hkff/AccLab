@@ -849,6 +849,7 @@ function insertSnippet(s) {
 	}
 }
 
+
 //////////////////////////////////////////////////////////
 //
 //  templatesTool
@@ -913,13 +914,12 @@ visualEditor.ui.Template = {
             ((typeof(template.html) == "string")?template.html:template.html.join(""));
 
         // Handle vars
-        html = html.replace("{vars}", tmp);
+        html = replaceAll("{vars}", tmp, html);
         // Handle genBtn
-        html = html.replace("{genBtn}", "<div class='varGroupe'>" +
-            visualEditor.ui.Template.generateBtn + "</div>");
+        html = replaceAll("{genBtn}", "<div class='varGroupe'>" + visualEditor.ui.Template.generateBtn + "</div>", html);
         // Handle vars one by one
         for(var i=0; i<template.vars.length; i++)
-            html = html.replace("{"+template.vars[i].id+"}", vars[template.vars[i].id]);
+            html = replaceAll("{"+template.vars[i].id+"}", vars[template.vars[i].id], html);
 
 
         // Rendering
@@ -931,16 +931,18 @@ visualEditor.ui.Template = {
      * @param template
      */
     genAAL: function(template) {
-        var aal = (typeof(template.aal) == "string")?template.aal:template.aal.join("");
+        var aal = (typeof(template.aal) == "string")?template.aal:template.aal.join(" ");
         for(var i=0; i<template.vars.length; i++) {
-            aal = aal.replace("{"+template.vars[i].id+"}.val", eval("$('#"+template.vars[i].id+"').val()" ));
-            aal = aal.replace("{"+template.vars[i].id+"}.checked", ("$('#"+template.vars[i].id+"').is(':checked')" ));
+            aal = replaceAll("{"+template.vars[i].id+"}.val", eval("$('#"+template.vars[i].id+"').val()" ), aal);
+            aal = replaceAll("{"+template.vars[i].id+"}.checked", ("$('#"+template.vars[i].id+"').is(':checked')" ), aal);
         }
 
         // Handle evals
-        var evals = aal.match(/{{.*}}/g);
+        var evals = aal.match(/{{.*}}/gm);
+        console.log(evals)
         for(var i=0; i<evals.length; i++) {
-            aal = aal.replace(evals[i], eval(evals[i].replace("{{", "").replace("}}", "")));
+            var e = replaceAll("}}", "", replaceAll("{{", "", evals[i]));
+            aal = aal.replace(evals[i], eval(e));
         }
         return aal;
     }
@@ -950,7 +952,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.templatesTool",
 
 	view: function(parent) {
-		this.button = $('<div title="Templates (ctrl+x)" id="tmpBtn" class="btn-action fa fa-magic fa-lg"/>');
+		this.button = $('<div title="Templates (ctrl+e)" id="tmpBtn" class="btn-action fa fa-magic fa-lg"/>');
 		parent.actionsPanel.append(this.button);
 	},
 
@@ -1002,7 +1004,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 			});
 		};
 		this.button.click(fx);
-		shortcut.add("Ctrl+x", fx);
+		shortcut.add("Ctrl+e", fx);
 	}
 });
 

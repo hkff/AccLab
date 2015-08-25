@@ -114,3 +114,14 @@ window.onload = function() {
     visualEditor.ui.fileManager.openFile("tuto2.aal");
     $("#tmpBtn").click();
 }
+
+/**
+ * Replace ALL
+ * @param find
+ * @param replace
+ * @param str
+ * @returns {XML|string|*|void}
+ */
+function replaceAll(find, replace, str) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
