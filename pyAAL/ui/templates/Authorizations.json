@@ -10,7 +10,10 @@
       {"name": "", "id": "owner", "type": "text", "pre": "Owner ", "post": ""},
       {"name": "", "id": "user", "type": "text", "pre": "User ", "post": ""}
     ],
-	"aal": "TYPE {Read}\n EXTENDS(data)",
-	"html": "<div class='varGroupe'>{user} {owner} </div> <div class='varGroupe'><h4 class='varsHeader'>Standard Actions :</h4> {read} {write} {update} {delete} </div> <div class='varGroupe'><h4 class='varsHeader'>Other Actions :</h4> {action} </div> {genBtn}",
+	"aal": ["PERMIT {{ (({read}.checked)?'checked':'not checked') }} EXTENDS(data)"],
+	"html": [
+      "<div class='varGroupe'>{user} {owner} </div>",
+      "<div class='varGroupe'><h4 class='varsHeader'>Standard Actions :</h4> {read} {write} {update} {delete} </div> <div class='varGroupe'><h4 class='varsHeader'>Other Actions :</h4> {action} </div> {genBtn}"
+    ],
 	"xacml": ""
 }

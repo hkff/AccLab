@@ -307,6 +307,7 @@ def main(argv):
                         "\n  -d \t--hotswap       " + "\t enable hotswaping (for development only)" + \
                         "\n  -a \t--ast           " + "\t show ast tree" + \
                         "\n  -u \t--gui [port]    " + "\t run the gui on the specified port" + \
+                        "\n     \t--no-browser    " + "\t don't start the web browser" + \
                         "\n\nReport aalc bugs to walid.benghabrit@mines-nantes.fr" + \
                         "\nAccLab home page: <http://www.emn.fr/z-info/acclab/>" + \
                         "\naalc is a free software released under GPL 3"
@@ -323,6 +324,8 @@ def main(argv):
     show_ast = False
     synth = False
     reparse = False
+    nobrowser = False
+    run_gui = False
     outputfile = "tmp.tspass"
 
     # Check libs path
@@ -334,7 +337,7 @@ def main(argv):
         opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaSru:",
                                    ["help", "input", "output", "compile", "monodic", "check",
                                     "shell", "load", "fotl", "recompile", "init", "no-colors",
-                                    "compile-stdlib", "hotswap", "ast", "synth", "reparse", "gui"])
+                                    "compile-stdlib", "hotswap", "ast", "synth", "reparse", "gui", "no-browser"])
     except getopt.GetoptError:
         print(helpStr)
         sys.exit(2)
@@ -380,16 +383,22 @@ def main(argv):
             synth = True
         elif opt in ("-r", "--reparse"):
             reparse = True
+        elif opt in ("--no-browser"):
+            print("dddd")
+            nobrowser = True
         elif opt in ("-u", "--gui"):
-            # Start server
-            from ui.Server import start_ui
+            run_gui = True
+
+    if run_gui:
+        # Start server
+        from ui.Server import start_ui
+        port = 8000
+        try:
+            port = int(arg)
+        except:
+            print("Warning invalid port number, running on port 8000")
             port = 8000
-            try:
-                port = int(arg)
-            except:
-                print("Warning invalide port number, running on port 8000")
-                port = 8000
-            start_ui(port)
+        start_ui(port, nobrowser=nobrowser)
 
     # Use hot swapping decoration on all AALMetaModel classes
     # use this option for debug only

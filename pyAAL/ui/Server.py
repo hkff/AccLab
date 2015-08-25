@@ -114,14 +114,15 @@ def run(server_class=HTTPServer, handler_class=HTTPRequestHandler):
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("Stoping server...")
+        print("Stopping server...")
     httpd.server_close()
 
 
 # Start ui
-def start_ui(port=8000):
+def start_ui(port=8000, nobrowser=False):
     global server_port
     server_port = port
     # Open the index page in a web browser
     threading.Thread(target=run).start()
-    webbrowser.open("http://127.0.0.1:" + str(server_port) + "/ui", new=2)
+    if not nobrowser:
+        webbrowser.open("http://127.0.0.1:" + str(server_port) + "/ui", new=2)

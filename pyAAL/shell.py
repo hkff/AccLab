@@ -35,7 +35,7 @@ help_str = "Shell Help" +\
     "\t\t\t   *args : a list of string; << ex : [\"'args1'\", \"'args2'\", ...\"'argsN'\"] >>" +\
     "\n - clauses()         " + "\t show all declared clauses in the loaded aal program" +\
     "\n - macros()          " + "\t show all declared macros in the loaded aal program" +\
-    "\n - load(lib)         " + "\t load the librarie lib" +\
+    "\n - load(lib)         " + "\t load the library lib" +\
     "\n - quit / q          " + "\t exit the shell" +\
     "\n - help / h / man()  " + "\t show this help" +\
     "\n - self              " + "\t the current compiler instance of the loaded aal program" +\

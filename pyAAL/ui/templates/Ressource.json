@@ -4,7 +4,7 @@
 	"vars": [
       {"name": "Resssource Name", "id": "Field1", "type": "input", "pre": "", "post": ""}
     ],
-	"aal": "TYPE {Field1} EXTENDS (data)",
+	"aal": "TYPE {Field1}.val EXTENDS (data)",
 	"html": "{vars} <br> {genBtn}",
 	"xacml": ""
 }

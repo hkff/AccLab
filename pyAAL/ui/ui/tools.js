@@ -910,7 +910,7 @@ visualEditor.ui.Template = {
         var html =
             "<div class='templateName'>" + template.name + "</div>" +
             "<div class='templateDesc'>" + template.desc +"</div>" +
-            template.html;
+            ((typeof(template.html) == "string")?template.html:template.html.join(""));
 
         // Handle vars
         html = html.replace("{vars}", tmp);
@@ -931,11 +931,17 @@ visualEditor.ui.Template = {
      * @param template
      */
     genAAL: function(template) {
-        var aal = template.aal;
+        var aal = (typeof(template.aal) == "string")?template.aal:template.aal.join("");
         for(var i=0; i<template.vars.length; i++) {
-            aal = aal.replace("{"+template.vars[i].id+"}", eval("$('#"+template.vars[i].id+"').val()" ));
+            aal = aal.replace("{"+template.vars[i].id+"}.val", eval("$('#"+template.vars[i].id+"').val()" ));
+            aal = aal.replace("{"+template.vars[i].id+"}.checked", ("$('#"+template.vars[i].id+"').is(':checked')" ));
         }
-        console.log(aal)
+
+        // Handle evals
+        var evals = aal.match(/{{.*}}/g);
+        for(var i=0; i<evals.length; i++) {
+            aal = aal.replace(evals[i], eval(evals[i].replace("{{", "").replace("}}", "")));
+        }
         return aal;
     }
 }
