@@ -399,6 +399,11 @@ visualEditor.ui.properties = {
 		
 		this.AALEditor.control(this);
 
+		// Detect size change
+        $('#properties_window').mouseover(function(){$('#pg').datagrid('resize');});
+        $('#properties_window').mouseout(function(){$('#pg').datagrid('resize');});
+
+
 		/*
 		this.labelSizePropel.bind('input', function() { 
 			visualEditor.ui.selectedNode.tlabel.setFontSize($(this).val());

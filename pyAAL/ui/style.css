@@ -64,35 +64,35 @@ body {
 	width: 300px;
 	height: 200px;
 	background-color: #eee;
-	overflow: overlay;
+	overflow: auto;
 }
 
 .output-window {
 	width: 300px;
 	height: 200px;
 	background-color: #eee;
-	overflow: overlay;
+	overflow: auto;
 }
 
 .properties-window {
 	width: 250px;
 	height: 200px;
 	background-color: #aac;
-	overflow: overlay;
+	overflow: auto;
 }
 
 .toolbox-window {
 	width: 300px;
 	height: 200px;
 	background-color: #eee;
-	overflow: overlay;
+	overflow: auto;
 }
 
 .componentbox-window {
 	width: 300px;
 	height: 200px;
 	background-color: #eee;
-	overflow: overlay;
+	overflow: auto;
 }
 
 .editor1-window {
@@ -111,14 +111,14 @@ body {
 	width: 300px;
 	height: 200px;
 	background-color: #ddd;
-	overflow: overlay;
+	overflow: auto;
 }
 
 .problems-window {
 	width: 300px;
 	height: 200px;
 	background-color: #edd;
-	overflow: overlay;
+	overflow: auto;
 }
 
 .editor-host {
