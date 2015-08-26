@@ -24,6 +24,7 @@ from AALMetaModel import *
 def time_to_set(times):
     res = []
     lng = len(times)
+    y = 0
     for x in range(0, lng):
         for y in range(x+1, lng):
             if str(times[x].time) == str(times[y].time):
