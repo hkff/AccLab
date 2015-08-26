@@ -1139,6 +1139,12 @@ class AALCompilerListener(AALListener.AALListener):
         res = [str(x.name) + "(" + " ".join(x.param) + ")" for x in self.aalprog.macros]
         return "\n".join(res)
 
+    def get_declared(self, type="agent"):
+        x = ['"'+str(x.name)+'"' + " " for x in self.aalprog.declarations[type]]
+        for l in self.libs:
+            x = x + ['"'+str(y.name)+'"' + " " for y in l.aalprog.declarations[type]]
+        return x
+
     # Create a new macro
     def new_macro(self, name, param, code):
         """

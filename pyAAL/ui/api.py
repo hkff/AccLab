@@ -26,7 +26,7 @@ from aalc import *
 base_dir = "examples"
 
 
-# List dir
+#  List dir
 def api_listDir(wpath):
     tmp = "["
     dirs = os.listdir(wpath)[::-1]
@@ -167,8 +167,9 @@ def api_getAALDec(f):
     except:
         res = "Compilation Error"
 
-    agents = ",".join(['"' + str(x.name) + '"' for x in mm.aalprog.declarations["agents"]])
-    services = ",".join(['"' + str(x.name) + '"' for x in mm.aalprog.declarations["services"]])
+    agents = ",".join(mm.get_declared("agents"))
+    services = ",".join(mm.get_declared("services"))
+    types = ",".join(mm.get_declared("types"))
     clauses = ",".join(['"' + str(x.name) + '"' for x in mm.aalprog.clauses])
-    res = '{"agents" : [' + agents + '], "services" : [' + services + '], "clauses" : [' + clauses+ ']}'
+    res = '{"agents" : [' + agents + '], "services" : [' + services + '], "types" : [' + types + '], "clauses" : [' + clauses + ']}'
     return res

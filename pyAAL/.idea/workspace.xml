@@ -4,8 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/ui/ui/ui.js" line="108" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AALtoFOTL.py" afterPath="$PROJECT_DIR$/AALtoFOTL.py" />
+    <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="time_to_set bug fix">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AALCompiler.py" afterPath="$PROJECT_DIR$/AALCompiler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/api.py" afterPath="$PROJECT_DIR$/ui/api.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pyAAL.iws" />
@@ -90,11 +91,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="api.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="api.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ui/api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="169" column="64" selection-start-line="169" selection-start-column="64" selection-end-line="169" selection-end-column="64" />
+            <state vertical-scroll-proportion="0.8090909">
+              <caret line="173" column="132" selection-start-line="173" selection-start-column="132" selection-end-line="173" selection-end-column="132" />
               <folding>
                 <element signature="e#690#699#0" expanded="true" />
               </folding>
@@ -102,11 +103,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="aalc.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/aalc.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="86" column="4" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="AALCompiler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AALCompiler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.034483">
-              <caret line="455" column="30" selection-start-line="455" selection-start-column="30" selection-end-line="455" selection-end-column="30" />
+            <state vertical-scroll-proportion="-8.620689">
+              <caret line="1150" column="26" selection-start-line="1150" selection-start-column="26" selection-end-line="1150" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -116,17 +127,7 @@
         <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="220" column="14" selection-start-line="220" selection-start-column="14" selection-end-line="220" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AALtoFOTL.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/AALtoFOTL.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.71659917">
-              <caret line="36" column="19" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
+              <caret line="327" column="8" selection-start-line="327" selection-start-column="8" selection-end-line="327" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -177,7 +178,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/AALCompiler.py" />
         <option value="$PROJECT_DIR$/UserGuide/parts/acclab.tex" />
         <option value="$PROJECT_DIR$/examples/tuto1.aal" />
         <option value="$PROJECT_DIR$/UserGuide/parts/tuto.tex" />
@@ -224,10 +224,11 @@
         <option value="$PROJECT_DIR$/ui/diagramEditor.js" />
         <option value="$PROJECT_DIR$/ui/Server.py" />
         <option value="$PROJECT_DIR$/ui/ui/fileManager.js" />
-        <option value="$PROJECT_DIR$/ui/api.py" />
         <option value="$PROJECT_DIR$/ui/style.css" />
         <option value="$PROJECT_DIR$/ui/ui/properties.js" />
         <option value="$PROJECT_DIR$/AALtoFOTL.py" />
+        <option value="$PROJECT_DIR$/AALCompiler.py" />
+        <option value="$PROJECT_DIR$/ui/api.py" />
       </list>
     </option>
   </component>
@@ -822,12 +823,6 @@
       <option name="number" value="Default" />
       <updated>1423228113584</updated>
     </task>
-    <task id="LOCAL-00023" summary="Minors">
-      <created>1432304206925</created>
-      <option name="number" value="00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1432304206925</updated>
-    </task>
     <task id="LOCAL-00024" summary="Adding libs in aalprog">
       <created>1432305947105</created>
       <option name="number" value="00024" />
@@ -1116,29 +1111,16 @@
       <option name="project" value="LOCAL" />
       <updated>1440520177396</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="time_to_set bug fix">
+      <created>1440599310133</created>
+      <option name="number" value="00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1440599310133</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
-  <component name="TodoView" selected-index="1">
-    <todo-panel id="selected-file">
-      <are-packages-shown value="false" />
-      <are-modules-shown value="false" />
-      <flatten-packages value="false" />
-      <is-autoscroll-to-source value="false" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="false" />
-      <are-modules-shown value="false" />
-      <flatten-packages value="false" />
-      <is-autoscroll-to-source value="false" />
-    </todo-panel>
-    <todo-panel id="default-changelist">
-      <are-packages-shown value="false" />
-      <are-modules-shown value="false" />
-      <flatten-packages value="false" />
-      <is-autoscroll-to-source value="false" />
-    </todo-panel>
-  </component>
+  <component name="TodoView" selected-index="1" />
   <component name="ToolWindowManager">
     <frame x="1919" y="26" width="1922" height="1175" extended-state="6" />
     <editor active="true" />
@@ -1149,8 +1131,8 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962963" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32664755" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26552054" sideWeight="0.49790794" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23782235" sideWeight="0.49551705" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26552054" sideWeight="0.49790794" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23782235" sideWeight="0.49551705" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16347177" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32507148" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1207,7 +1189,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="LTL fixing + reparse option" />
     <MESSAGE value="Wearable example + Minors" />
     <MESSAGE value="Adding libs in aalprog" />
     <MESSAGE value="LTL check fix" />
@@ -1232,7 +1213,8 @@
     <MESSAGE value="Finalizing templates" />
     <MESSAGE value="Adding &quot;New Folder&quot; filemanager" />
     <MESSAGE value="Fixing properties panel resize" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing properties panel resize" />
+    <MESSAGE value="time_to_set bug fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="time_to_set bug fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1405,6 +1387,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="388" column="17" selection-start-line="388" selection-start-column="17" selection-end-line="388" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1412,14 +1395,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.76251227">
           <caret line="37" column="9" selection-start-line="37" selection-start-column="9" selection-end-line="37" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/aalc.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34052992">
-          <caret line="385" column="37" selection-start-line="385" selection-start-column="37" selection-end-line="385" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1611,20 +1586,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/api.py">
+    <entry file="file://$PROJECT_DIR$/AALtoFOTL.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="169" column="64" selection-start-line="169" selection-start-column="64" selection-end-line="169" selection-end-column="64" />
-          <folding>
-            <element signature="e#690#699#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AALCompiler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.034483">
-          <caret line="455" column="30" selection-start-line="455" selection-start-column="30" selection-end-line="455" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.71659917">
+          <caret line="36" column="19" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
           <folding />
         </state>
       </provider>
@@ -1632,16 +1597,34 @@
     <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="220" column="14" selection-start-line="220" selection-start-column="14" selection-end-line="220" selection-end-column="14" />
+          <caret line="327" column="8" selection-start-line="327" selection-start-column="8" selection-end-line="327" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AALtoFOTL.py">
+    <entry file="file://$PROJECT_DIR$/aalc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71659917">
-          <caret line="36" column="19" selection-start-line="36" selection-start-column="19" selection-end-line="36" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="86" column="4" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALCompiler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.620689">
+          <caret line="1150" column="26" selection-start-line="1150" selection-start-column="26" selection-end-line="1150" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8090909">
+          <caret line="173" column="132" selection-start-line="173" selection-start-column="132" selection-end-line="173" selection-end-column="132" />
+          <folding>
+            <element signature="e#690#699#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
