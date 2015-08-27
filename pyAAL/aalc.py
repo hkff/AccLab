@@ -225,7 +225,7 @@ def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: boo
     if debug:
         pprint(bt)
 
-    # FOTL Translate
+    # FOTL Translate # TODO : see timeout
     p = Popen(['tools/' + os_name + '/fotl-translate', generated_tspass],
               stdout=PIPE, stderr=PIPE, stdin=PIPE)
     fotl = p.stdout.read().decode("utf-8")

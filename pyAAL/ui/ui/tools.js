@@ -885,8 +885,8 @@ visualEditor.ui.Template = {
             var options = "";
             var src = varObj.src;
             // Replacing agents/services/clauses #NOTE : do not try to optimize
-            src = src.replace("{aal.agents}",  JSON.stringify(visualEditor.ui.currentAAL.agents.concat(["FORALL", "EXISTS"])));
-            src = src.replace("{aal.services}",  JSON.stringify(visualEditor.ui.currentAAL.services.concat(["FORALL", "EXISTS"])));
+            src = src.replace("{aal.agents}",  JSON.stringify(visualEditor.ui.currentAAL.agents));
+            src = src.replace("{aal.services}",  JSON.stringify(visualEditor.ui.currentAAL.services));
             src = src.replace("{aal.clauses}",  JSON.stringify(visualEditor.ui.currentAAL.clauses));
             src = JSON.parse(src);
 

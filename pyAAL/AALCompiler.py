@@ -1142,6 +1142,7 @@ class AALCompilerListener(AALListener.AALListener):
     def get_declared(self, type="agent"):
         x = ['"'+str(x.name)+'"' + " " for x in self.aalprog.declarations[type]]
         for l in self.libs:
+            print(l)
             x = x + ['"'+str(y.name)+'"' + " " for y in l.aalprog.declarations[type]]
         return x
 

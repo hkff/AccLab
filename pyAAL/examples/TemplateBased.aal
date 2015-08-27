@@ -116,7 +116,7 @@ CLAUSE customer2_clause (
     IF(d.subject == customer2) THEN {
         PERMIT customer2.read[cardioMon](d)
         AND PERMIT customer2.write[cardioMon](d)
-        AND PERMIT customer2.update[cardioMon](d)
+        AND DENY customer2.update[cardioMon](d)
         AND PERMIT customer2.delete[cardioMon](d)
         AND PERMIT customer2.login[cardioMon](d)
     }
@@ -127,4 +127,4 @@ CLAUSE customer2_clause (
     	AUDITING auditor.audit[cardioMon](a)
     	IF_VIOLATED_THEN dpa.sanction[cardioMon](a) 
 )
-CALL validate("cardiomon_clause" "customer2_clause")
+CALL resolve("cardiomon_clause" "customer2_clause")

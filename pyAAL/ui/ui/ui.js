@@ -215,6 +215,7 @@ visualEditor.ui = {
             url: visualEditor.backend,
             data: {action: "getAALdec", file: aalFile},
             success: function(response){
+                console.log(response)
                 var obj = jQuery.parseJSON(response);
                 visualEditor.ui.currentAAL = obj;
             }
