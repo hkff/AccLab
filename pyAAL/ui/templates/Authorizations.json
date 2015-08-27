@@ -28,7 +28,8 @@
 
     ],
 	"html": [
-      "<div class='varGroupe'> {resource} {owner} {user}</div>",
+      "<div class='varGroupe'> {resource} {owner} </div>",
+      "<div class='varGroupe'> {user}</div>",
       "<div class='varGroupe'> <h4 class='varsHeader'>Authorization :</h4> {permit} {deny} </div>",
       "<div class='varGroupe'><h4 class='varsHeader'>Standard Actions :</h4>",
       " {read} {write} {update} {delete} </div> ",

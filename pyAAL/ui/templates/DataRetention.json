@@ -12,7 +12,8 @@
       "THEN {\n\t MUST( {owner}.val.delete[{owner}.val]({resource}.val) BEFORE '{period}.val') \n}"
     ],
 	"html": [
-      "<div class='varGroupe'> {resource} {owner} {user}</div>",
+      "<div class='varGroupe'> {resource} {owner} </div>",
+      "<div class='varGroupe'> {user}</div>",
       "<div class='varGroupe'> {period}</div><script>$('#period').datepicker();</script> {genBtn}"
     ],
 	"xacml": ""
