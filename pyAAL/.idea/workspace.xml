@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AALCompiler.py" afterPath="$PROJECT_DIR$/AALCompiler.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/TemplateBased.aal" afterPath="$PROJECT_DIR$/examples/TemplateBased.aal" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/aalc.py" afterPath="$PROJECT_DIR$/aalc.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/api.py" afterPath="$PROJECT_DIR$/ui/api.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/tools.js" afterPath="$PROJECT_DIR$/ui/ui/tools.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/ui.js" afterPath="$PROJECT_DIR$/ui/ui/ui.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pyAAL.iws" />
@@ -128,11 +123,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AALCompiler.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AALCompiler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AALCompiler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41744548">
-              <caret line="1144" column="20" selection-start-line="1144" selection-start-column="20" selection-end-line="1144" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1144" column="30" selection-start-line="1144" selection-start-column="30" selection-end-line="1144" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="types.aal" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/libs/aal/core/types.aal">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.3364486">
+              <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -143,16 +148,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="364" column="8" selection-start-line="364" selection-start-column="8" selection-end-line="364" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AALtoFOTL.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AALtoFOTL.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="109" column="60" selection-start-line="109" selection-start-column="60" selection-end-line="109" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -848,12 +843,6 @@
       <option name="number" value="Default" />
       <updated>1423228113584</updated>
     </task>
-    <task id="LOCAL-00025" summary="Minors">
-      <created>1432310023394</created>
-      <option name="number" value="00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1432310023394</updated>
-    </task>
     <task id="LOCAL-00026" summary="Minors">
       <created>1432311160079</created>
       <option name="number" value="00026" />
@@ -1142,7 +1131,13 @@
       <option name="project" value="LOCAL" />
       <updated>1440666248434</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="Removing quant">
+      <created>1440677953748</created>
+      <option name="number" value="00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1440677953748</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1" />
@@ -1214,7 +1209,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Adding libs in aalprog" />
     <MESSAGE value="LTL check fix" />
     <MESSAGE value="qvar bug fix" />
     <MESSAGE value="Code clean v1" />
@@ -1239,7 +1233,8 @@
     <MESSAGE value="Fixing properties panel resize" />
     <MESSAGE value="time_to_set bug fix" />
     <MESSAGE value="Adding quantification to templates" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding quantification to templates" />
+    <MESSAGE value="Removing quant" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removing quant" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1248,17 +1243,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/aalc.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="86" column="4" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="4" />
-          <folding>
-            <marker date="1440675429536" expanded="true" signature="2530:2548" placeholder="..." />
-            <marker date="1440675429536" expanded="true" signature="5590:5620" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AALCompiler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1643,8 +1627,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AALCompiler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41744548">
-          <caret line="1144" column="20" selection-start-line="1144" selection-start-column="20" selection-end-line="1144" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1144" column="30" selection-start-line="1144" selection-start-column="30" selection-end-line="1144" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/aal/core/types.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3364486">
+          <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
           <folding />
         </state>
       </provider>
