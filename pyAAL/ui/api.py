@@ -167,9 +167,9 @@ def api_getAALDec(f):
     except:
         res = "Compilation Error"
 
-    agents = ",".join(mm.get_declared(type="agents"))
-    services = ",".join(mm.get_declared(type="services"))
-    types = ",".join(mm.get_declared(type="types"))
+    agents = ",".join(mm.get_declared(dtype="agents"))
+    services = ",".join(mm.get_declared(dtype="services"))
+    types = ",".join(mm.get_declared(dtype="types"))
     clauses = ",".join(['"' + str(x.name) + '"' for x in mm.aalprog.clauses])
     res = '{"agents" : [' + agents + '], "services" : [' + services + '], "types" : [' + types + '], "clauses" : [' + clauses + ']}'
     return res

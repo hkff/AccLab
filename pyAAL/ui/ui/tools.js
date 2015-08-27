@@ -986,7 +986,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 			toastr.info(p, "", {
 				"closeButton": true,
 				"preventDuplicates": true,
-				"tapToDismiss": false,
+				"tapToDismiss": true,
   				"showDuration": "3000",
 			  	"hideDuration": "1000",
 			  	"timeOut": 0,

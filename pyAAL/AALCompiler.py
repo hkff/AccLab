@@ -520,6 +520,8 @@ class AALCompilerListener(AALListener.AALListener):
         if self.aalprog.isDeclared(agName, m_agent) is True:
             if agName in self.refForwardAgents:  # Check if agent is in forwards ref
                 del self.refForwardAgents[agName]  # Remove it to resolve forwards ref
+                # Remove it from the declarations list
+                self.aalprog.declarations["agents"].remove(self.aalprog.isDeclared(agName, m_agent, ret=int))
             else:  # The agent was effectively declared
                 print(Color("{autored}[ERROR]{/red} agent " + agName + "{automagenta} at line " +
                             str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
@@ -557,11 +559,12 @@ class AALCompilerListener(AALListener.AALListener):
     def exitServiceDec(self, ctx):
         sv_name = str(ctx.h_serviceId().ID())
         sv_dec = m_service(name=ctx.h_serviceId().ID())  # Declare service (put the ID() to keep context)
-
         # Check if service is already declared
         if self.aalprog.isDeclared(sv_name, m_service) is True:
             if sv_name in self.refForwardServices:  # Check if service is in forwards ref
                 del self.refForwardServices[sv_name]  # Remove it to resolve forwards ref
+                # Remove it from the declarations list
+                self.aalprog.declarations["services"].remove(self.aalprog.isDeclared(sv_name, m_service, ret=int))
             else:  # The service was effectively declared
                 print(Color("{autored}[ERROR]{/red} service " + sv_name + "{automagenta} at line " +
                             str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
@@ -590,6 +593,8 @@ class AALCompilerListener(AALListener.AALListener):
         if self.aalprog.isDeclared(dtName, m_data) is True:
             if dtName in self.refForwardData:  # Check if data is in forwards ref
                 del self.refForwardData[dtName]  # Remove it to resolve forwards ref
+                # Remove it from the declarations list
+                self.aalprog.declarations["data"].remove(self.aalprog.isDeclared(dtName, m_data, ret=int))
             else:  # The data was effectively declared
                 print(Color("{autored}[ERROR]{/red} data " + dtName + "{automagenta} at line " +
                             str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
@@ -637,6 +642,8 @@ class AALCompilerListener(AALListener.AALListener):
         if self.aalprog.isDeclared(dtName, m_type) is True:
             if dtName in self.refForwardTypes:  # Check if type is in forwards ref
                 del self.refForwardTypes[dtName]  # Remove it to resolve forwards ref
+                # Remove it from the declarations list
+                self.aalprog.declarations["services"].remove(self.aalprog.isDeclared(dtName, m_type, ret=int))
             else:  # The data was effectively declared
                 print(Color("{autored}[ERROR]{/red} type " + dtName + "{automagenta} at line " +
                             str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
@@ -1139,14 +1146,12 @@ class AALCompilerListener(AALListener.AALListener):
         res = [str(x.name) + "(" + " ".join(x.param) + ")" for x in self.aalprog.macros]
         return "\n".join(res)
 
-    def get_declared(self, type="agent"):
-        x = ['"'+str(x.name)+'"' + " " for x in self.aalprog.declarations[type]]
+    def get_declared(self, dtype="agent"):
+        lst = ['"'+str(x.name)+'"' for x in self.aalprog.declarations[dtype]]
         for l in self.libs:
-            print("========= " + str(l.file))
-            tmp = ['"'+str(y.name)+'"' + " " for y in l.aalprog.declarations[type]]
-            print(tmp)
-            x = x + tmp
-        return x
+            tmp = ['"'+str(y.name)+'"' for y in l.aalprog.declarations[dtype]]
+            lst = lst + tmp
+        return sorted(list(set(lst)))
 
     # Create a new macro
     def new_macro(self, name, param, code):

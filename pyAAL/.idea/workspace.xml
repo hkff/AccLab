@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AALCompiler.py" afterPath="$PROJECT_DIR$/AALCompiler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/api.py" afterPath="$PROJECT_DIR$/ui/api.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/tools.js" afterPath="$PROJECT_DIR$/ui/ui/tools.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/ui.js" afterPath="$PROJECT_DIR$/ui/ui/ui.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pyAAL.iws" />
@@ -55,13 +58,13 @@
         <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="882" column="39" selection-start-line="882" selection-start-column="39" selection-end-line="882" selection-end-column="39" />
+              <caret line="1001" column="0" selection-start-line="1001" selection-start-column="0" selection-end-line="1001" selection-end-column="0" />
               <folding>
-                <marker date="1440677796164" expanded="true" signature="17191:17221" placeholder="..." />
-                <marker date="1440677796164" expanded="true" signature="19751:19762" placeholder="..." />
-                <marker date="1440677796164" expanded="true" signature="30997:31016" placeholder="..." />
-                <marker date="1440677796164" expanded="true" signature="35010:35033" placeholder="..." />
-                <marker date="1440677796164" expanded="true" signature="35889:35899" placeholder="..." />
+                <marker date="1440682185141" expanded="true" signature="17191:17221" placeholder="..." />
+                <marker date="1440682185141" expanded="true" signature="19751:19762" placeholder="..." />
+                <marker date="1440682185141" expanded="true" signature="30997:31016" placeholder="..." />
+                <marker date="1440682185141" expanded="true" signature="35010:35033" placeholder="..." />
+                <marker date="1440682185141" expanded="true" signature="35888:35898" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -71,7 +74,7 @@
         <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="220" column="13" selection-start-line="220" selection-start-column="13" selection-end-line="220" selection-end-column="13" />
+              <caret line="216" column="40" selection-start-line="216" selection-start-column="40" selection-end-line="216" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -83,19 +86,9 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="404" column="39" selection-start-line="404" selection-start-column="39" selection-end-line="404" selection-end-column="39" />
               <folding>
-                <marker date="1440581696524" expanded="true" signature="1660:1729" placeholder="..." />
-                <marker date="1440581696524" expanded="true" signature="3252:3262" placeholder="..." />
+                <marker date="1440515420777" expanded="true" signature="1660:1729" placeholder="..." />
+                <marker date="1440515420777" expanded="true" signature="3252:3262" placeholder="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="diagramEditor.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/diagramEditor.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="86" column="67" selection-start-line="86" selection-start-column="67" selection-end-line="86" selection-end-column="67" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -104,7 +97,7 @@
         <entry file="file://$PROJECT_DIR$/ui/api.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="170" column="34" selection-start-line="170" selection-start-column="34" selection-end-line="170" selection-end-column="34" />
+              <caret line="169" column="32" selection-start-line="169" selection-start-column="32" selection-end-line="169" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -114,30 +107,17 @@
         <entry file="file://$PROJECT_DIR$/aalc.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="227" column="41" selection-start-line="227" selection-start-column="41" selection-end-line="227" selection-end-column="41" />
-              <folding>
-                <marker date="1440675429536" expanded="true" signature="2530:2548" placeholder="..." />
-                <marker date="1440675429536" expanded="true" signature="5590:5620" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AALCompiler.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AALCompiler.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1144" column="30" selection-start-line="1144" selection-start-column="30" selection-end-line="1144" selection-end-column="30" />
+              <caret line="372" column="29" selection-start-line="372" selection-start-column="29" selection-end-line="372" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="types.aal" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/libs/aal/core/types.aal">
+      <file leaf-file-name="AALCompiler.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/AALCompiler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3364486">
-              <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.45221114">
+              <caret line="1152" column="27" selection-start-line="1152" selection-start-column="27" selection-end-line="1152" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -146,18 +126,18 @@
       <file leaf-file-name="AALMetaModel.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="364" column="8" selection-start-line="364" selection-start-column="8" selection-end-line="364" selection-end-column="8" />
+            <state vertical-scroll-proportion="25.137932">
+              <caret line="327" column="55" selection-start-line="327" selection-start-column="52" selection-end-line="327" selection-end-column="55" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AALChecker.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AALChecker.py">
+      <file leaf-file-name="types.aal" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libs/aal/core/types.aal">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="219" column="7" selection-start-line="219" selection-start-column="7" selection-end-line="219" selection-end-column="7" />
+              <caret line="15" column="54" selection-start-line="15" selection-start-column="54" selection-end-line="15" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -182,9 +162,7 @@
         <option value="$PROJECT_DIR$/ui/test.js" />
         <option value="$PROJECT_DIR$/ui/ui/outline.js" />
         <option value="$PROJECT_DIR$/toto" />
-        <option value="$PROJECT_DIR$/AALMetaModel.py" />
         <option value="$PROJECT_DIR$/UserGuide/parts/aalsyntax.tex" />
-        <option value="$PROJECT_DIR$/examples/tuto0.aal" />
         <option value="$PROJECT_DIR$/examples/tuto2.aal" />
         <option value="$PROJECT_DIR$/examples/wearable/wearable.aal" />
         <option value="$PROJECT_DIR$/examples/healthcare/healthcare.aal" />
@@ -223,9 +201,11 @@
         <option value="$PROJECT_DIR$/ui/templates/DataRetention.json" />
         <option value="$PROJECT_DIR$/ui/templates/DataTransfer.json" />
         <option value="$PROJECT_DIR$/aalc.py" />
-        <option value="$PROJECT_DIR$/ui/ui/ui.js" />
         <option value="$PROJECT_DIR$/ui/api.py" />
         <option value="$PROJECT_DIR$/ui/ui/tools.js" />
+        <option value="$PROJECT_DIR$/AALMetaModel.py" />
+        <option value="$PROJECT_DIR$/ui/ui/ui.js" />
+        <option value="$PROJECT_DIR$/examples/tuto0.aal" />
         <option value="$PROJECT_DIR$/AALCompiler.py" />
       </list>
     </option>
@@ -239,10 +219,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1" />
+    <option name="x" value="1919" />
     <option name="y" value="26" />
-    <option name="width" value="1282" />
-    <option name="height" value="775" />
+    <option name="width" value="1922" />
+    <option name="height" value="1175" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -344,6 +324,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -450,7 +431,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -843,12 +823,6 @@
       <option name="number" value="Default" />
       <updated>1423228113584</updated>
     </task>
-    <task id="LOCAL-00026" summary="Minors">
-      <created>1432311160079</created>
-      <option name="number" value="00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1432311160079</updated>
-    </task>
     <task id="LOCAL-00027" summary="LTL check fix">
       <created>1432311630304</created>
       <option name="number" value="00027" />
@@ -1137,24 +1111,31 @@
       <option name="project" value="LOCAL" />
       <updated>1440677953748</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Fix server port">
+      <created>1440680769421</created>
+      <option name="number" value="00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1440680769422</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1" />
   <component name="ToolWindowManager">
-    <frame x="-1" y="26" width="1282" height="775" extended-state="6" />
-    <editor active="true" />
+    <frame x="1919" y="26" width="1922" height="1175" extended-state="6" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.203125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20500532" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23731343" sideWeight="0.5078125" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962963" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32473734" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32664755" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18157615" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23731343" sideWeight="0.4921875" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3037249" sideWeight="0.4921875" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32698414" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1164,7 +1145,6 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26552054" sideWeight="0.49790794" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23867069" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24973376" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32507148" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39888683" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1209,7 +1189,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="LTL check fix" />
     <MESSAGE value="qvar bug fix" />
     <MESSAGE value="Code clean v1" />
     <MESSAGE value="pyAAL doc" />
@@ -1234,23 +1213,16 @@
     <MESSAGE value="time_to_set bug fix" />
     <MESSAGE value="Adding quantification to templates" />
     <MESSAGE value="Removing quant" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removing quant" />
+    <MESSAGE value="Fix server port" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix server port" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/AALCompiler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1150" column="26" selection-start-line="1150" selection-start-column="26" selection-end-line="1150" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1271,7 +1243,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="72" column="12" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1287,13 +1258,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.69463086">
           <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/test2.aal">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1332,13 +1296,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/tuto2.aal">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -1473,7 +1430,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="72" column="12" selection-start-line="72" selection-start-column="12" selection-end-line="72" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1537,7 +1493,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="10" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1545,14 +1500,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="109" column="60" selection-start-line="109" selection-start-column="60" selection-end-line="109" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="364" column="8" selection-start-line="364" selection-start-column="8" selection-end-line="364" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -1565,17 +1512,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/aalc.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="227" column="41" selection-start-line="227" selection-start-column="41" selection-end-line="227" selection-end-column="41" />
-          <folding>
-            <marker date="1440675429536" expanded="true" signature="2530:2548" placeholder="..." />
-            <marker date="1440675429536" expanded="true" signature="5590:5620" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/diagramEditor.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1584,10 +1520,72 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/examples/tuto2.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/test2.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/aalc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="372" column="29" selection-start-line="372" selection-start-column="29" selection-end-line="372" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1001" column="0" selection-start-line="1001" selection-start-column="0" selection-end-line="1001" selection-end-column="0" />
+          <folding>
+            <marker date="1440682185141" expanded="true" signature="17191:17221" placeholder="..." />
+            <marker date="1440682185141" expanded="true" signature="19751:19762" placeholder="..." />
+            <marker date="1440682185141" expanded="true" signature="30997:31016" placeholder="..." />
+            <marker date="1440682185141" expanded="true" signature="35010:35033" placeholder="..." />
+            <marker date="1440682185141" expanded="true" signature="35888:35898" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="220" column="13" selection-start-line="220" selection-start-column="13" selection-end-line="220" selection-end-column="13" />
+          <caret line="216" column="40" selection-start-line="216" selection-start-column="40" selection-end-line="216" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/tuto0.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5392297">
+          <caret line="18" column="63" selection-start-line="18" selection-start-column="63" selection-end-line="18" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="25.137932">
+          <caret line="327" column="55" selection-start-line="327" selection-start-column="52" selection-end-line="327" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/aal/core/types.aal">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="54" selection-start-line="15" selection-start-column="54" selection-end-line="15" selection-end-column="54" />
           <folding />
         </state>
       </provider>
@@ -1597,22 +1595,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="404" column="39" selection-start-line="404" selection-start-column="39" selection-end-line="404" selection-end-column="39" />
           <folding>
-            <marker date="1440581696524" expanded="true" signature="1660:1729" placeholder="..." />
-            <marker date="1440581696524" expanded="true" signature="3252:3262" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="882" column="39" selection-start-line="882" selection-start-column="39" selection-end-line="882" selection-end-column="39" />
-          <folding>
-            <marker date="1440677796164" expanded="true" signature="17191:17221" placeholder="..." />
-            <marker date="1440677796164" expanded="true" signature="19751:19762" placeholder="..." />
-            <marker date="1440677796164" expanded="true" signature="30997:31016" placeholder="..." />
-            <marker date="1440677796164" expanded="true" signature="35010:35033" placeholder="..." />
-            <marker date="1440677796164" expanded="true" signature="35889:35899" placeholder="..." />
+            <marker date="1440515420777" expanded="true" signature="1660:1729" placeholder="..." />
+            <marker date="1440515420777" expanded="true" signature="3252:3262" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1620,23 +1604,15 @@
     <entry file="file://$PROJECT_DIR$/ui/api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="170" column="34" selection-start-line="170" selection-start-column="34" selection-end-line="170" selection-end-column="34" />
+          <caret line="169" column="32" selection-start-line="169" selection-start-column="32" selection-end-line="169" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AALCompiler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1144" column="30" selection-start-line="1144" selection-start-column="30" selection-end-line="1144" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libs/aal/core/types.aal">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3364486">
-          <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.45221114">
+          <caret line="1152" column="27" selection-start-line="1152" selection-start-column="27" selection-end-line="1152" selection-end-column="27" />
           <folding />
         </state>
       </provider>
