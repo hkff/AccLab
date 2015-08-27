@@ -25,6 +25,8 @@ var visualEditor = {
 	activeTab     : null,
     canvas        : [],*/
     activeEditor     : null,
+    visualEditor  : false,
+    activeCloseBtn: null,
     backend       : "http://127.0.0.1:8000/",
 
     /**
@@ -46,6 +48,16 @@ var visualEditor = {
             return s ? "-" + p.substr(0,4) + "-" + p.substr(4,4) : p ;
         }
        return _p8() + _p8(true) + _p8(true) + _p8();
+    },
+
+    closeFile: function() {
+        // If the page contains a panel element, undock it and destroy it
+        if (visualEditor.activeCloseBtn.parent.container.containerType == "panel")
+        {
+            visualEditor.activeCloseBtn.undockInitiator.enabled = false;
+            var panel = visualEditor.activeCloseBtn.parent.container;
+            panel.performUndock();
+        }
     }
 };
 
@@ -54,6 +66,22 @@ var visualEditor = {
  * On load
  */
 window.onload = function() {
+    // Override close btn
+    dockspawn.TabHandle.prototype.onCloseButtonClicked = function() {
+        visualEditor.activeCloseBtn = this;
+        var p = '<button type="button" class="btn" onclick="visualEditor.closeFile()">YES</button> <button type="button" class="btn">NO</button>';
+        toastr.error(p, "Close file without Saving ?", {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": true,
+  				"showDuration": "2000",
+			  	"hideDuration": "500",
+			  	"timeOut": 0,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-center"
+			});
+    };
+
     // Convert a div to the dock manager.  Panels can then be docked on to it
     this.divDockManager = document.getElementById("my_dock_manager");
     this.dockManager = new dockspawn.DockManager(divDockManager);
@@ -108,7 +136,9 @@ window.onload = function() {
         visualEditor.ui.canvas = page.activeTab.container.canvas;
         visualEditor.ui.activeTab = page.activeTab;
         visualEditor.ui.updatePanel();
-    }
+    };
+
+
 
     // TODO REMOVE
     //visualEditor.ui.fileManager.openFile("tuto2.aal");

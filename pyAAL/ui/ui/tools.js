@@ -575,7 +575,7 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 				url: visualEditor.backend,
 				data: {action: action, file: file},
 				success: function(response){
-					$("#output_window").empty().append(response);
+					$("#output_window").empty().append(response).scrollTop(0);;
 				}
 			});
 		};
