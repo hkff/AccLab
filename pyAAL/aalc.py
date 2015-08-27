@@ -327,6 +327,7 @@ def main(argv):
     nobrowser = False
     run_gui = False
     outputfile = "tmp.tspass"
+    server_port = 8000
 
     # Check libs path
     install_path = os.environ.get('ACCLAB_PATH')
@@ -387,17 +388,16 @@ def main(argv):
             nobrowser = True
         elif opt in ("-u", "--gui"):
             run_gui = True
+            try:
+                server_port = int(arg)
+            except:
+                print("Warning invalid port number, running on port 8000")
+                server_port = 8000
 
     if run_gui:
         # Start server
         from ui.Server import start_ui
-        port = 8000
-        try:
-            port = int(arg)
-        except:
-            print("Warning invalid port number, running on port 8000")
-            port = 8000
-        start_ui(port, nobrowser=nobrowser)
+        start_ui(server_port, nobrowser=nobrowser)
 
     # Use hot swapping decoration on all AALMetaModel classes
     # use this option for debug only
