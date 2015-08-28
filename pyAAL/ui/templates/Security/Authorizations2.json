@@ -1,0 +1,25 @@
+{
+    "name": "Authorizations (Simple form)",
+	"desc": "Allow or prohibit an agent the access to a specific resource.",
+	"vars": [
+      {"name": "", "id": "action", "type": "select", "pre": "Action ", "post": "", "src": "{aal.services}"},
+      {"name": "", "id": "resource", "type": "text", "pre": " Resource ", "post": " "},
+      {"name": "", "id": "owner", "type": "select", "pre": " Owner ", "post": " ", "src": "{aal.agents}"},
+      {"name": "", "id": "provider", "type": "select", "pre": " Provider ", "post": " ", "src": "{aal.agents}"},
+      {"name": "", "id": "user", "type": "select", "pre": " User ", "post": " ", "src": "{aal.agents}"},
+      {"name": "a", "id": "permit", "type": "radio", "pre": "", "post": "Permit"},
+      {"name": "a", "id": "deny", "type": "radio", "pre": "", "post": "Deny"}
+    ],
+	"aal": [
+      "IF ({resource}.val.subject == {owner}.val) THEN {",
+      "{{ (({deny}.checked)?'DENY':'PERMIT') }} {user}.val.{action}.val[{provider}.val]({resource}.val) } AND\n<...>"
+
+    ],
+	"html": [
+      "<div class='varGroupe'> <h4 class='varsHeader'>Authorization :</h4> {permit} {deny} </div>",
+      "<div class='varGroupe'> <h4 class='varsHeader'>Information :</h4> {resource} {owner} </div>",
+      "<div class='varGroupe'> {user} {provider} </div>",
+      "<div class='varGroupe'><h4 class='varsHeader'> Action :</h4> {action} </div> {genBtn}"
+    ],
+	"xacml": ""
+}
