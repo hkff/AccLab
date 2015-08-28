@@ -24,7 +24,7 @@ var visualEditor = {
 	/*currentCanvas : null,
 	activeTab     : null,
     canvas        : [],*/
-    activeEditor     : null,
+    activeEditor    : null,
     visualEditor  : false,
     activeCloseBtn: null,
     backend       : "http://127.0.0.1:8000/",
@@ -137,8 +137,6 @@ window.onload = function() {
         visualEditor.ui.activeTab = page.activeTab;
         visualEditor.ui.updatePanel();
     };
-
-
 
     // TODO REMOVE
     //visualEditor.ui.fileManager.openFile("tuto2.aal");

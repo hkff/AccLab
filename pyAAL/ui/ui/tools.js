@@ -962,6 +962,17 @@ visualEditor.ui.Template = {
     }
 }
 
+/**
+ * Get absolute path
+ */
+function getAbsPath(node) {
+    var parent = $("#tt").tree('getParent', node.target);
+    if(parent != undefined || parent != null)
+        return (getAbsPath(parent) + "/" + node.text);
+    else
+        return node.text;
+}
+
 visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.templatesTool",
 
@@ -986,7 +997,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 			toastr.info(p, "", {
 				"closeButton": true,
 				"preventDuplicates": true,
-				"tapToDismiss": true,
+				"tapToDismiss": false,
   				"showDuration": "3000",
 			  	"hideDuration": "1000",
 			  	"timeOut": 0,
@@ -1001,11 +1012,13 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 				url: visualEditor.backend + "?action=listTemplates",
 
 				onDblClick: function(node){
-					loadTemplate(node.text + ".json");
+                    if(node.children == undefined)
+					    loadTemplate(getAbsPath(node) + ".json");
 				},
 
                 onClick: function(node){
-					loadTemplate(node.text + ".json");
+					if(node.children == undefined)
+					    loadTemplate(getAbsPath(node) + ".json");
 				},
 
 				formatter:function(node){

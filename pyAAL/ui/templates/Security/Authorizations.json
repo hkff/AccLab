@@ -16,15 +16,15 @@
     ],
 	"aal": [
       "{{ (({read}.checked)?'\\n' + (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.read[{owner}.val]({resource}.val)':'') }}",
-      "+{{ (({read}.checked && {write}.checked)?'\\nAND ':'') + (({write}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ",
+      "+{{ (({read}.checked && {write}.checked)?' AND \\n':'') + (({write}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ",
         "' {user}.val.write[{owner}.val]({resource}.val)') : '') }}",
-      "+{{ (({update}.checked && ({read}.checked || {write}.checked )) ?'\\nAND ':'') + (({update}.checked)? ( (({deny}.checked)?'DENY':'PERMIT')",
+      "+{{ (({update}.checked && ({read}.checked || {write}.checked )) ?' AND \\n':'') + (({update}.checked)? ( (({deny}.checked)?'DENY':'PERMIT')",
         " + ' {user}.val.update[{owner}.val]({resource}.val)') : '') }}",
-      "+{{ (({delete}.checked && ({read}.checked || {write}.checked || {update}.checked))?'\\nAND ':'') + (({delete}.checked)? ",
+      "+{{ (({delete}.checked && ({read}.checked || {write}.checked || {update}.checked))?' AND \\n':'') + (({delete}.checked)? ",
         "( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.delete[{owner}.val]({resource}.val)') : '') }}",
 
-      "+{{ (({useaction}.checked && ({read}.checked || {write}.checked || {update}.checked ||{delete}.checked))?'\\nAND ':'') +",
-        " (({useaction}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.{action}.val[{owner}.val]({resource}.val)') : '') }}"
+      "+{{ (({useaction}.checked && ({read}.checked || {write}.checked || {update}.checked ||{delete}.checked))?' AND \\n':'') +",
+        " (({useaction}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.{action}.val[{owner}.val]({resource}.val)') : '') }} AND\n<...>"
 
     ],
 	"html": [

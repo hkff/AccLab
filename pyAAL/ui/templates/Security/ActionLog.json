@@ -8,9 +8,10 @@
       {"name": "", "id": "user", "type": "select", "pre": " User ", "post": " ", "src": "{aal.agents}"}
     ],
 	"aal": [
-      "{{ (('{resource}.val' == '')? 'FORALL d:data\\nIF (d.subject == {user}.val' : 'IF ({resource}.val.subject == {user}.val')}}",
+      "{{ (('{resource}.val' == '')? 'FORALL d:data\\",
+      "nIF (d.subject == {user}.val' : 'IF ({resource}.val.subject == {user}.val')}}",
       "AND {user}.val.{action}.val[{owner}.val]({resource}.val) ) THEN {\n\t MUST( {owner}.val.log[{owner}.val](",
-      "\"user:{user}.val;action:{action}.val;resource:{resource}.val;owner:{owner}.val\") ) \n}"
+      "\"user:{user}.val;action:{action}.val;resource:{resource}.val;owner:{owner}.val\") ) \n} AND "
     ],
 	"html": [
       "<div class='varGroupe'> {resource} {owner} </div>",
