@@ -127,4 +127,4 @@ CLAUSE customer2_clause (
     	AUDITING auditor.audit[cardioMon](a)
     	IF_VIOLATED_THEN dpa.sanction[cardioMon](a) 
 )
-CALL resolve("cardiomon_clause" "customer2_clause")
+CALL validate("cardiomon_clause" "customer2_clause")

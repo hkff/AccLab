@@ -118,7 +118,7 @@ def api_compile_aal(f):
 
     res = ""
     try:
-        aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="examples")
+        aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="")
     except:
         res = "Compilation Error"
 
@@ -163,7 +163,7 @@ def api_compile_tspass(f):
 # Get AAL declaration in JSON format
 def api_getAALDec(f):
     try:
-        mm = aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="examples")["mm"]
+        mm = aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="")["mm"]
     except:
         res = "Compilation Error"
 

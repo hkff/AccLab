@@ -387,7 +387,7 @@ def solve_auth(compiler, p=None, u=None, verbose=False, resolve=False):
                 print("  " + str(x) + " " + op + " c1" + " : " + res["res"])
             #print("===== res : " + str(res))
             if res["res"] == "Unsatisfiable":
-                print(Color("  Authorization <<" + str(x) + ">> found {automagenta}at line " +
+                print(Color("\n  Authorization <<" + str(x) + ">> found {automagenta}at line " +
                             str(x.name.parentCtx.getPayload().start.line) +
                             "{/magenta} does not match with user preference"))
                 if resolve:
@@ -423,7 +423,7 @@ def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
             print("  " + str(x) + " & c1" + " : " + res["res"])
 
         if res["res"] == "Satisfiable":
-            print(Color("  Implication <<" + str(x) + ">> found {automagenta}at line " +
+            print(Color("\n  Implication <<" + str(x) + ">> found {automagenta}at line " +
                         str(x.name.parentCtx.getPayload().start.line) + "{/magenta} is not guaranteed by provider"))
             if resolve:
                 print(Color("{autogreen}    |-> Resolving conflict {/green}"))
