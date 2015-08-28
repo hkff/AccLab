@@ -1109,7 +1109,7 @@ class m_aexpQvar(m_aexp):
 
     def to_ltl(self):
         q = [str(x.to_ltl()) for x in self.qvars]
-        return str(" ".join(q)) + "(" + str(self.actionExp.to_ltl()) + "))"
+        return str(" ".join(q)) + "(" + str(self.actionExp.to_ltl()) + ") " + (")"*len(q))
 
     def to_nnf(self, negated):
         q = [str(x.to_nnf(negated)) for x in self.qvars]

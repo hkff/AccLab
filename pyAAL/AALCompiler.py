@@ -1034,6 +1034,7 @@ class AALCompilerListener(AALListener.AALListener):
                 replace = str(x.group())
                 # Check if we have usage/audit or rectification after
                 tmp = code[end:]
+
                 if tmp.startswith(".get_usage") or tmp.startswith(".ue"):
                     node = cl.usage
                     replace += (".ue" if tmp.startswith(".ue") else ".get_usage")
@@ -1047,7 +1048,7 @@ class AALCompilerListener(AALListener.AALListener):
                     node = cl
                 ltl = ltl.replace(replace, node.to_ltl())  # Replace clause with its ltl formulae
         if verbose:
-            print(ltl)
+            print("========= ltl :" + ltl)
         # exec("from aalc import tspassc")
         res = tspassc(code=ltl, use_shell=False, debug=False, reparse=False)
         if show:

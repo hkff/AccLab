@@ -380,11 +380,12 @@ def solve_auth(compiler, p=None, u=None, verbose=False, resolve=False):
     for op in ["&", "=>"]:
         for x in authors:
             res = compiler.apply_check(code=pre_cond + str(quant) +
-                                        "( " + str(x.to_ltl()) + " " + op +" clause(" + u_id + ").uc )",
+                                        "( " + str(x.to_ltl()) + " " + op + " clause(" + u_id + ").ue )" + (")"*len(quants)),
                                        show=False, verbose=False)
+
             if verbose:
                 print("  " + str(x) + " " + op + " c1" + " : " + res["res"])
-
+            #print("===== res : " + str(res))
             if res["res"] == "Unsatisfiable":
                 print(Color("  Authorization <<" + str(x) + ">> found {automagenta}at line " +
                             str(x.name.parentCtx.getPayload().start.line) +
@@ -416,7 +417,7 @@ def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
 
     ifthens = u.usage.walk(filter_type=m_aexpIfthen)
     for x in ifthens:
-        res = compiler.apply_check(code=pre_cond + "~(clause(" + p_id + ").uc => " + x.to_ltl() + ")", show=False,
+        res = compiler.apply_check(code=pre_cond + "~(clause(" + p_id + ").ue => " + x.to_ltl() + ")", show=False,
                                    verbose=verbose)
         if verbose:
             print("  " + str(x) + " & c1" + " : " + res["res"])
