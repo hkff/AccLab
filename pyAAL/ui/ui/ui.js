@@ -125,6 +125,7 @@ visualEditor.ui = {
 			if(fileType == "aal") {
 				$(visualEditor.ui.tools.tools[20].button).show();
 				$(visualEditor.ui.tools.tools[21].button).show();
+				$(visualEditor.ui.tools.tools[22].button).show();
 			}
 		} else {
 			// Enable them

@@ -387,8 +387,8 @@ visualEditor.ui.fileManager = {
         	enableLiveAutocompletion: false
     	});
 
-		// monokai
-	    editor.setTheme("ace/theme/monokai");
+		// Set theme
+	    editor.setTheme("ace/theme/" + visualEditor.aceTheme);
 		if(type == "AAL" || type == "TSPASS")
 			editor.getSession().setMode("ace/mode/" + type);
 		else

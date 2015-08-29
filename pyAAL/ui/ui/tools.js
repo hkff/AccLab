@@ -58,28 +58,30 @@ visualEditor.ui.tools = {
 	 * Register tools
 	 */
 	toolsRegistrator: function() {
-		this.tools.push(new visualEditor.ui.tools.selectTool());
-		this.tools.push(new visualEditor.ui.tools.panneTool());
-		this.tools.push(new visualEditor.ui.tools.mselectTool());
-		this.tools.push(new visualEditor.ui.tools.copyTool());
-		this.tools.push(new visualEditor.ui.tools.deleteTool());
-		this.tools.push(new visualEditor.ui.tools.lockTool());
-		this.tools.push(new visualEditor.ui.tools.zoomInTool());
-		this.tools.push(new visualEditor.ui.tools.zoomOutTool());
-		this.tools.push(new visualEditor.ui.tools.zoomOriginTool());
-		this.tools.push(new visualEditor.ui.tools.undoTool());
-		this.tools.push(new visualEditor.ui.tools.redoTool());
-		this.tools.push(new visualEditor.ui.tools.saveTool());
-		this.tools.push(new visualEditor.ui.tools.groupTool());
-		this.tools.push(new visualEditor.ui.tools.ungroupTool());
-		this.tools.push(new visualEditor.ui.tools.fullScreenTool());
-		this.tools.push(new visualEditor.ui.tools.clearTool());
-		this.tools.push(new visualEditor.ui.tools.separatorTool());
-		this.tools.push(new visualEditor.ui.tools.genAALTool());
-		this.tools.push(new visualEditor.ui.tools.genTSPASSTool());
-		this.tools.push(new visualEditor.ui.tools.keyboardShortcutsTool());
-		this.tools.push(new visualEditor.ui.tools.AALSyntaxTool());
-		this.tools.push(new visualEditor.ui.tools.templatesTool());
+		this.tools.push(new visualEditor.ui.tools.selectTool());               // 0
+		this.tools.push(new visualEditor.ui.tools.panneTool());                // 1
+		this.tools.push(new visualEditor.ui.tools.mselectTool());              // 2
+		this.tools.push(new visualEditor.ui.tools.copyTool());                 // 3
+		this.tools.push(new visualEditor.ui.tools.deleteTool());               // 4
+		this.tools.push(new visualEditor.ui.tools.lockTool());                 // 5
+		this.tools.push(new visualEditor.ui.tools.zoomInTool());               // 6
+		this.tools.push(new visualEditor.ui.tools.zoomOutTool());              // 7
+		this.tools.push(new visualEditor.ui.tools.zoomOriginTool());           // 8
+		this.tools.push(new visualEditor.ui.tools.undoTool());                 // 9
+		this.tools.push(new visualEditor.ui.tools.redoTool());                 // 10
+		this.tools.push(new visualEditor.ui.tools.saveTool());                 // 11
+		this.tools.push(new visualEditor.ui.tools.groupTool());                // 12
+		this.tools.push(new visualEditor.ui.tools.ungroupTool());              // 13
+		this.tools.push(new visualEditor.ui.tools.fullScreenTool());           // 14
+		this.tools.push(new visualEditor.ui.tools.clearTool());                // 15
+		this.tools.push(new visualEditor.ui.tools.separatorTool());            // 16
+		this.tools.push(new visualEditor.ui.tools.genAALTool());               // 17
+		this.tools.push(new visualEditor.ui.tools.genTSPASSTool());            // 18
+		this.tools.push(new visualEditor.ui.tools.keyboardShortcutsTool());    // 19
+		this.tools.push(new visualEditor.ui.tools.AALSyntaxTool());            // 20
+		this.tools.push(new visualEditor.ui.tools.templatesTool());            // 21
+		this.tools.push(new visualEditor.ui.tools.acethemeTool());             // 22
+
 	},
 
 	/**
@@ -1055,3 +1057,41 @@ function loadTemplate(template) {
 		}
 	});
 }
+
+//////////////////////////////////////////////////////////
+//
+//  AceThemeTool
+//
+//////////////////////////////////////////////////////////
+visualEditor.ui.tools.acethemeTool = visualEditor.ui.tool.extend({
+	NAME : "visualEditor.ui.tools.acethemeTool",
+
+	view: function(parent) {
+		this.button = $('<div title="Editor Theme (ctrl+G)" id="aceThemeBtn" class="btn-action fa fa-file-image-o  fa-lg"/>');
+		parent.actionsPanel.append(this.button);
+	},
+
+	control: function(parent) {
+		var fx = function(e){
+            var options = "";
+            for(var i=0; i<visualEditor.aceThemesList.length; i++)
+                options += "<option value='" + visualEditor.aceThemesList[i] + "' " +
+                    ((visualEditor.aceTheme == visualEditor.aceThemesList[i])?'selected':'')  + ">" +
+                    visualEditor.aceThemesList[i] + "</option>";
+			var p = "<select id='themes' onchange='visualEditor.updateAceTheme(this);'>" + options + "</select>";
+
+            toastr.info(p, "Themes List", {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": false,
+  				"showDuration": "1000",
+			  	"hideDuration": "1000",
+			  	"timeOut": 0,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-center"
+			});
+		};
+		this.button.click(fx);
+		//shortcut.add("Ctrl+G", fx);
+	}
+});

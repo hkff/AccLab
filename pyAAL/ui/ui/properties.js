@@ -542,7 +542,7 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 	 * @param attr
 	 */
 	init: function(attr) {
-		_this = this;
+		this._this = this;
 	},
 
 	/**
@@ -551,7 +551,7 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 	 */
 	view: function(parent) {
 		this.inPlaceAALEditor = ace.edit("inPlaceAALEditor-editor");
-	    this.inPlaceAALEditor.setTheme("ace/theme/monokai");
+	    this.inPlaceAALEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
 	    this.inPlaceAALEditor.getSession().setMode("ace/mode/AAL");
 
 		this.templateAALBtn = $('<div title="Clause template" id="templateAALBtn" class="btn-action fa fa-code fa-lg"/>');
@@ -573,11 +573,11 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 		});
 		
 		this.templateAALBtn.click(function(e){
-			_this.inPlaceAALEditor.setValue(_this.getClauseTemplate());
+			visualEditor.ui.properties.aalEditor._this.inPlaceAALEditor.setValue(this._this.getClauseTemplate());
 		});
 
 		this.clearAALBtn.click(function(e){
-			_this.inPlaceAALEditor.setValue("");
+			visualEditor.ui.properties.aalEditor._this.inPlaceAALEditor.setValue("");
 		});
 	},
 

@@ -4,11 +4,18 @@
     <bookmark url="file://$PROJECT_DIR$/ui/ui/ui.js" line="108" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AALChecker.py" afterPath="$PROJECT_DIR$/AALChecker.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/TemplatesExamples/TemplateBased.aal" afterPath="$PROJECT_DIR$/examples/TemplatesExamples/TemplateBased.aal" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/api.py" afterPath="$PROJECT_DIR$/ui/api.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/wearable/wearable.aal" afterPath="$PROJECT_DIR$/examples/wearable/wearable.aal" />
+    <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="Fixing libs loading bug">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/theme-chaos.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/theme-chrome.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/theme-eclipse.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/theme-kuroir.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/theme-tomorrow.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/diagramEditor.js" afterPath="$PROJECT_DIR$/ui/diagramEditor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/fileManager.js" afterPath="$PROJECT_DIR$/ui/ui/fileManager.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/index.html" afterPath="$PROJECT_DIR$/ui/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/properties.js" afterPath="$PROJECT_DIR$/ui/ui/properties.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/tools.js" afterPath="$PROJECT_DIR$/ui/ui/tools.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui/ui.js" afterPath="$PROJECT_DIR$/ui/ui/ui.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pyAAL.iws" />
@@ -54,52 +61,65 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ActionLog.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/templates/Security/ActionLog.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.0">
-              <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Compliance.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/templates/Macros/Compliance.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.0">
-              <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Authorizations.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/templates/Security/Authorizations.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.666667">
-              <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="diagramEditor.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/diagramEditor.js">
+      <file leaf-file-name="ui.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
+              <caret line="30" column="12" selection-start-line="30" selection-start-column="12" selection-end-line="30" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Authorizations2.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/templates/Security/Authorizations2.json">
+      <file leaf-file-name="tools.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.333333">
-              <caret line="14" column="103" selection-start-line="14" selection-start-column="103" selection-end-line="14" selection-end-column="103" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1078" column="87" selection-start-line="1078" selection-start-column="87" selection-end-line="1078" selection-end-column="87" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <marker date="1440834068214" expanded="true" signature="17694:17724" placeholder="..." />
+                <marker date="1440834068214" expanded="true" signature="20254:20265" placeholder="..." />
+                <marker date="1440834068214" expanded="true" signature="31500:31519" placeholder="..." />
+                <marker date="1440834068214" expanded="true" signature="35767:35790" placeholder="..." />
+                <marker date="1440834068214" expanded="true" signature="36755:36765" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="diagramEditor.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ui/diagramEditor.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.44536084">
+              <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="properties.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/ui/properties.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="541" column="18" selection-start-line="541" selection-start-column="18" selection-end-line="541" selection-end-column="18" />
+              <folding>
+                <marker date="1440833888110" expanded="true" signature="6978:6995" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fileManager.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="263" column="50" selection-start-line="263" selection-start-column="24" selection-end-line="263" selection-end-column="50" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <marker date="1440832845914" expanded="true" signature="1660:1729" placeholder="..." />
+                <marker date="1440832845914" expanded="true" signature="3252:3262" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -107,7 +127,7 @@
       <file leaf-file-name="api.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.310345">
+            <state vertical-scroll-proportion="0.0">
               <caret line="165" column="16" selection-start-line="165" selection-start-column="16" selection-end-line="165" selection-end-column="16" />
               <folding />
             </state>
@@ -124,37 +144,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AALChecker.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AALChecker.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="388" column="30" selection-start-line="388" selection-start-column="30" selection-end-line="388" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AALMetaModel.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AALMetaModel.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1111" column="74" selection-start-line="1111" selection-start-column="74" selection-end-line="1111" selection-end-column="74" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AALCompiler.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AALCompiler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AALCompiler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21365638">
-              <caret line="167" column="14" selection-start-line="167" selection-start-column="14" selection-end-line="167" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="169" column="48" selection-start-line="169" selection-start-column="48" selection-end-line="169" selection-end-column="48" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Html5" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -167,7 +174,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/toto" />
         <option value="$PROJECT_DIR$/UserGuide/parts/aalsyntax.tex" />
         <option value="$PROJECT_DIR$/examples/tuto2.aal" />
         <option value="$PROJECT_DIR$/examples/wearable/wearable.aal" />
@@ -180,7 +186,6 @@
         <option value="$PROJECT_DIR$/coverage/tests.py" />
         <option value="$PROJECT_DIR$/examples/demo_CIEL.aal" />
         <option value="$PROJECT_DIR$/ui/ui/grid.js" />
-        <option value="$PROJECT_DIR$/ui/index.html" />
         <option value="$PROJECT_DIR$/shell.py" />
         <option value="$USER_HOME$/Desktop/ascoflix/js/films.js" />
         <option value="$USER_HOME$/Desktop/ascoflix/index.html" />
@@ -196,19 +201,13 @@
         <option value="$PROJECT_DIR$/ui/templates/Macros.json" />
         <option value="$PROJECT_DIR$/ui/Server.py" />
         <option value="$PROJECT_DIR$/ui/style.css" />
-        <option value="$PROJECT_DIR$/ui/ui/properties.js" />
         <option value="$PROJECT_DIR$/AALtoFOTL.py" />
         <option value="$PROJECT_DIR$/ui/templates/Authorizations.json" />
         <option value="$PROJECT_DIR$/ui/templates/ActionLog.json" />
         <option value="$PROJECT_DIR$/ui/templates/DataRetention.json" />
         <option value="$PROJECT_DIR$/ui/templates/DataTransfer.json" />
         <option value="$PROJECT_DIR$/aalc.py" />
-        <option value="$PROJECT_DIR$/ui/ui/ui.js" />
         <option value="$PROJECT_DIR$/examples/tuto0.aal" />
-        <option value="$PROJECT_DIR$/ui/libs/dock/js/dockspawn.js" />
-        <option value="$PROJECT_DIR$/ui/diagramEditor.js" />
-        <option value="$PROJECT_DIR$/ui/ui/fileManager.js" />
-        <option value="$PROJECT_DIR$/ui/ui/tools.js" />
         <option value="$PROJECT_DIR$/ui/templates/Security/ActionLog.json" />
         <option value="$PROJECT_DIR$/ui/templates/Security/Authorizations.json" />
         <option value="$PROJECT_DIR$/ui/templates/Security/Authorization_Simple.json" />
@@ -218,6 +217,14 @@
         <option value="$PROJECT_DIR$/AALChecker.py" />
         <option value="$PROJECT_DIR$/ui/api.py" />
         <option value="$PROJECT_DIR$/AALCompiler.py" />
+        <option value="$PROJECT_DIR$/ui/index2.html" />
+        <option value="$PROJECT_DIR$/ui/libs/dock/js/dockspawn.js" />
+        <option value="$PROJECT_DIR$/ui/index.html" />
+        <option value="$PROJECT_DIR$/ui/ui/ui.js" />
+        <option value="$PROJECT_DIR$/ui/ui/fileManager.js" />
+        <option value="$PROJECT_DIR$/ui/ui/properties.js" />
+        <option value="$PROJECT_DIR$/ui/ui/tools.js" />
+        <option value="$PROJECT_DIR$/ui/diagramEditor.js" />
       </list>
     </option>
   </component>
@@ -610,6 +617,7 @@
     <property name="jsx.switch.disabled" value="true" />
     <property name="ChangesBrowser.SHOW_FLATTEN" value="true" />
     <property name="full.screen.before.presentation.mode" value="false" />
+    <property name="DefaultHtmlFileTemplate" value="Html5" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -985,12 +993,6 @@
       <option name="number" value="Default" />
       <updated>1423228113584</updated>
     </task>
-    <task id="LOCAL-00031" summary="Minors">
-      <created>1432634575255</created>
-      <option name="number" value="00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1432634575255</updated>
-    </task>
     <task id="LOCAL-00032" summary="Code clean v1">
       <created>1432644999092</created>
       <option name="number" value="00032" />
@@ -1279,28 +1281,34 @@
       <option name="project" value="LOCAL" />
       <updated>1440765190092</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="Fixing libs loading bug">
+      <created>1440772127255</created>
+      <option name="number" value="00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1440772127255</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1" />
   <component name="ToolWindowManager">
     <frame x="-1" y="26" width="1282" height="775" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19628432" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20597738" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23731343" sideWeight="0.5078125" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32465753" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32357472" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32664755" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18157615" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21020092" sideWeight="0.4921875" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20955315" sideWeight="0.4921875" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32698414" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39971346" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1351,7 +1359,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Examples clean" />
     <MESSAGE value="Coverage tests" />
     <MESSAGE value="Coverage tests minors" />
     <MESSAGE value="Adding Behavior" />
@@ -1376,7 +1383,8 @@
     <MESSAGE value="Refactoring templates" />
     <MESSAGE value="Fixing AAL validate" />
     <MESSAGE value="Template minors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Template minors" />
+    <MESSAGE value="Fixing libs loading bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing libs loading bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1385,13 +1393,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/coverage/tests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.69463086">
-          <caret line="24" column="38" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/test1.aal">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5167785">
@@ -1414,13 +1415,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LICENCE">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.5087483">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/mode-AAL.js">
@@ -1557,18 +1558,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/properties.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="419" column="38" selection-start-line="419" selection-start-column="38" selection-end-line="419" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/Server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="45" column="20" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1611,15 +1604,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="54" selection-start-line="15" selection-start-column="54" selection-end-line="15" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/libs/dock/js/dockspawn.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.724138">
-          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="89" selection-end-column="2" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1627,49 +1611,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.6153846">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14666666">
-          <caret line="99" column="14" selection-start-line="99" selection-start-column="14" selection-end-line="99" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.137931">
-          <caret line="206" column="0" selection-start-line="206" selection-start-column="0" selection-end-line="215" selection-end-column="6" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1440756314340" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1440756314340" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="210" column="11" selection-start-line="210" selection-start-column="4" selection-end-line="210" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="998" column="42" selection-start-line="998" selection-start-column="42" selection-end-line="998" selection-end-column="42" />
-          <folding>
-            <marker date="1440757054652" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1440757054652" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1440757054652" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1440757054652" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1440757054652" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1677,7 +1618,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.0">
           <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1685,34 +1625,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.0">
           <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/templates/Security/Authorizations.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.666667">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tmp_gen.tspass">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.89301634">
           <caret line="36" column="81" selection-start-line="36" selection-start-column="81" selection-end-line="36" selection-end-column="81" />
-          <folding />
         </state>
+      </provider>
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AALtoFOTL.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.82051283">
           <caret line="109" column="60" selection-start-line="109" selection-start-column="60" selection-end-line="109" selection-end-column="60" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1720,7 +1649,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.025641026">
           <caret line="13" column="10" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1728,7 +1656,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="388" column="30" selection-start-line="388" selection-start-column="30" selection-end-line="388" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1736,29 +1663,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="1111" column="74" selection-start-line="1111" selection-start-column="74" selection-end-line="1111" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/templates/Security/Authorizations2.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.333333">
-          <caret line="14" column="103" selection-start-line="14" selection-start-column="103" selection-end-line="14" selection-end-column="103" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/diagramEditor.js">
-      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
+          <caret line="14" column="103" selection-start-line="14" selection-start-column="103" selection-end-line="14" selection-end-column="103" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.310345">
+        <state vertical-scroll-proportion="0.0">
           <caret line="165" column="16" selection-start-line="165" selection-start-column="16" selection-end-line="165" selection-end-column="16" />
           <folding />
         </state>
@@ -1774,8 +1692,91 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AALCompiler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21365638">
-          <caret line="167" column="14" selection-start-line="167" selection-start-column="14" selection-end-line="167" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="169" column="48" selection-start-line="169" selection-start-column="48" selection-end-line="169" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/templates/Security/Authorizations.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.666667">
+          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/ext-themelist.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/libs/dock/js/dockspawn.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9710145">
+          <caret line="2626" column="23" selection-start-line="2626" selection-start-column="14" selection-end-line="2626" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.8754209">
+          <caret line="100" column="61" selection-start-line="100" selection-start-column="61" selection-end-line="100" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1078" column="87" selection-start-line="1078" selection-start-column="87" selection-end-line="1078" selection-end-column="87" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1440834068214" expanded="true" signature="17694:17724" placeholder="..." />
+            <marker date="1440834068214" expanded="true" signature="20254:20265" placeholder="..." />
+            <marker date="1440834068214" expanded="true" signature="31500:31519" placeholder="..." />
+            <marker date="1440834068214" expanded="true" signature="35767:35790" placeholder="..." />
+            <marker date="1440834068214" expanded="true" signature="36755:36765" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/properties.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="541" column="18" selection-start-line="541" selection-start-column="18" selection-end-line="541" selection-end-column="18" />
+          <folding>
+            <marker date="1440833888110" expanded="true" signature="6978:6995" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="263" column="50" selection-start-line="263" selection-start-column="24" selection-end-line="263" selection-end-column="50" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1440832845914" expanded="true" signature="1660:1729" placeholder="..." />
+            <marker date="1440832845914" expanded="true" signature="3252:3262" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/ui/ui.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="12" selection-start-line="30" selection-start-column="12" selection-end-line="30" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/diagramEditor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44536084">
+          <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
           <folding />
         </state>
       </provider>

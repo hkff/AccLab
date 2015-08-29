@@ -27,6 +27,8 @@ var visualEditor = {
     activeEditor    : null,
     visualEditor  : false,
     activeCloseBtn: null,
+    aceTheme      : (sessionStorage.getItem("theme") != null)?sessionStorage.getItem("theme"):"monokai",
+    aceThemesList : ["monokai", "chrome", "tomorrow", "kuroir", "eclipse", "chaos"],
     backend       : "http://127.0.0.1:8000/",
 
     /**
@@ -50,6 +52,9 @@ var visualEditor = {
        return _p8() + _p8(true) + _p8(true) + _p8();
     },
 
+    /**
+     * Close file
+     */
     closeFile: function() {
         // If the page contains a panel element, undock it and destroy it
         if (visualEditor.activeCloseBtn.parent.container.containerType == "panel")
@@ -58,6 +63,23 @@ var visualEditor = {
             var panel = visualEditor.activeCloseBtn.parent.container;
             panel.performUndock();
         }
+    },
+
+    /**
+     * Update Ace editor Theme
+     * @param theme
+     */
+    updateAceTheme: function(theme) {
+        visualEditor.aceTheme = $(theme).val();
+        // Save theme in local storage
+        sessionStorage.setItem("theme", visualEditor.aceTheme);
+
+        // Update Editors
+        if (visualEditor.activeEditor != null)
+            visualEditor.activeEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
+
+        if (visualEditor.ui.properties.aalEditor.inPlaceAALEditor != null)
+            visualEditor.ui.properties.aalEditor.inPlaceAALEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
     }
 };
 
@@ -66,8 +88,14 @@ var visualEditor = {
  * On load
  */
 window.onload = function() {
-    // Override close btn
-    dockspawn.TabHandle.prototype.onCloseButtonClicked = function() {
+
+    // ===================================
+    // Patching dockspawn lib
+    // ===================================
+
+    // Override dockspawn close btn
+    dockspawn.TabHandle.prototype.onCloseButtonClicked = function()
+    {
         visualEditor.activeCloseBtn = this;
         var p = '<button type="button" class="btn" onclick="visualEditor.closeFile()">YES</button> <button type="button" class="btn">NO</button>';
         toastr.error(p, "Close file without Saving ?", {
@@ -81,6 +109,64 @@ window.onload = function() {
 				"positionClass": "toast-top-center"
 			});
     };
+
+    function removeNode(node) {
+        if (node.parentNode == null)
+            return false;
+        node.parentNode.removeChild(node);
+        return true;
+    }
+
+    // PATCH : do not remove panel from dom when changing tabs
+    dockspawn.TabPage.prototype.setSelected = function(flag)
+    {
+        this.selected = flag;
+        this.handle.setSelected(flag);
+
+        if ($(this.containerElement).hasClass("panel-base")) {
+            if (!this._initContent)
+                this.host.contentElement.appendChild(this.containerElement);
+            this._initContent = true;
+        }
+
+        if (this.selected)
+        {
+             if (!$(this.containerElement).hasClass("panel-base"))
+                this.host.contentElement.appendChild(this.containerElement);
+             else
+                this.containerElement.style.display = 'block';
+
+            // force a resize again
+            var width = this.host.contentElement.clientWidth;
+            var height = this.host.contentElement.clientHeight;
+            this.container.resize(width, height);
+        }
+        else {
+            if (!$(this.containerElement).hasClass("panel-base"))
+               removeNode(this.containerElement);
+            else
+                 this.containerElement.style.display = 'none';
+        }
+        //if(visualEditor.aceTheme != undefined)
+          //  visualEditor.updateAceTheme(visualEditor.aceTheme);
+    };
+
+
+    dockspawn.PanelContainer.loadFromState = function(state, dockManager)
+    {
+        var elementName = state.element;
+        var elementContent = document.getElementById(elementName);
+        var ret = new dockspawn.PanelContainer(elementContent, dockManager);
+        //ret.elementContent = elementContent;
+        //ret._initialize();
+        ret.loadState(state);
+        return ret;
+    };
+    // =========================================== //
+
+    //
+    // Main UI
+    //
 
     // Convert a div to the dock manager.  Panels can then be docked on to it
     this.divDockManager = document.getElementById("my_dock_manager");
