@@ -80,7 +80,65 @@ var visualEditor = {
 
         if (visualEditor.ui.properties.aalEditor.inPlaceAALEditor != null)
             visualEditor.ui.properties.aalEditor.inPlaceAALEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
-    }
+    },
+
+    aalMode: function() {
+        var prop = 200 / $(document).width();
+        for(var i=0; i<window.panelNodes.length; i++) {
+            try {
+                window.panelNodes[i].performUndock();
+            } catch (e) {
+            }
+        }
+
+
+        window.solutionNode = dockManager.dockLeft(window.documentNode, window.solution, 0.10);
+        window.outputNode = dockManager.dockDown(window.documentNode, window.output, 0.2);
+        window.toolboxNode = dockManager.dockLeft(window.documentNode, window.toolbox, 0.03);
+
+        //window.outlineNode = dockManager.dockFill(solutionNode, outline);
+
+/*
+
+        window.problemsNode = dockManager.dockDown(window.propertiesNode, inplaceAAL, 0.40);
+        window.propertiesNode = dockManager.dockRight(documentNode, properties, 0.20);
+
+        window.inplaceAALNode = dockManager.dockFill(window.propertiesNode, window.inplaceAAL);
+        window.componentsNode = dockManager.dockFill(window.propertiesNode, components);
+    */
+    },
+
+    acdMode: function() {
+        for(var i=0; i<window.panelNodes.length; i++) {
+            try {
+                window.panelNodes[i].performUndock();
+            } catch (e) {
+            }
+        }
+
+        // Dock the panels on the dock manager
+        var prop = 200 / $(document).width();
+        window.solutionNode = dockManager.dockLeft(window.documentNode, window.solution, prop);
+        window.outlineNode = dockManager.dockDown(window.solutionNode, window.outline, 0.50);
+
+        prop = 145 / $(document).width();
+        window.componentsNode = dockManager.dockLeft(window.documentNode, window.components, prop);
+        window.toolboxNode = dockManager.dockDown(window.componentsNode, window.toolbox, 0.80);
+
+        prop = 250 / $(document).width();
+        window.propertiesNode = dockManager.dockRight(window.documentNode, window.properties, prop);
+        //window.inplaceAALNode = dockManager.dockRight(window.documentNode, window.inplaceAAL, prop);
+        //window.propertiesNode = dockManager.dockFill(window.inplaceAALNode, window.properties);
+
+        //prop = 500 / $(document).height();
+        //window.outputNode = dockManager.dockDown(window.documentNode, window.output, prop);
+
+
+    },
+
+    defaultMode: function() {
+
+    },
 };
 
 
@@ -211,7 +269,7 @@ window.onload = function() {
 
     prop = 500 / $(document).height();
     this.outputNode = dockManager.dockDown(documentNode, output, prop);
-    this.problemsNode = dockManager.dockDown(this.propertiesNode, inplaceAAL, 0.40);
+    this.inplaceAALNode = dockManager.dockDown(this.propertiesNode, inplaceAAL, 0.40);
 
     prop = 145 / $(document).width();
     this.componentsNode = dockManager.dockLeft(documentNode, components, prop);
@@ -224,8 +282,8 @@ window.onload = function() {
         visualEditor.ui.updatePanel();
     };
 
-    // TODO REMOVE
-    //visualEditor.ui.fileManager.openFile("tuto2.aal");
+    this.panelNodes = [window.solution, window.outline, window.components, window.toolbox,
+        window.properties, window.inplaceAAL, window.output];
 }
 
 /**
