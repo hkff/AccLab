@@ -127,6 +127,7 @@ visualEditor.ui = {
 				$(visualEditor.ui.tools.tools[21].button).show();
 				$(visualEditor.ui.tools.tools[22].button).show();
 			}
+
 		} else {
 			// Enable them
 			this.enableNode(this.propertiesPanel);
@@ -140,6 +141,7 @@ visualEditor.ui = {
 			$(visualEditor.ui.tools.tools[18].button).hide();
 			$(visualEditor.ui.tools.tools[20].button).hide();
 			$(visualEditor.ui.tools.tools[21].button).hide();
+
 		}
 	},
 

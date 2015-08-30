@@ -70,27 +70,35 @@ var visualEditor = {
      * @param theme
      */
     updateAceTheme: function(theme) {
+
         visualEditor.aceTheme = $(theme).val();
         // Save theme in local storage
         sessionStorage.setItem("theme", visualEditor.aceTheme);
+        this.updateEditorsTheme();
+    },
 
+    updateEditorsTheme: function() {
         // Update Editors
         if (visualEditor.activeEditor != null)
             visualEditor.activeEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
 
         if (visualEditor.ui.properties.aalEditor.inPlaceAALEditor != null)
             visualEditor.ui.properties.aalEditor.inPlaceAALEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
+
     },
 
-    aalMode: function() {
-        var prop = 200 / $(document).width();
-        for(var i=0; i<window.panelNodes.length; i++) {
+    clearPanels: function() {
+     for(var i=0; i<window.panelNodes.length; i++) {
             try {
                 window.panelNodes[i].performUndock();
             } catch (e) {
             }
         }
+    },
 
+    aalMode: function() {
+        visualEditor.clearPanels();
+        var prop = 200 / $(document).width();
 
         window.solutionNode = dockManager.dockLeft(window.documentNode, window.solution, 0.10);
         window.outputNode = dockManager.dockDown(window.documentNode, window.output, 0.2);
@@ -109,12 +117,7 @@ var visualEditor = {
     },
 
     acdMode: function() {
-        for(var i=0; i<window.panelNodes.length; i++) {
-            try {
-                window.panelNodes[i].performUndock();
-            } catch (e) {
-            }
-        }
+        visualEditor.clearPanels();
 
         // Dock the panels on the dock manager
         var prop = 200 / $(document).width();
@@ -132,11 +135,26 @@ var visualEditor = {
 
         //prop = 500 / $(document).height();
         //window.outputNode = dockManager.dockDown(window.documentNode, window.output, prop);
-
-
     },
 
     defaultMode: function() {
+        visualEditor.clearPanels();
+
+        window.documentNode = dockManager.context.model.documentManagerNode;
+        var prop = 200 / $(document).width();
+        window.solutionNode = dockManager.dockLeft(documentNode, solution, prop);
+        window.outlineNode = dockManager.dockDown(solutionNode, outline, 0.50);
+
+        prop = 250 / $(document).width();
+        window.propertiesNode = dockManager.dockRight(documentNode, properties, prop);
+
+        prop = 500 / $(document).height();
+        window.outputNode = dockManager.dockDown(documentNode, output, prop);
+        window.inplaceAALNode = dockManager.dockDown(this.propertiesNode, inplaceAAL, 0.40);
+
+        prop = 145 / $(document).width();
+        window.componentsNode = dockManager.dockLeft(documentNode, components, prop);
+        window.toolboxNode = dockManager.dockDown(componentsNode, toolbox, 0.80);
 
     },
 };
@@ -205,8 +223,9 @@ window.onload = function() {
             else
                  this.containerElement.style.display = 'none';
         }
-        //if(visualEditor.aceTheme != undefined)
-          //  visualEditor.updateAceTheme(visualEditor.aceTheme);
+        if(visualEditor.aceTheme != null)
+            visualEditor.updateEditorsTheme();
+
     };
 
 

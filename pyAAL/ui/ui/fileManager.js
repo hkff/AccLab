@@ -364,7 +364,7 @@ visualEditor.ui.fileManager = {
 		var snippetManager = ace.require("ace/snippets").snippetManager;
 		var config = ace.require("ace/config");
 
-		/*
+		/*s
 		ace.config.loadModule("ace/snippets/AAL", function(m) {
 			if (m) {
 				snippetManager.files.AAL = m;
