@@ -11,25 +11,26 @@
       {"name": "", "id": "resource", "type": "text", "pre": " Resource ", "post": " "},
       {"name": "", "id": "owner", "type": "select", "pre": " Owner ", "post": " ", "src": "{aal.agents}"},
       {"name": "", "id": "user", "type": "select", "pre": " User ", "post": " ", "src": "{aal.agents}"},
-      {"name": "a", "id": "permit", "type": "radio", "pre": "", "post": "Permit"},
-      {"name": "a", "id": "deny", "type": "radio", "pre": "", "post": "Deny"}
+      {"name": "", "id": "permit", "type": "radio", "pre": "", "post": "Permit"},
+      {"name": "", "id": "deny", "type": "radio", "pre": "", "post": "Deny"},
+      {"name": "", "id": "provider", "type": "select", "pre": " Provider ", "post": " ", "src": "{aal.agents}"}
     ],
 	"aal": [
-      "{{ (({read}.checked)?'\\n' + (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.read[{owner}.val]({resource}.val)':'') }}",
+      "{{ (({read}.checked)?'\\n' + (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.read[{provider}.val]({resource}.val)':'') }}",
       "+{{ (({read}.checked && {write}.checked)?' AND \\n':'') + (({write}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ",
-        "' {user}.val.write[{owner}.val]({resource}.val)') : '') }}",
+        "' {user}.val.write[{provider}.val]({resource}.val)') : '') }}",
       "+{{ (({update}.checked && ({read}.checked || {write}.checked )) ?' AND \\n':'') + (({update}.checked)? ( (({deny}.checked)?'DENY':'PERMIT')",
-        " + ' {user}.val.update[{owner}.val]({resource}.val)') : '') }}",
+        " + ' {user}.val.update[{provider}.val]({resource}.val)') : '') }}",
       "+{{ (({delete}.checked && ({read}.checked || {write}.checked || {update}.checked))?' AND \\n':'') + (({delete}.checked)? ",
-        "( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.delete[{owner}.val]({resource}.val)') : '') }}",
+        "( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.delete[{provider}.val]({resource}.val)') : '') }}",
 
       "+{{ (({useaction}.checked && ({read}.checked || {write}.checked || {update}.checked ||{delete}.checked))?' AND \\n':'') +",
-        " (({useaction}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.{action}.val[{owner}.val]({resource}.val)') : '') }} AND\n<...>"
+        " (({useaction}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.{action}.val[{provider}.val]({resource}.val)') : '') }} AND\n<...>"
 
     ],
 	"html": [
       "<div class='varGroupe'> {resource} {owner} </div>",
-      "<div class='varGroupe'> {user}</div>",
+      "<div class='varGroupe'> {user} {provider}</div>",
       "<div class='varGroupe'> <h4 class='varsHeader'>Authorization :</h4> {permit} {deny} </div>",
       "<div class='varGroupe'><h4 class='varsHeader'>Standard Actions :</h4>",
       " {read} {write} {update} {delete} </div> ",

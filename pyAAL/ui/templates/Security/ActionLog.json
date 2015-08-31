@@ -5,17 +5,18 @@
       {"name": "", "id": "action", "type": "select", "pre": " Action ", "post": "", "src": "{aal.services}"},
       {"name": "", "id": "resource", "type": "text", "pre": " Resource ", "post": "  "},
       {"name": "", "id": "owner", "type": "select", "pre": " Owner ", "post": " ", "src": "{aal.agents}"},
-      {"name": "", "id": "user", "type": "select", "pre": " User ", "post": " ", "src": "{aal.agents}"}
+      {"name": "", "id": "user", "type": "select", "pre": " User ", "post": " ", "src": "{aal.agents}"},
+      {"name": "", "id": "provider", "type": "select", "pre": " Provider ", "post": " ", "src": "{aal.agents}"}
     ],
 	"aal": [
       "{{ (('{resource}.val' == '')? 'FORALL d:data\\",
-      "nIF (d.subject == {user}.val' : 'IF ({resource}.val.subject == {user}.val')}}",
-      "AND {user}.val.{action}.val[{owner}.val]({resource}.val) ) THEN {\n\t MUST( {owner}.val.log[{owner}.val](",
-      "\"user:{user}.val;action:{action}.val;resource:{resource}.val;owner:{owner}.val\") ) \n} AND "
+      "nIF (d.subject == {owner}.val' : 'IF ({resource}.val.subject == {owner}.val')}}",
+      "AND {user}.val.{action}.val[{provider}.val]({resource}.val) ) THEN {\n\t MUST( {provider}.val.log[{provider}.val](",
+      "\"user:{user}.val;action:{action}.val;resource:{resource}.val;owner:{owner}.val;provider:{provider}.val\") ) \n} AND "
     ],
 	"html": [
       "<div class='varGroupe'> {resource} {owner} </div>",
-      "<div class='varGroupe'> {user}</div>",
+      "<div class='varGroupe'> {user} {provider}</div>",
       "<div class='varGroupe'> {action}</div> {genBtn}"
     ],
 	"xacml": ""

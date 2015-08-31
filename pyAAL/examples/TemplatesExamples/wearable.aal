@@ -57,3 +57,4 @@ CLAUSE customer_policy (
 )
 
 CALL validate("cardioMon_policy" "customer_policy")
+
