@@ -184,7 +184,7 @@ visualEditor.ui = {
 		for(var i=0; i<figs.getSize(); i++) {
 			tmp = figs.get(i);
 			services += tmp.getRservices().data + ",";
-			services += tmp.getPservices().data;
+			services += tmp.getPservices().data + ",";
 		}
 
 		var servicesTmp = services.split(",");
