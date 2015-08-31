@@ -100,9 +100,9 @@ var visualEditor = {
         visualEditor.clearPanels();
         var prop = 200 / $(document).width();
 
-        window.solutionNode = dockManager.dockLeft(window.documentNode, window.solution, 0.10);
-        window.outputNode = dockManager.dockDown(window.documentNode, window.output, 0.2);
-        window.toolboxNode = dockManager.dockLeft(window.documentNode, window.toolbox, 0.03);
+        window.solutionNode = dockManager.dockLeft(window.documentNode, window.solution, 0.20);
+        window.outputNode = dockManager.dockRight(window.documentNode, window.output, 0.4);
+        window.toolboxNode = dockManager.dockUp(window.solutionNode, window.toolbox, 0.2);
 
         //window.outlineNode = dockManager.dockFill(solutionNode, outline);
 

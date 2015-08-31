@@ -6,9 +6,9 @@ LOAD "core.macros"
  *       Declarations
  ****************************/
 // Actors
-AGENT customer TYPES() REQUIRED(login add update delete submitRTI ) PROVIDED()
-AGENT wearableCo TYPES() REQUIRED() PROVIDED(login add update delete submitRTI viewActiveUsers )
-AGENT cardioMon TYPES() REQUIRED(login add update delete viewActiveUsers ) PROVIDED()
+AGENT customer TYPES(Actor) REQUIRED(login add update delete submitRTI ) PROVIDED()
+AGENT wearableCo TYPES(Actor) REQUIRED() PROVIDED(login add update delete submitRTI viewActiveUsers )
+AGENT cardioMon TYPES(Actor) REQUIRED(login add update delete viewActiveUsers ) PROVIDED()
 
 // Services
 SERVICE login
@@ -22,7 +22,7 @@ SERVICE viewActiveUsers
  *       Clauses
  ****************************/
 CLAUSE cardioMon_policy (  
-	 FORALL d:data FORALL a:agent
+	FORALL d:data FORALL a:Actor
     IF(d.subject == a) THEN {
         PERMIT a.read[cardioMon](d)
         AND PERMIT a.write[cardioMon](d)
@@ -34,8 +34,8 @@ CLAUSE cardioMon_policy (
     IF (d.subject == a) THEN {
     	 MUST( cardioMon.delete[cardioMon](d) BEFORE "6 months") 
     }
-//	AUDITING auditor.audit[cardioMon](a)
-//	IF_VIOLATED_THEN dpa.sanction[cardioMon](a)
+	AUDITING auditor.audit[cardioMon](a)
+	IF_VIOLATED_THEN dpa.sanction[cardioMon](a)
 )
 
 
@@ -44,7 +44,7 @@ CLAUSE customer_policy (
     IF(d.subject == customer) THEN {
         PERMIT customer.read[cardioMon](d)
         AND PERMIT customer.write[cardioMon](d)
-        AND DENY customer.update[cardioMon](d)
+        AND PERMIT customer.update[cardioMon](d)
         AND PERMIT customer.delete[cardioMon](d)
         AND PERMIT customer.login[cardioMon](d)
     }
@@ -52,8 +52,8 @@ CLAUSE customer_policy (
     IF (d.subject == customer) THEN {
     	 MUST( cardioMon.delete[cardioMon](d) BEFORE "6 months") 
     }
-//	AUDITING auditor.audit[cardioMon](a)
-//	IF_VIOLATED_THEN dpa.sanction[cardioMon](a) 
+	AUDITING auditor.audit[cardioMon](a)
+	IF_VIOLATED_THEN dpa.sanction[cardioMon](a) 
 )
 
-CALL vvalidate("cardioMon_policy" "customer_policy")
+CALL validate("cardioMon_policy" "customer_policy")
