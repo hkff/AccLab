@@ -31,10 +31,10 @@ data = actor.extend({
 
 	view: function() {
 		// Agent
-		this.cmp_data = $('<div title="Data (shift+D)" class="btn-components fa fa-database fa-2x"></div>')
+		this.cmp_data = $('<div title="Data (Ctrl+Shift+D)" class="btn-components fa fa-database fa-2x"></div>')
 		this.cmp_data.click(this.addElement);
 		this.parent.componentsPanel.append(this.cmp_data);
-		shortcut.add("Shift+D", this.addElement);
+		shortcut.add("Ctrl+Shift+D", this.addElement);
 	},
 
 	addElement: function() {

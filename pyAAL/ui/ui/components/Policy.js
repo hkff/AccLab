@@ -33,10 +33,10 @@ policy = Class.extend({
 
 	view: function() {
 		// Agent
-		this.cmp_data = $('<div title="Policy (shift+E)" class="btn-components fa fa-file-powerpoint-o fa-2x"></div>');
+		this.cmp_data = $('<div title="Policy (Ctrl+Shift+E)" class="btn-components fa fa-file-powerpoint-o fa-2x"></div>');
 		this.cmp_data.click(this.addElement);
 		this.parent.componentsPanel.append(this.cmp_data);
-        shortcut.add("Shift+E", this.addElement);
+        shortcut.add("Ctrl+Shift+E", this.addElement);
 	},
 
 	addElement: function() {

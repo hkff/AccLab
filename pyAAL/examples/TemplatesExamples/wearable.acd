@@ -1,0 +1,417 @@
+[
+  {
+    "type": "AgentUI",
+    "id": "30034a81-830f-78c3-77a7-620237d096f1",
+    "x": 106,
+    "y": 51,
+    "width": 124,
+    "height": 114,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "login",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "add",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "update",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "delete",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "submitRTI",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      }
+    ],
+    "bgColor": "#6BAB30",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "customer",
+    "policy": "",
+    "pservices": {
+      "data": []
+    },
+    "rservices": {
+      "data": [
+        "login",
+        "add",
+        "update",
+        "delete",
+        "submitRTI"
+      ]
+    },
+    "types": {
+      "data": []
+    },
+    "DEFAULT_bgColor": "#6bab30",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "AgentUI",
+    "id": "940cab9a-166a-25c0-c647-dc8da2acdb20",
+    "x": 518,
+    "y": 143,
+    "width": 178,
+    "height": 141,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "login",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "add",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "update",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "delete",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "submitRTI",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      },
+      {
+        "name": "viewActiveUsers",
+        "port": "draw2d.ProvidedPort",
+        "locator": "draw2d.layout.locator.InputPortLocator"
+      }
+    ],
+    "bgColor": "#D1A22A",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "wearableCo",
+    "policy": "",
+    "pservices": {
+      "data": [
+        "login",
+        "add",
+        "update",
+        "delete",
+        "submitRTI",
+        "viewActiveUsers"
+      ]
+    },
+    "rservices": {
+      "data": []
+    },
+    "types": {
+      "data": []
+    },
+    "DEFAULT_bgColor": "#d1a22a",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "AgentUI",
+    "id": "15be5c64-83b0-74f0-bb9b-2a8e22d49635",
+    "x": 98,
+    "y": 271,
+    "width": 132,
+    "height": 113,
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "AgentUI",
+    "ports": [
+      {
+        "name": "login",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "add",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "update",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "delete",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      },
+      {
+        "name": "viewActiveUsers",
+        "port": "draw2d.RequiredPort",
+        "locator": "draw2d.layout.locator.OutputPortLocator"
+      }
+    ],
+    "bgColor": "#0EB4F0",
+    "color": "#1B1B1B",
+    "stroke": 1,
+    "radius": 0,
+    "tlabeltxt": "cardioMon",
+    "policy": "",
+    "pservices": {
+      "data": []
+    },
+    "rservices": {
+      "data": [
+        "login",
+        "add",
+        "update",
+        "delete",
+        "viewActiveUsers"
+      ]
+    },
+    "types": {
+      "data": []
+    },
+    "DEFAULT_bgColor": "#0eb4f0",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d"
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "6adc4163-47f0-9b1d-a840-f62cfd3174c7",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "30034a81-830f-78c3-77a7-620237d096f1",
+      "port": "login"
+    },
+    "target": {
+      "node": "940cab9a-166a-25c0-c647-dc8da2acdb20",
+      "port": "login"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "053cece8-3d20-44ed-7ca7-4cb8695b3c35",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "30034a81-830f-78c3-77a7-620237d096f1",
+      "port": "add"
+    },
+    "target": {
+      "node": "940cab9a-166a-25c0-c647-dc8da2acdb20",
+      "port": "add"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "d065613e-f5f9-e1be-374f-9c0daacd9d04",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "30034a81-830f-78c3-77a7-620237d096f1",
+      "port": "update"
+    },
+    "target": {
+      "node": "940cab9a-166a-25c0-c647-dc8da2acdb20",
+      "port": "update"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "49d11396-82c3-872d-874f-e32209d5b603",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "30034a81-830f-78c3-77a7-620237d096f1",
+      "port": "delete"
+    },
+    "target": {
+      "node": "940cab9a-166a-25c0-c647-dc8da2acdb20",
+      "port": "delete"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "6d7399dd-a912-bc10-5d63-66477633d80d",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "30034a81-830f-78c3-77a7-620237d096f1",
+      "port": "submitRTI"
+    },
+    "target": {
+      "node": "940cab9a-166a-25c0-c647-dc8da2acdb20",
+      "port": "submitRTI"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "ac73a7ca-843d-ae5f-0b33-f1e3049e7270",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "15be5c64-83b0-74f0-bb9b-2a8e22d49635",
+      "port": "login"
+    },
+    "target": {
+      "node": "940cab9a-166a-25c0-c647-dc8da2acdb20",
+      "port": "login"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "e36595e0-e4cf-142d-3849-2aebc276de82",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "15be5c64-83b0-74f0-bb9b-2a8e22d49635",
+      "port": "add"
+    },
+    "target": {
+      "node": "940cab9a-166a-25c0-c647-dc8da2acdb20",
+      "port": "add"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "1fbd94ae-7f7f-ab79-e711-1e7ab3fed386",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "15be5c64-83b0-74f0-bb9b-2a8e22d49635",
+      "port": "update"
+    },
+    "target": {
+      "node": "940cab9a-166a-25c0-c647-dc8da2acdb20",
+      "port": "update"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "acb0961e-e466-3120-1a96-7df8f7e0e4e7",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "15be5c64-83b0-74f0-bb9b-2a8e22d49635",
+      "port": "delete"
+    },
+    "target": {
+      "node": "940cab9a-166a-25c0-c647-dc8da2acdb20",
+      "port": "delete"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "c337ed09-8592-91f2-06bb-2e814348a5bb",
+    "alpha": 1,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "15be5c64-83b0-74f0-bb9b-2a8e22d49635",
+      "port": "viewActiveUsers"
+    },
+    "target": {
+      "node": "940cab9a-166a-25c0-c647-dc8da2acdb20",
+      "port": "viewActiveUsers"
+    }
+  }
+]

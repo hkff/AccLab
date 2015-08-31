@@ -1,0 +1,59 @@
+// Loading aal libs
+LOAD "core.types"
+LOAD "core.macros"
+
+/***************************
+ *       Declarations
+ ****************************/
+// Actors
+AGENT customer TYPES() REQUIRED(login add update delete submitRTI ) PROVIDED()
+AGENT wearableCo TYPES() REQUIRED() PROVIDED(login add update delete submitRTI viewActiveUsers )
+AGENT cardioMon TYPES() REQUIRED(login add update delete viewActiveUsers ) PROVIDED()
+
+// Services
+SERVICE login
+SERVICE add
+SERVICE update
+SERVICE delete
+SERVICE submitRTI
+SERVICE viewActiveUsers
+
+/***************************
+ *       Clauses
+ ****************************/
+CLAUSE cardioMon_policy (  
+	 FORALL d:data FORALL a:agent
+    IF(d.subject == a) THEN {
+        PERMIT a.read[cardioMon](d)
+        AND PERMIT a.write[cardioMon](d)
+        AND PERMIT a.update[cardioMon](d)
+        AND PERMIT a.delete[cardioMon](d)
+        AND PERMIT a.login[cardioMon](d)
+    }
+    AND
+    IF (d.subject == a) THEN {
+    	 MUST( cardioMon.delete[cardioMon](d) BEFORE "6 months") 
+    }
+//	AUDITING auditor.audit[cardioMon](a)
+//	IF_VIOLATED_THEN dpa.sanction[cardioMon](a)
+)
+
+
+CLAUSE customer_policy (
+    FORALL d:data
+    IF(d.subject == customer) THEN {
+        PERMIT customer.read[cardioMon](d)
+        AND PERMIT customer.write[cardioMon](d)
+        AND DENY customer.update[cardioMon](d)
+        AND PERMIT customer.delete[cardioMon](d)
+        AND PERMIT customer.login[cardioMon](d)
+    }
+    AND
+    IF (d.subject == customer) THEN {
+    	 MUST( cardioMon.delete[cardioMon](d) BEFORE "6 months") 
+    }
+//	AUDITING auditor.audit[cardioMon](a)
+//	IF_VIOLATED_THEN dpa.sanction[cardioMon](a) 
+)
+
+CALL vvalidate("cardioMon_policy" "customer_policy")
