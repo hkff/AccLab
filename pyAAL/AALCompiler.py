@@ -82,7 +82,7 @@ class AALCompilerListener(AALListener.AALListener):
     # Initializer
     def __init__(self, loadlibs: bool=True, serialize: bool=False, file: str="",
                  libs_path="libs/aal/", root_path=None, recompile=False,
-                 hotswaping=False, errors_listener=None):
+                 hotswaping=False, errors_listener=None, tspass_timeout=20):
         self.loadlibs = loadlibs
         self.serialize = serialize
         self.aalmm = aalmm()
@@ -113,6 +113,7 @@ class AALCompilerListener(AALListener.AALListener):
         self.recompile = recompile
         self.root_path = root_path
         self.errors_listener = errors_listener
+        self.tspass_timeout = tspass_timeout
 
         # FIXME
         if hotswaping:
@@ -1050,7 +1051,8 @@ class AALCompilerListener(AALListener.AALListener):
         if verbose:
             print("========= ltl :" + ltl)
         # exec("from aalc import tspassc")
-        res = tspassc(code=ltl, use_shell=False, debug=False, reparse=False)
+
+        res = tspassc(code=ltl, use_shell=False, debug=False, reparse=False, timeout=self.tspass_timeout)
         if show:
             print(Color("{autoblue}" + str(chk.name) + " : " + str(res["print"]) + "{/autoblue}"))
         return res

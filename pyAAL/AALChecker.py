@@ -239,8 +239,8 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
     pre_cond = build_env(compiler.aalprog)
 
     print("----- Checking c1 & c2 consistency :")
-    res = compiler.apply_check(code=pre_cond + "\n%%  " + c1_id + "\nclause(" + c1_id + ") " + "\n & \n\n%%  " +
-                                    c2_id + "\nclause(" + c2_id + ")",
+    res = compiler.apply_check(code=pre_cond + "\n%%  " + c1_id + "\nclause(" + c1_id + ").ue " + "\n & \n\n%%  " +
+                                    c2_id + "\nclause(" + c2_id + ").ue",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))

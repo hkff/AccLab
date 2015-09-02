@@ -1,6 +1,6 @@
-#!/usr/local/bin/python3.4
+#!/usr/bin/python3.4
 """
-aalc version 1.0 main AccLab prgram
+aalc version 1.0 main AccLab program
 Copyright (C) 2014 Walid Benghabrit
 
 This program is free software: you can redistribute it and/or modify
@@ -70,7 +70,6 @@ import time
 import io
 import signal
 
-TSPASS_TIMEOUT = 10
 
 # DescriptiveErrorListener
 class DescriptiveErrorListener(ErrorListener):
@@ -88,7 +87,7 @@ class DescriptiveErrorListener(ErrorListener):
 # aalc
 def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, compile: bool=False,
          libs_path="libs/aal/", root_path=None, recompile: bool=False, to_ltl: bool=False,
-         show_ast: bool=False):
+         show_ast: bool=False, timeout=20):
     """
     Parse AAL.
     :param file: The AAL input file
@@ -113,7 +112,7 @@ def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, co
     parser = AALParser(stream)
     desec = DescriptiveErrorListener()
     parser.addParseListener(AALCompilerListener(file=file, libs_path=libs_path, recompile=recompile,
-                                                root_path=root_path, errors_listener=desec))
+                                                root_path=root_path, errors_listener=desec, tspass_timeout=timeout))
     parser.addErrorListener(desec)
     parser.buildParseTrees = True
 
@@ -165,7 +164,7 @@ def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, co
 
 # tspassc
 def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: bool=False,
-            synth: bool=False, reparse: bool=False):
+            synth: bool=False, reparse: bool=False, timeout=20):
     """
     Parse tspass
     :param file: The tspass input file
@@ -247,14 +246,13 @@ def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: boo
 
     # Handling timeout
     start = datetime.datetime.now()
-    print(TSPASS_TIMEOUT)
     while p.poll() is None:
         time.sleep(0.1)
         now = datetime.datetime.now()
-        if (now - start).seconds > TSPASS_TIMEOUT:
+        if (now - start).seconds > timeout:
             os.kill(p.pid, signal.SIGKILL)
             os.waitpid(-1, os.WNOHANG)
-            print(Color("{autored}=== TSPASS prover Time out after " + str(TSPASS_TIMEOUT) + "sc ! === {/red}"))
+            print(Color("{autored}=== TSPASS prover Time out after " + str(timeout) + "sc ! === {/red}"))
 
     tspass = p.stdout.read().decode("utf-8")
     if tspass == "":
@@ -343,7 +341,7 @@ def main(argv):
     run_gui = False
     outputfile = "tmp.tspass"
     server_port = 8000
-    global TSPASS_TIMEOUT
+    timeout = 20
 
     # Check libs path
     install_path = os.environ.get('ACCLAB_PATH')
@@ -403,7 +401,7 @@ def main(argv):
         elif opt in ("-n", "--no-browser"):
             nobrowser = True
         elif opt in ("-q", "--timeout"):
-            TSPASS_TIMEOUT = int(arg)
+            timeout = int(arg)
         elif opt in ("-u", "--gui"):
             run_gui = True
             try:
@@ -439,11 +437,11 @@ def main(argv):
 
     elif inputfile.endswith(".aal"):  # Use AAL compiler
         res = aalc(inputfile, use_shell=use_shell, check=check, monodic=monodic, compile=compile, recompile=recompile,
-                   to_ltl=to_ltl, show_ast=show_ast, libs_path=libs_path)
+                   to_ltl=to_ltl, show_ast=show_ast, libs_path=libs_path, timeout=timeout)
         print(res["res"])
 
     elif inputfile.endswith(".tspass"):  # Use tspass compiler
-        res = tspassc(inputfile, output=outputfile, use_shell=False, debug=False, synth=synth, reparse=reparse)
+        res = tspassc(inputfile, output=outputfile, use_shell=False, debug=False, synth=synth, reparse=reparse, timeout=timeout)
         print(res["print"])
 
 
