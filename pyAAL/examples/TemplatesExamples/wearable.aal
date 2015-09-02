@@ -51,18 +51,18 @@ CLAUSE customer_policy (
     }
     AND
     IF (d.subject == customer) THEN {
-    	 MUST( cardioMon.delete[cardioMon](d) BEFORE "6 months") 
+    	 MUST( cardioMon.delete[cardioMon](d) BEFORE "6 months")
     	 //MUST( cardioMon.delete[cardioMon](d)) 
     }
 	AUDITING auditor.audit[cardioMon](a)
 	IF_VIOLATED_THEN dpa.sanction[cardioMon](a) 
 )
 
-CALL validate_usage("cardioMon_policy" "customer_policy")
+//CALL validate_usage("cardioMon_policy" "customer_policy")
 // with time : SAT
 // without time : UNSAT
 
-//CALL validate("cardioMon_policy" "customer_policy")
+CALL validate("cardioMon_policy" "customer_policy")
 // with time : SAT
 // without time : LOOP
 

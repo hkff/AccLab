@@ -77,7 +77,7 @@ def build_env(prog: m_aalprog=None):
     # print([str(x.time) + " " for x in times])
     for i in range(0, len(times)):
         for j in range(i+1, len(times)):
-            pre_cond += "" + str(times[i].to_ltl()) + " => " + str(times[j].to_ltl()) + " &"
+            pre_cond += "(" + str(times[i].to_ltl()) + " => " + str(times[j].to_ltl()) + ") &"
 
     data_decs = "\n\n%%% Data knowledge \n" + "".join(["![d](subject(d, " + str(x.name) + ")) &\n" for x in prog.get_declared(m_agent)])
     # data_decs = ""

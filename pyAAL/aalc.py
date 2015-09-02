@@ -68,7 +68,9 @@ import pickle
 import getopt
 import time
 import io
+import signal
 
+TSPASS_TIMEOUT = 10
 
 # DescriptiveErrorListener
 class DescriptiveErrorListener(ErrorListener):
@@ -172,9 +174,9 @@ def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: boo
     :param use_shell: Run an interactive shell after parsing
     :param debug: boolean enable/disable debug messages
     :param synth: Synthesize monitors specifications from a global FOTL formula
+    :param timeout: tspass prover timeout
     :return:
     """
-
     # print("-------- tspassc " + " starting at : " + str(datetime.datetime.now()) + "  File : " + str(file) + " --------\n")
 
     # TODO add binaries for win
@@ -225,7 +227,7 @@ def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: boo
     if debug:
         pprint(bt)
 
-    # FOTL Translate # TODO : see timeout
+    # FOTL Translate
     p = Popen(['tools/' + os_name + '/fotl-translate', generated_tspass],
               stdout=PIPE, stderr=PIPE, stdin=PIPE)
     fotl = p.stdout.read().decode("utf-8")
@@ -242,6 +244,18 @@ def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: boo
     # TSPASS
     p = Popen(['tools/' + os_name + '/tspass', fotl_file],
               stdout=PIPE, stderr=PIPE, stdin=PIPE)
+
+    # Handling timeout
+    start = datetime.datetime.now()
+    print(TSPASS_TIMEOUT)
+    while p.poll() is None:
+        time.sleep(0.1)
+        now = datetime.datetime.now()
+        if (now - start).seconds > TSPASS_TIMEOUT:
+            os.kill(p.pid, signal.SIGKILL)
+            os.waitpid(-1, os.WNOHANG)
+            print(Color("{autored}=== TSPASS prover Time out after " + str(TSPASS_TIMEOUT) + "sc ! === {/red}"))
+
     tspass = p.stdout.read().decode("utf-8")
     if tspass == "":
         tspass = p.stderr.read().decode("utf-8")
@@ -292,8 +306,8 @@ def main(argv):
     help_str_extended = "AAL tools set. aalc is a part of Acclab tool.\n" + \
                         "For more information see AccLab home page\n Usage : aalc.py [OPTIONS]" + \
                         "\n  -h \t--help          " + "\t display this help and exit" + \
-                        "\n  -i \t--input         " + "\t the input file" + \
-                        "\n  -i \t--output        " + "\t the output file" + \
+                        "\n  -i \t--input= [file] " + "\t the input file" + \
+                        "\n  -o \t--output= [path]" + "\t the output file" + \
                         "\n  -c \t--compile       " + "\t compile the file, that can be loaded after using -l" + \
                         "\n  -m \t--monodic       " + "\t apply monodic check on aal file" + \
                         "\n  -s \t--shell         " + "\t run a shell after handling aal program" + \
@@ -306,8 +320,9 @@ def main(argv):
                         "\n  -x \t--compile-stdlib" + "\t compile the standard library" + \
                         "\n  -d \t--hotswap       " + "\t enable hotswaping (for development only)" + \
                         "\n  -a \t--ast           " + "\t show ast tree" + \
-                        "\n  -u \t--gui [port]    " + "\t run the gui on the specified port" + \
-                        "\n     \t--no-browser    " + "\t don't start the web browser" + \
+                        "\n  -u \t--gui= [port]   " + "\t run the gui on the specified port" + \
+                        "\n  -n \t--no-browser    " + "\t don't start the web browser" + \
+                        "\n  -q \t--timeout= [n]  " + "\t TSPASS prover timeout (in seconds)" + \
                         "\n\nReport aalc bugs to walid.benghabrit@mines-nantes.fr" + \
                         "\nAccLab home page: <http://www.emn.fr/z-info/acclab/>" + \
                         "\naalc is a free software released under GPL 3"
@@ -328,6 +343,7 @@ def main(argv):
     run_gui = False
     outputfile = "tmp.tspass"
     server_port = 8000
+    global TSPASS_TIMEOUT
 
     # Check libs path
     install_path = os.environ.get('ACCLAB_PATH')
@@ -335,10 +351,10 @@ def main(argv):
 
     # Checking options
     try:
-        opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaSru:",
-                                   ["help", "input", "output", "compile", "monodic", "check",
-                                    "shell", "load", "fotl", "recompile", "init", "no-colors",
-                                    "compile-stdlib", "hotswap", "ast", "synth", "reparse", "gui", "no-browser"])
+        opts, args = getopt.getopt(argv[1:], "hi:o:cmsktlrbxdaSru:nq:",
+                                   ["help", "input=", "output=", "compile", "monodic", "check",
+                                    "shell", "load", "fotl", "recompile", "init", "no-colors", "compile-stdlib",
+                                    "hotswap", "ast", "synth", "reparse", "gui=", "no-browser", "timeout="])
     except getopt.GetoptError:
         print(helpStr)
         sys.exit(2)
@@ -384,8 +400,10 @@ def main(argv):
             synth = True
         elif opt in ("-r", "--reparse"):
             reparse = True
-        elif opt in ("--no-browser"):
+        elif opt in ("-n", "--no-browser"):
             nobrowser = True
+        elif opt in ("-q", "--timeout"):
+            TSPASS_TIMEOUT = int(arg)
         elif opt in ("-u", "--gui"):
             run_gui = True
             try:
