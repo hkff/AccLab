@@ -41,9 +41,10 @@ def build_env(prog: m_aalprog=None):
     :param prog: AAL program
     :return: the environment
     """
-    pre_cond = "\n%%%%%%%%% START EVN %%%%%%%%%%%"
+    pre_cond = "\n%%%%%%%%% START EVN %%%%%%%%%%%\n"
+    pre_cond += "always(\n"
     pre_cond += "\n%%% Types knowledge\n"
-    pre_cond += "always(\n "
+
     for x in prog.get_declared(m_type):
         pre_cond += str(x.to_ltl()) + " & \n"
 
@@ -80,7 +81,7 @@ def build_env(prog: m_aalprog=None):
 
     data_decs = "\n\n%%% Data knowledge \n" + "".join(["![d](subject(d, " + str(x.name) + ")) &\n" for x in prog.get_declared(m_agent)])
     # data_decs = ""
-    pre_cond += data_decs + " CTE ) &"
+    pre_cond += data_decs + "\nCTE ) &"
     #pre_cond = pre_cond[:-2] + "& true )\n" if pre_cond[-2].startswith("&") else pre_cond + ")\n"
 
     pre_cond += "\n%%%%%%%%% END EVN %%%%%%%%%%%\n\n"

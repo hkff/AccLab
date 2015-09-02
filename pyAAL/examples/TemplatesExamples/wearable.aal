@@ -59,5 +59,10 @@ CLAUSE customer_policy (
 )
 
 CALL validate_usage("cardioMon_policy" "customer_policy")
+// with time : SAT
+// without time : UNSAT
+
 //CALL validate("cardioMon_policy" "customer_policy")
+// with time : SAT
+// without time : LOOP
 
