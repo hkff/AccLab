@@ -248,7 +248,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
 
         solve_auth(compiler, p=c1, u=c2, resolve=resolve)
         solve_triggers(compiler, p=c1, u=c2, resolve=resolve)
-        # return
+        return
     else:
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
 

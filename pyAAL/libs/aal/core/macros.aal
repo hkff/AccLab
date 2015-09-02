@@ -140,3 +140,23 @@ def exitAgentDec(ctx):
 self.exitAgentDec = exitAgentDec
 """
 )
+
+
+/*
+ * Check usage consistency of two clauses
+ */
+MACRO validate_usage(c1 c2) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+
+if _c1 is not None and _c2 is not None:
+    pre_cond = build_env(self.aalprog)
+    code = pre_cond + "\n%%  " + c1 + "\nclause(" + c1 + ").ue " + "\n & \n\n%%  " + c2 + "\nclause(" + c2 + ").ue"
+    res = self.apply_check(code=code, show=False, verbose=True)
+    if res["res"] == "Unsatisfiable":
+        print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
+    else:
+        print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+"""
+)

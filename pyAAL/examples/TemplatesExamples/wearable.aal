@@ -33,6 +33,7 @@ CLAUSE cardioMon_policy (
     AND
     IF (d.subject == a) THEN {
     	 MUST( cardioMon.delete[cardioMon](d) BEFORE "6 months") 
+    	 //MUST( cardioMon.delete[cardioMon](d)) 
     }
 	AUDITING auditor.audit[cardioMon](a)
 	IF_VIOLATED_THEN dpa.sanction[cardioMon](a)
@@ -43,7 +44,7 @@ CLAUSE customer_policy (
     FORALL d:data
     IF(d.subject == customer) THEN {
         PERMIT customer.read[cardioMon](d)
-        AND PERMIT customer.write[cardioMon](d)
+        AND DENY customer.write[cardioMon](d)
         AND PERMIT customer.update[cardioMon](d)
         AND PERMIT customer.delete[cardioMon](d)
         AND PERMIT customer.login[cardioMon](d)
@@ -51,10 +52,12 @@ CLAUSE customer_policy (
     AND
     IF (d.subject == customer) THEN {
     	 MUST( cardioMon.delete[cardioMon](d) BEFORE "6 months") 
+    	 //MUST( cardioMon.delete[cardioMon](d)) 
     }
 	AUDITING auditor.audit[cardioMon](a)
 	IF_VIOLATED_THEN dpa.sanction[cardioMon](a) 
 )
 
-CALL validate("cardioMon_policy" "customer_policy")
+CALL validate_usage("cardioMon_policy" "customer_policy")
+//CALL validate("cardioMon_policy" "customer_policy")
 

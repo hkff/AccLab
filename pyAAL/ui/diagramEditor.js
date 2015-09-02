@@ -105,15 +105,12 @@ var visualEditor = {
         window.toolboxNode = dockManager.dockUp(window.solutionNode, window.toolbox, 0.2);
 
         //window.outlineNode = dockManager.dockFill(solutionNode, outline);
-
-/*
-
+        /*
         window.problemsNode = dockManager.dockDown(window.propertiesNode, inplaceAAL, 0.40);
         window.propertiesNode = dockManager.dockRight(documentNode, properties, 0.20);
-
         window.inplaceAALNode = dockManager.dockFill(window.propertiesNode, window.inplaceAAL);
         window.componentsNode = dockManager.dockFill(window.propertiesNode, components);
-    */
+        */
     },
 
     acdMode: function() {
@@ -155,8 +152,7 @@ var visualEditor = {
         prop = 145 / $(document).width();
         window.componentsNode = dockManager.dockLeft(documentNode, components, prop);
         window.toolboxNode = dockManager.dockDown(componentsNode, toolbox, 0.80);
-
-    },
+    }
 };
 
 
