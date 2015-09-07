@@ -4,6 +4,7 @@
 *.blg
 *.out
 *.toc
+.idea/workspace.xml
 pyAAL/.idea/workspace.xml
 pyAAL/UserGuide/UserGuide.log
 pyAAL/tmp_gen.fotl

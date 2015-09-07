@@ -5,56 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/thirdparty_src/buddy-2.4.tar.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/interfaces/jtlv_grgame.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/thirdparty_src/ltl2ba-1.2b1.tar.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/linux/ltl2ba" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/thirdparty_src/ltl3ba-1.1.2.tar.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/linux/ltl3ba" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/thirdparty_src/tspass-source-0.95-0.17.tar.gz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polytope/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/abstract/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/interfaces/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/export/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/ast.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/automata.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/export/d3.v3.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/abstract/discretization.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/dumpsmach.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polytope/esp.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/executions.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/abstract/feasible.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/abstract/find_controller.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/form.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/interfaces/gr1c.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/export/graph2dot.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/export/graph2promela.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/graphics.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/hybrid.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/interfaces/jtlv.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/labeled_graphs.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/interfaces/ltl2ba.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/export/machine2scxml.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/machines.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/mathset.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/parser.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/parsetab.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polytope/plot.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/abstract/plot.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/plyparser.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polytope/polytope.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polytope/prop2partition.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/abstract/prop2partition.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/pyparser.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polytope/quickhull.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/export/save_d3.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/synth.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/simul/test.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/transys.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/version.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pyAAL.iws" />
@@ -101,14 +51,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/simul/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.9120879">
+            <state vertical-scroll-proportion="0.0">
               <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
               <folding>
                 <element signature="e#21#30#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6290481">
+              <caret line="41" column="2" selection-start-line="0" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dumpsmach.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tulip/dumpsmach.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -134,7 +104,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ui/templates/Macros.json" />
         <option value="$PROJECT_DIR$/ui/Server.py" />
         <option value="$PROJECT_DIR$/ui/style.css" />
         <option value="$PROJECT_DIR$/ui/templates/Authorizations.json" />
@@ -185,6 +154,7 @@
         <option value="$PROJECT_DIR$/tulip/interfaces/ltl2ba.py" />
         <option value="$PROJECT_DIR$/simul/test.py" />
         <option value="$PROJECT_DIR$/polytope/polytope.py" />
+        <option value="$PROJECT_DIR$/README" />
       </list>
     </option>
   </component>
@@ -344,70 +314,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tulip" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="thirdparty_src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pyAAL" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="linux" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -924,18 +830,6 @@
       <option name="number" value="Default" />
       <updated>1423228113584</updated>
     </task>
-    <task id="LOCAL-00038" summary="Coverage tests minors">
-      <created>1432652162192</created>
-      <option name="number" value="00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1432652162192</updated>
-    </task>
-    <task id="LOCAL-00039" summary="Minors">
-      <created>1432654165468</created>
-      <option name="number" value="00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1432654165468</updated>
-    </task>
     <task id="LOCAL-00040" summary="Minors">
       <created>1432654358900</created>
       <option name="number" value="00040" />
@@ -1218,13 +1112,25 @@
       <option name="project" value="LOCAL" />
       <updated>1441636241332</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="Adding Tulip lib / ltl2ba / ltl3ba">
+      <created>1441641329358</created>
+      <option name="number" value="00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1441641329358</updated>
+    </task>
+    <task id="LOCAL-00088" summary="Readme Update">
+      <created>1441645166239</created>
+      <option name="number" value="00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1441645166239</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1" />
   <component name="ToolWindowManager">
     <frame x="1919" y="26" width="1922" height="1175" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -1232,9 +1138,9 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32664755" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36485195" sideWeight="0.49790794" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36485195" sideWeight="0.49790794" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17000955" sideWeight="0.4921875" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22204472" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22204472" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32282713" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18157615" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1290,8 +1196,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Minors + tspass examples" />
-    <MESSAGE value="Toaster" />
     <MESSAGE value="Times fixing" />
     <MESSAGE value="Minors" />
     <MESSAGE value="Templates Rendering V1" />
@@ -1315,7 +1219,9 @@
     <MESSAGE value="Consistency checks : adding data knowledge" />
     <MESSAGE value="Adding TSPASS timeout; Fixing aalc args" />
     <MESSAGE value="Moving tspass src" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moving tspass src" />
+    <MESSAGE value="Adding Tulip lib / ltl2ba / ltl3ba" />
+    <MESSAGE value="Readme Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Readme Update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1324,13 +1230,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ui/ui/components/Policy.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39497307">
-          <caret line="38" column="27" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/ui/components/Data.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4308797">
@@ -1343,13 +1242,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="212" column="7" selection-start-line="212" selection-start-column="7" selection-end-line="212" selection-end-column="7" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.59952325">
-          <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -1736,11 +1628,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/simul/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.9120879">
+        <state vertical-scroll-proportion="0.0">
           <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
           <folding>
             <element signature="e#21#30#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tulip/dumpsmach.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6290481">
+          <caret line="41" column="2" selection-start-line="0" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
