@@ -81,7 +81,7 @@ def call_ltlba(formula, prefix='', v=3):
     ltl2ba_output = p.stdout.read()
     logger.info(ltlba +' output:\n\n{s}\n'.format(s=ltl2ba_output))
     if p.returncode != 0:
-        raise Exception('Error when converting LTL to Buchi.')
+        raise Exception('Error when converting LTL to Buchi.' + str(ltl2ba_output.decode("utf-8")))
     return ltl2ba_output
 
 

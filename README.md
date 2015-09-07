@@ -54,8 +54,9 @@ AccLab needs the following dependencies :
     
             $ sudo apt-get install liblapack3 liblapack-dev  
             $ sudo apt-get install libblas-dev liblapack3gf
+            $ sudo apt-get install python3-dev
         
-    You can download cvxopt from  http://cvxopt.org/  
+    After that you can download and install cvxopt from  http://cvxopt.org/  
     For more information on TuLip see
     http://tulip-control.sourceforge.net/
 
