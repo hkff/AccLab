@@ -5,8 +5,56 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c2caad01-f71f-479d-8af7-bf6b9aa803e3" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/thirdparty_src/buddy-2.4.tar.gz" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/interfaces/jtlv_grgame.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/thirdparty_src/ltl2ba-1.2b1.tar.gz" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/linux/ltl2ba" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/thirdparty_src/ltl3ba-1.1.2.tar.gz" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/linux/ltl3ba" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/thirdparty_src/tspass-source-0.95-0.17.tar.gz" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polytope/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/abstract/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/interfaces/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/export/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/ast.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/automata.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/export/d3.v3.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/abstract/discretization.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/dumpsmach.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polytope/esp.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/executions.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/abstract/feasible.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/abstract/find_controller.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/form.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/interfaces/gr1c.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/export/graph2dot.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/export/graph2promela.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/graphics.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/hybrid.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/interfaces/jtlv.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/labeled_graphs.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/interfaces/ltl2ba.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/export/machine2scxml.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/machines.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/mathset.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/parser.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/parsetab.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polytope/plot.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/abstract/plot.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/plyparser.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polytope/polytope.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polytope/prop2partition.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/abstract/prop2partition.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/spec/pyparser.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/polytope/quickhull.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/export/save_d3.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/synth.py" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/simul/test.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tools/tspass-source-0.95-0.17.tar.gz" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/transys/transys.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tulip/version.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pyAAL.iws" />
@@ -24,7 +72,7 @@
     <SUITE FILE_PATH="coverage/pyAAL$test_feature.coverage" NAME="test.feature Coverage Results" MODIFIED="1432656492542" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/pyAAL$Simul.coverage" NAME="Simul Coverage Results" MODIFIED="1432824204651" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pyAAL$aalc2.coverage" NAME="aalc2 Coverage Results" MODIFIED="1432536010436" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/pyAAL$Simul2.coverage" NAME="Simul2 Coverage Results" MODIFIED="1441636089561" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/simul" />
+    <SUITE FILE_PATH="coverage/pyAAL$Simul2.coverage" NAME="Simul2 Coverage Results" MODIFIED="1441640814868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/simul" />
     <SUITE FILE_PATH="coverage/pyAAL$aaltlr.coverage" NAME="aaltlr Coverage Results" MODIFIED="1432824120924" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
     <SUITE FILE_PATH="coverage/pyAAL$tests.coverage" NAME="tests Coverage Results" MODIFIED="1433280481213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pyAAL$tspasslr.coverage" NAME="tspasslr Coverage Results" MODIFIED="1432650914159" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
@@ -53,13 +101,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="graphics.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tulip/graphics.py">
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/simul/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.068627454">
-              <caret line="34" column="36" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
+            <state vertical-scroll-proportion="1.9120879">
+              <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
               <folding>
-                <marker date="1441636086854" expanded="true" signature="5675:5773" placeholder="import ..." />
+                <element signature="e#21#30#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -86,10 +134,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ui/templates/Compliance.json" />
-        <option value="$PROJECT_DIR$/ui/templates/Clause.json" />
-        <option value="$PROJECT_DIR$/ui/templates/Ressource.json" />
-        <option value="$PROJECT_DIR$/ui/templates/Resource.json" />
         <option value="$PROJECT_DIR$/ui/templates/Macros.json" />
         <option value="$PROJECT_DIR$/ui/Server.py" />
         <option value="$PROJECT_DIR$/ui/style.css" />
@@ -123,20 +167,24 @@
         <option value="$PROJECT_DIR$/examples/TemplatesExamples/wearable.aal" />
         <option value="$PROJECT_DIR$/AALChecker.py" />
         <option value="$USER_HOME$/Desktop/tulip-1.1a/build/lib/test.py" />
-        <option value="$PROJECT_DIR$/simul/test.py" />
-        <option value="$PROJECT_DIR$/tulip/transys/export/graph2dot.py" />
         <option value="$PROJECT_DIR$/tulip/abstract/feasible.py" />
         <option value="$PROJECT_DIR$/tulip/abstract/find_controller.py" />
         <option value="$PROJECT_DIR$/tulip/abstract/prop2partition.py" />
-        <option value="$PROJECT_DIR$/tulip/abstract/discretization.py" />
         <option value="$PROJECT_DIR$/tulip/spec/form.py" />
-        <option value="$PROJECT_DIR$/tulip/interfaces/jtlv.py" />
-        <option value="$PROJECT_DIR$/tulip/transys/labeled_graphs.py" />
-        <option value="$PROJECT_DIR$/tulip/transys/transys.py" />
-        <option value="$PROJECT_DIR$/tulip/transys/machines.py" />
         <option value="$PROJECT_DIR$/tulip/transys/executions.py" />
         <option value="$PROJECT_DIR$/tulip/transys/export/machine2scxml.py" />
         <option value="$PROJECT_DIR$/tulip/graphics.py" />
+        <option value="$PROJECT_DIR$/tulip/transys/export/graph2dot.py" />
+        <option value="$PROJECT_DIR$/tulip/transys/labeled_graphs.py" />
+        <option value="$PROJECT_DIR$/tulip/transys/transys.py" />
+        <option value="$PROJECT_DIR$/tulip/transys/machines.py" />
+        <option value="$PROJECT_DIR$/tulip/synth.py" />
+        <option value="$PROJECT_DIR$/tulip/interfaces/jtlv.py" />
+        <option value="$PROJECT_DIR$/tulip/abstract/discretization.py" />
+        <option value="$PROJECT_DIR$/tulip/interfaces/gr1c.py" />
+        <option value="$PROJECT_DIR$/tulip/interfaces/ltl2ba.py" />
+        <option value="$PROJECT_DIR$/simul/test.py" />
+        <option value="$PROJECT_DIR$/polytope/polytope.py" />
       </list>
     </option>
   </component>
@@ -323,7 +371,71 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="thirdparty_src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="linux" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="simul" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pyAAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="polytope" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -408,7 +520,7 @@
     <property name="FullScreen" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
+    <property name="settings.editor.selected.configurable" value="pyconsole" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="jsx.switch.disabled" value="true" />
     <property name="ChangesBrowser.SHOW_FLATTEN" value="true" />
@@ -416,13 +528,16 @@
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/../../AccLab0/pyAAL/aalc.py" />
   </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myIpythonEnabled" value="false" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tulip/interfaces" />
       <recent name="$PROJECT_DIR$/ui/templates/Security" />
       <recent name="$PROJECT_DIR$/ui/templates" />
       <recent name="$PROJECT_DIR$/ui/libs" />
       <recent name="$PROJECT_DIR$/tools/utils/ace" />
-      <recent name="$PROJECT_DIR$/tools/utils/nano" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/ui/templates/Declarations" />
@@ -809,12 +924,6 @@
       <option name="number" value="Default" />
       <updated>1423228113584</updated>
     </task>
-    <task id="LOCAL-00037" summary="Coverage tests">
-      <created>1432651569470</created>
-      <option name="number" value="00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1432651569470</updated>
-    </task>
     <task id="LOCAL-00038" summary="Coverage tests minors">
       <created>1432652162192</created>
       <option name="number" value="00038" />
@@ -1103,35 +1212,41 @@
       <option name="project" value="LOCAL" />
       <updated>1441214805080</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="Moving tspass src">
+      <created>1441636241323</created>
+      <option name="number" value="00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1441636241332</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1" />
   <component name="ToolWindowManager">
     <frame x="1919" y="26" width="1922" height="1175" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22204472" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23731343" sideWeight="0.5078125" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295129" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32664755" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2650143" sideWeight="0.49790794" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36485195" sideWeight="0.49790794" order="2" side_tool="false" content_ui="tabs" x="907" y="82" width="1001" height="955" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17000955" sideWeight="0.4921875" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22204472" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32282713" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18157615" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17063871" sideWeight="0.4921875" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39888683" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3982808" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32698414" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931355" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39971346" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23867069" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24973376" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32328767" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1175,7 +1290,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Adding AccLab ui" />
     <MESSAGE value="Minors + tspass examples" />
     <MESSAGE value="Toaster" />
     <MESSAGE value="Times fixing" />
@@ -1200,7 +1314,8 @@
     <MESSAGE value="Wearable Templates + Components shortcut fix" />
     <MESSAGE value="Consistency checks : adding data knowledge" />
     <MESSAGE value="Adding TSPASS timeout; Fixing aalc args" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding TSPASS timeout; Fixing aalc args" />
+    <MESSAGE value="Moving tspass src" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moving tspass src" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1209,84 +1324,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/libs/aal/core/types.aal">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="54" selection-start-line="15" selection-start-column="54" selection-end-line="15" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/libs/ace/src-min-noconflict/ext-themelist.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/libs/dock/js/dockspawn.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9710145">
-          <caret line="2626" column="23" selection-start-line="2626" selection-start-column="14" selection-end-line="2626" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="175" column="0" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/fileManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="299" column="25" selection-start-line="299" selection-start-column="25" selection-end-line="299" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/libs/dock/css/font-awesome.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.468041">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="89" column="50" selection-start-line="89" selection-start-column="50" selection-end-line="89" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/properties.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="323" column="20" selection-start-line="323" selection-start-column="20" selection-end-line="323" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/tools.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1097" column="0" selection-start-line="1097" selection-start-column="0" selection-end-line="1097" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/components/Actor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="302" column="24" selection-start-line="302" selection-start-column="24" selection-end-line="302" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/ui/components/Agent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4308797">
-          <caret line="33" column="52" selection-start-line="33" selection-start-column="52" selection-end-line="33" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/ui/components/Policy.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.39497307">
@@ -1415,14 +1452,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simul/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharm40/system/python_stubs/-1247971765/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33243608">
@@ -1436,7 +1465,7 @@
         <state vertical-scroll-proportion="0.38492596">
           <caret line="339" column="45" selection-start-line="339" selection-start-column="45" selection-end-line="339" selection-end-column="45" />
           <folding>
-            <element signature="e#1835#1853#0" expanded="true" />
+            <element signature="e#1835#1853#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1461,14 +1490,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.32839838">
           <caret line="83" column="27" selection-start-line="83" selection-start-column="27" selection-end-line="83" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tulip/abstract/discretization.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="754" column="26" selection-start-line="754" selection-start-column="26" selection-end-line="754" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -1510,42 +1531,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tulip/interfaces/jtlv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33243608">
-          <caret line="488" column="21" selection-start-line="488" selection-start-column="21" selection-end-line="488" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tulip/transys/labeled_graphs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.837147">
-          <caret line="688" column="35" selection-start-line="688" selection-start-column="35" selection-end-line="688" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tulip/transys/transys.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6716016">
-          <caret line="501" column="24" selection-start-line="501" selection-start-column="24" selection-end-line="501" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tulip/transys/machines.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.2503365">
-          <caret line="682" column="30" selection-start-line="682" selection-start-column="30" selection-end-line="682" selection-end-column="30" />
-          <folding>
-            <marker date="1441635917678" expanded="true" signature="-1:-1" placeholder="Select from which..." />
-            <marker date="1441635917678" expanded="true" signature="-1:-1" placeholder="Select from the..." />
-            <marker date="1441635917678" expanded="true" signature="-1:-1" placeholder="Select from the..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1599,20 +1584,162 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tulip/transys/export/graph2dot.py">
+    <entry file="file://$PROJECT_DIR$/tulip/transys/labeled_graphs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33243608">
-          <caret line="368" column="18" selection-start-line="368" selection-start-column="18" selection-end-line="368" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.33235726">
+          <caret line="688" column="34" selection-start-line="688" selection-start-column="34" selection-end-line="688" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tulip/transys/transys.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2738764">
+          <caret line="631" column="32" selection-start-line="631" selection-start-column="32" selection-end-line="631" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tulip/transys/machines.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="9.002929">
+          <caret line="549" column="0" selection-start-line="549" selection-start-column="0" selection-end-line="549" selection-end-column="0" />
+          <folding>
+            <marker date="1441637159414" expanded="true" signature="-1:-1" placeholder="Select from which..." />
+            <marker date="1441637159414" expanded="true" signature="-1:-1" placeholder="Select from the..." />
+            <marker date="1441637159414" expanded="true" signature="-1:-1" placeholder="Select from the..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tulip/synth.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24011713">
+          <caret line="178" column="4" selection-start-line="178" selection-start-column="4" selection-end-line="178" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tulip/abstract/discretization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="9.494876">
+          <caret line="412" column="1" selection-start-line="412" selection-start-column="1" selection-end-line="412" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tulip/interfaces/gr1c.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12955466">
+          <caret line="302" column="39" selection-start-line="302" selection-start-column="39" selection-end-line="302" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tulip/interfaces/jtlv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11713031">
+          <caret line="464" column="22" selection-start-line="464" selection-start-column="22" selection-end-line="464" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/behave/log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/behave/test.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/behave/steps/steps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19838056">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/behave/behave.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tulip/graphics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.068627454">
-          <caret line="34" column="36" selection-start-line="34" selection-start-column="36" selection-end-line="34" selection-end-column="36" />
+        <state vertical-scroll-proportion="-4.1295547">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tulip/interfaces/ltl2ba.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/polytope/esp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.3805668">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tulip/version.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.9352227">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/polytope/polytope.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5604396">
+          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/polytope/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6200942">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1441636086854" expanded="true" signature="5675:5773" placeholder="import ..." />
+            <element signature="e#1700#1738#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tulip/transys/export/graph2dot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.634223">
+          <caret line="144" column="41" selection-start-line="144" selection-start-column="41" selection-end-line="144" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simul/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.9120879">
+          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+          <folding>
+            <element signature="e#21#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
