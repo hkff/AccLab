@@ -98,9 +98,9 @@ Contacts
 >   Pr.Jean-Claude Royer  <Jean-Claude.Royer@mines-nantes.fr>  (Kernel/Theory/UI)  
 >   Dr. Hervé Grall       <Herve.Grall@mines-nantes.fr>        (Theory)  
 >   Dr. Mohamed Sellami   <Mohamed.Sellami@isep.fr>            (Theory)  
->   Pierre Teilhard    (Kernel)
->   Anqi Tong          (UI)
->   Julie Spens         (UI)
+>   Pierre Teilhard    (Kernel)  
+>   Anqi Tong          (UI)  
+>   Julie Spens         (UI)  
 
 -------------------------------------------------------------------------------
 Copyright (C) 2014-2015 Walid Benghabrit  
