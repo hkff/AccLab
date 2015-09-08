@@ -66,7 +66,7 @@ AccLab needs the following dependencies :
     For other platforms you have to compile the sources.  
     Note : ltl3ba depends on buddy-2.4, you need to compile and install it.
     
-        $ ./configure
+        $ ./configure --prefix=/usr
         $ sudo make & make install
     The source code for ltl3ba-1.1.2, ltl2ba-1.2b1 and buddy-2.4 
     are provided with this tool, see folder tools/thirdparty_src/ .
