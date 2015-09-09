@@ -35,16 +35,91 @@
 import logging
 logger = logging.getLogger(__name__)
 import subprocess
+from tulip.transys.automata import BuchiAutomaton
 
 
-def ltl3baHOAtoBuchi(a):
+def handle_state(state):
     """
-    Return the automata
-    :param a:
+    Handle a state
+    :param state:
     :return:
     """
+    res = {"name": "", "init": False, "accept": False}
+    state = state.strip()
 
-    return a
+    if state is '':
+        return None
+
+    if state.endswith("_init"):
+        res["init"] = True
+        state = state.replace("_init", "")
+    elif state.startswith("accept_"):
+        res["accept"] = True
+        state = state.replace("accept_", "")
+
+    res["name"] = state.replace('\n', '')
+    return res
+
+
+def ltl3baHOAtoBuchi(out):
+    """
+    Return the automata
+    Transition Format # state, state, (1)?, 1 (if accept);
+    :param out:
+    :return:
+    """
+    transitions = out.split('\n')
+    transitions = transitions[1:]
+
+    states = []
+    init = []
+    accept = []
+    trans = []
+
+    for s in transitions:
+        tstates = s.split(',')
+        if len(tstates) > 2:
+            s1 = handle_state(tstates[0])
+            if s1 is not None:
+                states.append(s1["name"])
+                if s1["init"]:
+                    init.append(s1["name"])
+                if s1["accept"]:
+                    accept.append(s1["name"])
+
+            s2 = handle_state(tstates[1])
+            if s2 is not None:
+                states.append(s2["name"])
+                if s2["init"]:
+                    init.append(s2["name"])
+                if s2["accept"]:
+                    accept.append(s2["name"])
+            # Add transition
+            trans.append({"from": s1["name"], "to": s2["name"], "label": str(tstates[-2])[2:-1]})
+
+    states = list(set(states))
+    init = list(set(init))
+    accept = list(set(accept))
+
+    # Creating Buchi Automaton
+    b = BuchiAutomaton(atomic_proposition_based=True)
+    # Adding states
+    b.states.add_from(states)
+
+    # Adding initial states
+    b.states.initial.add_from(init)
+
+    # Adding accepting states
+    b.states.accepting.add_from(accept)
+
+    # Adding transitions
+    for t in trans:
+        t["label"] = t["label"]
+        b.atomic_propositions |= {t["label"]}
+        b.transitions.add(t["from"], t["to"], letter=t["label"])
+
+    return b
+
 
 # PATCHED by Walid Benghabrit on 04/09/2015
 # Adding ltl3ba supports
