@@ -1,3 +1,5 @@
+from tulip.transys.export import save_d3
+
 __author__ = 'walid'
 import os
 from tulip.transys import *
@@ -7,13 +9,12 @@ from tulip.transys.automata import *
 from tulip.transys.export.graph2dot import *
 
 
-prefix = (str(os.path.realpath(__file__)).split("pyAAL")[0] + "pyAAL/tools/linux/")
-f = LTL("! spawn U init")
-# print(f)
-
-out = call_ltl3ba("! spawn U init", prefix=prefix)
-out = out.decode("utf-8")
-# print(out)
+f = LTL("! spawn U init && b => c")
+out = call_ltl3ba(f, args=['-M1'])
+print(out)
 b = ltl3baHOAtoBuchi(out)
 print(b)
 b.save("toto", "svg")
+save_d3.labeled_digraph2d3(b, "test.html")
+nfa = NFA()
+nfa2dfa(nfa)

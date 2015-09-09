@@ -63,11 +63,11 @@ def labeled_digraph2d3(graph, html_file_name='index.html'):
     =======
     From C{examples/transys/machine_examples.py} call:
     
-    >>> m = garage_counter_with_state_vars()
+    >> m = garage_counter_with_state_vars()
     
     Then export to html:
     
-    >>> m.save('index.html', 'html')
+    >> m.save('index.html', 'html')
     
     See Also
     ========
@@ -77,7 +77,7 @@ def labeled_digraph2d3(graph, html_file_name='index.html'):
     @type graph: L{LabeledDiGraph}
     """
     file_path = inspect.getfile(inspect.currentframe())
-    dir_path = os.path.dirname(os.path.abspath(file_path) )
+    dir_path = os.path.dirname(os.path.abspath(file_path))
     
     d3_file_name = os.path.join(dir_path, 'd3.v3.min.js')
     d3_file = open(d3_file_name)
@@ -152,7 +152,7 @@ def labeled_digraph2d3(graph, html_file_name='index.html'):
         # better error msg for numpy array
         import json
         data = json_graph.node_link_data(graph)
-        s += json.dumps(data, default=lambda x: str(x) )
+        s += json.dumps(data, default=lambda x: str(x))
     
     s += ';'
     
@@ -167,7 +167,7 @@ def labeled_digraph2d3(graph, html_file_name='index.html'):
           .data(graph.links)
         .enter().append("svg:path")
           .attr("class", "link")
-          .style("stroke-width", 10)
+          .style("stroke-width", 9)
           .style("fill", "none")
           .style("marker-end", 'url(#end-arrow)');
       
@@ -205,7 +205,7 @@ def labeled_digraph2d3(graph, html_file_name='index.html'):
       node.append("title")
           .style("fill", "gray")
           .text(function(d) { return """
-      
+    print(graph)
     # edge labels (shown when mouse on edge)
     if hasattr(graph, '_state_label_def') and \
     hasattr(graph, '_state_dot_label_format'):

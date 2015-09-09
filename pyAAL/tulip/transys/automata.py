@@ -206,13 +206,13 @@ class DFA(NFA):
         )
         self.automaton_type = 'Deterministic Finite Automaton'
 
-def nfa2dfa():
+def nfa2dfa(nfa):
     """Determinize NFA.
 
     UNDER DEVELOPMENT; function signature may change without notice.
     Calling will result in NotImplementedError.
     """
-    raise NotImplementedError
+    return "testing"
     
 def dfa2nfa(dfa):
     """Copy DFA to an NFA, so remove determinism restriction.

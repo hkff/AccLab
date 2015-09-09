@@ -367,11 +367,9 @@ class MooreMachine(FiniteStateMachine):
         """
         FiniteStateMachine.__init__(self, **args)
         
-        self.dot_node_shape = {'normal':'ellipse'}
+        self.dot_node_shape = {'normal': 'ellipse'}
         self.default_export_fname = 'moore'
-        
-        raise NotImplementedError
-    
+
     def __str__(self):
         """Get informal string representation."""
         #TODO: improve port formatting
@@ -752,6 +750,22 @@ def moore2mealy(moore_machine, mealy_machine):
     Calling will result in NotImplementedError.
     """
     raise NotImplementedError
+
+def _print_ports(port_dict):
+    s = ''
+    for port_name, port_type in port_dict.iteritems():
+        s += '\t' + str(port_name) + ' : '
+        s += pformat(port_type) + '\n'
+    s += '\n'
+    return s
+
+
+def _print_label(label_dict):
+    s = ''
+    for name, value in label_dict.iteritems():
+        s += '\t\t' + str(name) + ' : ' + str(value) + '\n'
+    s += '\n'
+    return s
 
 ####
 # Program Graph (memo)

@@ -36,13 +36,13 @@ import logging
 logger = logging.getLogger(__name__)
 import subprocess
 from tulip.transys.automata import BuchiAutomaton
-
+import os, sys
 
 def handle_state(state):
     """
     Handle a state
     :param state:
-    :return:
+    :return: Object {"name": "state_name", "init": Bool, "accept": Bool}
     """
     res = {"name": "", "init": False, "accept": False}
     state = state.strip()
@@ -95,7 +95,7 @@ def ltl3baHOAtoBuchi(out):
                 if s2["accept"]:
                     accept.append(s2["name"])
             # Add transition
-            trans.append({"from": s1["name"], "to": s2["name"], "label": str(tstates[-2])[2:-1]})
+            trans.append({"from": s1["name"], "to": s2["name"], "label": str(tstates[-2])[3:-2]})
 
     states = list(set(states))
     init = list(set(init))
@@ -123,7 +123,7 @@ def ltl3baHOAtoBuchi(out):
 
 # PATCHED by Walid Benghabrit on 04/09/2015
 # Adding ltl3ba supports
-def call_ltlba(formula, prefix='', v=3):
+def call_ltlba(formula, v=3, args=[]):
     """Load a Buchi Automaton from a Never Claim.
 
     TODO
@@ -139,17 +139,26 @@ def call_ltlba(formula, prefix='', v=3):
     @type formula: str
 
     @return: Buchi Automaton
-    @rtype: tulip.transys.BA
+    @rtype: byte
     """
     ltlba = 'ltl2ba' if v == 2 else 'ltl3ba'
-
+    prefix = ""
     try:
         subprocess.call([ltlba, '-h'], stdout=subprocess.PIPE)
     except OSError:
-        # print(Exception('cannot find ' + ltlba + ' on path'))
-        pass
+        # Setting up the ltlxba path
+        p = sys.platform
+        if p.startswith("linux"):
+            os_name = "linux"
+        elif p.startswith("darwin"):
+            os_name = "mac"
+        else:
+            print("OS not supported !")
+            return
+        prefix = str(os.path.realpath(__file__)).split("pyAAL")[0] + "pyAAL/tools/" + os_name + "/"
+
     p = subprocess.Popen(
-        [prefix + ltlba, '-T3', '-f', '"{f}"'.format(f=formula)],
+        [prefix + ltlba, '-T3'] + args + ['-f', '"{f}"'.format(f=formula)],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT)
     p.wait()
@@ -160,25 +169,10 @@ def call_ltlba(formula, prefix='', v=3):
     return ltl2ba_output
 
 
-def call_ltl2ba(formula, prefix=''):
-    return call_ltlba(formula, prefix=prefix, v=2)
+def call_ltl2ba(formula, args=[]):
+    return call_ltlba(formula, v=2, args=args).decode("utf-8")
 
 
-def call_ltl3ba(formula, prefix=''):
-    return call_ltlba(formula, prefix=prefix, v=3)
+def call_ltl3ba(formula, args=[]):
+    return call_ltlba(formula, v=3, args=args).decode("utf-8")
 
-
-def parse_spot(self, ltl2ba_output):
-    """Return a Buchi automaton from parsing C{ltl3ba_output}.
-
-    @return: Buchi automaton as a 3-`tuple` containing:
-      - `dict` mapping symbols to types (all `"boolean"`)
-      - `networkx.MultiDiGraph`, each edge labeled with a
-        `"guard"` that is a Boolean formula as `str`
-      - `set` of initial nodes
-      - `set` of accepting nodes
-    """
-    self.initial_nodes = set()
-    self.accepting_nodes = set()
-    self.symbols = dict()
-    return (self.symbols, self.initial_nodes, self.accepting_nodes)
