@@ -42,6 +42,8 @@ from textwrap import fill
 from io import StringIO
 
 import networkx as nx
+from networkx import *
+from networkx.drawing.nx_pydot import *
 
 try:
     import pydot
@@ -164,8 +166,8 @@ def _form_node_label(state, state_data, label_def,
             label_str = fill(str(label_value), width=width)
         label_str = label_str.replace('\n', '\\n')
         
-        node_dot_label += type_name +sep_type_value
-        node_dot_label += label_str +sep_label_sets
+        node_dot_label += type_name + sep_type_value
+        node_dot_label += label_str + sep_label_sets
     node_dot_label += '"'
     
     if latex:
@@ -280,7 +282,7 @@ def _graph2pydot(graph, wrap=10, latex=False):
     _states2dot_str(graph, dummy_nx_graph, wrap=wrap, latex=latex)
     _transitions2dot_str(graph.transitions, dummy_nx_graph, latex)
     
-    pydot_graph = nx.to_pydot(dummy_nx_graph)
+    pydot_graph = networkx.to_pydot(dummy_nx_graph)
     pydot_graph.set_overlap('false')
     
     return pydot_graph
@@ -350,17 +352,19 @@ def plot_pydot(graph, prog='dot', rankdir='LR', wrap=10, ax=None):
         pydot_graph = _graph2pydot(graph, wrap=wrap)
     except:
         if isinstance(graph, nx.Graph):
-            pydot_graph = nx.to_pydot(graph)
+            pydot_graph = networkx.to_pydot(graph)
+
         else:
             raise TypeError('graph not networkx or pydot class.' +
-                'Got instead: ' +str(type(graph) ) )
+                'Got instead: ' + str(type(graph)))
     pydot_graph.set_rankdir(rankdir)
     pydot_graph.set_splines('true')
     pydot_graph.set_bgcolor('gray')
     
     png_str = pydot_graph.create_png(prog=prog)
-    
+
     # installed ?
+    """
     if IPython:
         logger.debug('IPython installed.')
         
@@ -375,15 +379,19 @@ def plot_pydot(graph, prog='dot', rankdir='LR', wrap=10, ax=None):
             # qtconsole ?
             if cfg['IPKernelApp']:
                 logger.debug('Within IPython QtConsole.')
-                display(Image(data=png_str) )
+                display(Image(data=png_str))
                 return True
         except:
             print('IPython installed, but not called from it.')
     else:
         logger.debug('IPython not installed.')
-    
+    """
     # not called from IPython QtConsole, try Matplotlib...
-    
+
+    p = open("tot.png", "wb+")
+    p.write(png_str)
+    p.close()
+    exit()
     # installed ?
     if matplotlib:
         logger.debug('Matplotlib installed.')

@@ -44,7 +44,7 @@ AccLab needs the following dependencies :
 
     You need to install the following dependencies :  
     
-            $ sudo apt-get install python3-numpy python3-scipy python3-networkx python3-ply python3-matplotlib
+            $ sudo apt-get install python3-numpy python3-scipy python3-networkx python3-ply python3-matplotlib graphviz
             
     Installing cvxopt :  
     

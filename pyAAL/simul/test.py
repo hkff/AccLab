@@ -4,6 +4,8 @@ from tulip.transys import *
 from tulip.interfaces.ltl2ba import *
 from tulip.spec import LTL
 from tulip.transys.automata import *
+from tulip.transys.export.graph2dot import *
+
 
 prefix = (str(os.path.realpath(__file__)).split("pyAAL")[0] + "pyAAL/tools/linux/")
 f = LTL("! spawn U init")
@@ -67,8 +69,11 @@ print(states)
 print(accept)
 print(init)
 
-exit()
+# exit()
 b = BuchiAutomaton(atomic_proposition_based=True)
+# Adding states
+# for s in states:
+#     b.states.add(s)
 b.states.add("t0")
 b.states.add("t1")
 b.states.initial.add("t0")
@@ -77,3 +82,6 @@ b.atomic_propositions |= {'spawn', 'l'}
 b.transitions.add("t0", "t1", letter={'l'})
 b.transitions.add("t0", "t1")
 print(b.dot_str())
+from tulip.transys.export.save_d3 import *
+labeled_digraph2d3(b, "o.html")
+b.save("toto", "svg")

@@ -686,18 +686,18 @@ class LabeledDiGraph(nx.MultiDiGraph):
     Initialize and define one label type called C{'fruits'}.
     This also creates a field C{g.fruits}.
     
-    >>> from tulip.transys import LabeledDiGraph
-    >>> node_label_types = [('fruits', set(), True)]
-    >>> g = LabeledDiGraph(node_label_types=node_label_types)
+    >> from tulip.transys import LabeledDiGraph
+    >> node_label_types = [('fruits', set(), True)]
+    >> g = LabeledDiGraph(node_label_types=node_label_types)
     
     Add some value to the codomain of type C{'fruits'}.
     
-    >>> g.fruits |= ['apple', 'lemon']
+    >> g.fruits |= ['apple', 'lemon']
     
     The label key 'day' will be untyped,
     so the class accepts 'Jan', though incorrect.
     
-    >>> g.add_nodes_from([(1, {'fruit':'apple'}),
+    >> g.add_nodes_from([(1, {'fruit':'apple'}),
                           (2, {'fruit':'lemon', 'day':'Jan'})])
     
     Note
