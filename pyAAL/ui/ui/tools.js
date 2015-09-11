@@ -400,6 +400,8 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
 				case "aal":
 					var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
 					visualEditor.ui.fileManager.saveFile(file, editor.getValue());
+                    if(visualEditor.activeEditor != null)
+                        visualEditor.activeEditor.session.getUndoManager().markClean();
 					break;
 
 				case "acd":
@@ -418,6 +420,8 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
 				default:
 					var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
 					visualEditor.ui.fileManager.saveFile(file, editor.getValue());
+					if(visualEditor.activeEditor != null)
+                        visualEditor.activeEditor.session.getUndoManager().markClean();
 					break;
 			}
 		}

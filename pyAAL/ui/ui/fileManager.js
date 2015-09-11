@@ -261,7 +261,20 @@ visualEditor.ui.fileManager = {
 					    var inPlaceAALEditor = visualEditor.ui.fileManager.openAceEditor(id, fileType.toUpperCase());
 					    inPlaceAALEditor.setValue(response);
 					    inPlaceAALEditor.clearSelection();
-						visualEditor.activeEditor = inPlaceAALEditor;
+                        inPlaceAALEditor.on("input", function() {
+                            if (inPlaceAALEditor.session.getUndoManager().isClean())
+                                //$("#save").removeClass("disabled");
+                                console.log("not yet edited")
+                            else
+                                //$("#save").addClass("disabled");
+                                console.log("edited")
+                        });
+
+                        visualEditor.activeEditor = inPlaceAALEditor;
+                        //$('#save').on("click", function() {
+                        //    editor.session.getUndoManager().markClean()
+                        //});
+
 						break;
 				}
 			}

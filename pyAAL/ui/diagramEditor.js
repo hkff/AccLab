@@ -62,6 +62,7 @@ var visualEditor = {
             visualEditor.activeCloseBtn.undockInitiator.enabled = false;
             var panel = visualEditor.activeCloseBtn.parent.container;
             panel.performUndock();
+            visualEditor.activeCloseBtn = null;
         }
     },
 
@@ -168,7 +169,13 @@ window.onload = function() {
     // Override dockspawn close btn
     dockspawn.TabHandle.prototype.onCloseButtonClicked = function()
     {
+        // check if file has been modified
+
+
         visualEditor.activeCloseBtn = this;
+        visualEditor.closeFile();
+        return;
+
         var p = '<button type="button" class="btn" onclick="visualEditor.closeFile()">YES</button> <button type="button" class="btn">NO</button>';
         toastr.error(p, "Close file without Saving ?", {
 				"closeButton": true,
