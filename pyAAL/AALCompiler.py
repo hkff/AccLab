@@ -252,7 +252,7 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Exit AALprog
     def exitAalprog(self, ctx):
-        self.checkForwardsRef()
+        print(Color(self.checkForwardsRef()))
         if self.DEBUG:
             print("\n")
             print(self.aalprog)
@@ -330,34 +330,32 @@ class AALCompilerListener(AALListener.AALListener):
         self.isRectification = False
 
     # Check forwards ref
-    def checkForwardsRef(self) -> None:
+    def checkForwardsRef(self) -> str:
         """
         Check forwards references.
         :return:
         """
+        res = ""
         # Disable check in lib context
         if not self.loadlibs:
-            return
+            return ""
         if len(self.refForwardAgents) > 0:
-            print(Color("{autoyellow}[WARNING]{/yellow} Agents declarations missing !"))
+            res += "{autoyellow}[WARNING]{/yellow} Agents declarations missing !\n"
             for d in self.refForwardAgents:
-                print(Color("  -> " + d + " {automagenta}at line " + str(self.refForwardAgents[d].get_line()) +
-                            "{/magenta}"))
+                res += "  -> " + d + " {automagenta}at line " + str(self.refForwardAgents[d].get_line()) + "{/magenta}\n"
         if len(self.refForwardData) > 0:
-            print(Color("{autoyellow}[WARNING]{/yellow} Data declarations missing !"))
+            res += "{autoyellow}[WARNING]{/yellow} Data declarations missing !\n"
             for d in self.refForwardData:
-                print(Color("  -> " + d + " {automagenta}at line " + str(self.refForwardData[d].get_line()) +
-                            "{/magenta}"))
+                res += "  -> " + d + " {automagenta}at line " + str(self.refForwardData[d].get_line()) + "{/magenta}\n"
         if len(self.refForwardServices) > 0:
-            print(Color("{autoyellow}[WARNING]{/yellow} Services declarations missing !"))
+            res += "{autoyellow}[WARNING]{/yellow} Services declarations missing !\n"
             for d in self.refForwardServices:
-                print(Color("  -> " + d + " {automagenta}at line " + str(self.refForwardServices[d].get_line()) +
-                            "{/magenta}"))
+                res += "  -> " + d + " {automagenta}at line " + str(self.refForwardServices[d].get_line()) + "{/magenta}\n"
         if len(self.refForwardTypes) > 0:
-            print(Color("{autoyellow}[WARNING]{/yellow} Types declarations missing !"))
+            res += "{autoyellow}[WARNING]{/yellow} Types declarations missing !\n"
             for d in self.refForwardTypes:
-                print(Color("  -> " + d + " {automagenta}at line " + str(self.refForwardTypes[d].get_line()) +
-                            "{/magenta}"))
+                res += "  -> " + d + " {automagenta}at line " + str(self.refForwardTypes[d].get_line()) + "{/magenta}\n"
+        return res
 
     ##########################
     ####### Declarable #######

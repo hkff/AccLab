@@ -158,7 +158,7 @@ def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, co
     if use_shell:  # Run the shell
         shell(l)
 
-    return {"res": res, "mm": l}
+    return {"res": str(Color(res)), "mm": l}
     # TODO add interactive mode for macros
 
 

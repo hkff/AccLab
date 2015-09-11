@@ -1,7 +1,12 @@
 LOAD "core.macros"
 
-Agent bob
-Agent alice
+AGENT bob
+AGENT alice
+AGENT toto
+SERVICE cloud
+AGENT Kim
+AGENT Hospital
+AGENT d
 
 BEHAVIOR bob (
     PERMIT bob.read[alice](d),

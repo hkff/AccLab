@@ -24,16 +24,44 @@ from tools.color import *
 from AALtoFOTL import *
 
 
+# Check unused dec
+def check_unused_dec(mm) -> str:
+    """
+    Check forwards references.
+    :return:
+    """
+    res = ""
+    # Disable check in lib context
+    if not mm.loadlibs:
+        return ""
+    agents = mm.aalprog.get_declared(m_agent)
+    services = mm.aalprog.get_declared(m_service)
+    data = mm.aalprog.get_declared(m_data)
+    types = mm.aalprog.get_declared(m_type)
+
+    refs_agents = [x.target for x in mm.aalprog.walk(filter_type=m_ref, filters="self.target.is_a(m_agent) ")]
+    refs_services = [x.target for x in mm.aalprog.walk(filter_type=m_ref, filters="self.target.is_a(m_service) ")]
+
+    for a in agents:
+        if not (a in refs_agents):
+            res += ("{autoyellow}[WARNING]{/yellow} Unused agent declaration : " + str(a.name) +
+                    "  ->  {automagenta}at line " + str(a.get_line()) + "{/magenta}\n")
+
+    for a in services:
+        if not (a in refs_services):
+            res += ("{autoyellow}[WARNING]{/yellow} Unused service declaration : " + str(a.name) +
+                    "  ->  {automagenta}at line " + str(a.get_line()) + "{/magenta}\n")
+
+    return res
+
 # Check AAL global
 def check_aal(mm=None, verbose=False):
     """
     Check an AAL program
-    :param mm: AAL metamodel instance
+    :param mm: AAL compiler instance
     :param verbose: verbose print
     :return:
     """
-    # TODO : make it user friendly
-    # TODO : add some stats
     res = ""
     res += "------------------------- Start Checking -------------------------"
     if verbose:
@@ -43,16 +71,20 @@ def check_aal(mm=None, verbose=False):
         typesCount = len(mm.aalprog.get_declared(m_type))
 
         res += "\n\n** DECLARATIONS"
-        res += "\n[DECLARED AGENTS]   : " + str(agentsCount) + ""
-        res += "\n[DECLARED SERVICES] : " + str(servicesCount) + ""
-        res += "\n[DECLARED DATA]     : " + str(dataCount) + ""
-        res += "\n[DECLARED TYPES]    : " + str(typesCount) + ""
+        res += "\n[DECLARED AGENTS]   : " + str(agentsCount)
+        res += "\n[DECLARED SERVICES] : " + str(servicesCount)
+        res += "\n[DECLARED DATA]     : " + str(dataCount)
+        res += "\n[DECLARED TYPES]    : " + str(typesCount)
 
         res += "\n\n*** Forwards references check"
         res += "\n[AGENTS]   : " + str(len(mm.refForwardAgents))
         res += "\n[SERVICES] : " + str(len(mm.refForwardServices))
         res += "\n[DATA]     : " + str(len(mm.refForwardData))
         res += "\n[TYPES]    : " + str(len(mm.refForwardTypes))
+        res += "\n" + mm.checkForwardsRef()
+
+        res += "\n\n*** Unused declarations"
+        res += "\n\n" + check_unused_dec(mm)
 
         res += "\n\n** LOADED libraries"
         res += "\n[LIBS] : " + str(len(mm.aalprog.libs))
@@ -60,13 +92,16 @@ def check_aal(mm=None, verbose=False):
         res += "\n\n** CLAUSES"
         res += "\n[CLAUSES] : " + str(len(mm.aalprog.clauses))
 
-        res += "\nMonodic test :\n"
+        res += "\n\n*** Miscellaneous"
+        res += "\n[PERMISSIONS]   : " + str(len(mm.aalprog.walk(filter_type=m_aexpAuthor,
+                                                                filters="self.author == m_author.A_permit ")))
+        res += "\n[PROHIBITIONS   : " + str(len(mm.aalprog.walk(filter_type=m_aexpAuthor,
+                                                                filters="self.author == m_author.A_deny ")))
 
-    # p = check_monodic(mm.aalprog)
-    # TODO : add export to org mode
+        res += "\n\n*** Monodic test :\n"
+
     for c in mm.aalprog.clauses:
-        res += "|" + str(c.name) + " | " + check_monodic(c)["tmonodic"] + " | \n"
-    # res += "\n" + p["print"]
+        res += " |" + str(c.name) + (' ' * (15-len(str(c.name)))) + "->   " + check_monodic(c)["tmonodic"] + " \n"
 
     res += "-------------------------- Checking End -------------------------"
     return res

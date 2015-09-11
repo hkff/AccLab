@@ -493,8 +493,9 @@ class m_declarable(aalmmnode):
         self.types = []
 
     def is_a(self, ttype):
-        t = [str(x.label) for x in self.types]
-        return ttype in t
+        # t = [str(x.label) for x in self.types]
+        # return ttype in t
+        return isinstance(self, ttype)
 
 
 # Clause
