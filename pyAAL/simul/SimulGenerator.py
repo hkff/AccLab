@@ -70,9 +70,9 @@ def generate_simulation(aalprog: m_aalprog):
     # Creating all actors with their Reference monitors
     for x in agents:
         actors.append(MyActor.start(x, proxy=sim.watcher, behavior=behaviors.get(x)))
-        actors.append(RefMonitor.start("RM_" + x, actor=actors[-1], proxy=sim.watcher, behavior=Behavior()))
+        actors.append(LoggerRefMonitor.start("RM_" + x, actor=actors[-1], proxy=sim.watcher, behavior=Behavior()))
 
     sim.eval_action("bob.read[alice](d)")
 
-    sim.run_shell()
+    # sim.run_shell()
     sim.stop()

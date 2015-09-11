@@ -80,21 +80,14 @@ class AActor(ThreadingActor):
     def load_behavior(self):
         pass
 
+    def set_proxy(self, proxy):
+        self.proxy = proxy
 
 # RefMonitor
 class RefMonitor(AActor):
     def __init__(self, name, actor: ThreadingActor=None, proxy=None, behavior=None):
         super(RefMonitor, self).__init__(name, proxy=proxy, behavior=behavior)
         self.actor = actor
-
-    def on_start(self):
-        super(RefMonitor, self).on_start()
-
-    def on_stop(self):
-        super(RefMonitor, self).on_stop()
-
-    def on_failure(self, exception_type, exception_value, traceback):
-        super(RefMonitor, self).on_failure()
 
     def on_receive(self, msg):
         # super(RefMonitor, self).on_receive(message)
@@ -119,20 +112,31 @@ class RefMonitor(AActor):
                 # Check if it is from/to agent
 
 
+# LoggerRefMonitor
+class LoggerRefMonitor(AActor):
+    def __init__(self, name, actor: ThreadingActor=None, proxy=None, behavior=None):
+        super(LoggerRefMonitor, self).__init__(name, proxy=proxy, behavior=behavior)
+        self.actor = actor
+
+    # def on_start(self):
+    #     super(LoggerRefMonitor, self).on_start()
+    #
+    # def on_stop(self):
+    #     super(LoggerRefMonitor, self).on_stop()
+    #
+    # def on_failure(self, exception_type, exception_value, traceback):
+    #     super(LoggerRefMonitor, self).on_failure()
+    #
+    def on_receive(self, msg):
+        # super(RefMonitor, self).on_receive(message)
+        print(Color("{autoblue}[" + str(self.name) + "]" + " MSG received : " + str(msg) + "{/autoblue}"))
+        msg["protocol"] = MsgProtocol.LOG
+        self.proxy.tell(msg)
+
 # MyActor
 class MyActor(AActor):
     def __init__(self, name, proxy=None, behavior=None):
         super(MyActor, self).__init__(name, proxy=proxy, behavior=behavior)
-
-    def on_start(self):
-        super(MyActor, self).on_start()
-        pass
-
-    def on_stop(self):
-        pass
-
-    def on_failure(self, exception_type, exception_value, traceback):
-        pass
 
     def on_receive(self, msg):
         print("[" + str(self.name) + "]" + " MSG received : " + str(msg))
@@ -167,8 +171,8 @@ class Proxy(AActor):
         if protocol == MsgProtocol.CALL:
             # If the msg comes from an agent, forward it to his Reference monitor
             # Get only reference monitors
-            receivers = [x for x in ActorRegistry.get_by_class_name("RefMonitor") if
-                         x.proxy().name.get() == "RM_" + sender]
+            receivers = [x for x in ActorRegistry.get_by_class_name("LoggerRefMonitor")
+                         if x.proxy().name.get() == "RM_" + sender]
             msg["protocol"] = MsgProtocol.CALL_CHECK
 
         elif protocol == MsgProtocol.CALL_OK:

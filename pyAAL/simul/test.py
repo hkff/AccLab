@@ -9,12 +9,15 @@ from tulip.transys.automata import *
 from tulip.transys.export.graph2dot import *
 
 
-f = LTL("! spawn U init && b => c")
-out = call_ltl3ba(f, args=['-M1'])
-print(out)
-b = ltl3baHOAtoBuchi(out)
-print(b)
-b.save("toto", "svg")
-save_d3.labeled_digraph2d3(b, "test.html")
+# f = LTL("! spawn U init && b => c")
+# out = call_ltl3ba(f, args=['-M1'])
+# print(out)
+# b = ltl3baHOAtoBuchi(out)
+# print(b)
+# b.save("toto", "svg")
+
+
+# save_d3.labeled_digraph2d3(b, "test.html")
 nfa = NFA()
-nfa2dfa(nfa)
+dfa = nfa2dfa(nfa)
+print(dfa)

@@ -92,6 +92,7 @@ class MsgProtocol(Enum):
     CALL = "CALL"
     CALL_CHECK = "CALL_CHECK"
     CALL_OK = "CALL_OK"
+    LOG = "LOG"
 
     def __str__(self):
         return self.value

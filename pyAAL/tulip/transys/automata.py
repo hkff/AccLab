@@ -211,8 +211,32 @@ def nfa2dfa(nfa):
 
     UNDER DEVELOPMENT; function signature may change without notice.
     Calling will result in NotImplementedError.
+
+    initially, ε-Closure (S0) in DTrans.
+    While unmarked state T in DTrans
+    mark T
+
+    for each input symbol 'a'
+        do u = ε Closure (T, a)
+            If u is not in DTrans
+                then add u to DTrans
+            DTrans [T, a] = U
+
+    Following algorithm shows a computation of ε -Closure function.
+
+        Push all states in T onto stack.
+        initialize ε-Closure (T) to T
+        while stack is not empty
+            do pop top element t
+                for each state u with ε-edge
+                            t to u
+                    do If u is not in ε-Closure(T)
+                        do add u ε Closure (T)
+                            push u onto stack
     """
-    return "testing"
+
+    dfa = DFA()
+    return dfa
     
 def dfa2nfa(dfa):
     """Copy DFA to an NFA, so remove determinism restriction.
