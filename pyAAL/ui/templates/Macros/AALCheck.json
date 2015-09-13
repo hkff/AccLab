@@ -1,0 +1,12 @@
+{
+    "name": "AAL Check",
+	"desc": "Apply AAL Checks.",
+	"vars": [],
+	"aal": [
+      "CALL check_aal()"
+    ],
+	"html": [
+      "{genBtn}"
+    ],
+	"xacml": ""
+}

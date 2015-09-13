@@ -160,3 +160,13 @@ if _c1 is not None and _c2 is not None:
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
 """
 )
+
+
+/*
+ * AAL Check
+ */
+MACRO check_aal() (
+"""
+print(Color(check_aal(self, verbose=True)))
+"""
+)
