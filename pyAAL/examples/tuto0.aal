@@ -47,9 +47,8 @@ CLAUSE alice_pref (
     // Alice want to be able to read all her data stored on css
     IF (d.subject == alice) THEN {
         DENY alice.read[css](d)
-    }
+    } 
 )
 
 // Call validate macro to perform the compliance check
 CALL validate("css_policy" "alice_pref")
-

@@ -170,14 +170,14 @@ window.onload = function() {
     dockspawn.TabHandle.prototype.onCloseButtonClicked = function()
     {
         // check if file has been modified
-
-
         visualEditor.activeCloseBtn = this;
-        visualEditor.closeFile();
-        return;
-
-        var p = '<button type="button" class="btn" onclick="visualEditor.closeFile()">YES</button> <button type="button" class="btn">NO</button>';
-        toastr.error(p, "Close file without Saving ?", {
+        if(visualEditor.activeEditor != null &&
+            visualEditor.activeEditor.session.getUndoManager().isClean())
+            visualEditor.closeFile();
+        else {
+            var p = '<button type="button" class="btn" onclick="visualEditor.closeFile()">YES' +
+                '</button> <button type="button" class="btn">NO</button>';
+            toastr.error(p, "Close file without Saving ?", {
 				"closeButton": true,
 				"preventDuplicates": true,
 				"tapToDismiss": true,
@@ -187,6 +187,7 @@ window.onload = function() {
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-center"
 			});
+        }
     };
 
     function removeNode(node) {

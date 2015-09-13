@@ -388,7 +388,6 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
 	view: function(parent) {
 		this.button = $('<div title="Save (ctrl+S)" id="saveBtn" class="btn-action fa fa-save fa-lg"/>');
 		parent.actionsPanel.append(this.button);
-
 	},
 
 	control: function(parent) {
@@ -402,6 +401,10 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
 					visualEditor.ui.fileManager.saveFile(file, editor.getValue());
                     if(visualEditor.activeEditor != null)
                         visualEditor.activeEditor.session.getUndoManager().markClean();
+                    // Remove save marker
+                    var tt = $(".tab-handle-selected .tab-handle-text");
+                    if(tt.length > 0)
+					    tt[0].innerHTML = tt[0].innerHTML.replace(" *", "");
 					break;
 
 				case "acd":
@@ -422,6 +425,10 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
 					visualEditor.ui.fileManager.saveFile(file, editor.getValue());
 					if(visualEditor.activeEditor != null)
                         visualEditor.activeEditor.session.getUndoManager().markClean();
+                    // Remove save marker
+                    var tt = $(".tab-handle-selected .tab-handle-text");
+                    if(tt.length > 0)
+					    tt[0].innerHTML = tt[0].innerHTML.replace(" *", "");
 					break;
 			}
 		}

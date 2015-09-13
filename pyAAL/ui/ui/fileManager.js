@@ -261,20 +261,16 @@ visualEditor.ui.fileManager = {
 					    var inPlaceAALEditor = visualEditor.ui.fileManager.openAceEditor(id, fileType.toUpperCase());
 					    inPlaceAALEditor.setValue(response);
 					    inPlaceAALEditor.clearSelection();
+
                         inPlaceAALEditor.on("input", function() {
-                            if (inPlaceAALEditor.session.getUndoManager().isClean())
-                                //$("#save").removeClass("disabled");
-                                console.log("not yet edited")
-                            else
-                                //$("#save").addClass("disabled");
-                                console.log("edited")
+                            var tt = $(".tab-handle-selected .tab-handle-text");
+                            if(tt.length > 0 && !tt[0].innerHTML.endsWith(" *"))
+                                tt[0].innerHTML += " *";
                         });
 
                         visualEditor.activeEditor = inPlaceAALEditor;
-                        //$('#save').on("click", function() {
-                        //    editor.session.getUndoManager().markClean()
-                        //});
-
+                        visualEditor.activeEditor.session.getUndoManager().markClean();
+                         $(".tab-handle-text")[0].innerHTML += " *";
 						break;
 				}
 			}
