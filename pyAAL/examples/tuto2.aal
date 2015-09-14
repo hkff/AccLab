@@ -36,9 +36,7 @@ CLAUSE css_policy (
         DENY a.read[css](d)
     } AND
 
-    // Allow css to read/delete stored data FORALL x3:Auditor EXISTS x28:CloudProvider EXISTS x46:CloudCustomer 
-DENY x28.write[x46]() AND
-<...>
+    // Allow css to read/delete stored data
     PERMIT css.read[css](d) AND
     PERMIT css.delete[css](d)
 

@@ -18,7 +18,7 @@
       " {{('{provider}.ctext'.startsWith('FORALL')?'FORALL ' + '{provider}.cval:{provider}.ctext '.replace(\"FORALL \",\"\"):'') +",
       " {{('{provider}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{provider}.cval:{provider}.ctext '.replace(\"EXISTS \",\"\"):'') +",
 
-      "{{ (('{resource}.val' == '')? 'FORALL d:data\\nIF (d.subject == {owner}.val)' : 'IF ({resource}.val.subject == {owner}.val)') }}",
+      "{{'\\n' + (('{resource}.val' == '')? 'FORALL d:data\\nIF (d.subject == {owner}.val)' : 'IF ({resource}.val.subject == {owner}.val)') }}",
       "THEN {\n\t MUST( {user}.val.delete[{provider}.val]({resource}.val) BEFORE '{period}.val') \n}"
     ],
 	"html": [

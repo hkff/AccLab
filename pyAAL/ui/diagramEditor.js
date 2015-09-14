@@ -87,6 +87,23 @@ var visualEditor = {
     },
 
     /**
+     * Clear Preferences
+     */
+    clearPrefs: function() {
+        sessionStorage.clear();
+            toastr.info("Cache cleared !", "", {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": true,
+  				"showDuration": "500",
+			  	"hideDuration": "500",
+			  	"timeOut": 1300,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-center"
+			});
+    },
+
+    /**
      * Update Ace editor Theme
      * @param theme
      */
@@ -202,8 +219,52 @@ var visualEditor = {
         prop = 145 / $(document).width();
         window.componentsNode = dockManager.dockLeft(documentNode, components, prop);
         window.toolboxNode = dockManager.dockDown(componentsNode, toolbox, 0.80);
+    },
+    
+    about: function () {
+        var abt = "" +
+            "<img src='assets/icon_128.png' class='logoAbout' alt='AccLab logo'>" +
+            "<div class='versionAbout'>AccLab Version 1.0.2</div>" +
+            "<div class='aboutCore'>AccLab is a web based accountability framework designed in the context of A4CLOUD project. " +
+            "The main goal is to observe ”accountability in action” by simulating a software system with several" +
+            " agents exchanging data and requiring different privacy policy." +
+            "</div></br><a href='http://www.emn.fr/z-info/acclab/' target='_blank'>http://www.emn.fr/z-info/acclab/</a> " +
+
+            "<div class='membersAbout'>* Developers : - Walid Benghabrit * Contributors :" +
+            " - Pr.Jean-Claude Royer (Kernel/Theory/UI)" +
+            " - Dr. Hervé Grall (Theory)" +
+            " - Dr. Mohamed Sellami (Theory)" +
+            " - Pierre Teilhard (Kernel)" +
+            " - Anqi Tong (UI)" +
+            " - Julie Spens (UI)</div>" +
+
+            "<div class='footerAbout'>Copyright (C) 2014-2015 Walid Benghabrit - Ecole des Mines de Nantes - ARMINES</br>" +
+            "ASCOLA Research Group - A4CLOUD Project http://www.a4cloud.eu/ </div>";
+       toastr.info(abt, "About", {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": true,
+  				"showDuration": "1000",
+			  	"hideDuration": "1000",
+			  	"timeOut": 0,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-center"
+			});
+        $(".toast-info").css("width", "800px");
     }
 };
+
+
+/**
+ * Replace ALL
+ * @param find
+ * @param replace
+ * @param str
+ * @returns {XML|string|*|void}
+ */
+function replaceAll(find, replace, str) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
 
 
 /**
@@ -360,15 +421,4 @@ window.onload = function() {
 
     // Load user name
     visualEditor.username = visualEditor.getUserName();
-}
-
-/**
- * Replace ALL
- * @param find
- * @param replace
- * @param str
- * @returns {XML|string|*|void}
- */
-function replaceAll(find, replace, str) {
-  return str.replace(new RegExp(find, 'g'), replace);
 }

@@ -223,6 +223,36 @@ body {
     padding-left: 8px;
 }
 
+.logoAbout {
+    width: 160px;
+    height: 160px;
+    float: left;
+    padding-top: 7px;
+    padding-left: 8px;
+}
+
+.footerAbout {
+    text-align: center;
+    padding-top: 25px;
+}
+
+.membersAbout {
+    text-align: left;
+    padding-top: 40px;
+}
+
+.versionAbout {
+    padding-top: 30px;
+    font-size: x-large;
+    font-family: sans-serif;
+}
+
+.aboutCore {
+    padding-top: 20px;
+    text-align: center;
+    font-style: oblique;
+    font-size: 15px;
+}
 
 .outlineIcons {
   background: url('') !important;

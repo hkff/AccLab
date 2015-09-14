@@ -81,7 +81,6 @@ visualEditor.ui.tools = {
 		this.tools.push(new visualEditor.ui.tools.AALSyntaxTool());            // 20
 		this.tools.push(new visualEditor.ui.tools.templatesTool());            // 21
 		this.tools.push(new visualEditor.ui.tools.acethemeTool());             // 22
-
 	},
 
 	/**
@@ -909,13 +908,17 @@ visualEditor.ui.Template = {
 
             // Adding quantifiers : only if agents
             if(agents){
+                var foralls = "";
+                var exists = "";
+
                 var tt = visualEditor.ui.currentAAL.types;
                 for(var i=0; i<tt.length; i++) {
                     counter++;
-                    options += "<option value='x" + counter + "'>FORALL " + tt[i] + "</option>";
+                    foralls += "<option value='x" + counter + "'>FORALL " + tt[i] + "</option>";
                     counter++;
-                    options += "<option value='x" + counter + "'>EXISTS " + tt[i] + "</option>";
+                    exists += "<option value='x" + counter + "'>EXISTS " + tt[i] + "</option>";
                 }
+                options += foralls + exists;
             }
         }
 
