@@ -263,9 +263,7 @@ visualEditor.ui.fileManager = {
 					    inPlaceAALEditor.clearSelection();
 
                         inPlaceAALEditor.on("input", function() {
-                            var tt = $(".tab-handle-selected .tab-handle-text");
-                            if(tt.length > 0 && !tt[0].innerHTML.endsWith(" *"))
-                                tt[0].innerHTML += " *";
+							visualEditor.markPanelEdited();
                         });
 
                         visualEditor.activeEditor = inPlaceAALEditor;

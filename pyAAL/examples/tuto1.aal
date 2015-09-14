@@ -12,7 +12,7 @@ LOAD "core.macros"
 SERVICE read
 SERVICE store
 SERVICE delete
-
+ 
 // Declaring actors
 AGENT alice TYPES(Actor) REQUIRED(read store delete) PROVIDED()
 AGENT bob   TYPES(Actor) REQUIRED(read store delete) PROVIDED()

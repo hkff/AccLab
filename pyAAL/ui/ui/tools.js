@@ -402,9 +402,7 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
                     if(visualEditor.activeEditor != null)
                         visualEditor.activeEditor.session.getUndoManager().markClean();
                     // Remove save marker
-                    var tt = $(".tab-handle-selected .tab-handle-text");
-                    if(tt.length > 0)
-					    tt[0].innerHTML = tt[0].innerHTML.replace(" *", "");
+					visualEditor.markPanelClear();
 					break;
 
 				case "acd":
@@ -426,9 +424,7 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
 					if(visualEditor.activeEditor != null)
                         visualEditor.activeEditor.session.getUndoManager().markClean();
                     // Remove save marker
-                    var tt = $(".tab-handle-selected .tab-handle-text");
-                    if(tt.length > 0)
-					    tt[0].innerHTML = tt[0].innerHTML.replace(" *", "");
+                    visualEditor.markPanelClear();
 					break;
 			}
 		}

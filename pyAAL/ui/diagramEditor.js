@@ -97,6 +97,18 @@ var visualEditor = {
         }
     },
 
+    markPanelEdited: function() {
+        var tt = $(".tab-handle-selected .tab-handle-text");
+        if(tt.length > 0 && !tt[0].innerHTML.endsWith(" *"))
+            tt[0].innerHTML += " *";
+    },
+
+    markPanelClear: function() {
+        var tt = $(".tab-handle-selected .tab-handle-text");
+        if(tt.length > 0)
+            tt[0].innerHTML = tt[0].innerHTML.replace(" *", "");
+    },
+
     aalMode: function() {
         visualEditor.clearPanels();
         var prop = 200 / $(document).width();
@@ -227,9 +239,10 @@ window.onload = function() {
             else
                  this.containerElement.style.display = 'none';
         }
+
+        // Update theme
         if(visualEditor.aceTheme != null)
             visualEditor.updateEditorsTheme();
-
     };
 
 
