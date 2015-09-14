@@ -7,8 +7,8 @@
 	"aal": [
       "CLAUSE {name}.val ( ",
       "\n\t<USAGE expression>",
-      "\n\tAUDITING <AUDIT expression>",
-      "\n\tIF_VIOLATED_THEN <RECTIFICATION expression>",
+      "\n\tAUDITING true",
+      "\n\tIF_VIOLATED_THEN true",
       "\n)"
     ],
 	"html": [
