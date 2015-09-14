@@ -905,7 +905,9 @@ visualEditor.ui.Template = {
 
         return "<div class='templateVar'>" + //<div class='templateVarName'>" + varObj.name + "</div>" +
             varObj.pre +
-            ((varObj.type != "select")?("<input type='" + varObj.type + "' id='" + varObj.id +  "' name='" + varObj.name + "'/>"):
+            ((varObj.type != "select")?
+				("<input type='" + varObj.type + "' id='" + varObj.id +  "' name='" + varObj.name + "'" +
+                ((varObj.checked != undefined)?" checked />":"/>")):
             ("<select id='" + varObj.id + "'>" + options +" </select>"))+
             varObj.post + "</div>";
     },

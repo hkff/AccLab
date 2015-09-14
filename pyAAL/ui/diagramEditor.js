@@ -30,6 +30,7 @@ var visualEditor = {
     aceTheme      : (sessionStorage.getItem("theme") != null)?sessionStorage.getItem("theme"):"monokai",
     aceThemesList : ["monokai", "chrome", "tomorrow", "kuroir", "eclipse", "chaos"],
     backend       : "http://127.0.0.1:8000/",
+    username      : "",
 
     /**
      * Initialize function
@@ -67,6 +68,25 @@ var visualEditor = {
     },
 
     /**
+     * Get username
+     */
+    getUserName: function() {
+        if(sessionStorage.getItem("username") != null) {
+            return sessionStorage.getItem("username");
+        }
+        else {
+            var username = "";
+            do {
+                username =prompt("Enter a user name : ");
+            }
+            while(username.length < 0);
+            // Save and return the username
+            sessionStorage.setItem("username", username);
+            return username;
+        }
+    },
+
+    /**
      * Update Ace editor Theme
      * @param theme
      */
@@ -85,9 +105,11 @@ var visualEditor = {
 
         if (visualEditor.ui.properties.aalEditor.inPlaceAALEditor != null)
             visualEditor.ui.properties.aalEditor.inPlaceAALEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
-
     },
 
+    /**
+     * Unlock all panels
+     */
     clearPanels: function() {
      for(var i=0; i<window.panelNodes.length; i++) {
             try {
@@ -97,18 +119,27 @@ var visualEditor = {
         }
     },
 
+    /**
+     * Adding edited marker " *" to current file
+     */
     markPanelEdited: function() {
         var tt = $(".tab-handle-selected .tab-handle-text");
         if(tt.length > 0 && !tt[0].innerHTML.endsWith(" *"))
             tt[0].innerHTML += " *";
     },
 
+    /**
+     * Remove edited marker " *" from current file
+     */
     markPanelClear: function() {
         var tt = $(".tab-handle-selected .tab-handle-text");
         if(tt.length > 0)
             tt[0].innerHTML = tt[0].innerHTML.replace(" *", "");
     },
 
+    /**
+     * AAL view mode
+     */
     aalMode: function() {
         visualEditor.clearPanels();
         var prop = 200 / $(document).width();
@@ -126,6 +157,9 @@ var visualEditor = {
         */
     },
 
+    /**
+     * Design view mode
+     */
     acdMode: function() {
         visualEditor.clearPanels();
 
@@ -147,6 +181,9 @@ var visualEditor = {
         //window.outputNode = dockManager.dockDown(window.documentNode, window.output, prop);
     },
 
+    /**
+     * Default mode
+     */
     defaultMode: function() {
         visualEditor.clearPanels();
 
@@ -320,6 +357,9 @@ window.onload = function() {
 
     this.panelNodes = [window.solution, window.outline, window.components, window.toolbox,
         window.properties, window.inplaceAAL, window.output];
+
+    // Load user name
+    visualEditor.username = visualEditor.getUserName();
 }
 
 /**

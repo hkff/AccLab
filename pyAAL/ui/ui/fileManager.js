@@ -349,7 +349,7 @@ visualEditor.ui.fileManager = {
 	 * @param file
 	 */
 	showGeneratedAAL: function(file) {
-		var aal = visualEditor.ui.generateAAL();
+		var aal = visualEditor.ui.generateAAL(file);
 		var f = file.replace(".acd", ".aal");
         this.saveFile(f, aal);
         this.openFile(f);

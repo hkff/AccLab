@@ -166,8 +166,11 @@ visualEditor.ui = {
 	/**
 	 * Generate AAL code
 	 */
-	generateAAL: function() {
-		var aal = "";
+	generateAAL: function(file_name) {
+		var date = new Date(Date.now()).toUTCString();
+		var aal = "/**\n * Generated AAL file \n * @diagram source : " + file_name +
+            "\n * @author : " + visualEditor.getUserName() + "\n * @on : " + date + "\n */\n\n" +
+            "\n// Loading types & macros libraries\nLOAD \"core.types\"\nLOAD \"core.macros\"\n\n";
 		var figs = visualEditor.ui.canvas.getFigures();
 		var tmp = null;
 		
