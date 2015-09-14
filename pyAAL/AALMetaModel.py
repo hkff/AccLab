@@ -653,7 +653,7 @@ class m_type(m_declarable):
     def to_ltl(self):
         supers = "& (![x] ( "
         for x in self.superTypes:
-            supers += "(" + str(self.name) + "(CTS) => " + str(x) + "(CTS) ) &"
+            supers += "(" + str(self.name) + "(x) => " + str(x) + "(x) ) &"
         if len(supers) > 10:
             supers = supers[:-1] + "))"
         else:
@@ -1062,7 +1062,7 @@ class m_qvar(aalmmnode):
 
     def to_ltl(self):
         return str(self.quant.to_ltl()) + "[" + str(self.variable.target.name) + "] ( " + \
-            str(self.variable.target.to_ltl()) + " & "
+            str(self.variable.target.to_ltl()) + " => "
 
     def to_nnf(self, negated):
         if negated:

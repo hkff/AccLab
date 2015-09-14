@@ -43,7 +43,7 @@ CLAUSE cardioMon_policy (
 CLAUSE customer_policy (
     FORALL d:data
     IF(d.subject == customer) THEN {
-        PERMIT customer.read[cardioMon](d)
+        DENY customer.read[cardioMon](d)
         AND PERMIT customer.write[cardioMon](d)
         AND PERMIT customer.update[cardioMon](d)
         AND PERMIT customer.delete[cardioMon](d)
@@ -62,6 +62,6 @@ CLAUSE customer_policy (
 // with time : SAT
 // without time : UNSAT
 
-CALL vvalidate("cardioMon_policy" "customer_policy")
+CALL validate("cardioMon_policy" "customer_policy")
 // with time : SAT
 // without time : LOOP
