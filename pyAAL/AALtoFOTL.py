@@ -79,7 +79,8 @@ def build_env(prog: m_aalprog=None):
         for j in range(i+1, len(times)):
             pre_cond += "(" + str(times[i].to_ltl()) + " => " + str(times[j].to_ltl()) + ") &"
 
-    data_decs = "\n\n%%% Data knowledge \n" + "".join(["![d](subject(d, " + str(x.name) + ")) &\n" for x in prog.get_declared(m_agent)])
+    data_decs = "\n\n%%% Data knowledge \n"
+    data_decs += "".join(["![d](subject(d, " + str(x.name) + ")) &\n" for x in prog.get_declared(m_agent)])
     # data_decs = ""
     pre_cond += data_decs + "\nCTE ) &"
     #pre_cond = pre_cond[:-2] + "& true )\n" if pre_cond[-2].startswith("&") else pre_cond + ")\n"

@@ -64,21 +64,21 @@ TYPE weight EXTENDS(sensitive)
 
 /*
  * Sugar Level
- * The sugar level in the user’s blood, measured by the wearable device
+ * The sugar level in the user's blood, measured by the wearable device
  * Sensitive PII
  */
 TYPE sugarLevel EXTENDS(sensitive)
 
 /*
  * Blood Pressure
- * The user’s blood pressure, measured by the wearable device
+ * The user's blood pressure, measured by the wearable device
  * Sensitive PII
  */
 TYPE blood EXTENDS(sensitive)
 
 /*
  * Heartbeat Rate
- * The user’s heart beat rate, measured by the wearable device
+ * The user's heart beat rate, measured by the wearable device
  * Sensitive PII
  */
 TYPE heartbeat EXTENDS(sensitive)

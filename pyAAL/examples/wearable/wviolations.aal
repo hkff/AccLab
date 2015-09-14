@@ -15,7 +15,7 @@
 /*
  * 2 : Inadequate Data Retention / Deletion
  * The agreed accountability policy between CardioMon and the Wearable Co defines that the personal data collected from
- *  the customer’s device must be deleted if being older than 6 months. However, a backup of the CardioMon store is left.
+ *  the customer's device must be deleted if being older than 6 months. However, a backup of the CardioMon store is left.
  */
 
 /*
