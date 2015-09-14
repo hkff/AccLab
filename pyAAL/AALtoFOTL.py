@@ -46,15 +46,15 @@ def build_env(prog: m_aalprog=None):
     pre_cond += "\n%%% Types knowledge\n"
 
     for x in prog.get_declared(m_type):
-        pre_cond += str(x.to_ltl()) + " & \n"
+        pre_cond += "always( " + str(x.to_ltl()) + " ) & \n"
 
     pre_cond += "\n\n%%% Action authorizations \n"
     for x in prog.get_declared(m_service):
-        pre_cond += str(x.to_ltl()) + " & \n"
+        pre_cond += "( " + str(x.to_ltl()) + " ) & \n"
 
     pre_cond += "\n\n%%% Actors knowledge \n"
     for x in prog.get_declared(m_agent):
-        pre_cond += str(x.to_ltl()) + " & \n"
+        pre_cond += "always( " + str(x.to_ltl()) + " ) & \n"
 
     pre_cond += "\n\n%%% Time knowledge \n"
     times = []
@@ -77,10 +77,10 @@ def build_env(prog: m_aalprog=None):
     # print([str(x.time) + " " for x in times])
     for i in range(0, len(times)):
         for j in range(i+1, len(times)):
-            pre_cond += "(" + str(times[i].to_ltl()) + " => " + str(times[j].to_ltl()) + ") &"
+            pre_cond += "always( " + str(times[i].to_ltl()) + " => " + str(times[j].to_ltl()) + " ) &"
 
     data_decs = "\n\n%%% Data knowledge \n"
-    data_decs += "".join(["?[d](subject(d, " + str(x.name) + ")) &\n" for x in prog.get_declared(m_agent)])
+    data_decs += "".join(["always( ?[d](subject(d, " + str(x.name) + ")) ) &\n" for x in prog.get_declared(m_agent)])
     # data_decs = ""
     pre_cond += data_decs + "\nCTE ) &"
     #pre_cond = pre_cond[:-2] + "& true )\n" if pre_cond[-2].startswith("&") else pre_cond + ")\n"
