@@ -54,7 +54,7 @@ MACRO validate2(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    validate2(self, _c1.to_ltl())
+    print(validate2(self, _c1.to_ltl()))
 """
 )
 
@@ -66,7 +66,7 @@ MACRO sat(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    validate2(self, _c1.to_ltl(), check=True)
+    print(validate2(self, _c1.to_ltl(), check=True))
 """
 )
 
@@ -78,7 +78,7 @@ MACRO vsat(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    validate2(self, _c1.to_ltl(), check=True, verbose=True)
+    print(validate2(self, _c1.to_ltl(), check=True, verbose=True))
 """
 )
 

@@ -54,56 +54,61 @@ def check_unused_dec(mm) -> str:
 
     return res
 
+
 # Check AAL global
 def check_aal(mm=None, verbose=False):
     """
     Check an AAL program
     :param mm: AAL compiler instance
-    :param verbose: verbose print
+    :param verbose: True -> verbose checks; False -> Monodic check on clauses
     :return:
     """
     res = ""
-    res += "------------------------- Start Checking -------------------------"
+    res += "{autogreen}------------------------- Start Checking -------------------------{/autogreen}"
     if verbose:
         agentsCount = len(mm.aalprog.get_declared(m_agent))
         servicesCount = len(mm.aalprog.get_declared(m_service))
         dataCount = len(mm.aalprog.get_declared(m_data))
         typesCount = len(mm.aalprog.get_declared(m_type))
 
-        res += "\n\n** DECLARATIONS"
+        res += "\n\n{autoblue}** DECLARATIONS{/autoblue}"
         res += "\n[DECLARED AGENTS]   : " + str(agentsCount)
         res += "\n[DECLARED SERVICES] : " + str(servicesCount)
         res += "\n[DECLARED DATA]     : " + str(dataCount)
         res += "\n[DECLARED TYPES]    : " + str(typesCount)
 
-        res += "\n\n*** Forwards references check"
+        res += "\n\n{autoblue}*** Forwards references check{/autoblue}"
         res += "\n[AGENTS]   : " + str(len(mm.refForwardAgents))
         res += "\n[SERVICES] : " + str(len(mm.refForwardServices))
         res += "\n[DATA]     : " + str(len(mm.refForwardData))
         res += "\n[TYPES]    : " + str(len(mm.refForwardTypes))
         res += "\n" + mm.checkForwardsRef()
 
-        res += "\n\n*** Unused declarations"
+        res += "\n\n{autoblue}*** Unused declarations{/autoblue}"
         res += "\n\n" + check_unused_dec(mm)
 
-        res += "\n\n** LOADED libraries"
+        res += "\n\n{autoblue}** LOADED libraries{/autoblue}"
         res += "\n[LIBS] : " + str(len(mm.aalprog.libs))
 
-        res += "\n\n** CLAUSES"
+        res += "\n\n{autoblue}** CLAUSES{/autoblue}"
         res += "\n[CLAUSES] : " + str(len(mm.aalprog.clauses))
 
-        res += "\n\n*** Miscellaneous"
+        res += "\n\n{autoblue}*** Miscellaneous{/autoblue}"
         res += "\n[PERMISSIONS]   : " + str(len(mm.aalprog.walk(filter_type=m_aexpAuthor,
                                                                 filters="self.author == m_author.A_permit ")))
         res += "\n[PROHIBITIONS   : " + str(len(mm.aalprog.walk(filter_type=m_aexpAuthor,
                                                                 filters="self.author == m_author.A_deny ")))
-
+        res += "\n\n{autoblue}*** Sat test {/autoblue}\n"
+        for c in mm.aalprog.clauses:
+            res += "\n---------- " + str(c.name) + " ----------\n"
+            res += validate2(mm, c.to_ltl(), check=True, verbose=False)
+            # res += " |" + str(c.name) + (' ' * (15-len(str(c.name)))) + "->   " + check_monodic(c)["tmonodic"] + " \n"
+    else:
         res += "\n\n*** Monodic test :\n"
+        for c in mm.aalprog.clauses:
+            res += " |" + str(c.name) + (' ' * (15-len(str(c.name)))) + "->   " + check_monodic(c)["tmonodic"] + " \n"
 
-    for c in mm.aalprog.clauses:
-        res += " |" + str(c.name) + (' ' * (15-len(str(c.name)))) + "->   " + check_monodic(c)["tmonodic"] + " \n"
-
-    res += "-------------------------- Checking End -------------------------"
+    res += "{autogreen}-------------------------- Checking End -------------------------{/autogreen}"
     return res
 
 
@@ -341,53 +346,53 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
     :param verbose: verbose print
     :return:
     """
+    res = ""
     # Monodic test
-    print("------------------------- Monodic check -------------------------")
+    res += "------------------------- Monodic check -------------------------\n"
     mc1 = check_monodic(c1)
     if not mc1["monodic"]:
-        print(mc1["print"])
-        print(Color("{autored}Please correct your clause. Exiting... {/red}"))
+        res += mc1["print"] + "\n"
+        res += "{autored}Please correct your clause. Exiting... {/red}\n"
         return
 
-    print(Color("{autogreen}Monodic check passed ! {/green}"))
+    res += "{autogreen}Monodic check passed ! {/green}\n"
 
     v = False
 
     pre_cond = build_env(compiler.aalprog)
-    print(
-        "------------------------ Starting " + ("Validity" if not check else "") + " check ---------------------")
-    print("----- Checking c1 :")
-    res = compiler.apply_check(code="always(" + pre_cond + c1 + ")", show=False, verbose=verbose)
-    if res["res"] == "Unsatisfiable":
+    res += "------------------------ Starting " + ("Validity" if not check else "") + " check ---------------------\n"
+    res += "----- Checking c1 :\n"
+    res2 = compiler.apply_check(code="always(" + pre_cond + c1 + ")", show=False, verbose=verbose)
+    if res2["res"] == "Unsatisfiable":
         v = False
-        print(Color("{autored}  -> " + res["res"] + "{/red}"))
+        res += "{autored}  -> " + res2["res"] + "{/red}\n"
     else:
-        print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+        res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
 
-    if res["res"] == "":
-        print(res["print"])
+    if res2["res"] == "":
+        res += res2["print"] + "\n"
 
     if not check:
-        print("----- Checking ~(c1) :")
-        res = compiler.apply_check(code="~(always(" + pre_cond + c1 + "))", show=False, verbose=verbose)
-        if res["res"] == "Unsatisfiable":
-            print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+        res += "----- Checking ~(c1) :\n"
+        res2 = compiler.apply_check(code="~(always(" + pre_cond + c1 + "))", show=False, verbose=verbose)
+        if res2["res"] == "Unsatisfiable":
+            res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
         else:
-            print(Color("{autored}  -> " + res["res"] + "{/red}"))
+            res += "{autored}  -> " + res2["res"] + "{/red}\n"
 
-        if res["res"] == "":
-            print(res["print"])
+        if res2["res"] == "":
+            res += res2["print"] + "\n"
 
-        if res["res"] == "Unsatisfiable":
+        if res2["res"] == "Unsatisfiable":
             v = True
 
         if v:
-            print(Color("\n{autogreen}[VALIDITY] Formula is valid !{/green}"))
+            res += "\n{autogreen}[VALIDITY] Formula is valid !{/green}\n"
         else:
-            print(Color("\n{autored}[VALIDITY] Formula is not valid !{/red}"))
+            res += "\n{autored}[VALIDITY] Formula is not valid !{/red}\n"
 
-    print("------------------------- " + ("Validity" if not check else "") + " check End -------------------------\n")
-    return ""
+    res += "------------------------- " + ("Validity" if not check else "") + " check End -------------------------\n\n"
+    return Color(res)
 
 
 # Check authorisations
