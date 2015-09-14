@@ -1,4 +1,4 @@
-AccLab Version 1.0 02/06/2015
+AccLab Last release : Version 1.0 02/06/2015
 
 What is it?
 -----------

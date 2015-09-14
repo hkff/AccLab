@@ -36,13 +36,16 @@ CLAUSE css_policy (
         DENY a.read[css](d)
     } AND
 
-    // Allow css to read/delete stored data
+    // Allow css to read/delete stored data FORALL x3:Auditor EXISTS x28:CloudProvider EXISTS x46:CloudCustomer 
+DENY x28.write[x46]() AND
+<...>
     PERMIT css.read[css](d) AND
     PERMIT css.delete[css](d)
 
     AUDITING dpa.audit[css](log)
     IF_VIOLATED_THEN MUST(dpa.sanction[css](d) AND css.delete[css](d))
 )
+
 
 /*
  * Alice's preferences
@@ -63,4 +66,3 @@ CLAUSE alice_pref (
 
 // Call validate macro to perform the compliance check
 CALL validate("css_policy" "alice_pref")
-

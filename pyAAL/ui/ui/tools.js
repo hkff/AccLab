@@ -888,11 +888,16 @@ visualEditor.ui.Template = {
      * Returns the generated html for the given var
      * @param varObj
      */
-    renderVar: function(varObj) {
+    renderVar: function(varObj, counter) {
         // Generating options for select
         if(varObj.type === "select"){
             var options = "";
             var src = varObj.src;
+            var agents = false;
+
+            if(src.indexOf("{aal.agents}") > -1)
+                agents = true;
+
             // Replacing agents/services/clauses #NOTE : do not try to optimize
             src = src.replace("{aal.agents}",  JSON.stringify(visualEditor.ui.currentAAL.agents));
             src = src.replace("{aal.services}",  JSON.stringify(visualEditor.ui.currentAAL.services));
@@ -901,15 +906,28 @@ visualEditor.ui.Template = {
 
             for(var i=0; i<src.length; i++)
                 options += "<option value='" + src[i] + "'>" + src[i] + "</option>";
+
+            // Adding quantifiers : only if agents
+            if(agents){
+                var tt = visualEditor.ui.currentAAL.types;
+                for(var i=0; i<tt.length; i++) {
+                    counter++;
+                    options += "<option value='x" + counter + "'>FORALL " + tt[i] + "</option>";
+                    counter++;
+                    options += "<option value='x" + counter + "'>EXISTS " + tt[i] + "</option>";
+                }
+            }
         }
 
-        return "<div class='templateVar'>" + //<div class='templateVarName'>" + varObj.name + "</div>" +
-            varObj.pre +
-            ((varObj.type != "select")?
-				("<input type='" + varObj.type + "' id='" + varObj.id +  "' name='" + varObj.name + "'" +
-                ((varObj.checked != undefined)?" checked />":"/>")):
-            ("<select id='" + varObj.id + "'>" + options +" </select>"))+
-            varObj.post + "</div>";
+        return {
+            view: "<div class='templateVar'>" + //<div class='templateVarName'>" + varObj.name + "</div>" +
+                varObj.pre +
+                ((varObj.type != "select")?
+                    ("<input type='" + varObj.type + "' id='" + varObj.id +  "' name='" + varObj.name + "'" +
+                    ((varObj.checked != undefined)?" checked />":"/>")):
+                ("<select id='" + varObj.id + "'>" + options +" </select>"))+
+                varObj.post + "</div>",
+            counter: counter};
     },
 
     /**
@@ -923,8 +941,13 @@ visualEditor.ui.Template = {
 
         // handling vars
         var vars = {};
-        for(var i=0; i<template.vars.length; i++)
-            vars[template.vars[i].id] = this.renderVar(template.vars[i]);
+        var counter = 0;
+        var res;
+        for(var i=0; i<template.vars.length; i++){
+            res = this.renderVar(template.vars[i], counter);
+            vars[template.vars[i].id] = res.view;
+            counter = res.counter;
+        }
 
         //
         // Generating html
@@ -957,6 +980,8 @@ visualEditor.ui.Template = {
     genAAL: function(template) {
         var aal = (typeof(template.aal) == "string")?template.aal:template.aal.join(" ");
         for(var i=0; i<template.vars.length; i++) {
+            aal = replaceAll("{"+template.vars[i].id+"}.ctext", eval("$('#"+template.vars[i].id+" option:selected').text()" ), aal);
+            aal = replaceAll("{"+template.vars[i].id+"}.cval", eval("$('#"+template.vars[i].id+" option:selected').val()" ), aal);
             aal = replaceAll("{"+template.vars[i].id+"}.val", eval("$('#"+template.vars[i].id+"').val()" ), aal);
             aal = replaceAll("{"+template.vars[i].id+"}.checked", ("$('#"+template.vars[i].id+"').is(':checked')" ), aal);
         }

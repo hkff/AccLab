@@ -1,6 +1,6 @@
 {
     "name": "Compliance",
-	"desc": "Checks if two clauses are compliant.",
+	"desc": "Checks if two clauses are compliant. is c1 compliant with c2 ?",
 	"vars": [
       {"name": "", "id": "c1", "type": "select", "pre": " Clause 1 ", "post": " ", "src": "{aal.clauses}"},
       {"name": "", "id": "c2", "type": "select", "pre": " Clause 2 ", "post": "", "src": "{aal.clauses}"}
