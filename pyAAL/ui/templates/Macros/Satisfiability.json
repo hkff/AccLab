@@ -1,0 +1,14 @@
+{
+    "name": "Satisfiability",
+	"desc": "Checks if a clause is satisfiable.",
+	"vars": [
+      {"name": "", "id": "c1", "type": "select", "pre": " Clause ", "post": " ", "src": "{aal.clauses}"}
+    ],
+	"aal": [
+      "CALL sat(\"{c1}.val\")"
+    ],
+	"html": [
+      "<div class='varGroupe'> {c1} </div> {genBtn}"
+    ],
+	"xacml": ""
+}

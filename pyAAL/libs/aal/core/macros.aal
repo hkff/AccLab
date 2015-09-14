@@ -66,7 +66,19 @@ MACRO sat(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    validate2(self, _c1.to_ltl(), True)
+    validate2(self, _c1.to_ltl(), check=True)
+"""
+)
+
+
+/*
+ * Checking satisfiability (verbose)
+ */
+MACRO vsat(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    validate2(self, _c1.to_ltl(), check=True, verbose=True)
 """
 )
 

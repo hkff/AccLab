@@ -353,10 +353,11 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
 
     v = False
 
+    pre_cond = build_env(compiler.aalprog)
     print(
-        "------------------------- Starting " + ("Validity" if not check else "") + " check -------------------------")
+        "------------------------ Starting " + ("Validity" if not check else "") + " check ---------------------")
     print("----- Checking c1 :")
-    res = compiler.apply_check(code=c1, show=False, verbose=verbose)
+    res = compiler.apply_check(code="always(" + pre_cond + c1 + ")", show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         v = False
         print(Color("{autored}  -> " + res["res"] + "{/red}"))
@@ -368,7 +369,7 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
 
     if not check:
         print("----- Checking ~(c1) :")
-        res = compiler.apply_check(code="~(" + c1 + ")", show=False, verbose=verbose)
+        res = compiler.apply_check(code="~(always(" + pre_cond + c1 + "))", show=False, verbose=verbose)
         if res["res"] == "Unsatisfiable":
             print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
         else:
