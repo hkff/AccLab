@@ -245,7 +245,7 @@ def get_vars(aexp: m_aexp, vtype=None):
 
 
 # Check validity between two clauses
-def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
+def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_always=True):
     """
     Perform validity test between two aal clauses
     :param compiler: the compiler instance
@@ -253,6 +253,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
     :param c2: clause 2
     :param resolve: try to detect conflicts if exists
     :param verbose: verbose print
+    :param use_always: prefix clauses with always operator
     :return:
     """
     # TODO  check if c1 and c2 exists
@@ -279,8 +280,9 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
     pre_cond = build_env(compiler.aalprog)
 
     print("----- Checking c1 & c2 consistency :")
-    res = compiler.apply_check(code=pre_cond + "\n%%  " + c1_id + "\nclause(" + c1_id + ").ue " + "\n & \n\n%%  " +
-                                    c2_id + "\nclause(" + c2_id + ").ue",
+    res = compiler.apply_check(code=pre_cond + "&\n%%  " + c1_id + "\n " + ("always" if use_always else "") +
+                                    "(clause(" + c1_id + ").ue) " + "\n & \n\n%%  " +
+                                    c2_id + "\n" + ("always" if use_always else "") + "(clause(" + c2_id + ").ue)",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
@@ -296,8 +298,9 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
         print(res["print"])
 
     print("----- Checking c1 => c2 :")
-    res = compiler.apply_check(code="always(" + pre_cond + "\n%%  " + c1_id + "\nclause(" + c1_id
-                                    + ")\n =>\n\n " + "%%  " + c2_id + "\nclause(" + c2_id + "))",
+    res = compiler.apply_check(code="" + pre_cond + "&\n%%  " + c1_id + "\n " + ("always" if use_always else "") +
+                                    "(clause(" + c1_id + "))\n =>\n\n " +
+                                    "%%  " + c2_id + "\n" + ("always" if use_always else "") + "(clause(" + c2_id + "))",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         v = v and False
@@ -309,8 +312,9 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False):
         print(res["print"])
 
     print("----- Checking ~(c1 => c2) :")
-    res = compiler.apply_check(code="~(always(" + pre_cond + "\n%%  " + c1_id + "\nclause(" + c1_id
-                                    + ")\n =>\n\n " + "%%  " + c2_id + "\nclause(" + c2_id + ")))",
+    res = compiler.apply_check(code="~(" + pre_cond + "&\n%%  " + c1_id + "\n " + ("always" if use_always else "") +
+                                    "(clause(" + c1_id + "))\n =>\n\n "
+                                    + "%%  " + c2_id + "\n" + ("always" if use_always else "") + "(clause(" + c2_id + ")) ) ",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
@@ -362,7 +366,7 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
     pre_cond = build_env(compiler.aalprog)
     res += "------------------------ Starting " + ("Validity" if not check else "") + " check ---------------------\n"
     res += "----- Checking c1 :\n"
-    res2 = compiler.apply_check(code="always(" + pre_cond + c1 + ")", show=False, verbose=verbose)
+    res2 = compiler.apply_check(code="(" + pre_cond + " & " + c1 + ")", show=False, verbose=verbose)
     if res2["res"] == "Unsatisfiable":
         v = False
         res += "{autored}  -> " + res2["res"] + "{/red}\n"
@@ -374,7 +378,7 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
 
     if not check:
         res += "----- Checking ~(c1) :\n"
-        res2 = compiler.apply_check(code="~(always(" + pre_cond + c1 + "))", show=False, verbose=verbose)
+        res2 = compiler.apply_check(code="~((" + pre_cond + " & " + c1 + "))", show=False, verbose=verbose)
         if res2["res"] == "Unsatisfiable":
             res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
         else:

@@ -324,4 +324,4 @@ CHECK c2() {
 }
 //APPLY c2()
 
-CALL validate_usage("r3" "up2")
+CALL vvalidate("r3" "up2")

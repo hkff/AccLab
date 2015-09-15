@@ -67,7 +67,7 @@ CHECK c1() {
 ~(
     % Build the environment
     @buildenv
-
+    &
     % Add extra condition
     (![f] ((subject(f, alice) )=> ~subject(f, bob))) &
 
@@ -78,4 +78,4 @@ CHECK c1() {
 )
 """
 }
-APPLY c1()
+//APPLY c1()

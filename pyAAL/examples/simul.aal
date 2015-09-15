@@ -26,3 +26,4 @@ EXEC
 from simul.SimulGenerator import *
 generate_simulation(self.aalprog)
 """
+CALL validate2("Kim_policy")
