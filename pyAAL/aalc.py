@@ -177,7 +177,6 @@ def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: boo
     :return:
     """
     # print("-------- tspassc " + " starting at : " + str(datetime.datetime.now()) + "  File : " + str(file) + " --------\n")
-
     p = sys.platform
     if p.startswith("linux"):
         os_name = "linux"

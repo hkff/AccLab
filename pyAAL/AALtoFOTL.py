@@ -42,21 +42,33 @@ def build_env(prog: m_aalprog=None):
     :return: the environment
     """
     pre_cond = "\n%%%%%%%%% START EVN %%%%%%%%%%%\n"
-    pre_cond += "always(\n"
+    pre_cond += "(\n"
     pre_cond += "\n%%% Types knowledge\n"
-
+    type_cond = ""
     for x in prog.get_declared(m_type):
-        pre_cond += "always( " + str(x.to_ltl()) + " ) & \n"
+        type_cond += " (?[a] " + str(x.to_ltl()) + " ) & \n"
+    if type_cond[-3:] == "& \n":
+        type_cond = type_cond[:-3]
+    pre_cond += "always (\n" + type_cond + "\n) & \n" if len(type_cond) > 0 else ""
 
     pre_cond += "\n\n%%% Action authorizations \n"
+    action_cond = ""
     for x in prog.get_declared(m_service):
-        pre_cond += "( " + str(x.to_ltl()) + " ) & \n"
+        action_cond += "( " + str(x.to_ltl()) + " ) & \n"
+    if action_cond[-3:] == "& \n":
+        action_cond = action_cond[:-3]
+    pre_cond += "always (\n" + action_cond + "\n) & \n" if len(action_cond) > 0 else ""
 
     pre_cond += "\n\n%%% Actors knowledge \n"
+    actor_cond = ""
     for x in prog.get_declared(m_agent):
-        pre_cond += "always( " + str(x.to_ltl()) + " ) & \n"
+        actor_cond += "( " + str(x.to_ltl()) + " ) & \n"
+    if actor_cond[-3:] == "& \n":
+        actor_cond = actor_cond[:-3]
+    pre_cond += "always (\n" + actor_cond + "\n) & \n" if len(actor_cond) > 0 else ""
 
     pre_cond += "\n\n%%% Time knowledge \n"
+    time_cond = ""
     times = []
     index = 0
     tmp = time_to_set(prog.walk(filter_type=m_time))
@@ -77,13 +89,19 @@ def build_env(prog: m_aalprog=None):
     # print([str(x.time) + " " for x in times])
     for i in range(0, len(times)):
         for j in range(i+1, len(times)):
-            pre_cond += "always( " + str(times[i].to_ltl()) + " => " + str(times[j].to_ltl()) + " ) &"
+            time_cond += "( " + str(times[i].to_ltl()) + " => " + str(times[j].to_ltl()) + " ) &"
+    pre_cond += "always (\n" + time_cond + "\n) & \n" if len(time_cond) > 0 else ""
 
-    data_decs = "\n\n%%% Data knowledge \n"
-    data_decs += "".join(["always( ?[d](subject(d, " + str(x.name) + ")) ) &\n" for x in prog.get_declared(m_agent)])
-    # data_decs = ""
-    pre_cond += data_decs + "\nCTE ) &"
-    #pre_cond = pre_cond[:-2] + "& true )\n" if pre_cond[-2].startswith("&") else pre_cond + ")\n"
+    pre_cond += "\n\n%%% Data knowledge \n"
+    data_decs = ""
+    data_decs += "".join(["( ?[d](subject(d, " + str(x.name) + ")) ) & \n" for x in prog.get_declared(m_agent)])
+    if data_decs[-3:] == "& \n":
+        data_decs = data_decs[:-3]
+    pre_cond += "always (\n" + data_decs + "\n) & \n" if len(data_decs) > 0 else ""
+
+    if pre_cond[-3:] == "& \n":
+        pre_cond = pre_cond[:-3]
+    pre_cond += "\n)"
 
     pre_cond += "\n%%%%%%%%% END EVN %%%%%%%%%%%\n\n"
     return pre_cond

@@ -146,7 +146,7 @@ def api_compile_tspass(f):
     sys.stderr = reportEIO
 
     try:
-        res = tspassc(file=base_dir + "/" + f, output="tmp.tspass")["print"]
+        res = tspassc(file=base_dir + "/" + f, output="tmp.tspass", timeout=timeout)["print"]
     except:
         res = "Compilation Error"
 

@@ -659,7 +659,7 @@ class m_type(m_declarable):
         else:
             supers = ""
 
-        return str(self.name) + "(CTS) " + supers
+        return str(self.name) + "(a) " + supers
 
 
 # Macro
