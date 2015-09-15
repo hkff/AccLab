@@ -320,15 +320,14 @@ class m_aalprog(aalmmnode):
                 res = res + l.aalprog.clauses
 
         res = self.declarations[decList]
-        for l in self.libs:
-            res = res + l.aalprog.get_declared(klass)
+        if res is None:
+            res = []
 
-        # Remove duplicated (due to forward refs in libs)
-        # res = list(filter(lambda a: (lambda x: len([z for z in res if str(x.name) == str(z.name)]))(a) > 1, res))
-        # p = [str(x.name) for x in res]
-        # d = list(filter((lambda x: len([z for z in res if str(x.name) == str(z.name)]) > 1 ), res))
-        # p = [str(x.name) for x in d]
-        # print(p)
+        for l in self.libs:
+            dl = l.aalprog.get_declared(klass)
+            for x in dl:
+                if not self.isDeclared(str(x.name), x.__class__):
+                    res.append(x)
         return res
 
     # is_declared
