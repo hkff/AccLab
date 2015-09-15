@@ -326,6 +326,8 @@ class m_aalprog(aalmmnode):
         # Remove duplicated (due to forward refs in libs)
         # res = list(filter(lambda a: (lambda x: len([z for z in res if str(x.name) == str(z.name)]))(a) > 1, res))
         # p = [str(x.name) for x in res]
+        # d = list(filter((lambda x: len([z for z in res if str(x.name) == str(z.name)]) > 1 ), res))
+        # p = [str(x.name) for x in d]
         # print(p)
         return res
 

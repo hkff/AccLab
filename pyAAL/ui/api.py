@@ -168,7 +168,8 @@ def api_getAALDec(f):
     try:
         mm = aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="")["mm"]
     except:
-        res = "Compilation Error"
+        # Compilation Error
+        return '{"agents" : [], "services" : [], "types" : [], "clauses" : []}'
 
     agents = ",".join(mm.get_declared(dtype="agents"))
     services = ",".join(mm.get_declared(dtype="services"))
