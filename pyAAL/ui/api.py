@@ -61,6 +61,9 @@ def api_getTemplate(f):
 
 # Write file
 def api_writeFile(f, d):
+    # Add \n at the end
+    if d[-1] != "\n":
+        d += "\n"
     with open(base_dir + "/" + f, "w+") as fd:
         return str(fd.write(d))
 

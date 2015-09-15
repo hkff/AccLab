@@ -46,7 +46,7 @@ def build_env(prog: m_aalprog=None):
     pre_cond += "\n%%% Types knowledge\n"
     type_cond = ""
     for x in prog.get_declared(m_type):
-        type_cond += " (?[a] " + str(x.to_ltl()) + ") & \n"
+        type_cond += " ( ?[a] " + str(x.to_ltl()) + " ) & \n"
     if type_cond[-3:] == "& \n":
         type_cond = type_cond[:-3]
     pre_cond += "always (\n" + type_cond + "\n) & \n" if len(type_cond) > 0 else ""
@@ -54,7 +54,7 @@ def build_env(prog: m_aalprog=None):
     pre_cond += "\n\n%%% Action authorizations \n"
     action_cond = ""
     for x in prog.get_declared(m_service):
-        action_cond += "( " + str(x.to_ltl()) + " ) & \n"
+        action_cond += "" + str(x.to_ltl()) + " & \n"
     if action_cond[-3:] == "& \n":
         action_cond = action_cond[:-3]
     pre_cond += "always (\n" + action_cond + "\n) & \n" if len(action_cond) > 0 else ""
@@ -62,7 +62,7 @@ def build_env(prog: m_aalprog=None):
     pre_cond += "\n\n%%% Actors knowledge \n"
     actor_cond = ""
     for x in prog.get_declared(m_agent):
-        actor_cond += " ( " + str(x.to_ltl()) + ") & \n"
+        actor_cond += " ( " + str(x.to_ltl()) + " ) & \n"
     if actor_cond[-3:] == "& \n":
         actor_cond = actor_cond[:-3]
     pre_cond += "always (\n" + actor_cond + "\n) & \n" if len(actor_cond) > 0 else ""

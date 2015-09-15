@@ -322,6 +322,11 @@ class m_aalprog(aalmmnode):
         res = self.declarations[decList]
         for l in self.libs:
             res = res + l.aalprog.get_declared(klass)
+
+        # Remove duplicated (due to forward refs in libs)
+        # res = list(filter(lambda a: (lambda x: len([z for z in res if str(x.name) == str(z.name)]))(a) > 1, res))
+        # p = [str(x.name) for x in res]
+        # print(p)
         return res
 
     # is_declared
@@ -624,7 +629,7 @@ class m_service(m_declarable):
         return "SERVICE " + str(self.name) + " TYPES(" + " ".join(sltypes) + ") PURPOSE(" + " ".join(slpurpose) + ")"
 
     def to_ltl(self):
-        return "(![x, y, z] (" + str(self.name) + "(x, y, z) => P" + str(self.name) + "(x, y, z)))"
+        return "( ![x, y, z] (" + str(self.name) + "(x, y, z) => P" + str(self.name) + "(x, y, z)) )"
 
 
 # Type

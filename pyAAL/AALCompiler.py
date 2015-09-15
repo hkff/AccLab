@@ -234,6 +234,8 @@ class AALCompilerListener(AALListener.AALListener):
 
         # TODO : replace lib context (parent by this)
 
+        # TODO : check lib forward refs
+
         # Check if the lib is already loaded, if it is the case replace it
         for lib in self.libs:
             # print(lib.file)
