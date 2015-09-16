@@ -548,6 +548,12 @@ class m_clause(m_declarable):
         else:
             return ue
 
+    def to_ltl_obj(self):
+        ue = str(self.usage.to_ltl()) if self.usage is not None else "true"
+        ae = str(self.audit.to_ltl()) if self.audit.usage is not None else "true"
+        re = str(self.rectification.to_ltl()) if self.rectification.usage is not None else "true"
+        return {"ue": ue, "ae": ae, "re": re}
+
     def to_nnf(self, negated):
         ue = str(self.usage.to_nnf(negated)) if self.usage is not None else "false"
         ae = str(self.audit.to_nnf(negated)) if self.audit.usage is not None else "false"
@@ -558,7 +564,7 @@ class m_clause(m_declarable):
         ue = str(self.usage.to_natural()) if self.usage is not None else "Not specified "
         ae = str(self.audit.to_natural()) if self.audit.usage is not None else "Not specified "
         re = str(self.rectification.to_natural()) if self.rectification.usage is not None else "Not specified "
-        return "Usage : "+ue + "\nAudit : " + ae + "\nRectification : " + re + "\n"
+        return "Usage : " + ue + "\nAudit : " + ae + "\nRectification : " + re + "\n"
 
 
 # Agent

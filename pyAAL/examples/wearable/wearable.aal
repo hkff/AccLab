@@ -324,4 +324,4 @@ CHECK c2() {
 }
 //APPLY c2()
 //CALL vsat("r3")
-CALL vvalidate("r3" "up2")
+CALL validate("r3" "up2")

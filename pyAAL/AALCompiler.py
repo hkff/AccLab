@@ -1002,9 +1002,15 @@ class AALCompilerListener(AALListener.AALListener):
             # print("Check not found !")
 
     # Apply check
-    def apply_check(self, chk=None, code=None, verbose=False, show=True):
+    def apply_check(self, chk=None, code=None, verbose=False, show=True, extended_mode=True):
         """
         Apply an FOTL check
+        :param chk: the compiler instance
+        :param code:
+        :param verbose: verbose print
+        :param show:
+        :param extended_mode:
+        :return:
         """
         from aalc import tspassc
 
@@ -1015,39 +1021,41 @@ class AALCompilerListener(AALListener.AALListener):
         code = str(chk.code)
         ltl = code
 
-        # Check if build env
-        ltl = ltl.replace('@buildenv', build_env(self.aalprog))
-        ltl = ltl.replace('"""', '')
+        # If we use extended mode
+        if extended_mode:
+            # Check if build env
+            ltl = ltl.replace('@buildenv', build_env(self.aalprog))
+            ltl = ltl.replace('"""', '')
 
-        # Check for extra commands
-        _verbose = len(re.findall('@verbose', ltl)) > 0  # TODO : optimize
-        if _verbose:
-            ltl = ltl.replace('@verbose', '')
-            verbose = True
+            # Check for extra commands
+            _verbose = len(re.findall('@verbose', ltl)) > 0  # TODO : optimize
+            if _verbose:
+                ltl = ltl.replace('@verbose', '')
+                verbose = True
 
-        for x in re.finditer('clause\(\w+\)', code):
-            clauseId = x.group().replace('clause(', '').replace(')', '')  # Get clause's id
-            cl = self.clause(clauseId)
+            for x in re.finditer('clause\(\w+\)', code):
+                clauseId = x.group().replace('clause(', '').replace(')', '')  # Get clause's id
+                cl = self.clause(clauseId)
 
-            if cl is not None:
-                end = x.end()
-                node = aalmmnode()
-                replace = str(x.group())
-                # Check if we have usage/audit or rectification after
-                tmp = code[end:]
+                if cl is not None:
+                    end = x.end()
+                    node = aalmmnode()
+                    replace = str(x.group())
+                    # Check if we have usage/audit or rectification after
+                    tmp = code[end:]
 
-                if tmp.startswith(".get_usage") or tmp.startswith(".ue"):
-                    node = cl.usage
-                    replace += (".ue" if tmp.startswith(".ue") else ".get_usage")
-                elif tmp.startswith(".get_audit") or tmp.startswith(".ae"):
-                    node = cl.audit
-                    replace += (".ae" if tmp.startswith(".ae") else ".get_audit")
-                elif tmp.startswith(".get_rectification") or tmp.startswith(".re"):
-                    node = cl.rectification
-                    replace += (".re" if tmp.startswith(".re") else ".get_rectification")
-                else:
-                    node = cl
-                ltl = ltl.replace(replace, node.to_ltl())  # Replace clause with its ltl formulae
+                    if tmp.startswith(".get_usage") or tmp.startswith(".ue"):
+                        node = cl.usage
+                        replace += (".ue" if tmp.startswith(".ue") else ".get_usage")
+                    elif tmp.startswith(".get_audit") or tmp.startswith(".ae"):
+                        node = cl.audit
+                        replace += (".ae" if tmp.startswith(".ae") else ".get_audit")
+                    elif tmp.startswith(".get_rectification") or tmp.startswith(".re"):
+                        node = cl.rectification
+                        replace += (".re" if tmp.startswith(".re") else ".get_rectification")
+                    else:
+                        node = cl
+                    ltl = ltl.replace(replace, node.to_ltl())  # Replace clause with its ltl formulae
         if verbose:
             print("========= ltl :" + ltl)
         # exec("from aalc import tspassc")
