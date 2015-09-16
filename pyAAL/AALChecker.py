@@ -280,9 +280,9 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     pre_cond = build_env(compiler.aalprog)
 
     print("----- Checking c1 & c2 consistency :")
-    res = compiler.apply_check(code=pre_cond + "&\n%%  " + c1_id + "\n " + ("always" if use_always else "") +
-                                    "(clause(" + c1_id + ").ue) " + "\n & \n\n%%  " +
-                                    c2_id + "\n" + ("always" if use_always else "") + "(clause(" + c2_id + ").ue)",
+    res = compiler.apply_check(code=pre_cond + "=>\n%%  " + c1_id + "\n (" + ("always" if use_always else "") +
+                                    "(clause(" + c1_id + ").ue)) " + "\n & \n\n%%  " +
+                                    c2_id + "\n(" + ("always" if use_always else "") + "(clause(" + c2_id + ").ue)) \n",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
@@ -298,9 +298,9 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
         print(res["print"])
 
     print("----- Checking c1 => c2 :")
-    res = compiler.apply_check(code="" + pre_cond + "&\n%%  " + c1_id + "\n " + ("always" if use_always else "") +
-                                    "(clause(" + c1_id + "))\n =>\n\n " +
-                                    "%%  " + c2_id + "\n" + ("always" if use_always else "") + "(clause(" + c2_id + "))",
+    res = compiler.apply_check(code="" + pre_cond + "=>\n%%  " + c1_id + "\n (" + ("always" if use_always else "") +
+                                    "(clause(" + c1_id + "))) \n =>\n\n " +
+                                    "%%  " + c2_id + "\n(" + ("always" if use_always else "") + "(clause(" + c2_id + ")))",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         v = v and False
@@ -312,9 +312,9 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
         print(res["print"])
 
     print("----- Checking ~(c1 => c2) :")
-    res = compiler.apply_check(code="~(" + pre_cond + "&\n%%  " + c1_id + "\n " + ("always" if use_always else "") +
-                                    "(clause(" + c1_id + "))\n =>\n\n "
-                                    + "%%  " + c2_id + "\n" + ("always" if use_always else "") + "(clause(" + c2_id + ")) ) ",
+    res = compiler.apply_check(code="~(" + pre_cond + "=>\n%%  " + c1_id + "\n (" + ("always" if use_always else "") +
+                                    "(clause(" + c1_id + "))) \n =>\n\n "
+                                    + "%%  " + c2_id + "\n(" + ("always" if use_always else "") + "(clause(" + c2_id + "))) ) ",
                                show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
