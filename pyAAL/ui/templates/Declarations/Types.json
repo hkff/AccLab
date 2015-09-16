@@ -1,0 +1,15 @@
+{
+    "name": "Type",
+	"desc": "Declare a type.",
+	"vars": [
+      {"name": "", "id": "name", "type": "input", "pre": " Name ", "post": " ", "src": "{aal.agents}"},
+      {"name": "", "id": "st", "type": "select", "pre": " SuperTypes ", "post": "", "src": "{aal.types}"}
+    ],
+	"aal": [
+      "TYPE {name}.val EXTENDS ({st}.val)"
+    ],
+	"html": [
+      "<div class='varGroupe'> {name} {st}  </div> {genBtn}"
+    ],
+	"xacml": ""
+}

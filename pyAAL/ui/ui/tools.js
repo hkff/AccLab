@@ -901,6 +901,7 @@ visualEditor.ui.Template = {
             src = src.replace("{aal.agents}",  JSON.stringify(visualEditor.ui.currentAAL.agents));
             src = src.replace("{aal.services}",  JSON.stringify(visualEditor.ui.currentAAL.services));
             src = src.replace("{aal.clauses}",  JSON.stringify(visualEditor.ui.currentAAL.clauses));
+            src = src.replace("{aal.types}",  JSON.stringify(visualEditor.ui.currentAAL.types));
             src = JSON.parse(src);
 
             for(var i=0; i<src.length; i++)

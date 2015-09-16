@@ -287,12 +287,18 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     c1_ltl = c1.to_ltl_obj()
     c2_ltl = c2.to_ltl_obj()
 
-    return
+    c1_cond = ("((UE1 <=> %s) & (AE1 <=> %s) & (RE1 <=> %s))" % (c1_ltl["ue"], c1_ltl["ae"], c1_ltl["re"]))
+    c2_cond = ("((UE2 <=> %s) & (AE2 <=> %s) & (RE2 <=> %s))" % (c2_ltl["ue"], c2_ltl["ae"], c2_ltl["re"]))
+
+    # Choosing acc formula
+    c1_formula = "(always(AE1 & always(UE1 | ((~(UE1)) & ((AE1 => (RE1)))))) )"
+    c2_formula = "(always(AE2 & always(UE2 | ((~(UE2)) & ((AE2 => (RE2)))))) )"
+
     print("----- Checking c1 & c2 consistency :")
-    res = compiler.apply_check(code=pre_cond + "=>\n%%  " + c1_id + "\n (" + ("always" if use_always else "") +
-                                    "(clause(" + c1_id + ").ue)) " + "\n & \n\n%%  " +
-                                    c2_id + "\n(" + ("always" if use_always else "") + "(clause(" + c2_id + ").ue)) \n",
-                               show=False, verbose=verbose)
+    code = ("%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s & %s \n)"
+            % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
+    # print(code)
+    res = compiler.apply_check(code=code, show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
         v = v and False
@@ -307,10 +313,10 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
         print(res["print"])
 
     print("----- Checking c1 => c2 :")
-    res = compiler.apply_check(code="" + pre_cond + "=>\n%%  " + c1_id + "\n (" + ("always" if use_always else "") +
-                                    "(clause(" + c1_id + "))) \n =>\n\n " +
-                                    "%%  " + c2_id + "\n(" + ("always" if use_always else "") + "(clause(" + c2_id + ")))",
-                               show=False, verbose=verbose)
+    code = ("%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n)"
+            % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
+    # print(code)
+    res = compiler.apply_check(code=code, show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         v = v and False
         print(Color("{autored}  -> " + res["res"] + "{/red}"))
@@ -321,10 +327,10 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
         print(res["print"])
 
     print("----- Checking ~(c1 => c2) :")
-    res = compiler.apply_check(code="~(" + pre_cond + "=>\n%%  " + c1_id + "\n (" + ("always" if use_always else "") +
-                                    "(clause(" + c1_id + "))) \n =>\n\n "
-                                    + "%%  " + c2_id + "\n(" + ("always" if use_always else "") + "(clause(" + c2_id + "))) ) ",
-                               show=False, verbose=verbose)
+    code = ("~(%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n))"
+            % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
+    # print(code)
+    res = compiler.apply_check(code=code, show=False, verbose=verbose)
     if res["res"] == "Unsatisfiable":
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
     else:
@@ -347,6 +353,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
 
     print("------------------------- Validity check End -------------------------\n")
     return ""
+
 
 # Check validity between two clauses # TODO remove after the first one is fixed
 def validate_back(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_always=True):
