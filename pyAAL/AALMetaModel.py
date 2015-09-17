@@ -675,6 +675,15 @@ class m_type(m_declarable):
 
     def c3_linearization(self):
         # TODO
+        """
+        Return linearization of this type using the C3 algorithm.
+        L(A) = A X L(B1) X ... X L(Bn)
+        (a1, .., ak) X (b1, .., bm) =
+                a1 . (a2, .., ak) X (b2, .., bm) if a1 = b1
+                a1 X (a2, .., ak) X (b1, .., bm) if a1 !in {b1, .., bm}
+                b1 X (a1, .., ak) X (b2, .., bm) if a1 !in {b1, .., bm} & b1 !in {a1, .., ak}
+                impossible if a1 in {b2, .., bm} & b1 in {a2, .., ak}
+        """
         return [str(x.target.name) for x in self.superTypes]
 
     def subtype_of(self, supertype):

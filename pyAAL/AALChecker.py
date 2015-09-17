@@ -256,7 +256,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     :param use_always: prefix clauses with always operator
     :param acc_formula: the accountability formula to use for clause translation
             0 : only usage
-            1 :
+            1 : (always(AE1 & always(UE1 | (~UE1 & (AE1 => RE1)) )) )
     :return:
     """
     # TODO  check if c1 and c2 exists
@@ -284,13 +284,15 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     print("c1 : " + c1_id + "\nc2 : " + c2_id)
     pre_cond = build_env(compiler.aalprog)
 
+    # clauses
     c1_ltl = c1.to_ltl_obj()
     c2_ltl = c2.to_ltl_obj()
-
     c1_cond = ("(always(UE1 <=> %s) & always(AE1 <=> %s) & always(RE1 <=> %s))" % (c1_ltl["ue"], c1_ltl["ae"], c1_ltl["re"]))
     c2_cond = ("(always(UE2 <=> %s) & always(AE2 <=> %s) & always(RE2 <=> %s))" % (c2_ltl["ue"], c2_ltl["ae"], c2_ltl["re"]))
 
+    ##
     # Choosing acc formula
+    ##
     if acc_formula == 1:
         c1_formula = "(always(AE1 & always(UE1 | ((~(UE1)) & ((AE1 => (RE1)))))) )"
         c2_formula = "(always(AE2 & always(UE2 | ((~(UE2)) & ((AE2 => (RE2)))))) )"
@@ -298,6 +300,9 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
         c1_formula = "(always(UE1) )"
         c2_formula = "(always(UE2) )"
 
+    ##
+    # C1 & C2
+    ##
     print("----- Checking c1 & c2 consistency :")
     code = ("%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s & %s \n)"
             % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
@@ -306,9 +311,6 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     if res["res"] == "Unsatisfiable":
         print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
         v = v and False
-
-        # solve_auth(compiler, p=c1, u=c2, resolve=resolve)
-        # solve_triggers(compiler, p=c1, u=c2, resolve=resolve)
         return
     else:
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
@@ -316,6 +318,9 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     if res["res"] == "":
         print(res["print"])
 
+    ##
+    # C1 => C2
+    ##
     print("----- Checking c1 => c2 :")
     code = ("%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n)"
             % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
@@ -330,6 +335,9 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     if res["res"] == "":
         print(res["print"])
 
+    ##
+    # ~(C1 => C2)
+    ##
     print("----- Checking ~(c1 => c2) :")
     code = ("~(%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n))"
             % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
@@ -346,10 +354,10 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
 
     if res["res"] == "Unsatisfiable":
         v = v and True
-    # else:
-        # solve_auth(compiler, p=c1, u=c2, resolve=resolve)
-        # solve_triggers(compiler, p=c1, u=c2, resolve=resolve)
 
+    ##
+    # Validity result
+    ##
     if v:
         print(Color("\n{autogreen}[VALIDITY] Formula is valid !{/green}"))
     else:
@@ -473,11 +481,12 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
         res += mc1["print"] + "\n"
         res += "{autored}Please correct your clause. Exiting... {/red}\n"
         return
-
     res += "{autogreen}Monodic check passed ! {/green}\n"
 
+    ##
+    # Satisfiability
+    ##
     v = False
-
     pre_cond = build_env(compiler.aalprog)
     res += "------------------------ Starting " + ("Validity" if not check else "") + " check ---------------------\n"
     res += "----- Checking c1 :\n"
@@ -491,6 +500,9 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
     if res2["res"] == "":
         res += res2["print"] + "\n"
 
+    ##
+    # Validity
+    ##
     if not check:
         res += "----- Checking ~(c1) :\n"
         res2 = compiler.apply_check(code="~((" + pre_cond + " & " + c1 + "))", show=False, verbose=verbose)

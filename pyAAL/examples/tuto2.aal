@@ -52,7 +52,7 @@ CLAUSE alice_pref (
     FORALL d:data
     // Alice want to be able to read all her data stored on css
     IF (d.subject == alice AND d.subject != bob) THEN {
-        DENY alice.read[css](d)
+        PERMIT alice.read[css](d)
         AND
         // Bob cannot read Alice's data
         DENY bob.read[css](d)
