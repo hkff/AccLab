@@ -893,31 +893,41 @@ visualEditor.ui.Template = {
             var options = "";
             var src = varObj.src;
             var agents = false;
+            var data = false;
 
             if(src.indexOf("{aal.agents}") > -1)
                 agents = true;
+
+            if(src.indexOf("{aal.data}") > -1)
+                data = true;
 
             // Replacing agents/services/clauses #NOTE : do not try to optimize
             src = src.replace("{aal.agents}",  JSON.stringify(visualEditor.ui.currentAAL.agents));
             src = src.replace("{aal.services}",  JSON.stringify(visualEditor.ui.currentAAL.services));
             src = src.replace("{aal.clauses}",  JSON.stringify(visualEditor.ui.currentAAL.clauses));
+            src = src.replace("{aal.data}",  JSON.stringify(visualEditor.ui.currentAAL.data));
             src = src.replace("{aal.types}",  JSON.stringify(visualEditor.ui.currentAAL.types));
+			src = src.replace("{aal.actorTypes}",  JSON.stringify(visualEditor.ui.currentAAL.actorTypes));
+			src = src.replace("{aal.dataTypes}",  JSON.stringify(visualEditor.ui.currentAAL.dataTypes));
             src = JSON.parse(src);
 
             for(var i=0; i<src.length; i++)
                 options += "<option value='" + src[i] + "'>" + src[i] + "</option>";
 
-            // Adding quantifiers : only if agents
-            if(agents){
+            // Adding quantifiers
+            if(agents || data){
                 var foralls = "";
                 var exists = "";
 
-                var tt = visualEditor.ui.currentAAL.types;
+                var tt = [];
+                if(agents) tt = tt.concat(visualEditor.ui.currentAAL.actorTypes);
+                if(data) tt = tt.concat(visualEditor.ui.currentAAL.dataTypes);
+
                 for(var i=0; i<tt.length; i++) {
                     counter++;
-                    foralls += "<option value='x" + counter + "'>FORALL " + tt[i] + "</option>";
+                    foralls += "<option value='" + ((data)?'d':'x') + counter + "'>FORALL " + tt[i] + "</option>";
                     counter++;
-                    exists += "<option value='x" + counter + "'>EXISTS " + tt[i] + "</option>";
+                    exists += "<option value='" + ((data)?'d':'x') + counter + "'>EXISTS " + tt[i] + "</option>";
                 }
                 options += foralls + exists;
             }

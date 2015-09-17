@@ -673,6 +673,12 @@ class m_type(m_declarable):
 
         return str(self.name) + "(a) " + supers
 
+    def subtype_of(self, supertype):
+        """
+        Subtype checking
+        """
+        return str(supertype) in [str(x.target.name) for x in self.superTypes]
+
 
 # Macro
 class m_macro(aalmmnode):

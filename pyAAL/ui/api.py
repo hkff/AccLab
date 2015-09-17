@@ -169,11 +169,24 @@ def api_getAALDec(f):
         mm = aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="")["mm"]
     except:
         # Compilation Error
-        return '{"agents" : [], "services" : [], "types" : [], "clauses" : []}'
+        return '{"agents" : [], "services" : [], "types" : [], "data" : [], "clauses" : [], "dataTypes" : [], "actorTypes" : []}'
 
     agents = ",".join(mm.get_declared(dtype="agents"))
     services = ",".join(mm.get_declared(dtype="services"))
+    data = ",".join(mm.get_declared(dtype="data"))
+
+    tts = mm.aalprog.get_declared(m_type)
+    print([str(x.name) for x in tts])
     types = ",".join(mm.get_declared(dtype="types"))
+    # Filter by data type / actor type
+
+    actorTypes = ",".join(['"' + str(x.name) + '"' for x in list(filter(lambda x: x.subtype_of("actor"), tts))])
+    dataTypes = ",".join(['"' + str(x.name) + '"' for x in list(filter(lambda x: x.subtype_of("data"), tts))])
+    print(actorTypes)
+    print(dataTypes)
     clauses = ",".join(['"' + str(x.name) + '"' for x in mm.aalprog.clauses])
-    res = '{"agents" : [' + agents + '], "services" : [' + services + '], "types" : [' + types + '], "clauses" : [' + clauses + ']}'
+    res = '{"agents" : [' + agents + '], "services" : [' + services + '], "types" : [' + \
+          types + '], "data" : [' + data + '], "clauses" : [' + clauses + ']' + ', "dataTypes" : [' +\
+          dataTypes + ']' + ', "actorTypes" : [' + actorTypes + ']' + '}'
+    print(res)
     return res

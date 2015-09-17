@@ -3,7 +3,7 @@
 	"desc": "Log event when a specific action is performed.",
 	"vars": [
       {"name": "", "id": "action", "type": "select", "pre": " Action to log : ", "post": "", "src": "{aal.services}"},
-      {"name": "", "id": "resource", "type": "text", "pre": " Resource ", "post": "  "},
+      {"name": "", "id": "resource", "type": "select", "pre": " Resource ", "post": "  ", "src": "{aal.data}"},
       {"name": "", "id": "owner", "type": "select", "pre": " Owner ", "post": " ", "src": "{aal.agents}"},
       {"name": "", "id": "user", "type": "select", "pre": " User ", "post": " ", "src": "{aal.agents}"},
       {"name": "", "id": "provider", "type": "select", "pre": " Provider ", "post": " ", "src": "{aal.agents}"}

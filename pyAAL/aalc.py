@@ -243,14 +243,14 @@ def tspassc(file=None, code="", output="tmp.tspass", use_shell=False, debug: boo
               stdout=PIPE, stderr=PIPE, stdin=PIPE)
 
     # Handling timeout
-    start = datetime.datetime.now()
-    while p.poll() is None:
-        time.sleep(0.1)
-        now = datetime.datetime.now()
-        if (now - start).seconds > timeout:
-            os.kill(p.pid, signal.SIGKILL)
-            os.waitpid(-1, os.WNOHANG)
-            print(Color("{autored}=== TSPASS prover Time out after " + str(timeout) + "sc ! === {/red}"))
+    # start = datetime.datetime.now()
+    # while p.poll() is None:
+    #     time.sleep(0.1)
+    #     now = datetime.datetime.now()
+    #     if (now - start).seconds > timeout:
+    #         os.kill(p.pid, signal.SIGKILL)
+    #         os.waitpid(-1, os.WNOHANG)
+    #         print(Color("{autored}=== TSPASS prover Time out after " + str(timeout) + "sc ! === {/red}"))
 
     tspass = p.stdout.read().decode("utf-8")
     if tspass == "":

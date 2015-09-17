@@ -291,20 +291,24 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     c2_cond = ("((UE2 <=> %s) & (AE2 <=> %s) & (RE2 <=> %s))" % (c2_ltl["ue"], c2_ltl["ae"], c2_ltl["re"]))
 
     # Choosing acc formula
-    c1_formula = "(always(AE1 & always(UE1 | ((~(UE1)) & ((AE1 => (RE1)))))) )"
-    c2_formula = "(always(AE2 & always(UE2 | ((~(UE2)) & ((AE2 => (RE2)))))) )"
+    if acc_formula == 1:
+        c1_formula = "(always(AE1 & always(UE1 | ((~(UE1)) & ((AE1 => (RE1)))))) )"
+        c2_formula = "(always(AE2 & always(UE2 | ((~(UE2)) & ((AE2 => (RE2)))))) )"
+    else:
+        c1_formula = "(always(UE1) )"
+        c2_formula = "(always(UE2) )"
 
     print("----- Checking c1 & c2 consistency :")
     code = ("%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s & %s \n)"
             % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
     # print(code)
-    res = compiler.apply_check(code=code, show=False, verbose=verbose)
+    res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
     if res["res"] == "Unsatisfiable":
         print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
         v = v and False
 
-        solve_auth(compiler, p=c1, u=c2, resolve=resolve)
-        solve_triggers(compiler, p=c1, u=c2, resolve=resolve)
+        # solve_auth(compiler, p=c1, u=c2, resolve=resolve)
+        # solve_triggers(compiler, p=c1, u=c2, resolve=resolve)
         return
     else:
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
@@ -316,7 +320,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     code = ("%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n)"
             % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
     # print(code)
-    res = compiler.apply_check(code=code, show=False, verbose=verbose)
+    res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
     if res["res"] == "Unsatisfiable":
         v = v and False
         print(Color("{autored}  -> " + res["res"] + "{/red}"))
@@ -330,7 +334,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     code = ("~(%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n))"
             % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
     # print(code)
-    res = compiler.apply_check(code=code, show=False, verbose=verbose)
+    res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
     if res["res"] == "Unsatisfiable":
         print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
     else:
@@ -342,9 +346,9 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
 
     if res["res"] == "Unsatisfiable":
         v = v and True
-    else:
-        solve_auth(compiler, p=c1, u=c2, resolve=resolve)
-        solve_triggers(compiler, p=c1, u=c2, resolve=resolve)
+    # else:
+        # solve_auth(compiler, p=c1, u=c2, resolve=resolve)
+        # solve_triggers(compiler, p=c1, u=c2, resolve=resolve)
 
     if v:
         print(Color("\n{autogreen}[VALIDITY] Formula is valid !{/green}"))
@@ -521,7 +525,6 @@ def solve_auth(compiler, p=None, u=None, verbose=False, resolve=False):
     :param resolve:
     :return:
     """
-    return
     print(Color("{autoblue}:: Solving authorization{/blue}"))
     u_id = str(u.name)
     p_id = str(p.name)

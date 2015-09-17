@@ -653,7 +653,11 @@ class AALCompilerListener(AALListener.AALListener):
         # Handle type superTypes
         if ctx.type_super():
             for x in ctx.type_super().ID():
-                dtDec.superTypes.append(x)
+                tmp = self.checkTypeDec(x)
+                ref = m_ref()
+                ref.label = tmp.name
+                ref.target = tmp
+                dtDec.superTypes.append(ref)
 
         # Handle type attributes
         if ctx.type_attr():

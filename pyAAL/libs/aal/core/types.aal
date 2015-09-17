@@ -2,15 +2,16 @@
 //=================== Defining Types ==================//
 //=====================================================//
 TYPE data
+TYPE actor
 TYPE Actor
-TYPE DataSubject      EXTENDS() ATTRIBUTES() ACTIONS()
-TYPE DataController   EXTENDS() ATTRIBUTES() ACTIONS()
-TYPE DataProcessor    EXTENDS() ATTRIBUTES() ACTIONS()
-TYPE DwDataController EXTENDS() ATTRIBUTES() ACTIONS()
-TYPE Auditor          EXTENDS() ATTRIBUTES() ACTIONS()
-TYPE CloudProvider    EXTENDS() ATTRIBUTES() ACTIONS()
-TYPE CloudCustomer    EXTENDS() ATTRIBUTES() ACTIONS()
-TYPE EndUser          EXTENDS() ATTRIBUTES() ACTIONS()
+TYPE DataSubject      EXTENDS(actor) ATTRIBUTES() ACTIONS()
+TYPE DataController   EXTENDS(actor) ATTRIBUTES() ACTIONS()
+TYPE DataProcessor    EXTENDS(actor) ATTRIBUTES() ACTIONS()
+TYPE DwDataController EXTENDS(actor) ATTRIBUTES() ACTIONS()
+TYPE Auditor          EXTENDS(actor) ATTRIBUTES() ACTIONS()
+TYPE CloudProvider    EXTENDS(actor) ATTRIBUTES() ACTIONS()
+TYPE CloudCustomer    EXTENDS(actor) ATTRIBUTES() ACTIONS()
+TYPE EndUser          EXTENDS(actor) ATTRIBUTES() ACTIONS()
 
 //=====================================================//
 //================= Defining services =================//
