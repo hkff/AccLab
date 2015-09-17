@@ -526,6 +526,7 @@ def solve_auth(compiler, p=None, u=None, verbose=False, resolve=False):
     :return:
     """
     print(Color("{autoblue}:: Solving authorization{/blue}"))
+
     u_id = str(u.name)
     p_id = str(p.name)
 

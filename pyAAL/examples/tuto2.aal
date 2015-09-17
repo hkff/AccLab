@@ -52,7 +52,7 @@ CLAUSE alice_pref (
     FORALL d:data
     // Alice want to be able to read all her data stored on css
     IF (d.subject == alice AND d.subject != bob) THEN {
-        PERMIT alice.read[css](d)
+        DENY alice.read[css](d)
         AND
         // Bob cannot read Alice's data
         DENY bob.read[css](d)
@@ -63,5 +63,6 @@ CLAUSE alice_pref (
 )
 
 // Call validate macro to perform the compliance check
-CALL vvalidate("css_policy" "alice_pref")
+CALL validate_usage("css_policy" "alice_pref")
 //CALL vsat("css_policy" )
+CALL resolve("css_policy" "alice_pref")

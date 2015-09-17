@@ -176,17 +176,14 @@ def api_getAALDec(f):
     data = ",".join(mm.get_declared(dtype="data"))
 
     tts = mm.aalprog.get_declared(m_type)
-    print([str(x.name) for x in tts])
     types = ",".join(mm.get_declared(dtype="types"))
     # Filter by data type / actor type
-
     actorTypes = ",".join(['"' + str(x.name) + '"' for x in list(filter(lambda x: x.subtype_of("Actor"), tts))])
     dataTypes = ",".join(['"' + str(x.name) + '"' for x in list(filter(lambda x: x.subtype_of("data"), tts))])
-    print(actorTypes)
-    print(dataTypes)
+
     clauses = ",".join(['"' + str(x.name) + '"' for x in mm.aalprog.clauses])
     res = '{"agents" : [' + agents + '], "services" : [' + services + '], "types" : [' + \
           types + '], "data" : [' + data + '], "clauses" : [' + clauses + ']' + ', "dataTypes" : [' +\
           dataTypes + ']' + ', "actorTypes" : [' + actorTypes + ']' + '}'
-    print(res)
+
     return res
