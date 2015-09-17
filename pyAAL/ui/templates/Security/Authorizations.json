@@ -8,7 +8,7 @@
       {"name": "", "id": "delete", "type": "checkbox", "pre": "", "post": "Delete"},
       {"name": "", "id": "action", "type": "select", "pre": "Action ", "post": "", "src": "{aal.services}"},
       {"name": "", "id": "useaction", "type": "checkbox", "pre": " ", "post": " Use custom action"},
-      {"name": "", "id": "resource", "type": "text", "pre": " Resource ", "post": " "},
+      {"name": "", "id": "resource", "type": "select", "pre": " Resource ", "post": " ", "src": "{aal.data}"},
       {"name": "", "id": "owner", "type": "select", "pre": " Owner ", "post": " ", "src": "{aal.agents}"},
       {"name": "", "id": "user", "type": "select", "pre": " User ", "post": " ", "src": "{aal.agents}"},
       {"name": "", "id": "permit", "type": "radio", "pre": "", "post": "Permit"},
@@ -16,14 +16,18 @@
       {"name": "", "id": "provider", "type": "select", "pre": " Provider ", "post": " ", "src": "{aal.agents}"}
     ],
 	"aal": [
-      " {{('{owner}.ctext'.startsWith('FORALL')?'FORALL ' + '{owner}.cval:{owner}.ctext '.replace(\"FORALL \",\"\"):'') +",
-      " {{('{owner}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{owner}.cval:{owner}.ctext '.replace(\"EXISTS \",\"\"):'') +",
+      "(",
+      "{{('{resource}.ctext'.startsWith('FORALL')?'FORALL ' + '{resource}.cval:{resource}.ctext '.replace('FORALL ',''):'')}}",
+      "{{('{resource}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{resource}.cval:{resource}.ctext '.replace('EXISTS ',''):'')}}",
 
-      " {{('{user}.ctext'.startsWith('FORALL')?'FORALL ' + '{user}.cval:{user}.ctext '.replace(\"FORALL \",\"\"):'') +",
-      " {{('{user}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{user}.cval:{user}.ctext '.replace(\"EXISTS \",\"\"):'') +",
+      "{{('{owner}.ctext'.startsWith('FORALL')?'FORALL ' + '{owner}.cval:{owner}.ctext '.replace('FORALL ',''):'')}}",
+      "{{('{owner}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{owner}.cval:{owner}.ctext '.replace('EXISTS ',''):'')}}",
 
-      " {{('{provider}.ctext'.startsWith('FORALL')?'FORALL ' + '{provider}.cval:{provider}.ctext '.replace(\"FORALL \",\"\"):'') +",
-      " {{('{provider}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{provider}.cval:{provider}.ctext '.replace(\"EXISTS \",\"\"):'') +",
+      "{{('{user}.ctext'.startsWith('FORALL')?'FORALL ' + '{user}.cval:{user}.ctext '.replace('FORALL ',''):'')}}",
+      "{{('{user}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{user}.cval:{user}.ctext '.replace('EXISTS ',''):'')}}",
+
+      "{{('{provider}.ctext'.startsWith('FORALL')?'FORALL ' + '{provider}.cval:{provider}.ctext '.replace('FORALL ',''):'')}}",
+      "{{('{provider}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{provider}.cval:{provider}.ctext '.replace('EXISTS ',''):'')}}",
 
       "{{'\\n'+ (({read}.checked)?'\\n' + (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.read[{provider}.val]({resource}.val)':'') }}",
       "+{{ (({read}.checked && {write}.checked)?' AND \\n':'') + (({write}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ",
@@ -34,7 +38,8 @@
         "( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.delete[{provider}.val]({resource}.val)') : '') }}",
 
       "+{{ (({useaction}.checked && ({read}.checked || {write}.checked || {update}.checked ||{delete}.checked))?' AND \\n':'') +",
-        " (({useaction}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.{action}.val[{provider}.val]({resource}.val)') : '') }} AND\n<...>"
+        " (({useaction}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.{action}.val[{provider}.val]({resource}.val)') : '') }} AND\n<...>",
+      ")"
 
     ],
 	"html": [

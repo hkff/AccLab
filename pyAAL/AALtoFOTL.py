@@ -43,6 +43,10 @@ def build_env(prog: m_aalprog=None):
     """
     pre_cond = "\n%%%%%%%%% START EVN %%%%%%%%%%%\n"
     pre_cond += "(\n"
+
+    pre_cond += "(always ![a] (Actor(a) => EQUAL(a, a))) &\n"
+    pre_cond += "(always ![a, b] ((Actor(a) & Actor(b) & EQUAL(a, b)) => EQUAL(b, a))) &\n"
+
     pre_cond += "\n%%% Types knowledge\n"
     type_cond = ""
     for x in prog.get_declared(m_type):
@@ -130,7 +134,7 @@ def AALtoFOTL(mm: aalmm=None):
         ifthen        -> INTER[actionExp1] => INTER[actionExp2]
         qvar          -> quant INTER[var]
     """
-    print(mm)
+    # print(mm)
     if isinstance(mm, m_aalprog):
         return build_env(mm) + "\n" + mm.to_ltl()
     else:

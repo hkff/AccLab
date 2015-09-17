@@ -180,7 +180,7 @@ def api_getAALDec(f):
     types = ",".join(mm.get_declared(dtype="types"))
     # Filter by data type / actor type
 
-    actorTypes = ",".join(['"' + str(x.name) + '"' for x in list(filter(lambda x: x.subtype_of("actor"), tts))])
+    actorTypes = ",".join(['"' + str(x.name) + '"' for x in list(filter(lambda x: x.subtype_of("Actor"), tts))])
     dataTypes = ",".join(['"' + str(x.name) + '"' for x in list(filter(lambda x: x.subtype_of("data"), tts))])
     print(actorTypes)
     print(dataTypes)

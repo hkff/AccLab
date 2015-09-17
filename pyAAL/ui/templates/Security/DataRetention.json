@@ -3,23 +3,29 @@
 	"desc": "Specify the retention period for a specific resource.",
 	"vars": [
       {"name": "", "id": "period", "type": "text", "pre": "<h4>Delete before </h4>", "post": ""},
-      {"name": "", "id": "resource", "type": "text", "pre": " Resource ", "post": "  "},
+      {"name": "", "id": "resource", "type": "select", "pre": " Resource ", "post": " ", "src": "{aal.data}"},
       {"name": "", "id": "owner", "type": "select", "pre": " Owner ", "post": " ", "src": "{aal.agents}"},
       {"name": "", "id": "user", "type": "select", "pre": " User ", "post": " ", "src": "{aal.agents}"},
       {"name": "", "id": "provider", "type": "select", "pre": " Provider ", "post": " ", "src": "{aal.agents}"}
     ],
 	"aal": [
-      " {{('{owner}.ctext'.startsWith('FORALL')?'FORALL ' + '{owner}.cval:{owner}.ctext '.replace(\"FORALL \",\"\"):'') +",
-      " {{('{owner}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{owner}.cval:{owner}.ctext '.replace(\"EXISTS \",\"\"):'') +",
+      "(",
+      "{{('{resource}.ctext'.startsWith('FORALL')?'FORALL ' + '{resource}.cval:{resource}.ctext '.replace('FORALL ',''):'')}}",
+      "{{('{resource}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{resource}.cval:{resource}.ctext '.replace('EXISTS ',''):'')}}",
 
-      " {{('{user}.ctext'.startsWith('FORALL')?'FORALL ' + '{user}.cval:{user}.ctext '.replace(\"FORALL \",\"\"):'') +",
-      " {{('{user}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{user}.cval:{user}.ctext '.replace(\"EXISTS \",\"\"):'') +",
+      "{{('{owner}.ctext'.startsWith('FORALL')?'FORALL ' + '{owner}.cval:{owner}.ctext '.replace('FORALL ',''):'')}}",
+      "{{('{owner}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{owner}.cval:{owner}.ctext '.replace('EXISTS ',''):'')}}",
 
-      " {{('{provider}.ctext'.startsWith('FORALL')?'FORALL ' + '{provider}.cval:{provider}.ctext '.replace(\"FORALL \",\"\"):'') +",
-      " {{('{provider}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{provider}.cval:{provider}.ctext '.replace(\"EXISTS \",\"\"):'') +",
+      "{{('{user}.ctext'.startsWith('FORALL')?'FORALL ' + '{user}.cval:{user}.ctext '.replace('FORALL ',''):'')}}",
+      "{{('{user}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{user}.cval:{user}.ctext '.replace('EXISTS ',''):'')}}",
 
-      "{{'\\n' + (('{resource}.val' == '')? 'FORALL d:data\\nIF (d.subject == {owner}.val)' : 'IF ({resource}.val.subject == {owner}.val)') }}",
-      "THEN {\n\t MUST( {user}.val.delete[{provider}.val]({resource}.val) BEFORE '{period}.val') \n}"
+      "{{('{provider}.ctext'.startsWith('FORALL')?'FORALL ' + '{provider}.cval:{provider}.ctext '.replace('FORALL ',''):'')}}",
+      "{{('{provider}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{provider}.cval:{provider}.ctext '.replace('EXISTS ',''):'')}}",
+
+      "{{'\\n' + (('{owner}.val' === '')?'':'IF ({resource}.val.subject == {owner}.val) THEN {') }}",
+      "\n\t MUST( {user}.val.delete[{provider}.val]({resource}.val) BEFORE '{period}.val')",
+      "{{ (('{owner}.val' === '')?'':'\\n}') }}",
+      ")"
     ],
 	"html": [
       "<div class='varGroupe'> {resource} {owner} </div>",

@@ -914,6 +914,9 @@ visualEditor.ui.Template = {
             for(var i=0; i<src.length; i++)
                 options += "<option value='" + src[i] + "'>" + src[i] + "</option>";
 
+            // Add empty option
+            options += "<option value=''></option>";
+
             // Adding quantifiers
             if(agents || data){
                 var foralls = "";
@@ -982,7 +985,6 @@ visualEditor.ui.Template = {
         for(var i=0; i<template.vars.length; i++)
             html = replaceAll("{"+template.vars[i].id+"}", vars[template.vars[i].id], html);
 
-
         // Rendering
         $("#" + target).html(html);
 	},
@@ -1001,10 +1003,8 @@ visualEditor.ui.Template = {
         }
 
         // Handle evals
-        //var evals = aal.match(/{{.*}}/gm);
         var evals = aal.match(/{{(.*?)}}/g);
 
-		console.log(evals)
         if (evals != null) {
             for(var i=0; i<evals.length; i++) {
                 var e = replaceAll("}}", "", replaceAll("{{", "", evals[i]));

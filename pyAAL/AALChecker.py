@@ -245,7 +245,7 @@ def get_vars(aexp: m_aexp, vtype=None):
 
 
 # Check validity between two clauses
-def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_always=True, acc_formula=0):
+def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_always=True, acc_formula=1):
     """
     Perform validity test between two aal clauses
     :param compiler: the compiler instance
@@ -260,7 +260,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     :return:
     """
     # TODO  check if c1 and c2 exists
-    validate_back(compiler, c1, c2, resolve=resolve, verbose=verbose, use_always=use_always)
+    # validate_back(compiler, c1, c2, resolve=resolve, verbose=verbose, use_always=use_always)
     #return
 
     # Monodic test
