@@ -19,7 +19,7 @@ AGENT bob   TYPES(Actor) REQUIRED(read store delete) PROVIDED()
 AGENT css   TYPES(Actor) REQUIRED() PROVIDED(read store delete)
 
 LOG log
-
+TYPE public EXTENDS(data)
 /*
  * Cloud storage service provider policy
  */

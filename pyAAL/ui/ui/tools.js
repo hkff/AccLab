@@ -1001,7 +1001,10 @@ visualEditor.ui.Template = {
         }
 
         // Handle evals
-        var evals = aal.match(/{{.*}}/gm);
+        //var evals = aal.match(/{{.*}}/gm);
+        var evals = aal.match(/{{(.*?)}}/g);
+
+		console.log(evals)
         if (evals != null) {
             for(var i=0; i<evals.length; i++) {
                 var e = replaceAll("}}", "", replaceAll("{{", "", evals[i]));

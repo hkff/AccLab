@@ -261,7 +261,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     """
     # TODO  check if c1 and c2 exists
     validate_back(compiler, c1, c2, resolve=resolve, verbose=verbose, use_always=use_always)
-    return
+    #return
 
     # Monodic test
     print("------------------------- Monodic check -------------------------")
@@ -287,8 +287,8 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     c1_ltl = c1.to_ltl_obj()
     c2_ltl = c2.to_ltl_obj()
 
-    c1_cond = ("((UE1 <=> %s) & (AE1 <=> %s) & (RE1 <=> %s))" % (c1_ltl["ue"], c1_ltl["ae"], c1_ltl["re"]))
-    c2_cond = ("((UE2 <=> %s) & (AE2 <=> %s) & (RE2 <=> %s))" % (c2_ltl["ue"], c2_ltl["ae"], c2_ltl["re"]))
+    c1_cond = ("(always(UE1 <=> %s) & always(AE1 <=> %s) & always(RE1 <=> %s))" % (c1_ltl["ue"], c1_ltl["ae"], c1_ltl["re"]))
+    c2_cond = ("(always(UE2 <=> %s) & always(AE2 <=> %s) & always(RE2 <=> %s))" % (c2_ltl["ue"], c2_ltl["ae"], c2_ltl["re"]))
 
     # Choosing acc formula
     if acc_formula == 1:
