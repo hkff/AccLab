@@ -37,7 +37,7 @@ from AALChecker import *
 # Note : To avoid cyclic import
 class AALCompilerListener(AALListener.AALListener):
     def __init__(self, loadlibs: bool=True, serialize: bool=False, file: str="",
-                 libs_path="libs/aal/", root_path=None, recompile=False, errors_listener=None):
+                 libs_path="libs/aal/", root_path=None, recompile=False, errors_listener=None, no_exec=False):
         pass
 
 from aalc import *
@@ -78,11 +78,12 @@ class AALCompilerListener(AALListener.AALListener):
         - recompile = recompile
         - root_path = root_path
         - errors_listener = errors_listener
+        - no_exec
     """
     # Initializer
     def __init__(self, loadlibs: bool=True, serialize: bool=False, file: str="",
                  libs_path="libs/aal/", root_path=None, recompile=False,
-                 hotswaping=False, errors_listener=None, tspass_timeout=20):
+                 hotswaping=False, errors_listener=None, tspass_timeout=20, no_exec=False):
         self.loadlibs = loadlibs
         self.serialize = serialize
         self.aalmm = aalmm()
@@ -114,6 +115,7 @@ class AALCompilerListener(AALListener.AALListener):
         self.root_path = root_path
         self.errors_listener = errors_listener
         self.tspass_timeout = tspass_timeout
+        self.no_exec = no_exec
 
         # FIXME
         if hotswaping:
@@ -1080,6 +1082,8 @@ class AALCompilerListener(AALListener.AALListener):
     # TODO complete
     # Exit macro call
     def exitMacroCall(self, ctx):
+        if self.no_exec:
+            return
         # Check if there is parsing errors
         if len(self.errors()) > 0:
             print(Color("{autored}[ERROR]{/red} There are syntax errors in your code. Macros calls are disabled !"))
@@ -1092,6 +1096,8 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Exit exec
     def exitExec(self, ctx):
+        if self.no_exec:
+            return
         exec(str(ctx.MCODE()).replace('"""', ''))
 
     # Search a macro

@@ -87,7 +87,7 @@ class DescriptiveErrorListener(ErrorListener):
 # aalc
 def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, compile: bool=False,
          libs_path="libs/aal/", root_path=None, recompile: bool=False, to_ltl: bool=False,
-         show_ast: bool=False, timeout=20):
+         show_ast: bool=False, timeout=20, no_exec=False):
     """
     Parse AAL.
     :param file: The AAL input file
@@ -100,6 +100,7 @@ def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, co
     :param recompile: Recompile the file
     :param to_ltl: Transform AAL code into FOTL formula
     :param show_ast: Show an interactive AST graph in a web page
+    :param no_exec: disable macro calls and exec
     :return: {"res": the result, "mm": the metamodel instance}
     """
     from AALCompiler import AALCompilerListener
@@ -111,7 +112,7 @@ def aalc(file, use_shell: bool=False, check: bool=False, monodic: bool=False, co
     stream = CommonTokenStream(lexer)
     parser = AALParser(stream)
     desec = DescriptiveErrorListener()
-    parser.addParseListener(AALCompilerListener(file=file, libs_path=libs_path, recompile=recompile,
+    parser.addParseListener(AALCompilerListener(file=file, libs_path=libs_path, recompile=recompile, no_exec=no_exec,
                                                 root_path=root_path, errors_listener=desec, tspass_timeout=timeout))
     parser.addErrorListener(desec)
     parser.buildParseTrees = True

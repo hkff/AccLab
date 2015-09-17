@@ -9,8 +9,10 @@
       {"name": "", "id": "provider", "type": "select", "pre": " Provider ", "post": " ", "src": "{aal.agents}"}
     ],
 	"aal": [
-      "{{ (('{resource}.val' == '')? 'FORALL d:data\\",
-      "nIF (d.subject == {owner}.val' : 'IF ({resource}.val.subject == {owner}.val')}}",
+      " {{('{owner}.ctext'.startsWith('FORALL')?'FORALL ' + '{owner}.cval:{owner}.ctext '.replace(\"FORALL \",\"\"):'') + ",
+      " ('{owner}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{owner}.cval:{owner}.ctext '.replace(\"EXISTS \",\"\"):'') }} + ",
+
+      "\nIF ({resource}.val.subject == {owner}.val')",
       "AND {user}.val.{action}.val[{provider}.val]({resource}.val) ) THEN {\n\t MUST( {provider}.val.log[{provider}.val](",
       "\"user:{user}.val;action:{action}.val;resource:{resource}.val;owner:{owner}.val;provider:{provider}.val\") ) \n} AND "
     ],

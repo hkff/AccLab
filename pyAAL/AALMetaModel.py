@@ -673,11 +673,15 @@ class m_type(m_declarable):
 
         return str(self.name) + "(a) " + supers
 
+    def c3_linearization(self):
+        # TODO
+        return [str(x.target.name) for x in self.superTypes]
+
     def subtype_of(self, supertype):
         """
         Subtype checking
         """
-        return str(supertype) in [str(x.target.name) for x in self.superTypes]
+        return str(supertype) in self.c3_linearization()
 
 
 # Macro
