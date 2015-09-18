@@ -545,7 +545,7 @@ visualEditor.ui.tools.genAALTool = visualEditor.ui.tool.extend({
 	control: function(parent) {
 		var fx = function(e){
 			var active = visualEditor.ui.activeTab.container.title;
-			visualEditor.ui.fileManager.showGeneratedAAL(active);
+            visualEditor.ui.fileManager.showGeneratedAAL(active);
 		};
 		this.button.click(fx);
 		shortcut.add("Ctrl+G", fx);
@@ -569,23 +569,33 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 		var fx = function(e){
 			//var active = visualEditor.ui.activeTab.container.title;
 			//visualEditor.ui.fileManager.showGeneratedTSPASS(active);
+            var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
             var file = visualEditor.ui.activeTab.container.title;
-            var dType = "text";
-			var action = "compileAAL";
-			var fileType = file.split('.').pop().toLowerCase();
-			if(fileType == "tspass")
-				action = "compileFOTL";
 
-			toastr.info('Compiling...');
-			$.ajax({
-				dataType: dType,
-				type:'POST',
-				url: visualEditor.backend,
-				data: {action: action, file: file},
-				success: function(response){
-					$("#output_window").empty().append(response).scrollTop(0);;
-				}
-			});
+			visualEditor.ui.fileManager.saveFile(file, editor.getValue(), function(){
+                var file = visualEditor.ui.activeTab.container.title;
+                var dType = "text";
+                var action = "compileAAL";
+                var fileType = file.split('.').pop().toLowerCase();
+                if(fileType == "tspass")
+                    action = "compileFOTL";
+
+                toastr.info('Compiling...');
+                $.ajax({
+                    dataType: dType,
+                    type:'POST',
+                    url: visualEditor.backend,
+                    data: {action: action, file: file},
+                    success: function(response){
+                        $("#output_window").empty().append(response).scrollTop(0);;
+                    }
+                });
+            });
+
+            if(visualEditor.activeEditor != null)
+				visualEditor.activeEditor.session.getUndoManager().markClean();
+			// Remove save marker
+			visualEditor.markPanelClear();
 		};
 
 		this.button.click(fx);

@@ -429,7 +429,7 @@ visualEditor.ui.fileManager = {
 	 * @param file
 	 * @param data
 	 */
-	saveFile: function(file, data) {
+	saveFile: function(file, data, callback) {
 		var fileType = file.split('.').pop().toLowerCase();
 		var dType = "";
 		switch(fileType) {
@@ -444,7 +444,10 @@ visualEditor.ui.fileManager = {
 							data: {action: "write", file: file, data: data},
 							success: function(response){
 						  		//console.log(response)
-								toastr.success('File saved !');
+								if(callback != undefined)
+									callback();
+								else
+									toastr.success('File saved !');
 							}
 						});
 					});
@@ -458,6 +461,9 @@ visualEditor.ui.fileManager = {
 					data: {action: "write", file: file, data: data},
 					success: function(response){
 				  		//console.log(response)
+                        if(callback != undefined)
+                            callback();
+                        else
 						toastr.success('File saved !');
 					}
 				});
