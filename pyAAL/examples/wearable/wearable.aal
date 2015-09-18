@@ -297,7 +297,7 @@ CHECK c1() {
 CLAUSE up2 (
     // user want to read/update/delete public and sensitive data
     EXISTS d:data
-    IF(d.subject == kim) THEN {
+    IF(d.subject == kim AND a == toto) THEN {
          IF(@public(d) OR @sensitive(d)) THEN {
             PERMIT kim.read[cardioMon](d)
             AND PERMIT kim.update[cardioMon](d)
@@ -323,5 +323,5 @@ CHECK c2() {
 """
 }
 //APPLY c2()
-//CALL vsat("r3")
-CALL validate("r3" "up2")
+CALL vsat("up2")
+//CALL validate("r3" "up2")

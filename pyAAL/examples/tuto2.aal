@@ -19,7 +19,7 @@ AGENT bob   TYPES(Actor) REQUIRED(read store delete) PROVIDED()
 AGENT css   TYPES(Actor) REQUIRED() PROVIDED(read store delete)
 
 LOG log
-TYPE public EXTENDS(data)
+
 /*
  * Cloud storage service provider policy
  */
@@ -63,6 +63,16 @@ CLAUSE alice_pref (
 )
 
 // Call validate macro to perform the compliance check
-CALL validate_usage("css_policy" "alice_pref")
-//CALL vsat("css_policy" )
-CALL resolve("css_policy" "alice_pref")
+//CALL validate("css_policy" "alice_pref")
+
+TYPE O
+TYPE A EXTENDS( O)
+TYPE B EXTENDS( O)
+TYPE C EXTENDS( O)
+TYPE D EXTENDS( O)
+TYPE E EXTENDS( O)
+TYPE K1 EXTENDS( A B C)
+TYPE K2 EXTENDS( D B E)
+TYPE K3 EXTENDS( D A)
+TYPE Z EXTENDS( K1 K2 K3)
+
