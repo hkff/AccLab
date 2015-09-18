@@ -1174,6 +1174,11 @@ class AALCompilerListener(AALListener.AALListener):
             lst = lst + tmp
         return sorted(list(set(lst)))
 
+    def call(self, macro, args=None):
+        if args is None:
+            args = []
+        return self.macro_call(macro, args)
+
     # Create a new macro
     def new_macro(self, name, param, code):
         """

@@ -245,7 +245,7 @@ def get_vars(aexp: m_aexp, vtype=None):
 
 
 # Check validity between two clauses
-def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_always=True, acc_formula=1):
+def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_always=True, acc_formula=1, chk="all"):
     """
     Perform validity test between two aal clauses
     :param compiler: the compiler instance
@@ -257,6 +257,11 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     :param acc_formula: the accountability formula to use for clause translation
             0 : only usage
             1 : (always(AE1 & always(UE1 | (~UE1 & (AE1 => RE1)) )) )
+    :param chk: perform only the selected check
+            "all" : all checks
+            "and" : &
+            "imply" : =>
+            "neg" : ~(=>)
     :return:
     """
     # TODO  check if c1 and c2 exists
@@ -278,7 +283,10 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     print(Color("{autogreen}Monodic check passed ! {/green}"))
 
     v = True
-    print("------------------------- Starting Validity check -------------------------")
+
+    if chk == "all":
+        print("------------------------- Starting Validity check -------------------------")
+
     c1_id = str(c1.name)
     c2_id = str(c2.name)
     print("c1 : " + c1_id + "\nc2 : " + c2_id)
@@ -303,67 +311,80 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     ##
     # C1 & C2
     ##
-    print("----- Checking c1 & c2 consistency :")
-    code = ("%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s & %s \n)"
-            % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
-    # print(code)
-    res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
-    if res["res"] == "Unsatisfiable":
-        print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
-        v = v and False
-        return
-    else:
-        print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+    if chk == "and" or chk == "all":
+        print("----- Checking c1 & c2 consistency :")
+        code = ("%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s & %s \n)"
+                % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
+        # print(code)
+        res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
+        if res["res"] == "Unsatisfiable":
+            print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
+            v = v and False
+            return
+        else:
+            print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
 
-    if res["res"] == "":
-        print(res["print"])
+        if res["res"] == "":
+            print(res["print"])
+
+    if chk == "&":
+        return ""
 
     ##
     # C1 => C2
     ##
-    print("----- Checking c1 => c2 :")
-    code = ("%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n)"
-            % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
-    # print(code)
-    res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
-    if res["res"] == "Unsatisfiable":
-        v = v and False
-        print(Color("{autored}  -> " + res["res"] + "{/red}"))
-    else:
-        print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+    if chk == "imply" or chk == "all":
+        print("----- Checking c1 => c2 :")
+        code = ("%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n)"
+                % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
+        # print(code)
+        res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
+        if res["res"] == "Unsatisfiable":
+            v = v and False
+            print(Color("{autored}  -> " + res["res"] + "{/red}"))
+        else:
+            print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
 
-    if res["res"] == "":
-        print(res["print"])
+        if res["res"] == "":
+            print(res["print"])
+
+    if chk == "imply":
+        return ""
 
     ##
     # ~(C1 => C2)
     ##
-    print("----- Checking ~(c1 => c2) :")
-    code = ("~(%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n))"
-            % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
-    # print(code)
-    res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
-    if res["res"] == "Unsatisfiable":
-        print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
-    else:
-        print(Color("{autored}  -> " + res["res"] + "{/red}"))
-        v = v and False
+    if chk == "neg" or chk == "all":
+        print("----- Checking ~(c1 => c2) :")
+        code = ("~(%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n))"
+                % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
+        # print(code)
+        res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
+        if res["res"] == "Unsatisfiable":
+            print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+        else:
+            print(Color("{autored}  -> " + res["res"] + "{/red}"))
+            v = v and False
 
-    if res["res"] == "":
-        print(res["print"])
+        if res["res"] == "":
+            print(res["print"])
 
-    if res["res"] == "Unsatisfiable":
-        v = v and True
+        if res["res"] == "Unsatisfiable":
+            v = v and True
 
-    ##
-    # Validity result
-    ##
-    if v:
-        print(Color("\n{autogreen}[VALIDITY] Formula is valid !{/green}"))
-    else:
-        print(Color("\n{autored}[VALIDITY] Formula is not valid !{/red}"))
+    if chk == "neg":
+        return ""
 
-    print("------------------------- Validity check End -------------------------\n")
+    if chk == "all":
+        ##
+        # Validity result
+        ##
+        if v:
+            print(Color("\n{autogreen}[VALIDITY] Formula is valid !{/green}"))
+        else:
+            print(Color("\n{autored}[VALIDITY] Formula is not valid !{/red}"))
+
+        print("------------------------- Validity check End -------------------------\n")
     return ""
 
 

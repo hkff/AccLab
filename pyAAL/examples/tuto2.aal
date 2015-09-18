@@ -63,16 +63,8 @@ CLAUSE alice_pref (
 )
 
 // Call validate macro to perform the compliance check
-//CALL validate("css_policy" "alice_pref")
+//CALL validate_usage_and("css_policy" "alice_pref")
 
-TYPE O
-TYPE A EXTENDS( O)
-TYPE B EXTENDS( O)
-TYPE C EXTENDS( O)
-TYPE D EXTENDS( O)
-TYPE E EXTENDS( O)
-TYPE K1 EXTENDS( A B C)
-TYPE K2 EXTENDS( D B E)
-TYPE K3 EXTENDS( D A)
-TYPE Z EXTENDS( K1 K2 K3)
-
+CALL sat_ue("alice_pref")
+CALL sat_ae("alice_pref")
+CALL sat_re("alice_pref")

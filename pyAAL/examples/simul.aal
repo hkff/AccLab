@@ -30,4 +30,4 @@ EXEC
 from simul.SimulGenerator import *
 #generate_simulation(self.aalprog)
 """
-CALL vsat("Kim_policy")
+//CALL vsat("Kim_policy")
