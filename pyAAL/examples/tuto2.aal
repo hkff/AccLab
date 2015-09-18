@@ -63,8 +63,24 @@ CLAUSE alice_pref (
 )
 
 // Call validate macro to perform the compliance check
-//CALL validate_usage_and("css_policy" "alice_pref")
+CALL validate_usage_and("css_policy" "alice_pref")
 
-CALL sat_ue("alice_pref")
-CALL sat_ae("alice_pref")
-CALL sat_re("alice_pref")
+/*
+EXEC
+"""
+for x in self.aalprog.get_declared(m_type):
+    print(str(x.name) + "  : " + str(x.lin()))
+
+tts = self.aalprog.get_declared(m_type)
+print(",".join(['"' + str(x.name) + '"' for x in list(filter(lambda x: x.subtype_of("Actor"), tts))]))
+
+print(",".join(['"' + str(x.name) + '"' for x in list(filter(lambda x: x.subtype_of("data"), tts))]))
+
+for l in self.aalprog.libs:
+    print("======================= " + l.file)
+    print(l.refForwardTypes)
+    print([str(x.name) for x in l.aalprog.declarations["types"]])
+
+print(self.isDeclared("goo", m_type))
+"""
+*/

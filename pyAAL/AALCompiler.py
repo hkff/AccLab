@@ -257,6 +257,7 @@ class AALCompilerListener(AALListener.AALListener):
     # Exit AALprog
     def exitAalprog(self, ctx):
         print(Color(self.checkForwardsRef()))
+        self.fixLibsForwardsRef()
         if self.DEBUG:
             print("\n")
             print(self.aalprog)
@@ -360,6 +361,19 @@ class AALCompilerListener(AALListener.AALListener):
             for d in self.refForwardTypes:
                 res += "  -> " + d + " {automagenta}at line " + str(self.refForwardTypes[d].get_line()) + "{/magenta}\n"
         return res
+
+
+    # Fix forwards Ref in loaded libs
+    def fixLibsForwardsRef(self):
+        """
+        Fix forwards Ref in loaded libs
+        :return:
+        """
+        #for l in self.aalprog.libs:
+        #    for d in l.refForwardTypes:
+        #        print(str(d) + " " + str(self.isDeclared(d, m_type)) )
+        #        res = self.isDeclared(d, m_type)
+        pass
 
     ##########################
     ####### Declarable #######
@@ -1178,6 +1192,10 @@ class AALCompilerListener(AALListener.AALListener):
         if args is None:
             args = []
         return self.macro_call(macro, args)
+
+    def isDeclared(self, name, klass):
+        types = self.aalprog.get_declared(m_type)
+        return name in [str(x.name) for x in types]
 
     # Create a new macro
     def new_macro(self, name, param, code):

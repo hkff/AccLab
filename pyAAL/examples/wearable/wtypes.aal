@@ -4,6 +4,9 @@
 TYPE sensitive EXTENDS(data)
 TYPE public EXTENDS(data)
 
+TYPE Customer EXTENDS (DataSubject)
+
+
 /*
  * Username
  * The username used as user credentials, along with the password, to log in to the Wearable Service

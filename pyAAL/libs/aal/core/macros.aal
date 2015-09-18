@@ -1,5 +1,6 @@
 //======================= Compliance / Validity / Satisfiability =======================//
 
+
 /*
  * Generic validate call
  * General call self.call("gvalidate", [c1, c2, "resolve", "verbose", "use_always", "acc_formula", "chk"])
