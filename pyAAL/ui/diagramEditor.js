@@ -318,7 +318,8 @@ var visualEditor = {
 			  	"hideDuration": "1000",
 			  	"timeOut": 0,
 			  	"extendedTimeOut": 0,
-				"positionClass": "toast-top-left"
+				"positionClass": "toast-top-left",
+                "onHidden": function() { if(visualEditor.ui.interval != null) clearInterval(visualEditor.ui.interval); }
 			});
         visualEditor.ui.updateToastSize("warning", {"width": 450, "height": 240}, true);
         $("#monGrid").datagrid({fit:false});
