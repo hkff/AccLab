@@ -325,3 +325,4 @@ CHECK c2() {
 //APPLY c2()
 CALL vsat("up2")
 CALL validate("r3" "up2")
+CALL resolve("r3" "up2")

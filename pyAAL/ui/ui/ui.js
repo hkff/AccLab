@@ -20,18 +20,19 @@
 //////////////////////////////////////////////////////////
 
 visualEditor.ui = {
-	grid            : null,
-	actionsPanel    : null,
-	componentsPanel : null,
-	propertiesPanel : null,
-	outlinePanel    : null,
-	inplacePanel    : null,
-	commandStack    : null,
-	canvas          : null,
-	selectedNode    : null,
-	activeTab       : null,
-    currentAAL      : null,
-    interval        : null,
+	grid             : null,
+	actionsPanel     : null,
+	componentsPanel  : null,
+	propertiesPanel  : null,
+	outlinePanel     : null,
+	inplacePanel     : null,
+	commandStack     : null,
+	canvas           : null,
+	selectedNode     : null,
+	activeTab        : null,
+    currentAAL       : null,
+    interval         : null,
+	psUpdateInterval : 10000,
 
 	/**
 	 * init function

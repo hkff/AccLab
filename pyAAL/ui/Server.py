@@ -67,6 +67,8 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             res = api_createFolder(self.get_arg(args, "file", method))
         elif val == "monitor":
             res = api_monitor()
+        elif val == "killPs":
+            res = api_kill_ps(self.get_arg(args, "pid", method))
         return res
 
     def do_GET(self):

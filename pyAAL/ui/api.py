@@ -188,6 +188,8 @@ def api_getAALDec(f):
 
     return res
 
+
+# Get ps info
 def api_monitor():
     # ps -a -o user,pid,%cpu,%mem,start,time,command
     p = Popen(['ps', '-a', '-o', 'user,pid,%cpu,%mem,time,command'], stdout=PIPE, stderr=PIPE, stdin=PIPE)
@@ -213,3 +215,9 @@ def api_monitor():
 
     json = "{\"ps\" : [ " + pss + " ]}"
     return json
+
+
+# kill process by id
+def api_kill_ps(pid):
+    p = Popen(['kill', '-KILL', pid], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    return p.stdout.read().decode("utf-8")

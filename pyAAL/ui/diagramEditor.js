@@ -243,6 +243,7 @@ var visualEditor = {
 
             "<div class='footerAbout'>Copyright (C) 2014-2015 Walid Benghabrit - Ecole des Mines de Nantes - ARMINES</br>" +
             "ASCOLA Research Group - A4CLOUD Project http://www.a4cloud.eu/ </div>";
+
        toastr.info(abt, "About", {
 				"closeButton": true,
 				"preventDuplicates": true,
@@ -285,9 +286,27 @@ var visualEditor = {
                 }
                 // Update grid
                 dg.datagrid('reload').datagrid('resize');
-
             }
         });
+    },
+
+    /**
+     * Kill process
+     */
+    killProcess: function() {
+        var selected = $('#monGrid').datagrid('getSelected');
+        if(selected != null && selected != undefined) {
+            var pid = selected.pid;
+            $.ajax({
+                dataType: 'text',
+                type: 'POST',
+                url: visualEditor.backend,
+                data: {action: "killPs", pid: pid},
+                success: function (response) {
+                    console.log(response)
+                }
+            });
+        }
     },
 
     /**
@@ -296,7 +315,7 @@ var visualEditor = {
     monitor: function() {
         var mon =
          "<table id='monGrid' class='easyui-datagrid'  style='overflow:auto;width:400px;height:200px'" +
-            "data-options='singleSelect:true,collapsible:true'>" +
+            "data-options='singleSelect:true,collapsible:true'  toolbar='#toolbar'>" +
             "<thead>" +
                 "<tr>" +
                 "<th data-options=\"field:'user',width:50\">USER</th>" +
@@ -308,7 +327,11 @@ var visualEditor = {
                 "</tr>" +
             "</thead>" +
             "<tbody></tbody>" +
-        "</table>";
+        "</table>" +
+         "<div id='toolbar'>" +
+            "<div title='Refresh' class='btn-action fa fa-refresh fa-lg' style='padding-top:0px;' onclick='visualEditor.getMonInfo()'></div>" +
+            "<div title='Kill process' class='btn-action fa fa-remove fa-lg' style='padding-top:0px;' onclick='visualEditor.killProcess()'></div>" +
+        "</div>";
 
         toastr.warning(mon, "System monitor", {
 				"closeButton": true,
@@ -324,7 +347,9 @@ var visualEditor = {
         visualEditor.ui.updateToastSize("warning", {"width": 450, "height": 240}, true);
         $("#monGrid").datagrid({fit:false});
 
-        visualEditor.ui.interval = setInterval(visualEditor.getMonInfo, 5000);
+        // Update moninfo
+        visualEditor.getMonInfo();
+        visualEditor.ui.interval = setInterval(visualEditor.getMonInfo, visualEditor.ui.psUpdateInterval);
     }
 };
 
