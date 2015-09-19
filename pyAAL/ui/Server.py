@@ -20,6 +20,7 @@ __author__ = 'walid'
 from http.server import SimpleHTTPRequestHandler
 from http.server import HTTPServer
 from urllib.parse import urlparse
+from socketserver import ThreadingMixIn
 import webbrowser
 import sys
 import threading
@@ -27,6 +28,11 @@ from ui.api import *
 
 base_dir = "examples"
 server_port = 8000
+
+
+# Threading server
+class ThreadingSimpleServer(ThreadingMixIn, HTTPServer):
+    pass
 
 
 # HTTPRequestHandler
@@ -114,6 +120,7 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
 # Run server
 def run(server_class=HTTPServer, handler_class=HTTPRequestHandler):
     global server_port
+    server_class = ThreadingSimpleServer
     server_address = ('', server_port)
     httpd = server_class(server_address, handler_class)
     print("Server start on port " + str(server_port))
