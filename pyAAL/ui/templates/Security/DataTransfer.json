@@ -19,7 +19,7 @@
       "{{('{user}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{user}.cval:{user}.ctext '.replace('EXISTS ',''):'')}}",
 
       "{{('{provider}.ctext'.startsWith('FORALL')?'FORALL ' + '{provider}.cval:{provider}.ctext '.replace('FORALL ',''):'')}}",
-      "{{('{provider}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{provider}.cval:{provider}.ctext '.replace('EXISTS ',''):'')}}",
+      "{{('{provider}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{provider}.cval:{provider}.ctext '.replace('EXISTS ',''):'')}}"
 
     ],
 	"html": [

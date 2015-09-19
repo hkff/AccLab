@@ -1078,7 +1078,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-right"
 			});
-            visualEditor.ui.updateToastSize("info", {"width": 800}, true);
+            visualEditor.ui.updateToastSize("info", {"width": 800}, false);
 
 			$("#tt").tree({
 				animate: true,

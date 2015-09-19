@@ -3,7 +3,7 @@
 	"desc": "Allow or prohibit an agent the access to a specific resource.",
 	"vars": [
       {"name": "", "id": "action", "type": "select", "pre": "Action ", "post": "", "src": "{aal.services}"},
-      {"name": "", "id": "resource", "type": "text", "pre": " Resource ", "post": " "},
+      {"name": "", "id": "resource", "type": "select", "pre": " Resource ", "post": " ", "src": "{aal.data}"},
       {"name": "", "id": "owner", "type": "select", "pre": " Owner ", "post": " ", "src": "{aal.agents}"},
       {"name": "", "id": "provider", "type": "select", "pre": " Provider ", "post": " ", "src": "{aal.agents}"},
       {"name": "", "id": "user", "type": "select", "pre": " User ", "post": " ", "src": "{aal.agents}"},
@@ -20,7 +20,7 @@
       " {{('{provider}.ctext'.startsWith('FORALL')?'FORALL ' + '{provider}.cval:{provider}.ctext '.replace(\"FORALL \",\"\"):'') +",
       " {{('{provider}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{provider}.cval:{provider}.ctext '.replace(\"EXISTS \",\"\"):'') +",
 
-      " '\\nIF ({resource}.val.subject == {owner}.cval) THEN { ' }}+ ",
+      " '\\nIF ({resource}.val.subject == {owner}.cval) THEN { ' }} ",
       "{{ (({deny}.checked)?'DENY':'PERMIT') }} {user}.cval.{action}.val[{provider}.val]({resource}.val) } AND\n<...>"
     ],
 	"html": [
