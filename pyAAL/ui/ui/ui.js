@@ -95,10 +95,13 @@ visualEditor.ui = {
 		e.preventDefault()
 	},
 
-	updateToastSize: function(type, size) {
+	updateToastSize: function(type, size, dragable) {
         var l = $(".toast-" + type);
-        if(l[l.length - 1] != undefined)
-            $(l[l.length - 1] ).css("width", size + "px");
+        if(l[l.length - 1] != undefined) {
+            $(l[l.length - 1]).css("width", size + "px");
+            if(dragable)
+                $(l[l.length - 1]).draggable();
+        }
     },
 
 	/**

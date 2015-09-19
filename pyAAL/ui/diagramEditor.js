@@ -220,7 +220,10 @@ var visualEditor = {
         window.componentsNode = dockManager.dockLeft(documentNode, components, prop);
         window.toolboxNode = dockManager.dockDown(componentsNode, toolbox, 0.80);
     },
-    
+
+    /**
+     * About panel
+     */
     about: function () {
         var abt = "" +
             "<img src='assets/icon_128.png' class='logoAbout' alt='AccLab logo'>" +
@@ -250,7 +253,14 @@ var visualEditor = {
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-center"
 			});
-        visualEditor.ui.updateToastSize("info", 800);
+        visualEditor.ui.updateToastSize("info", 800, false);
+    },
+
+    /**
+     * Sys monitor
+     */
+    monitor: function() {
+
     }
 };
 
