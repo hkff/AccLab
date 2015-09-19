@@ -95,6 +95,12 @@ visualEditor.ui = {
 		e.preventDefault()
 	},
 
+	updateToastSize: function(type, size) {
+        var l = $(".toast-" + type);
+        if(l[l.length - 1] != undefined)
+            $(l[l.length - 1] ).css("width", size + "px");
+    },
+
 	/**
 	 * Update all panels states
 	 */

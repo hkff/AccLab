@@ -666,7 +666,7 @@ visualEditor.ui.tools.keyboardShortcutsTool = visualEditor.ui.tool.extend({
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-right"
 			});
-			$(".toast-info").css("width", "500px");
+            visualEditor.ui.updateToastSize("info", 500);
 		};
 		this.button.click(fx);
 		shortcut.add("Ctrl+K", fx);
@@ -754,7 +754,7 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
 					"extendedTimeOut": 0,
 					"positionClass": "toast-top-right"
 				});
-				$(".toast-info").css("width", "950px");
+                visualEditor.ui.updateToastSize("info", 950);
 			};
 			this.button.click(fx);
 			shortcut.add("Ctrl+M", fx);
@@ -1078,7 +1078,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-right"
 			});
-			$(".toast-info").css("width", "800px");
+            visualEditor.ui.updateToastSize("info", 800);
 
 			$("#tt").tree({
 				animate: true,

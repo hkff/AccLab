@@ -250,7 +250,7 @@ var visualEditor = {
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-center"
 			});
-        $(".toast-info").css("width", "800px");
+        visualEditor.ui.updateToastSize("info", 800);
     }
 };
 
