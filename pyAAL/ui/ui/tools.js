@@ -580,14 +580,25 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
                 if(fileType == "tspass")
                     action = "compileFOTL";
 
-                toastr.info('Compiling...');
+                toastr.info("", "Compiling...", {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                    "tapToDismiss": false,
+                    "showDuration": "2000",
+                    "hideDuration": "1000",
+                    "timeOut": 0,
+                    "extendedTimeOut": 0,
+                    "positionClass": "toast-top-center"
+			    });
                 $.ajax({
                     dataType: dType,
                     type:'POST',
                     url: visualEditor.backend,
                     data: {action: action, file: file},
                     success: function(response){
-                        $("#output_window").empty().append(response).scrollTop(0);;
+                        $("#output_window").empty().append(response).scrollTop(0);
+                        // Clear toastr
+                        toastr.clear();
                     }
                 });
             });
