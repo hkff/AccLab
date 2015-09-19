@@ -25,6 +25,16 @@ from aalc import *
 
 base_dir = "examples"
 
+ALLOWED_CMD = ["tspass", "aalc.py", "fotl-translate"]
+
+
+# Filter ps
+def is_cmd_allowed(cmds):
+    for x in ALLOWED_CMD:
+        if x in cmds:
+            return True
+    return False
+
 
 #  List dir
 def api_listDir(wpath):
@@ -201,16 +211,18 @@ def api_monitor():
     for x in sts2:
         x = x.split(" ")
         if len(x) >= 5:
-            pss += (
-                "{"
-                " \"user\": \"" + x[0] + "\","
-                " \"pid\" : \"" + x[1] + "\","
-                " \"cpu\" : \"" + x[2] + "\","
-                " \"mem\" : \"" + x[3] + "\","
-                " \"time\": \"" + x[4] + "\","
-                " \"cmd\" : \"" + ' '.join(x[5:]) + "\" "
-                "},"
-            )
+            cmd = ' '.join(x[5:])
+            if is_cmd_allowed(cmd):
+                pss += (
+                    "{"
+                    " \"user\": \"" + x[0] + "\","
+                    " \"pid\" : \"" + x[1] + "\","
+                    " \"cpu\" : \"" + x[2] + "\","
+                    " \"mem\" : \"" + x[3] + "\","
+                    " \"time\": \"" + x[4] + "\","
+                    " \"cmd\" : \"" + cmd + "\" "
+                    "},"
+                )
     pss = pss[:-1]
 
     json = "{\"ps\" : [ " + pss + " ]}"

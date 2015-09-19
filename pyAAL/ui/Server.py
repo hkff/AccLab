@@ -118,9 +118,8 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
 
 
 # Run server
-def run(server_class=HTTPServer, handler_class=HTTPRequestHandler):
+def run(server_class=ThreadingSimpleServer, handler_class=HTTPRequestHandler):
     global server_port
-    server_class = ThreadingSimpleServer
     server_address = ('', server_port)
     httpd = server_class(server_address, handler_class)
     print("Server start on port " + str(server_port))
