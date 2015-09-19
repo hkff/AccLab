@@ -344,7 +344,8 @@ var visualEditor = {
 				"positionClass": "toast-top-left",
                 "onHidden": function() { if(visualEditor.ui.interval != null) clearInterval(visualEditor.ui.interval); }
 			});
-        visualEditor.ui.updateToastSize("warning", {"width": 450, "height": 240}, true);
+        visualEditor.ui.updateToastSize("warning", {"width": 410, "height": 240}, true);
+        $(".toast-warning").css("padding-left", "5px");
         $("#monGrid").datagrid({fit:false});
 
         // Update moninfo
