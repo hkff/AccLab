@@ -187,3 +187,29 @@ def api_getAALDec(f):
           dataTypes + ']' + ', "actorTypes" : [' + actorTypes + ']' + '}'
 
     return res
+
+def api_monitor():
+    # ps -a -o user,pid,%cpu,%mem,start,time,command
+    p = Popen(['ps', '-a', '-o', 'user,pid,%cpu,%mem,time,command'], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    sts = p.stdout.read().decode("utf-8")
+    sts = sts.split("\n")
+    sts2 = [' '.join(x.split()) for x in sts][1:]
+
+    pss = ""
+    for x in sts2:
+        x = x.split(" ")
+        if len(x) >= 5:
+            pss += (
+                "{"
+                " \"user\": \"" + x[0] + "\","
+                " \"pid\" : \"" + x[1] + "\","
+                " \"cpu\" : \"" + x[2] + "\","
+                " \"mem\" : \"" + x[3] + "\","
+                " \"time\": \"" + x[4] + "\","
+                " \"cmd\" : \"" + ' '.join(x[5:]) + "\" "
+                "},"
+            )
+    pss = pss[:-1]
+
+    json = "{\"ps\" : [ " + pss + " ]}"
+    return json

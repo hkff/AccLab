@@ -31,6 +31,7 @@ visualEditor.ui = {
 	selectedNode    : null,
 	activeTab       : null,
     currentAAL      : null,
+    interval        : null,
 
 	/**
 	 * init function
@@ -98,9 +99,9 @@ visualEditor.ui = {
 	updateToastSize: function(type, size, dragable) {
         var l = $(".toast-" + type);
         if(l[l.length - 1] != undefined) {
-            $(l[l.length - 1]).css("width", size + "px");
-            if(dragable)
-                $(l[l.length - 1]).draggable();
+            if(size.width != undefined) $(l[l.length - 1]).css("width", size.width + "px");
+            if(size.height != undefined) $(l[l.length - 1]).css("height", size.height + "px");
+            if(dragable) $(l[l.length - 1]).draggable();
         }
     },
 

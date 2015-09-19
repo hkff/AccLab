@@ -253,14 +253,77 @@ var visualEditor = {
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-center"
 			});
-        visualEditor.ui.updateToastSize("info", 800, false);
+        visualEditor.ui.updateToastSize("info", {"width": 800}, false);
+    },
+
+    /**
+     * Get sys info
+     */
+    getMonInfo: function() {
+        $.ajax({
+            dataType: 'text',
+            type: 'POST',
+            url: visualEditor.backend,
+            data: {action: "monitor"},
+            success: function (response) {
+                var obj = jQuery.parseJSON(response);
+                var dg = $('#monGrid');
+
+                // Clear rows
+               dg.datagrid('loadData', {"total":0,"rows":[]});
+
+                // Add new rows
+                for(var i=0; i<obj.ps.length; i++) {
+                    dg.datagrid('appendRow',{
+                        user: obj.ps[i].user,
+                        pid : obj.ps[i].pid,
+                        cpu : obj.ps[i].cpu,
+                        mem : obj.ps[i].mem,
+                        time: obj.ps[i].time,
+                        cmd : obj.ps[i].cmd
+                    });
+                }
+                // Update grid
+                dg.datagrid('reload').datagrid('resize');
+
+            }
+        });
     },
 
     /**
      * Sys monitor
      */
     monitor: function() {
+        var mon =
+         "<table id='monGrid' class='easyui-datagrid'  style='overflow:auto;width:400px;height:200px'" +
+            "data-options='singleSelect:true,collapsible:true'>" +
+            "<thead>" +
+                "<tr>" +
+                "<th data-options=\"field:'user',width:50\">USER</th>" +
+                "<th data-options=\"field:'pid' ,width:80\">PID</th>" +
+                "<th data-options=\"field:'cpu' ,width:50\">CPU</th>" +
+                "<th data-options=\"field:'mem' ,width:50\">MEM</th>" +
+                "<th data-options=\"field:'time',width:80\">TIME</th>" +
+                "<th data-options=\"field:'cmd' ,width:300\">CMD</th>" +
+                "</tr>" +
+            "</thead>" +
+            "<tbody></tbody>" +
+        "</table>";
 
+        toastr.warning(mon, "System monitor", {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": false,
+  				"showDuration": "1000",
+			  	"hideDuration": "1000",
+			  	"timeOut": 0,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-left"
+			});
+        visualEditor.ui.updateToastSize("warning", {"width": 450, "height": 240}, true);
+        $("#monGrid").datagrid({fit:false});
+
+        visualEditor.ui.interval = setInterval(visualEditor.getMonInfo, 5000);
     }
 };
 

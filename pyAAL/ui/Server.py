@@ -65,10 +65,12 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             res = api_getAALDec(self.get_arg(args, "file", method))
         elif val == "createDir":
             res = api_createFolder(self.get_arg(args, "file", method))
+        elif val == "monitor":
+            res = api_monitor()
         return res
 
     def do_GET(self):
-        # print("[GET] " + self.path)
+        #print("[GET] " + self.path)
         # Handle request
         res = "Error"
         p = self.path
@@ -85,7 +87,7 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             super().do_GET()
 
     def do_POST(self):
-        # print("[POST] " + self.path)
+        #print("[POST] " + self.path)
         # Handle request
         res = "Error"
         k = urlparse(self.path).query
