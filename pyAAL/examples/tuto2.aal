@@ -8,6 +8,7 @@
 LOAD "core.types"
 LOAD "core.macros"
 
+CALL skip_defs()
 // Declaring services
 SERVICE read
 SERVICE store
