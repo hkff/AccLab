@@ -1,0 +1,15 @@
+{
+    "name": "FOTL Check)",
+	"desc": "FOTL check",
+	"vars": [
+      {"name": "", "id": "fotl", "type": "text", "pre": " FOTL formula ", "post": " "}
+    ],
+	"aal": [
+      "CALL fotl(\"{fotl}.val\")"
+    ],
+	"html": [
+      "<div class='varGroupe'>  {fotl} </div> ",
+      " {genBtn}"
+    ],
+	"xacml": ""
+}

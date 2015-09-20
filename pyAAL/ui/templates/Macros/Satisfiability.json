@@ -2,13 +2,18 @@
     "name": "Satisfiability",
 	"desc": "Checks if a clause is satisfiable.",
 	"vars": [
-      {"name": "", "id": "c1", "type": "select", "pre": " Clause ", "post": " ", "src": "{aal.clauses}"}
+      {"name": "", "id": "c1", "type": "select", "pre": " Clause ", "post": " ", "src": "{aal.clauses}"},
+      {"name": "", "id": "verbose", "type": "checkbox", "pre": " Verbose ", "post": ""},
+      {"name": "", "id": "type", "type": "select", "pre": " Type ", "post": "", "src": "[\"ue\", \"ae\", \"re\"]"}
+
     ],
 	"aal": [
-      "CALL sat(\"{c1}.val\")"
+      "CALL {{ ({verbose}.checked)?'v':'' }}sat{{ ('{type}.val' == '')?'':'_'+'{type}.val'  }}(\"{c1}.val\")"
     ],
 	"html": [
-      "<div class='varGroupe'> {c1} </div> {genBtn}"
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Clauses :</h4>  {c1}</div> ",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Options :</h4> {verbose} {type}</div>",
+      " {genBtn}"
     ],
 	"xacml": ""
 }

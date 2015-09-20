@@ -3,13 +3,16 @@
 	"desc": "Checks if two clauses are compliant. is c1 compliant with c2 ?",
 	"vars": [
       {"name": "", "id": "c1", "type": "select", "pre": " Clause 1 ", "post": " ", "src": "{aal.clauses}"},
-      {"name": "", "id": "c2", "type": "select", "pre": " Clause 2 ", "post": "", "src": "{aal.clauses}"}
+      {"name": "", "id": "c2", "type": "select", "pre": " Clause 2 ", "post": "", "src": "{aal.clauses}"},
+      {"name": "", "id": "verbose", "type": "checkbox", "pre": " Verbose ", "post": ""}
     ],
 	"aal": [
-      "CALL validate(\"{c1}.val\" \"{c2}.val\")"
+      "CALL {{({verbose}.checked)?'v':''}}validate(\"{c1}.val\" \"{c2}.val\")"
     ],
 	"html": [
-      "<div class='varGroupe'> {c1} {c2} </div> {genBtn}"
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Clauses :</h4>  {c1} {c2}</div> ",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Options :</h4> {verbose} </div>",
+      " {genBtn}"
     ],
 	"xacml": ""
 }

@@ -266,7 +266,7 @@ print(AALtoFOTL(self.aalprog))
 /*
  * Translate clause c to FOTL
  */
-MACRO fotl(c) (
+MACRO clause_fotl(c) (
 """
 cl = self.clause(c)
 if cl is not None:
@@ -278,9 +278,9 @@ if cl is not None:
 /*
  * Evaluate an FOTL expression
  */
-MACRO do(a) (
+MACRO fotl(a) (
 """
-self.apply_check(code= AALtoFOTL(l) + " & " + a , verbose=False, show=True)["print"]
+self.apply_check(code=a , verbose=False, show=True)["print"]
 """
 )
 

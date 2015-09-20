@@ -1,0 +1,22 @@
+{
+    "name": "Compliance (Advanced)",
+	"desc": "Checks if two clauses are compliant. is c1 compliant with c2 ?",
+	"vars": [
+      {"name": "", "id": "c1", "type": "select", "pre": " Clause 1 ", "post": " ", "src": "{aal.clauses}"},
+      {"name": "", "id": "c2", "type": "select", "pre": " Clause 2 ", "post": "", "src": "{aal.clauses}"},
+      {"name": "", "id": "resolve", "type": "select", "pre": " Resolve ", "post": "", "src": "[\"True\", \"False\"]"},
+      {"name": "", "id": "verbose", "type": "select", "pre": " Verbose ", "post": "", "src": "[\"True\", \"False\"]"},
+      {"name": "", "id": "usealways", "type": "select", "pre": " Use always  ", "post": "", "src": "[\"True\", \"False\"]"},
+      {"name": "", "id": "accformula", "type": "select", "pre": " Acc formula ", "post": "", "src": "[0, 1, 2]"},
+      {"name": "", "id": "chk", "type": "select", "pre": " Check ", "post": "", "src": "[\"all\", \"and\", \"imply\", \"neg\"]"}
+    ],
+	"aal": [
+      "CALL gvalidate(\"{c1}.val\" \"{c2}.val\" \"{resolve}.val\" \"{verbose}.val\" \"{usealways}.val\" \"{accformula}.val\" \"{chk}.val\")"
+    ],
+	"html": [
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Clauses :</h4>  {c1} {c2}</div> ",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Options :</h4> {resolve} {verbose} {usealways} {accformula} {chk}</div>",
+      " {genBtn}"
+    ],
+	"xacml": ""
+}
