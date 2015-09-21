@@ -105,6 +105,12 @@ def build_env(prog: m_aalprog=None):
 
     if pre_cond[-3:] == "& \n":
         pre_cond = pre_cond[:-3]
+
+    # Add custom envs
+    if len(prog.envs) > 0:
+        pre_cond += "\n\n%%% Custom ENV \n&\n"
+        pre_cond += "\n&".join([str(x.code) for x in prog.envs])
+
     pre_cond += "\n)"
 
     pre_cond += "\n%%%%%%%%% END EVN %%%%%%%%%%%\n\n"

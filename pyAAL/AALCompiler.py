@@ -1156,6 +1156,10 @@ class AALCompilerListener(AALListener.AALListener):
         if self.DEBUG:
             print("lib loaded !")
 
+    # Exit env
+    def exitEnv(self, ctx):
+        self.aalprog.envs.append(m_env(code=str(ctx.MCODE()).replace('"""', '')))
+
     ################################################################
     ################## Utils/Shortcuts functions ###################
     ################################################################

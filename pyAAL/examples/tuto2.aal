@@ -63,8 +63,12 @@ CLAUSE alice_pref (
     IF_VIOLATED_THEN MUST(dpa.sanction[css](d) AND css.delete[css](d))
 )
 
+
+//ENV """ a => b """
+
 // Call validate macro to perform the compliance check
-CALL validate_usage_and("css_policy" "alice_pref")
+CALL vvalidate_usage_and("css_policy" "alice_pref")
+
 
 /*
 EXEC

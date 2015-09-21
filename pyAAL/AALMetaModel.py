@@ -273,6 +273,7 @@ class m_aalprog(aalmmnode):
         self.checksApply = []
         self.libs = []
         self.behaviors = []
+        self.envs = []
 
     def __str__(self):
         """
@@ -296,6 +297,8 @@ class m_aalprog(aalmmnode):
         res += "\n".join([str(x) for x in self.checks])+"\n\n"
         res += "// Behaviors \n"
         res += "\n".join([str(x) for x in self.behaviors])+"\n\n"
+        res += "// Env \n"
+        res += "\n".join([str(x) for x in self.envs])+"\n\n"
         return res
 
     # get_declared
@@ -394,6 +397,7 @@ class m_aalprog(aalmmnode):
         res.extend(self.checks)
         res.extend(self.checksApply)
         res.extend(self.behaviors)
+        res.extend(self.envs)
         return res
 
 
@@ -725,6 +729,16 @@ class m_ltlCheck(aalmmnode):
 
     def __str__(self):
         return "CHECK " + str(self.name) + " (" + str(self.code) + ")"
+
+
+# Env
+class m_env(aalmmnode):
+    def __init__(self, code=None):
+        super().__init__()
+        self.code = code
+
+    def __str__(self):
+        return "ENV \"\"\" " + str(self.code) + " \"\"\""
 
 
 # Behavior

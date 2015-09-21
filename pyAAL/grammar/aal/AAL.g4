@@ -1,7 +1,7 @@
 grammar AAL;
 /*
     // AAL CORE
-    AALprogram    ::= (Declaration | Clause | Comment | Macro | MacroCall | Loadlib | LtlCheck | CheckApply | Exec | Behavior)
+    AALprogram    ::= (Declaration | Clause | Comment | Macro | MacroCall | Loadlib | LtlCheck | CheckApply | Exec | Behavior | Env)
     Declaration   ::= AgentDec | ServiceDec | DataDec | TypesDec | varDec
     AgentDec      ::= AGENT Id [TYPES '(' Type *')' REQUIRED'('service*')' PROVIDED'('service*')']
     ServiceDec    ::= SERVICE Id [TYPES '(' Type* ')'] [PURPOSE '(' Id* ')']
@@ -51,6 +51,7 @@ grammar AAL;
     LtlCheck     ::= CHECK Id '(' param* ')' '(' check ')'
     check        ::= FOTL_formula + clause(Id) [.ue | .ae | .re]
     CheckApply   ::= APPLY Id '(' param* ')'
+    Env          ::= check
 
     // Behavior extension
     Behavior    ::= BEHAVIOR Id '(' ActionExp ')'
@@ -119,6 +120,7 @@ M_check    : 'CHECK' | 'check';
 M_apply    : 'APPLY' | 'apply';
 M_exec     : 'EXEC' | 'exec';
 M_behavior : 'BEHAVIOR'  | 'behavior';
+M_env      : 'ENV'  | 'env';
 
 /** Check **/
 C_clause        : 'clause'       | 'cl';
@@ -179,7 +181,7 @@ MLCOMMENT : '/*' (.)*? '*/' -> channel(HIDDEN);
 //------------------------------------------------------//
 
 main        : aalprog;
-aalprog     : (clause | declaration | h_comment | macro | macroCall | loadlib | ltlCheck | checkApply | exec | behavior)*;
+aalprog     : (clause | declaration | h_comment | macro | macroCall | loadlib | ltlCheck | checkApply | exec | behavior | env)*;
 declaration : (agentDec | serviceDec | dataDec | typeDec | varDec) NEWLINE?;
 
 
@@ -281,6 +283,7 @@ behavior :  M_behavior ID h_lpar actionExp h_rpar;
 ltlCheck : M_check ID args? h_lmar check h_rmar;
 check   : MCODE; //formula;
 checkApply : M_apply ID h_lpar STRING* h_rpar;
+env     : M_env MCODE; //formula;
 
 NEGATION    : '~' | 'not';
 CONJUNCTION : '&';
