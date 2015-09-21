@@ -64,8 +64,6 @@ CLAUSE alice_pref (
 )
 
 
-ENV """ a => b """
-
 // Call validate macro to perform the compliance check
 CALL vvalidate_usage_and("css_policy" "alice_pref")
 

@@ -35,7 +35,7 @@ def time_to_set(times):
 
 
 # Build environment
-def build_env(prog: m_aalprog=None):
+def build_env(prog: m_aalprog=None, extra=None):
     """
     Build the environment
     :param prog: AAL program
@@ -110,6 +110,9 @@ def build_env(prog: m_aalprog=None):
     if len(prog.envs) > 0:
         pre_cond += "\n\n%%% Custom ENV \n&\n"
         pre_cond += "\n&".join([str(x.code) for x in prog.envs])
+
+    if extra != None:
+        pre_cond += "\n\n%%% Extra ENV \n&\n" + str(extra)
 
     pre_cond += "\n)"
 
