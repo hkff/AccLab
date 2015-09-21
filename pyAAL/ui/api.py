@@ -63,7 +63,7 @@ def api_readFile(f):
         return fd.read()
 
 
-# Read file
+# Get template
 def api_getTemplate(f):
     with open(f) as fd:
         return fd.read()
@@ -76,6 +76,12 @@ def api_writeFile(f, d):
         d += "\n"
     with open(base_dir + "/" + f, "w+") as fd:
         return str(fd.write(d))
+
+
+# Rename file
+def api_renameFile(f, new_name):
+    os.rename(base_dir + "/" + f, base_dir + "/" + new_name)
+    return "RENAMED"
 
 
 # Delete file

@@ -81,6 +81,9 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         elif val == "delete":
             res = api_deleteFile(self.get_arg(args, "file", method))
 
+        elif val == "rename":
+            res = api_renameFile(self.get_arg(args, "file", method), self.get_arg(args, "new_name", method))
+
         elif val == "compileAAL":
             save_current_ps_id(os.getpid())
             res = api_compile_aal(self.get_arg(args, "file", method))

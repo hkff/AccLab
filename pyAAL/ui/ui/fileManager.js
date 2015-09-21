@@ -152,17 +152,22 @@ visualEditor.ui.fileManager = {
 
 		$('#fmm-rename').click(function(e){
 			var node = $("#explorer").tree('getSelected');
+            var path = _this.getAbsPath(node);
 			var file;
 			do {
-				file=prompt("Enter file name");
+				file=prompt("Enter file name", path);
 			}
 			while(file.length < 0);
-			var path = _this.getAbsPath(node);
-			console.log(node.text)
-			console.log(path)
 
-			//_this.createFile(file);
-			//_this.openFile(file);
+			$.ajax({
+				dataType: 'text',
+				type:'POST',
+				url: visualEditor.backend,
+				data: {action: "rename", file: path, new_name: file},
+				success: function(response){
+					$("#explorer").tree("reload");
+				}
+			});
 		});
 
 		$('#fmm-open').click(function(e){
@@ -371,7 +376,7 @@ visualEditor.ui.fileManager = {
 		var snippetManager = ace.require("ace/snippets").snippetManager;
 		var config = ace.require("ace/config");
 
-		/*s
+		/*
 		ace.config.loadModule("ace/snippets/AAL", function(m) {
 			if (m) {
 				snippetManager.files.AAL = m;
