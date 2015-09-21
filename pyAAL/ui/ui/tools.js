@@ -588,7 +588,18 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
                     "hideDuration": "1000",
                     "timeOut": 0,
                     "extendedTimeOut": 0,
-                    "positionClass": "toast-top-center"
+                    "positionClass": "toast-top-center",
+                    "onHidden": function() {
+                        $.ajax({
+                            dataType: 'text',
+                            type: 'POST',
+                            url: visualEditor.backend,
+                            data: {action: "cancelCurrentPS"},
+                            success: function (response) {
+                                $("#output_window").empty().append(response).scrollTop(0);
+                            }
+                        });
+                    }
 			    });
                 $.ajax({
                     dataType: dType,
@@ -598,8 +609,7 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
                     success: function(response){
                         $("#output_window").empty().append(response).scrollTop(0);
                         // Clear toastr
-                        //toastr.clear();
-						toastr. clear( $(".toast-info"));
+						toastr.clear( $(".toast-info"));
                     }
                 });
             });

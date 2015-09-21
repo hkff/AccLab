@@ -20,18 +20,37 @@ __author__ = 'walid'
 from http.server import SimpleHTTPRequestHandler
 from http.server import HTTPServer
 from urllib.parse import urlparse
-from socketserver import ThreadingMixIn
+from socketserver import ThreadingMixIn, ForkingMixIn
 import webbrowser
 import sys
+from os import *
 import threading
 from ui.api import *
+import signal
 
 base_dir = "examples"
 server_port = 8000
 
 
+def save_current_ps_id(pid):
+    print(pid)
+    with open(".pid~", "w+") as f:
+        f.write(str(pid))
+
+
+def get_current_ps_id():
+    with open(".pid~", "r") as f:
+        res = f.readline()
+        return int(res)
+
+
 # Threading server
 class ThreadingSimpleServer(ThreadingMixIn, HTTPServer):
+    pass
+
+
+# Forking server
+class ForkingSimpleServer(ForkingMixIn, HTTPServer):
     pass
 
 
@@ -50,35 +69,56 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         # print(args)
         res = "Error"
         val = self.get_arg(args, "action", method)
+
         if val == "list":
             res = api_listDir(base_dir)
         elif val == "write":
             res = api_writeFile(self.get_arg(args, "file", method), self.get_arg(args, "data", method))
+
         elif val == "read":
             res = api_readFile(self.get_arg(args, "file", method))
+
         elif val == "delete":
             res = api_deleteFile(self.get_arg(args, "file", method))
+
         elif val == "compileAAL":
+            save_current_ps_id(os.getpid())
             res = api_compile_aal(self.get_arg(args, "file", method))
+
         elif val == "compileFOTL":
+            save_current_ps_id(os.getpid())
             res = api_compile_tspass(self.get_arg(args, "file", method))
+
         elif val == "listTemplates":
             res = api_listDir("ui/templates")
             res = res.replace(".json", "")
+
         elif val == "getTemplate":
             res = api_getTemplate("ui/templates/" + self.get_arg(args, "file", method))
+
         elif val == "getAALdec":
             res = api_getAALDec(self.get_arg(args, "file", method))
+
         elif val == "createDir":
             res = api_createFolder(self.get_arg(args, "file", method))
+
         elif val == "monitor":
             res = api_monitor()
+
         elif val == "killPs":
             res = api_kill_ps(self.get_arg(args, "pid", method))
+
+        elif val == "cancelCurrentPS":
+            res = "No aalc/tspassc process is running"
+            ps = get_current_ps_id()
+            if ps is not None:
+                print("killing ps " + str(ps) + " from " + str(os.getpid()))
+                os.kill(ps, signal.SIGKILL)
+                res = "Operation canceled !"
         return res
 
     def do_GET(self):
-        #print("[GET] " + self.path)
+        # print("[GET] " + self.path)
         # Handle request
         res = "Error"
         p = self.path
@@ -95,7 +135,7 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             super().do_GET()
 
     def do_POST(self):
-        #print("[POST] " + self.path)
+        # print("[POST] " + self.path)
         # Handle request
         res = "Error"
         k = urlparse(self.path).query
@@ -118,7 +158,7 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
 
 
 # Run server
-def run(server_class=ThreadingSimpleServer, handler_class=HTTPRequestHandler):
+def run(server_class=ForkingSimpleServer, handler_class=HTTPRequestHandler):
     global server_port
     server_address = ('', server_port)
     httpd = server_class(server_address, handler_class)
