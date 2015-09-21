@@ -67,7 +67,7 @@ D_agent	  : 'AGENT'   | 'Agent';
 D_data    : 'DATA'    | 'Data';
 D_clause  : 'CLAUSE'  | 'Clause';
 D_type    : 'TYPE'    | 'Type';
-D_types    : 'TYPES'    | 'Types';
+D_types   : 'TYPES'   | 'Types';
 
 /** Clause **/
 C_auditing   : 'AUDITING' | 'Auditing';
@@ -123,7 +123,7 @@ M_behavior : 'BEHAVIOR'  | 'behavior';
 M_env      : 'ENV'  | 'env';
 
 /** Check **/
-C_clause        : 'clause'       | 'cl';
+C_clause        : 'clause'           | 'cl';
 C_usage         : 'get_usage'        | 'ue';
 C_audit         : 'get_audit'        | 'ae';
 C_rectification : 'get_rectification'| 're';
@@ -285,6 +285,7 @@ check   : MCODE; //formula;
 checkApply : M_apply ID h_lpar STRING* h_rpar;
 env     : M_env MCODE; //formula;
 
+
 NEGATION    : '~' | 'not';
 CONJUNCTION : '&';
 DISJUNCTION : '|';
@@ -293,6 +294,7 @@ EQUIVALENCE :'<->' | '<=>';
 CONSTANTS   : 'true' | 'false';
 PREDICATE   : ID;
 
+/*
 atom : C_clause h_lpar h_clauseId h_rpar (h_dot (C_usage | C_audit | C_rectification))?
      | PREDICATE | CONSTANTS;
 
@@ -304,3 +306,4 @@ formula  : atom NEWLINE*
          //| formula btOperators formula NEWLINE* | utOperators formula NEWLINE*
          | h_lpar formula h_rpar NEWLINE*
          | formula NEWLINE* formula;
+*/

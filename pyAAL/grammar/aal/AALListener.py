@@ -4,15 +4,6 @@ from antlr4 import *
 # This class defines a complete listener for a parse tree produced by AALParser.
 class AALListener(ParseTreeListener):
 
-    # Enter a parse tree produced by AALParser#atom.
-    def enterAtom(self, ctx):
-        pass
-
-    # Exit a parse tree produced by AALParser#atom.
-    def exitAtom(self, ctx):
-        pass
-
-
     # Enter a parse tree produced by AALParser#h_serviceId.
     def enterH_serviceId(self, ctx):
         pass
@@ -712,15 +703,6 @@ class AALListener(ParseTreeListener):
 
     # Exit a parse tree produced by AALParser#loadlib.
     def exitLoadlib(self, ctx):
-        pass
-
-
-    # Enter a parse tree produced by AALParser#formula.
-    def enterFormula(self, ctx):
-        pass
-
-    # Exit a parse tree produced by AALParser#formula.
-    def exitFormula(self, ctx):
         pass
 
 
