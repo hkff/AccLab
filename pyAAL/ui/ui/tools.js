@@ -81,6 +81,7 @@ visualEditor.ui.tools = {
 		this.tools.push(new visualEditor.ui.tools.AALSyntaxTool());            // 20
 		this.tools.push(new visualEditor.ui.tools.templatesTool());            // 21
 		this.tools.push(new visualEditor.ui.tools.acethemeTool());             // 22
+		this.tools.push(new visualEditor.ui.tools.clearOutputTool());          // 23
 	},
 
 	/**
@@ -1173,6 +1174,29 @@ visualEditor.ui.tools.acethemeTool = visualEditor.ui.tool.extend({
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-center"
 			});
+		};
+		this.button.click(fx);
+		//shortcut.add("Ctrl+G", fx);
+	}
+});
+
+
+//////////////////////////////////////////////////////////
+//
+//  clearOutputTool
+//
+//////////////////////////////////////////////////////////
+visualEditor.ui.tools.clearOutputTool = visualEditor.ui.tool.extend({
+	NAME : "visualEditor.ui.tools.clearOutputTool",
+
+	view: function(parent) {
+		this.button = $('<div title="Clear output" id="clearOutputBtn" class="btn-action fa fa-square-o  fa-lg"/>');
+		parent.actionsPanel.append(this.button);
+	},
+
+	control: function(parent) {
+		var fx = function(e){
+            $("#output_window").empty();
 		};
 		this.button.click(fx);
 		//shortcut.add("Ctrl+G", fx);

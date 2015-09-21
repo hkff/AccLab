@@ -132,6 +132,7 @@ visualEditor.ui = {
 				$(visualEditor.ui.tools.tools[14].button).show();
 				$(visualEditor.ui.tools.tools[18].button).show();
 				$(visualEditor.ui.tools.tools[19].button).show();
+				$(visualEditor.ui.tools.tools[23].button).show();
 			}
 			if(fileType == "aal") {
 				$(visualEditor.ui.tools.tools[20].button).show();
