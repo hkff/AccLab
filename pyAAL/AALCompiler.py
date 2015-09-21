@@ -1124,7 +1124,7 @@ class AALCompilerListener(AALListener.AALListener):
         macro = [x for x in self.aalprog.macros if str(x.name) == macro_name and len(x.param) == len(args)]
         if len(macro) == 0:  # Search in libs
             for l in self.libs:
-                macro = [x for x in l.aalprog.macros if str(x.name) == macro_name]
+                macro = [x for x in l.aalprog.macros if str(x.name) == macro_name and len(x.param) == len(args)]
                 if len(macro) > 0:
                     break
 

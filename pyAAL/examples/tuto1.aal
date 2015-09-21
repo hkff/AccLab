@@ -53,8 +53,10 @@ CLAUSE alice_pref (
     }
 )
 
+
+ENV """ (![f] ((subject(f, alice) )=> ~subject(f, bob))) """
 // Call validate macro to perform the compliance check
-CALL validate("css_policy" "alice_pref")
+CALL vvalidate("css_policy" "alice_pref" "1")
 
 
 // Extended check
@@ -66,15 +68,19 @@ CHECK c1() {
 @verbose 
 ~(
     % Build the environment
+    (
     @buildenv
     &
     % Add extra condition
     (![f] ((subject(f, alice) )=> ~subject(f, bob))) &
 
     % The check ~ P => U
+    
     (clause(css_policy))
+    )
     =>
     (clause(alice_pref))
+    
 )
 """
 }

@@ -30,6 +30,18 @@ self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 1, "
 """
 )
 
+MACRO validate(c1 c2 acc) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, acc, "'all'"]) # r v a acc c
+"""
+)
+
+MACRO vvalidate(c1 c2 acc) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, acc, "'all'"]) # r v a acc c
+"""
+)
+
 
 /** Checking C1 & C2 : using only usage acc formula 1  */
 MACRO validate_and(c1 c2) (
@@ -85,7 +97,7 @@ self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 0, 
 /** Checking validity (verbose mode) : using only usage (formula 0) */
 MACRO vvalidate_usage(c1 c2) (
 """
-self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 0, "'all'"]) # r v a acc c
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 0, "'all'"]) # r v a acc c
 """
 )
 
