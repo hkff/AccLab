@@ -266,7 +266,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     """
     # TODO  check if c1 and c2 exists
     # validate_back(compiler, c1, c2, resolve=resolve, verbose=verbose, use_always=use_always)
-    #return
+    # return
 
     # Monodic test
     print("------------------------- Monodic check -------------------------")

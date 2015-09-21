@@ -202,7 +202,7 @@ def api_getAALDec(f):
 # Get ps info
 def api_monitor():
     # ps -a -o user,pid,%cpu,%mem,start,time,command
-    p = Popen(['ps', '-a', '-o', 'user,pid,%cpu,%mem,time,command'], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    p = Popen(['ps', '-aL', '-o', 'user,pid,%cpu,%mem,time,command'], stdout=PIPE, stderr=PIPE, stdin=PIPE)
     sts = p.stdout.read().decode("utf-8")
     sts = sts.split("\n")
     sts2 = [' '.join(x.split()) for x in sts][1:]

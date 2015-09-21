@@ -598,7 +598,8 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
                     success: function(response){
                         $("#output_window").empty().append(response).scrollTop(0);
                         // Clear toastr
-                        toastr.clear();
+                        //toastr.clear();
+						toastr. clear( $(".toast-info"));
                     }
                 });
             });
