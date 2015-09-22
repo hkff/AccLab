@@ -93,7 +93,9 @@ def build_env(prog: m_aalprog=None, extra=None):
     # print([str(x.time) + " " for x in times])
     for i in range(0, len(times)):
         for j in range(i+1, len(times)):
-            time_cond += "( " + str(times[i].to_ltl()) + " => " + str(times[j].to_ltl()) + " ) &"
+            time_cond += "( " + str(times[i].to_ltl()) + " => " + str(times[j].to_ltl()) + " ) & \n"
+    if time_cond[-3:] == "& \n":
+        time_cond = time_cond[:-3]
     pre_cond += "always (\n" + time_cond + "\n) & \n" if len(time_cond) > 0 else ""
 
     pre_cond += "\n\n%%% Data knowledge \n"
