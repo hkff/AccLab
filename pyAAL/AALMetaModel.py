@@ -400,6 +400,18 @@ class m_aalprog(aalmmnode):
         res.extend(self.envs)
         return res
 
+    def get_macros(self):
+        res = []
+        res.extend(self.macros)
+        for l in self.libs:
+            res.extend(l.aalprog.get_macros())
+        return res
+
+    def find_macro(self, name, args):
+        macros = self.get_macros()
+        return [x for x in macros if str(x.name) == name and len(x.param) == len(args)]
+
+
 
 # Usage
 class m_usage(aalmmnode):

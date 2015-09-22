@@ -8,7 +8,7 @@
 LOAD "core.types"
 LOAD "core.macros"
 
-CALL skip_defs()
+
 // Declaring services
 SERVICE read
 SERVICE store
@@ -66,7 +66,6 @@ CLAUSE alice_pref (
 
 // Call validate macro to perform the compliance check
 CALL validate_usage("css_policy" "alice_pref")
-
 
 /*
 EXEC

@@ -1121,13 +1121,14 @@ class AALCompilerListener(AALListener.AALListener):
     # Call a macro TODO macro_find
     def macro_call(self, macro_name: str, args: []):
         __res__ = ""
-        macro = [x for x in self.aalprog.macros if str(x.name) == macro_name and len(x.param) == len(args)]
-        if len(macro) == 0:  # Search in libs
-            for l in self.libs:
-                macro = [x for x in l.aalprog.macros if str(x.name) == macro_name and len(x.param) == len(args)]
-                if len(macro) > 0:
-                    break
+        #macro = [x for x in self.aalprog.macros if str(x.name) == macro_name and len(x.param) == len(args)]
+        #if len(macro) == 0:  # Search in libs
+        #    for l in self.libs:
+        #        macro = [x for x in l.aalprog.macros if str(x.name) == macro_name and len(x.param) == len(args)]
+        #        if len(macro) > 0:
+        #            break
 
+        macro = self.aalprog.find_macro(macro_name, args)
         if len(macro) > 0:
             macro = macro[0]
             # TODO Securing env call
@@ -1182,7 +1183,7 @@ class AALCompilerListener(AALListener.AALListener):
         return "".join(x)
 
     def get_macros(self):
-        res = [str(x.name) + "(" + " ".join(x.param) + ")" for x in self.aalprog.macros]
+        res = [str(x.name) + "(" + " ".join(x.param) + ")" for x in self.aalprog.get_macros()]
         return "\n".join(res)
 
     def get_declared(self, dtype="agent"):
