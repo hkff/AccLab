@@ -586,6 +586,7 @@ def solve_auth(compiler, p=None, u=None, verbose=False, resolve=False):
     :param resolve:
     :return:
     """
+    return
     print(Color("{autoblue}:: Solving authorization{/blue}"))
 
     u_id = str(u.name)
@@ -631,7 +632,8 @@ def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
     :param resolve:
     :return:
     """
-    # FIXME this is adhoc
+    return
+    # FIXME this is adhoc to remove
     print(Color("{autoblue}:: Solving trigger{/blue}"))
     pre_cond = build_env(compiler.aalprog)
     u_id = str(u.name)
@@ -652,30 +654,34 @@ def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
                 # x.parent.remove(x) # TODO remove me from parent
 
 
-def conflict(compiler, c1):
-    print("Starting conflict detection...")
+def conflict(compiler, c1, resolve=False, verbose=False):
+    print("------------------------- Starting conflict detection -------------------------")
 
     # Getting All comb
     cmbs = c1.usage.walk(filter_type=m_aexpComb)
     res = []
 
-    verbose = False
     enable_masking()
 
     for c in cmbs:
-        print("\n\n" + "="*20 + " Handling expression " + "="*20 + "\n" +
-              "== e1 : " + str(c.actionExp1) + "\n== e2 : " + str(c.actionExp2))
+        if verbose:
+            print("\n\n" + "="*20 + " Handling expression " + "="*20 + "\n" +
+                  "== e1 : " + str(c.actionExp1) + "\n== e2 : " + str(c.actionExp2))
 
         ##
         # Masking e1
         ##
         before_masking_e1 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
-        print(Color("\n====== Before masking e1 : " + before_masking_e1["psat"]))
+        if verbose:
+            print(Color("\n====== Before masking e1 : " + before_masking_e1["psat"]))
 
-        print(Color("{autoblue}Masking e1...{/autoblue}"))
+        if verbose:
+            print(Color("{autoblue}Masking e1...{/autoblue}"))
+
         c.actionExp1.mask()
         after_masking_e1 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
-        print(Color("====== After Masking e1  : " + after_masking_e1["psat"]))
+        if verbose:
+            print(Color("====== After Masking e1  : " + after_masking_e1["psat"]))
         c.actionExp1.unmask()
 
         if before_masking_e1["sat"] == "Unsatisfiable" and after_masking_e1["sat"] == "Satisfiable":
@@ -685,12 +691,16 @@ def conflict(compiler, c1):
         # Masking e2
         ##
         before_masking_e2 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
-        print(Color("\n====== Before masking e2 : " + before_masking_e2["psat"]))
+        if verbose:
+            print(Color("\n====== Before masking e2 : " + before_masking_e2["psat"]))
 
-        print(Color("{autoblue}Masking e2...{/autoblue}"))
+        if verbose:
+            print(Color("{autoblue}Masking e2...{/autoblue}"))
+
         c.actionExp2.mask()
         after_masking_e2 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
-        print(Color("====== After Masking e2  : " + after_masking_e2["psat"]))
+        if verbose:
+            print(Color("====== After Masking e2  : " + after_masking_e2["psat"]))
         c.actionExp2.unmask()
 
         if before_masking_e2["sat"] == "Unsatisfiable" and after_masking_e2["sat"] == "Satisfiable":
@@ -701,14 +711,31 @@ def conflict(compiler, c1):
     ##
     # Minimizing unsat set
     ##
-    # TODO
-    print("Expressions causing unsat are :\n")
-    [print(Color(" * E {automagenta}at line %s{/automagenta} : %s" % (x.get_line(), x))) for x in res]
+    if verbose:
+        print("Expressions causing unsat are :\n")
+        [print(Color(" * E {automagenta}at line %s{/automagenta} : %s" % (x.get_line(), x))) for x in res]
 
     print("\n\nMinimized Expressions causing unsat are :\n")
     min = minimize(compiler, res)
     [print(Color(" * E {automagenta}at line %s{/automagenta} : %s" % (x.get_line(), x))) for x in min]
-    print("\n\n")
+    print("\n------------------------- conflict detection End -------------------------\n")
+
+
+    ##
+    # Resolving
+    ##
+    if resolve:
+        before_resolving = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
+        print(Color("\n====== Before Resolving : " + before_resolving["psat"]+ "\n"))
+
+        for x in min:
+            if isinstance(x, m_aexpAuthor):
+                print(Color("  -> Changing permission PERMIT/DENY in %s {automagenta}at line %s{/automagenta}"
+                            % (x, x.get_line())))
+                x.author = m_author.A_deny if x.author == m_author.A_permit else m_author.A_permit
+
+        after_resolving = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
+        print(Color("\n====== After Resolving : " + after_resolving["psat"] + "\n"))
 
 
 def minimize(compiler, l):
