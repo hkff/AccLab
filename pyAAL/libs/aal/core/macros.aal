@@ -58,7 +58,7 @@ self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 1, "
 
 
 /** Checking C1 => C2 : using acc formula 1  */
-MACRO validate_usage_imply(c1 c2) (
+MACRO validate_imply(c1 c2) (
 """
 self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 1, "'imply'"]) # r v a acc c
 """
@@ -72,7 +72,7 @@ self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 1, "
 
 
 /** Checking ~(C1 => C2) : using  acc formula 1  */
-MACRO validate_usage_neg(c1 c2) (
+MACRO validate_neg(c1 c2) (
 """
 self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 1, "'neg'"]) # r v a acc c
 """

@@ -294,10 +294,10 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     # clauses
     c1_ltl = c1.to_ltl_obj()
     c2_ltl = c2.to_ltl_obj()
-    c1_cond = ("(always(UE1 <=> %s) & always(AE1 <=> %s) & always(RE1 <=> %s))" % (c1_ltl["ue"], c1_ltl["ae"], c1_ltl["re"]))
-    c2_cond = ("(always(UE2 <=> %s) & always(AE2 <=> %s) & always(RE2 <=> %s))" % (c2_ltl["ue"], c2_ltl["ae"], c2_ltl["re"]))
+    c1_cond = ("((always(UE1 <=> %s)) & (always(AE1 <=> %s)) & (always(RE1 <=> %s)))" % (c1_ltl["ue"], c1_ltl["ae"], c1_ltl["re"]))
+    c2_cond = ("((always(UE2 <=> %s)) & (always(AE2 <=> %s)) & (always(RE2 <=> %s)))" % (c2_ltl["ue"], c2_ltl["ae"], c2_ltl["re"]))
 
-    extra = ("\n%%%% %s\n%s \n&\n%%%% %s\n%s" %(c1_id, c1_cond, c2_id, c1_cond))
+    extra = ("\n%%%% %s\n%s \n&\n%%%% %s\n%s" %(c1_id, c1_cond, c2_id, c2_cond))
     pre_cond = build_env(compiler.aalprog, extra=extra)
 
     ##
@@ -315,9 +315,9 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     ##
     if chk == "and" or chk == "all":
         print("----- Checking c1 & c2 consistency :")
-        # code = ("%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s & %s \n)"
+        # code = ("%s &\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s & %s \n)"
         #        % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
-        code = ("%s =>\n(\n %s & %s \n)"
+        code = ("%s &\n(\n %s & %s \n)"
                 % (pre_cond, c1_formula, c2_formula))
         # print(code)
         res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
