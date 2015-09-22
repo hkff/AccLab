@@ -611,6 +611,12 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
                         $("#output_window").empty().append(response).scrollTop(0);
                         // Clear toastr
 						toastr.clear( $(".toast-info"));
+                        // Setup lines
+                        $(".aceLine").click(function(e) {
+                            var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
+                            if (editor != undefined && editor != null)
+                                editor.gotoLine(parseInt(e.target.innerHTML.replace("at line ", "")));
+                        });
                     }
                 });
             });

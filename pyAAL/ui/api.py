@@ -108,6 +108,9 @@ def toHTMLcolors(html_code: str):
     html_code = html_code.replace("[93m[WARNING]", "<b style='color:orange;'><span class='fa fa-exclamation-triangle'"
                                                    " style='padding-top: 2px;padding-right: 5px;'/>[WARNING]")
 
+    html_code = html_code.replace("[95mat line", "<b style='color:magenta; text-decoration: underline;  "
+                                                 "cursor: pointer;' class='aceLine'>at line")
+
     html_code = html_code.replace("[91m", "<b style='color:red;'><span class='' style='padding-top: 2px;'/>")
     html_code = html_code.replace("[93m", "<b style='color:orange;'><span class='' style='padding-top: 2px;'/>")
 
@@ -165,7 +168,7 @@ def api_compile_tspass(f):
     sys.stderr = reportEIO
 
     try:
-        res = tspassc(file=base_dir + "/" + f, output="tmp.tspass", timeout=timeout)["print"]
+        res = tspassc(file=base_dir + "/" + f, output="tmp.tspass")["print"]
     except:
         res = "Compilation Error"
 
