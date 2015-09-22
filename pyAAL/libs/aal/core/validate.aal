@@ -1,0 +1,264 @@
+/*
+ * Generic validate call
+ * General call self.call("gvalidate", [c1, c2, "resolve", "verbose", "use_always", "acc_formula", "chk"])
+ */
+MACRO gvalidate(c1 c2 resolve verbose use_always acc_formula chk) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+if _c1 is not None and _c2 is not None:
+    validate(self, _c1, _c2, resolve=resolve, verbose=verbose, use_always=use_always, acc_formula=acc_formula, chk=chk)
+"""
+)
+
+
+MACRO validate(c1 c2 acc) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, acc, "'all'"]) # r v a acc c
+"""
+)
+
+MACRO vvalidate(c1 c2 acc) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, acc, "'all'"]) # r v a acc c
+"""
+)
+
+/******************************************************************
+ ******************************************************************
+ *                      Validate acc formula 1
+ ******************************************************************
+ ******************************************************************/
+/** Checking validity (verbose mode) : using acc formula 1 */
+MACRO validate(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 1, "'all'"]) # r v a acc c
+"""
+)
+
+/** Checking validity (verbose mode) : using acc formula 1 */
+MACRO vvalidate(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 1, "'all'"]) # r v a acc c
+"""
+)
+
+
+
+/** Checking C1 & C2 : using only usage acc formula 1  */
+MACRO validate_and(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 1, "'and'"]) # r v a acc c
+"""
+)
+
+MACRO vvalidate_and(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 1, "'and'"]) # r v a acc c
+"""
+)
+
+
+/** Checking C1 => C2 : using acc formula 1  */
+MACRO validate_imply(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 1, "'imply'"]) # r v a acc c
+"""
+)
+
+MACRO vvalidate_imply(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 1, "'imply'"]) # r v a acc c
+"""
+)
+
+
+/** Checking ~(C1 => C2) : using  acc formula 1  */
+MACRO validate_neg(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 1, "'neg'"]) # r v a acc c
+"""
+)
+
+MACRO vvalidate_neg(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 1, "'neg'"]) # r v a acc c
+"""
+)
+
+
+
+/******************************************************************
+ ******************************************************************
+ *                      Validate Usage
+ ******************************************************************
+ ******************************************************************/
+
+/** Checking validity : using only usage (formula 0)  */
+MACRO validate_usage(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 0, "'all'"]) # r v a acc c
+"""
+)
+
+MACRO vvalidate_usage(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 0, "'all'"]) # r v a acc c
+"""
+)
+
+
+/** Checking C1 & C2 : using only usage (formula 0)  */
+MACRO validate_usage_and(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 0, "'and'"]) # r v a acc c
+"""
+)
+MACRO vvalidate_usage_and(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 0, "'and'"]) # r v a acc c
+"""
+)
+
+
+/** Checking C1 => C2 : using only usage (formula 0)  */
+MACRO validate_usage_imply(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 0, "'imply'"]) # r v a acc c
+"""
+)
+MACRO vvalidate_usage_imply(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 0, "'imply'"]) # r v a acc c
+"""
+)
+
+
+/** Checking ~(C1 => C2) : using only usage (formula 0)  */
+MACRO validate_usage_neg(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 0, "'neg'"]) # r v a acc c
+"""
+)
+MACRO vvalidate_usage_neg(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 0, "'neg'"]) # r v a acc c
+"""
+)
+
+
+/******************************************************************
+ ******************************************************************
+ *                      Validate Audit
+ ******************************************************************
+ ******************************************************************/
+
+/** Checking validity : using only audit (formula 2)  */
+MACRO validate_audit(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 2, "'all'"]) # r v a acc c
+"""
+)
+
+MACRO vvalidate_audit(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 2, "'all'"]) # r v a acc c
+"""
+)
+
+
+/** Checking C1 & C2 : using only audit (formula 2)  */
+MACRO validate_audit_and(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 2, "'and'"]) # r v a acc c
+"""
+)
+MACRO vvalidate_audit_and(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 2, "'and'"]) # r v a acc c
+"""
+)
+
+
+/** Checking C1 => C2 : using only audit (formula 2)  */
+MACRO validate_audit_imply(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 2, "'imply'"]) # r v a acc c
+"""
+)
+MACRO vvalidate_audit_imply(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 2, "'imply'"]) # r v a acc c
+"""
+)
+
+
+/** Checking ~(C1 => C2) : using only audit (formula 2)  */
+MACRO validate_audit_neg(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 2, "'neg'"]) # r v a acc c
+"""
+)
+MACRO vvalidate_audit_neg(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 2, "'neg'"]) # r v a acc c
+"""
+)
+
+/******************************************************************
+ ******************************************************************
+ *                      Validate Rectif
+ ******************************************************************
+ ******************************************************************/
+
+/** Checking validity : using only rectif (formula 3)  */
+MACRO validate_rectif(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 3, "'all'"]) # r v a acc c
+"""
+)
+
+MACRO vvalidate_rectif(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 3, "'all'"]) # r v a acc c
+"""
+)
+
+
+/** Checking C1 & C2 : using only rectif (formula 3)  */
+MACRO validate_rectif_and(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 3 "'and'"]) # r v a acc c
+"""
+)
+MACRO vvalidate_rectif_and(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 3, "'and'"]) # r v a acc c
+"""
+)
+
+
+/** Checking C1 => C2 : using only rectif (formula 3)  */
+MACRO validate_rectif_imply(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 3, "'imply'"]) # r v a acc c
+"""
+)
+MACRO vvalidate_rectif_imply(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 3, "'imply'"]) # r v a acc c
+"""
+)
+
+
+/** Checking ~(C1 => C2) : using only rectif (formula 3)  */
+MACRO validate_rectif_neg(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, False, False, 3, "'neg'"]) # r v a acc c
+"""
+)
+MACRO vvalidate_rectif_neg(c1 c2) (
+"""
+self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 3, "'neg'"]) # r v a acc c
+"""
+)

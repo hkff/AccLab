@@ -1,0 +1,68 @@
+
+/*
+ * Checking satisfiability
+ */
+MACRO sat(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    print(validate2(self, _c1.to_ltl(), check=True))
+"""
+)
+
+MACRO vsat(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    print(validate2(self, _c1.to_ltl(), check=True, verbose=True))
+"""
+)
+
+MACRO sat_ue(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    print(validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True))
+"""
+)
+
+MACRO vsat_ue(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    print(validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True, verbose=True))
+"""
+)
+
+MACRO sat_ae(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    print(validate2(self, "(always (" + _c1.audit.to_ltl() + "))", check=True))
+"""
+)
+
+MACRO vsat_ae(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    print(validate2(self, "(always (" + _c1.audit.to_ltl() + "))", check=True, verbose=True))
+"""
+)
+
+
+MACRO sat_re(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    print(validate2(self, "(always (" + _c1.rectification.to_ltl() + "))", check=True))
+"""
+)
+
+MACRO vsat_re(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    print(validate2(self, "(always (" + _c1.rectification.to_ltl() + "))", check=True, verbose=True))
+"""
+)

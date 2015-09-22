@@ -1,0 +1,27 @@
+
+/*
+ * Conflicts detection
+ */
+MACRO resolve(c1 c2) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+
+if _c1 is not None and _c2 is not None:
+    solve_auth(self, p=_c1, u=_c2, resolve=False)
+    solve_triggers(self, p=_c1, u=_c2, resolve=False)
+"""
+)
+
+/*
+ * Conflicts detection : apply corrections to current AAL program
+ */
+MACRO vresolve(c1 c2) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+if _c1 is not None and _c2 is not None:
+    solve_auth(self, p=c1, u=c2, resolve=True)
+    solve_triggers(self, p=c1, u=c2, resolve=True)
+"""
+)

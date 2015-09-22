@@ -65,7 +65,7 @@ CLAUSE alice_pref (
 
 
 // Call validate macro to perform the compliance check
-CALL validate_usage("css_policy" "alice_pref")
+CALL vvalidate_audit_and("css_policy" "alice_pref")
 
 /*
 EXEC

@@ -303,13 +303,21 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     ##
     # Choosing acc formula
     ##
-    if acc_formula == 1:
+    if acc_formula == 0:
+        c1_formula = "(always(UE1) )"
+        c2_formula = "(always(UE2) )"
+    elif acc_formula == 1:
         c1_formula = "(always(AE1 & always(UE1 | ((~(UE1)) & ((AE1 => (RE1)))))) )"
         c2_formula = "(always(AE2 & always(UE2 | ((~(UE2)) & ((AE2 => (RE2)))))) )"
+    elif acc_formula == 2:
+        c1_formula = "(always(AE1) )"
+        c2_formula = "(always(AE2) )"
+    elif acc_formula == 3:
+        c1_formula = "(always(RE1) )"
+        c2_formula = "(always(RE2) )"
     else:
         c1_formula = "(always(UE1) )"
         c2_formula = "(always(UE2) )"
-
     ##
     # C1 & C2
     ##
