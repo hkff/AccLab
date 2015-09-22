@@ -24,6 +24,7 @@ import sys
 import os
 import platform
 
+ACCLAB_PATH = ""
 
 # Check environment
 def check_env():
@@ -297,6 +298,7 @@ def main(argv):
     :param argv: console arguments
     :return:
     """
+    global ACCLAB_PATH
     inputfile = ""
     outputfile = ""
     helpStr = "Usage : aalc.py [-c] [-i <inputfile>] [-s]"
@@ -344,6 +346,7 @@ def main(argv):
 
     # Check libs path
     install_path = os.environ.get('ACCLAB_PATH')
+    ACCLAB_PATH = install_path
     libs_path = (install_path + "/" if install_path is not None else "") + "libs/aal/"
 
     # Checking options

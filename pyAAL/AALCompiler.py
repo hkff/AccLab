@@ -162,7 +162,6 @@ class AALCompilerListener(AALListener.AALListener):
             root_path = root_path + self.root_path + "/"
 
         lib_path = lib_name.replace('"', '').replace(".", "/") + ".aal"
-        # print(root_path)
         #  Search in the file scope before
         # FIXME
         if not internal:
@@ -228,7 +227,7 @@ class AALCompilerListener(AALListener.AALListener):
             stream = CommonTokenStream(lexer)
             parser = AALParser(stream)
             # !IMPORTANT : set loadlibs false to avoid infinite rec
-            parser.addParseListener(AALCompilerListener(file=found_lib_path,
+            parser.addParseListener(AALCompilerListener(file=found_lib_path, root_path=root_path,
                                                         loadlibs=False, serialize=False))
             parser.buildParseTrees = True
             tr = parser.main()
