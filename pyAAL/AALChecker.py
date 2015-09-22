@@ -703,5 +703,21 @@ def conflict(compiler, c1):
     ##
     # TODO
     print("Expressions causing unsat are :\n")
-    [print(" * E : " + str(x)) for x in res]
+    [print(Color(" * E {automagenta}at line %s{/automagenta} : %s" % (x.get_line(), x))) for x in res]
+
+    print("\n\nMinimized Expressions causing unsat are :\n")
+    min = minimize(compiler, res)
+    [print(Color(" * E {automagenta}at line %s{/automagenta} : %s" % (x.get_line(), x))) for x in min]
     print("\n\n")
+
+
+def minimize(compiler, l):
+    to_rem = []
+    for b in l:
+        for s in l:
+            if b.is_my_child(s):
+                to_rem.append(b)
+    for x in to_rem:
+        if x in l:
+            l.remove(x)
+    return l

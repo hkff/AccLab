@@ -248,7 +248,10 @@ class aalmmnode():
 
     def get_line(self):
         """ Get line number in the source code """
-        return str(self.name.parentCtx.getPayload().start.line)
+        try:
+            return str(self.name.parentCtx.getPayload().start.line)
+        except:
+            return "0"
 
     @classmethod
     def man(cls):
@@ -276,6 +279,17 @@ class aalmmnode():
             res = res[:-1]
         res += ']},'
         return res
+
+    def is_my_child(self, child):
+        """ Check if element child is the descendant of self """
+        if child in self.children():
+            return True
+        else:
+            for c in self.children():
+                if isinstance(c, aalmmnode) or isinstance(c, sEnum):
+                    if c.is_my_child(child):
+                        return True
+        return False
 
 
 # aal prog
@@ -1594,6 +1608,15 @@ class sEnum(Enum):
         res += ']},'
         return res
 
+    def is_my_child(self, child):
+        """ Check if element child is the descendant of self """
+        if child in self.children():
+            return True
+        else:
+            for c in self.children():
+                if c.is_my_child(child):
+                    return True
+        return False
 
 # Boolean Op
 class m_booleanOp(sEnum):
