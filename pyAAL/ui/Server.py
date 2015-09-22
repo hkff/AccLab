@@ -117,6 +117,7 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             if ps is not None:
                 print("killing ps " + str(ps) + " from " + str(os.getpid()))
                 os.kill(ps, signal.SIGKILL)
+                Popen(['killall', 'tspass'])
                 res = "Operation canceled !"
         return res
 
