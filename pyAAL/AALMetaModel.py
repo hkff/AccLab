@@ -1056,8 +1056,8 @@ class m_aexpIfthen(m_aexp):
         return [self.condition, self.branchTrue]
 
     def to_ltl(self):
-        return " (" + str(self.condition.to_ltl()) + " " + str(m_booleanOp.O_then.to_ltl()) + " " + \
-               str(self.branchTrue.to_ltl()) + ")"
+        return " ((" + str(self.condition.to_ltl()) + ") " + str(m_booleanOp.O_then.to_ltl()) + " (" + \
+               str(self.branchTrue.to_ltl()) + "))"
 
     def to_nnf(self, negated):
         self.branchTrue.to_nnf(negated)
