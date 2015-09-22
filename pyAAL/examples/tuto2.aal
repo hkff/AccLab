@@ -29,7 +29,7 @@ CLAUSE css_policy (
 
     // Allow users to read their data
     IF (d.subject == a) THEN {
-        PERMIT a.read[css](d)
+        PERMIT a.read[css](d) AND DENY a.read[css](d)
     } AND
 
     // Deny access to read other
@@ -65,8 +65,9 @@ CLAUSE alice_pref (
 
 
 // Call validate macro to perform the compliance check
-CALL vvalidate_audit_and("css_policy" "alice_pref")
-
+//CALL sat_ue("css_policy")
+//CALL validate_usage("css_policy" "alice_pref")
+CALL conflict("css_policy")
 /*
 EXEC
 """

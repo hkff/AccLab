@@ -93,6 +93,28 @@ class aalmm():
         self.aalprog = m_aalprog()
 
 
+# Enable masking
+def enable_masking():
+    """
+    More funny with meta programming ;)
+    :return:
+    """
+    def mask_decorator(f):
+        def g(*args, **kwargs):
+            if args[0].masked:
+                return "true"
+            else:
+                return f(*args, **kwargs)
+        return g
+
+    import inspect, sys
+    for name, obj in inspect.getmembers(sys.modules[__name__]):
+        if inspect.isclass(obj):
+            if issubclass(obj, aalmmnode):
+                obj.to_ltl = mask_decorator(obj.to_ltl)
+                obj.__str__ = mask_decorator(obj.__str__)
+
+
 # Meta model node
 class aalmmnode():
     """
@@ -118,6 +140,13 @@ class aalmmnode():
         """
         self.name = name
         self.parent = None
+        self.masked = False
+
+    def mask(self):
+        self.masked = True
+
+    def unmask(self):
+        self.masked = False
 
     def children(self):
         """ return a list that contains node's children """

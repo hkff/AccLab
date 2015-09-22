@@ -6,7 +6,7 @@ MACRO sat(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, _c1.to_ltl(), check=True))
+    print(validate2(self, _c1.to_ltl(), check=True)["res"])
 """
 )
 
@@ -14,7 +14,7 @@ MACRO vsat(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, _c1.to_ltl(), check=True, verbose=True))
+    print(validate2(self, _c1.to_ltl(), check=True, verbose=True)["res"])
 """
 )
 
@@ -22,7 +22,7 @@ MACRO sat_ue(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True))
+    print(validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True)["res"])
 """
 )
 
@@ -30,7 +30,7 @@ MACRO vsat_ue(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True, verbose=True))
+    print(validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True, verbose=True)["res"])
 """
 )
 
@@ -38,7 +38,7 @@ MACRO sat_ae(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, "(always (" + _c1.audit.to_ltl() + "))", check=True))
+    print(validate2(self, "(always (" + _c1.audit.to_ltl() + "))", check=True)["res"])
 """
 )
 
@@ -46,7 +46,7 @@ MACRO vsat_ae(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, "(always (" + _c1.audit.to_ltl() + "))", check=True, verbose=True))
+    print(validate2(self, "(always (" + _c1.audit.to_ltl() + "))", check=True, verbose=True)["res"])
 """
 )
 
@@ -55,7 +55,7 @@ MACRO sat_re(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, "(always (" + _c1.rectification.to_ltl() + "))", check=True))
+    print(validate2(self, "(always (" + _c1.rectification.to_ltl() + "))", check=True)["res"])
 """
 )
 
@@ -63,6 +63,6 @@ MACRO vsat_re(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, "(always (" + _c1.rectification.to_ltl() + "))", check=True, verbose=True))
+    print(validate2(self, "(always (" + _c1.rectification.to_ltl() + "))", check=True, verbose=True)["res"])
 """
 )

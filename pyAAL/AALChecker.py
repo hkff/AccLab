@@ -101,7 +101,7 @@ def check_aal(mm=None, verbose=False):
         res += "\n\n{autoblue}*** Sat test {/autoblue}\n"
         for c in mm.aalprog.clauses:
             res += "\n---------- " + str(c.name) + " ----------\n"
-            res += validate2(mm, c.to_ltl(), check=True, verbose=False)
+            res += validate2(mm, c.to_ltl(), check=True, verbose=False)["res"]
             # res += " |" + str(c.name) + (' ' * (15-len(str(c.name)))) + "->   " + check_monodic(c)["tmonodic"] + " \n"
     else:
         res += "\n\n*** Monodic test :\n"
@@ -511,6 +511,8 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
     :return:
     """
     res = ""
+    fres = {"res": "", "sat": "", "neg": "", "monodic": "", "psat": "", "pneg": ""}
+
     # Monodic test
     res += "------------------------- Monodic check -------------------------\n"
     mc1 = check_monodic(c1)
@@ -519,6 +521,7 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
         res += "{autored}Please correct your clause. Exiting... {/red}\n"
         return
     res += "{autogreen}Monodic check passed ! {/green}\n"
+    fres["monodic"] = mc1["monodic"]
 
     ##
     # Satisfiability
@@ -531,11 +534,14 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
     if res2["res"] == "Unsatisfiable":
         v = False
         res += "{autored}  -> " + res2["res"] + "{/red}\n"
+        fres["psat"] = "{autored}  -> " + res2["res"] + "{/red}"
     else:
         res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
+        fres["psat"] = "{autogreen}  -> " + res2["res"] + "{/green}"
 
     if res2["res"] == "":
         res += res2["print"] + "\n"
+    fres["sat"] = res2["res"]
 
     ##
     # Validity
@@ -545,8 +551,10 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
         res2 = compiler.apply_check(code="~((" + pre_cond + " & " + c1 + "))", show=False, verbose=verbose)
         if res2["res"] == "Unsatisfiable":
             res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
+            fres["pneg"] = "{autogreen}  -> " + res2["res"] + "{/green}"
         else:
             res += "{autored}  -> " + res2["res"] + "{/red}\n"
+            fres["pneg"] = "{autored}  -> " + res2["res"] + "{/red}"
 
         if res2["res"] == "":
             res += res2["print"] + "\n"
@@ -559,8 +567,12 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
         else:
             res += "\n{autored}[VALIDITY] Formula is not valid !{/red}\n"
 
+        fres["neg"] = res2["res"]
+
     res += "------------------------- " + ("Validity" if not check else "") + " check End -------------------------\n\n"
-    return Color(res)
+
+    fres["res"] = Color(res)
+    return fres
 
 
 # Check authorisations
@@ -638,3 +650,58 @@ def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
             if resolve:
                 print(Color("{autogreen}    |-> Resolving conflict {/green}"))
                 # x.parent.remove(x) # TODO remove me from parent
+
+
+def conflict(compiler, c1):
+    print("Starting conflict detection...")
+
+    # Getting All comb
+    cmbs = c1.usage.walk(filter_type=m_aexpComb)
+    res = []
+
+    verbose = False
+    enable_masking()
+
+    for c in cmbs:
+        print("\n\n" + "="*20 + " Handling expression " + "="*20 + "\n" +
+              "== e1 : " + str(c.actionExp1) + "\n== e2 : " + str(c.actionExp2))
+
+        ##
+        # Masking e1
+        ##
+        before_masking_e1 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
+        print(Color("\n====== Before masking e1 : " + before_masking_e1["psat"]))
+
+        print(Color("{autoblue}Masking e1...{/autoblue}"))
+        c.actionExp1.mask()
+        after_masking_e1 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
+        print(Color("====== After Masking e1  : " + after_masking_e1["psat"]))
+        c.actionExp1.unmask()
+
+        if before_masking_e1["sat"] == "Unsatisfiable" and after_masking_e1["sat"] == "Satisfiable":
+            res.append(c.actionExp1)
+
+        ##
+        # Masking e2
+        ##
+        before_masking_e2 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
+        print(Color("\n====== Before masking e2 : " + before_masking_e2["psat"]))
+
+        print(Color("{autoblue}Masking e2...{/autoblue}"))
+        c.actionExp2.mask()
+        after_masking_e2 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
+        print(Color("====== After Masking e2  : " + after_masking_e2["psat"]))
+        c.actionExp2.unmask()
+
+        if before_masking_e2["sat"] == "Unsatisfiable" and after_masking_e2["sat"] == "Satisfiable":
+            res.append(c.actionExp2)
+
+    print("\n\n=============================================================================\n\n")
+
+    ##
+    # Minimizing unsat set
+    ##
+    # TODO
+    print("Expressions causing unsat are :\n")
+    [print(" * E : " + str(x)) for x in res]
+    print("\n\n")
