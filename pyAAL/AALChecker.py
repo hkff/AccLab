@@ -590,70 +590,85 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=False):
 
     # Masking aexComb expression
     def masking(c):
+        if isinstance(c, m_aexpComb):
+            e1 = c.actionExp1
+            e2 = c.actionExp2
+        elif isinstance(c, m_aexpIfthen):
+            e1 = c.condition
+            e2 = c.branchTrue
+        else:
+            return "Type %s not handled !" % type(c)
         if verbose:
             print("\n\n" + "="*20 + " Handling expression " + "="*20 + "\n" +
-                  "== e1 : " + str(c.actionExp1) + "\n== e2 : " + str(c.actionExp2))
+                  "== e1 : " + str(e1) + "\n== e2 : " + str(e2))
 
         ##
         # Masking e1
         ##
-        before_masking_e1 = chk() # validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        before_masking_e1 = chk()
         if verbose:
             print(Color("\n====== Before masking e1 : " + before_masking_e1["psat"]))
 
         if verbose:
             print(Color("{autoblue}Masking e1...{/autoblue}"))
 
-        c.actionExp1.mask()
-        after_masking_e1 = chk() # validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        e1.mask()
+        after_masking_e1 = chk()
         if verbose:
             print(Color("====== After Masking e1  : " + after_masking_e1["psat"]))
-        c.actionExp1.unmask()
+        e1.unmask()
 
         if c2 is None:
             if before_masking_e1["sat"] == "Unsatisfiable" and after_masking_e1["sat"] == "Satisfiable":
-                res.append(c.actionExp1)
+                res.append(e1)
         else:
             if before_masking_e1["sat"] == "Satisfiable" and after_masking_e1["sat"] == "Unsatisfiable":
-                res.append(c.actionExp1)
+                res.append(e1)
 
         ##
         # Masking e2
         ##
-        before_masking_e2 = chk() # validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        before_masking_e2 = chk()
         if verbose:
             print(Color("\n====== Before masking e2 : " + before_masking_e2["psat"]))
 
         if verbose:
             print(Color("{autoblue}Masking e2...{/autoblue}"))
 
-        c.actionExp2.mask()
-        after_masking_e2 = chk() #validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        e2.mask()
+        after_masking_e2 = chk()
         if verbose:
             print(Color("====== After Masking e2  : " + after_masking_e2["psat"]))
-        c.actionExp2.unmask()
+        e2.unmask()
 
         if c2 is None:
             if before_masking_e2["sat"] == "Unsatisfiable" and after_masking_e2["sat"] == "Satisfiable":
-                res.append(c.actionExp2)
+                res.append(e2)
         else:
             if before_masking_e2["sat"] == "Satisfiable" and after_masking_e2["sat"] == "Unsatisfiable":
-                res.append(c.actionExp2)
+                res.append(e2)
 
-    print("------------------------- Starting conflict detection -------------------------")
-
-    # Getting All comb
-    cmbs = c1.usage.walk(filter_type=m_aexpComb)
-    res = []
-
+    print("============================= Starting conflict detection ===========================")
+    # Enable masking
     enable_masking()
     verbose2 = False
+    res = []
 
-    for x in cmbs:
-        masking(x)
+    # Getting all comb in c1
+    if c1 is not None:
+        cmbs = c1.usage.walk(filter_type=m_aexpComb)
+        if len(cmbs) == 0:  # if there are no comb try with ifThenExp
+            cmbs = c1.usage.walk(filter_type=m_aexpIfthen)
 
+        for x in cmbs:
+            masking(x)
+
+    # Getting all comb in c2
     if c2 is not None:
         cmbs2 = c2.usage.walk(filter_type=m_aexpComb)
+        if len(cmbs2) == 0:  # if there are no comb try with ifThenExp
+            cmbs2 = c2.usage.walk(filter_type=m_aexpIfthen)
+
         for x in cmbs2:
             masking(x)
 
