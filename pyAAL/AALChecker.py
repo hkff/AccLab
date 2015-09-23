@@ -245,7 +245,7 @@ def get_vars(aexp: m_aexp, vtype=None):
 
 
 # Check validity between two clauses
-def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_always=True, acc_formula=1, chk="all"):
+def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_print=False, use_always=True, acc_formula=1, chk="all"):
     """
     Perform validity test between two aal clauses
     :param compiler: the compiler instance
@@ -268,28 +268,35 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     # validate_back(compiler, c1, c2, resolve=resolve, verbose=verbose, use_always=use_always)
     # return
 
+    fres = {"res": "", "sat": "", "neg": "", "monodic": "", "psat": "", "pneg": ""}
+
+    # Custom printer
+    def print2(x):
+        if not no_print:
+            print(x)
+
     # Monodic test
-    print("------------------------- Monodic check -------------------------")
+    print2("------------------------- Monodic check -------------------------")
     mc1 = check_monodic(c1)
     mc2 = check_monodic(c2)
     if not mc1["monodic"]:
-        print(mc1["print"])
-        print(Color("{autored}Please correct your clause. Exiting... {/red}"))
-        return
+        print2(mc1["print"])
+        print2(Color("{autored}Please correct your clause. Exiting... {/red}"))
+        return fres
     if not mc2["monodic"]:
-        print(mc2["print"])
-        print(Color("{autored}Please correct your clause. Exiting... {/red}"))
-        return
-    print(Color("{autogreen}Monodic check passed ! {/green}"))
+        print2(mc2["print"])
+        print2(Color("{autored}Please correct your clause. Exiting... {/red}"))
+        return fres
+    print2(Color("{autogreen}Monodic check passed ! {/green}"))
 
     v = True
 
     if chk == "all":
-        print("------------------------- Starting Validity check -------------------------")
+        print2("------------------------- Starting Validity check -------------------------")
 
     c1_id = str(c1.name)
     c2_id = str(c2.name)
-    print("c1 : " + c1_id + "\nc2 : " + c2_id)
+    print2("c1 : " + c1_id + "\nc2 : " + c2_id)
 
     # clauses
     c1_ltl = c1.to_ltl_obj()
@@ -322,86 +329,94 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, use_alw
     # C1 & C2
     ##
     if chk == "and" or chk == "all":
-        print("----- Checking c1 & c2 consistency :")
+        print2("----- Checking c1 & c2 consistency :")
         # code = ("%s &\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s & %s \n)"
         #        % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
         code = ("%s &\n(\n %s & %s \n)"
                 % (pre_cond, c1_formula, c2_formula))
-        # print(code)
+        # print2(code)
         res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
         if res["res"] == "Unsatisfiable":
-            print(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
+            print2(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
             v = v and False
-            return
+            fres["sat"] = "Unsatisfiable"
+            fres["psat"] = "{autored}  -> " + res["res"] + "{/red}"
+            return fres
         else:
-            print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+            print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+            fres["sat"] = "Satisfiable"
+            fres["psat"] = "{autogreen}  -> " + res["res"] + "{/green}"
 
         if res["res"] == "":
-            print(res["print"])
+            print2(res["print"])
 
     if chk == "&":
-        return ""
+        return fres
 
     ##
     # C1 => C2
     ##
     if chk == "imply" or chk == "all":
-        print("----- Checking c1 => c2 :")
+        print2("----- Checking c1 => c2 :")
         # code = ("%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n)"
         #        % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
         code = ("%s =>\n(\n %s => %s \n)"
                 % (pre_cond, c1_formula, c2_formula))
-        # print(code)
+        # print2(code)
         res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
         if res["res"] == "Unsatisfiable":
             v = v and False
-            print(Color("{autored}  -> " + res["res"] + "{/red}"))
+            print2(Color("{autored}  -> " + res["res"] + "{/red}"))
         else:
-            print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+            print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
 
         if res["res"] == "":
-            print(res["print"])
+            print2(res["print"])
 
     if chk == "imply":
-        return ""
+        return fres
 
     ##
     # ~(C1 => C2)
     ##
     if chk == "neg" or chk == "all":
-        print("----- Checking ~(c1 => c2) :")
+        print2("----- Checking ~(c1 => c2) :")
         # code = ("~(%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n))"
         #        % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
         code = ("~(%s =>\n(\n %s => %s \n))"
                 % (pre_cond, c1_formula, c2_formula))
-        # print(code)
+        # print2(code)
         res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
         if res["res"] == "Unsatisfiable":
-            print(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+            print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+            fres["sat"] = "Unsatisfiable"
+            fres["psat"] = "{autogreen}  -> " + res["res"] + "{/green}"
         else:
-            print(Color("{autored}  -> " + res["res"] + "{/red}"))
+            print2(Color("{autored}  -> " + res["res"] + "{/red}"))
+            fres["sat"] = "Satisfiable"
+            fres["psat"] = "{autored}  -> " + res["res"] + "{/red}"
             v = v and False
 
         if res["res"] == "":
-            print(res["print"])
+            print2(res["print"])
 
         if res["res"] == "Unsatisfiable":
             v = v and True
 
     if chk == "neg":
-        return ""
+        return fres
 
     if chk == "all":
         ##
         # Validity result
         ##
         if v:
-            print(Color("\n{autogreen}[VALIDITY] Formula is valid !{/green}"))
+            print2(Color("\n{autogreen}[VALIDITY] Formula is valid !{/green}"))
         else:
-            print(Color("\n{autored}[VALIDITY] Formula is not valid !{/red}"))
+            print2(Color("\n{autored}[VALIDITY] Formula is not valid !{/red}"))
 
-        print("------------------------- Validity check End -------------------------\n")
-    return ""
+        print2("------------------------- Validity check End -------------------------\n")
+    return fres
 
 
 # Check validity between two clauses # TODO remove after the first one is fixed
@@ -654,7 +669,76 @@ def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
                 # x.parent.remove(x) # TODO remove me from parent
 
 
-def conflict(compiler, c1, resolve=False, verbose=False):
+# Conflict detection
+def conflict(compiler, c1, c2=None, resolve=False, verbose=False):
+    """
+    Detect conflicts in a clause / between two clauses using masking
+    :param compiler:
+    :param c1:
+    :param c2:
+    :param resolve:
+    :param verbose:
+    :return:
+    """
+    # Check type Val/Sat
+    def chk():
+        if c2 is None:
+            return validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        else:
+            return validate(compiler, c1, c2, resolve=False, verbose=verbose2, no_print=True, use_always=True, acc_formula=0, chk="neg")
+
+    # Masking aexComb expression
+    def masking(c):
+        if verbose:
+            print("\n\n" + "="*20 + " Handling expression " + "="*20 + "\n" +
+                  "== e1 : " + str(c.actionExp1) + "\n== e2 : " + str(c.actionExp2))
+
+        ##
+        # Masking e1
+        ##
+        before_masking_e1 = chk() # validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        if verbose:
+            print(Color("\n====== Before masking e1 : " + before_masking_e1["psat"]))
+
+        if verbose:
+            print(Color("{autoblue}Masking e1...{/autoblue}"))
+
+        c.actionExp1.mask()
+        after_masking_e1 = chk() # validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        if verbose:
+            print(Color("====== After Masking e1  : " + after_masking_e1["psat"]))
+        c.actionExp1.unmask()
+
+        if c2 is None:
+            if before_masking_e1["sat"] == "Unsatisfiable" and after_masking_e1["sat"] == "Satisfiable":
+                res.append(c.actionExp1)
+        else:
+            if before_masking_e1["sat"] == "Satisfiable" and after_masking_e1["sat"] == "Unsatisfiable":
+                res.append(c.actionExp1)
+
+        ##
+        # Masking e2
+        ##
+        before_masking_e2 = chk() # validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        if verbose:
+            print(Color("\n====== Before masking e2 : " + before_masking_e2["psat"]))
+
+        if verbose:
+            print(Color("{autoblue}Masking e2...{/autoblue}"))
+
+        c.actionExp2.mask()
+        after_masking_e2 = chk() #validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        if verbose:
+            print(Color("====== After Masking e2  : " + after_masking_e2["psat"]))
+        c.actionExp2.unmask()
+
+        if c2 is None:
+            if before_masking_e2["sat"] == "Unsatisfiable" and after_masking_e2["sat"] == "Satisfiable":
+                res.append(c.actionExp2)
+        else:
+            if before_masking_e2["sat"] == "Satisfiable" and after_masking_e2["sat"] == "Unsatisfiable":
+                res.append(c.actionExp2)
+
     print("------------------------- Starting conflict detection -------------------------")
 
     # Getting All comb
@@ -664,48 +748,13 @@ def conflict(compiler, c1, resolve=False, verbose=False):
     enable_masking()
     verbose2 = False
 
-    for c in cmbs:
-        if verbose:
-            print("\n\n" + "="*20 + " Handling expression " + "="*20 + "\n" +
-                  "== e1 : " + str(c.actionExp1) + "\n== e2 : " + str(c.actionExp2))
+    for x in cmbs:
+        masking(x)
 
-        ##
-        # Masking e1
-        ##
-        before_masking_e1 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
-        if verbose:
-            print(Color("\n====== Before masking e1 : " + before_masking_e1["psat"]))
-
-        if verbose:
-            print(Color("{autoblue}Masking e1...{/autoblue}"))
-
-        c.actionExp1.mask()
-        after_masking_e1 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
-        if verbose:
-            print(Color("====== After Masking e1  : " + after_masking_e1["psat"]))
-        c.actionExp1.unmask()
-
-        if before_masking_e1["sat"] == "Unsatisfiable" and after_masking_e1["sat"] == "Satisfiable":
-            res.append(c.actionExp1)
-
-        ##
-        # Masking e2
-        ##
-        before_masking_e2 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
-        if verbose:
-            print(Color("\n====== Before masking e2 : " + before_masking_e2["psat"]))
-
-        if verbose:
-            print(Color("{autoblue}Masking e2...{/autoblue}"))
-
-        c.actionExp2.mask()
-        after_masking_e2 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
-        if verbose:
-            print(Color("====== After Masking e2  : " + after_masking_e2["psat"]))
-        c.actionExp2.unmask()
-
-        if before_masking_e2["sat"] == "Unsatisfiable" and after_masking_e2["sat"] == "Satisfiable":
-            res.append(c.actionExp2)
+    if c2 is not None:
+        cmbs2 = c2.usage.walk(filter_type=m_aexpComb)
+        for x in cmbs2:
+            masking(x)
 
     print("\n\n=============================================================================\n\n")
 
@@ -721,12 +770,11 @@ def conflict(compiler, c1, resolve=False, verbose=False):
     [print(Color(" * E {automagenta}at line %s{/automagenta} : %s" % (x.get_line(), x))) for x in min]
     print("\n------------------------- conflict detection End -------------------------\n")
 
-
     ##
     # Resolving
     ##
     if resolve:
-        before_resolving = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        before_resolving = chk() # validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
         print(Color("\n====== Before Resolving : " + before_resolving["psat"] + "\n"))
 
         for x in min:
@@ -735,7 +783,7 @@ def conflict(compiler, c1, resolve=False, verbose=False):
                             % (x, x.get_line())))
                 x.author = m_author.A_deny if x.author == m_author.A_permit else m_author.A_permit
 
-        after_resolving = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        after_resolving = chk() # validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
         print(Color("\n====== After Resolving : " + after_resolving["psat"] + "\n"))
 
 

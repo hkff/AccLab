@@ -30,3 +30,22 @@ if _c1 is not None:
     conflict(self, _c1, verbose=True)
 """
 )
+
+
+MACRO compliance(c1 c2) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+if _c1 is not None and _c2 is not None:
+    conflict(self, _c1, c2=_c2)
+"""
+)
+
+MACRO vcompliance(c1 c2) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+if _c1 is not None and _c2 is not None:
+    conflict(self, _c1, c2=_c2, verbose=True)
+"""
+)
