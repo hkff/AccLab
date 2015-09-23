@@ -259,6 +259,9 @@ visualEditor.ui.fileManager = {
 						visualEditor.ui.canvas.clear();
 			 			reader.unmarshal(visualEditor.ui.canvas, response);
 						visualEditor.ui.outline.canvasToTree();
+
+                        // Switch to acd mode
+                        visualEditor.acdMode();
 			 			break;
 
 					default:
@@ -274,6 +277,9 @@ visualEditor.ui.fileManager = {
                         visualEditor.activeEditor = inPlaceAALEditor;
                         visualEditor.activeEditor.session.getUndoManager().markClean();
                          $(".tab-handle-text")[0].innerHTML += " *";
+
+						// Switch to aal mode
+                        visualEditor.aalMode();
 						break;
 				}
 			}

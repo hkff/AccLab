@@ -90,10 +90,7 @@ var visualEditor = {
      * @param theme
      */
     updateAceTheme: function(theme) {
-
         visualEditor.aceTheme = $(theme).val();
-        // Save theme in local storage
-        //sessionStorage.setItem("theme", visualEditor.aceTheme);
         visualEditor.userPrefs["theme"] = visualEditor.aceTheme;
         visualEditor.save_prefs();
         this.updateEditorsTheme();

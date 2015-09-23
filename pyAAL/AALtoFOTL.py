@@ -113,7 +113,7 @@ def build_env(prog: m_aalprog=None, extra=None):
         pre_cond += "\n\n%%% Custom ENV \n&\n"
         pre_cond += "\n&".join([str(x.code) for x in prog.envs])
 
-    if extra != None:
+    if extra is not None:
         pre_cond += "\n\n%%% Extra ENV \n&\n" + str(extra)
 
     pre_cond += "\n)"
