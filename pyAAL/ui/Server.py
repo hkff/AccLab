@@ -71,18 +71,18 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         val = self.get_arg(args, "action", method)
 
         if val == "list":
-            res = api_listDir(base_dir)
+            res = api_list_dir(base_dir)
         elif val == "write":
-            res = api_writeFile(self.get_arg(args, "file", method), self.get_arg(args, "data", method))
+            res = api_write_file(self.get_arg(args, "file", method), self.get_arg(args, "data", method))
 
         elif val == "read":
-            res = api_readFile(self.get_arg(args, "file", method))
+            res = api_read_file(self.get_arg(args, "file", method))
 
         elif val == "delete":
-            res = api_deleteFile(self.get_arg(args, "file", method))
+            res = api_delete_file(self.get_arg(args, "file", method))
 
         elif val == "rename":
-            res = api_renameFile(self.get_arg(args, "file", method), self.get_arg(args, "new_name", method))
+            res = api_rename_file(self.get_arg(args, "file", method), self.get_arg(args, "new_name", method))
 
         elif val == "compileAAL":
             save_current_ps_id(os.getpid())
@@ -93,17 +93,23 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             res = api_compile_tspass(self.get_arg(args, "file", method))
 
         elif val == "listTemplates":
-            res = api_listDir("ui/templates")
+            res = api_list_dir("ui/templates")
             res = res.replace(".json", "")
 
         elif val == "getTemplate":
-            res = api_getTemplate("ui/templates/" + self.get_arg(args, "file", method))
+            res = api_get_template("ui/templates/" + self.get_arg(args, "file", method))
+
+        elif val == "savePrefs":
+            res = api_save_prefs(self.get_arg(args, "prefs", method))
+
+        elif val == "loadPrefs":
+            res = api_load_prefs()
 
         elif val == "getAALdec":
-            res = api_getAALDec(self.get_arg(args, "file", method))
+            res = api_get_aal_dec(self.get_arg(args, "file", method))
 
         elif val == "createDir":
-            res = api_createFolder(self.get_arg(args, "file", method))
+            res = api_create_folder(self.get_arg(args, "file", method))
 
         elif val == "monitor":
             res = api_monitor()

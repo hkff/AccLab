@@ -27,10 +27,12 @@ var visualEditor = {
     activeEditor    : null,
     visualEditor  : false,
     activeCloseBtn: null,
-    aceTheme      : (sessionStorage.getItem("theme") != null)?sessionStorage.getItem("theme"):"monokai",
+    userPrefs    : {"theme": "monokai", "username": "" },
+    aceTheme      : "monokai",
     aceThemesList : ["monokai", "chrome", "tomorrow", "kuroir", "eclipse", "chaos"],
     backend       : "http://127.0.0.1:8000/",
     username      : "",
+
 
     /**
      * Initialize function
@@ -71,36 +73,16 @@ var visualEditor = {
      * Get username
      */
     getUserName: function() {
-        if(sessionStorage.getItem("username") != null) {
-            return sessionStorage.getItem("username");
-        }
-        else {
+        if(visualEditor.userPrefs["username"] == "") {
             var username = "";
             do {
                 username =prompt("Enter a user name : ");
             }
             while(username.length < 0);
-            // Save and return the username
-            sessionStorage.setItem("username", username);
-            return username;
+            // Save the username
+            visualEditor.userPrefs["username"] = username;
+            visualEditor.save_prefs();
         }
-    },
-
-    /**
-     * Clear Preferences
-     */
-    clearPrefs: function() {
-        sessionStorage.clear();
-            toastr.info("Cache cleared !", "", {
-				"closeButton": true,
-				"preventDuplicates": true,
-				"tapToDismiss": true,
-  				"showDuration": "500",
-			  	"hideDuration": "500",
-			  	"timeOut": 1300,
-			  	"extendedTimeOut": 0,
-				"positionClass": "toast-top-center"
-			});
     },
 
     /**
@@ -111,7 +93,9 @@ var visualEditor = {
 
         visualEditor.aceTheme = $(theme).val();
         // Save theme in local storage
-        sessionStorage.setItem("theme", visualEditor.aceTheme);
+        //sessionStorage.setItem("theme", visualEditor.aceTheme);
+        visualEditor.userPrefs["theme"] = visualEditor.aceTheme;
+        visualEditor.save_prefs();
         this.updateEditorsTheme();
     },
 
@@ -125,14 +109,74 @@ var visualEditor = {
     },
 
     /**
+     * Load user preferences
+     */
+    load_prefs: function() {
+        $.ajax({
+            dataType: 'text',
+            type: 'POST',
+            url: visualEditor.backend,
+            data: {action: "loadPrefs"},
+            success: function (response) {
+                var obj = jQuery.parseJSON(response);
+                visualEditor.userPrefs = obj;
+                visualEditor.getUserName();
+                visualEditor.aceTheme = visualEditor.userPrefs["theme"];
+            }
+        });
+    },
+
+    /**
+     * Save user preferences
+     */
+    save_prefs: function() {
+        $.ajax({
+            dataType: 'text',
+            type: 'POST',
+            url: visualEditor.backend,
+            data: {action: "savePrefs", prefs: JSON.stringify(visualEditor.userPrefs)},
+            success: function (response) {
+                //console.log(response)
+            }
+        });
+    },
+
+    /**
+     * Clear Preferences
+     */
+    clearPrefs: function() {
+        // Restore default values
+        visualEditor.userPrefs["username"] = "";
+        visualEditor.userPrefs["theme"] = "monokai";
+
+        $.ajax({
+            dataType: 'text',
+            type: 'POST',
+            url: visualEditor.backend,
+            data: {action: "savePrefs", prefs: JSON.stringify(visualEditor.userPrefs)},
+            success: function (response) {
+                 toastr.info("Preferences cleared !", "", {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                    "tapToDismiss": true,
+                    "showDuration": "500",
+                    "hideDuration": "500",
+                    "timeOut": 1300,
+                    "extendedTimeOut": 0,
+                    "positionClass": "toast-top-center"
+                });
+            }
+        });
+    },
+
+    /**
      * Unlock all panels
      */
     clearPanels: function() {
-     for(var i=0; i<window.panelNodes.length; i++) {
+        for(var i=0; i<window.panelNodes.length; i++) {
             try {
                 window.panelNodes[i].performUndock();
-            } catch (e) {
-            }
+            } catch (e) {}
         }
     },
 
@@ -519,6 +563,6 @@ window.onload = function() {
     this.panelNodes = [window.solution, window.outline, window.components, window.toolbox,
         window.properties, window.inplaceAAL, window.output];
 
-    // Load user name
-    visualEditor.username = visualEditor.getUserName();
+    // Load prefs
+    visualEditor.userPrefs = visualEditor.load_prefs();
 }

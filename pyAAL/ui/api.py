@@ -37,7 +37,7 @@ def is_cmd_allowed(cmds):
 
 
 #  List dir
-def api_listDir(wpath):
+def api_list_dir(wpath):
     tmp = "["
     dirs = os.listdir(wpath)[::-1]
     for d in dirs:
@@ -47,7 +47,7 @@ def api_listDir(wpath):
 
         if os.path.isdir(wpath + "/" + d):
             tmp += ',"children": '
-            tmp += api_listDir(wpath + '/' + d)
+            tmp += api_list_dir(wpath + '/' + d)
         tmp += '},'
 
     if tmp[-1] == ",":
@@ -58,19 +58,19 @@ def api_listDir(wpath):
 
 
 # Read file
-def api_readFile(f):
+def api_read_file(f):
     with open(base_dir + "/" + f) as fd:
         return fd.read()
 
 
 # Get template
-def api_getTemplate(f):
+def api_get_template(f):
     with open(f) as fd:
         return fd.read()
 
 
 # Write file
-def api_writeFile(f, d):
+def api_write_file(f, d):
     # Add \n at the end
     if d[-1] != "\n":
         d += "\n"
@@ -79,22 +79,40 @@ def api_writeFile(f, d):
 
 
 # Rename file
-def api_renameFile(f, new_name):
+def api_rename_file(f, new_name):
     os.rename(base_dir + "/" + f, base_dir + "/" + new_name)
     return "RENAMED"
 
 
 # Delete file
-def api_deleteFile(f):
+def api_delete_file(f):
     file = base_dir + "/" + f
     if os.path.isfile(file):
         os.remove(file)
     elif os.path.isdir(file):
         shutil.rmtree(file)
+    return "DELETED"
+
+
+# Save preferences
+def api_save_prefs(d):
+    # Add \n at the end
+    if d[-1] != "\n":
+        d += "\n"
+    with open("ui/prefs.json", "w+") as fd:
+        return str(fd.write(d))
+
+
+# Load preferences
+def api_load_prefs():
+    if not os.path.isfile("ui/prefs.json"):
+        api_save_prefs('{"theme": "monokai", "username": "" }')
+    with open("ui/prefs.json") as fd:
+        return fd.read()
 
 
 # Create Folder
-def api_createFolder(d):
+def api_create_folder(d):
     if not os.path.exists(base_dir + "/" + d):
         return str(os.makedirs(base_dir + "/" + d))
     else:
@@ -102,7 +120,7 @@ def api_createFolder(d):
 
 
 # Convert terminal colors to colored div
-def toHTMLcolors(html_code: str):
+def to_html_colors(html_code: str):
     html_code = html_code.replace("[91m[ERROR]", "<b style='color:red;'><span class='fa fa-times-circle' "
                                                  "style='padding-top: 2px;padding-right: 5px;'/>[ERROR]")
     html_code = html_code.replace("[93m[WARNING]", "<b style='color:orange;'><span class='fa fa-exclamation-triangle'"
@@ -151,7 +169,7 @@ def api_compile_aal(f):
     sys.stderr = syserr
 
     print(res)
-    res = toHTMLcolors(res)
+    res = to_html_colors(res)
     return res.replace("\n", "<br>")
 
 
@@ -183,7 +201,7 @@ def api_compile_tspass(f):
 
 
 # Get AAL declaration in JSON format
-def api_getAALDec(f):
+def api_get_aal_dec(f):
     try:
         mm = aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="", no_exec=True)["mm"]
     except:
