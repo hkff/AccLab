@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 //
-//  AccLab UI BETA V 1.0 : diagramEditor.js
+//  AccLab UI BETA V 1.0 : acclab.js
 //
 // Copyright (C) 2014 Walid Benghabrit
 //
