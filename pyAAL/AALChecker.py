@@ -662,6 +662,7 @@ def conflict(compiler, c1, resolve=False, verbose=False):
     res = []
 
     enable_masking()
+    verbose2 = False
 
     for c in cmbs:
         if verbose:
@@ -671,7 +672,7 @@ def conflict(compiler, c1, resolve=False, verbose=False):
         ##
         # Masking e1
         ##
-        before_masking_e1 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
+        before_masking_e1 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
         if verbose:
             print(Color("\n====== Before masking e1 : " + before_masking_e1["psat"]))
 
@@ -679,7 +680,7 @@ def conflict(compiler, c1, resolve=False, verbose=False):
             print(Color("{autoblue}Masking e1...{/autoblue}"))
 
         c.actionExp1.mask()
-        after_masking_e1 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
+        after_masking_e1 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
         if verbose:
             print(Color("====== After Masking e1  : " + after_masking_e1["psat"]))
         c.actionExp1.unmask()
@@ -690,7 +691,7 @@ def conflict(compiler, c1, resolve=False, verbose=False):
         ##
         # Masking e2
         ##
-        before_masking_e2 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
+        before_masking_e2 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
         if verbose:
             print(Color("\n====== Before masking e2 : " + before_masking_e2["psat"]))
 
@@ -698,7 +699,7 @@ def conflict(compiler, c1, resolve=False, verbose=False):
             print(Color("{autoblue}Masking e2...{/autoblue}"))
 
         c.actionExp2.mask()
-        after_masking_e2 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
+        after_masking_e2 = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
         if verbose:
             print(Color("====== After Masking e2  : " + after_masking_e2["psat"]))
         c.actionExp2.unmask()
@@ -725,8 +726,8 @@ def conflict(compiler, c1, resolve=False, verbose=False):
     # Resolving
     ##
     if resolve:
-        before_resolving = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
-        print(Color("\n====== Before Resolving : " + before_resolving["psat"]+ "\n"))
+        before_resolving = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        print(Color("\n====== Before Resolving : " + before_resolving["psat"] + "\n"))
 
         for x in min:
             if isinstance(x, m_aexpAuthor):
@@ -734,7 +735,7 @@ def conflict(compiler, c1, resolve=False, verbose=False):
                             % (x, x.get_line())))
                 x.author = m_author.A_deny if x.author == m_author.A_permit else m_author.A_permit
 
-        after_resolving = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose)
+        after_resolving = validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
         print(Color("\n====== After Resolving : " + after_resolving["psat"] + "\n"))
 
 

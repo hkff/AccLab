@@ -82,7 +82,7 @@ def build_env(prog: m_aalprog=None, extra=None):
             times.append(x)
         else:
             for y in times:
-                if y.compare(x) == 1:
+                if y.compare(x) == -1:
                     times.insert(index, x)
                     break
                 index += 1
