@@ -562,4 +562,7 @@ window.onload = function() {
 
     // Load prefs
     visualEditor.userPrefs = visualEditor.load_prefs();
+
+    // Add shortcuts
+    shortcut.add("Alt+c", visualEditor.ui.toggleComment);
 }

@@ -232,10 +232,67 @@ visualEditor.ui = {
             url: visualEditor.backend,
             data: {action: "getAALdec", file: aalFile},
             success: function(response) {
-                var obj = jQuery.parseJSON(response);
-                visualEditor.ui.currentAAL = obj;
+                visualEditor.ui.currentAAL = jQuery.parseJSON(response);
             }
 	    });
+    },
+
+    /**
+     * Toggle comment in ace editor
+     */
+    toggleComment: function() {
+        if(visualEditor.activeEditor != null){
+            var selectRange = visualEditor.activeEditor.getSelectionRange();
+            var single = false;
+
+            // Check if single/multiple selection
+            if (selectRange.start.row == selectRange.end.row && selectRange.start.column == selectRange.end.column)
+                single = true;
+
+            if (single) {
+                // Single line comment
+                var line = visualEditor.activeEditor.getCursorPosition().row;
+                visualEditor.activeEditor.gotoLine(line+1);
+                if (visualEditor.activeEditor.getSession().getLine(line).startsWith("//")) {
+                    visualEditor.activeEditor.remove();
+                    visualEditor.activeEditor.remove();
+                }
+                else
+                    visualEditor.activeEditor.insert("//");
+            } else {
+                // Multiple chars comment
+                if (visualEditor.activeEditor.getSelectedText().startsWith("/*") &&
+                    visualEditor.activeEditor.getSelectedText().endsWith("*/")) {
+                    var start = {row: visualEditor.activeEditor.getSession().getSelection().selectionLead.row,
+                                 column: visualEditor.activeEditor.getSession().getSelection().selectionLead.column};
+
+                    var end = {row : visualEditor.activeEditor.getSession().getSelection().selectionAnchor.row,
+                                column : visualEditor.activeEditor.getSession().getSelection().selectionAnchor.column};
+
+                    visualEditor.activeEditor.moveCursorToPosition({row: end.row, column: end.column-2});
+                        visualEditor.activeEditor.remove();
+
+                    visualEditor.activeEditor.moveCursorToPosition({row: start.row, column: start.column});
+                        visualEditor.activeEditor.remove();
+                        visualEditor.activeEditor.remove();
+                }
+                else{
+                    var start = {row: visualEditor.activeEditor.getSession().getSelection().selectionLead.row,
+                                 column: visualEditor.activeEditor.getSession().getSelection().selectionLead.column};
+
+                    var end = {row : visualEditor.activeEditor.getSession().getSelection().selectionAnchor.row,
+                                column : visualEditor.activeEditor.getSession().getSelection().selectionAnchor.column};
+
+                    visualEditor.activeEditor.moveCursorToPosition({row: end.row, column: end.column});
+                        visualEditor.activeEditor.insert("*/");
+
+                    visualEditor.activeEditor.moveCursorToPosition({row: start.row, column: start.column});
+                        visualEditor.activeEditor.insert("/*");
+                }
+
+            }
+
+        }
     }
 
 };
