@@ -4,12 +4,15 @@
 ace.define('ace/mode/AAL', function(require, exports, module) {
     var oop = require("../lib/oop");
     var TextMode = require("./text").Mode;
-    var Tokenizer = require("../tokenizer").Tokenizer;
+    //var Tokenizer = require("../tokenizer").Tokenizer;
     var aalHighlightRules = require("./aal_highlight_rules").aalHighlightRules;
+    var aalFoldMode = require("./aalFolding").FoldMode;
 
     var Mode = function() {
-        this.$tokenizer = new Tokenizer(new aalHighlightRules().getRules());
-        this.$keywordList = aalHighlightRules.$keywordList;
+        //this.$tokenizer = new Tokenizer(new aalHighlightRules().getRules());
+        //this.$keywordList = aalHighlightRules.$keywordList;
+        this.HighlightRules = aalHighlightRules;
+        this.foldingRules = new aalFoldMode("\\:");
     };
     oop.inherits(Mode, TextMode);
 
@@ -23,6 +26,36 @@ ace.define('ace/mode/AAL', function(require, exports, module) {
 
 
 /**
+ * AAL Folding mode
+ */
+ace.define('ace/mode/aalFolding', function(require, exports, module) {
+    var oop = require("../lib/oop");
+    var BaseFoldMode = require("./folding/fold_mode").FoldMode;
+
+    var FoldMode = exports.FoldMode = function(markers) {
+        this.foldingStartMarker = new RegExp("([\\[{\(])(?:\\s*)$|(" + markers + ")(?:\\s*)(?:#.*)?$");
+    };
+    oop.inherits(FoldMode, BaseFoldMode);
+
+    (function() {
+
+        this.getFoldWidgetRange = function(session, foldStyle, row) {
+            var line = session.getLine(row);
+            var match = line.match(this.foldingStartMarker);
+            if (match) {
+                if (match[1])
+                    return this.openingBracketBlock(session, match[1], row, match.index);
+                if (match[2])
+                    return this.indentationBlock(session, row, match.index + match[2].length);
+                return this.indentationBlock(session, row);
+            }
+        }
+
+    }).call(FoldMode.prototype);
+});
+
+
+/**
  * AAL syntax highlighter
  */
 ace.define('ace/mode/aal_highlight_rules', function(require, exports, module) {
@@ -31,7 +64,7 @@ ace.define('ace/mode/aal_highlight_rules', function(require, exports, module) {
     var oop = require("../lib/oop");
     var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 
-       var aalHighlightRules = function() {
+    var aalHighlightRules = function() {
         this.$rules = new TextHighlightRules().getRules();
 
         // Keywords
@@ -41,9 +74,9 @@ ace.define('ace/mode/aal_highlight_rules', function(require, exports, module) {
             "ae ACTIONS ATTRIBUTES DENY EXTENDS GET_AUDIT GET_RECTIFICATION GET_USAGE PERMIT re SUBJECT ue "
         );
 
-        this.$keywordList = keywords;
+        //this.$keywordList = keywords;
 
-        // Predifined Types
+        // Predefined Types
         var types = ("Actor DataSubject DataController DataProcessor DwDataController Auditor CloudProvider CloudCustomer EndUser");
         
         // Operators
