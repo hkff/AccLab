@@ -28,6 +28,9 @@ visualEditor.ui.fileManager = {
 	commandStack    : null,
 	canvas          : null,
 	selectedNode    : null,
+    supportedTypes  : ["AAL", "TSPASS", "PY", "JSON", "XML", "HTML", "JS"],
+    typesMode       : {"AAL":"AAL", "TSPASS": "TSPASS", "PY": "python",
+                        "JSON": "json", "XML": "xml", "HTML": "html", "JS": "javascript"},
 
 	/**
 	 * init function
@@ -407,10 +410,13 @@ visualEditor.ui.fileManager = {
 
 		// Set theme
 	    editor.setTheme("ace/theme/" + visualEditor.aceTheme);
-		if(type == "AAL" || type == "TSPASS")
-			editor.getSession().setMode("ace/mode/" + type);
+
+        // Set Mode
+		if(this.supportedTypes.indexOf(type) != -1)
+			editor.getSession().setMode("ace/mode/" + this.typesMode[type]);
 		else
-			editor.getSession().setMode("ace/mode/plain_text");
+            editor.getSession().setMode("ace/mode/plain_text");
+
 	    editor.setFontSize(14);
 	    return editor;
 	},
