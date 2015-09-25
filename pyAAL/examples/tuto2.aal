@@ -68,7 +68,7 @@ CLAUSE alice_pref (
 //CALL vconflict("css_policy" )
 //CALL vcompliance("css_policy" "alice_pref")
 //CALL sat_ue("css_policy")
-CALL validate_usage("css_policy" "alice_pref")
+CALL vvalidate_usage("css_policy" "alice_pref")
 
 /*
 EXEC

@@ -298,30 +298,37 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
     # clauses
     c1_ltl = c1.to_ltl_obj()
     c2_ltl = c2.to_ltl_obj()
-    c1_cond = ("((always(UE1 <=> %s)) & (always(AE1 <=> %s)) & (always(RE1 <=> %s)))" % (c1_ltl["ue"], c1_ltl["ae"], c1_ltl["re"]))
-    c2_cond = ("((always(UE2 <=> %s)) & (always(AE2 <=> %s)) & (always(RE2 <=> %s)))" % (c2_ltl["ue"], c2_ltl["ae"], c2_ltl["re"]))
-
-    extra = ("\n%%%% %s\n%s \n&\n%%%% %s\n%s" %(c1_id, c1_cond, c2_id, c2_cond))
-    pre_cond = build_env(compiler.aalprog, extra=extra)
+    # c1_cond = ("((always(UE1 <=> %s)) & (always(AE1 <=> %s)) & (always(RE1 <=> %s)))" % (c1_ltl["ue"], c1_ltl["ae"], c1_ltl["re"]))
+    # c2_cond = ("((always(UE2 <=> %s)) & (always(AE2 <=> %s)) & (always(RE2 <=> %s)))" % (c2_ltl["ue"], c2_ltl["ae"], c2_ltl["re"]))
+    # extra = ("\n%%%% %s\n%s \n&\n%%%% %s\n%s" %(c1_id, c1_cond, c2_id, c2_cond))
+    pre_cond = build_env(compiler.aalprog)
 
     ##
     # Choosing acc formula
     ##
     if acc_formula == 0:
-        c1_formula = "(always(UE1) )"
-        c2_formula = "(always(UE2) )"
+        # (always(UE))
+        c1_formula = "(always(%s) )" % (c1_ltl["ue"])
+        c2_formula = "(always(%s) )" % (c2_ltl["ue"])
     elif acc_formula == 1:
-        c1_formula = "(always(AE1 & always(UE1 | ((~(UE1)) & ((AE1 => (RE1)))))) )"
-        c2_formula = "(always(AE2 & always(UE2 | ((~(UE2)) & ((AE2 => (RE2)))))) )"
+        # (always(AE1 & always(UE1 | ((~(UE1)) & ((AE1 => (RE1)))))) )
+        c1_formula = "(always(%s & always(%s | ((~(%s)) & ((%s => (%s)))))) )" \
+                     % (c1_ltl["ae"], c1_ltl["ue"], c1_ltl["ue"], c1_ltl["ae"], c1_ltl["re"])
+        c2_formula = "(always(%s & always(%s | ((~(%s)) & ((%s => (%s)))))) )" \
+                     % (c2_ltl["ae"], c2_ltl["ue"], c2_ltl["ue"], c2_ltl["ae"], c2_ltl["re"])
     elif acc_formula == 2:
-        c1_formula = "(always(AE1) )"
-        c2_formula = "(always(AE2) )"
+        # (always(AE))
+        c1_formula = "(always(%s) )" % (c1_ltl["ae"])
+        c2_formula = "(always(%s) )" % (c2_ltl["ae"])
     elif acc_formula == 3:
-        c1_formula = "(always(RE1) )"
-        c2_formula = "(always(RE2) )"
+        # (always(RE))
+        c1_formula = "(always(%s) )" % (c1_ltl["re"])
+        c2_formula = "(always(%s) )" % (c2_ltl["re"])
     else:
-        c1_formula = "(always(UE1) )"
-        c2_formula = "(always(UE2) )"
+        # (always(UE))
+        c1_formula = "(always(%s) )" % (c1_ltl["ue"])
+        c2_formula = "(always(%s) )" % (c2_ltl["ue"])
+
     ##
     # C1 & C2
     ##
