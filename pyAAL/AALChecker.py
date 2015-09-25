@@ -265,7 +265,7 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
     :return:
     """
     # TODO  check if c1 and c2 exists
-    fres = {"res": "", "sat": "", "neg": "", "monodic": "", "psat": "", "pneg": ""}
+    fres = {"res": "", "sat": "", "neg": "", "monodic": "", "psat": "", "pneg": "", "ok": ""}
 
     # Custom printer
     def print2(x):
@@ -338,11 +338,13 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
             v = v and False
             fres["sat"] = "Unsatisfiable"
             fres["psat"] = "{autored}  -> " + res["res"] + "{/red}"
+            fres["ok"] = "false"
             return fres
         else:
             print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
             fres["sat"] = "Satisfiable"
             fres["psat"] = "{autogreen}  -> " + res["res"] + "{/green}"
+            fres["ok"] = "true"
 
         if res["res"] == "":
             print2(res["print"])
@@ -364,8 +366,10 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
         if res["res"] == "Unsatisfiable":
             v = v and False
             print2(Color("{autored}  -> " + res["res"] + "{/red}"))
+            fres["ok"] = "false"
         else:
             print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+            fres["ok"] = "true"
 
         if res["res"] == "":
             print2(res["print"])
@@ -388,10 +392,12 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
             print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
             fres["sat"] = "Unsatisfiable"
             fres["psat"] = "{autogreen}  -> " + res["res"] + "{/green}"
+            fres["ok"] = "true"
         else:
             print2(Color("{autored}  -> " + res["res"] + "{/red}"))
             fres["sat"] = "Satisfiable"
             fres["psat"] = "{autored}  -> " + res["res"] + "{/red}"
+            fres["ok"] = "false"
             v = v and False
 
         if res["res"] == "":
@@ -409,8 +415,10 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
         ##
         if v:
             print2(Color("\n{autogreen}[VALIDITY] Formula is valid !{/green}"))
+            fres["ok"] = "true"
         else:
             print2(Color("\n{autored}[VALIDITY] Formula is not valid !{/red}"))
+            fres["ok"] = "false"
 
         print2("------------------------- Validity check End -------------------------\n")
     return fres

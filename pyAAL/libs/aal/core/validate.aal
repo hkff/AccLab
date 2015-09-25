@@ -7,7 +7,18 @@ MACRO gvalidate(c1 c2 resolve verbose use_always acc_formula chk) (
 _c1 = self.clause(c1)
 _c2 = self.clause(c2)
 if _c1 is not None and _c2 is not None:
-    validate(self, _c1, _c2, resolve=resolve, verbose=verbose, use_always=use_always, acc_formula=acc_formula, chk=chk)
+    res = validate(self, _c1, _c2, resolve=resolve, verbose=verbose, use_always=use_always, acc_formula=acc_formula, chk=chk)
+
+    ### Web view ###
+    ## NOTE : not a place for this
+    ###
+    opts = "'closeButton': true, 'preventDuplicates': true, 'tapToDismiss': true, 'timeOut': 0"
+    if res["ok"] == "true":
+        web = "<script> toastr.success('Check passed !', 'Result', {" + opts + " }); </script>"
+    else:
+        web = "<script> toastr.error('Check failed !', 'Result', {" + opts + " }); </script>"
+    print(web)
+
 """
 )
 
