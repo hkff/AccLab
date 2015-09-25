@@ -565,4 +565,7 @@ window.onload = function() {
 
     // Add shortcuts
     shortcut.add("Alt+c", visualEditor.ui.toggleComment);
+    shortcut.add("Alt+h", visualEditor.ui.clearHighlight);
+    shortcut.add("Alt+z", visualEditor.ui.highlightRed);
+    shortcut.add("Alt+a", visualEditor.ui.highlightGreen);
 }

@@ -2,6 +2,8 @@
  * AAL Mode
  */
 ace.define('ace/mode/AAL', function(require, exports, module) {
+    window.Range = require('ace/range').Range;
+
     var oop = require("../lib/oop");
     var TextMode = require("./text").Mode;
     //var Tokenizer = require("../tokenizer").Tokenizer;

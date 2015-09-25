@@ -238,6 +238,43 @@ visualEditor.ui = {
     },
 
     /**
+     * Highligh line
+     */
+    clearHighlight: function() {
+        if(visualEditor.activeEditor != null) {
+            var markers = visualEditor.activeEditor.session.$backMarkers;
+            for(var key in markers){
+                if(markers[key].clazz.startsWith("aceHighlight"))
+                    visualEditor.activeEditor.session.removeMarker(markers[key].id);
+            }
+        }
+    },
+
+    /**
+     * Highlight selected text / current line
+     */
+    highlight: function(theme) {
+        if(visualEditor.activeEditor != null) {
+            var sr = visualEditor.activeEditor.getSelectionRange();
+            // Select one line
+             var range = null;
+            if(sr.start.column ==  sr.end.column)
+                range = new Range(sr.start.row, 0, sr.end.row, Number.MAX_VALUE);
+            else
+                range = new Range(sr.start.row, sr.start.column, sr.end.row, sr.end.column);
+            visualEditor.activeEditor.session.addMarker(range, theme, "line");
+        }
+    },
+
+    highlightRed: function() {
+        visualEditor.ui.highlight("aceHighlightRed");
+    },
+
+    highlightGreen: function() {
+        visualEditor.ui.highlight("aceHighlightGreen");
+    },
+
+    /**
      * Toggle comment in ace editor
      */
     toggleComment: function() {

@@ -672,6 +672,9 @@ visualEditor.ui.tools.keyboardShortcutsTool = visualEditor.ui.tool.extend({
 					"<li><b class='keyword'>ALT+Shift+Down-</b>Arrow - Copy current line(s) below current</li>" +
 					"<li><b class='keyword'>CTRL+Space bar -</b> Autocomplete</li>" +
 					"<li><b class='keyword'>CTRL+Click -</b> Multiedit</li>" +
+					"<li><b class='keyword'>ALT+A -</b> Highlight green</li>" +
+                    "<li><b class='keyword'>ALT+Z -</b> Highlight red</li>" +
+                    "<li><b class='keyword'>ALT+H -</b> Clear all highlights</li>" +
 					"<a href='https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts'" +
 					" target='_blank'>Click here for more ace editor shortcuts </a>" +
 			"</ul>" +
