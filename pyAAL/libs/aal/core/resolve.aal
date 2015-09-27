@@ -1,8 +1,13 @@
+/******************************************************************
+ ******************************************************************
+ *    Conflict / Compliance / Resolve  using masking algorithm
+ ******************************************************************
+ ******************************************************************/
 MACRO resolve(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    conflict(self, _c1, resolve=True)
+    conflict(self, _c1, resolve=True, alog=0)
 """
 )
 
@@ -10,7 +15,7 @@ MACRO vresolve(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    conflict(self, _c1, resolve=True, verbose=True)
+    conflict(self, _c1, resolve=True, verbose=True, alog=0)
 """
 )
 
@@ -19,7 +24,7 @@ MACRO conflict(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    conflict(self, _c1)
+    conflict(self, _c1, alog=0)
 """
 )
 
@@ -27,7 +32,7 @@ MACRO vconflict(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    conflict(self, _c1, verbose=True)
+    conflict(self, _c1, verbose=True, alog=0)
 """
 )
 
@@ -37,7 +42,7 @@ MACRO compliance(c1 c2) (
 _c1 = self.clause(c1)
 _c2 = self.clause(c2)
 if _c1 is not None and _c2 is not None:
-    conflict(self, _c1, c2=_c2)
+    conflict(self, _c1, c2=_c2, alog=0)
 """
 )
 
@@ -46,6 +51,65 @@ MACRO vcompliance(c1 c2) (
 _c1 = self.clause(c1)
 _c2 = self.clause(c2)
 if _c1 is not None and _c2 is not None:
-    conflict(self, _c1, c2=_c2, verbose=True)
+    conflict(self, _c1, c2=_c2, verbose=True, alog=0)
+"""
+)
+
+
+/******************************************************************
+ ******************************************************************
+ *    Conflict / Compliance / Resolve  using combining algorithm
+ ******************************************************************
+ ******************************************************************/
+
+MACRO eresolve(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    conflict(self, _c1, resolve=True, algo=1)
+"""
+)
+
+MACRO veresolve(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    conflict(self, _c1, resolve=True, verbose=True, algo=1)
+"""
+)
+
+
+MACRO econflict(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    conflict(self, _c1, algo=1)
+"""
+)
+
+MACRO veconflict(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    conflict(self, _c1, verbose=True, algo=1)
+"""
+)
+
+
+MACRO ecompliance(c1 c2) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+if _c1 is not None and _c2 is not None:
+    conflict(self, _c1, c2=_c2, algo=1)
+"""
+)
+
+MACRO vecompliance(c1 c2) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+if _c1 is not None and _c2 is not None:
+    conflict(self, _c1, c2=_c2, verbose=True, algo=1)
 """
 )
