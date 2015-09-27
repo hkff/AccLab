@@ -264,13 +264,15 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
             "neg" : ~(=>)
     :return:
     """
-    # TODO  check if c1 and c2 exists
     fres = {"res": "", "sat": "", "neg": "", "monodic": "", "psat": "", "pneg": "", "ok": ""}
 
     # Custom printer
     def print2(x):
         if not no_print:
             print(x)
+
+    if c1 is None or c2 is None:
+        print2("Error clause c1 / c2 are None")
 
     # Monodic test
     print2("------------------------- Monodic check -------------------------")
@@ -336,9 +338,8 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
         print2("----- Checking c1 & c2 consistency :")
         # code = ("%s &\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s & %s \n)"
         #        % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
-        code = ("%s &\n(\n %s & %s \n)"
-                % (pre_cond, c1_formula, c2_formula))
-        # print2(code)
+        code = ("%s &\n(\n %s & %s \n)" % (pre_cond, c1_formula, c2_formula))
+
         res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
         if res["res"] == "Unsatisfiable":
             print2(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
@@ -366,9 +367,8 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
         print2("----- Checking c1 => c2 :")
         # code = ("%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n)"
         #        % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
-        code = ("%s =>\n(\n %s => %s \n)"
-                % (pre_cond, c1_formula, c2_formula))
-        # print2(code)
+        code = ("%s =>\n(\n %s => %s \n)" % (pre_cond, c1_formula, c2_formula))
+
         res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
         if res["res"] == "Unsatisfiable":
             v = v and False
@@ -391,9 +391,8 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
         print2("----- Checking ~(c1 => c2) :")
         # code = ("~(%s =>\n(\n%% %s\n %s & \n%% %s\n %s & \n\n %s => %s \n))"
         #        % (pre_cond, c1_id, c1_cond, c2_id, c2_cond, c1_formula, c2_formula))
-        code = ("~(%s =>\n(\n %s => %s \n))"
-                % (pre_cond, c1_formula, c2_formula))
-        # print2(code)
+        code = ("~(%s =>\n(\n %s => %s \n))" % (pre_cond, c1_formula, c2_formula))
+
         res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
         if res["res"] == "Unsatisfiable":
             print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
@@ -586,7 +585,7 @@ def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
 
 
 # Conflict detection
-def conflict(compiler, c1, c2=None, resolve=False, verbose=False):
+def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=0):
     """
     Detect conflicts in a clause / between two clauses using masking
     :param compiler:
@@ -594,16 +593,25 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=False):
     :param c2:
     :param resolve:
     :param verbose:
+    :param algo: The detection algorithm
+            0 : masking
+            1 : combining
     :return:
     """
+
+    #####################################
     # Check type Val/Sat
+    #####################################
     def chk():
         if c2 is None:
             return validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
         else:
-            return validate(compiler, c1, c2, resolve=False, verbose=verbose2, no_print=True, use_always=True, acc_formula=0, chk="neg")
+            return validate(compiler, c1, c2, resolve=False, verbose=verbose2, no_print=True,
+                            use_always=True, acc_formula=0, chk="neg")
 
-    # Masking aexComb expression
+    #####################################
+    # Masking expression algorithm
+    #####################################
     def masking(c):
         if isinstance(c, m_aexpComb):
             e1 = c.actionExp1
@@ -663,11 +671,60 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=False):
             if before_masking_e2["sat"] == "Satisfiable" and after_masking_e2["sat"] == "Unsatisfiable":
                 res.append(e2)
 
+    #####################################
+    # Combining expression algorithm
+    #####################################
+    def combining(e, comb):
+        for c in comb:
+            if verbose:
+                print(Color("\n\n{autoblue}Combining{/blue} :\n %s \n  {autoblue}with{/blue} \n%s" % (e, c)))
+
+            f = e.to_ltl() + " & " + c.to_ltl()
+            fres = validate2(compiler, "(always (" + f + "))", check=True, verbose=verbose2)
+
+            if verbose:
+                print(Color(fres["psat"]))
+
+            # Add the combination if unsat
+            if fres["sat"] == "Unsatisfiable":
+                res.append((e, c))
+
+    #####################################
+    # Minimizing unsat set
+    #####################################
+    def minimize(l):
+        to_rem = []
+        for b in l:
+            for s in l:
+                if isinstance(s, tuple):
+                    if b[0].is_my_child(s[0]) and b[1].is_my_child(s[1]):
+                        to_rem.append(b)
+                elif isinstance(b, aalmmnode) and b.is_my_child(s):
+                    to_rem.append(b)
+        for r in to_rem:
+            if r in l:
+                l.remove(r)
+        return l
+
+    #####################################
+    # Conflict / Compliance detection
+    #####################################
+
+    # Choose algorithm to use
+    def handle(e, combs):
+        if algo == 0:
+            masking(e)
+        elif algo == 1:
+            combining(e, combs)
+        else:
+            masking(e)
+
     print("============================= Starting conflict detection ===========================")
     # Enable masking
     enable_masking()
     verbose2 = False
     res = []
+    cmbs = []
 
     # Getting all comb in c1
     if c1 is not None:
@@ -676,7 +733,7 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=False):
             cmbs = c1.usage.walk(filter_type=m_aexpIfthen)
 
         for x in cmbs:
-            masking(x)
+            handle(x, cmbs)
 
     # Getting all comb in c2
     if c2 is not None:
@@ -684,8 +741,13 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=False):
         if len(cmbs2) == 0:  # if there are no comb try with ifThenExp
             cmbs2 = c2.usage.walk(filter_type=m_aexpIfthen)
 
-        for x in cmbs2:
-            masking(x)
+        if algo == 1:
+            cmbs3 = cmbs + cmbs2
+            for x in cmbs3:
+                combining(x, cmbs3)
+        else:
+            for x in cmbs2:
+                handle(x, cmbs2)
 
     print("\n\n=============================================================================\n\n")
 
@@ -694,37 +756,35 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=False):
     ##
     if verbose:
         print("Expressions causing unsat are :\n")
-        [print(Color(" * E {automagenta}at line %s{/automagenta} : %s" % (x.get_line(), x))) for x in res]
+        for x in res:
+            line = x.get_line() if isinstance(x, aalmmnode) else (str(x[0].get_line()) + " and " + str(x[1].get_line()))
+            tmp = ("\n{autoblue}E1 : {/blue}" + str(x[0]) + "\n{autoblue}E2 : {/blue}" + str(x[1]) + "\n\n") \
+                if isinstance(x, tuple) else str(x)
+            print(Color(" * E {automagenta}at line %s{/magenta} : %s" % (line, tmp)))
 
     print("\n\nMinimized Expressions causing unsat are :\n")
-    min = minimize(compiler, res)
-    [print(Color(" * E {automagenta}at line %s{/automagenta} : %s" % (x.get_line(), x))) for x in min]
+    mins = minimize(res)
+    for x in mins:
+        line = x.get_line() if isinstance(x, aalmmnode) else (str(x[0].get_line()) + " and " + str(x[1].get_line()))
+        tmp = ("\n{autoblue}E1 : {/blue}" + str(x[0]) + "\n{autoblue}E2 : {/blue}" + str(x[1]) + "\n\n") \
+            if isinstance(x, tuple) else str(x)
+        print(Color(" * E {automagenta}at line %s{/magenta} : %s" % (line, tmp)))
+
     print("\n------------------------- conflict detection End -------------------------\n")
 
     ##
     # Resolving
     ##
     if resolve:
-        before_resolving = chk() # validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        before_resolving = chk()
         print(Color("\n====== Before Resolving : " + before_resolving["psat"] + "\n"))
 
-        for x in min:
+        for x in mins:
             if isinstance(x, m_aexpAuthor):
                 print(Color("  -> Changing permission PERMIT/DENY in %s {automagenta}at line %s{/automagenta}"
                             % (x, x.get_line())))
                 x.author = m_author.A_deny if x.author == m_author.A_permit else m_author.A_permit
 
-        after_resolving = chk() # validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+        after_resolving = chk()
         print(Color("\n====== After Resolving : " + after_resolving["psat"] + "\n"))
 
-
-def minimize(compiler, l):
-    to_rem = []
-    for b in l:
-        for s in l:
-            if b.is_my_child(s):
-                to_rem.append(b)
-    for x in to_rem:
-        if x in l:
-            l.remove(x)
-    return l
