@@ -585,7 +585,7 @@ def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
 
 
 # Conflict detection
-def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=0):
+def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1):
     """
     Detect conflicts in a clause / between two clauses using masking
     :param compiler:

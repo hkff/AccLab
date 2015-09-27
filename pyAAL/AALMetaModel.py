@@ -859,6 +859,17 @@ class m_aexp(aalmmnode):
     def __init__(self):
         super().__init__()
 
+    def get_line(self):
+        """ Get line number in the source code (of the first child) """
+        try:
+            children = self.children()
+            if len(children) > 0:
+                return str(children[0].get_line())
+            else:
+                return str(self.name.parentCtx.getPayload().start.line)
+        except:
+            return " "
+
 
 # ActionExpr Action
 class m_aexpAction(m_aexp):
