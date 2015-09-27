@@ -4351,10 +4351,12 @@ window.Raphael.svg && function (R) {
             }
         } else {
             tspans = node.getElementsByTagName("tspan");
-            for (i = 0, ii = tspans.length; i < ii; i++) if (i) {
-                $(tspans[i], {dy: fontSize * leading, x: a.x});
-            } else {
-                $(tspans[0], {dy: 0});
+            for (i = 0, ii = tspans.length; i < ii; i++) {
+                if (i) {
+                    $(tspans[i], {dy: fontSize * leading, x: a.x});
+                } else {
+                    $(tspans[0], {dy: 0});
+                }
             }
         }
         $(node, {x: a.x, y: a.y});

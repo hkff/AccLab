@@ -31,6 +31,7 @@ var draw2d =
         node: {},
         note: {},
         diagram:{},
+        flowchart:{},
         analog:{},
         icon:{},
         layout:{},
@@ -77,6 +78,172 @@ var draw2d =
 };
 
 
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
+ ****************************************/// Production steps of ECMA-262, Edition 5, 15.4.4.21
+// Reference: http://es5.github.io/#x15.4.4.21
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce#Browser_compatibility
+if (!Array.prototype.reduce) {
+  Array.prototype.reduce = function(callback /*, initialValue*/) {
+    'use strict';
+    if (this == null) {
+      throw new TypeError('Array.prototype.reduce called on null or undefined');
+    }
+    if (typeof callback !== 'function') {
+      throw new TypeError(callback + ' is not a function');
+    }
+    var t = Object(this), len = t.length >>> 0, k = 0, value;
+    if (arguments.length == 2) {
+      value = arguments[1];
+    } else {
+      while (k < len && ! k in t) {
+        k++; 
+      }
+      if (k >= len) {
+        throw new TypeError('Reduce of empty array with no initial value');
+      }
+      value = t[k++];
+    }
+    for (; k < len; k++) {
+      if (k in t) {
+        value = callback(value, t[k], k, t);
+      }
+    }
+    return value;
+  };
+}
+
+
+// Production steps of ECMA-262, Edition 5, 15.4.4.18
+// Reference: http://es5.github.io/#x15.4.4.18
+if (!Array.prototype.forEach) {
+
+  Array.prototype.forEach = function(callback, thisArg) {
+
+    var T, k;
+
+    if (this == null) {
+      throw new TypeError(' this is null or not defined');
+    }
+
+    // 1. Let O be the result of calling ToObject passing the |this| value as the argument.
+    var O = Object(this);
+
+    // 2. Let lenValue be the result of calling the Get internal method of O with the argument "length".
+    // 3. Let len be ToUint32(lenValue).
+    var len = O.length >>> 0;
+
+    // 4. If IsCallable(callback) is false, throw a TypeError exception.
+    // See: http://es5.github.com/#x9.11
+    if (typeof callback !== "function") {
+      throw new TypeError(callback + ' is not a function');
+    }
+
+    // 5. If thisArg was supplied, let T be thisArg; else let T be undefined.
+    if (arguments.length > 1) {
+      T = thisArg;
+    }
+
+    // 6. Let k be 0
+    k = 0;
+
+    // 7. Repeat, while k < len
+    while (k < len) {
+
+      var kValue;
+
+      // a. Let Pk be ToString(k).
+      //   This is implicit for LHS operands of the in operator
+      // b. Let kPresent be the result of calling the HasProperty internal method of O with argument Pk.
+      //   This step can be combined with c
+      // c. If kPresent is true, then
+      if (k in O) {
+
+        // i. Let kValue be the result of calling the Get internal method of O with argument Pk.
+        kValue = O[k];
+
+        // ii. Call the Call internal method of callback with T as the this value and
+        // argument list containing kValue, k, and O.
+        callback.call(T, kValue, k, O);
+      }
+      // d. Increase k by 1.
+      k++;
+    }
+    // 8. return undefined
+  };
+}
+
+// Production steps of ECMA-262, Edition 5, 15.4.4.14
+// Reference: http://es5.github.io/#x15.4.4.14
+if (!Array.prototype.indexOf) {
+  Array.prototype.indexOf = function(searchElement, fromIndex) {
+
+    var k;
+
+    // 1. Let O be the result of calling ToObject passing
+    //    the this value as the argument.
+    if (this == null) {
+      throw new TypeError('"this" is null or not defined');
+    }
+
+    var O = Object(this);
+
+    // 2. Let lenValue be the result of calling the Get
+    //    internal method of O with the argument "length".
+    // 3. Let len be ToUint32(lenValue).
+    var len = O.length >>> 0;
+
+    // 4. If len is 0, return -1.
+    if (len === 0) {
+      return -1;
+    }
+
+    // 5. If argument fromIndex was passed let n be
+    //    ToInteger(fromIndex); else let n be 0.
+    var n = +fromIndex || 0;
+
+    if (Math.abs(n) === Infinity) {
+      n = 0;
+    }
+
+    // 6. If n >= len, return -1.
+    if (n >= len) {
+      return -1;
+    }
+
+    // 7. If n >= 0, then Let k be n.
+    // 8. Else, n<0, Let k be len - abs(n).
+    //    If k is less than 0, then let k be 0.
+    k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+
+    // 9. Repeat, while k < len
+    while (k < len) {
+      // a. Let Pk be ToString(k).
+      //   This is implicit for LHS operands of the in operator
+      // b. Let kPresent be the result of calling the
+      //    HasProperty internal method of O with argument Pk.
+      //   This step can be combined with c
+      // c. If kPresent is true, then
+      //    i.  Let elementK be the result of calling the Get
+      //        internal method of O with the argument ToString(k).
+      //   ii.  Let same be the result of applying the
+      //        Strict Equality Comparison Algorithm to
+      //        searchElement and elementK.
+      //  iii.  If same is true, return k.
+      if (k in O && O[k] === searchElement) {
+        return k;
+      }
+      k++;
+    }
+    return -1;
+  };
+}
+
+
+if(!Number.MAX_SAFE_INTEGER){
+  Number.MAX_SAFE_INTEGER = 9007199254740991; // Math.pow(2, 53) - 1
+}
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
@@ -257,7 +424,7 @@ var draw2d =
       return output;
     },
     
-    init : function() {
+    init: function() {
         if (!draw2d.util.Base64.byteToCharMap_) {
             draw2d.util.Base64.byteToCharMap_ = {};
             draw2d.util.Base64.charToByteMap_ = {};
@@ -806,7 +973,23 @@ draw2d.util.Color = Class.extend({
         var b= Math.floor(this.blue+(pc*(color.blue-this.blue)) + .5);
 
         return new draw2d.util.Color(r,g,b);   
-    }
+    },
+    
+	/**
+	 * @method
+	 * Compares two color objects
+	 * 
+	 * @param {draw2d.util.Color} o
+	 * @return {Boolean}
+	 **/
+	equals:function( o)
+	{
+		if(!(o instanceof draw2d.util.Color)){
+			return false;
+		}
+		return this.hash()==o.hash();
+	}
+	
 });
 
 /*****************************************
@@ -957,8 +1140,31 @@ draw2d.util.ArrayList = Class.extend({
  
          return this;
      },
-     
-     /**
+
+    /**
+     * @method
+     *
+     * Return ONE element which matches by the given function or <b>null</b>
+     * if no element is found.
+     *
+     *     var r1= figures.find(function(figure){
+     *                   return figure.id===123456
+     *             });
+     *
+     * @param {Function} func the filter function
+     * @param {Object} func.value value of the element in iteration.
+     * @param {Object} func.index index of the element in collection.
+     * @since 2.0.0
+     */
+     find: function(func){
+        var result= $.grep(this.data, func);
+        if(result.length===0){
+            return null;
+        }
+        return result[0];
+     },
+
+    /**
       * @method
       * Translate all items in the array into new items. The array list is modified after this call. 
       * You must clone the array before if you want avoid this.
@@ -1017,7 +1223,7 @@ draw2d.util.ArrayList = Class.extend({
      /**
       * @method
       * You can use the Array list as Stack as well. this is the pop method to remove one element
-      * at the top of the stack.
+      * at the end of the stack.
       * 
       * @returns
       */
@@ -1088,15 +1294,21 @@ draw2d.util.ArrayList = Class.extend({
 
     /**
      * @method
-     * removes all given elements in the Vector
+     * removes all given elements in the ArrayList
      * 
      * @param {draw2d.util.ArrayList} elements The elements to remove
      */
-     removeAll:function(elements)
-     {
-         $.each(elements, $.proxy(function(i,e){
-             this.remove(e);
-         },this));
+     removeAll:function(elements) {
+
+        if (elements instanceof draw2d.util.ArrayList) {
+            elements = elements.data;
+        }
+
+        if($.isArray(elements)){
+            $.each(elements, $.proxy(function (i, e) {
+                this.remove(e);
+            }, this));
+        }
         
         return this;
      },
@@ -1219,9 +1431,7 @@ draw2d.util.ArrayList = Class.extend({
     
      getPersistentAttributes:function()
      {
-        return {
-               data: this.data
-               };
+        return {data: this.data};
      },
      
      /**
@@ -1265,6 +1475,130 @@ Raphael.fn.polygon = function(pointString) {
   poly.push('Z');
   
   return this.path(poly);
+};
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
+ ****************************************/draw2d.util.JSON = {
+
+        /**
+         * @method
+         * Given a dot deliminated string set will create an object
+         * based on the structure of the string with the desired value
+         *
+         * @param {Object} data   the json object to modify
+         * @param {String} path   path indicating where value should be placed
+         * @param {Object} value  the value desired to be set at the location determined by path
+         */
+        set: function(data, path, value) {
+          if(!path || path===''){ 
+              return;
+          }
+
+          var re = /[\w-]+|\[\]|([^\[[\w]\]]|["'](.*?)['"])/g;
+          // parse path on dots, and brackets
+          var pathList = path.match(re);
+          var parent = data;
+          var parentKey;
+          var grandParent = null;
+          var grandParentKey = null;
+
+          var addObj = function(obj, key, data) {
+            if(key === '[]') {
+              obj.push(data);
+            } else {
+              obj[key] = data;
+            }
+          };
+
+          while(pathList.length > 0) {
+            parentKey = pathList.shift().replace(/["']/g, '');
+
+            // Number, treat it as an array
+            if (!isNaN(+parentKey) || parentKey === "[]") {
+              if($.type(parent)!=="array" ) {
+                parent = [];
+                addObj(grandParent, grandParentKey, parent);
+              }
+            // String, treat it as a key
+            } 
+            else if ($.type(parentKey)==="string") {
+              if(!$.isPlainObject(parent)) {
+                parent = {};
+                addObj(grandParent, grandParentKey, parent);
+              }
+            }
+            // Next
+            grandParent = parent;
+            grandParentKey = parentKey;
+            parent = parent[parentKey];
+          }
+
+          addObj(grandParent, grandParentKey, value);
+        },
+
+        /**
+         * @method
+         * Returns the value defined by the path passed in
+         *
+         * @param  {Object} data the JSON data object
+         * @param  {String} path string leading to a desired value
+         */
+        get : function(data, path) {
+          var regex = /[\w-]+|\[\]|([^\[[\w]\]]|["'](.*?)['"])/g;
+          //check if path is truthy
+          if (!path){
+              return undefined;
+          }
+          //parse path on dots and brackets
+          var paths = path.match(regex);
+          //step through data object until all keys in path have been processed
+          while (data !== null && paths.length > 0) {
+            if(data.propertyIsEnumerable(paths[0].replace(/"/g, ''))){
+              data = data[paths.shift().replace(/"/g, '')];
+            }
+            else{
+              return undefined;
+            }
+          }
+          return data;
+        },
+        
+        /**
+         * @method
+         * calculates the diff between the given json objects
+         * 
+         */
+        diff:function(obj1, obj2) {
+            var result = {};
+            for(key in obj1) {
+            	var v1 = obj1[key];
+            	var v2 = obj2[key];
+                if(v1 !== v2) {
+                	if(v1.equals ){
+                		if(!v1.equals(v2)){
+                			result[key] = obj1[key];
+                		}
+                	}
+                	else{
+            			result[key] = obj1[key];
+                	}
+                }
+            }
+            return result;
+        },
+        
+        flatDiff:function(obj1, obj2) {
+            var result = {};
+            for(key in obj1) {
+                if(obj1[key] !== obj2[key]) {
+                    result[key] = obj1[key];
+                }
+            }
+            return result;
+        }
+        
+        
 };
 /*****************************************
  *   Library is under GPL License (GPL)
@@ -1321,7 +1655,7 @@ draw2d.util.spline.Spline = Class.extend({
     /**
      * @constructor 
      */
-    init : function()
+    init: function()
     {
     },
     
@@ -1358,7 +1692,7 @@ draw2d.util.spline.CubicSpline = draw2d.util.spline.Spline.extend(
     /**
      * @constructor 
      */
-    init : function()
+    init: function()
     {
         this._super();
     },
@@ -1451,7 +1785,7 @@ draw2d.util.spline.CatmullRomSpline = draw2d.util.spline.CubicSpline.extend(
     /**
      * @constructor 
      */
-    init : function()
+    init: function()
     {
         this._super();
     },
@@ -1490,7 +1824,7 @@ draw2d.util.spline.BezierSpline = draw2d.util.spline.Spline.extend(
     /**
      * @constructor 
      */
-    init : function()
+    init: function()
     {
         this._super();
     },
@@ -1589,9 +1923,13 @@ draw2d.geo.Point = Class.extend({
      * @param {Number} x
      * @param {Number} y
      */
-    init : function(x, y)
+    init: function(x, y)
     {
         if(x instanceof draw2d.geo.Point){
+            this.x = x.x;
+            this.y = x.y;
+        }
+        else if(typeof x.x ==="number" && typeof x.y==="number"){
             this.x = x.x;
             this.y = x.y;
         }
@@ -1801,13 +2139,34 @@ draw2d.geo.Point = Class.extend({
     /**
      * @method 
      * Return a new Point translated with the x/y values of the hands over point.
-     * 
-     * @param {draw2d.geo.Point} other the offset to add for the new point.
+     *
+     * @param {draw2d.geo.Point|Number} x the x translation or the complete point to translate
+     * @param {Number} [y] the y translation. Required if x is a simple number instead of a draw2d.geo.Point
      * @return {draw2d.geo.Point} The new translated point.
      */
-    getTranslated : function(other)
+    translated : function(x,y)
     {
+        var other = new draw2d.geo.Point(x,y);
         return new draw2d.geo.Point(this.x + other.x, this.y + other.y);
+    },
+    /**
+     * @deprecated
+     */
+    getTranslated : function(x,y){return this.translated(x,y);},
+
+    /**
+     * @method
+     * Return a new Point scaled with the x/y values of the hands over point.
+     *
+     * @param {Number} factor the factor to scaled the new point.
+     * @return {draw2d.geo.Point} The new translated point.
+     */
+    scale : function(factor)
+    {
+        this.x *= factor;
+        this.y *= factor;
+        this.adjustBoundary();
+        return this;
     },
 
     /**
@@ -1817,10 +2176,13 @@ draw2d.geo.Point = Class.extend({
      * @param {Number} factor the factor to scaled the new point.
      * @return {draw2d.geo.Point} The new translated point.
      */
-    getScaled : function(factor)
+    scaled : function(factor)
     {
         return new draw2d.geo.Point(this.x * factor, this.y * factor);
     },
+
+    /* @deprecated */
+    getScaled : function(factor){ return this.scaled(factor);},
 
     /**
      * @method 
@@ -1911,13 +2273,46 @@ draw2d.geo.Rectangle = draw2d.geo.Point.extend({
     /**
      * @constructor 
      * Creates a new Point object with the hands over coordinates.
+	 * <br>
+	 * The constructor consumes almost any kind of rectangel definitions
+	 * like:
+	 *       var rect0 = new draw2d.geo.Rectangle({x:0,y:0,width:20,height:20});
+	 *       var rect1 = new draw2d.geo.Rectangle({x:0,y:0,w:20,h:20});
+	 *       var rect2 = new draw2d.geo.Rectangle($("#divid")[0].getBoundingClientRect());
+	 *       var rect3 = new draw2d.geo.Rectangle(rect1);
+	 *
+	 * The rectangle class is usefull for any kind of intersection, hitTest, contains,...calculation
+	 * or to set the bounding box of any shape.
+	 *
      * @param {Number} x
      * @param {Number} y
      * @param {Number} w
      * @param {Number} h
      */
-    init : function( x, y,  w, h)
+    init: function( x, y,  w, h)
     {
+		// try to consume any kind rectangle definitions
+		//
+
+
+    	if(x instanceof draw2d.geo.Rectangle){
+    		y= x.y;
+    		w = x.w;
+    		h = x.h;
+    		x = x.x;
+    	}
+    	else if(typeof x.x ==="number" && typeof x.y ==="number"){
+    		y= x.y;
+    		w = x.w | x.width;
+    		h = x.h | x.height;
+    		x = x.x;
+    	}
+		else if(typeof x.top ==="number" && typeof x.left ==="number"){
+			y=  x.top;
+			w = x.w | x.width;
+			h = x.h | x.height;
+			x = x.left;
+		}
     	this._super(x,y);
         this.w = w;
         this.h = h;
@@ -1979,7 +2374,6 @@ draw2d.geo.Rectangle = draw2d.geo.Point.extend({
      **/
     scale:function( dw, dh)
     {
-        
       this.w +=(dw);
       this.h +=(dh);
       this.x -=(dw/2);
@@ -1987,8 +2381,46 @@ draw2d.geo.Rectangle = draw2d.geo.Point.extend({
       this.adjustBoundary();
       return this;
     },
-    
-    /**
+
+	/**
+	 * @method
+	 * Returns a copy of the translated rectangle
+	 *
+	 * @param {draw2d.geo.Point|Number} x the x translation or the complete point to translate
+	 * @param {Number} [y] the y translation. Required if x is a simple number instead of a draw2d.geo.Point
+	 * @return {draw2d.geo.Rectangle} The new translated rectangle.
+	 *
+	 * @since 5.6.0
+	 */
+	translate : function(x,y)
+	{
+		var other = new draw2d.geo.Point(x,y);
+		this.x += other.x;
+		this.y += other.y;
+		this.adjustBoundary();
+
+		return this;
+	},
+
+
+	/**
+	 * @method
+	 * Returns a copy of the translated rectangle
+	 *
+	 * @param {draw2d.geo.Point|Number} x the x translation or the complete point to translate
+	 * @param {Number} [y] the y translation. Required if x is a simple number instead of a draw2d.geo.Point
+	 * @return {draw2d.geo.Rectangle} The new translated rectangle.
+	 *
+	 * @since 5.6.0
+	 */
+	translated : function(x,y)
+	{
+		var other = new draw2d.geo.Point(x,y);
+		return new draw2d.geo.Rectangle(this.x + other.x, this.y + other.y, this.w, this.h);
+	},
+
+
+	/**
 	 * Sets the parameters of this Rectangle from the Rectangle passed in and
 	 * returns this for convenience.<br>
 	 * <br>
@@ -2142,7 +2574,18 @@ draw2d.geo.Rectangle = draw2d.geo.Point.extend({
 	{
 	  return new draw2d.geo.Point(this.x+this.w,this.y);
 	},
-		
+
+	/**
+	 * @method
+	 * The center left  of the dimension object.
+	 *
+	 * @return {draw2d.geo.Point} a new point objects which holds the coordinates
+	 **/
+	getCenterLeft:function()
+	{
+		return new draw2d.geo.Point(this.x,this.y+(this.h/2));
+	},
+
 	/**
 	 * @method
 	 * The bottom left corner of the dimension object.
@@ -2338,7 +2781,7 @@ draw2d.geo.Rectangle = draw2d.geo.Point.extend({
 				return -((cx + cw) - ox);
 		}
 
-		throw "Unknown data type of parameter for distance calculation in draw2d.geo.Rectangle.getDistnace(..)";
+		throw "Unknown data type of parameter for distance calculation in draw2d.geo.Rectangle.getDistance(..)";
 	},
 	
     
@@ -2359,7 +2802,7 @@ draw2d.geo.Rectangle = draw2d.geo.Point.extend({
      */
     determineOctant: function( r2){
         
-        var HISTERESE= 3; // Tolleranz um diese vermieden wird, dass der Octant "8" zur?ºckgegeben wird
+        var HISTERESE= 3; // Tolleranz um diese vermieden wird, dass der Octant "8" zurückgegeben wird
         
         var ox = this.x+HISTERESE;
         var oy = this.y+HISTERESE;
@@ -2604,8 +3047,21 @@ draw2d.geo.Rectangle = draw2d.geo.Point.extend({
         }
         return result;
     },
-    
-    /**
+
+	/**
+	 * @method
+	 * Returns a copy of this rectangle
+	 *
+	 *
+	 * @returns {draw2d.geo.Rectangle}
+	 * @since 5.6.0
+	 */
+	clone : function()
+	{
+		return new draw2d.geo.Rectangle(this.x, this.y, this.w, this.h);
+	},
+
+	/**
      * @method
      * converts the rectangle to JSON representation. required for the draw2d.io.Writer
      * 
@@ -2644,6 +3100,37 @@ draw2d.geo.Rectangle.DIRECTION_LEFT  =3;
  * @extends draw2d.geo.Point
  * @author Andreas Herz
  */
+draw2d.geo.Util=
+{
+
+    insetPoint: function(start, end, distanceFromStart){
+        if(start.equals(end)){
+            return start;
+        }
+        var vx = start.x-end.x;
+        var vy = start.y-end.y;
+        var length = Math.sqrt(vx*vx + vy*vy);
+        var localDistance = Math.min(length/2,distanceFromStart);
+        return {x: end.x + vx/length * (length - localDistance),
+                y: end.y + vy/length * (length - localDistance)};
+
+    }
+
+};
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
+ ****************************************/
+
+/**
+ * @class draw2d.geo.Ray
+ * A ray is a line starting in [0,0,] with some additional
+ * helper functions required for some router.
+ * 
+ * @inheritable
+ * @extends draw2d.geo.Point
+ * @author Andreas Herz
+ */
 draw2d.geo.Ray = draw2d.geo.Point.extend({
 
     NAME : "draw2d.geo.Ray",
@@ -2655,7 +3142,7 @@ draw2d.geo.Ray = draw2d.geo.Point.extend({
      * @param {Number} x
      * @param {Number} y
      */
-    init : function( x, y)
+    init: function( x, y)
     {
         this._super(x,y);
     },
@@ -2730,6 +3217,7 @@ draw2d.command.CommandType.MOVE_VERTICES        = "MOVE_VERTICES";
 draw2d.command.CommandType.MOVE_GHOST_VERTEX    = "MOVE_GHOST_VERTEX";
 draw2d.command.CommandType.RESIZE               = "RESIZE";
 draw2d.command.CommandType.RESET                = "RESET";
+draw2d.command.CommandType.ROTATE               = "ROTATE";
 
 
 
@@ -2858,7 +3346,7 @@ draw2d.command.CommandCollection = draw2d.command.Command.extend({
      * 
      * @param {String} commandLabel the label to show on the command stack for the undo/redo operation
      */
-    init : function(commandLabel)
+    init: function(commandLabel)
      {
        this._super((typeof commandLabel === 'undefined') ? draw2d.Configuration.i18n.command.collection : commandLabel);
        
@@ -2986,32 +3474,12 @@ draw2d.command.CommandStack = Class.extend({
      * Create a new CommandStack objects which can be execute via the CommandStack.
      * 
      */
-    init : function( ) {
+    init: function( ) {
        this.undostack = [];
        this.redostack = [];
        this.maxundo = 50;
        this.transactionCommand = null;
        this.eventListeners = new draw2d.util.ArrayList();
-       
-       window.onpopstate = $.proxy(function(event) {
-    	   if( event.state === null){
-    		   return;
-    	   }
-    	   
-    	   /*
-    	   var stackLegth = event.state.length;
-    	   console.log(stackLegth +"<="+ this.undostack.length );
-    	   if(stackLegth <= this.undostack.length ){
-    		   console.log("Back");
-    		   this.undo();
-    	   }
-    	   else{
-    		   console.log("Forward");
-    		   this.redo();
-    	   }
-    	   console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
-    	   */
-       },this);
     },
     
  
@@ -3090,16 +3558,14 @@ draw2d.command.CommandStack = Class.extend({
        //
        this.redostack = [];
     
-       // monitor the max. undo stack size
+       // monitor only the max. undo stack size
        //
        if(this.undostack.length > this.maxundo)
        {
           this.undostack = this.undostack.slice(this.undostack.length-this.maxundo);
        }
        this.notifyListeners(command, draw2d.command.CommandStack.POST_EXECUTE);
-       
-//       window.history.pushState({length: this.undostack.length}, "title 1", "?undo="+this.undostack.length);
-       
+            
        return this;
     },
     
@@ -3171,8 +3637,7 @@ draw2d.command.CommandStack = Class.extend({
     {
        var command = this.redostack.pop();
     
-       if(command)
-       {
+       if(command){
           this.notifyListeners(command, draw2d.command.CommandStack.PRE_REDO);
           this.undostack.push(command);
           command.redo();
@@ -3195,8 +3660,7 @@ draw2d.command.CommandStack = Class.extend({
          
        var command = this.redostack[this.redostack.length-1];
     
-       if(command)
-       {
+       if(command){
           return command.getLabel();
        }
        return "";
@@ -3216,8 +3680,7 @@ draw2d.command.CommandStack = Class.extend({
          
        var command = this.undostack[this.undostack.length-1];
     
-       if(command)
-       {
+       if(command){
           return command.getLabel();
        }
        return "";
@@ -3278,6 +3741,7 @@ draw2d.command.CommandStack = Class.extend({
      */
     removeEventListener:function(listener)
     {
+        var size = this.eventListeners.getSize();
         for (var i = 0; i < size; i++){
             var entry = this.eventListeners.get(i);
             if(entry ===listener || entry.stackChanged === listener){
@@ -3348,7 +3812,7 @@ draw2d.command.CommandStackEvent = Class.extend({
      * @param {Number} details the current state of the command execution
      * 
      */
-    init : function(stack, command, details)
+    init: function(stack, command, details)
     {
     	this.stack = stack;
         this.command = command;
@@ -3422,7 +3886,6 @@ draw2d.command.CommandStackEvent = Class.extend({
  * @class draw2d.command.CommandStackEventListener
  * 
  * Event class which will be fired for every CommandStack operation. Required for CommandStackListener.
- * 
  * @author Andreas Herz
  */
 draw2d.command.CommandStackEventListener = Class.extend({
@@ -3433,7 +3896,7 @@ draw2d.command.CommandStackEventListener = Class.extend({
      * Creates a new Listener Object
      * 
      */
-    init : function()
+    init: function()
     {
     },
     
@@ -3476,7 +3939,7 @@ draw2d.command.CommandMove = draw2d.command.Command.extend({
      * @param {Number} [x] the current x position
      * @param {Number} [y] the current y position
      */
-    init : function(figure, x, y)
+    init: function(figure, x, y)
     {
         this._super(draw2d.Configuration.i18n.command.moveShape);
         this.figure = figure;
@@ -3589,7 +4052,7 @@ draw2d.command.CommandMoveLine = draw2d.command.Command.extend({
      *
      * @param {draw2d.Figure} figure the figure to move
      */
-    init : function(figure)
+    init: function(figure)
     {
         this._super(draw2d.Configuration.i18n.command.moveLine);
         this.line = figure;
@@ -3686,7 +4149,7 @@ draw2d.command.CommandMoveVertex = draw2d.command.Command.extend({
      *
      * @param {draw2d.shape.basic.PolyLine} line the related line
      */
-    init : function(line)
+    init: function(line)
     {
         this._super(draw2d.Configuration.i18n.command.moveVertex);
         
@@ -3782,7 +4245,7 @@ draw2d.command.CommandMoveVertices = draw2d.command.Command.extend({
      *
      * @param {draw2d.shape.basic.PolyLine} line the related line
      */
-    init : function(line)
+    init: function(line)
     {
         this._super(draw2d.Configuration.i18n.command.moveVertices);
         
@@ -3867,7 +4330,7 @@ draw2d.command.CommandResize = draw2d.command.Command.extend({
      * @param {Number} [width] the current width
      * @param {Number} [height] the current height
      */
-    init : function(figure, width, height)
+    init: function(figure, width, height)
     {
         this._super(draw2d.Configuration.i18n.command.resizeShape);
         this.figure = figure;
@@ -3967,7 +4430,7 @@ draw2d.command.CommandRotate = draw2d.command.Command.extend({
      * @param {Number} [width] the current width
      * @param {Number} [height] the current height
      */
-    init : function(figure, angle)
+    init: function(figure, angle)
     {
         this._super(draw2d.Configuration.i18n.command.rotateShape);
         this.figure = figure;
@@ -4059,7 +4522,7 @@ draw2d.command.CommandConnect = draw2d.command.Command.extend({
      * @param {draw2d.Port} target the target port for the connection to create
      * @param {draw2d.Port} [dropTarget] the port who has initiate the connection creation. mainly the drop target
      */
-    init : function(canvas, source, target, dropTarget)
+    init: function(canvas, source, target, dropTarget)
      {
        this._super(draw2d.Configuration.i18n.command.connectPorts);
        this.canvas = canvas;
@@ -4092,7 +4555,7 @@ draw2d.command.CommandConnect = draw2d.command.Command.extend({
         // the asynch callback must be called. Usefull if the createConnection shows a selection dialog
         //
         if(this.connection===null){
-          var result = draw2d.Connection.createConnection(this.source, this.target, optionalCallback, this.dropTarget);
+          var result = draw2d.Configuration.factory.createConnection(this.source, this.target, optionalCallback, this.dropTarget);
           // well be handeld by the optional callback
           if(typeof result==="undefined"){
               return;
@@ -4150,7 +4613,7 @@ draw2d.command.CommandReconnect = draw2d.command.Command.extend({
      *
      * @param {draw2d.Connection} con the related Connection which is currently in the drag&drop operation
      */
-    init : function(con){
+    init: function(con){
        this._super(draw2d.Configuration.i18n.command.connectPorts);
        this.con      = con;
        this.oldSourcePort  = con.getSource();
@@ -4274,10 +4737,25 @@ draw2d.command.CommandDelete = draw2d.command.Command.extend({
        this.figure   = figure;
        this.canvas   = figure.getCanvas();
        this.connections = null;
-       this.removedParentEntry = null; // can be null if the figure didn't ave any parent shape assigned
+       this.removedParentEntry = null; // can be null if the figure didn't have any parent shape assigned
        this.indexOfChild = -1;
     },
-    
+
+
+    /**
+     * @method
+     * Returns [true] if the command can be execute and the execution of the
+     * command modifies the model. e.g.: a CommandMove with [startX,startX] == [endX,endY] should
+     * return false. The execution of this Command doesn't modify the model.
+     *
+     * @return {boolean} return try if the command modify the model or make any relevant changes
+     **/
+    canExecute:function()
+    {
+        // we can only delete the figure if its part of the canvas.
+        return this.figure.getCanvas()!==null;
+    },
+
     /**
      * @method
      * Execute the command the first time
@@ -4365,6 +4843,117 @@ draw2d.command.CommandDelete = draw2d.command.Command.extend({
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
 /**
+ * @class draw2d.command.CommandDeleteGroup
+ *
+ * Command to remove a group with all related children.
+ * 
+ * @extends draw2d.command.Command
+ */
+draw2d.command.CommandDeleteGroup = draw2d.command.Command.extend({
+    
+    /**
+     * @constructor
+     * Create a delete command for the given figure.
+     * 
+     * @param {draw2d.Figure} group
+     */
+    init: function( group)
+    {
+       this._super(draw2d.Configuration.i18n.command.deleteShape);
+       
+       this.parent   = group.getParent();
+       this.group    = group;
+       this.canvas   = group.getCanvas();
+       this.removedParentEntry = null; // can be null if the figure didn't have any parent shape assigned
+       this.indexOfChild = -1;
+
+       this.batchDelete = null;
+    },
+
+
+    /**
+     * @method
+     * Returns [true] if the command can be execute and the execution of the
+     * command modifies the model. e.g.: a CommandMove with [startX,startX] == [endX,endY] should
+     * return false. The execution of this Command doesn't modify the model.
+     *
+     * @return {boolean} return try if the command modify the model or make any relevant changes
+     **/
+    canExecute:function()
+    {
+        // we can only delete the shape if a children can be deleted
+        //
+        var children = this.group.getAssignedFigures();
+        for(var i=0; i<children.getSize();i++){
+            if(children.get(i).isDeleteable()===false){
+                return false;
+            }
+        }
+
+        // we can only delete the figure if its part of the canvas.
+        return this.group.getCanvas()!==null;
+    },
+
+    /**
+     * @method
+     * Execute the command the first time
+     *
+     **/
+    execute:function()
+    {
+       this.redo();
+    },
+
+    /**
+     * @method
+     * Undo the command
+     *
+     **/
+    undo:function()
+    {
+        this.batchDelete.undo();
+        this.canvas.setCurrentSelection(this.group);
+    },
+
+    /**
+     * @method
+     * 
+     * Redo the command after the user has undo this command
+     *
+     **/
+    redo:function()
+    {
+        var _this = this;
+        if(this.batchDelete ===null){
+            this.batchDelete = new  draw2d.command.CommandCollection();
+
+            // remove the assignment of the children to the group before we delete the group
+            //
+            this.batchDelete.add(new  draw2d.command.CommandUngroup(this.canvas, this.group));
+
+            // add the delete command of the children to the batch
+            //
+            var children = this.group.getAssignedFigures();
+            for(var i=0; i<children.getSize();i++){
+                var child = children.get(i);
+                // request a delete Command from the child instead of create one by my own. May the child
+                // provides its own implementation
+                var cmd = child.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.DELETE));
+                this.batchDelete.add(cmd);
+            }
+
+        }
+
+
+        this.batchDelete.execute();
+    }
+});
+
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
+ ****************************************/
+/**
  * @class draw2d.command.CommandAdd
  * 
  * Command to add a figure with CommandStack support.
@@ -4389,7 +4978,22 @@ draw2d.command.CommandAdd = draw2d.command.Command.extend({
        this.canvas = canvas;
        this.pos = new draw2d.geo.Point(x,y);
     },
-    
+
+
+    /**
+     * @method
+     * Returns [true] if the command can be execute and the execution of the
+     * command modifies the model. e.g.: a CommandMove with [startX,startX] == [endX,endY] should
+     * return false. The execution of this Command doesn't modify the model.
+     *
+     * @return {boolean} return try if the command modify the model or make any relevant changes
+     **/
+    canExecute:function()
+    {
+        // we can only add the figure once to the canvas
+        return this.figure.getCanvas()===null;
+    },
+
     /**
      * @method
      * Execute the command the first time
@@ -4447,7 +5051,7 @@ draw2d.command.CommandGroup = draw2d.command.Command.extend({
            this.figures = figures.getAll();
        }
        else{
-           this.figures   = figures;
+           this.figures = figures;
        }
        
        // figures which already part of an non "Group" composite are removed from the set.
@@ -4470,7 +5074,7 @@ draw2d.command.CommandGroup = draw2d.command.Command.extend({
      *
      * @return {boolean} return try if the command modify the model or make any relevant changes
      **/
-    canExecute:function()
+    canExecute: function()
     {
       return !this.figures.isEmpty();
     },
@@ -4481,7 +5085,7 @@ draw2d.command.CommandGroup = draw2d.command.Command.extend({
      * Execute the command the first time
      * 
      **/
-    execute:function()
+    execute: function()
     {
        this.redo();
     },
@@ -4491,7 +5095,7 @@ draw2d.command.CommandGroup = draw2d.command.Command.extend({
      * Undo the command
      *
      **/
-    undo:function()
+    undo: function()
     {
         var _this=this;
         this.figures.each(function(i,figure){
@@ -4507,7 +5111,7 @@ draw2d.command.CommandGroup = draw2d.command.Command.extend({
      * Redo the command after the user has undo this command
      *
      **/
-    redo:function()
+    redo: function()
     {
         var _this = this;
         this.figures.each(function(i,figure){
@@ -4633,7 +5237,7 @@ draw2d.command.CommandAddVertex = draw2d.command.Command.extend({
      * @param {Number} x the x coordinate for the new vertex
      * @param {Number} y the y coordinate for the new vertex
      */
-    init : function(line, index, x ,y)
+    init: function(line, index, x ,y)
     {
         this._super(draw2d.Configuration.i18n.command.addVertex);
         
@@ -4714,7 +5318,7 @@ draw2d.command.CommandAssignFigure = draw2d.command.Command.extend({
      * @param {draw2d.Figure} figure the figure to assign
      * @param {draw2d.Figure} composite the composite where the figure should assign
      */
-    init : function(figure, composite)
+    init: function(figure, composite)
     {
         this._super(draw2d.Configuration.i18n.command.assignShape);
         
@@ -4835,7 +5439,7 @@ draw2d.command.CommandBoundingBox = draw2d.command.Command.extend({
      * @param {draw2d.Figure} figure the figure to resize
      * @param {draw2d.geo.Rectangle} boundingBox the new bounding box of the figure
      */
-    init : function(figure, boundingBox)
+    init: function(figure, boundingBox)
     {
         this._super(draw2d.Configuration.i18n.command.resizeShape);
         this.figure = figure;
@@ -4915,7 +5519,7 @@ draw2d.command.CommandRemoveVertex = draw2d.command.Command.extend({
      * @param {Number} x the x coordinate for the new vertex
      * @param {Number} y the y coordinate for the new vertex
      */
-    init : function(line, index)
+    init: function(line, index)
     {
         this._super(draw2d.Configuration.i18n.command.deleteVertex);
         
@@ -4997,7 +5601,7 @@ draw2d.command.CommandReplaceVertices = draw2d.command.Command.extend({
      * @param {draw2d.util.ArrayList} originalVertices the original vertices of the polyline
      * @param {draw2d.util.ArrayList} newVertices the new vertices of the polyline
      */
-    init : function(line, originalVertices, newVertices)
+    init: function(line, originalVertices, newVertices)
     {
         this._super(draw2d.Configuration.i18n.command.addSegment);
         
@@ -5103,11 +5707,11 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
             var length = (ps.getSize()-1);
             for(  ;i<length;i++){
                   p = ps.get(i);
-                  inset = this.insetPoint(p,lastP, distance);
+                  inset = draw2d.geo.Util.insetPoint(p,lastP, distance);
                   path.push("L", (inset.x|0)+0.5, ",", (inset.y|0)+0.5);
     
                   p2 = ps.get(i+1);
-                  inset = this.insetPoint(p,p2,distance);
+                  inset = draw2d.geo.Util.insetPoint(p,p2,distance);
                   
                   path.push("Q",p.x,",",p.y," ", (inset.x|0)+0.5, ", ", (inset.y|0)+0.5);
                   lastP = p;
@@ -5124,19 +5728,7 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
         }
          conn.svgPathString = path.join("");
      },
-     
-     insetPoint: function(start, end, distanceFromStart){
-         if(start.equals(end)){
-             return start;
-         }
-         var vx = start.x-end.x;
-         var vy = start.y-end.y;
-         var length = Math.sqrt(vx*vx + vy*vy);
-         var localDistance = Math.min(length/2,distanceFromStart);
-         return {x: end.x + vx/length * (length - localDistance),
-                y: end.y + vy/length * (length - localDistance)};
 
-     },
      
 
     /**
@@ -5229,7 +5821,7 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
  *     
  *     // Override the default connection type. This is used during drag&drop operations of ports.
  *     //
- *     draw2d.Connection.createConnection=function(sourcePort, targetPort){
+ *     draw2d.Configuration.factory.createConnection=function(sourcePort, targetPort){
  *        // return my special kind of connection
  *        var con = new draw2d.Connection();
  *        con.setRouter(new draw2d.layout.connection.DirectRouter());
@@ -5247,7 +5839,7 @@ draw2d.layout.connection.ConnectionRouter = Class.extend({
  *          
  *     // first Connection
  *     //
- *     var c = draw2d.Connection.createConnection();
+ *     var c = draw2d.Configuration.factory.createConnection();
  *     c.setSource(start.getOutputPort(0));
  *     c.setTarget(end.getInputPort(0));
  *     canvas.add(c);
@@ -5323,6 +5915,167 @@ draw2d.layout.connection.DirectRouter = draw2d.layout.connection.ConnectionRoute
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
 /**
+ * @class draw2d.layout.connection.RubberbandRouter
+ * Router for direct connections between two ports with a rubber band effect
+ * 
+ * See the example:
+ *
+ *     @example preview small frame
+ *     
+ *     // Override the default connection type. This is used during drag&drop operations of ports.
+ *     //
+ *     draw2d.Configuration.factory.createConnection=function(sourcePort, targetPort){
+ *        // return my special kind of connection
+ *        var con = new draw2d.Connection();
+ *        con.setRouter(new draw2d.layout.connection.RubberbandRouter());
+ *        return con;
+ *     };
+ *     
+ *     // create and add two nodes which contains Ports (In and OUT)
+ *     //
+ *     var start = new draw2d.shape.node.Start();
+ *     var end   = new draw2d.shape.node.End();
+        
+ *     // ...add it to the canvas 
+ *     canvas.add( start, 50,50);
+ *     canvas.add( end, 230,80);
+ *          
+ *     // first Connection
+ *     //
+ *     var c = draw2d.Configuration.factory.createConnection();
+ *     c.setSource(start.getOutputPort(0));
+ *     c.setTarget(end.getInputPort(0));
+ *     canvas.add(c);
+ * 
+ * 
+ * @inheritable
+ * @author Andreas Herz
+ * 
+ * @extends  draw2d.layout.connection.ConnectionRouter
+ */
+draw2d.layout.connection.RubberbandRouter = draw2d.layout.connection.ConnectionRouter.extend({
+
+    NAME : "draw2d.layout.connection.RubberbandRouter",
+
+    /**
+	 * @constructor 
+	 * Creates a new Router object
+	 */
+    init: function(){
+        this._super();
+    },
+    
+    
+    /**
+     * @method
+     * Callback method if the router has been assigned to a connection.
+     * 
+     * @param {draw2d.Connection} connection The assigned connection
+     * @template
+     * @since 2.7.2
+     */
+    onInstall: function(connection){
+        connection.installEditPolicy(new draw2d.policy.line.LineSelectionFeedbackPolicy());
+       
+    },
+ 
+    /**
+     * @method
+     * Invalidates the given Connection
+     */
+    invalidate:function()
+    {
+    },
+    
+    /**
+     * @method
+     * Routes the Connection in air line (beeline).
+     * 
+     * @param {draw2d.Connection} connection The Connection to route
+     * @param {draw2d.util.ArrayList} oldVertices old/existing vertices of the Connection
+     */
+    route:function( connection, oldVertices)
+    {
+       var thickness = 10;
+       
+       var start  = connection.getStartPoint();
+       var end    = connection.getEndPoint();
+       
+       // 1. Calculate the vector AB? by subtracting the coordinates of A from the coordinates of B. 
+       //    Let's say you get (u,v) as the vector components.
+       //
+       // 2. normalize the vector (u,v,) to a length of |1|
+       //
+       // 3. The vector (?v,u) is AB? rotated by 90 degrees counterclockwise. (Why? Look up "rotation matrix").
+       //
+       // 4. Add (?v,u) to A to get C. Also add (?v,u) to B to get D.
+
+       var uv = end.subtract(start);
+       var uv2 = uv.clone();
+       var length = uv.length();
+
+       var strength = 1-Math.min(0.75,(1/500*length)); 
+       var first  = start.lerp(end,0.25*strength);     // go closer to the start point if the strength grows
+       var second = start.lerp(end,0.5);
+       var third  = start.lerp(end,1-(0.25*strength)); // go closer to the end point if the strengths grows
+
+       thickness = Math.max(5,thickness *strength); 
+       
+       uv.x = uv.x/length*thickness;
+       uv.y = uv.y/length*thickness;
+
+       uv2.x = uv2.x/length*(thickness*(strength));
+       uv2.y = uv2.y/length*(thickness*(strength));
+
+       // anchor points for the 180 arc at the start point of the connection
+       //
+       var start90  = new draw2d.geo.Point(-uv.y+start.x, uv.x+start.y);
+       var start270 = new draw2d.geo.Point( uv.y+start.x,-uv.x+start.y);
+       
+       // anchor point in the first segment ( on the upside/downside) of the connection
+       //
+       var first90   = new draw2d.geo.Point(-uv2.y+first.x, uv2.x+first.y);
+       var first270  = new draw2d.geo.Point( uv2.y+first.x,-uv2.x+first.y);
+       
+       // center upside/downside anchor point of the connection
+       //
+       var second90  = new draw2d.geo.Point(-uv2.y+second.x, uv2.x+second.y);
+       var second270 = new draw2d.geo.Point( uv2.y+second.x,-uv2.x+second.y);
+       
+       // anchor point in the third segment of the connection
+       //
+       var third90   = new draw2d.geo.Point(-uv2.y+third.x, uv2.x+third.y);
+       var third270  = new draw2d.geo.Point( uv2.y+third.x,-uv2.x+third.y);
+
+       // anchor point for the 180 arc at the end
+       //
+       var end90  = new draw2d.geo.Point(-uv.y+end.x, uv.x+end.y);
+       var end270 = new draw2d.geo.Point( uv.y+end.x,-uv.x+end.y);
+
+       // required for hit tests
+       //
+       connection.addPoint(start);
+       connection.addPoint(end);
+       
+       // calculate the path
+       var path = ["M",start90.x,",",start90.y];
+       path.push("A", thickness,",", thickness, "0 0 1 ", start270.x,",",start270.y);
+       path.push("C", start270.x,",", start270.y, first270.x,",", first270.y, second270.x,",",second270.y);
+       path.push("C", second270.x,",", second270.y, third270.x,",", third270.y, end270.x,",",end270.y);
+       path.push("A", thickness,",", thickness, "0 0 1", end90.x,",",end90.y);
+       path.push("C", end90.x,",", end90.y, third90.x,",", third90.y, second90.x,",",second90.y);
+       path.push("C", second90.x,",", second90.y, first90.x,",", first90.y, start90.x,",",start90.y);
+       
+       connection.svgPathString = path.join(" ");
+
+    }
+});
+
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
+ ****************************************/
+/**
  * @class draw2d.layout.connection.VertexRouter
  * Router for direct connections between two ports. Beeline
  * 
@@ -5332,7 +6085,7 @@ draw2d.layout.connection.DirectRouter = draw2d.layout.connection.ConnectionRoute
  *     
  *     // Override the default connection type. This is used during drag&drop operations of ports.
  *     //
- *     draw2d.Connection.createConnection=function(sourcePort, targetPort){
+ *     draw2d.Configuration.factory.createConnection=function(sourcePort, targetPort){
  *        // return my special kind of connection
  *        var con = new draw2d.Connection();
  *        con.setRouter(new draw2d.layout.connection.DirectRouter());
@@ -5350,7 +6103,7 @@ draw2d.layout.connection.DirectRouter = draw2d.layout.connection.ConnectionRoute
  *          
  *     // first Connection
  *     //
- *     var c = draw2d.Connection.createConnection();
+ *     var c = draw2d.Configuration.factory.createConnection();
  *     c.setSource(start.getOutputPort(0));
  *     c.setTarget(end.getInputPort(0));
  *     canvas.add(c);
@@ -5525,7 +6278,7 @@ draw2d.layout.connection.VertexRouter = draw2d.layout.connection.ConnectionRoute
  *     
  *     // Override the default connection type. This is used during drag&drop operations of ports.
  *     //
- *     draw2d.Connection.createConnection=function(sourcePort, targetPort){
+ *     draw2d.Configuration.factory.createConnection=function(sourcePort, targetPort){
  *        // return my special kind of connection
  *        var con = new draw2d.Connection();
  *        con.setRouter(new draw2d.layout.connection.ManhattanConnectionRouter());
@@ -5543,7 +6296,7 @@ draw2d.layout.connection.VertexRouter = draw2d.layout.connection.ConnectionRoute
  *          
  *     // first Connection
  *     //
- *     var c = draw2d.Connection.createConnection();
+ *     var c = draw2d.Configuration.factory.createConnection();
  *     c.setSource(start.getOutputPort(0));
  *     c.setTarget(end.getInputPort(0));
  *     canvas.add(c);
@@ -6046,7 +6799,7 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
     	       //
 	           case draw2d.geo.Rectangle.DIRECTION_UP:
 	             conn.setVertex(1,fromPt.x, min(fromPt.y-10,p1.y)); // p1
-                 conn.setVertex(2,p2.x, min(fromPt.y-10,p1.y)); // p2
+                 conn.setVertex(2,p2.x    , min(fromPt.y-10,p1.y)); // p2
                  break;
                //        +
                //     p0 |      
@@ -6056,7 +6809,7 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
                //
 	           case draw2d.geo.Rectangle.DIRECTION_DOWN:
                  conn.setVertex(1,fromPt.x, max(fromPt.y+10,p1.y)); // p1
-                 conn.setVertex(2,p2.x, max(fromPt.y+10,p1.y));     // p2
+                 conn.setVertex(2,p2.x    , max(fromPt.y+10,p1.y));     // p2
     	         break;
 	       }
 	    }
@@ -6078,7 +6831,7 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
     	         conn.setVertex(vertexCount-2,max(toPt.x+10,p1.x),toPt.y);  // p1
     	         conn.setVertex(vertexCount-3,max(toPt.x+10,p1.x),p2.y);    // p2
     	         break;
-    	         
+
     	      //    .
     	      //    .
     	      //    . p1         p0
@@ -6098,8 +6851,8 @@ draw2d.layout.connection.InteractiveManhattanConnectionRouter = draw2d.layout.co
     	      //     p0 +  
     	      //
     	      case draw2d.geo.Rectangle.DIRECTION_UP:
-    	         conn.setVertex(vertexCount-2, toPt.x,max(toPt.y+10,p1.y));  // p1
-    	         conn.setVertex(vertexCount-3, p2.x  ,max(toPt.y+10,p1.y));  // p2
+    	         conn.setVertex(vertexCount-2, toPt.x,min(toPt.y+10,p1.y));  // p1
+    	         conn.setVertex(vertexCount-3, p2.x  ,min(toPt.y+10,p1.y));  // p2
     	         break;
     	         
     	      //        +    
@@ -6490,7 +7243,7 @@ draw2d.layout.connection.SplineConnectionRouter = draw2d.layout.connection.Manha
     /**
      * @constructor Creates a new Router object
      */
-    init : function()
+    init: function()
     {
         this._super();
 
@@ -6573,7 +7326,7 @@ draw2d.layout.connection.SplineConnectionRouter = draw2d.layout.connection.Manha
  *     
  *     // Override the default connection type. This is used during drag&drop operations of ports.
  *     //
- *     draw2d.Connection.createConnection=function(sourcePort, targetPort){
+ *     draw2d.Configuration.factory.createConnection=function(sourcePort, targetPort){
  *        // return my special kind of connection
  *        var con = new draw2d.Connection();
  *        con.setRouter(new draw2d.layout.connection.FanConnectionRouter());
@@ -6591,21 +7344,21 @@ draw2d.layout.connection.SplineConnectionRouter = draw2d.layout.connection.Manha
  *          
  *     // first Connection
  *     //
- *     var c = draw2d.Connection.createConnection();
+ *     var c = draw2d.Configuration.factory.createConnection();
  *     c.setSource(start.getOutputPort(0));
  *     c.setTarget(end.getInputPort(0));
  *     canvas.add(c);
  *     
  *     // second Connection
  *     //
- *     c = draw2d.Connection.createConnection();
+ *     c = draw2d.Configuration.factory.createConnection();
  *     c.setSource(start.getOutputPort(0));
  *     c.setTarget(end.getInputPort(0));
  *     canvas.add(c);
  *     
  *     // third Connection
  *     //
- *     c = draw2d.Connection.createConnection();
+ *     c = draw2d.Configuration.factory.createConnection();
  *     c.setSource(start.getOutputPort(0));
  *     c.setTarget(end.getInputPort(0));
  *     canvas.add(c);
@@ -6620,7 +7373,7 @@ draw2d.layout.connection.FanConnectionRouter = draw2d.layout.connection.DirectRo
     /**
      * @constructor Creates a new Router object.
      */
-    init : function()
+    init: function()
     {
         this._super();
         
@@ -7315,7 +8068,7 @@ draw2d.layout.connection.MuteableManhattanConnectionRouter = draw2d.layout.conne
         
         horizontal = !horizontal;
 
-        // dot product is zero if the vector orthogonal (90¬?)
+        // dot product is zero if the vector orthogonal (90°)
         if (startNormal.dot(endNormal) === 0) {
             if ((startNormal.dot(direction) >= 0)  && (endNormal.dot(direction) <= 0)) {
                 // 0
@@ -7323,7 +8076,7 @@ draw2d.layout.connection.MuteableManhattanConnectionRouter = draw2d.layout.conne
 
                 // 2
                 if (startNormal.dot(direction) < 0)
-                    i = startNormal.similarity(start.getTranslated(startNormal.getScaled(10)));
+                    i = startNormal.similarity(start.translated(startNormal.getScaled(10)));
                 else {
                     if (horizontal) 
                         i = average.y;
@@ -7335,7 +8088,7 @@ draw2d.layout.connection.MuteableManhattanConnectionRouter = draw2d.layout.conne
                 horizontal = !horizontal;
 
                 if (endNormal.dot(direction) > 0){
-                    i = endNormal.similarity(end.getTranslated(endNormal.getScaled(10)));
+                    i = endNormal.similarity(end.translated(endNormal.getScaled(10)));
                 }
                 else {
                     if (horizontal) {
@@ -7352,15 +8105,15 @@ draw2d.layout.connection.MuteableManhattanConnectionRouter = draw2d.layout.conne
             if (startNormal.dot(endNormal) > 0) {
                 //1
                 if (startNormal.dot(direction) >= 0)
-                    i = startNormal.similarity(start.getTranslated(startNormal.getScaled(10)));
+                    i = startNormal.similarity(start.translated(startNormal.getScaled(10)));
                 else
-                    i = endNormal.similarity(end.getTranslated(endNormal.getScaled(10)));
+                    i = endNormal.similarity(end.translated(endNormal.getScaled(10)));
                 positions.add( i);
                 horizontal = !horizontal;
             } else {
                 //3 or 1
                 if (startNormal.dot(direction) < 0) {
-                    i = startNormal.similarity(start.getTranslated(startNormal.getScaled(10)));
+                    i = startNormal.similarity(start.translated(startNormal.getScaled(10)));
                     positions.add(i);
                     horizontal = !horizontal;
                 }
@@ -7375,7 +8128,7 @@ draw2d.layout.connection.MuteableManhattanConnectionRouter = draw2d.layout.conne
                     if (horizontal) {
                         var j = average.y;
 
-                        var next = endNormal.similarity(end.getTranslated(endNormal.getScaled(10)));
+                        var next = endNormal.similarity(end.translated(endNormal.getScaled(10)));
 
                         var trial = new draw2d.geo.Ray((positions.get(positions.getSize() - 1)), j);
                         var figure = this.findFirstFigureAtStraightLine(canvas, trial, this.LEFT, draw2d.util.ArrayList.EMPTY_LIST);
@@ -7393,7 +8146,7 @@ draw2d.layout.connection.MuteableManhattanConnectionRouter = draw2d.layout.conne
                         if (figure == null)
                             i = average.x;
                         else {
-                            i = Math.min(average.x, start.getTranslated(new draw2d.geo.Ray(3 * (figure.getBoundingBox().x - start.x) / 4, 0)).x);
+                            i = Math.min(average.x, start.translated(new draw2d.geo.Ray(3 * (figure.getBoundingBox().x - start.x) / 4, 0)).x);
                             i = Math.max(start.x, i);
                         }
                         i = this.adjust(conn, i);
@@ -8198,8 +8951,11 @@ draw2d.layout.locator.PortLocator = draw2d.layout.locator.Locator.extend({
     applyConsiderRotation: function(port, x, y){
     	var parent = port.getParent();
     
-    	var halfW = parent.getWidth()/2;
-    	var halfH = parent.getHeight()/2;
+    	// determine the width/height before manipulate the 
+    	// matrix of the shape
+        var halfW = parent.getWidth()/2;
+        var halfH = parent.getHeight()/2;
+        
     	var rotAngle = parent.getRotationAngle();
     	var m = Raphael.matrix();
     	m.rotate(rotAngle, halfW, halfH);
@@ -8361,6 +9117,7 @@ draw2d.layout.locator.InputPortLocator = draw2d.layout.locator.PortLocator.exten
     **/
     relocate:function(index, figure){
         var node = figure.getParent();
+        
         var dividerFactor = 1;
         var thisNAME = this.NAME;
         var portIndex =1;
@@ -8748,13 +9505,19 @@ draw2d.layout.locator.TopLocator= draw2d.layout.locator.Locator.extend({
     {
        var parent = target.getParent();
        var boundingBox = parent.getBoundingBox();
-    
+       
+       // I made a wrong decision in the port handling: anchor point
+       // is in the center and not topLeft. Now I must correct this flaw here, and there, and...
+       // shit happens.
+       var offset = (parent instanceof draw2d.Port)?boundingBox.w/2:0;
+       
+
        var targetBoundingBox = target.getBoundingBox();
        if(target instanceof draw2d.Port){
-           target.setPosition(boundingBox.w/2,0);
+           target.setPosition(boundingBox.w/2-offset,0);
        }
        else{
-           target.setPosition(boundingBox.w/2-(targetBoundingBox.w/2),-(targetBoundingBox.h+2));
+           target.setPosition(boundingBox.w/2-(targetBoundingBox.w/2)-offset,-(targetBoundingBox.h+2));
        }
     }
 });
@@ -8817,13 +9580,18 @@ draw2d.layout.locator.BottomLocator= draw2d.layout.locator.Locator.extend({
     {
        var parent = target.getParent();
        var boundingBox = parent.getBoundingBox();
-    
+       // I made a wrong decision in the port handling: anchor point
+       // is in the center and not topLeft. Now I must correct this flaw here, and there, and...
+       // shit happens.
+       var offset = (parent instanceof draw2d.Port)?boundingBox.w/2:0;
+       
+
        var targetBoundingBox = target.getBoundingBox();
        if(target instanceof draw2d.Port){
-           target.setPosition(boundingBox.w/2,boundingBox.h);
+           target.setPosition(boundingBox.w/2-offset,boundingBox.h);
        }
        else{
-           target.setPosition(boundingBox.w/2-targetBoundingBox.w/2,2+boundingBox.h);
+           target.setPosition(boundingBox.w/2-targetBoundingBox.w/2-offset,2+boundingBox.h);
        }
     }
 });
@@ -8846,7 +9614,9 @@ draw2d.layout.locator.BottomLocator= draw2d.layout.locator.Locator.extend({
  *     // create a basic figure and add a Label/child via API call
  *     //
  *     var start = new draw2d.shape.node.Start();
- *     start.add(new draw2d.shape.basic.Label({text:"Left Label"}), new draw2d.layout.locator.LeftLocator());	
+ *     start.add(new draw2d.shape.basic.Label({text:"Left Label"}), new draw2d.layout.locator.LeftLocator({
+ *      margin:10  // distance to the parent shape
+ *     }));
  *     canvas.add( start, 100,50);
  *
  *     
@@ -8859,11 +9629,14 @@ draw2d.layout.locator.LeftLocator= draw2d.layout.locator.Locator.extend({
     /**
      * @constructor
      * Constructs a locator with associated parent.
-     * 
+     *
+     * @param attr
      */
-    init: function()
+    init: function(attr)
     {
       this._super();
+
+      this.margin = (attr && ( "margin" in attr))?attr.margin :5;
     },
     
     
@@ -8878,9 +9651,20 @@ draw2d.layout.locator.LeftLocator= draw2d.layout.locator.Locator.extend({
     {
        var parent = target.getParent();
        var boundingBox = parent.getBoundingBox();
-
-       var targetBoundingBox = target.getBoundingBox();
-       target.setPosition(-targetBoundingBox.w-5,(boundingBox.h/2)-(targetBoundingBox.h/2));
+       
+       // I made a wrong decision in the port handling: anchor point
+       // is in the center and not topLeft. Now I must correct this flaw here, and there, and...
+       // shit happens.
+       var offset = (parent instanceof draw2d.Port)?boundingBox.h/2:0;
+       
+       
+       if(target instanceof draw2d.Port){
+           target.setPosition(0,(boundingBox.h/2)-offset);
+       }
+       else{
+           var targetBoundingBox = target.getBoundingBox();
+           target.setPosition(-targetBoundingBox.w-this.margin,(boundingBox.h/2)-(targetBoundingBox.h/2)-offset);
+       }
     }
 });
 
@@ -8902,7 +9686,9 @@ draw2d.layout.locator.LeftLocator= draw2d.layout.locator.Locator.extend({
  *     // create a basic figure and add a Label/child via API call
  *     //
  *     var end = new draw2d.shape.node.End();
- *     end.add(new draw2d.shape.basic.Label({text:"Right Label"}), new draw2d.layout.locator.RightLocator());	
+ *     end.add(new draw2d.shape.basic.Label({text:"Right Label"}), new draw2d.layout.locator.RightLocator({
+ *          margin: 10 // distance to the parent shape
+ *     }));
  *     canvas.add( end, 50,50);
  *
  *     
@@ -8917,9 +9703,12 @@ draw2d.layout.locator.RightLocator = draw2d.layout.locator.Locator.extend({
      * Constructs a locator with associated parent.
      * 
      */
-    init: function()
+    init: function(attr)
     {
       this._super();
+
+      this.margin = (attr && ( "margin" in attr))?attr.margin :5;
+
     },
     
     
@@ -8934,9 +9723,19 @@ draw2d.layout.locator.RightLocator = draw2d.layout.locator.Locator.extend({
     {
        var parent = target.getParent();
        var boundingBox = parent.getBoundingBox();
-      
-       var targetBoundingBox = target.getBoundingBox();
-       target.setPosition(boundingBox.w+5,(boundingBox.h/2)-(targetBoundingBox.h/2));
+
+       // I made a wrong decision in the port handling: anchor point
+       // is in the center and not topLeft. Now I must correct this flaw here, and there, and...
+       // shit happens.
+       var offset = (parent instanceof draw2d.Port)?boundingBox.h/2:0;
+
+       if(target instanceof draw2d.Port){
+           target.setPosition(boundingBox.w,(boundingBox.h/2)-offset);
+       }
+       else{
+           var targetBoundingBox = target.getBoundingBox();
+           target.setPosition(boundingBox.w+this.margin,(boundingBox.h/2)-(targetBoundingBox.h/2)-offset);
+       }
     }
 });
 
@@ -9002,7 +9801,7 @@ draw2d.layout.locator.CenterLocator= draw2d.layout.locator.Locator.extend({
        }
        else{
            var targetBoundingBox = target.getBoundingBox();
-           target.setPosition(boundingBox.w/2-targetBoundingBox.w/2,boundingBox.h/2-(targetBoundingBox.h/2));
+           target.setPosition(((boundingBox.w/2-targetBoundingBox.w/2)|0)+0.5,((boundingBox.h/2-(targetBoundingBox.h/2))|0)+0.5);
        }
     }
 });
@@ -9036,9 +9835,72 @@ draw2d.policy.EditPolicy = Class.extend({
      * @constructor 
      * 
      */
-    init: function(){
+    init: function( attr, setter, getter){
+        this.setterWhitelist = $.extend({
+        },setter);
+        
+        this.getterWhitelist = $.extend({
+        },getter);
+        
+        this.attr(attr);
     },
 
+    /**
+     * @method
+     * Read or set object attributes.<br>
+     * When no value is given, reads specified attribute from the element.<br> 
+     * When value is given, sets the attribute to that value.
+     * Multiple attributes can be set by passing an object with name-value pairs.
+     *     
+     * @param {String/Object} name
+     * @param {Object} [value]
+     * @since 5.3.2
+     * @experimental
+     * @returns
+     **/
+    attr: function(name, value){
+        // call of attr as setter method with {name1:val1, name2:val2 }  argument list
+        //
+        if($.isPlainObject(name)){
+            for(key in name){
+                var func=this.setterWhitelist[key];
+                if(func){
+                    func.call(this,name[key]); 
+                }
+            }
+        }
+        else if(typeof name === "string"){
+            // call attr as getter
+            //
+            if(typeof value ==="undefined"){
+                var getter = this.getterWhitelist[name];
+                if($.isFunction(getter)){
+                    return getter.call(this);
+                }
+                return; // undefined
+            }
+            // call attr as simple setter with (key , value)
+            //
+            
+            // the value can be a function. In this case we must call the value().
+            if($.isFunction(value)){
+                value = value();
+            }
+            var setter = this.setterWhitelist[name];
+            if (setter){setter.call(this,value);}
+        }
+        // generic getter of all registered attributes
+        else if(typeof name === "undefined"){
+        	var result = {};
+        	for(key in this.getterWhitelist){
+         		result[key] = this.getterWhitelist[key].call(this);
+        	}
+        	return result;
+        }
+        
+        return this;
+    },
+    
     /**
      * @method
      * Called by the host if the policy has been installed.
@@ -9077,14 +9939,17 @@ draw2d.policy.canvas.CanvasPolicy = draw2d.policy.EditPolicy.extend({
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter)
+    {
+        this._super( attr, setter, getter);
     },
     
-    onInstall: function(canvas){
+    onInstall: function(canvas)
+    {
     },
     
-    onUninstall: function(canvas){
+    onUninstall: function(canvas)
+    {
     },
     
     /**
@@ -9101,7 +9966,8 @@ draw2d.policy.canvas.CanvasPolicy = draw2d.policy.EditPolicy.extend({
      * 
      * @template
      */
-    onClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey){
+    onClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey)
+    {
     },
     
     /**
@@ -9114,7 +9980,8 @@ draw2d.policy.canvas.CanvasPolicy = draw2d.policy.EditPolicy.extend({
      * @param {Boolean} ctrlKey true if the ctrl key has been pressed during the event
      * @template
      */
-    onMouseMove:function(canvas, x, y, shiftKey, ctrlKey){
+    onMouseMove:function(canvas, x, y, shiftKey, ctrlKey)
+    {
     },
     
     /**
@@ -9131,7 +9998,8 @@ draw2d.policy.canvas.CanvasPolicy = draw2d.policy.EditPolicy.extend({
      * 
      * @template
      */
-    onDoubleClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey){
+    onDoubleClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey)
+    {
     },
     
     
@@ -9143,7 +10011,8 @@ draw2d.policy.canvas.CanvasPolicy = draw2d.policy.EditPolicy.extend({
      * @param {draw2d.geo.Point} clientPos
      * @returns {draw2d.geo.Point} the contraint position of th efigure
      */
-    snap: function(canvas, figure, clientPos){
+    snap: function(canvas, figure, clientPos)
+    {
         return clientPos;
     },
 
@@ -9156,7 +10025,8 @@ draw2d.policy.canvas.CanvasPolicy = draw2d.policy.EditPolicy.extend({
      * @param {Boolean} shiftKey true if the shift key has been pressed during this event
      * @param {Boolean} ctrlKey true if the ctrl key has been pressed during the event
      */
-    onMouseDown:function(canvas, x, y, shiftKey, ctrlKey){
+    onMouseDown:function(canvas, x, y, shiftKey, ctrlKey)
+    {
         
     },
     
@@ -9170,7 +10040,8 @@ draw2d.policy.canvas.CanvasPolicy = draw2d.policy.EditPolicy.extend({
      * @param {Number} dy2 The y diff since the last call of this dragging operation
      * @template
      */
-    onMouseDrag:function(canvas, dx, dy, dx2, dy2){
+    onMouseDrag:function(canvas, dx, dy, dx2, dy2)
+    {
     },
     
     /**
@@ -9183,7 +10054,8 @@ draw2d.policy.canvas.CanvasPolicy = draw2d.policy.EditPolicy.extend({
      * @param {Boolean} ctrlKey true if the ctrl key has been pressed during the event
      * @template
      */
-    onMouseUp: function(figure, x, y, shiftKey, ctrlKey){
+    onMouseUp: function(figure, x, y, shiftKey, ctrlKey)
+    {
     },
     
     
@@ -9199,7 +10071,8 @@ draw2d.policy.canvas.CanvasPolicy = draw2d.policy.EditPolicy.extend({
      * @template
      * @since 4.4.0
      */
-    onRightMouseDown: function(figure, x, y, shiftKey, ctrlKey){
+    onRightMouseDown: function(figure, x, y, shiftKey, ctrlKey)
+    {
     },
     
   
@@ -9221,7 +10094,8 @@ draw2d.policy.canvas.CanvasPolicy = draw2d.policy.EditPolicy.extend({
      * @param color
      * @returns {String}
      */
-    createMonochromGif: function(w,h,d,color) {
+    createMonochromGif: function(w,h,d,color)
+    {
     	color = new draw2d.util.Color(color);
         var r = String.fromCharCode(w%256) + String.fromCharCode(w/256) + String.fromCharCode(h%256) + String.fromCharCode(h/256) ;
         var gif = "GIF89a" + r + "\xf0\0\0\xff\xff\xff" + String.fromCharCode(color.red) + String.fromCharCode(color.green) + String.fromCharCode(color.blue) + "\x21\xf9\4\1\0\0\0\0,\0\0\0\0" + r + "\0\2";
@@ -9317,7 +10191,6 @@ draw2d.policy.canvas.ConnectionInterceptorPolicy = draw2d.policy.canvas.CanvasPo
      */
     delegateDrop: function(draggedFigure, dropTarget)
     {
-        
         // a composite accept any kind of figures exceptional ports
         //
     	if(!(draggedFigure instanceof draw2d.Port) && dropTarget instanceof draw2d.shape.composite.StrongComposite){
@@ -9349,7 +10222,7 @@ draw2d.policy.canvas.ConnectionInterceptorPolicy = draw2d.policy.canvas.CanvasPo
         // It is not possible to create a loop back connection at the moment.
         // Reason: no connection router implemented for this case
         if((draggedFigure instanceof draw2d.Port) && (dropTarget instanceof draw2d.Port)){
-	        if(draggedFigure.getParent().getId() === dropTarget.getParent().getId()){
+	        if(draggedFigure.getParent() === dropTarget.getParent()){
 	            return null;
 	         }
         }
@@ -9692,7 +10565,7 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
         if (figure !== canvas.getSelection().getPrimary() && figure !== null && figure.isSelectable() === true) {
             this.select(canvas,figure);
 
-            // its a line
+            // it's a line
             if (figure instanceof draw2d.shape.basic.Line) {
                 // you can move a line with Drag&Drop...but not a connection.
                 // A Connection is fixed linked with the corresponding ports.
@@ -9741,11 +10614,17 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
             
             if (target !== canvas.currentDropTarget) {
                 if (canvas.currentDropTarget !== null) {
-                    canvas.currentDropTarget.onDragLeave(this.mouseDraggingElement);                     
+                    canvas.currentDropTarget.onDragLeave(this.mouseDraggingElement);
+                    canvas.currentDropTarget.fireEvent("dragLeave",{draggingElement:this.mouseDraggingElement});
                     canvas.currentDropTarget = null;
                 }
                 if (target !== null) {
                     canvas.currentDropTarget = target.onDragEnter(this.mouseDraggingElement);
+                    // inform all listener that the element has accept the dragEtner event
+                    //
+                    if( canvas.currentDropTarget !==null) {
+                        canvas.currentDropTarget.fireEvent("dragEnter", {draggingElement: this.mouseDraggingElement});
+                    }
                 }
             }
        }
@@ -9753,8 +10632,15 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
        // decision.
        //
        else if(this.mouseDownElement!==null && !(this.mouseDownElement instanceof draw2d.Connection)){
-           this.mouseDownElement.onPanning(dx, dy, dx2, dy2);
-       } 
+           if(this.mouseDownElement.panningDelegate!==null){
+               this.mouseDownElement.panningDelegate.fireEvent("panning", {dx:dx,dy:dy,dx2:dx2,dy2:dy2});
+               this.mouseDownElement.panningDelegate.onPanning(dx, dy, dx2, dy2);
+           }
+           else{
+               this.mouseDownElement.fireEvent("panning", {dx:dx,dy:dy,dx2:dx2,dy2:dy2});
+               this.mouseDownElement.onPanning(dx, dy, dx2, dy2);
+           }
+       }
     },
     
     /**
@@ -9797,6 +10683,7 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
                     if(canvas.currentDropTarget!==null && !this.mouseDraggingElement.isResizeHandle){
                         this.mouseDraggingElement.onDrop(canvas.currentDropTarget, x, y, shiftKey, ctrlKey);
                         canvas.currentDropTarget.onDragLeave(this.mouseDraggingElement);
+                        canvas.currentDropTarget.fireEvent("dragLeave",{draggingElement:this.mouseDraggingElement});
                         canvas.currentDropTarget.onCatch(this.mouseDraggingElement, x, y, shiftKey, ctrlKey);
                         canvas.currentDropTarget = null;
                     }
@@ -9817,7 +10704,20 @@ draw2d.policy.canvas.SingleSelectionPolicy =  draw2d.policy.canvas.SelectionPoli
 
             this.mouseDraggingElement = null;
         }
-        
+        // Connection didn't support panning at the moment. There is no special reason for that. Just an interaction
+        // decision.
+        //
+        else if(this.mouseDownElement!==null && !(this.mouseDownElement instanceof draw2d.Connection)){
+            if(this.mouseDownElement.panningDelegate!==null){
+                this.mouseDownElement.panningDelegate.fireEvent("panningEnd");
+                this.mouseDownElement.panningDelegate.onPanningEnd();
+            }
+            else{
+                this.mouseDownElement.fireEvent("panningEnd");
+                this.mouseDownElement.onPanningEnd();
+            }
+        }
+
         // Reset the current selection if the user click in the blank canvas.
         // Don't reset the selection if the user pan the canvas
         //
@@ -9944,11 +10844,16 @@ draw2d.policy.canvas.GhostMoveSelectionPolicy =  draw2d.policy.canvas.SingleSele
             
             if (target !== canvas.currentDropTarget) {
                 if (canvas.currentDropTarget !== null) {
-                    canvas.currentDropTarget.onDragLeave(this.mouseDraggingElement);                     
+                    canvas.currentDropTarget.onDragLeave(this.mouseDraggingElement);
+                    canvas.currentDropTarget.fireEvent("dragLeave",{draggingElement:this.draggingElement});
                     canvas.currentDropTarget = null;
                 }
                 if (target !== null) {
                     canvas.currentDropTarget = target.onDragEnter(this.mouseDraggingElement);
+                    // inform all listener that the element has accept a dropEnter event
+                    if(canvas.currentDropTarget!==null) {
+                        canvas.currentDropTarget.fireEvent("dragEnter", {draggingElement: this.draggingElement});
+                    }
                 }
             }
        }
@@ -9956,8 +10861,15 @@ draw2d.policy.canvas.GhostMoveSelectionPolicy =  draw2d.policy.canvas.SingleSele
        // decision.
        //
        else if(this.mouseDownElement!==null && !(this.mouseDownElement instanceof draw2d.Connection)){
-           this.mouseDownElement.onPanning(dx, dy, dx2, dy2);
-       } 
+            if(this.mouseDownElement.panningDelegate!==null){
+                this.mouseDownElement.panningDelegate.fireEvent("panning", {dx:dx,dy:dy,dx2:dx2,dy2:dy2});
+                this.mouseDownElement.panningDelegate.onPanning(dx, dy, dx2, dy2);
+            }
+            else{
+                this.mouseDownElement.fireEvent("panning", {dx:dx,dy:dy,dx2:dx2,dy2:dy2});
+                this.mouseDownElement.onPanning(dx, dy, dx2, dy2);
+            }
+       }
     },
     
     /**
@@ -10090,8 +11002,8 @@ draw2d.policy.canvas.PanningSelectionPolicy =  draw2d.policy.canvas.SingleSelect
         
         if (this.mouseDraggingElement === null && this.mouseDownElement===null) {
            var area = canvas.getScrollArea();
-           area.scrollTop(area.scrollTop()+dy2);
-           area.scrollLeft(area.scrollLeft()+dx2);
+           area.scrollTop(area.scrollTop()-dy2);
+           area.scrollLeft(area.scrollLeft()-dx2);
        }
     }
 });
@@ -10138,16 +11050,20 @@ draw2d.policy.canvas.BoundingboxSelectionPolicy =  draw2d.policy.canvas.SingleSe
          if(canvas.getSelection().contains(figure)){
              return; // nothing to to
          }
-  
+         
+         var oldSelection = canvas.getSelection().getPrimary();
+         
          if(figure !==null) {
              figure.select(true); // primary selection
          }
          
-         canvas.getSelection().setPrimary(figure);
-
-         // inform all selection listeners about the new selection.
-         //
-         canvas.fireEvent("select",figure);
+         if(oldSelection!==figure){
+             canvas.getSelection().setPrimary(figure);
+    
+             // inform all selection listeners about the new selection.
+             //
+             canvas.fireEvent("select",figure);
+         }
      },
      
      
@@ -10164,7 +11080,7 @@ draw2d.policy.canvas.BoundingboxSelectionPolicy =  draw2d.policy.canvas.SingleSe
       */
      setDecisionMode: function(useIntersectionMode)
      {
-         if(flag===true){
+         if(useIntersectionMode===true){
              this.decision = this.intersectsMode;
          }
          else{
@@ -10183,101 +11099,116 @@ draw2d.policy.canvas.BoundingboxSelectionPolicy =  draw2d.policy.canvas.SingleSe
       */
      onMouseDown:function(canvas, x, y, shiftKey, ctrlKey)
      {
-        var _this = this;
-        
-        this.x = x;
-        this.y = y;
-
-        var currentSelection = canvas.getSelection().getAll();
-        
-        // COPY_PARENT
-        // this code part is copied from the parent implementation. The main problem is, that 
-        // the sequence of unselect/select of elements is broken if we call the base implementation
-        // in this case a wrong of events is fired if we select a figure if already a figure is selected!
-        // WRONG: selectNewFigure -> unselectOldFigure
-        // RIGHT: unselectOldFigure -> selectNewFigure
-        // To ensure this I must copy the parent code and postpond the event propagation
-        //
-        this.mouseMovedDuringMouseDown  = false;
-        var canDragStart = true;
-
-        var figure = canvas.getBestFigure(x, y);
-
-        // may the figure is assigned to a composite. In this case the composite can
-        // override the event receiver
-        while(figure!==null && figure.getComposite() !== null){
-            var delegate = figure.getComposite().delegateSelectionHandling(figure);
-            if(delegate===figure){
-                break;
+         try{
+            var _this = this;
+            
+            this.x = x;
+            this.y = y;
+    
+            var currentSelection = canvas.getSelection().getAll();
+            
+            // COPY_PARENT
+            // this code part is copied from the parent implementation. The main problem is, that 
+            // the sequence of unselect/select of elements is broken if we call the base implementation
+            // in this case a wrong of events is fired if we select a figure if already a figure is selected!
+            // WRONG: selectNewFigure -> unselectOldFigure
+            // RIGHT: unselectOldFigure -> selectNewFigure
+            // To ensure this I must copy the parent code and postpond the event propagation
+            //
+            this.mouseMovedDuringMouseDown  = false;
+            var canDragStart = true;
+    
+            var figure = canvas.getBestFigure(x, y);
+    
+            // may the figure is assigned to a composite. In this case the composite can
+            // override the event receiver
+            while(figure!==null && figure.getComposite() !== null){
+                var delegate = figure.getComposite().delegateSelectionHandling(figure);
+                if(delegate===figure){
+                    break;
+                }
+                figure = delegate;
             }
-            figure = delegate;
-        }
-
-        // check if the user click on a child shape. DragDrop and movement must redirect
-        // to the parent
-        // Exception: Port's
-        while((figure!==null && figure.getParent()!==null) && !(figure instanceof draw2d.Port)){
-            figure = figure.getParent();
-        }
-
-        if (figure !== null && figure.isDraggable()) {
-            canDragStart = figure.onDragStart(x - figure.getAbsoluteX(), y - figure.getAbsoluteY(), shiftKey, ctrlKey);
-            // Element send a veto about the drag&drop operation
-            if (canDragStart === false) {
-                this.mouseDraggingElement = null;
-                this.mouseDownElement = figure;
+    
+            // check if the user click on a child shape. DragDrop and movement must redirect
+            // to the parent
+            // Exception: Port's
+            while((figure!==null && figure.getParent()!==null) && !(figure instanceof draw2d.Port)){
+                figure = figure.getParent();
             }
-            else {
-                this.mouseDraggingElement = figure;
-                this.mouseDownElement = figure;
-            }
-        }
-
-        // we click on an element which are not part of the current selection
-        // => reset the "old" current selection if we didn't press the shift key
-        if(shiftKey === false){
-            if(this.mouseDownElement!==null && this.mouseDownElement.isResizeHandle===false && !currentSelection.contains(this.mouseDownElement)){
-                currentSelection.each(function(i, figure){
-                    _this.unselect(canvas,figure);
-                });
-            }
-        }
-
-        if (figure !== canvas.getSelection().getPrimary() && figure !== null && figure.isSelectable() === true) {
-            this.select(canvas,figure);
-
-            // its a line
-            if (figure instanceof draw2d.shape.basic.Line) {
-                // you can move a line with Drag&Drop...but not a connection.
-                // A Connection is fixed linked with the corresponding ports.
-                //
-                if (!(figure instanceof draw2d.Connection)) {
-                    canvas.draggingLineCommand = figure.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.MOVE));
-                    if (canvas.draggingLineCommand !== null) {
-                        canvas.draggingLine = figure;
-                    }
+    
+            if (figure !== null && figure.isDraggable()) {
+                canDragStart = figure.onDragStart(x - figure.getAbsoluteX(), y - figure.getAbsoluteY(), shiftKey, ctrlKey);
+                // Element send a veto about the drag&drop operation
+                if (canDragStart === false) {
+                    this.mouseDraggingElement = null;
+                    this.mouseDownElement = figure;
+                }
+                else {
+                    this.mouseDraggingElement = figure;
+                    this.mouseDownElement = figure;
                 }
             }
-            else if (canDragStart === false) {
-                figure.unselect();
+    
+            // we click on an element which are not part of the current selection
+            // => reset the "old" current selection if we didn't press the shift key
+            if(shiftKey === false){
+                if(this.mouseDownElement!==null && this.mouseDownElement.isResizeHandle===false && !currentSelection.contains(this.mouseDownElement)){
+                    currentSelection.each(function(i, figure){
+                        _this.unselect(canvas,figure);
+                    });
+                }
             }
-        }
-        // END_COPY FROM PARENT
-        
-     	
-     	// inform all figures that they have a new ox/oy position for the relative
-     	// drag/drop operation
-        currentSelection = canvas.getSelection().getAll();
-        currentSelection.each(function(i,figure){
-             var canDragStart= figure.onDragStart(figure.getAbsoluteX(),figure.getAbsoluteY(), shiftKey, ctrlKey);
-             // its a line
-             if (figure instanceof draw2d.shape.basic.Line) {
-                 
-             }
-             else if(canDragStart===false){
-                 _this.unselect(canvas,figure);
-             }
-        });
+    
+            if (figure !== canvas.getSelection().getPrimary() && figure !== null && figure.isSelectable() === true) {
+                this.select(canvas,figure);
+    
+                // its a line
+                if (figure instanceof draw2d.shape.basic.Line) {
+                    // you can move a line with Drag&Drop...but not a connection.
+                    // A Connection is fixed linked with the corresponding ports.
+                    //
+                    if (!(figure instanceof draw2d.Connection)) {
+                        canvas.draggingLineCommand = figure.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.MOVE));
+                        if (canvas.draggingLineCommand !== null) {
+                            canvas.draggingLine = figure;
+                        }
+                    }
+                }
+                else if (canDragStart === false) {
+                    figure.unselect();
+                }
+            }
+            // END_COPY FROM PARENT
+            
+         	
+         	// inform all figures that they have a new ox/oy position for the relative
+         	// drag/drop operation
+            currentSelection = canvas.getSelection().getAll();
+            currentSelection.each(function(i,figure){
+                var fakeDragX = 1;
+                var fakeDragY = 1;
+
+                var handleRect = figure.getHandleBBox();
+                if(handleRect!==null){
+                    handleRect.translate(figure.getAbsolutePosition().scale(-1));
+                    fakeDragX = handleRect.x+1;
+                    fakeDragY = handleRect.y+1;
+                }
+
+                var canDragStart= figure.onDragStart(fakeDragX,fakeDragY, shiftKey, ctrlKey);
+                 // its a line
+                 if (figure instanceof draw2d.shape.basic.Line) {
+                     
+                 }
+                 else if(canDragStart===false){
+                     _this.unselect(canvas,figure);
+                 }
+            });
+         }
+         catch(exc){
+             console.log(exc);
+         }
      },
      
     /**
@@ -10292,29 +11223,42 @@ draw2d.policy.canvas.BoundingboxSelectionPolicy =  draw2d.policy.canvas.SingleSe
      */
     onMouseDrag:function(canvas, dx, dy, dx2, dy2)
     {    
-        this._super(canvas, dx,dy,dx2,dy2);
-        
-        if (this.mouseDraggingElement === null && this.mouseDownElement===null && this.boundingBoxFigure1===null) {
-            this.boundingBoxFigure1 = new draw2d.shape.basic.Rectangle(1,1);
-            this.boundingBoxFigure1.setPosition(this.x,this.y);
-            this.boundingBoxFigure1.setCanvas(canvas);
-            this.boundingBoxFigure1.setBackgroundColor("#0f0f0f");
-            this.boundingBoxFigure1.setAlpha(0.1);
+        try{
+            this._super(canvas, dx,dy,dx2,dy2);
             
-            this.boundingBoxFigure2 = new draw2d.shape.basic.Rectangle(1,1);
-            this.boundingBoxFigure2.setPosition(this.x,this.y);
-            this.boundingBoxFigure2.setCanvas(canvas);
-            this.boundingBoxFigure2.setDashArray("- ");
-            this.boundingBoxFigure2.setStroke(1);
-            this.boundingBoxFigure2.setColor(new draw2d.util.Color(84,151,220));
-            this.boundingBoxFigure2.setBackgroundColor(null);
-       }
-        
-        if (this.boundingBoxFigure1!==null) {
-        	this.boundingBoxFigure1.setDimension(Math.abs(dx),Math.abs(dy));
-        	this.boundingBoxFigure1.setPosition(this.x + Math.min(0,dx), this.y + Math.min(0,dy));
-        	this.boundingBoxFigure2.setDimension(Math.abs(dx),Math.abs(dy));
-        	this.boundingBoxFigure2.setPosition(this.x + Math.min(0,dx), this.y + Math.min(0,dy));
+            if (this.mouseDraggingElement === null && this.mouseDownElement===null && this.boundingBoxFigure1===null) {
+                this.boundingBoxFigure1 = new draw2d.shape.basic.Rectangle({
+                	width  :1,
+                	height :1,
+                	x      : this.x,
+                	y      : this.y,
+                	bgColor: "#d4d1d4",
+                	alpha  : 0.1
+                });
+                this.boundingBoxFigure1.setCanvas(canvas);
+                
+                this.boundingBoxFigure2 = new draw2d.shape.basic.Rectangle({
+                	width:1,
+                	height:1,
+                	x: this.x,
+                	y:this.y,
+                	dash:"--..",
+                	stroke:0.5,
+                	color:"#37a8ff",
+                	bgColor:null
+                });
+                this.boundingBoxFigure2.setCanvas(canvas);
+           }
+
+            if (this.boundingBoxFigure1!==null) {
+            	this.boundingBoxFigure1.setDimension(Math.abs(dx),Math.abs(dy));
+            	this.boundingBoxFigure1.setPosition(this.x + Math.min(0,dx), this.y + Math.min(0,dy));
+            	this.boundingBoxFigure2.setDimension(Math.abs(dx),Math.abs(dy));
+            	this.boundingBoxFigure2.setPosition(this.x + Math.min(0,dx), this.y + Math.min(0,dy));
+            }
+        }
+        catch(exc){
+            console.log(exc);
         }
     },
     
@@ -10329,59 +11273,74 @@ draw2d.policy.canvas.BoundingboxSelectionPolicy =  draw2d.policy.canvas.SingleSe
      */
     onMouseUp:function(canvas, x,y, shiftKey, ctrlKey)
     {
-        var _this = this;
-        // delete the current selection if you have clicked in the empty
-        // canvas.
-        if(this.mouseDownElement===null){
-            canvas.getSelection().getAll().each(function(i,figure){
-                _this.unselect(canvas, figure);
-            });
-        }
-        else if(this.mouseDownElement instanceof draw2d.ResizeHandle || (this.mouseDownElement instanceof draw2d.shape.basic.LineResizeHandle)){
-            // Do nothing
-            // A click on a resize handle didn't change the selection of the canvas
+        try{
+            var _this = this;
+            // delete the current selection if you have clicked in the empty
+            // canvas.
+            if(this.mouseDownElement===null){
+                canvas.getSelection().getAll().each(function(i,figure){
+                    _this.unselect(canvas, figure);
+                });
+            }
+            else if(this.mouseDownElement instanceof draw2d.ResizeHandle || (this.mouseDownElement instanceof draw2d.shape.basic.LineResizeHandle)){
+                // Do nothing
+                // A click on a resize handle didn't change the selection of the canvas
+                //
+            }
+            // delete the current selection if you click on another figure than the current
+            // selection and you didn't drag the complete selection.
+            else if(this.mouseDownElement!==null && this.mouseMovedDuringMouseDown===false){
+                var sel =canvas.getSelection().getAll();
+                if(!sel.contains(this.mouseDownElement)){
+                   canvas.getSelection().getAll().each(function(i,figure){
+                       _this.unselect(canvas, figure);
+                   });
+                }   
+            }
+            this._super(canvas, x,y, shiftKey, ctrlKey);
+            
+            if (this.boundingBoxFigure1!==null) {
+            	// retrieve all figures which are inside the bounding box and select all of them
+            	//
+            	var selectionRect = this.boundingBoxFigure1.getBoundingBox();
+             	canvas.getFigures().each(function(i,figure){
+            		if(figure.isSelectable() === true && _this.decision(figure.getBoundingBox(),selectionRect)){
+                        var fakeDragX = 1;
+                        var fakeDragY = 1;
+
+                        var handleRect = figure.getHandleBBox();
+                        if(handleRect!==null){
+                            handleRect.translate(figure.getAbsolutePosition().scale(-1));
+                            fakeDragX = handleRect.x+1;
+                            fakeDragY = handleRect.y+1;
+                        }
+                        var canDragStart = figure.onDragStart(fakeDragX,fakeDragY, shiftKey, ctrlKey);
+                        if(canDragStart===true){
+                            _this.select(canvas,figure,false);
+                        }
+            		}
+            	});
+             	
+             	
+        	  this.boundingBoxFigure1.setCanvas(null);
+           	  this.boundingBoxFigure1 = null;
+          	  this.boundingBoxFigure2.setCanvas(null);
+           	  this.boundingBoxFigure2 = null;
+            }
+    
+            // adding connections to the selection of the source and target port part of the current selection
             //
-        }
-        // delete the current selection if you click on another figure than the current
-        // selection and you didn't drag the complete selection.
-        else if(this.mouseDownElement!==null && this.mouseMovedDuringMouseDown===false){
-            var sel =canvas.getSelection().getAll();
-            if(!sel.contains(this.mouseDownElement)){
-               canvas.getSelection().getAll().each(function(i,figure){
-                   _this.unselect(canvas, figure);
-               });
-            }   
-        }
-        this._super(canvas, x,y, shiftKey, ctrlKey);
-        
-        if (this.boundingBoxFigure1!==null) {
-        	// retrieve all figures which are inside the bounding box and select all of them
-        	//
-        	var selectionRect = this.boundingBoxFigure1.getBoundingBox();
-         	canvas.getFigures().each(function(i,figure){
-        		if(figure.isSelectable() === true && _this.decision(figure.getBoundingBox(),selectionRect)){
-                    var canDragStart = figure.onDragStart(figure.getAbsoluteX(),figure.getAbsoluteY(), shiftKey, ctrlKey);
-                    if(canDragStart===true){
-                        _this.select(canvas,figure,false);
-                    }
-        		}
-        	});
-         	
-         	var selection = canvas.getSelection();
-         	
-         	// adding connections to the selection of the source and target port part of the current selection
+            var selection = canvas.getSelection();
             canvas.getLines().each(function(i,line){
                 if(line instanceof draw2d.Connection){
-                    if(selection.contains(line.getSource().getParent()) && selection.contains(line.getTarget().getParent())){
+                    if(selection.contains(line.getSource().getRoot()) && selection.contains(line.getTarget().getRoot())){
                         _this.select(canvas,line,false);
                     }
                 }
             });
-         	
-    	  this.boundingBoxFigure1.setCanvas(null);
-       	  this.boundingBoxFigure1 = null;
-      	  this.boundingBoxFigure2.setCanvas(null);
-       	  this.boundingBoxFigure2 = null;
+        }
+        catch(exc){
+            console.log(exc);
         }
    }
     
@@ -10446,8 +11405,8 @@ draw2d.policy.canvas.ReadOnlySelectionPolicy = draw2d.policy.canvas.SelectionPol
      */
     onMouseDrag:function(canvas, dx, dy, dx2, dy2){
         var area = canvas.getScrollArea();
-        area.scrollTop(area.scrollTop()+dy2);
-        area.scrollLeft(area.scrollLeft()+dx2);
+        area.scrollTop(area.scrollTop()-dy2);
+        area.scrollLeft(area.scrollLeft()-dx2);
     }
     
 });
@@ -10471,8 +11430,8 @@ draw2d.policy.canvas.DecorationPolicy = draw2d.policy.canvas.CanvasPolicy.extend
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter){
+        this._super( attr, setter, getter);
     }
     
 });
@@ -10663,18 +11622,48 @@ draw2d.policy.canvas.CoronaDecorationPolicy = draw2d.policy.canvas.DecorationPol
      * @constructor 
      * 
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter){
         
         this.startDragX = 0;
         this.startDragY = 0;
+        this.diameterToBeFullVisible = 0;
+        this.diameterToBeVisible = 0;
+        this.sumDiameter =0;
         
-        this.diameterToBeVissible = 150;
-        this.diameterToBeFullVisible=20;
-        this.sumDiameter =this.diameterToBeVissible+this.diameterToBeFullVisible;
+        this._super(
+            $.extend({diameterToBeVisible: 200, diameterToBeFullVisible:20},attr) ,
+            
+            $.extend({
+                diameterToBeVisible    : this.setDiameterToBeVisible,
+                diameterToBeFullVisible : this.setDiameterToBeFullVisible
+           },setter),
+           
+            $.extend({
+                diameterToBeVisible    : this.getDiameterToBeVisible,
+                diameterToBeFullVisible: this.getDiameterToBeFullVisible
+           },getter)
 
+        );
    },
     
+   setDiameterToBeVisible: function(diameter){
+       this.diameterToBeVisible = diameter;
+       this.sumDiameter = this.diameterToBeFullVisible + this.diameterToBeVisible;
+   },
+   
+   getDiameterToBeVisible: function(){
+	   return this.diameterToBeVisible;
+   },
+
+   setDiameterToBeFullVisible: function(diameter){
+       this.diameterToBeFullVisible = diameter;
+       this.sumDiameter = this.diameterToBeFullVisible + this.diameterToBeVisible;
+   },
+
+   getDiameterToBeFullVisible: function(){
+	   return this.diameterToBeFullVisible;
+   },
+
    /**
     * @inheritdoc
     */
@@ -10742,6 +11731,7 @@ draw2d.policy.canvas.CoronaDecorationPolicy = draw2d.policy.canvas.DecorationPol
         //
         var figures = canvas.getFigures();
         var _this=this;
+
         figures.each(function(i,figure){
             if(figure instanceof draw2d.shape.node.Node){
                 if (figure.isVisible()===true && figure.hitTest(x, y, _this.sumDiameter) === true){
@@ -10750,8 +11740,10 @@ draw2d.policy.canvas.CoronaDecorationPolicy = draw2d.policy.canvas.DecorationPol
                             p.__origAlpha= figure.getAlpha();
                         }
                         var dist = figure.getBoundingBox().getDistance(new draw2d.geo.Point(x,y));
-                        var alpha = 1-((100/(_this.diameterToBeVissible-_this.diameterToBeFullVisible))*dist)/100.0;
-                        
+                        var alpha = 1-((100/(_this.diameterToBeVisible- _this.diameterToBeFullVisible))*dist)/100.0;
+//                        var alpha2 = (Math.PI/2)-(((Math.PI/2)/(_this.diameterToBeVisible- _this.diameterToBeFullVisible))*dist)/(Math.PI/2);
+                                               
+//                        console.log(Math.sin(alpha2)                       		);
                         p.setAlpha(alpha);
 
                         p.setVisible(true);
@@ -10775,7 +11767,23 @@ draw2d.policy.canvas.CoronaDecorationPolicy = draw2d.policy.canvas.DecorationPol
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
- ****************************************/
+ ****************************************/draw2d.SnapToHelper = {};
+
+draw2d.SnapToHelper.NORTH   =  1;
+draw2d.SnapToHelper.SOUTH   =  4;
+draw2d.SnapToHelper.WEST    =  8;
+draw2d.SnapToHelper.EAST    = 16;
+draw2d.SnapToHelper.CENTER_H= 32;
+draw2d.SnapToHelper.CENTER_V= 642;
+
+draw2d.SnapToHelper.NORTH_EAST  = draw2d.SnapToHelper.NORTH | draw2d.SnapToHelper.EAST;
+draw2d.SnapToHelper.NORTH_WEST  = draw2d.SnapToHelper.NORTH | draw2d.SnapToHelper.WEST;
+draw2d.SnapToHelper.SOUTH_EAST  = draw2d.SnapToHelper.SOUTH | draw2d.SnapToHelper.EAST;
+draw2d.SnapToHelper.SOUTH_WEST  = draw2d.SnapToHelper.SOUTH | draw2d.SnapToHelper.WEST;
+draw2d.SnapToHelper.NORTH_SOUTH = draw2d.SnapToHelper.NORTH | draw2d.SnapToHelper.SOUTH;
+draw2d.SnapToHelper.EAST_WEST   = draw2d.SnapToHelper.EAST | draw2d.SnapToHelper.WEST;
+draw2d.SnapToHelper.NSEW        = draw2d.SnapToHelper.NORTH_SOUTH | draw2d.SnapToHelper.EAST_WEST;
+
 /**
  * @class draw2d.policy.canvas.SnapToEditPolicy
  * 
@@ -10795,9 +11803,9 @@ draw2d.policy.canvas.SnapToEditPolicy = draw2d.policy.canvas.CanvasPolicy.extend
      * Creates a new constraint policy for snap to grid
      * 
      */
-    init: function( )
+    init: function( attr, setter, getter)
     {
-        this._super();
+        this._super( attr, setter, getter);
     },
 
 
@@ -11241,21 +12249,6 @@ draw2d.policy.canvas.ShowChessboardEditPolicy = draw2d.policy.canvas.CanvasPolic
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
-draw2d.SnapToHelper = {};
-
-draw2d.SnapToHelper.NORTH =  1;
-draw2d.SnapToHelper.SOUTH =  4;
-draw2d.SnapToHelper.WEST  =  8;
-draw2d.SnapToHelper.EAST  = 16;
-draw2d.SnapToHelper.CENTER= 32;
-
-draw2d.SnapToHelper.NORTH_EAST  = draw2d.SnapToHelper.NORTH | draw2d.SnapToHelper.EAST;
-draw2d.SnapToHelper.NORTH_WEST  = draw2d.SnapToHelper.NORTH | draw2d.SnapToHelper.WEST;
-draw2d.SnapToHelper.SOUTH_EAST  = draw2d.SnapToHelper.SOUTH | draw2d.SnapToHelper.EAST;
-draw2d.SnapToHelper.SOUTH_WEST  = draw2d.SnapToHelper.SOUTH | draw2d.SnapToHelper.WEST;
-draw2d.SnapToHelper.NORTH_SOUTH = draw2d.SnapToHelper.NORTH | draw2d.SnapToHelper.SOUTH;
-draw2d.SnapToHelper.EAST_WEST   = draw2d.SnapToHelper.EAST | draw2d.SnapToHelper.WEST;
-draw2d.SnapToHelper.NSEW        = draw2d.SnapToHelper.NORTH_SOUTH | draw2d.SnapToHelper.EAST_WEST;
 
 /**
  * @class draw2d.policy.canvas.SnapToGeometryEditPolicy
@@ -11274,25 +12267,65 @@ draw2d.policy.canvas.SnapToGeometryEditPolicy = draw2d.policy.canvas.SnapToEditP
     NAME : "draw2d.policy.canvas.SnapToGeometryEditPolicy",
     
     SNAP_THRESHOLD   : 3,
-    LINE_COLOR       : "#1387E6",
     FADEOUT_DURATION : 300,
     
     /**
      * @constructor 
-     * Creates a new constraint policy for snap to grid
+     * Creates a new constraint policy for snap to geometry
      * 
-     * @param {Number} grid the grid width of the canvas
      */
-    init: function( )
-    {
-        this._super();
-        
+    init: function( attr, setter, getter){
+        this.lineColor = null;
+
+        this._super(
+            $.extend({
+                lineColor: "#1387E6"
+            },attr),
+            $.extend({
+                /** @attr {draw2d.util.Color} color the line color of the snapTo lines */
+                lineColor : this.setLineColor
+            }, setter),
+            $.extend({
+                lineColor : this.getLineColor
+            }, getter));
+
         this.rows=null;
         this.cols=null;
         this.vline = null;
         this.hline = null;
         this.canvas = null;
     },
+
+
+    /**
+     * @method
+     * Set the color of the snap line.
+     *
+     *      // Alternatively you can use the attr method:
+     *      policy.attr({
+     *        lineColor: color
+     *      });
+     *
+     * @param {draw2d.util.Color|String} color The new color of the line.
+     **/
+    setLineColor:function( color)
+    {
+        this.lineColor = new draw2d.util.Color(color);
+        return this;
+    },
+
+    /**
+     * @method
+     * Return the current paint color.
+     *
+     * @return {draw2d.util.Color} The paint color of the line.
+     * @since 5.6.1
+     **/
+    getLineColor:function()
+    {
+        return this.lineColor;
+    },
+
 
     onInstall: function(canvas)
     {
@@ -11325,105 +12358,146 @@ draw2d.policy.canvas.SnapToGeometryEditPolicy = draw2d.policy.canvas.SnapToEditP
     /**
      * @method
      * Adjust the coordinates to the canvas neighbours
-     * 
-     * @param figure
+     *
+     * @param canvas the related canvas
+     * @param figure the figure to snap
      * @param {draw2d.geo.Point} pos
-     * @returns {draw2d.geo.Point} the contraint position of th efigure
+     *
+     * @returns {draw2d.geo.Point} the constraint position of the figure
      */
-    snap: function(canvas, figure, pos)
+    snap: function(canvas, figure, pos, origPos)
     {
-        
+
+        var allowXChanges = pos.x=== origPos.x;
+        var allowYChanges = pos.y=== origPos.y;
+
+        // Coordinates already snapped to an x/y coordinate.
+        // Don't change them and in this case no further calculation is requried.
+        //
+        if(!allowXChanges && !allowYChanges){
+            return pos;
+        }
+
         if(figure instanceof draw2d.ResizeHandle)
         {
            var snapPoint = figure.getSnapToGridAnchor();
            pos.x+= snapPoint.x;
            pos.y+= snapPoint.y;
-           var result = new draw2d.geo.Point(pos.x,pos.y);
 
            var snapDirections = figure.getSnapToDirection();
-           var direction = this.snapPoint(snapDirections, pos,result);
+           var result = this.snapPoint(snapDirections, pos);
 
            // Show a vertical line if the snapper has modified the inputPoint
            //
-           if((snapDirections & draw2d.SnapToHelper.EAST_WEST) && !(direction & draw2d.SnapToHelper.EAST_WEST))
-              this.showVerticalLine(result.x);
-           else
-              this.hideVerticalLine();
+           if(allowXChanges && (snapDirections & draw2d.SnapToHelper.EAST_WEST) && !(result.edge & draw2d.SnapToHelper.EAST_WEST)) {
+               this.showVerticalLine(figure, draw2d.SnapToHelper.WEST, result.point.x);
+           }
+           else {
+               this.hideVerticalLine();
+           }
 
            // Show a horizontal line if the snapper has modified the inputPoint
            //
-           if((snapDirections & draw2d.SnapToHelper.NORTH_SOUTH) && !(direction & draw2d.SnapToHelper.NORTH_SOUTH))
-              this.showHorizontalLine(result.y);
-           else
-              this.hideHorizontalLine();
+           if(allowYChanges && (snapDirections & draw2d.SnapToHelper.NORTH_SOUTH) && !(result.edge & draw2d.SnapToHelper.NORTH_SOUTH)) {
+               this.showHorizontalLine(figure, draw2d.SnapToHelper.NORTH, result.point.y);
+           }
+           else {
+               this.hideHorizontalLine();
+           }
 
-           result.x-= snapPoint.x;
-           result.y-= snapPoint.y;
-           return result;
+           // restore the original pos coordinate if x or y coordinate already snapped to any axis
+           // or subtract the added snapOffset
+            //
+           result.point.x= allowXChanges? result.point.x-snapPoint.x: pos.x;
+           result.point.y= allowYChanges? result.point.y-snapPoint.y: pos.y;
+
+           return result.point;
         }
 
         // The user drag&drop a normal figure
         var inputBounds = new draw2d.geo.Rectangle(pos.x,pos.y, figure.getWidth(), figure.getHeight());
-        var result = new draw2d.geo.Rectangle(pos.x,pos.y, figure.getWidth(), figure.getHeight());
 
-        var snapDirections = draw2d.SnapToHelper.NSEW;
-        var direction = this.snapRectangle( inputBounds, result);
+        var result = this.snapRectangle( inputBounds);
+
+        if(!allowXChanges){
+            result.bounds.x= pos.x;
+        }
+
+        if(!allowYChanges){
+            result.bounds.y=pos.y;
+        }
 
         // Show a vertical line if the snapper has modified the inputPoint
         //
-        if((snapDirections & draw2d.SnapToHelper.WEST) && !(direction & draw2d.SnapToHelper.WEST))
-           this.showVerticalLine(result.x);
-        else if((snapDirections & draw2d.SnapToHelper.EAST) && !(direction & draw2d.SnapToHelper.EAST))
-           this.showVerticalLine(result.getX()+result.getWidth());
-        else
-           this.hideVerticalLine();
+        if(allowXChanges && !(result.edge & draw2d.SnapToHelper.WEST)) {
+            this.showVerticalLine(figure, draw2d.SnapToHelper.WEST, result.bounds.x);
+        }
+        else if(allowXChanges && ! (result.edge & draw2d.SnapToHelper.EAST)) {
+            this.showVerticalLine(figure, draw2d.SnapToHelper.EAST, result.bounds.x + result.bounds.getWidth());
+        }
+        else {
+            this.hideVerticalLine();
+        }
 
 
         // Show a horizontal line if the snapper has modified the inputPoint
         //
-        if((snapDirections & draw2d.SnapToHelper.NORTH) && !(direction & draw2d.SnapToHelper.NORTH))
-           this.showHorizontalLine(result.y);
-        else if((snapDirections & draw2d.SnapToHelper.SOUTH) && !(direction & draw2d.SnapToHelper.SOUTH))
-           this.showHorizontalLine(result.getY()+result.getHeight());
-        else
-           this.hideHorizontalLine();
+        if(allowYChanges && !(result.edge & draw2d.SnapToHelper.NORTH)) {
+            this.showHorizontalLine(figure, draw2d.SnapToHelper.NORTH, result.bounds.y);
+        }
+        else if(allowYChanges && !(result.edge & draw2d.SnapToHelper.SOUTH)) {
+            this.showHorizontalLine(figure, draw2d.SnapToHelper.SOUTH, result.bounds.y + result.bounds.getHeight());
+        }
+        else {
+            this.hideHorizontalLine();
+        }
 
-        return result.getTopLeft();
+        return result.bounds.getTopLeft();
+    },
+
+    /**
+     * @method
+     * calculates the snapped position of the rectangle.
+     *
+     * @param {draw2d.geo.Rectangle} inputBounds
+     * @param {draw2d.geo.Rectangle} resultBounds
+     * @returns {number}
+     */
+    snapRectangle:function(inputBounds)
+    {
+        var resultBounds = inputBounds.clone();
+
+        var topLeft = this.snapPoint(draw2d.SnapToHelper.NORTH_WEST, inputBounds.getTopLeft());
+        resultBounds.x = topLeft.point.x;
+        resultBounds.y = topLeft.point.y;
+
+        var bottomRight = this.snapPoint(draw2d.SnapToHelper.SOUTH_EAST, inputBounds.getBottomRight());
+
+        // The first test (topLeft) has not modified the point. so we can modify them with the bottomRight adjustment
+        //
+        if(topLeft.edge & draw2d.SnapToHelper.WEST) {
+            resultBounds.x = bottomRight.point.x - inputBounds.getWidth();
+        }
+
+        // The first test (topLeft) has not modified the point. so we can modify them with the bottomRight adjustment
+        //
+        if(topLeft.edge & draw2d.SnapToHelper.NORTH) {
+            resultBounds.y = bottomRight.point.y - inputBounds.getHeight();
+        }
+
+        return {edge: topLeft.edge|bottomRight.edge , bounds:resultBounds};
     },
     
-    
-    snapRectangle:function( /*:draw2d.Dimension*/ inputBounds,  /*:draw2d.Dimension*/ resultBounds)
+    snapPoint:function(/*:int*/ snapOrientation, /*:draw2d.Point*/ inputPoint)
     {
-        var topLeftResult     = inputBounds.getTopLeft();
-        var bottomRightResult = inputBounds.getBottomRight();
+        var resultPoint = inputPoint.clone();
 
-        var snapDirectionsTopLeft = this.snapPoint(draw2d.SnapToHelper.NORTH_WEST, inputBounds.getTopLeft(), topLeftResult);
-        resultBounds.x = topLeftResult.x;
-        resultBounds.y = topLeftResult.y;
-
-        var snapDirectionsBottomRight = this.snapPoint(draw2d.SnapToHelper.SOUTH_EAST, inputBounds.getBottomRight(), bottomRightResult);
-        // the first test (topLeft) has not modified the point. so we can modify them with the bottomRight adjustment
-        //
-        if(snapDirectionsTopLeft & draw2d.SnapToHelper.WEST)
-          resultBounds.x = bottomRightResult.x-inputBounds.getWidth();
-
-        // the first test (topLeft) has not modified the point. so we can modify them with the bottomRight adjustment
-        //
-        if(snapDirectionsTopLeft & draw2d.SnapToHelper.NORTH)
-           resultBounds.y = bottomRightResult.y-inputBounds.getHeight();
-
-
-        return snapDirectionsTopLeft |snapDirectionsBottomRight;
-    },
-    
-    snapPoint:function(/*:int*/ snapOrientation, /*:draw2d.Point*/ inputPoint,  /*:draw2d.Point*/ resultPoint)
-    {
        if(this.rows===null || this.cols===null)
          this.populateRowsAndCols();
 
        if ((snapOrientation & draw2d.SnapToHelper.EAST) !== 0) 
        {
-          var rightCorrection = this.getCorrectionFor(this.cols, inputPoint.getX() -1, 1);
+          var rightCorrection = this.getCorrectionFor(this.cols, inputPoint.x -1, 1);
           if (rightCorrection !== this.SNAP_THRESHOLD) 
           {
              snapOrientation &= ~draw2d.SnapToHelper.EAST;
@@ -11433,7 +12507,7 @@ draw2d.policy.canvas.SnapToGeometryEditPolicy = draw2d.policy.canvas.SnapToEditP
 
        if ((snapOrientation & draw2d.SnapToHelper.WEST) !== 0) 
        {
-          var leftCorrection = this.getCorrectionFor(this.cols, inputPoint.getX(), -1);
+          var leftCorrection = this.getCorrectionFor(this.cols, inputPoint.x, -1);
           if (leftCorrection !== this.SNAP_THRESHOLD) 
           {
              snapOrientation &= ~draw2d.SnapToHelper.WEST;
@@ -11443,7 +12517,7 @@ draw2d.policy.canvas.SnapToGeometryEditPolicy = draw2d.policy.canvas.SnapToEditP
 
        if ((snapOrientation & draw2d.SnapToHelper.SOUTH) !== 0) 
        {
-          var bottomCorrection = this.getCorrectionFor(this.rows,  inputPoint.getY() - 1, 1);
+          var bottomCorrection = this.getCorrectionFor(this.rows,  inputPoint.y - 1, 1);
           if (bottomCorrection !== this.SNAP_THRESHOLD) 
           {
              snapOrientation &= ~draw2d.SnapToHelper.SOUTH;
@@ -11453,7 +12527,7 @@ draw2d.policy.canvas.SnapToGeometryEditPolicy = draw2d.policy.canvas.SnapToEditP
 
        if ((snapOrientation & draw2d.SnapToHelper.NORTH) !== 0) 
        {
-          var topCorrection = this.getCorrectionFor(this.rows, inputPoint.getY(), -1);
+          var topCorrection = this.getCorrectionFor(this.rows, inputPoint.y, -1);
           if (topCorrection !== this.SNAP_THRESHOLD) 
           {
              snapOrientation &= ~draw2d.SnapToHelper.NORTH;
@@ -11461,7 +12535,7 @@ draw2d.policy.canvas.SnapToGeometryEditPolicy = draw2d.policy.canvas.SnapToEditP
           }
        }
 
-      return snapOrientation;
+       return {edge: snapOrientation, point: resultPoint};
     },
     
     populateRowsAndCols:function()
@@ -11471,22 +12545,23 @@ draw2d.policy.canvas.SnapToGeometryEditPolicy = draw2d.policy.canvas.SnapToEditP
        this.cols = [];
        
        var figures = this.canvas.getFigures();
-       var index =0;
        for (var i = 0; i < figures.getSize();i++ )
        {
           var figure = figures.get(i);
-          if(!selection.contains(figure))
+          if(!selection.contains(figure, true))
           {
              var bounds = figure.getBoundingBox();
-             this.cols[index * 3]     = {type:-1, location: bounds.getX()};
-             this.rows[index * 3]     = {type:-1, location: bounds.getY()};
-             this.cols[index * 3 + 1] = {type:0 , location: bounds.x + (bounds.getWidth() - 1) / 2};
-             this.rows[index * 3 + 1] = {type:0 , location: bounds.y + (bounds.getHeight() - 1) / 2};
-             this.cols[index * 3 + 2] = {type:1 , location: bounds.getRight() - 1};
-             this.rows[index * 3 + 2] = {type:1 , location: bounds.getBottom() - 1};
-             index++;
+             this.cols.push({type:-1, location: bounds.x});
+             this.cols.push({type:0 , location: bounds.x + (bounds.w - 1) / 2});
+             this.cols.push({type:1 , location: bounds.getRight() - 1});
+             this.rows.push({type:-1, location: bounds.y});
+             this.rows.push({type:0 , location: bounds.y + (bounds.h - 1) / 2});
+             this.rows.push({type:1 , location: bounds.getBottom() - 1});
          }
        }
+
+       // TODO: remove duplicate entries in the rows/cols array
+
     },
 
     getCorrectionFor:function(/*:Array*/ entries, /*:double*/ value, /*:int*/ side) 
@@ -11530,52 +12605,1131 @@ draw2d.policy.canvas.SnapToGeometryEditPolicy = draw2d.policy.canvas.SnapToEditP
        return result;
     },
     
-    showVerticalLine:function(x){
+    showVerticalLine:function(causedFigure, edge, x)
+    {
         if(this.vline!=null){
-            return; //silently
+            this.vline.stop();
+            this.vline.remove();
         }
-        this.vline = this.canvas.paper
-                        .path("M " + x + " 0 l 0 " + this.canvas.getHeight())
-                        .attr({"stroke":this.LINE_COLOR,"stroke-width":1});
+
+        var figures = this.canvas.getFigures().clone();
+        figures.removeAll(this.canvas.getSelection().getAll(true));
+        figures.map(function(figure){
+            return figure.getBoundingBox();
+        });
+        figures.grep(function(bbox){
+            return (Math.abs(bbox.x-x)<=1) || (Math.abs(bbox.getRight()-x)<=1);
+        });
+
+        // return silently if no figure bounding box is left
+        //
+        if(figures.getSize()===0){
+            return;
+        }
+
+        // figure to align is above the current shape
+        //
+        var causedBox  = causedFigure.getBoundingBox();
+        var causedCenter  = causedBox.getCenter();
+        figures.sort(function(a,b){
+            var d_a = a.getCenter().getDistance(causedCenter);
+            var d_b = b.getCenter().getDistance(causedCenter);
+            return d_a-d_b;
+        });
+        var fromY = 0;
+        var yLength  = maxLength = this.canvas.getHeight()*Math.max(1,this.canvas.getZoom());
+        var snappedBox = figures.get(0);
+        if(causedBox.y <snappedBox.y){
+            fromY   = causedBox.y;
+            yLength = snappedBox.getBottom()-causedBox.y;
+        }
+        else{
+            fromY   = snappedBox.y;
+            yLength = causedBox.getBottom()-snappedBox.y;
+        }
+
+        x=(x|0)+0.5; // force a .5 number to avoid subpixel rendering. Blurry lines...
+        this.canvas.paper.setStart();
+        this.canvas.paper.path("M " + x + " 0 l 0 " + maxLength)
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1, "stroke-dasharray":". "});
+        this.canvas.paper.path("M " + x + " "+fromY+" l 0 " + yLength)
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+        this.vline = this.canvas.paper.setFinish();
+        this.vline.toBack();
     },
     
-    hideVerticalLine:function(){
+    hideVerticalLine:function()
+    {
         if(this.vline==null){
             return;
         }
-        var tmp = this.vline;
-        tmp.animate({
-            opacity: 0.1
-        }, this.FADEOUT_DURATION,function(){
-            tmp.remove();
-        });
-        
-        this.vline = null;
+        this.vline.animate(
+            {opacity: 0.1},
+            this.FADEOUT_DURATION,
+            $.proxy(function(){
+                if(this.vline!==null) {
+                    this.vline.remove();
+                    this.vline = null;
+                }
+            },this)
+        );
     },
     
-    showHorizontalLine:function(y){
+    showHorizontalLine:function(causedFigure, edge, y)
+    {
         if(this.hline!=null){
+            this.hline.stop();
+            this.hline.remove();
+        }
+
+        var figures = this.canvas.getFigures().clone();
+        figures.removeAll(this.canvas.getSelection().getAll(true));
+        figures.map(function(figure){
+            return figure.getBoundingBox();
+        });
+        figures.grep(function(bbox){
+            return (Math.abs(bbox.y-y)<=1) || (Math.abs(bbox.getBottom()-y)<=1);
+        });
+
+        // return silently if no figure bounding box is left
+        //
+        if(figures.getSize()===0){
             return;
         }
-        
-        this.hline = this.canvas.paper
-                      .path("M 0 " + y + " l " + this.canvas.getWidth() + " 0")
-                      .attr({"stroke":this.LINE_COLOR,"stroke-width":1});
+
+        // figure to align is above the current shape
+        //
+        var causedBox  = causedFigure.getBoundingBox();
+        var causedCenter  = causedBox.getCenter();
+        figures.sort(function(a,b){
+            var d_a = a.getCenter().getDistance(causedCenter);
+            var d_b = b.getCenter().getDistance(causedCenter);
+            return d_a-d_b;
+        });
+        var fromX = 0;
+        var xLength  = maxLength = this.canvas.getWidth()*Math.max(1,this.canvas.getZoom());
+        var snappedBox = figures.get(0);
+        if(causedBox.x <snappedBox.x){
+            fromX   = causedBox.x;
+            xLength = snappedBox.getRight()-causedBox.x;
+        }
+        else{
+            fromX   = snappedBox.x;
+            xLength = causedBox.getRight()-snappedBox.x;
+        }
+
+
+        y=(y|0)+0.5; // force a .5 number to avoid subpixel rendering. Blurry lines...
+
+        this.canvas.paper.setStart();
+        this.canvas.paper.path("M 0 "+y+ " l " + maxLength+" 0")
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1, "stroke-dasharray":". "});
+        this.canvas.paper.path("M "+fromX+" " + y + " l " + xLength + " 0")
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+        this.hline = this.canvas.paper.setFinish();
+        this.hline.toBack();
+
     },
 
-    hideHorizontalLine:function(){
+    hideHorizontalLine:function()
+    {
         if(this.hline==null){
             return; //silently
         }
-        var tmp = this.hline;
-        tmp.animate({
-            opacity: 0.1
-        }, this.FADEOUT_DURATION,function(){
-            tmp.remove();
-        });
-        this.hline = null;
+        this.hline.animate(
+            {opacity: 0.1},
+            this.FADEOUT_DURATION,
+            $.proxy(function(){
+                if(this.hline!==null) {
+                    this.hline.remove();
+                    this.hline = null;
+                }
+            },this)
+        );
     }
     
+});
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
+ ****************************************/
+
+/**
+ * @class draw2d.policy.canvas.SnapToInBetweenEditPolicy
+ * 
+ * Snapping is based on the existing children of a container. When snapping a shape, 
+ * the edges of the bounding box will snap to edges of other rectangles generated 
+ * from the children of the given canvas. 
+ * 
+ * 
+ * @author Andreas Herz
+ * 
+ * @extends draw2d.policy.canvas.SnapToEditPolicy
+ * @since 5.6.4
+ */
+draw2d.policy.canvas.SnapToInBetweenEditPolicy = draw2d.policy.canvas.SnapToEditPolicy.extend({
+
+    NAME : "draw2d.policy.canvas.SnapToInBetweenEditPolicy",
+    
+    SNAP_THRESHOLD   : 5,
+    FADEOUT_DURATION : 500,
+    
+    /**
+     * @constructor 
+     * Creates a new constraint policy for snap to geometry
+     * 
+     */
+    init: function( attr, setter, getter){
+        this.lineColor = null;
+
+        this._super(
+            $.extend({
+                lineColor: "#1387E6"
+            },attr),
+            $.extend({
+                /** @attr {draw2d.util.Color} color the line color of the snapTo lines */
+                lineColor : this.setLineColor
+            }, setter),
+            $.extend({
+                lineColor : this.getLineColor
+            }, getter));
+
+        this.bounds=null;
+
+        this.horizontalGuideLines = null;
+        this.verticalGuideLines = null;
+        this.canvas = null;
+    },
+
+
+    /**
+     * @method
+     * Set the color of the snap line.
+     *
+     *      // Alternatively you can use the attr method:
+     *      policy.attr({
+     *        lineColor: color
+     *      });
+     *
+     * @param {draw2d.util.Color|String} color The new color of the line.
+     **/
+    setLineColor:function( color)
+    {
+        this.lineColor = new draw2d.util.Color(color);
+        return this;
+    },
+
+    /**
+     * @method
+     * Return the current paint color.
+     *
+     * @return {draw2d.util.Color} The paint color of the line.
+     * @since 5.6.1
+     **/
+    getLineColor:function()
+    {
+        return this.lineColor;
+    },
+
+
+    onInstall: function(canvas)
+    {
+        this.canvas = canvas;
+    },
+    
+    onUninstall: function(canvas)
+    {
+        this.canvas = null;
+    },
+    
+    /**
+     * @method
+     * 
+     * @param {draw2d.Canvas} canvas
+     * @param {Number} x the x-coordinate of the mouse down event
+     * @param {Number} y the y-coordinate of the mouse down event
+     * @param {Boolean} shiftKey true if the shift key has been pressed during this event
+     * @param {Boolean} ctrlKey true if the ctrl key has been pressed during the event
+     * @template
+     */
+    onMouseUp: function(figure, x, y, shiftKey, ctrlKey)
+    {
+        this.bounds=null;
+        this.hideHorizontalGuides(false);
+        this.hideVerticalGuides(false);
+    },
+    
+    /**
+     * @method
+     * Adjust the coordinates to the canvas neighbours
+     *
+     * @param canvas the related canvas
+     * @param figure the figure to snap
+     * @param {draw2d.geo.Point} pos
+     *
+     * @returns {draw2d.geo.Point} the constraint position of the figure
+     */
+    snap: function(canvas, figure, modifiedPos, originalPos)
+    {
+        // do nothing for resize handles
+        if(figure instanceof draw2d.ResizeHandle) {
+           return modifiedPos;
+        }
+
+
+        var allowXChanges = modifiedPos.x=== originalPos.x;
+        var allowYChanges = modifiedPos.y=== originalPos.y;
+
+        var inputBounds = new draw2d.geo.Rectangle(modifiedPos.x,modifiedPos.y, figure.getWidth(), figure.getHeight());
+
+        modifiedPos = modifiedPos.clone();
+
+        if(allowXChanges===true) {
+            var horizontal = this.snapHorizontal(inputBounds);
+
+            // Show a horizontal line if the snapper has modified the inputPoint
+            //
+            if (horizontal.snapped) {
+                // show the snap lines..
+                this.showHorizontalGuides(figure, horizontal);
+
+                // and snap the x coordinate
+                modifiedPos.x += horizontal.diff;
+            }
+            else {
+                this.hideHorizontalGuides(true);
+            }
+        }
+        else{
+            this.hideHorizontalGuides(true);
+        }
+
+        if(allowYChanges===true) {
+            var vertical = this.snapVertical(inputBounds);
+
+            // Show a vertical guides if the snapper has modified the inputPoint
+            //
+            if (vertical.snapped) {
+                // show the snap lines..
+                this.showVerticalGuides(figure, vertical);
+
+                // and snap the x coordinate
+                modifiedPos.y += vertical.diff;
+            }
+            else {
+                this.hideVerticalGuides(true);
+            }
+        }
+        else{
+            this.hideVerticalGuides(true);
+        }
+
+        return modifiedPos;
+    },
+
+
+    snapHorizontal:function( boundingBox    )
+    {
+        var center = boundingBox.getCenter();
+        if(this.bounds===null)
+         this.populateBounds();
+
+        var result = {
+            point:center,
+            snapped:false,
+            snappedBox : boundingBox.clone()
+        };
+
+
+        var intersectionPoint=null;
+
+        // Calculate the intersections points p(i) of all left side edges of the bounding boxes
+        // and the ray from the center of the drag&drop object to the left edge of the canva
+        //
+        // BBox of          Drag&Drop
+        // any Figure       Figure
+        //
+        // ....+           ........
+        //     |           .      .
+        // .   |p(i)       .      .
+        // .   X<------------->+  .
+        // .   |           .      .
+        // ....+           .      .
+        //                 ........
+        //
+        //
+        var leftIntersections = [];
+        var leftInputPoint = center.clone();
+        leftInputPoint.x=0;
+        this.bounds.forEach(function( bbox,index){
+            intersectionPoint =  draw2d.shape.basic.Line.intersection(bbox.getTopRight(), bbox.getBottomRight(), center, leftInputPoint);
+            if (intersectionPoint !== null) {
+                intersectionPoint.causedBBox = bbox;
+                leftIntersections.push(intersectionPoint);
+            }
+        });
+        // we can abort if we didn't find an intersection on the left hand side
+        if(leftIntersections.length===0){
+            return result;
+        }
+
+        // sort the intersection point and get the closest point to the tested inputPoint
+        // In this case it is the point with the greates X coordinate
+        //
+        leftIntersections.sort(function(a, b) {
+            return b.x - a.x;
+        });
+
+
+
+        // Calculate the intersections points p(i) of all right hand side edges of the
+        // bounding boxes and the ray from the center of the drag&drop object to the
+        // left edge of the canvas
+        //
+        //                 Drag&Drop             bbox of any
+        //                 Figure                figure
+        //
+        //                 ........
+        //                 .      .
+        //                 .      .             ...........
+        //                 .   +<-------------->X         |
+        //                 .      .         p(i)|         |
+        //                 .      .             |         |
+        //                 ........             |         |
+        //                                      ...........
+        //
+        var rightIntersections= [];
+        var rightInputPoint = center.clone();
+        rightInputPoint.x= Number.MAX_SAFE_INTEGER;
+        this.bounds.forEach(function( bbox,index){
+            intersectionPoint =  draw2d.shape.basic.Line.intersection(bbox.getTopLeft(), bbox.getBottomLeft(), center, rightInputPoint);
+            if (intersectionPoint !== null) {
+                intersectionPoint.causedBBox = bbox;
+                rightIntersections.push(intersectionPoint);
+            }
+        });
+        // we can abort if we didn't find an intersection on the right hand side
+        if(rightIntersections.length===0){
+            return result;
+        }
+
+        // sort the intersection point and get the closest point to the tested inputPoint
+        // In this case it is the point with the greates X coordinate
+        //
+        rightIntersections.sort(function(a, b) {
+            return a.x - b.x;
+        });
+
+
+
+        // Snap the point (S) between the two founded intersections
+        // p(i1) and p(i2)
+        //
+        // BBox FigureA     Drag&Drop           BBox of FigureB
+        //                  Figure
+        //
+        // ....+           ........
+        //     |           .      .
+        // .   |p(i1)      .   S  .             ...........
+        // .   X<------------->X<-------------->X         |
+        // .   |           .      .        p(i2)|         |
+        // ....+           .      .             |         |
+        //                 ........             |         |
+        //                                      ...........
+        //
+        var snappedRect = boundingBox.clone();
+        var diff = ((leftIntersections[0].x + rightIntersections[0].x)/2)-center.x;
+
+        snappedRect.x +=diff;
+
+        return {snapped: Math.abs(diff)<this.SNAP_THRESHOLD, snappedRect:snappedRect, diff:diff, leftSide:leftIntersections[0], rightSide:rightIntersections[0]};
+    },
+
+
+    snapVertical:function( boundingBox )
+    {
+        var center = boundingBox.getCenter();
+
+        if(this.bounds===null) {
+            this.populateBounds();
+        }
+
+        var result = {
+            point:center,
+            snapped:false,
+            snappedBox : boundingBox.clone()
+        };
+
+
+        var intersectionPoint=null;
+
+        // Calculate the intersections points p(i) of all left side edges of the bounding boxes
+        // and the ray from the center of the drag&drop object to the left edge of the canva
+        //
+        // BBox of          Drag&Drop
+        // any Figure       Figure
+        //
+        // ....+           ........
+        //     |           .      .
+        // .   |p(i)       .      .
+        // .   X<------------->+  .
+        // .   |           .      .
+        // ....+           .      .
+        //                 ........
+        //
+        //
+        var topIntersections = [];
+        var topInputPoint = center.clone();
+        topInputPoint.y=0;
+        this.bounds.forEach(function( bbox){
+            intersectionPoint =  draw2d.shape.basic.Line.intersection(bbox.getBottomLeft(), bbox.getBottomRight(), center, topInputPoint);
+            if (intersectionPoint !== null) {
+                intersectionPoint.causedBBox = bbox;
+                topIntersections.push(intersectionPoint);
+            }
+        });
+        // we can abort if we didn't find an intersection on the left hand side
+        if(topIntersections.length===0){
+            return result;
+        }
+
+        // sort the intersection point and get the closest point to the tested inputPoint
+        // In this case it is the point with the greates X coordinate
+        //
+        topIntersections.sort(function(a, b) {
+            return b.y - a.y;
+        });
+
+
+
+        // Calculate the intersections points p(i) of all right hand side edges of the
+        // bounding boxes and the ray from the center of the drag&drop object to the
+        // left edge of the canvas
+        //
+        //                 Drag&Drop             bbox of any
+        //                 Figure                figure
+        //
+        //                 ........
+        //                 .      .
+        //                 .      .             ...........
+        //                 .   +<-------------->X         |
+        //                 .      .         p(i)|         |
+        //                 .      .             |         |
+        //                 ........             |         |
+        //                                      ...........
+        //
+        var bottomIntersections= [];
+        var bottomInputPoint = center.clone();
+        bottomInputPoint.y= Number.MAX_SAFE_INTEGER;
+        this.bounds.forEach(function( bbox){
+            intersectionPoint =  draw2d.shape.basic.Line.intersection(bbox.getTopLeft(), bbox.getTopRight(), center, bottomInputPoint);
+            if (intersectionPoint !== null) {
+                intersectionPoint.causedBBox = bbox;
+                bottomIntersections.push(intersectionPoint);
+            }
+        });
+        // we can abort if we didn't find an intersection on the right hand side
+        if(bottomIntersections.length===0){
+            return result;
+        }
+
+        // sort the intersection point and get the closest point to the tested inputPoint
+        // In this case it is the point with the greates X coordinate
+        //
+        bottomIntersections.sort(function(a, b) {
+            return a.y - b.y;
+        });
+
+
+
+        // Snap the point (S) between the two founded intersections
+        // p(i1) and p(i2)
+        //
+        // BBox FigureA     Drag&Drop           BBox of FigureB
+        //                  Figure
+        //
+        // ....+           ........
+        //     |           .      .
+        // .   |p(i1)      .   S  .             ...........
+        // .   X<------------->X<-------------->X         |
+        // .   |           .      .        p(i2)|         |
+        // ....+           .      .             |         |
+        //                 ........             |         |
+        //                                      ...........
+        //
+        var snappedRect = boundingBox.clone();
+        var diff = ((topIntersections[0].y + bottomIntersections[0].y)/2)-center.y;
+
+        snappedRect.y +=diff;
+
+        return {snapped: Math.abs(diff)<this.SNAP_THRESHOLD, snappedRect:snappedRect, diff:diff, topSide:topIntersections[0], bottomSide:bottomIntersections[0]};
+    },
+
+    populateBounds:function()
+    {
+       var selection = this.canvas.getSelection().getAll(true);
+       var bounds = this.bounds = [];
+       
+       var figures = this.canvas.getFigures();
+       figures.each(function(index,figure){
+          if(!selection.contains(figure)){
+             bounds.push(figure.getBoundingBox());
+         }
+       });
+        console.log(bounds);
+    },
+
+    showHorizontalGuides:function(causedFigure, constraint)
+    {
+        if(this.horizontalGuideLines!=null){
+            this.horizontalGuideLines.stop();
+            this.horizontalGuideLines.remove();
+        }
+
+        var snapTopLeft  = constraint.snappedRect.getTopLeft();
+        var snapTopRight = constraint.snappedRect.getTopRight();
+        var y = ((Math.min(constraint.leftSide.causedBBox.getTopRight().y,Math.min(constraint.rightSide.causedBBox.y,causedFigure.getY()))-50)|0)+0.5;
+
+        this.canvas.paper.setStart();
+
+        // Vertical lines from left to the right order
+        //
+        this.canvas.paper.path("M " + ((constraint.leftSide.x|0)+0.5)   + " "+y+" L "+((constraint.leftSide.x|0)+0.5) + " "  + constraint.leftSide.y)
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1, "stroke-dasharray":". "});;
+        this.canvas.paper.path("M " + ((snapTopLeft.x |0)+0.5)  + " "+y+" L "+((snapTopLeft.x|0)+0.5) + " "  + snapTopLeft.y)
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1, "stroke-dasharray":". "});;
+        this.canvas.paper.path("M " + ((snapTopRight.x|0)+0.5)   + " "+y+" L "+((snapTopRight.x|0)+0.5) + " "  + snapTopRight.y)
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1, "stroke-dasharray":". "});;
+        this.canvas.paper.path("M " + ((constraint.rightSide.x|0)+0.5)  + " "+y+" L "+((constraint.rightSide.x|0)+0.5)+ " "  + constraint.rightSide.y)
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1, "stroke-dasharray":". "});;
+
+        // horizontal lines
+        //
+        this.canvas.paper.path("M " + (constraint.leftSide.x)   + " "+(y+5)+" L "+(snapTopLeft.x)+ " "  + (y+5)).attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+        this.canvas.paper.path("M " + (constraint.rightSide.x)  + " "+(y+5)+" L "+(snapTopRight.x)+ " "  + (y+5)).attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+        // 4 arrow heads starting on the left side and add one by one
+        //
+        this.canvas.paper.path(
+              " M " + (constraint.leftSide.x+5) + " "+(y)
+             +" L " + (constraint.leftSide.x) + " "+(y+5)
+             +" L " + (constraint.leftSide.x+5) + " "+(y+10))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+        this.canvas.paper.path(
+             " M " + (snapTopLeft.x-5) + " "+(y)
+            +" L " + (snapTopLeft.x) + " "+(y+5)
+            +" L " + (snapTopLeft.x-5) + " "+(y+10))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+
+        this.canvas.paper.path(
+             " M " + (snapTopRight.x+5) + " "+(y)
+            +" L " + (snapTopRight.x) + " "+(y+5)
+            +" L " + (snapTopRight.x+5) + " "+(y+10))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+
+        this.canvas.paper.path(
+             " M " + (constraint.rightSide.x-5) + " "+(y)
+            +" L " + (constraint.rightSide.x) + " "+(y+5)
+            +" L " + (constraint.rightSide.x-5) + " "+(y+10))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+
+        this.horizontalGuideLines = this.canvas.paper.setFinish();
+        this.horizontalGuideLines.toFront();
+    },
+
+    /**
+     * @method
+     * Hide the horizontal snapüing guides
+     *
+     * @param soft
+     */
+    hideHorizontalGuides:function( fast)
+    {
+        if(this.horizontalGuideLines==null){
+            return;
+        }
+
+        if(fast===true) {
+            if (this.horizontalGuideLines !== null) {
+                this.horizontalGuideLines.remove();
+                this.horizontalGuideLines = null;
+            }
+        }
+        else {
+            this.horizontalGuideLines.animate(
+                {opacity: 0.1},
+                this.FADEOUT_DURATION,
+                $.proxy(function () {
+                    if (this.horizontalGuideLines !== null) {
+                        this.horizontalGuideLines.remove();
+                        this.horizontalGuideLines = null;
+                    }
+                }, this)
+            );
+        }
+    },
+
+    showVerticalGuides:function(causedFigure, constraint)
+    {
+        if(this.verticalGuideLines!=null){
+            this.verticalGuideLines.stop();
+            this.verticalGuideLines.remove();
+        }
+
+        var snapTopRight    = constraint.snappedRect.getTopRight();
+        var snapBottomRight = constraint.snappedRect.getBottomRight();
+        var x = ((Math.max(constraint.topSide.causedBBox.getRight(),Math.max(constraint.bottomSide.causedBBox.getRight(),causedFigure.getX()))+40)|0)+0.5;
+
+        this.canvas.paper.setStart();
+
+        // Vertical lines from left to the right order
+        //
+        this.canvas.paper.path("M " + x + " "+((constraint.topSide.y|0)+0.5)+" L "+((constraint.topSide.x|0)+0.5) + " "  + ((constraint.topSide.y|0)+0.5))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1, "stroke-dasharray":". "});
+        this.canvas.paper.path("M " + x + " "+((snapTopRight.y|0)+0.5)+" L "+((snapTopRight.x|0)+0.5) + " "  + ((snapTopRight.y|0)+0.5))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1, "stroke-dasharray":". "});
+        this.canvas.paper.path("M " + x + " "+((snapBottomRight.y|0)+0.5)+" L "+((snapBottomRight.x|0)+0.5) + " "  + ((snapBottomRight.y|0)+0.5))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1, "stroke-dasharray":". "});
+        this.canvas.paper.path("M " + x   + " "+((constraint.bottomSide.y|0)+0.5)+" L "+((constraint.bottomSide.x|0)+0.5) + " "  + ((constraint.bottomSide.y|0)+0.5))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1, "stroke-dasharray":". "});
+
+        // horizontal lines
+        //
+        this.canvas.paper.path("M " + (x-5)  + " "+(((constraint.topSide.y|0)+0.5))+" L "+(x-5)+ " "  +((snapTopRight.y|0)+0.5))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+        this.canvas.paper.path("M " + (x-5)  + " "+(((constraint.bottomSide.y|0)+0.5))+" L "+(x-5)+ " "  +((snapBottomRight.y|0)+0.5))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+
+        // 4 arrow heads starting on the left side and add one by one
+        //
+        this.canvas.paper.path(
+             " M " + (x-10)+ " "+(constraint.topSide.y+5)
+            +" L " + (x-5) + " "+(constraint.topSide.y)
+            +" L " + (x)   + " "+(constraint.topSide.y+5))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+        this.canvas.paper.path(
+             " M " + (x-10)+ " "+(snapTopRight.y-5)
+            +" L " + (x-5) + " "+(snapTopRight.y)
+            +" L " + (x)   + " "+(snapTopRight.y-5))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+        this.canvas.paper.path(
+             " M " + (x-10)+ " "+(snapBottomRight.y+5)
+            +" L " + (x-5) + " "+(snapBottomRight.y)
+            +" L " + (x)   + " "+(snapBottomRight.y+5))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+        this.canvas.paper.path(
+             " M " + (x-10)+ " "+(constraint.bottomSide.y-5)
+            +" L " + (x-5) + " "+(constraint.bottomSide.y)
+            +" L " + (x)   + " "+(constraint.bottomSide.y-5))
+            .attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+        this.verticalGuideLines = this.canvas.paper.setFinish();
+        this.verticalGuideLines.toFront();
+    },
+
+    hideVerticalGuides:function()
+    {
+        if(this.verticalGuideLines==null){
+            return; //silently
+        }
+
+        this.verticalGuideLines.animate(
+            {opacity: 0.1},
+            this.FADEOUT_DURATION,
+            $.proxy(function(){
+                if(this.verticalGuideLines!==null) {
+                    this.verticalGuideLines.remove();
+                    this.verticalGuideLines = null;
+                }
+            },this)
+        );
+    }
+    
+});
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
+ ****************************************/
+
+/**
+ * @class draw2d.policy.canvas.SnapToCenterEditPolicy
+ * 
+ * Snapping is based on the existing children of a container. When snapping a shape, 
+ * the center of the bounding box will snap to the center of other figures of the given canvas.
+ *
+ * @author Andreas Herz
+ * 
+ * @extends draw2d.policy.canvas.SnapToEditPolicy
+ * @since 5.6.4
+ */
+draw2d.policy.canvas.SnapToCenterEditPolicy = draw2d.policy.canvas.SnapToEditPolicy.extend({
+
+    NAME : "draw2d.policy.canvas.SnapToCenterEditPolicy",
+    
+    SNAP_THRESHOLD   : 5,
+    FADEOUT_DURATION : 500,
+    
+    /**
+     * @constructor 
+     * Creates a new constraint policy for snap to geometry
+     * 
+     */
+    init: function( attr, setter, getter){
+        this.lineColor = null;
+
+        this._super(
+            $.extend({
+                lineColor: "#1387E6"
+            },attr),
+            $.extend({
+                /** @attr {draw2d.util.Color} color the line color of the snapTo lines */
+                lineColor : this.setLineColor
+            }, setter),
+            $.extend({
+                lineColor : this.getLineColor
+            }, getter));
+
+        this.centers=null;
+
+        this.horizontalGuideLines = null;
+        this.verticalGuideLines = null;
+        this.canvas = null;
+    },
+
+
+    /**
+     * @method
+     * Set the color of the snap line.
+     *
+     *      // Alternatively you can use the attr method:
+     *      policy.attr({
+     *        lineColor: color
+     *      });
+     *
+     * @param {draw2d.util.Color|String} color The new color of the line.
+     **/
+    setLineColor:function( color)
+    {
+        this.lineColor = new draw2d.util.Color(color);
+        return this;
+    },
+
+    /**
+     * @method
+     * Return the current paint color.
+     *
+     * @return {draw2d.util.Color} The paint color of the line.
+     * @since 5.6.1
+     **/
+    getLineColor:function()
+    {
+        return this.lineColor;
+    },
+
+
+    onInstall: function(canvas)
+    {
+        this.canvas = canvas;
+    },
+    
+    onUninstall: function(canvas)
+    {
+        this.canvas = null;
+    },
+    
+    /**
+     * @method
+     * 
+     * @param {draw2d.Canvas} canvas
+     * @param {Number} x the x-coordinate of the mouse down event
+     * @param {Number} y the y-coordinate of the mouse down event
+     * @param {Boolean} shiftKey true if the shift key has been pressed during this event
+     * @param {Boolean} ctrlKey true if the ctrl key has been pressed during the event
+     * @template
+     */
+    onMouseUp: function(figure, x, y, shiftKey, ctrlKey)
+    {
+        this.centers=null;
+        this.hideHorizontalGuides(false);
+        this.hideVerticalGuides(false);
+    },
+    
+    /**
+     * @method
+     * Adjust the coordinates to the canvas neighbours
+     *
+     * @param canvas the related canvas
+     * @param figure the figure to snap
+     * @param {draw2d.geo.Point} pos
+     *
+     * @returns {draw2d.geo.Point} the constraint position of the figure
+     */
+    snap: function(canvas, figure, modifiedPos, originalPos)
+    {
+        // do nothing for resize handles
+        if(figure instanceof draw2d.ResizeHandle) {
+           return modifiedPos;
+        }
+
+
+        var allowXChanges = modifiedPos.x=== originalPos.x;
+        var allowYChanges = modifiedPos.y=== originalPos.y;
+
+        var inputBounds = new draw2d.geo.Rectangle(modifiedPos.x,modifiedPos.y, figure.getWidth(), figure.getHeight());
+        var inputCenter = inputBounds.getCenter();
+
+        modifiedPos = modifiedPos.clone();
+
+        if(allowXChanges===true) {
+            var horizontal = this.snapHorizontal(inputCenter);
+
+            // Show a horizontal line if the snapper has modified the inputPoint
+            //
+            if (horizontal.snapped) {
+                // show the snap lines..
+                this.showHorizontalGuides(figure, horizontal);
+
+                // and snap the x coordinate
+                modifiedPos.y += horizontal.diff;
+            }
+            else {
+                this.hideHorizontalGuides(true);
+            }
+        }
+        else{
+            this.hideHorizontalGuides(true);
+        }
+
+        if(allowYChanges===true) {
+            var vertical = this.snapVertical(inputCenter);
+
+            // Show a vertical guides if the snapper has modified the inputPoint
+            //
+            if (vertical.snapped) {
+                // show the snap lines..
+                this.showVerticalGuides(figure, vertical);
+
+                // and snap the x coordinate
+                modifiedPos.x += vertical.diff;
+            }
+            else {
+                this.hideVerticalGuides(true);
+            }
+        }
+        else{
+            this.hideVerticalGuides(true);
+        }
+
+        return modifiedPos;
+    },
+
+
+    snapVertical:function( center  )
+    {
+        var _this = this;
+        if(this.centers===null) {
+            this.populateCenters();
+        }
+
+        var result = {
+            point:center,
+            snapped:false,
+            diff : 0
+        };
+
+
+        var candidates= [];
+        this.centers.forEach(function( point){
+            if(Math.abs(point.x - center.x)<_this.SNAP_THRESHOLD){
+                candidates.push(point);
+            }
+        });
+
+        // we can abort if we didn't find an intersection on the right hand side
+        if(candidates.length===0){
+            return result;
+        }
+
+        // sort the intersection point and get the closest point to the tested inputPoint
+        // In this case it is the point with the greates X coordinate
+        //
+        candidates.sort(function(a, b) {
+            return a.x - b.x;
+        });
+
+        var diff = candidates[0].x -center.x;
+        var snappedPoint = center.clone();
+        snappedPoint.x +=diff;
+        return {snapped: true, diff:diff, point:candidates[0], snappedPoint:snappedPoint};
+    },
+
+
+
+    snapHorizontal:function( center  )
+    {
+        var _this = this;
+        if(this.centers===null) {
+            this.populateCenters();
+        }
+
+        var result = {
+            point:center,
+            snapped:false,
+            diff : 0
+        };
+
+
+        var candidates= [];
+        this.centers.forEach(function( point){
+            if(Math.abs(point.y - center.y)<_this.SNAP_THRESHOLD){
+                candidates.push(point);
+            }
+        });
+
+        // we can abort if we didn't find an intersection on the right hand side
+        if(candidates.length===0){
+            return result;
+        }
+
+        // sort the intersection point and get the closest point to the tested inputPoint
+        // In this case it is the point with the greatest X coordinate
+        //
+        candidates.sort(function(a, b) {
+            return a.y - b.y;
+        });
+
+        var diff = candidates[0].y -center.y;
+        var snappedPoint = center.clone();
+        snappedPoint.y +=diff;
+        return {snapped: true, diff:diff, point:candidates[0], snappedPoint:snappedPoint};
+    },
+
+    populateCenters: function()
+    {
+       var selection = this.canvas.getSelection().getAll(true);
+       var centers = this.centers = [];
+       
+       var figures = this.canvas.getFigures();
+       figures.each(function(index, figure){
+          if(!selection.contains(figure)){
+             centers.push(figure.getBoundingBox().getCenter());
+         }
+       });
+    },
+
+    showHorizontalGuides:function(causedFigure, constraint)
+    {
+        if(this.horizontalGuideLines!==null){
+            this.horizontalGuideLines.stop();
+            this.horizontalGuideLines.remove();
+        }
+
+        var start  = constraint.point;
+        var end    = constraint.snappedPoint;
+
+        this.canvas.paper.setStart();
+
+        // horizontal lines
+        //
+        this.canvas.paper.path("M " + (start.x)  + " "+((start.y|0)+0.5)+" L "+(end.x)+ " "  + ((end.y|0)+0.5)).attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+        this.horizontalGuideLines = this.canvas.paper.setFinish();
+        this.horizontalGuideLines.toFront();
+    },
+
+    /**
+     * @method
+     * Hide the horizontal snapüing guides
+     *
+     * @param soft
+     */
+    hideHorizontalGuides:function( fast)
+    {
+        if(this.horizontalGuideLines===null){
+            return;
+        }
+        if(fast===true) {
+            if (this.horizontalGuideLines !== null) {
+                this.horizontalGuideLines.remove();
+                this.horizontalGuideLines = null;
+            }
+        }
+        else {
+            this.horizontalGuideLines.animate(
+                {opacity: 0.1},
+                this.FADEOUT_DURATION,
+                $.proxy(function () {
+                    if (this.horizontalGuideLines !== null) {
+                        this.horizontalGuideLines.remove();
+                        this.horizontalGuideLines = null;
+                    }
+                }, this)
+            );
+        }
+    },
+
+
+    showVerticalGuides:function(causedFigure, constraint)
+    {
+        if(this.verticalGuideLines!==null){
+            this.verticalGuideLines.stop();
+            this.verticalGuideLines.remove();
+        }
+
+        var start  = constraint.point;
+        var end    = constraint.snappedPoint;
+
+        this.canvas.paper.setStart();
+
+        // horizontal lines
+        //
+        this.canvas.paper.path("M " + ((start.x|0)+0.5)  + " "+(start.y)+" L "+((end.x|0)+0.5)+ " "  + (end.y)).attr({"stroke":this.lineColor.hash(),"stroke-width":1});
+
+
+        this.verticalGuideLines = this.canvas.paper.setFinish();
+        this.verticalGuideLines.toFront();
+    },
+
+    /**
+     * @method
+     * Hide the horizontal snapüing guides
+     *
+     * @param soft
+     */
+    hideVerticalGuides:function( fast)
+    {
+        if(this.verticalGuideLines===null){
+            return;
+        }
+        if(fast===true) {
+            if (this.verticalGuideLines !== null) {
+                this.verticalGuideLines.remove();
+                this.verticalGuideLines = null;
+            }
+        }
+        else {
+            this.verticalGuideLines.animate(
+                {opacity: 0.1},
+                this.FADEOUT_DURATION,
+                $.proxy(function () {
+                    if (this.verticalGuideLines !== null) {
+                        this.verticalGuideLines.remove();
+                        this.verticalGuideLines = null;
+                    }
+                }, this)
+            );
+        }
+    }
 });
 /*****************************************
  *   Library is under GPL License (GPL)
@@ -11599,8 +13753,8 @@ draw2d.policy.figure.FigureEditPolicy = draw2d.policy.EditPolicy.extend({
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter){
+        this._super( attr, setter, getter);
     },
     
     /**
@@ -11641,9 +13795,8 @@ draw2d.policy.figure.DragDropEditPolicy = draw2d.policy.figure.FigureEditPolicy.
      * @constructor 
      * Creates a new Router object
      */
-    init: function()
-    {
-        this._super();
+    init: function( attr, setter, getter){
+        this._super( attr, setter, getter);
     },
     
    
@@ -11688,8 +13841,7 @@ draw2d.policy.figure.DragDropEditPolicy = draw2d.policy.figure.FigureEditPolicy.
         
         // enable the alpha blending of the first real move of the object
         //
-        if(figure.isMoving===false)
-        {
+        if(figure.isMoving===false){
             figure.isMoving = true;
             figure.setAlpha(figure.originalAlpha*0.4);
         }    	
@@ -11901,8 +14053,9 @@ draw2d.policy.figure.HorizontalEditPolicy = draw2d.policy.figure.DragDropEditPol
      * Creates a new constraint object
      * 
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter)
+    {
+        this._super( attr, setter, getter);
     },
 
 
@@ -11956,9 +14109,9 @@ draw2d.policy.figure.VerticalEditPolicy = draw2d.policy.figure.DragDropEditPolic
      * @constructor 
      * Creates a new constraint object
      */
-    init: function()
+    init: function( attr, setter, getter)
     {
-        this._super();
+        this._super( attr, setter, getter);
     },
 
 
@@ -12000,9 +14153,9 @@ draw2d.policy.figure.SelectionFeedbackPolicy = draw2d.policy.figure.DragDropEdit
      * @constructor 
      * 
      */
-    init: function()
+    init: function( attr, setter, getter)
     {
-        this._super();
+        this._super( attr, setter, getter);
     },
     
 
@@ -12104,8 +14257,9 @@ draw2d.policy.figure.ResizeSelectionFeedbackPolicy = draw2d.policy.figure.Select
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter)
+    {
+        this._super( attr, setter, getter);
    },
     
 
@@ -12121,31 +14275,14 @@ draw2d.policy.figure.ResizeSelectionFeedbackPolicy = draw2d.policy.figure.Select
         {
             // create standard Resize handles for the figure
             //
-            var r1= new draw2d.ResizeHandle(figure,1); // 1 = LEFT TOP
-            var r2= new draw2d.ResizeHandle(figure,2); // 2 = CENTER_TOP
-            var r3= new draw2d.ResizeHandle(figure,3); // 3 = RIGHT_TOP
-            var r4= new draw2d.ResizeHandle(figure,4); // 4 = RIGHT_MIDDLE
-            var r5= new draw2d.ResizeHandle(figure,5); // 5 = RIGHT_BOTTOM
-            var r6= new draw2d.ResizeHandle(figure,6); // 6 = CENTER_BOTTOM
-            var r7= new draw2d.ResizeHandle(figure,7); // 7 = LEFT_BOTTOM
-            var r8= new draw2d.ResizeHandle(figure,8); // 8 = LEFT_MIDDLE
-
-            // and add them to the figure. We need the reference to the ResizeHandles
-            // to remove the resize handles if the figure will be unselect. Just a simple
-            // refrence store
-            //
+            var r1= draw2d.Configuration.factory.createResizeHandle(figure,1); // 1 = LEFT TOP
+            var r3= draw2d.Configuration.factory.createResizeHandle(figure,3); // 3 = RIGHT_TOP
+            var r5= draw2d.Configuration.factory.createResizeHandle(figure,5); // 5 = RIGHT_BOTTOM
+            var r7= draw2d.Configuration.factory.createResizeHandle(figure,7); // 7 = LEFT_BOTTOM
             figure.selectionHandles.add(r1);
-            figure.selectionHandles.add(r2);
             figure.selectionHandles.add(r3);
-            figure.selectionHandles.add(r4);
             figure.selectionHandles.add(r5);
-            figure.selectionHandles.add(r6);
             figure.selectionHandles.add(r7);
-            figure.selectionHandles.add(r8);
-            
-            // show the default top/left, top/right, bottom/right and bottom/left
-            // resize handles 
-            //
             r1.show(canvas);
             r3.show(canvas);
             r5.show(canvas);
@@ -12172,10 +14309,18 @@ draw2d.policy.figure.ResizeSelectionFeedbackPolicy = draw2d.policy.figure.Select
             // show only the additional resizehandles if the figure is resizeable
             //
             if((!figure.getKeepAspectRatio()) && figure.isResizeable()){
-              r2.show(canvas);
-              r4.show(canvas);
-              r6.show(canvas);
-              r8.show(canvas);
+                var r2= draw2d.Configuration.factory.createResizeHandle(figure,2); // 2 = CENTER_TOP
+                var r4= draw2d.Configuration.factory.createResizeHandle(figure,4); // 4 = RIGHT_MIDDLE
+                var r6= draw2d.Configuration.factory.createResizeHandle(figure,6); // 6 = CENTER_BOTTOM
+                var r8= draw2d.Configuration.factory.createResizeHandle(figure,8); // 8 = LEFT_MIDDLE
+                figure.selectionHandles.add(r2);
+                figure.selectionHandles.add(r4);
+                figure.selectionHandles.add(r6);
+                figure.selectionHandles.add(r8);
+                r2.show(canvas);
+                r4.show(canvas);
+                r6.show(canvas);
+                r8.show(canvas);
             }
         }
         this.moved(canvas, figure);
@@ -12200,10 +14345,10 @@ draw2d.policy.figure.ResizeSelectionFeedbackPolicy = draw2d.policy.figure.Select
         var xPos = figure.getX();
         var yPos = figure.getY();
         
-        var r1= figure.selectionHandles.get(0);
-        var r3= figure.selectionHandles.get(2);
-        var r5= figure.selectionHandles.get(4);
-        var r7= figure.selectionHandles.get(6); 
+        var r1= figure.selectionHandles.find(function(handle){return handle.type===1});
+        var r3= figure.selectionHandles.find(function(handle){return handle.type===3});
+        var r5= figure.selectionHandles.find(function(handle){return handle.type===5});
+        var r7= figure.selectionHandles.find(function(handle){return handle.type===7});
         r1.setPosition(xPos-r1.getWidth(),yPos-r1.getHeight());
         r3.setPosition(xPos+objWidth,yPos-r3.getHeight());
         r5.setPosition(xPos+objWidth,yPos+objHeight);
@@ -12211,10 +14356,10 @@ draw2d.policy.figure.ResizeSelectionFeedbackPolicy = draw2d.policy.figure.Select
         
         if(!figure.getKeepAspectRatio())
         {
-            var r2= figure.selectionHandles.get(1); 
-            var r4= figure.selectionHandles.get(3); 
-            var r6= figure.selectionHandles.get(5); 
-            var r8= figure.selectionHandles.get(7); 
+            var r2= figure.selectionHandles.find(function(handle){return handle.type===2});
+            var r4= figure.selectionHandles.find(function(handle){return handle.type===4});
+            var r6= figure.selectionHandles.find(function(handle){return handle.type===6});
+            var r8= figure.selectionHandles.find(function(handle){return handle.type===8});
      
             r2.setPosition(xPos+(objWidth/2)-(r2.getWidth()/2),yPos-r2.getHeight());
             r4.setPosition(xPos+objWidth,yPos+(objHeight/2)-(r4.getHeight()/2));
@@ -12252,9 +14397,9 @@ draw2d.policy.figure.RectangleSelectionFeedbackPolicy = draw2d.policy.figure.Sel
      * @constructor 
      * Creates a selection feedback for a shape.
      */
-    init: function()
+    init: function( attr, setter, getter)
     {
-        this._super();
+        this._super( attr, setter, getter);
 
     },
     
@@ -12269,8 +14414,8 @@ draw2d.policy.figure.RectangleSelectionFeedbackPolicy = draw2d.policy.figure.Sel
             // Add a dotted line rectangle to the figure. Override the show/hide method of the standard
             // figure to avoid adding these element to the hit test of the canvas. In this case the element
             // is just visible but not part of the model or responsible for any drag/drop operation
-            //
-            var box = new draw2d.shape.basic.Rectangle({bgColor:null, dashArray:"- ", color:"#2096fc", stroke:0.5});
+            // #2C70FF #2096fc
+            var box = new draw2d.shape.basic.Rectangle({bgColor:null, dashArray:"- ", color:"#2C70FF", stroke:0.5});
             box.hide= function(){
                 // IMPORTANT
                 // don't add/remove this rectangle to the canvas resizeHandles. This rect isn't responsible for any hitTest or
@@ -12285,43 +14430,24 @@ draw2d.policy.figure.RectangleSelectionFeedbackPolicy = draw2d.policy.figure.Sel
                 // dragDrop operation
                 //canvas.resizeHandles.remove(box);
                 //canvas.resizeHandles.add(box);
-                box.shape.toFront();
+                box.toFront(figure);
             };
-            box.show(canvas);
-
             // create standard Resize handles for the figure
             //
-            var r1= new draw2d.ResizeHandle(figure,1); // 1 = LEFT TOP
-            var r2= new draw2d.ResizeHandle(figure,2); // 2 = CENTER_TOP
-            var r3= new draw2d.ResizeHandle(figure,3); // 3 = RIGHT_TOP
-            var r4= new draw2d.ResizeHandle(figure,4); // 4 = RIGHT_MIDDLE
-            var r5= new draw2d.ResizeHandle(figure,5); // 5 = RIGHT_BOTTOM
-            var r6= new draw2d.ResizeHandle(figure,6); // 6 = CENTER_BOTTOM
-            var r7= new draw2d.ResizeHandle(figure,7); // 7 = LEFT_BOTTOM
-            var r8= new draw2d.ResizeHandle(figure,8); // 8 = LEFT_MIDDLE
-
-            // and add them to the figure. We need the reference to the ResizeHandles
-            // to remove the resize handles if the figure will be unselect. Just a simple
-            // reference store
-            //
+            var r1= draw2d.Configuration.factory.createResizeHandle(figure,1); // 1 = LEFT TOP
+            var r3= draw2d.Configuration.factory.createResizeHandle(figure,3); // 3 = RIGHT_TOP
+            var r5= draw2d.Configuration.factory.createResizeHandle(figure,5); // 5 = RIGHT_BOTTOM
+            var r7= draw2d.Configuration.factory.createResizeHandle(figure,7); // 7 = LEFT_BOTTOM
             figure.selectionHandles.add(r1);
-            figure.selectionHandles.add(r2);
             figure.selectionHandles.add(r3);
-            figure.selectionHandles.add(r4);
             figure.selectionHandles.add(r5);
-            figure.selectionHandles.add(r6);
             figure.selectionHandles.add(r7);
-            figure.selectionHandles.add(r8);
-            
-            // show the default top/left, top/right, bottom/right and bottom/left
-            // resize handles 
-            //
             r1.show(canvas);
             r3.show(canvas);
             r5.show(canvas);
             r7.show(canvas);
 
-            
+
             // change the look&feel of the corner resizehandles if the
             // figure isn't resizeable
             //
@@ -12341,10 +14467,18 @@ draw2d.policy.figure.RectangleSelectionFeedbackPolicy = draw2d.policy.figure.Sel
             //
             if((!figure.getKeepAspectRatio()) && figure.isResizeable())
             {
-              r2.show(canvas);
-              r4.show(canvas);
-              r6.show(canvas);
-              r8.show(canvas);
+                var r2= draw2d.Configuration.factory.createResizeHandle(figure,2); // 2 = CENTER_TOP
+                var r4= draw2d.Configuration.factory.createResizeHandle(figure,4); // 4 = RIGHT_MIDDLE
+                var r6= draw2d.Configuration.factory.createResizeHandle(figure,6); // 6 = CENTER_BOTTOM
+                var r8= draw2d.Configuration.factory.createResizeHandle(figure,8); // 8 = LEFT_MIDDLE
+                figure.selectionHandles.add(r2);
+                figure.selectionHandles.add(r4);
+                figure.selectionHandles.add(r6);
+                figure.selectionHandles.add(r8);
+                r2.show(canvas);
+                r4.show(canvas);
+                r6.show(canvas);
+                r8.show(canvas);
             }
 
             // add the reference of the "ant box" to the figure as well. But wee add them
@@ -12352,6 +14486,12 @@ draw2d.policy.figure.RectangleSelectionFeedbackPolicy = draw2d.policy.figure.Sel
             // on index 0-7.
             //
             figure.selectionHandles.add(box);
+
+            // call the box.show() at last to ensure that the resize handles are above the 
+            // rectangle. The rectangle did a toFront(parentShape);
+            box.show(canvas);
+
+
         }
         this.moved(canvas, figure);
    },
@@ -12385,29 +14525,30 @@ draw2d.policy.figure.RectangleSelectionFeedbackPolicy = draw2d.policy.figure.Sel
         var xPos = figure.getX();
         var yPos = figure.getY();
         
-        var r1= figure.selectionHandles.get(0);
-        var r3= figure.selectionHandles.get(2);
-        var r5= figure.selectionHandles.get(4);
-        var r7= figure.selectionHandles.get(6); 
+        var r1= figure.selectionHandles.find(function(handle){return handle.type===1});
+        var r3= figure.selectionHandles.find(function(handle){return handle.type===3});
+        var r5= figure.selectionHandles.find(function(handle){return handle.type===5});
+        var r7= figure.selectionHandles.find(function(handle){return handle.type===7});
+
         r1.setPosition(xPos-r1.getWidth(),yPos-r1.getHeight());
         r3.setPosition(xPos+objWidth,yPos-r3.getHeight());
         r5.setPosition(xPos+objWidth,yPos+objHeight);
         r7.setPosition(xPos-r7.getWidth(),yPos+objHeight);
         
-        if(!figure.getKeepAspectRatio())
+        if(!figure.getKeepAspectRatio()  && figure.isResizeable())
         {
-            var r2= figure.selectionHandles.get(1); 
-            var r4= figure.selectionHandles.get(3); 
-            var r6= figure.selectionHandles.get(5); 
-            var r8= figure.selectionHandles.get(7); 
+            var r2= figure.selectionHandles.find(function(handle){return handle.type===2});
+            var r4= figure.selectionHandles.find(function(handle){return handle.type===4});
+            var r6= figure.selectionHandles.find(function(handle){return handle.type===6});
+            var r8= figure.selectionHandles.find(function(handle){return handle.type===8});
      
             r2.setPosition(xPos+(objWidth/2)-(r2.getWidth()/2),yPos-r2.getHeight());
             r4.setPosition(xPos+objWidth,yPos+(objHeight/2)-(r4.getHeight()/2));
             r6.setPosition(xPos+(objWidth/2)-(r6.getWidth()/2),yPos+objHeight);
             r8.setPosition(xPos-r8.getWidth(),yPos+(objHeight/2)-(r8.getHeight()/2));
         }
-        var box= figure.selectionHandles.get(8); 
-        box.setPosition(figure.getPosition().translate(-2,-2));
+        var box= figure.selectionHandles.last();
+        box.setPosition(figure.getPosition().translate(-2.5,-2.5));
         box.setDimension(figure.getWidth()+4, figure.getHeight()+4);
         box.setRotationAngle(figure.getRotationAngle());
     }
@@ -12442,8 +14583,9 @@ draw2d.policy.figure.BigRectangleSelectionFeedbackPolicy = draw2d.policy.figure.
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter)
+    {
+        this._super( attr, setter, getter);
    },
     
 
@@ -12494,9 +14636,10 @@ draw2d.policy.figure.RoundRectangleSelectionFeedbackPolicy = draw2d.policy.figur
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
-   },
+    init: function( attr, setter, getter)
+    {
+        this._super( attr, setter, getter);
+    },
     
 
     /**
@@ -12539,8 +14682,9 @@ draw2d.policy.figure.BusSelectionFeedbackPolicy = draw2d.policy.figure.Selection
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter)
+    {
+        this._super( attr, setter, getter);
     },
     
 
@@ -12552,10 +14696,10 @@ draw2d.policy.figure.BusSelectionFeedbackPolicy = draw2d.policy.figure.Selection
      */
     onSelect: function(canvas, figure, isPrimarySelection){
         if (figure.selectionHandles.isEmpty()) {
-            var r2 = new draw2d.ResizeHandle(figure, 2); // 2 = CENTER_TOP
-            var r4 = new draw2d.ResizeHandle(figure, 4); // 4 = RIGHT_MIDDLE
-            var r6 = new draw2d.ResizeHandle(figure, 6); // 6 = CENTER_BOTTOM
-            var r8 = new draw2d.ResizeHandle(figure, 8); // 8 = LEFT_MIDDLE
+            var r2 = draw2d.Configuration.factory.createResizeHandle(figure, 2); // 2 = CENTER_TOP
+            var r4 = draw2d.Configuration.factory.createResizeHandle(figure, 4); // 4 = RIGHT_MIDDLE
+            var r6 = draw2d.Configuration.factory.createResizeHandle(figure, 6); // 6 = CENTER_BOTTOM
+            var r8 = draw2d.Configuration.factory.createResizeHandle(figure, 8); // 8 = LEFT_MIDDLE
 
             figure.selectionHandles.add(r2);
             figure.selectionHandles.add(r4);
@@ -12588,10 +14732,10 @@ draw2d.policy.figure.BusSelectionFeedbackPolicy = draw2d.policy.figure.Selection
         if(figure.selectionHandles.isEmpty()){
             return; // silently
         }
-        var r2= figure.selectionHandles.get(0); 
-        var r4= figure.selectionHandles.get(1); 
-        var r6= figure.selectionHandles.get(2); 
-        var r8= figure.selectionHandles.get(3); 
+        var r2= figure.selectionHandles.find(function(handle){return handle.type===2});
+        var r4= figure.selectionHandles.find(function(handle){return handle.type===4});
+        var r6= figure.selectionHandles.find(function(handle){return handle.type===6});
+        var r8= figure.selectionHandles.find(function(handle){return handle.type===8});
 
         var objHeight   = figure.getHeight();
         var objWidth    = figure.getWidth();
@@ -12639,8 +14783,9 @@ draw2d.policy.figure.WidthSelectionFeedbackPolicy = draw2d.policy.figure.Selecti
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter)
+    {
+        this._super( attr, setter, getter);
     },
     
 
@@ -12652,8 +14797,8 @@ draw2d.policy.figure.WidthSelectionFeedbackPolicy = draw2d.policy.figure.Selecti
      */
     onSelect: function(canvas, figure, isPrimarySelection){
         if (figure.selectionHandles.isEmpty()) {
-            var r4 = new draw2d.ResizeHandle(figure, 4); // 4 = RIGHT_MIDDLE
-            var r8 = new draw2d.ResizeHandle(figure, 8); // 8 = LEFT_MIDDLE
+            var r4 = draw2d.Configuration.factory.createResizeHandle(figure, 4); // 4 = RIGHT_MIDDLE
+            var r8 = draw2d.Configuration.factory.createResizeHandle(figure, 8); // 8 = LEFT_MIDDLE
 
             r4.installEditPolicy(new draw2d.policy.figure.HorizontalEditPolicy());
             r8.installEditPolicy(new draw2d.policy.figure.HorizontalEditPolicy());
@@ -12682,8 +14827,8 @@ draw2d.policy.figure.WidthSelectionFeedbackPolicy = draw2d.policy.figure.Selecti
         if(figure.selectionHandles.isEmpty()){
             return; // silently
         }
-        var r4= figure.selectionHandles.first(); 
-        var r8= figure.selectionHandles.last(); 
+        var r4= figure.selectionHandles.find(function(handle){return handle.type===4});
+        var r8= figure.selectionHandles.find(function(handle){return handle.type===8});
 
         var objWidth    = figure.getWidth();
         
@@ -12717,8 +14862,9 @@ draw2d.policy.figure.VBusSelectionFeedbackPolicy = draw2d.policy.figure.BusSelec
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter)
+    {
+        this._super( attr, setter, getter);
     },
     
 
@@ -12733,8 +14879,9 @@ draw2d.policy.figure.VBusSelectionFeedbackPolicy = draw2d.policy.figure.BusSelec
         if(figure.selectionHandles.isEmpty()){
             return; // silently
         }
-        var r2= figure.selectionHandles.get(0); 
-        var r6= figure.selectionHandles.get(2); 
+        var r2= figure.selectionHandles.find(function(handle){return handle.type===2});
+        var r6= figure.selectionHandles.find(function(handle){return handle.type===6});
+
         var objWidth    = figure.getWidth();
         // adjust the resize handles on the left/right to the new dimension of the shape
         //
@@ -12743,7 +14890,7 @@ draw2d.policy.figure.VBusSelectionFeedbackPolicy = draw2d.policy.figure.BusSelec
         
         this._super(canvas,figure);
      }
-    
+
     
 });
 
@@ -12765,8 +14912,9 @@ draw2d.policy.figure.HBusSelectionFeedbackPolicy = draw2d.policy.figure.BusSelec
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter)
+    {
+        this._super( attr, setter, getter);
     },
     
     /**
@@ -12781,8 +14929,8 @@ draw2d.policy.figure.HBusSelectionFeedbackPolicy = draw2d.policy.figure.BusSelec
         if(figure.selectionHandles.isEmpty()){
             return; // silently
         }
-        var r4= figure.selectionHandles.get(1); 
-        var r8= figure.selectionHandles.get(3); 
+        var r4= figure.selectionHandles.find(function(handle){return handle.type===4});
+        var r8= figure.selectionHandles.find(function(handle){return handle.type===8});
 
         r4.setDimension(r4.getWidth(), figure.getHeight());
         r8.setDimension(r4.getWidth(), figure.getHeight());
@@ -12824,8 +14972,9 @@ draw2d.policy.figure.AntSelectionFeedbackPolicy = draw2d.policy.figure.Selection
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter)
+    {
+        this._super( attr, setter, getter);
     },
     
 
@@ -12841,7 +14990,7 @@ draw2d.policy.figure.AntSelectionFeedbackPolicy = draw2d.policy.figure.Selection
             var box = new draw2d.shape.basic.Rectangle();
             box.setBackgroundColor(null);
             box.setDashArray("- ");
-            box.setColor("#00bdee");
+            box.setColor("#2C70FF");
             box.hide= function(){
                 // IMPORTANT
                 // don't add/remove this rectangle to the canvas resizeHandles. This rect isn't responsible for any hitTest or
@@ -12877,8 +15026,8 @@ draw2d.policy.figure.AntSelectionFeedbackPolicy = draw2d.policy.figure.Selection
         if(figure.selectionHandles.isEmpty()){
             return; // silently
         }
-        var box= figure.selectionHandles.get(0); 
-        box.setPosition(figure.getPosition().translate(-2,-2));
+        var box= figure.selectionHandles.first();
+        box.setPosition(figure.getPosition().translate(-2.5,-2.5));
         box.setDimension(figure.getWidth()+4, figure.getHeight()+4);
         box.setRotationAngle(figure.getRotationAngle());
      }
@@ -12910,8 +15059,9 @@ draw2d.policy.figure.GlowSelectionFeedbackPolicy = draw2d.policy.figure.Selectio
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter)
+    {
+        this._super( attr, setter, getter);
     },
     
 
@@ -12967,9 +15117,10 @@ draw2d.policy.figure.SlimSelectionFeedbackPolicy = draw2d.policy.figure.Rectangl
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
-   },
+    init: function( attr, setter, getter)
+    {
+        this._super( attr, setter, getter);
+    },
     
 
     /**
@@ -13016,8 +15167,9 @@ draw2d.policy.figure.VertexSelectionFeedbackPolicy = draw2d.policy.figure.Select
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
-        this._super();
+    init: function( attr, setter, getter)
+    {
+        this._super( attr, setter, getter);
     },
     
 
@@ -14050,9 +16202,12 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
         var start = 0;
         var allPorts = canvas.getAllPorts().clone();
         allPorts.each(function(i, element){
-	        element.__beforeInflate = element.getWidth();
+            if(typeof element.__beforeInflate ==="undefined") {
+                element.__beforeInflate = element.getWidth();
+            }
 	        start = element.__beforeInflate;
     	});
+
 
     	// animate the resize of the ports
     	//
@@ -14112,14 +16267,16 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
      * @template
      */
     onDragEnd: function(canvas, figure, x, y, shiftKey, ctrlKey){
-        this.tweenable.stop(false);
-        this.tweenable = null;
+        this.tweenable.stop(true);
+        this.tweenable.dispose();
+        this.tweenable= null;
         canvas.getAllPorts().each(function(i, element){
             // IMPORTANT shortcut to avoid rendering errors!!
             // performance shortcut to avoid a lot of events and recalculate/routing of all related connections
     	    // for each setDimension call. Additional the connection is following a port during Drag&Drop operation
     	    element.shape.attr({rx : element.__beforeInflate/2, ry :element.__beforeInflate/2});
             element.width = element.height = element.__beforeInflate;
+            delete element.__beforeInflate;
     		//element.setDimension(element.__beforeInflate, element.__beforeInflate);
     	});
         this.connectionLine.setCanvas(null);
@@ -14143,7 +16300,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "5.0.5",
+    version : "5.6.5",
     i18n : {
         command : {
             move : "Move Shape",
@@ -14170,9 +16327,32 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
             filenamePrompt : "Enter Filename:"
         }
     },
-    color : {
-        resizeHandle : "#5bcaff",
-        vertexHandle : "#5bcaff"
+
+    factory:{
+    	// all selection policies calles this method to create a ResizeHandle.
+    	// It is possible to replace this method with a custom implementation
+    	// @since 5.2.0
+    	createResizeHandle: function(forShape, type){
+    		return new draw2d.ResizeHandle(forShape, type);
+    	},
+    	// The commands an canvas calles this method to create a new connection.
+    	// all parameters are optional.
+    	// @since 5.3.0
+    	createConnection: function(sourcePort, targetPort, callback, dropTarget){
+    	    return new draw2d.Connection();
+    	},
+        // @since 5.3.0
+    	createInputPort: function(relatedFigure){
+    	    return new draw2d.InputPort();
+    	},
+        // @since 5.3.0
+        createOutputPort: function(relatedFigure){
+            return new draw2d.OutputPort();
+        },
+        // @since 5.3.0
+        createHybridPort: function(relatedFigure){
+            return new draw2d.HybridPort();
+        }
     }
 };
 /*****************************************
@@ -14209,7 +16389,7 @@ draw2d.Canvas = Class.extend(
      * 
      * @param {String} canvasId the id of the DOM element to use a parent container
      */
-    init : function(canvasId, width, height)
+    init: function(canvasId, width, height)
     {
         var _this = this;
         // Hook the canvas calculation for IE8
@@ -14279,10 +16459,8 @@ draw2d.Canvas = Class.extend(
                     _this.onDrag(ui.draggable, pos.getX(), pos.getY(), event.shiftKey, event.ctrlKey);
                 },
                 stop: function(e, ui){
-                    this.isInExternalDragOperation=false;
                 },
                 start: function(e, ui){
-                    this.isInExternalDragOperation=true;
                     $(ui.helper).addClass("shadow");
                 }
            });
@@ -14303,7 +16481,6 @@ draw2d.Canvas = Class.extend(
         this.zoomFactor = 1.0; // range [0.001..10]
         this.selection  = new draw2d.Selection();
         this.currentDropTarget = null;
-        this.isInExternalDragOperation=false;
         this.currentHoverFigure = null;
         
         // eventhandling since version 5.0.0
@@ -14331,7 +16508,7 @@ draw2d.Canvas = Class.extend(
         this.linesToRepaintAfterDragDrop =  new draw2d.util.ArrayList();
         this.lineIntersections = new draw2d.util.ArrayList();
        
-        this.installEditPolicy( new draw2d.policy.canvas.DefaultKeyboardPolicy());      // Handles the ke3yboard interaction
+        this.installEditPolicy( new draw2d.policy.canvas.DefaultKeyboardPolicy());      // Handles the keyboard interaction
         this.installEditPolicy( new draw2d.policy.canvas.BoundingboxSelectionPolicy()); // Responsible for selection handling
         this.installEditPolicy( new draw2d.policy.canvas.ConnectionInterceptorPolicy());// Responsible for port, connection and drop operations
         
@@ -14390,9 +16567,11 @@ draw2d.Canvas = Class.extend(
 	               var hover = _this.getBestFigure(pos.x,pos.y);
 	               if(hover !== _this.currentHoverFigure && _this.currentHoverFigure!==null){
 	            	   _this.currentHoverFigure.onMouseLeave();
+	            	   _this.currentHoverFigure.fireEvent("mouseleave");
 	               }
 	               if(hover !== _this.currentHoverFigure && hover!==null){
 	            	   hover.onMouseEnter();
+	            	   hover.fireEvent("mouseenter");
 	               }
 	               _this.currentHoverFigure = hover;
                }
@@ -14418,21 +16597,27 @@ draw2d.Canvas = Class.extend(
         
         this.html.bind("mousedown touchstart", function(event)
         {
+            try{
             var pos = null;
             switch (event.which) {
             case 1: //touch pressed
             case 0: //Left mouse button pressed
-                event.preventDefault();
-                event = _this._getEvent(event);
-                _this.mouseDownX = event.clientX;
-                _this.mouseDownY = event.clientY;
-                _this.mouseDragDiffX = 0;
-                _this.mouseDragDiffY = 0;
-                pos = _this.fromDocumentToCanvasCoordinate(event.clientX, event.clientY);
-                _this.mouseDown = true;
-                _this.editPolicy.each(function(i,policy){
-                    policy.onMouseDown(_this,pos.x,pos.y, event.shiftKey, event.ctrlKey);
-                });
+                try{
+                    event.preventDefault();
+                    event = _this._getEvent(event);
+                    _this.mouseDownX = event.clientX;
+                    _this.mouseDownY = event.clientY;
+                    _this.mouseDragDiffX = 0;
+                    _this.mouseDragDiffY = 0;
+                    pos = _this.fromDocumentToCanvasCoordinate(event.clientX, event.clientY);
+                    _this.mouseDown = true;
+                    _this.editPolicy.each(function(i,policy){
+                        policy.onMouseDown(_this,pos.x,pos.y, event.shiftKey, event.ctrlKey);
+                    });
+                }
+                catch(exc){
+                    console.log(exc);
+                }
                 break;
             case 3: //Right mouse button pressed             
                 event.preventDefault();
@@ -14446,12 +16631,16 @@ draw2d.Canvas = Class.extend(
              default:
                 //You have a strange mouse
             }
+            }
+            catch(exc){
+                console.log(exc);
+            }
         });
         
         
         // Catch the dblclick and route them to the Canvas hook.
         //
-        this.html.bind("dblclick",function(event)
+        this.html.on("dblclick",function(event)
         {
             event = _this._getEvent(event);
 
@@ -14464,7 +16653,7 @@ draw2d.Canvas = Class.extend(
         
         // Catch the click event and route them to the canvas hook
         //
-        this.html.bind("click",function(event)
+        this.html.on("click",function(event)
         {
             event = _this._getEvent(event);
 
@@ -14540,7 +16729,7 @@ draw2d.Canvas = Class.extend(
      * 
      * @since 1.1.0
      */
-    clear : function()
+    clear: function()
     {
         // notice all listener that the canvas will be cleared
         this.fireEvent("clear");
@@ -14558,7 +16747,6 @@ draw2d.Canvas = Class.extend(
         this.zoomFactor =1.0;
         this.selection.clear();
         this.currentDropTarget = null;
-        this.isInExternalDragOperation=false;
 
         // internal document with all figures, ports, ....
         //
@@ -14665,6 +16853,7 @@ draw2d.Canvas = Class.extend(
                 return stay;
             });
         }
+        /*
         // only one SnapToXYZ edit policy at once
         else if (policy instanceof draw2d.policy.canvas.SnapToEditPolicy){
             // remove existing snapTo policy
@@ -14676,8 +16865,9 @@ draw2d.Canvas = Class.extend(
                 return stay;
             });
         }
+        */
         else if( policy instanceof draw2d.policy.canvas.ConnectionInterceptorPolicy){
-            // think about if I allow to install move than one
+            // think about if I allow to install more than one
         }
         
         policy.onInstall(this);
@@ -14692,12 +16882,12 @@ draw2d.Canvas = Class.extend(
      * UnInstall the selection and edit policy from the canvas.
      * 
      * @since 2.2.0
-     * @param {draw2d.policy.EditPolicy} policy
+     * @param {draw2d.policy.EditPolicy|String} policy
      */
     uninstallEditPolicy: function(policy)
     {
-        if(!(policy instanceof draw2d.policy.EditPolicy)){
-            return this; // silently
+        if(policy===null){
+            return; //silently
         }
         
         // either remove exact the policy instance...
@@ -14712,8 +16902,9 @@ draw2d.Canvas = Class.extend(
             // the same class at once
             //
             var _this = this;
+            var name = (typeof policy === "string")?policy:policy.NAME;
             this.editPolicy.grep(function(p){
-                if(p.NAME === policy.NAME){
+                if(p.NAME === name){
                     p.onUninstall(_this);
                     return false;
                 }
@@ -15008,8 +17199,23 @@ draw2d.Canvas = Class.extend(
 
     /**
      * @method
-     * Add a figure at the given x/y coordinate.
+     * Add a figure at the given x/y coordinate. This method fires an event.
      *
+     * Example:
+     * 
+     *      canvas.on("figure:add", function(emitter, event){
+     *         alert("figure added:");
+     *      });
+     *      
+     *      // or more general if you want catch all figure related events
+     *      //
+     *      canvas.on("figure", function(emitter, event){
+     *         // use event.figure.getCanvas()===null to determine if the 
+     *         // figure part of the canvas
+     *         
+     *         alert("figure added or removed:");
+     *      });
+     *      
      * @param {draw2d.Figure} figure The figure to add.
      * @param {Number/draw2d.geo.Point} x The new x coordinate of the figure or the x/y coordinate if it is an draw2d.geo.Point
      * @param {Number} [y] The y position.
@@ -15035,12 +17241,21 @@ draw2d.Canvas = Class.extend(
       }
       figure.setCanvas(this);
 
-      // important inital 
+      // important inital call
       figure.getShapeElement();
 
       // init a repaint of the figure. This enforce that all properties
       // ( color, dim, stroke,...) will be set.
       figure.repaint();
+      // fire the figure:add event before the "move" event and after the figure.repaint() call!
+      //   - the move event can only be fired if the figure part of the canvas.
+      //     and in this case the notification event should be fired to the listener before
+      this.fireEvent("figure:add", {figure:figure});
+
+      // fire the event that the figure is part of the canvas
+      figure.fireEvent("added");
+ 
+      // ...now we can fire the initial move event
       figure.fireEvent("move");
       
       return this;
@@ -15056,11 +17271,34 @@ draw2d.Canvas = Class.extend(
     
     /**
      * @method
-     * Remove a figure from the Canvas.
+     * Remove a figure or connection from the Canvas. This method fires an event 
+     * which can be catched.
+     * 
+     * Example:
+     * 
+     *      canvas.on("figure:remove", function(emitter, event){
+     *         alert("figure removed:");
+     *      });
+     *      
+     *      // or more general if you want catch all figure related events
+     *      //
+     *      canvas.on("figure", function(emitter, event){
+     *         // use event.figure.getCanvas()===null to determine if the 
+     *         // figure part of the canvas
+     *         
+     *         alert("figure added or removed:");
+     *      });
+     *      
      *
      * @param {draw2d.Figure} figure The figure to remove
      **/
     remove:function(figure){
+        // don't fire events of calll callbacks if the fire isn'T part of this canvas
+        //
+        if(figure.getCanvas()!==this){
+            return this;
+        }
+
         // remove the figure from a selection handler as well and cleanup the 
         // selection feedback 
         var _this = this;
@@ -15070,18 +17308,20 @@ draw2d.Canvas = Class.extend(
             }
         });
         
-
         if(figure instanceof draw2d.shape.basic.Line){
            this.lines.remove(figure);
-         }
+        }
         else {
            this.figures.remove(figure);
         }
+
         figure.setCanvas(null);
 
         if(figure instanceof draw2d.Connection){
            figure.disconnect();
         }
+        
+        this.fireEvent("figure:remove",  {figure:figure});
         
         return this;
     },
@@ -15101,7 +17341,7 @@ draw2d.Canvas = Class.extend(
      * @protected
      * @return {draw2d.util.ArrayList}
      **/
-    getLines:function()
+    getLines: function()
     {
       return this.lines;
     },
@@ -15113,7 +17353,7 @@ draw2d.Canvas = Class.extend(
      * @protected
      * @return {draw2d.util.ArrayList}
      **/
-    getFigures:function()
+    getFigures: function()
     {
       return this.figures;
     },
@@ -15124,9 +17364,9 @@ draw2d.Canvas = Class.extend(
      *
      * @param {String} id The id of the line.
      * 
-     * @type draw2d.shape.basic.Line
+     * @return {draw2d.shape.basic.Line}
      **/
-    getLine:function( id)
+    getLine: function( id)
     {
       var count = this.lines.getSize();
       for(var i=0; i<count;i++)
@@ -15194,8 +17434,9 @@ draw2d.Canvas = Class.extend(
     snapToHelper:function(figure,  pos)
     {
         var _this = this;
+        var orig = pos.clone();
         this.editPolicy.each(function(i,policy){
-            pos = policy.snap(_this, figure, pos);
+             pos = policy.snap(_this, figure, pos, orig);
         });
 
         return pos;
@@ -15392,7 +17633,7 @@ draw2d.Canvas = Class.extend(
      * @param {Object/Function} w The object which will be removed from the selection eventing
      * @deprecated use draw2d.Canvas.off() instead
      **/
-    removeSelectionListener:function(/*:Object*/ w )
+    removeSelectionListener: function(/*:Object*/ w )
     {
       this.off("select",w);
       
@@ -15409,52 +17650,71 @@ draw2d.Canvas = Class.extend(
      * @param {Number} y The y position.
      * @param {draw2d.Figure|Array} [figureToIgnore] The figures which should be ignored.
      **/
-    getBestFigure : function(x, y, figureToIgnore)
+    getBestFigure: function(x, y, figureToIgnore)
     {
     	if(!$.isArray(figureToIgnore)){
     		if(figureToIgnore instanceof draw2d.Figure){
     			figureToIgnore = [figureToIgnore];
     		}
     		else{
-    			figureToIgnore=[];
+    			figureToIgnore = [];
     		}
     	}
     	
         var result = null;
         var testFigure = null;
-        var i=0;
-        var children = null;
-        
+
+        var contains = function(testFigure, figuresToCheck){
+            var i,len; // inner function scope of vars. take care about this and don't ove them outside
+            for(i=0,len=figuresToCheck.length; i<len;i++){
+                if(figuresToCheck[i]===testFigure || figuresToCheck[i].contains(testFigure)){
+                    return true;
+                }
+            }
+            return false;
+        };
+
         // ResizeHandles first
-        for ( i = 0, len = this.resizeHandles.getSize(); i < len; i++)
-        {
+        //
+        var i,len;
+        for ( i = 0, len = this.resizeHandles.getSize(); i < len; i++) {
             testFigure = this.resizeHandles.get(i);
-            if (testFigure.isVisible()===true && testFigure.hitTest(x, y) === true && $.inArray(testFigure, figureToIgnore)===-1) 
-            { 
+            if (testFigure.isVisible()===true && testFigure.hitTest(x, y) === true && contains(testFigure, figureToIgnore)===false){
                 return testFigure; 
             }
         }
 
-        // Checking ports
-        for ( i = 0, len = this.commonPorts.getSize(); i < len; i++) 
-        {
-            testFigure = this.commonPorts.get(i);
-            if($.inArray(testFigure, figureToIgnore)===-1)
-            {
-                if (testFigure.isVisible()===true && testFigure.hitTest(x, y) === true) 
-                { 
-                    return testFigure; 
+        // tool method to check recursive a figure for hitTest
+        //
+        var checkRecursive = function(children){
+            children.each(function(i,e){
+                var c=e.figure;
+                checkRecursive(c.children);
+                if(result===null && c.isVisible()===true && c.hitTest(x,y)===true && contains(c, figureToIgnore)===false){
+                    result = c;
                 }
+                return result===null; // break the each-loop if we found an element
+            });
+        };
+
+        // Checking ports
+        //
+        for ( i = 0, len = this.commonPorts.getSize(); i < len; i++) {
+            port = this.commonPorts.get(i);
+            // check first a children of the figure
+            //
+            checkRecursive( port.children);
+
+            if(result===null && port.isVisible()===true && port.hitTest(x, y) === true && contains(port, figureToIgnore)===false){
+               result = port;
+            }
+            
+            if(result !==null){
+                return result;
             }
         }
 
-        // A line is the next option in the priority queue for a "Best" figure
-        //
-        result = this.getBestLine(x,y,figureToIgnore);
-        if(result !==null){
-            return result;
-        }
-        
+
         //  Check now the common objects.
         //  run reverse to aware the z-oder of the figures
         for ( i = (this.figures.getSize()-1); i >=0; i--)
@@ -15462,22 +17722,11 @@ draw2d.Canvas = Class.extend(
             var figure = this.figures.get(i);
             // check first a children of the figure
             //
-            var checkRecursive = function(children){
-                children.each(function(i,e){
-                    var c=e.figure;
-                    checkRecursive(c.children);
-                    if(result===null && c.isVisible()===true && c.hitTest(x,y)===true && $.inArray(c, figureToIgnore)===-1){
-                        result = c;
-                    }
-                    return result===null; // break the each-loop if we found an element
-                });
-            };
             checkRecursive( figure.children);
             
             // ...and the figure itself
             //
-            if (result ===null && figure.isVisible()===true && figure.hitTest(x, y) === true && $.inArray(figure, figureToIgnore)===-1)
-            {
+            if (result ===null && figure.isVisible()===true && figure.hitTest(x, y) === true && contains(figure, figureToIgnore)===false) {
                 result = figure;
             }
 
@@ -15493,16 +17742,22 @@ draw2d.Canvas = Class.extend(
         for(i=0;i< count;i++)
         {
           var line = this.lines.get(i);
-          children= line.getChildren();
-          children.each(function(i,e){
-              if(e.isVisible()===true && e.hitTest(x,y)===true && $.inArray(e, figureToIgnore)===-1){
-                  result = e;
-                  return false;
-              }
-              return true;
-          });
+          // check first a children of the figure
+          //
+          checkRecursive( line.children);
+          
+          if(result !==null){
+              return result;
+          }
         }
         
+        // A line is the last option in the priority queue for a "Best" figure
+        //
+        result = this.getBestLine(x,y,figureToIgnore);
+        if(result !==null){
+            return result;
+        }
+
        return result;
     },
 
@@ -15541,33 +17796,7 @@ draw2d.Canvas = Class.extend(
 	    return null;
     }, 
 
-
     
-    /**
-     * @private
-     **/
-    hideSnapToHelperLines:function()
-    {
-      this.hideSnapToHelperLineHorizontal();
-      this.hideSnapToHelperLineVertical();
-    },
-
-    /**
-     * @private
-     **/
-    hideSnapToHelperLineHorizontal:function()
-    {
-    },
-
-    /**
-     * @private
-     **/
-    hideSnapToHelperLineVertical:function()
-    {
-
-    },
-
-
     /**
      * @method
      * Called by the framework during drag&drop operations.<br>
@@ -15675,6 +17904,7 @@ draw2d.Canvas = Class.extend(
     },
 
     /**
+     * 
      * @param {Number} x the x coordinate of the event
      * @param {Number} y the y coordinate of the event
      * @param {Boolean} shiftKey true if the shift key has been pressed during this event
@@ -15722,7 +17952,7 @@ draw2d.Canvas = Class.extend(
      **/
     onRightMouseDown : function(x, y, shiftKey, ctrlKey)
     {
-        this.fireEvent("contextmenu");
+        this.fireEvent("contextmenu",  {x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
         
         var figure = this.getBestFigure(x, y);
         if(figure!==null){
@@ -15763,7 +17993,13 @@ draw2d.Canvas = Class.extend(
         
         var subscribers = this.eventSubscriptions[event];
         for (var i=0; i<subscribers.length; i++) {
-            subscribers[i](this, args);
+            try{
+                subscribers[i](this, args);
+            }
+            catch(exc){
+                console.log(exc);
+                console.log(subscribers[i]);
+            }
         }
     },
     
@@ -15930,13 +18166,24 @@ draw2d.Selection = Class.extend({
     
     /**
      * @method
-     * return true if the given figure part of the selection
+     * return true if the given figure part of the selection.
      * 
      * @param {draw2d.Figure} figure The figure to check
+     * @param {boolean} checkDescendant Check if the figure provided by the argument is a descendant of the selection whether it is a direct child or nested more deeply.
      * @since 2.2.0
      */
-    contains: function(figure)
+    contains: function(figure, checkDescendant)
     {
+        if(checkDescendant){
+            var i=0;
+            for(i=0; i<this.all.getSize();i++){
+                var figureToCheck = this.all.get(i);
+                if(figureToCheck===figure || figureToCheck.contains(figure)){
+                    return true;
+                }
+            }
+            return false;
+        }
         return this.all.contains(figure);
     },
 
@@ -15954,10 +18201,28 @@ draw2d.Selection = Class.extend({
     /**
      * @method
      * Return the complete selection - including the primary selection.
-     * 
+     *
+     * @param {boolean} expand expand all StrongComposite and WeakComposite to get all figures. Didn't expand any SetFigures or LayoutFigures
+     * @return {draw2d.util.ArrayList}
+     *
      */
-    getAll: function()
+    getAll: function(expand)
     {
+        if(expand ===true){
+            var result = new draw2d.util.ArrayList();
+            var addRecursive = function(figures){
+                result.addAll(figures,true);
+                figures.each(function(index, figure){
+                    if(figure instanceof draw2d.shape.composite.StrongComposite){
+                        addRecursive(figure.getAssignedFigures());
+                    }
+                });
+            };
+            addRecursive(this.all);
+
+            return result;
+        }
+
         return this.all.clone();
     },
     
@@ -15967,6 +18232,8 @@ draw2d.Selection = Class.extend({
      */
     each: function( func){
         this.all.each(func);
+        
+        return this;
     }
 });
 /*****************************************
@@ -15986,10 +18253,7 @@ draw2d.Figure = Class.extend({
 	MIN_TIMER_INTERVAL: 50, // minimum timer interval in milliseconds
 
     // special attributes that should be get/set via method calls
-    setterHooks     : {},
-    setterWhitelist : {},
-    getterWhitelist : {},
-    
+   
     /**
      * @constructor 
      * Creates a new figure element which is not assigned to any canvas.
@@ -15997,82 +18261,60 @@ draw2d.Figure = Class.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr ) {
-        /** @attr {Number} x the x coordinate of the shape */
-        this.setterHooks.x= function(attr, attrs, marker){ 
-            if("y" in attrs){
-                marker.y=true;
-                this.setPosition(attr, attrs.y);
-            }
-            else{
-                this.setPosition(attr, this.y);
-            }
-        };
-        /** @attr {Number} y the y coordinate of the shape */
-        this.setterHooks.y= function(attr, attrs, marker){ 
-            if("x" in attrs){
-                marker.x=true;
-                this.setPosition(attrs.x, attr);
-            }
-            else{
-                this.setPosition(this.x,attr);
-            }
-        };
-        /** @attr {Number} width the width of the shape */
-        this.setterHooks.width= function(attr, attrs, marker){ 
-            if("height" in attrs){
-                marker.height=true;
-                this.setDimension(attr, attrs.height);
-            }
-            else{
-                this.setDimension(attr, this.height);
-            }
-        };
-        /** @attr {Number} height the height of the shape */
-        this.setterHooks.height= function(attr, attrs, marker){ 
-            if("width" in attrs){
-                marker.width=true;
-                this.setDimension(attrs.width, attr);
-            }
-            else{
-                this.setDimension(this.width,attr);
-            }
-        };
+    init: function( attr, setter, getter) {
 
-        /** @attr {String} cssClass the css class of the shape. can be used to style the shape via CSS3 (SVG only) */
-        this.setterWhitelist.cssClass   = this.setCssClass;
-        /** @attr {Object} userData additional custom data which can be stored by the shape */
-        this.setterWhitelist.userData   = this.setUserData;
-        /** @attr {Boolean} resizeable drives the resizeable behaviour of the shape */
-        this.setterWhitelist.resizeable = this.setResizeable;
-        /** @attr {Number} angle the rotation angle of the shape. At the moment only 90 degree increments are possible */
-        this.setterWhitelist.angle      = this.setRotationAngle;
-        /** @attr {Number} alpha the the alpha/opacity of the shape. value must be between [0..1] */
-        this.setterWhitelist.alpha  = this.setAlpha;
-        /** @attr {Boolean} glow the glow flag for the shape. The representation of the "glow" depends on the shape */
-        this.setterWhitelist.glow  = this.setGlow;
-        /** @attr {Boolean} visible set the visibility flag of the shape */
-        this.setterWhitelist.visible  = this.setVisible;
+        this.setterWhitelist = $.extend({
+            /** @attr {Number} x the x offset of the figure in relation to the parent figure or canvas */
+            x   : this.setX,
+            /** @attr {Number} y the y offset of the figure in relation to the parent figure or canvas */
+            y   : this.setY,
+            /** @attr {Number} width the new width of the figure. Considering the minWidth of the shape */
+            width   : this.setWidth,
+            /** @attr {Number} height the new height of the figure. Considering the minHeight of the shape */
+            height   : this.setHeight,
+            /** @attr {Rectangle} boundingBox set the new bounding box of the shape */
+            boundingBox : this.setBoundingBox,
+            /** @attr {Number} minWidth the new min width of the figure. */
+            minWidth   : this.setMinWidth,
+            /** @attr {Number} minHeight the new min height of the figure. */
+            minHeight   : this.setMinHeight,
+            /** @attr {String} cssClass the css class of the shape. can be used to style the shape via CSS3 (SVG only) */
+            cssClass   : this.setCssClass,
+            /** @attr {Object} userData additional custom data which can be stored by the shape */
+            userData   : this.setUserData,
+            /** @attr {Boolean} resizeable drives the resizeable behaviour of the shape */
+            resizeable : this.setResizeable,
+            /** @attr {Boolean} selectable drives the selectable behaviour of the shape */
+            selectable : this.setSelectable,
+            /** @attr {Number} angle the rotation angle of the shape. At the moment only 90 degree increments are possible */
+            angle      : this.setRotationAngle,
+            /** @attr {Number} alpha the the alpha/opacity of the shape. value must be between [0..1] */
+            alpha  : this.setAlpha,
+            /** @attr {Number} opacity the the alpha/opacity of the shape. value must be between [0..1] */
+            opacity  : this.setAlpha,
+            /** @attr {Boolean} glow the glow flag for the shape. The representation of the "glow" depends on the shape */
+            glow  : this.setGlow,
+            /** @attr {Boolean} visible set the visibility flag of the shape */
+            visible  : this.setVisible,
+            /** @attr {Boolean} keepAspectRatio indicate if the shape should keep the aspect ratio during resize */
+            keepAspectRatio : this.setKeepAspectRatio
+            
+        },setter);
         
-        this.getterWhitelist.visible= this.isVisible;
-        this.getterWhitelist.angle= this.getRotationAngle;
-        this.getterWhitelist.x= this.getAbsoluteX;
-        this.getterWhitelist.y= this.getAbsoluteY;
-        this.getterWhitelist.width = this.getWidth;
-        this.getterWhitelist.height= this.getHeight;
-        this.getterWhitelist.resizeable = this.isResizeable;
-        this.getterWhitelist.alpha  = this.getAlpha;
-
-
-        for(key in this.setterHooks){
-            this.setterHooks[key]= $.proxy(this.setterHooks[key],this);
-        }
-        for(key in this.setterWhitelist){
-            this.setterWhitelist[key]= $.proxy(this.setterWhitelist[key],this);
-        }
-        for(key in this.getterWhitelist){
-            this.getterWhitelist[key]= $.proxy(this.getterWhitelist[key],this);
-        }
+        this.getterWhitelist = $.extend({
+            visible: this.isVisible,
+            angle: this.getRotationAngle,
+            x: this.getX,
+            y: this.getY,
+            width : this.getWidth,
+            height: this.getHeight,
+            resizeable : this.isResizeable,
+            selectable : this.isSelectable,
+            alpha  : this.getAlpha,
+            opacity : this.getAlpha
+        },getter);
+        
+        var _this = this;
         
         // all figures has an unique id. Required for figure get and persistence storage
         this.id = draw2d.util.UUID.create();
@@ -16110,6 +18352,7 @@ draw2d.Figure = Class.extend({
         this.canSnapToHelper = true;
         this.snapToGridAnchor = new draw2d.geo.Point(0,0);    // hot spot for snap to grid  
         this.editPolicy = new draw2d.util.ArrayList();
+        
         
         // timer for animation or automatic update
         //
@@ -16150,8 +18393,9 @@ draw2d.Figure = Class.extend({
         this.repaintBlocked=false;
         this.lastAppliedAttributes = {};
         this.selectionHandles = new draw2d.util.ArrayList();
+        this.panningDelegate = null;
 
-        // eventhandling since version 5.0.0
+        // even handling since version 5.0.0
         this.eventSubscriptions = {};
 
         // install default selection handler. Can be overridden or replaced
@@ -16159,6 +18403,12 @@ draw2d.Figure = Class.extend({
 
         // the new style attr call with object attributes
         this.attr(attr);
+        
+        this.relocateChildrenEventCallback = function(){
+            _this.children.each(function(i,e){
+                e.locator.relocate(i, e.figure);
+            });
+        };
     },
     
     /**
@@ -16181,7 +18431,42 @@ draw2d.Figure = Class.extend({
      *       cssClass: "red_border_figure"
      *     });
      *     
+     * Additional you can set the user defined values (userData) with this method 
+     * using the dot-notation. User defined values are always part of the exported 
+     * JSON data.
+     * 
+     *     // setting multiple attributes:
+     *     figure.attr({
+     *       userData.my.property.x: 30,
+     *       userData.my.property.y: 40
+     *     });
+     * 
+     * Also set using array notation is possible for the userData:
+     * 
+     *     // dot notation and array brackets:
+     *     figure.attr({
+     *       userData.my.names[0]: "John",
+     *       userData.my.names[1]: "Doe"
+     *     });
      *     
+     *     
+     * The Object returned should be the equivalent structured object:
+     * 
+     *     var obj = figure.getUserData();
+     *     
+     * That is, where obj is equivalent to:
+     * 
+     *     var obj = {
+     *         my:{
+     *             property:{
+     *                 x: 30,
+     *                 y: 40
+     *            },
+     *            names:  ["John", "Doe"]
+     *        }
+     *    }; 
+     *    
+     * 
      * @param {String/Object} name
      * @param {Object} [value]
      * @since 5.0.1
@@ -16189,44 +18474,69 @@ draw2d.Figure = Class.extend({
      * @returns
      **/
     attr: function(name, value){
-
         this.repaintBlocked=true;
-        // call of attr as setter method with {name1:val1, name2:val2 }  argument list
-        //
-        if($.isPlainObject(name)){
-//            name = this.pick(name, this.setterWhitelist);
-            var marker = {};
-            for(key in name){
-                var func=this.setterWhitelist[key];
-                var hook=this.setterHooks[key];
-                if(func){func(name[key]); }
-                else if(hook && !(key in marker)){hook(name[key], name, marker); }
-            }
-        }
-        
-        else if(typeof name === "string"){
-            // call attr as getter
+        try{
+            // call of attr as setter method with {name1:val1, name2:val2 }  argument list
             //
-            if(typeof value ==="undefined"){
-                var getter = this.getterWhitelist[name];
-                if($.isFunction(getter)){
-                    return getter();
+            if($.isPlainObject(name)){
+                for(key in name){
+                    // user can set the "userData" with path notation. In this case we
+                    // expand the path to a real JSON object and set the data.
+                    // index/brackets are allowed too.
+                    //
+                    if(key.substring(0,9)==="userData."){
+                        draw2d.util.JSON.set({userData:this.userData}, key, name[key]);
+                    }
+                    else{
+                        var func=this.setterWhitelist[key];
+                        if(func){
+                            func.call(this,name[key]); 
+                        }
+                    }
                 }
-                return; // undefined
             }
-            // call attr as simple setter with (key , value)
-            //
-            if($.isFunction(value)){
-                value = value();
+            else if(typeof name === "string"){
+                // call attr as getter
+                //
+                if(typeof value ==="undefined"){
+                    var getter = this.getterWhitelist[name];
+                    if($.isFunction(getter)){
+                        return getter.call(this);
+                    }
+                    // or it is a userData path notation like "userData.any.path.value"
+                    else if(name.substring(0,9)==="userData."){
+                        var data = {userData:this.userData};
+                        return draw2d.util.JSON.get(data, name);
+                    }
+                    return; // undefined
+                }
+                // call attr as simple setter with (key , value)
+                //
+                
+                // the value can be a function. In this case we must call the value().
+                if($.isFunction(value)){
+                    value = value();
+                }
+                if(name.substring(0,9)==="userData."){
+                    draw2d.util.JSON.set({userData:this.userData}, name, value);
+                }
+                else{
+                    var setter = this.setterWhitelist[name];
+                    if (setter){setter.call(this,value);}
+                }
             }
-            
-            var setter = this.setterWhitelist[name];
-            var hook = this.setterHooks[name];
-            if (setter){setter(value);}
-            else if (hook){hook(value,{},{});}
+            // generic getter of all registered attributes
+            else if(typeof name === "undefined"){
+            	var result = {};
+            	for(key in this.getterWhitelist){
+             		result[key] = this.getterWhitelist[key].call(this);
+            	}
+            	return result;
+            }
         }
-       
-        this.repaintBlocked=false;
+        finally{
+            this.repaintBlocked=false;
+        }
         this.repaint();
         
         return this;
@@ -16234,6 +18544,7 @@ draw2d.Figure = Class.extend({
     
     /**
      * Return a copy of the object, filtered to only have values for the whitelisted keys.
+     * @deprecated
      */
     pick : function(obj, var_keys) {
         var keys = typeof arguments[1] !== 'string' ? arguments[1] : Array.prototype.slice.call(arguments, 1);
@@ -16296,7 +18607,22 @@ draw2d.Figure = Class.extend({
         
         return this;
     },
-    
+
+    /**
+     * @method
+     * Returns true if the figure part of the current canvas selection.
+     *
+     * @since 5.5.6
+     */
+    isSelected: function(){
+
+        if(this.canvas !==null){
+            return this.canvas.getSelection().contains(this);
+        }
+
+        return false;
+    },
+
     /**
      * @method
      * Allows a user to attach (or remove) data to an element, without needing to create a custom figure or shape.
@@ -16313,7 +18639,7 @@ draw2d.Figure = Class.extend({
     setUserData: function(object)
     {
       this.userData = object;  
-      
+      this.fireEvent("change:userData");
       return this;
     },
 
@@ -16340,6 +18666,7 @@ draw2d.Figure = Class.extend({
        return this.id; 
     },
     
+    	
     /**
      * @method
      * Set the id of this element. 
@@ -16397,7 +18724,8 @@ draw2d.Figure = Class.extend({
         else{
             this.shape.node.setAttribute("class", this.cssClass);
         }
-                
+        this.fireEvent("change:userData");
+               
         return this;
     },
     
@@ -16435,6 +18763,7 @@ draw2d.Figure = Class.extend({
             else{
                 this.setCssClass(this.cssClass + ' ' + className);
             }
+            this.fireEvent("change:cssClass");
         }
         
         return this;
@@ -16456,7 +18785,8 @@ draw2d.Figure = Class.extend({
                 newClass = newClass.replace(' ' + className + ' ', ' ');
             }
             this.setCssClass( newClass.replace(/^\s+|\s+$/g, ''));
-        }
+            this.fireEvent("change:cssClass");
+       }
         
         return this;
     },
@@ -16480,6 +18810,7 @@ draw2d.Figure = Class.extend({
         } else {
             this.setCssClass(this.cssClass + ' ' + className);
         }
+        this.fireEvent("change:cssClass");
         
         return this;
     },
@@ -16508,7 +18839,12 @@ draw2d.Figure = Class.extend({
           this.getShapeElement();
       }
 
-      if(canvas === null){
+      // resset the attribute cache. We must start by paint all attributes
+      //
+      this.lastAppliedAttributes = {};
+
+
+     if(canvas === null){
     	  this.stopTimer();
       }
       else{
@@ -16578,7 +18914,7 @@ draw2d.Figure = Class.extend({
       * Inherit classes must override this method if they want use the timer feature.
       * 
       *      // Alternatively you can register for this event with  
-      *      figure.on("timer", function(emitterFigure){
+      *      figure.on("timer", function(emitter){
       *          alert("timer fired");
       *      });
       * 
@@ -16590,7 +18926,7 @@ draw2d.Figure = Class.extend({
      
     /**
      * @method
-     * Moves the element so it is the closest to the viewer?Äôs eyes, on top of other elements. Additional
+     * Moves the element so it is the closest to the viewer?s eyes, on top of other elements. Additional
      * the internal model changed as well.
      * 
      * Optional: Inserts current object in front of the given one. 
@@ -16639,11 +18975,17 @@ draw2d.Figure = Class.extend({
              }
          }
          
-         // bring all children figures in front of the parent
+         // bring all children in front of the parent
          this.children.each(function(i,child){
              child.figure.toFront(figure);
          });
-         
+
+         // and last but not lease the ResizeHandles if any present
+         //
+         this.selectionHandles.each(function(i,handle){
+             handle.toFront();
+         });
+
          return this;
      },
      
@@ -16774,7 +19116,7 @@ draw2d.Figure = Class.extend({
      add: function(child, locator, index)
      {
          if(typeof locator ==="undefined" || locator ===null){
-             throw "Second parameter 'locator' is requried for method 'Figure#add'";
+             throw "Second parameter 'locator' is required for method 'Figure#add'";
          }
          
          // the child is now a slave of the parent
@@ -16782,6 +19124,7 @@ draw2d.Figure = Class.extend({
          child.setDraggable(false);
          child.setSelectable(false);
          child.setParent(this);
+         child.on("resize", this.relocateChildrenEventCallback);
          
          if($.isNumeric(index)){
              this.children.insertElementAt({figure:child, locator:locator}, index);
@@ -16798,6 +19141,7 @@ draw2d.Figure = Class.extend({
 
          return this;
      },
+
      /**
       * @method
       * @deprecated use draw2d.Figure.add() 
@@ -16820,7 +19164,7 @@ draw2d.Figure = Class.extend({
      {
          if(typeof child ==="undefined" || child ===null){
              debug.warn("The parameter child is required for Figure.remove");
-             return null; // silently
+             return null;
          }
          
          var removed = null;
@@ -16835,7 +19179,8 @@ draw2d.Figure = Class.extend({
          if(removed!==null){
              child.setParent(null);
              child.setCanvas(null);
-
+             child.off(this.relocateChildrenEventCallback);
+             
              this.repaint();
              return removed;
          }
@@ -16853,6 +19198,8 @@ draw2d.Figure = Class.extend({
       * @method
       * Return all children/decorations of this shape which has been added with 
       * draw2d.Figure.add
+      * 
+      * @returns {draw2d.util.ArrayList}
       */
      getChildren : function()
      {
@@ -16932,7 +19279,7 @@ draw2d.Figure = Class.extend({
      * @method
      * propagate all attributes like color, stroke,... to the shape element
      * 
-     * @param {Object} attributes the style attributes for the SVG shape
+     * @param {Object} [attributes] the style attributes for the SVG shape
      * @private
      **/
      repaint: function(attributes)
@@ -16949,49 +19296,36 @@ draw2d.Figure = Class.extend({
         	 this.shape.hide();
         	 return this;
          }
-         
-         
+
+         attributes = attributes || {};
+
          // enrich with common properties
          attributes.opacity = this.alpha;
          
          // performance improvement
-         // Only apply attributes which has changed. This end in a big performance improvement
+         // Only apply attributes which has changed. This ends in a big performance improvement
          // because the raphael shape isn't redraw at all.
          //
-         var diff= function(obj1, obj2) {
-             var result = {};
-             for(key in obj1) {
-                 if(obj1[key] !== obj2[key]) {
-                     result[key] = obj1[key];
-                 }
-             }
-             return result;
-         };
-         attributes = diff(attributes, this.lastAppliedAttributes);
+         attributes = draw2d.util.JSON.flatDiff(attributes, this.lastAppliedAttributes);
          this.lastAppliedAttributes= attributes;
-
          
          this.shape.attr(attributes);
 
          this.applyTransformation();
 
-         /* moved to setDimension.
-          * Locator is only called if the dimension of the figure has been changed
-          * Performance
-          */
-        // Relocate all children of the figure.
-        // This means that the Locater can calculate the new Position of the child.
-        //
-        this.children.each(function(i,e){
+         // Relocate all children of the figure.
+         // This means that the Locator can calculate the new Position of the child.
+         //
+         this.children.each(function(i,e){
             e.locator.relocate(i, e.figure);
-        });
+         });
         
-        return this;
+         return this;
      },
      
      /**
       * @method
-      * apply a transformation to the shape like rotation, traanslate,..
+      * apply a transformation to the shape like rotation, translate,..
       * 
       * @private
       * @template
@@ -17005,7 +19339,7 @@ draw2d.Figure = Class.extend({
       * @method
       * Highlight the element or remove the highlighting
       * 
-      *      // Anatively you can use the attr method:
+      *      // Alternatively you can use the attr method:
       *      figure.attr({
       *        glow: flag
       *      });
@@ -17020,7 +19354,27 @@ draw2d.Figure = Class.extend({
 
          return this;
      },
-     
+
+
+    /**
+     * @method
+     * Allow dragging only when the cursor is over a specific part of the figure.
+     * <br>
+     * Override this method to specify the bounding box of an element or a draw2d.util.ArrayList
+     * of draw2d.geo.Rectangle of bounding boxes used to drag the figure. The returned coordinates
+     * are absolute coordinates to the canvas.
+     * <br>
+     * <br>
+     * Default implementation returns <b>null<b> to indicate to use the complete figures as
+     * drag handle.
+     *
+     * @since 5.6.0
+     * @returns {draw2d.geo.Rectangle|draw2d.util.ArrayList}
+     */
+     getHandleBBox: function()
+     {
+        return null
+     },
 
     /**
      * @method
@@ -17038,6 +19392,24 @@ draw2d.Figure = Class.extend({
     {
       this.isInDragDrop =false;
 
+      // Check whenever the figures has a drag-handle. Allow drag&drop
+      // operation only if the x/y is inside this area.
+      //
+      // @since 5.6.0
+      var bbox = this.getHandleBBox();
+      if(bbox!==null && bbox.translate(this.getAbsolutePosition().scale(-1)).hitTest(x,y)===false){
+
+          // design failure: we must cash the figure below the mouse to forward
+          // the panning event to this figure. Special handling to provide sliders
+          // and other UI elements which requires the panning event. Hack.
+          this.panningDelegate = this.getBestChild(this.getX()+x,this.getY()+y);
+          if(this.panningDelegate!==null){
+              // transform x/y relative to the panning figure and request the dragStart event
+              this.panningDelegate.onDragStart(x-this.panningDelegate.x, y-this.panningDelegate.y, shiftKey, ctrlKey);
+          }
+          return false;
+      }
+
       this.command = this.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.MOVE));
 
       if(this.command!==null){
@@ -17054,6 +19426,10 @@ draw2d.Figure = Class.extend({
              }
          });
 
+         // fire an event
+         // @since 5.3.3
+         this.fireEvent("dragstart",{x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
+         
          return true;
       }
       
@@ -17073,7 +19449,7 @@ draw2d.Figure = Class.extend({
      * @param {Number} dx2 The x diff since the last call of this dragging operation
      * @param {Number} dy2 The y diff since the last call of this dragging operation
      **/
-    onDrag : function( dx,  dy, dx2, dy2)
+    onDrag: function( dx,  dy, dx2, dy2)
     {
       var _this = this;
 
@@ -17105,6 +19481,10 @@ draw2d.Figure = Class.extend({
               e.onDrag(_this.canvas, _this);
           }
       });
+      
+      this.fireEvent("move");
+      this.fireEvent("change:x");
+      this.fireEvent("change:y");
     },
 
     /**
@@ -17112,7 +19492,12 @@ draw2d.Figure = Class.extend({
      * Called by the framework if the figure returns false for the drag operation. In this
      * case we send a "panning" event - mouseDown + mouseMove. This is very useful for
      * UI-Widget like slider, spinner,...
-     * 
+     *
+     *      // You can alternatively register an event handler with:
+     *      figure.on("panning", function(emitter, eventData){
+     *          alert("panning of the figure called");
+     *      });
+     *
      * @param {Number} dx the x difference between the mouse down operation and now
      * @param {Number} dy the y difference between the mouse down operation and now
      * @param {Number} dx2 The x diff since the last call of this dragging operation
@@ -17121,9 +19506,22 @@ draw2d.Figure = Class.extend({
      */
     onPanning: function(dx, dy, dx2, dy2)
     {
-        
     },
-    
+
+    /**
+     * @method
+     * Called by the framework if the panning event of the figures ends. This happens
+     * after the mous up event if the panning is active.
+     *
+     *      // You can alternatively register an event handler with:
+     *      figure.on("panningEnd", function(emitter){
+     *          alert("panning of the figure called");
+     *      });
+     *
+     */
+    onPanningEnd:function()
+    {
+    },
     
     /**
      * @method
@@ -17147,6 +19545,7 @@ draw2d.Figure = Class.extend({
       //
       this.command.setPosition(this.x, this.y);
       this.isInDragDrop = false;
+      this.panningDelegate=null;
 
       this.canvas.getCommandStack().execute(this.command);
       this.command = null;
@@ -17160,6 +19559,12 @@ draw2d.Figure = Class.extend({
       });
 
       this.fireEvent("move");
+      this.fireEvent("change:x");
+      this.fireEvent("change:y");
+
+      // fire an event
+      // @since 5.3.3
+      this.fireEvent("dragend",{x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
     },
 
     /**
@@ -17169,7 +19574,7 @@ draw2d.Figure = Class.extend({
      * @param {draw2d.Figure} draggedFigure The figure which is currently dragging
      * 
      * @return {draw2d.Figure} the figure which should receive the drop event or null if the element didn't want a drop event
-     * @template
+     * @private
      **/
     onDragEnter : function( draggedFigure )
     {
@@ -17190,7 +19595,7 @@ draw2d.Figure = Class.extend({
      * Called if the DragDrop object leaving the current hover figure.
      * 
      * @param {draw2d.Figure} figure The figure which is currently dragging
-     * @template
+     * @private
      **/
     onDragLeave:function( draggedFigure )
     {
@@ -17260,7 +19665,7 @@ draw2d.Figure = Class.extend({
      * Called when a user dbl clicks on the element
      * 
      *      // Alternatively you register for this event with:
-     *      figure.on("dblclick", function(emitterFunction){
+     *      figure.on("dblclick", function(emitter){
      *          alert("user dbl click on the figure");
      *      });
      * 
@@ -17275,8 +19680,8 @@ draw2d.Figure = Class.extend({
      * @method
      * Called when a user clicks on the element.
      * 
-     *      // Alternatively you register for this event with:
-     *      figure.on("click", function(emitterFunction){
+     *      // You can alternatively register an event handler with:
+     *      figure.on("click", function(emitter){
      *          alert("user click on the figure");
      *      });
      * 
@@ -17294,7 +19699,7 @@ draw2d.Figure = Class.extend({
      * right click with the mouse.
      * 
      *      // Alternatively you register for this event with:
-     *      figure.on("contextmenu", function(emitterFunction){
+     *      figure.on("contextmenu", function(emitter){
      *          alert("user press the right mouse button for a context menu");
      *      });
      * 
@@ -17311,11 +19716,15 @@ draw2d.Figure = Class.extend({
      * @method
      * Set the alpha blending of this figure. 
      * 
-      *      // Anatively you can use the attr method:
-      *      figure.attr({
-      *        alpha: percent
-      *      });
-      *     
+     *      // Alternatively you can use the attr method:
+     *      figure.attr({
+     *        "alpha": percent
+     *      });
+     *     
+     *      // ...or:
+     *      figure.attr({
+     *        "opacity": percent
+     *      });
      *
      * @param {Number} percent value between [0..1].
      * @template
@@ -17329,6 +19738,7 @@ draw2d.Figure = Class.extend({
 
       this.alpha =percent;
       this.repaint();
+      this.fireEvent("change:opacity");
 
       return this;
     },
@@ -17351,7 +19761,7 @@ draw2d.Figure = Class.extend({
      * Set the rotation angle in degree [0..356]<br>
      * <b>Only steps of 90 degree is working well</b>
      * <br>
-      *      // Anatively you can use the attr method:
+      *      // Alternatively you can use the attr method:
       *      figure.attr({
       *        angle: angle
       *      });
@@ -17372,6 +19782,7 @@ draw2d.Figure = Class.extend({
             }
         });
 
+        this.fireEvent("change:angle");
         this.repaint();
 
         return this;
@@ -17397,7 +19808,7 @@ draw2d.Figure = Class.extend({
      * Show/hide the element. The element didn't receive any mouse events (click, dblclick) if you hide the
      * figure.
      * 
-      *      // Anatively you can use the attr method:
+      *      // Alternatively you can use the attr method:
       *      figure.attr({
       *        visible: flag
       *      });
@@ -17407,7 +19818,11 @@ draw2d.Figure = Class.extend({
      */
     setVisible: function(flag)
     {
-    	this.visible = !!flag;
+        flag=!!flag;
+        if(flag===this.visible){
+            return;
+        }
+    	this.visible = flag;
     	
     	this.repaint();
 
@@ -17416,7 +19831,8 @@ draw2d.Figure = Class.extend({
         } else {
             this.fireEvent("hide");
         }
-        
+        this.fireEvent("change:visibility");
+
     	return this;
     },
     
@@ -17518,8 +19934,7 @@ draw2d.Figure = Class.extend({
     /**
      * @method
      * Set the hot spot for all snapTo### operations.
-     * (deprecated? Todo: check references in existing projects)
-     * 
+     *
      * @param {draw2d.geo.Point} point
      **/
     setSnapToGridAnchor:function(point)
@@ -17531,6 +19946,21 @@ draw2d.Figure = Class.extend({
 
     /**
      * @method
+     * Set the width of the figure and consider the minWidth attribute
+     * 
+     * @param {Number} width the new width of the figure
+     * @since 5.1.0
+     */
+    setWidth:function( width)
+    {
+        this.setDimension(parseFloat(width), this.getHeight());
+        this.fireEvent("change:width");
+
+        return this;
+    },
+    
+    /**
+     * @method
      * The current width of the figure.
      * 
      * @type {Number}
@@ -17540,6 +19970,21 @@ draw2d.Figure = Class.extend({
       return this.width;
     },
 
+    /**
+     * @method
+     * Set the heigth of the figure and consider the minWidth attribute
+     * 
+     * @param {Number} width the new width of the figure
+     * @since 5.1.0
+     */
+    setHeight:function( height)
+    {
+        this.setDimension(this.getWidth(), parseFloat(height));
+        this.fireEvent("change:height");
+
+        return this;
+    },
+    
     /**
      * @method 
      * The current height of the figure.
@@ -17572,7 +20017,11 @@ draw2d.Figure = Class.extend({
     setMinWidth: function(w)
     {
       this.minWidth = parseFloat(w);
+      this.fireEvent("change:minWidth");
 
+      // fit the width with the new constraint
+      this.setWidth(this.getWidth());
+      
       return this;
     },
     
@@ -17595,8 +20044,30 @@ draw2d.Figure = Class.extend({
      * 
      * @param {Number} h
      */
-    setMinHeight:function(h){
+    setMinHeight:function(h)
+    {
         this.minHeight =parseFloat(h);
+        this.fireEvent("change:minHeight");
+
+        // fit the height with the new constraint
+        this.setHeight(this.getHeight());
+
+        return this;
+    },
+
+
+    
+    /**
+     * @method
+     * the the x-offset related to the parent figure or canvas
+     * 
+     * @param {Number} x the new x offset of the figure
+     * @since 5.0.8
+     */
+    setX: function(x)
+    {
+        this.setPosition(parseFloat(x), this.y);
+        this.fireEvent("change:x");
 
         return this;
     },
@@ -17614,6 +20085,22 @@ draw2d.Figure = Class.extend({
 
     /**
      * @method
+     * the the y-offset related to the parent figure or canvas
+     * 
+     * @param {Number} x the new x offset of the figure
+     * @since 5.0.8
+     */
+    setY: function(y)
+    {
+        this.setPosition(this.x, parseFloat(y));
+        this.fireEvent("change:y");
+
+        return this;
+    },
+    
+    
+    /**
+     * @method
      * The y-offset related to the parent figure or canvas.
      * 
      * @return {Number} The y-offset to the parent figure.
@@ -17628,14 +20115,14 @@ draw2d.Figure = Class.extend({
      * @method
      * The x-offset related to the canvas.
      * 
-     * @return {Number} the x-offset to the parent figure
+     * @return {Number} the x-offset to the canvas
      **/
     getAbsoluteX :function()
     {
         if(!this.parent){
-            // provide some good defaults if the figure not placed
             return this.getX();
         }
+        
         return this.getX() + this.parent.getAbsoluteX();  
     },
 
@@ -17644,12 +20131,11 @@ draw2d.Figure = Class.extend({
      * @method
      * The y-offset related to the canvas.
      * 
-     * @return {Number} The y-offset to the parent figure.
+     * @return {Number} The y-offset to the canvas.
      **/
     getAbsoluteY :function()
     {
         if(!this.parent){
-            // provide some good defaults if the figure not placed
             return this.getY();
         }
         return this.getY() + this.parent.getAbsoluteY();  
@@ -17683,7 +20169,7 @@ draw2d.Figure = Class.extend({
      * @method
      * Set the position of the object.
      *
-      *      // Anatively you can use the attr method:
+      *      // Alternatively you can use the attr method:
       *      figure.attr({
       *        x: x,
       *        y: y
@@ -17702,6 +20188,8 @@ draw2d.Figure = Class.extend({
             this.y = y;
         }
 
+//        var oldPos = {x:this.x, y:this.y};
+        
         var _this = this;
 
         this.editPolicy.each(function(i,e){
@@ -17713,11 +20201,7 @@ draw2d.Figure = Class.extend({
         });
   
         this.repaint();
-        
-        this.children.each(function(i,e){
-            e.locator.relocate(i, e.figure);
-        });
-        
+
         // Update the resize handles if the user change the position of the
         // element via an API call.
         //
@@ -17728,6 +20212,8 @@ draw2d.Figure = Class.extend({
         });
 
         this.fireEvent("move");
+        this.fireEvent("change:x");
+        this.fireEvent("change:y");
 
         return this;
     },
@@ -17765,7 +20251,7 @@ draw2d.Figure = Class.extend({
      * @method
      * Set the new width and height of the figure. 
      *
-     *      // Anatively you can use the attr method:
+     *      // Alternatively you can use the attr method:
      *      figure.attr({
      *         width:  w,
      *         height: h
@@ -17782,7 +20268,8 @@ draw2d.Figure = Class.extend({
 
         if(this.width === w && this.height ===h){
             // required if an inherit figure changed the w/h to a given constraint.
-            // In this case the Resize handles must be informed that the didn't resized.
+            // In this case the Resize handles must be informed that the shape didn't resized.
+            // because the minWidth/minHeight did have a higher prio.
             this.editPolicy.each(function(i,e){
                 if(e instanceof draw2d.policy.figure.DragDropEditPolicy){
                     e.moved(_this.canvas, _this);
@@ -17805,33 +20292,26 @@ draw2d.Figure = Class.extend({
         // respect the aspect ratio if required
         //
         if(this.keepAspectRatio===true){
-
-            // resize the icon and keep the aspect ratio
-            //
-            var cw = this.getWidth();
-            var ch = this.getHeight();
-            if(w!==cw && h!==ch){
-                h= ch;
-            }
-
-            // width is the same and height changed
-            //
-            if(h!==ch){
-                w = w*(h/ch);
-            }
-            // width has changed and height is the same
-            //
-            else if(w !==cw){
-                h = h*(w/cw);
-            }
+            if (w >= this.getMinWidth()) {
+                // scale the height to the given ratio
+                h = this.getHeight() * (w/this.getWidth());
+                // and apply the new dimension only if the values are in range of the given constraints
+                if(h>=this.getMinHeight()){
+                    this.width = w;
+                    this.height= h;
+                }
+            } 
+        }
+        else{
+            this.width = Math.max(this.getMinWidth(),w);
+            this.height= Math.max(this.getMinHeight(),h);
         }
 
-        this.width = Math.max(this.getMinWidth(),w);
-		this.height= Math.max(this.getMinHeight(),h);
 
 		this.repaint();
 
         this.fireEvent("resize");
+        this.fireEvent("change:dimension");
 		
 		// Update the resize handles if the user change the position of the element via an API call.
 		//
@@ -17849,12 +20329,17 @@ draw2d.Figure = Class.extend({
      * @method
      * Set the bounding box of the figure
      * 
-     *      // Anatively you can use the attr method:
+     *      // Alternatively you can use the attr method:
      *      figure.attr({
      *        width: w,
      *        height: h,
      *        x: x,
      *        y: y
+     *      });
+     *      
+     *      // or
+     *      figure.attr({
+     *        boundingBox: {x:1, y:100, width:30, height:30}
      *      });
      *     
      * @param {draw2d.geo.Rectangle} rect
@@ -17862,6 +20347,8 @@ draw2d.Figure = Class.extend({
      */
     setBoundingBox:function(rect)
     {
+    	rect = new draw2d.geo.Rectangle(rect);
+    	
         this.repaintBlocked=true;
         this.setPosition(rect.x, rect.y);
         this.repaintBlocked=false;
@@ -17878,7 +20365,7 @@ draw2d.Figure = Class.extend({
      **/
     getBoundingBox:function()
     {
-      return new draw2d.geo.Rectangle(this.getAbsoluteX(),this.getAbsoluteY(),this.getWidth(),this.getHeight());
+        return new draw2d.geo.Rectangle(this.getAbsoluteX(),this.getAbsoluteY(),this.getWidth(),this.getHeight());
     },
 
     /**
@@ -17947,7 +20434,7 @@ draw2d.Figure = Class.extend({
      * You can change the resizeable behaviour of this object. Hands over [false] and
      * the figure has no resizehandles if you select them with the mouse.<br>
      *
-     *      // Anatively you can use the attr method:
+     *      // Alternatively you can use the attr method:
      *      figure.attr({
      *        resizeable: flag
      *      });
@@ -17957,6 +20444,7 @@ draw2d.Figure = Class.extend({
     setResizeable:function(flag)
     {
       this.resizeable=!!flag;
+      this.fireEvent("change:resizeable");
 
       return this;
     },
@@ -17988,6 +20476,7 @@ draw2d.Figure = Class.extend({
     setSelectable:function(flag)
     {
       this.selectable=!!flag;
+      this.fireEvent("change:selectable");
 
       return this;
     },
@@ -18027,6 +20516,7 @@ draw2d.Figure = Class.extend({
     setDeleteable:function(flag)
     {
       this.deleteable = !!flag;
+      this.fireEvent("change:deleteable");
 
       return this;
     },
@@ -18055,6 +20545,47 @@ draw2d.Figure = Class.extend({
     getParent:function()
     {
       return this.parent;
+    },
+
+    /**
+     * @method
+     * Check to see if a figure is a descendant of another figure.
+     * <br>
+     * The contains() method returns true if the figure provided by the argument is a descendant of this figure,
+     * whether it is a direct child or nested more deeply. Otherwise, it returns false.
+     *
+     * @param {draw2d.Figure} containedFigure The figure that may be contained by (a descendant of) this figure.
+     * @since 5.5.4
+     */
+    contains: function(containedFigure)
+    {
+        if(containedFigure.getParent()===this){
+            return true;
+        }
+
+        for(var i= 0,len=this.children.getSize(); i<len;i++){
+            var child = this.children.get(i).figure;
+            if(child.contains(containedFigure)) {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    /**
+     * @method
+     * Get the top most parent of this figure. This can be an layout figure or parent container
+     *
+     * @return {draw2d.Figure}
+     * @since 5.0.6
+     **/
+    getRoot:function()
+    {
+        var root = this.parent;
+        while(root!==null && root.parent!==null){
+            root = root.parent;
+        }
+        return root;
     },
 
     /**
@@ -18088,7 +20619,7 @@ draw2d.Figure = Class.extend({
       return this.composite;
     },
 
-    // NEW EVENT HANDLING SINCE VERSION 5.0.0
+
     /**
      * @method
      * Execute all handlers and behaviors attached to the figure for the given event type.
@@ -18099,15 +20630,33 @@ draw2d.Figure = Class.extend({
      * 
      * @since 5.0.0
      */
-    fireEvent: function(event, args) {
-        if (typeof this.eventSubscriptions[event] === 'undefined') {
-            return;
+    fireEvent: function(event, args) 
+    {
+        try{
+            if (typeof this.eventSubscriptions[event] === 'undefined') {
+                return;
+            }
+            
+            // avoid recursion
+            if(this._inEvent===true){
+                return;
+            }
+            this._inEvent=true;
+            var subscribers = this.eventSubscriptions[event];
+            for (var i=0; i<subscribers.length; i++) {
+                subscribers[i](this, args);
+            }
         }
-        
-        var subscribers = this.eventSubscriptions[event];
-        for (var i=0; i<subscribers.length; i++) {
-            subscribers[i](this, args);
-        }
+        finally{
+            this._inEvent=false;
+            
+            // fire a generic change event if an attribute has changed
+            // required for some DataBinding frameworks or for the Backbone.Model compatibility
+            // the event "change" with the corresponding attribute name as additional parameter
+            if(event.substring(0,7)==="change:"){
+                this.fireEvent("change",event.substring(7));
+            }
+       }
     },
     
     /**
@@ -18125,17 +20674,25 @@ draw2d.Figure = Class.extend({
      *   <li>contextmenu</li>
      *   <li>show</li>
      *   <li>hide</li>
+     *   <li>change:[attr]</li>
      * </ul>
      * 
      * @param {String}   event One or more space-separated event types
      * @param {Function} callback A function to execute when the event is triggered. 
      * @param {draw2d.Figure} callback.emitter the emitter of the event
      * @param {Object} [callback.obj] optional event related data
-     * 
+     * @param {Object} [context] optional context of the fucntion callback. 
      * @since 5.0.0
      */
-    on: function(event, callback) {
+    on: function(event, callback, context) {
         var events = event.split(" ");
+        // the "context" param is add to be compatible with Backbone.Model.
+        // The project "backbone.ModelBinder" used this signature and we want use this
+        if(context){
+            callback = $.proxy(callback,context);
+            callback.___originalCallback = callback;
+        }
+        
         for(var i=0; i<events.length; i++){
             if (typeof this.eventSubscriptions[events[i]] === 'undefined') {
                 this.eventSubscriptions[events[i]] = [];
@@ -18153,7 +20710,7 @@ draw2d.Figure = Class.extend({
      * If a simple event name such as "move" is provided, all events of that type are removed from the figure. 
      * 
      * 
-     * @param {String|Function} eventOrFunction the event name of the registerd function
+     * @param {String|Function} eventOrFunction the event name of the registerd function or the function itself
      * @since 5.0.0
      */
     off: function( eventOrFunction){
@@ -18165,13 +20722,60 @@ draw2d.Figure = Class.extend({
         }
         else{
             for(var event in this.eventSubscriptions ){
-                this.eventSubscriptions[event] =$.grep(this.eventSubscriptions[event], function( callback ) { return callback !== eventOrFunction; });
+                this.eventSubscriptions[event] =$.grep(this.eventSubscriptions[event], function( callback ) { 
+                    if(typeof callback.___originalCallback !=="undefined"){
+                        return callback.___originalCallback !== eventOrFunction;
+                    }
+                    return callback !== eventOrFunction; 
+                });
             }
         }
 
         return this;
     },
-    
+
+
+
+    /**
+     * @method
+     * Returns the best figure at the location [x,y]. It is a simple hit test. Keep in mind that only visible objects
+     * are returned.
+     *
+     * @param {Number} x The x position.
+     * @param {Number} y The y position.
+     * @param {draw2d.Figure|Array} [figureToIgnore] The figures which should be ignored.
+     **/
+    getBestChild: function(x, y, figureToIgnore)
+    {
+        if(!$.isArray(figureToIgnore)){
+            if(figureToIgnore instanceof draw2d.Figure){
+                figureToIgnore = [figureToIgnore];
+            }
+            else{
+                figureToIgnore=[];
+            }
+        }
+
+        var result = null;
+
+        // tool method to check recursive a figure for hitTest
+        //
+        var checkRecursive = function(children){
+            children.each(function(i,e){
+                var c=e.figure;
+                checkRecursive(c.children);
+                if(result===null && c.isVisible()===true && c.hitTest(x,y)===true && $.inArray(c, figureToIgnore)===-1){
+                    result = c;
+                }
+                return result===null; // break the each-loop if we found an element
+            });
+        };
+
+        checkRecursive( this.children);
+
+        return result;
+    },
+
     /**
      * @method
      * Returns the Command to perform the specified Request or null.
@@ -18342,13 +20946,8 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
     */
-    init: function( attr ) 
+    init: function( attr ,setter , getter) 
     {
-      /** @attr {Number} radius the radius to render the line edges */
-      this.setterWhitelist.persistPorts = this.setPersistPorts;
-      
-      this.getterWhitelist.persistPorts = this.getPersistPorts;
-
       this.inputPorts = new draw2d.util.ArrayList();
       this.outputPorts= new draw2d.util.ArrayList();
       this.hybridPorts= new draw2d.util.ArrayList();
@@ -18365,7 +20964,15 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
       //
       this.cachedPorts = null;
       
-      this._super($.extend({width:50, height:50}, attr) );
+      this._super(
+              $.extend({width:50, height:50}, attr),
+              $.extend({
+                  /** @attr {Number} radius the radius to render the line edges */
+                  persistPorts : this.setPersistPorts
+              }, setter),
+              $.extend({
+                  persistPorts : this.getPersistPorts
+              }, getter));
     },
     
 
@@ -18380,7 +20987,8 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
     setPersistPorts: function(flag)
     {
         this.persistPorts = flag;
-        
+        this.fireEvent("change:persistPorts");
+
         return this;
     },
     
@@ -18401,7 +21009,11 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
      */
     onDoubleClick:function()
     {
-        this.canvas.getCommandStack().execute(new draw2d.command.CommandRotate(this, (this.getRotationAngle()+90)%360));
+        var command = this.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.ROTATE));
+
+        if(command!==null) {
+            this.canvas.getCommandStack().execute(command);
+        }
     },
     
     /**
@@ -18444,6 +21056,33 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
     },
 
     /**
+     * @inheritdoc
+     */
+    setVisible: function(flag){
+    	// adjust the visibility of the ports to the parent state
+    	//
+    	if(!flag){
+    		this.getPorts().each(function(i,port){
+    			port.__initialVisibilityState=port.isVisible();
+    			port.setVisible(false);
+    		});
+    	}
+    	else{
+    		this.getPorts().each(function(i,port){
+    			if(typeof port.__initialVisibilityState !=="undefined"){
+    				port.setVisible(port.__initialVisibilityState);
+    			}
+    			else{
+    				port.setVisible(true);
+    			}
+    			delete port.__initialVisibilityState;
+    		});
+    	}
+    	this._super(flag);
+    },
+    
+    
+    /**
      * @method
      * Return all ports of the node.
      *
@@ -18451,7 +21090,6 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
      **/
     getPorts: function()
     {
-      // TODO: expensive! Find another solution.
       if(this.cachedPorts===null ){
           this.cachedPorts = new draw2d.util.ArrayList();
           this.cachedPorts.addAll(this.inputPorts);
@@ -18718,15 +21356,15 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
         
     	switch(type){
     	case "input":
-    		newPort= new draw2d.InputPort();
+    		newPort= draw2d.Configuration.factory.createInputPort(this);
     		count = this.inputPorts.getSize();
     		break;
     	case "output":
-    		newPort= new draw2d.OutputPort();
+    		newPort= draw2d.Configuration.factory.createOutputPort(this);
             count = this.outputPorts.getSize();
     		break;
         case "hybrid":
-            newPort= new draw2d.HybridPort();
+            newPort= draw2d.Configuration.factory.createHybridPort(this);
             count = this.hybridPorts.getSize();
             break;
     	default:
@@ -18750,7 +21388,8 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
      * 
      * @returns {draw2d.util.ArrayList}
      */
-    getConnections: function(){
+    getConnections: function()
+    {
         var connections = new draw2d.util.ArrayList();
         var ports = this.getPorts();
         for(var i=0; i<ports.getSize(); i++)
@@ -18768,10 +21407,11 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
         return connections;
     },
 
+
     /**
      * @inheritdoc
      */
-    setCanvas : function(canvas)
+    setCanvas: function(canvas)
     {
         var oldCanvas = this.canvas;
         this._super(canvas);
@@ -18812,7 +21452,8 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
     /**
      * @inheritdoc
      */
-    setDimension: function(w,h){
+    setDimension: function(w,h)
+    {
         this.portRelayoutRequired=true;
         this._super(w,h);
     },
@@ -18847,7 +21488,8 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
      * 
      * @private
      */
-     layoutPorts: function(){
+     layoutPorts: function()
+    {
 
          if(this.portRelayoutRequired===false){
              return;//silently
@@ -18868,15 +21510,37 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
              port.locator.relocate(i,port);
          });
      },
-     
 
-     /**
+    /**
+     * @method
+     * Returns the Command to perform the specified Request or null.
+     *
+     * @param {draw2d.command.CommandType} request describes the Command being requested
+     * @return {draw2d.command.Command} null or a Command
+     * @private
+     **/
+    createCommand: function( request)
+    {
+        if(request===null){
+            return null;
+        }
+
+        if(request.getPolicy() === draw2d.command.CommandType.ROTATE){
+            return new draw2d.command.CommandRotate(this, (this.getRotationAngle()+90)%360);
+        }
+
+
+        return this._super(request);
+    },
+
+
+    /**
       * @method 
       * Return an objects with all important attributes for XML or JSON serialization
       * 
       * @returns {Object}
       */
-     getPersistentAttributes : function()
+     getPersistentAttributes: function()
      {
          var memento = this._super();
          
@@ -18885,11 +21549,11 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
          if(this.persistPorts===true){
              memento.ports = [];
              this.getPorts().each(function(i,port){
-                 memento.ports.push({
+                 memento.ports.push($.extend(port.getPersistentAttributes(),{
                      name   : port.getName(),
                      port   : port.NAME,
                      locator: port.getLocator().NAME
-                 });
+                 }));
              });
          }
          
@@ -18903,7 +21567,7 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
       * @param {Object} memento
       * @returns 
       */
-     setPersistentAttributes : function(memento)
+     setPersistentAttributes: function(memento)
      {
          this._super(memento);
          
@@ -18920,7 +21584,7 @@ draw2d.shape.node.Node = draw2d.Figure.extend({
              $.each(memento.ports, $.proxy(function(i,e){
                  var port    =  eval("new "+e.port+"()");
                  var locator =  eval("new "+e.locator+"()");
-                 
+                 port.setPersistentAttributes(e);
                  this.addPort(port, locator);
                  port.setName(e.name);
              },this));
@@ -18954,22 +21618,8 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function( attr)
+    init: function( attr, setter, getter)
     {
-        /** @attr {Number} radius the radius to render the line edges */
-        this.setterWhitelist.radius = this.setRadius;
-        /** @attr {String|draw2d.util.Color} bgColor the background color of the shape */
-        this.setterWhitelist.bgColor= this.setBackgroundColor;
-        /** @attr {String|draw2d.util.Color} color the main color of the shape */
-        this.setterWhitelist.color  = this.setColor;
-        /** @attr {Number} stroke the stroke width */
-        this.setterWhitelist.stroke = this.setStroke;
-        
-        this.getterWhitelist.radius = this.getRadius;
-        this.getterWhitelist.bgColor= this.getBackgroundColor;
-        this.getterWhitelist.color  = this.getColor;
-        this.getterWhitelist.stroke = this.getStroke;
-
         this.stroke = 1;
         this.radius = 0;
         this.bgColor= new draw2d.util.Color("#ffffff");
@@ -18980,7 +21630,24 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
         this.strokeBeforeGlow = this.stroke;
         this.glowIsActive = false;
         
-        this._super( attr);
+        this._super( attr, 
+            $.extend({
+                /** @attr {Number} radius the radius to render the line edges */
+                radius : this.setRadius,
+                /** @attr {String|draw2d.util.Color} bgColor the background color of the shape */
+                bgColor: this.setBackgroundColor,
+                /** @attr {String|draw2d.util.Color} color the main color of the shape */
+                color  : this.setColor,
+                /** @attr {Number} stroke the stroke width */
+                stroke : this.setStroke
+            }, setter),
+            $.extend({
+               radius : this.getRadius,
+               bgColor: this.getBackgroundColor,
+               color  : this.getColor,
+               stroke : this.getStroke
+            }, getter)
+        );
     },
 
     /**
@@ -18994,6 +21661,7 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
      {
         this.radius = radius;
         this.repaint();
+        this.fireEvent("change:radius");
         
         return this;
     },
@@ -19039,7 +21707,7 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     /**
      * @inheritdoc
      */
-    repaint : function(attributes)
+    repaint: function(attributes)
     {
         if (this.repaintBlocked===true || this.shape === null){
             return;
@@ -19077,6 +21745,11 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     * @method
     * Set the new background color of the figure. It is possible to hands over
     * <code>null</code> to set the background transparent.
+    * 
+    *      // Alternatively you can use the attr method:
+    *      figure.attr({
+    *        "bgColor": "#f0f0f0"
+    *      });
     *
     * @param {String|draw2d.util.Color} color The new background color of the figure
     **/
@@ -19085,6 +21758,7 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
         this.bgColor = new draw2d.util.Color(color);
 
         this.repaint();
+        this.fireEvent("change:bgColor");
         
         return this;
     },
@@ -19093,6 +21767,9 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     * @method
     * The current used background color.
     * 
+    *      // Alternatively you can use the attr method:
+    *      var color =figure.attr("bgColor");
+    *      
     * @return {draw2d.util.Color}
     */
    getBackgroundColor:function()
@@ -19104,12 +21781,18 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     * @method
     * Set the stroke to use.
     * 
+    *      // Alternatively you can use the attr method:
+    *      figure.attr({
+    *        "stroke": 2
+    *      });
+    * 
     * @param {Number} w The new line width of the figure
     **/
    setStroke:function( w )
    {
      this.stroke=w;
      this.repaint();
+     this.fireEvent("change:stroke");
      
      return this;
    },
@@ -19130,12 +21813,18 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     * Set the foreground color of the figure.
     * This method fires a <i>document dirty</i> event.
     * 
+    *      // Alternatively you can use the attr method:
+    *      figure.attr({
+    *        "color": "#f3f3f3"
+    *      });
+    *      
     * @param {String|draw2d.util.Color} color The new color of the line.
     **/
    setColor:function( color)
    {
      this.color = new draw2d.util.Color(color);
      this.repaint();
+     this.fireEvent("change:color");
      
      return this;
    },
@@ -19144,6 +21833,7 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     * @method
     * Get the current used foreground color
     * 
+    *      
     * @returns {draw2d.util.Color}
     */
    getColor:function()
@@ -19184,8 +21874,8 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
            this.setColor(memento.color);
        }
        
-       if(typeof memento.stroke !== "undefined"){
-           this.setStroke(parseFloat(memento.stroke));
+       if(typeof memento.stroke !== "undefined" ){
+           this.setStroke(memento.stroke===null?0:parseFloat(memento.stroke));
        }
         
        return this;
@@ -19239,18 +21929,25 @@ draw2d.shape.basic.Rectangle = draw2d.VectorFigure.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr) {
+    init: function( attr, setter, getter) {
        this.dasharray = null;
       
-       /** @attr {String} dash The dot/dash pattern for the line style. Valid values: ["", "-", ".", "-.", "-..", ". ", "- ", "--", "- .", "--.", "--.."]*/
-       this.setterWhitelist.dash  = this.setDashArray;
        
-       this.getterWhitelist.dash  = this.getDashArray;
 
-       this._super($.extend({bgColor:"#a0a0a0", color:"#1B1B1B"},attr));
+       this._super(
+           $.extend({bgColor:"#a0a0a0", color:"#1B1B1B"},attr),
+           $.extend({},{
+               /** @attr {String} dash The dot/dash pattern for the line style. Valid values: ["", "-", ".", "-.", "-..", ". ", "- ", "--", "- .", "--.", "--.."]*/
+               dash  : this.setDashArray
+           }, setter),
+           $.extend({},{
+               dash  : this.getDashArray
+           }, getter)
 
-       // some performance approvements
-       this.lastAppliedRotation = -1;
+       );
+
+       // some performance improvements
+       this.lastAppliedTransformation = "";
      },
 
     /**
@@ -19282,13 +21979,17 @@ draw2d.shape.basic.Rectangle = draw2d.VectorFigure.extend({
      */
     applyTransformation:function()
     {
-         this.shape.transform("R"+this.rotationAngle);
+        var ts= "R"+this.rotationAngle;
         
         if(this.getRotationAngle()=== 90|| this.getRotationAngle()===270){
             var ratio = this.getHeight()/this.getWidth();
-            var rs = "...S"+ratio+","+1/ratio+","+(this.getAbsoluteX() +this.getWidth()/2)+","+(this.getAbsoluteY() +this.getHeight()/2);
-            this.shape.transform(rs);
+            ts = ts+"S"+ratio+","+1/ratio+","+(this.getAbsoluteX() +this.getWidth()/2)+","+(this.getAbsoluteY() +this.getHeight()/2);
         }
+
+    //    if(ts!=this.lastAppliedTransformation){
+            this.shape.transform(ts);
+            this.lastAppliedTransformation = ts;
+   //     }
         
         return this;
     },
@@ -19318,10 +22019,25 @@ draw2d.shape.basic.Rectangle = draw2d.VectorFigure.extend({
     {
         this.dasharray = pattern;
         this.repaint();
-        
+        this.fireEvent("change:dashArray");
+  
         return this;
     },
     
+    /**
+     * @method
+     * Get the line style for this object.
+     * 
+     *      // Alternatively you can use the attr method:
+     *      figure.attr("dash");
+     *  
+     * @since 5.1.0
+     */
+    getDashArray: function(dashPattern)
+    {
+        return this.dasharray;
+    },
+  
     /**
      * @inheritdoc
      */
@@ -19374,7 +22090,7 @@ draw2d.SetFigure = draw2d.shape.basic.Rectangle.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr ) {
+    init: function( attr ,setter, getter) {
       // collection of SVG DOM nodes
       this.svgNodes=null;
       
@@ -19386,7 +22102,7 @@ draw2d.SetFigure = draw2d.shape.basic.Rectangle.extend({
 
       this.strokeScale = true; // scale the stroke width of the children nodes if the parent resize
 
-      this._super( $.extend({ stroke:0, bgColor:null},attr) );
+      this._super( $.extend({ stroke:0, bgColor:null},attr),setter,getter );
     },
     
     /**
@@ -19517,7 +22233,7 @@ draw2d.SetFigure = draw2d.shape.basic.Rectangle.extend({
     
     /**
      * @method
-     * Moves the element so it is the closest to the viewer?Äôs eyes, on top of other elements. Additional
+     * Moves the element so it is the closest to the viewer?s eyes, on top of other elements. Additional
      * the internal model changed as well.
      * 
      * Optional: Inserts current object in front of the given one. 
@@ -19544,8 +22260,15 @@ draw2d.SetFigure = draw2d.shape.basic.Rectangle.extend({
         }
         
         if(typeof figure ==="undefined"){
+            // bring the outer frame in front...
             this.getShapeElement().toFront();
-            
+
+            // and all inner children
+            //
+            if(this.svgNodes!==null){
+                this.svgNodes.toFront();
+            }
+
             if(this.canvas!==null){
                 var figures = this.canvas.getFigures();
                 var lines = this.canvas.getLines();
@@ -19557,8 +22280,13 @@ draw2d.SetFigure = draw2d.shape.basic.Rectangle.extend({
             }
         }
         else{
+            // Bring the SVG shapes between the "figure" and the container of this shape
+            //
+            if(this.svgNodes!==null){
+                this.svgNodes.insertAfter(figure.getTopLevelShapeElement());
+            }
             this.getShapeElement().insertAfter(figure.getTopLevelShapeElement());
-            
+
             if(this.canvas!==null){
                 var figures = this.canvas.getFigures();
                 var lines = this.canvas.getLines();
@@ -19572,24 +22300,14 @@ draw2d.SetFigure = draw2d.shape.basic.Rectangle.extend({
         }
         
         
-        // Bring the SVG shapes in front
-        //
-        if(this.svgNodes!==null){
-            if(typeof figure !=="undefined"){
-                this.svgNodes.insertAfter(figure.getTopLevelShapeElement());
-            }
-            else{
-                this.svgNodes.toFront();
-            }
-        }
-        
-        // bring all children figures in front of the parent
+
+        // bring all children in front of the parent
         //
         this.children.each(function(i,child){
             child.figure.toFront(figure);
         });
         
-        // and last but not least - the ports are always on top
+        // the ports are always on top
         //
         var _this = this;
         this.getPorts().each(function(i,port){
@@ -19602,6 +22320,11 @@ draw2d.SetFigure = draw2d.shape.basic.Rectangle.extend({
             port.toFront(_this);
         });
 
+        // and last but not lease the ResizeHandles if any present
+        //
+        this.selectionHandles.each(function(i,handle){
+            handle.toFront();
+        });
 
         return this;
     },
@@ -19823,7 +22546,13 @@ draw2d.SVGFigure = draw2d.SetFigure.extend({
                   // just to ignore
                   break;
               default:
-                attr[this.nodeName] = this.nodeValue;
+                if(this.value){
+                    attr[this.nodeName] = this.value;
+                }
+                else{
+                    // @deprecated
+                    attr[this.nodeName] = this.nodeValue;
+                }
               break;
             }
           });
@@ -19888,7 +22617,7 @@ draw2d.SVGFigure = draw2d.SetFigure.extend({
                             case 11://DOCUMENT_FRAGMENT_NODE
                             case 12://NOTATION_NODE
                                 return;
-                            case 3://TEXT_NOD   
+                            case 3://TEXT_NODE
                             	 // redirect to the parent node if we found a simple TEXT without any attributes
                             	child = element;
                             	break;
@@ -19933,7 +22662,9 @@ draw2d.SVGFigure = draw2d.SetFigure.extend({
                        
                         subShape.attr(subAttr);
                         set.push(subShape);
-                    }while(child= child.nextSibling);
+                        child = child.nextSibling;
+
+                    }while(child && child.nodeType === 3); // 3= TEXT_NODE
                 }
                 else{
                   shape = canvas.paper.text(0,0,$(element).html());
@@ -20021,19 +22752,22 @@ draw2d.shape.node.Hub = draw2d.shape.basic.Rectangle.extend({
 	 * 
      * @param {Object} [attr] the configuration of the shape
 	 */
-	init : function(attr)
+	init: function(attr, setter, getter)
     {
-	    // deprecated
-        this.setterWhitelist.label = this.setLabel;
-        /** @attr {String} text the text to display in the center of the hub */
-        this.setterWhitelist.text = this.setLabel;
-        
-        this.getterWhitelist.label= this.getLabel;
-        this.getterWhitelist.text= this.getLabel;
-
         this.label = null;
 	    
-        this._super($.extend({color:this.DEFAULT_COLOR.darker(), bgColor:this.BACKGROUND_COLOR},attr));
+        this._super(
+                $.extend({color:this.DEFAULT_COLOR.darker(), bgColor:this.BACKGROUND_COLOR},attr),
+                $.extend({
+                    // deprecated
+                    label : this.setLabel,
+                    /** @attr {String} text the text to display in the center of the hub */
+                    text  : this.setLabel
+                },setter),
+                $.extend({
+                    label: this.getLabel,
+                    text : this.getLabel
+                },getter));
         
         var _port = this.port = this.createPort("hybrid", new draw2d.layout.locator.CenterLocator());
 
@@ -20053,6 +22787,7 @@ draw2d.shape.node.Hub = draw2d.shape.basic.Rectangle.extend({
         //
         this.port.setConnectionAnchor(new draw2d.layout.anchor.ShortesPathConnectionAnchor(this.port));
         this.port.setVisible(false);
+        this.port.setVisible= function(){};
         
         this.setConnectionDirStrategy(0);
     },
@@ -20223,7 +22958,7 @@ draw2d.shape.node.HorizontalBus = draw2d.shape.node.Hub.extend({
 	 * 
      * @param {Object} [attr] the configuration of the shape
 	 */
-	init : function(attr)
+	init: function(attr, setter, getter )
     {
         this._super(attr);
         
@@ -20262,7 +22997,7 @@ draw2d.shape.node.VerticalBus = draw2d.shape.node.Hub.extend({
 	 * 
      * @param {Object} [attr] the configuration of the shape
 	 */
-	init : function(attr)
+	init: function(attr, setter, getter )
     {
         this._super(attr);
 
@@ -20351,9 +23086,9 @@ draw2d.shape.node.Fulcrum = draw2d.shape.node.Hub.extend({
 	 * 
      * @param {Object} [attr] the configuration of the shape
 	 */
-	init : function(attr)
+	init: function(attr, setter, getter )
     {
-        this._super($.extend({width:40, height:40},attr));
+        this._super($.extend({width:40, height:40},attr), setter, getter);
 
         
         this.port.setConnectionAnchor(new draw2d.layout.anchor.ConnectionAnchor(this.port));
@@ -20420,12 +23155,12 @@ draw2d.shape.basic.Arc = draw2d.SetFigure.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function(attr ) 
+    init: function(attr, setter, getter) 
     {
     	this.startAngle = 180;
     	this.endAngle = 360;
  	
-        this._super( $.extend({width:80, height:50,bgColor:null, color:"#1B1B1B"},attr));
+        this._super( $.extend({width:80, height:50,bgColor:null, color:"#1B1B1B"},attr), setter, getter);
     	this.strokeScale = false; // scale the stroke width of the children nodes if the parent resize
     },
       
@@ -20437,10 +23172,8 @@ draw2d.shape.basic.Arc = draw2d.SetFigure.extend({
    {
         this.canvas.paper.setStart();
 
-//        this.canvas.paper.rect(0, 0, this.getWidth(), this.getHeight()).attr({stroke:""});
 
         var flag = (this.endAngle - this.startAngle) > 180;
-        var clr = (this.endAngle - this.startAngle) / 360;
         var a1  = (this.startAngle % 360) * Math.PI / 180;
         var a2  = (this.endAngle % 360)   * Math.PI / 180;
         
@@ -20492,9 +23225,17 @@ draw2d.shape.basic.Oval = draw2d.VectorFigure.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function(attr ) 
+    init: function(attr, setter, getter ) 
     {
-        this._super( $.extend({bgColor:"#C02B1D", color:"#1B1B1B"},attr));
+        this._super( 
+                $.extend({
+                    bgColor:"#C02B1D", 
+                    color:"#1B1B1B"
+                    },attr),
+                $.extend({
+                    center: this.setCenter
+                    },setter),
+                getter);
     },
       
 
@@ -20509,6 +23250,37 @@ draw2d.shape.basic.Oval = draw2d.VectorFigure.extend({
      return this.canvas.paper.ellipse(this.getAbsoluteX()+halfW, this.getAbsoluteY()+halfH, halfW, halfH);
    },
 
+   
+   /**
+    * @method
+    * Get the center of the figure
+    * 
+    */
+   getCenter: function(){
+       var w2= this.getWidth()/2;
+       var h2= this.getHeight()/2;
+
+       return this.getPosition().translate(w2,h2);
+   },
+
+   /**
+    * @method
+    * Set the center of the figure.
+    * 
+    * @param {Number|draw2d.geo.Point} x the new x coordinate of the center or a draw2d.geo.Point object with the center
+    * @param {Number} y the y coordinate of the new center of the first argument isn't a draw2d.geo.Point object
+    */
+   setCenter: function(x, y){
+       var pos = new draw2d.geo.Point(x,y);
+       var w2= this.getWidth()/2;
+       var h2= this.getHeight()/2;
+       pos.translate(-w2,-h2);
+       this.fireEvent("change:center");
+       this.setPosition(pos);
+       
+       return this;
+   },
+   
 
    /**
     * @inheritdoc
@@ -20546,7 +23318,8 @@ draw2d.shape.basic.Oval = draw2d.VectorFigure.extend({
    *   NOTE: Rotation will need to be added to this function
    *
    *****/
-   intersectionWithLine : function(a1, a2) {
+   intersectionWithLine : function(a1, a2)
+   {
 	   var rx = this.getWidth()/2;
 	   var ry = this.getHeight()/2;
        
@@ -20631,18 +23404,21 @@ draw2d.shape.basic.Circle = draw2d.shape.basic.Oval.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init:function( attr)
+    init: function( attr, setter, getter)
     {
-        /** @attr {Number} diameter the diameter of the circle */
-        this.setterWhitelist.diameter  = this.setDiameter;
-        /** @attr {Number} radius the radius of the circle */
-        this.setterWhitelist.radius  = this.setRadius;
-        
-        this.getterWhitelist.diameter = this.getDiameter;
-        this.getterWhitelist.radius = this.getRadius;
+        this._super(
+            attr,
+            $.extend({
+                /** @attr {Number} diameter the diameter of the circle */
+                diameter : this.setDiameter,
+                /** @attr {Number} radius the radius of the circle */
+                radius   : this.setRadius
+            },setter),
+            $.extend({
+                diameter : this.getDiameter,
+                radius   : this.getRadius
+            },getter));
 
-        this._super(attr);
-        
         this.setKeepAspectRatio(true);
     },
     
@@ -20658,6 +23434,7 @@ draw2d.shape.basic.Circle = draw2d.shape.basic.Oval.extend({
         var center = this.getCenter();
         this.setDimension(d,d);
         this.setCenter(center); 
+        this.fireEvent("change:diameter");
         
         return this;
     },
@@ -20684,37 +23461,11 @@ draw2d.shape.basic.Circle = draw2d.shape.basic.Oval.extend({
     setRadius:function(r)
     {
         this.setDiameter(r*2);
+        this.fireEvent("change:radius");
         
         return this;
     },
 
-    
-    /**
-     * @method
-     * Get the center of the circle
-     * 
-     */
-    getCenter: function(){
-        var d2= this.getDiameter()/2;
-        return this.getPosition().translate(d2,d2);
-    },
-
-    /**
-     * @method
-     * Set the center of the circle.
-     * 
-     * @param {Number|draw2d.geo.Point} x the new x coordinate of the center or a draw2d.geo.Point object with the center
-     * @param {Number} y the y coordinate of the new center of the first argument isn't a draw2d.geo.Point object
-     */
-    setCenter: function(x, y){
-        var pos = new draw2d.geo.Point(x,y);
-        var d2  = this.getDiameter()/2;
-        pos.translate(-d2,-d2);
-        this.setPosition(pos);
-        
-        return this;
-    },
-    
     /**
      * @inheritdoc
      */
@@ -20726,7 +23477,7 @@ draw2d.shape.basic.Circle = draw2d.shape.basic.Oval.extend({
         delete memento.radius;
         
         return memento;
-    },
+    }
 
 });
 /*****************************************
@@ -20775,34 +23526,9 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function(attr)
+    init: function(attr, setter, getter)
     {
-        /** @attr {String} text the text to show */
-        this.setterWhitelist.text  = this.setText;
-        /** @attr {Number} outlineStroke the line width of the text to draw. Fill color and outline of the text can be different. */
-        this.setterWhitelist.outlineStroke  = this.setOutlineStroke;
-        /** @attr {String|draw2d.util.Color} outlineColor the outline color of the text */
-        this.setterWhitelist.outlineColor  = this.setOutlineColor;
-        /** @attr {String} fontFamily the font to use*/
-        this.setterWhitelist.fontFamily  = this.setFontFamily;
-        /** @attr {Number} fontSize the font size to use */
-        this.setterWhitelist.fontSize  = this.setFontSize;
-        /** @attr {String|draw2d.util.Color} fontColor the font color */
-        this.setterWhitelist.fontColor  = this.setFontColor;
-        /** @attr {Number} padding the padding in pixel around the text */
-        this.setterWhitelist.padding  = this.setPadding;
-        /** @attr {Boolean} bold indicator if bold text should be used*/
-        this.setterWhitelist.bold  = this.setBold;
         
-        this.getterWhitelist.text  = this.getText;
-        this.getterWhitelist.outlineStroke  = this.getOutlineStroke;
-        this.getterWhitelist.outlineColor  = this.getOutlineColor;
-        this.getterWhitelist.fontFamily  = this.getFontFamily;
-        this.getterWhitelist.fontSize  = this.getFontSize;
-        this.getterWhitelist.fontColor  = this.getFontColor;
-        this.getterWhitelist.padding  = this.getPadding;
-        this.getterWhitelist.bold  = this.isBold;
-
         this.text = "";
     	// for performance reasons
         //
@@ -20816,15 +23542,44 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
         this.fontSize = 12;
         this.fontColor = new draw2d.util.Color("#080808");
         this.fontFamily = null;
-        this.padding = 4;
+        this.padding = {top:4, right:4, bottom:4,left:4};
         
         this.outlineStroke = 0;
         this.outlineColor = new draw2d.util.Color(null);
         
         this.bold = false;
         
-        this._super($.extend({stroke:1, width:1,height:1,resizeable:false},attr));
-        
+        this._super(
+            $.extend({stroke:1, width:1,height:1,resizeable:false},attr),
+            $.extend({
+                /** @attr {String} text the text to show */
+                text  : this.setText,
+                /** @attr {Number} outlineStroke the line width of the text to draw. Fill color and outline of the text can be different. */
+                outlineStroke  : this.setOutlineStroke,
+                /** @attr {String|draw2d.util.Color} outlineColor the outline color of the text */
+                outlineColor  : this.setOutlineColor,
+                /** @attr {String} fontFamily the font to use*/
+                fontFamily  : this.setFontFamily,
+                /** @attr {Number} fontSize the font size to use */
+                fontSize  : this.setFontSize,
+                /** @attr {String|draw2d.util.Color} fontColor the font color */
+                fontColor  : this.setFontColor,
+                /** @attr {Number} padding the padding in pixel around the text */
+                padding  : this.setPadding,
+                /** @attr {Boolean} bold indicator if bold text should be used*/
+                bold  : this.setBold
+            }, setter),
+            $.extend({
+                text          : this.getText,
+                outlineStroke : this.getOutlineStroke,
+                outlineColor  : this.getOutlineColor,
+                fontFamily    : this.getFontFamily,
+                fontSize      : this.getFontSize,
+                fontColor     : this.getFontColor,
+                padding       : this.getPadding,
+                bold          : this.isBold
+            }, getter));
+            
        
         // behavior of the shape
         //
@@ -20834,7 +23589,8 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
  
     
         // some performance approvements
-        this.lastAppliedRotation = -1;
+        this.lastAppliedLabelRotation = "";
+        this.lastAppliedTextAttributes= {};
     },
     
     /** 
@@ -20877,12 +23633,21 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
         // style the label
         var lattr = this.calculateTextAttr();
         lattr.text = this.text;        
-        this.svgNodes.attr(lattr);
-        // set of the x/y must be done AFTER the font-size and bold has been set.
-        // Reason: the getHeight method needs the font-size for calculation because
-        //         it redirects the calculation to the SVG element.
-        this.svgNodes.attr({x:this.padding,y: this.getHeight()/2});
-
+        
+        var attrDiff = draw2d.util.JSON.flatDiff(lattr, this.lastAppliedTextAttributes);
+        this.lastAppliedTextAttributes= lattr;
+      
+        // the two "attr" calls takes 2/3 of the complete method call (chrome performance check).
+        // now we check if any changes happens and call this method only if neccessary.
+        if(!$.isEmptyObject(attrDiff)){
+            this.svgNodes.attr(lattr);
+            // set of the x/y must be done AFTER the font-size and bold has been set.
+            // Reason: the getBBox method needs the font attributes for calculation
+            this.svgNodes.attr({
+                    x: (this.padding.left+this.stroke),
+                    y: (this.svgNodes.getBBox(true).height/2 +this.padding.top + this.getStroke())
+                });
+        }
         this._super(attributes);
     },
     
@@ -20891,7 +23656,8 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
      * 
      * @private
      */
-    calculateTextAttr:function(){
+    calculateTextAttr:function()
+    {
         var lattr={"text-anchor":"start",
                    "font-size":this.fontSize,
                    "font-weight":(this.bold===true)?"bold":"normal",
@@ -20908,9 +23674,13 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
     /**
      * @private
      */
-    applyTransformation:function(){
-        
-        this.shape.transform("R"+this.rotationAngle);
+    applyTransformation:function()
+    {
+        var ts= "R"+this.rotationAngle;
+    //    if(ts!==this.lastAppliedLabelRotation){
+            this.shape.transform(ts);
+            this.lastAppliedLabelRotation = ts;
+    //    }
         
         this.svgNodes.transform(
                 "R" + this.rotationAngle+
@@ -20933,6 +23703,7 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
       
       this.repaint();
 
+      this.fireEvent("change:fontSize");
       this.fireEvent("resize");
       
       // Update the resize handles if the user change the position of the element via an API call.
@@ -20974,6 +23745,7 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
       this.bold = bold;
       this.repaint();
       
+      this.fireEvent("change:bold");
       this.fireEvent("resize");
       
       // Update the resize handles if the user change the position of the element via an API call.
@@ -20995,7 +23767,8 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
      * @since 5.0.0
      * @returns {Boolean}
      */
-    isBold: function(){
+    isBold: function()
+    {
         return this.bold;
     },
     
@@ -21010,6 +23783,7 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
     {
       this.outlineColor = new draw2d.util.Color(color);
       this.repaint();
+      this.fireEvent("change:outlineColor");
       
       return this;
     },
@@ -21037,7 +23811,8 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
     {
       this.outlineStroke=w;
       this.repaint();
-      
+      this.fireEvent("change:outlineStroke");
+     
       return this;
     },
 
@@ -21063,6 +23838,7 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
     {
       this.fontColor = new draw2d.util.Color(color);
       this.repaint();
+      this.fireEvent("change:fontColor");
       
       return this;
     },
@@ -21081,14 +23857,32 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
     /**
      * @method
      * Set the padding of the element
-     *
-     * @param {Number} padding The new padding
+     * 
+     *      // Alternatively you can use the attr method:
+     *      //
+     *      // set the padding for top,left,bottom,right in one call 
+     *      figure.attr({
+     *        padding: 3
+     *      });
+     *      
+     *      // update the padding left and top
+     *      figure.attr({
+     *        padding: {left:3, top:30}
+     *      });
+     * 
+     * @param {Number|Object} padding The new padding
      **/
     setPadding: function( padding)
     {
       this.clearCache();
-      this.padding = padding;
+      if(typeof padding ==="number"){
+          this.padding = {top:padding, right:padding, bottom:padding, left:padding};
+      }
+      else{
+          $.extend(this.padding, padding);
+      }
       this.repaint();
+      this.fireEvent("change:padding");
       
       return this;
     },
@@ -21107,32 +23901,32 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
 
     /**
      * @method
-     * Set the font family to use. If you use the <b>bold</b> font names the typical fallback 
+     * Set the font family to use. If you use the shown font names the typical fallback 
      * font are installed as well.
      * 
      * <b>Serif Fonts</b>
      * <ul>
-     *  <li><b>Georgia</b>, serif   </li>
-     *  <li><b>Palatino Linotype</b>, "Book Antiqua", Palatino, serif    </li>
-     *  <li><b>Times New Roman</b>, Times, serif  </li>   
+     *  <li><span style="font-family:'Georgia'">Georgia</span></li>
+     *  <li><span style="font-family:'Palatino Linotype'">Palatino Linotype</span></li>
+     *  <li><span style="font-family:'Times New Roman'">Times New Roman</span></li>   
      * </ul>
      * 
      * <b>Sans-Serif Fonts</b>
      * <ul>
-     *  <li><b>Arial</b>, Helvetica, sans-serif   </li> 
-     *  <li><b>Arial Black</b>, Gadget, sans-serif </li>  
-     *  <li><b>Comic Sans MS</b>, cursive, sans-serif   </li> 
-     *  <li><b>Impact, Charcoal</b>, sans-serif   </li> 
-     *  <li><b>Lucida Sans Unicode</b>, "Lucida Grande", sans-serif </li> 
-     *  <li><b>Tahoma, Geneva</b>, sans-serif  </li>
-     *  <li><b>Trebuchet MS</b>, Helvetica, sans-serif </li>  
-     *  <li><b>Verdana</b>, Geneva, sans-serif   </li>  
+     *  <li><span style="font-family:'Arial'">Arial</span></li> 
+     *  <li><span style="font-family:'Arial Black'">Arial Black</span></li>  
+     *  <li><span style="font-family:'Comic Sans MS'">Comic Sans MS</span></li> 
+     *  <li><span style="font-family:'Impact, Charcoal'">Impact, Charcoal</span></li> 
+     *  <li><span style="font-family:'Lucida Sans Unicode'">Lucida Sans Unicode</span></li> 
+     *  <li><span style="font-family:'Tahoma, Geneva'">Tahoma, Geneva</span></li>
+     *  <li><span style="font-family:'Trebuchet MS'">Trebuchet MS</span> </li>  
+     *  <li><span style="font-family:'Verdana'">Verdana</span></li>  
      * </ul>
      * 
      * <b>Monospace Fonts</b>
      * <ul>
-     *  <li><b>Courier New</b>, Courier, monospace   </li>
-     *  <li><b>Lucida Console</b>, Monaco, monospace</li>
+     *  <li><span style="font-family:'Courier New'">Courier New</span></li>
+     *  <li><span style="font-family:'Lucida Console'">Lucida Console</span></li>
      * </ul>
      *
      * @param {String} font The font to use
@@ -21149,10 +23943,23 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
       
       this.fontFamily = font;
       this.repaint();
+      this.fireEvent("change:fontFamily");
       
       return this;
     },
     
+    
+    /**
+     * @method
+     * Returns the used font family of the label.
+     * 
+     * @returns {String}
+     */
+    getFontFamily : function(){
+        return this.fontFamily;
+    },
+    
+
     /**
      * @method
      * A Label did have "autosize". Do nothing at all.
@@ -21172,13 +23979,14 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
      * clear the internal cache for width/height precalculation
      * @private
      */
-    clearCache:function(){
+    clearCache:function()
+    {
         this.portRelayoutRequired=true;
         this.cachedMinWidth  = null;
         this.cachedMinHeight = null;
         this.cachedWidth=null;
         this.cachedHeight=null;
-        
+        this.lastAppliedTextAttributes= {};
         return this;
     },
     
@@ -21195,8 +24003,11 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
         }
         
         if(this.cachedMinWidth=== null){
-            this.cachedMinWidth=this.svgNodes.getBBox(true).width+2*this.padding+2*this.getStroke();
-        }
+            this.cachedMinWidth= this.svgNodes.getBBox(true).width
+                                +this.padding.left
+                                +this.padding.right
+                                +2*this.getStroke();
+       }
         
         return this.cachedMinWidth;
     },
@@ -21214,7 +24025,10 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
         }
         
         if(this.cachedMinHeight=== null){
-            this.cachedMinHeight=this.svgNodes.getBBox(true).height+2*this.padding+2*this.getStroke();
+            this.cachedMinHeight= this.svgNodes.getBBox(true).height
+                                 +this.padding.top
+                                 +this.padding.bottom
+                                 +(2*this.getStroke());
         }
         
         return this.cachedMinHeight;
@@ -21227,14 +24041,19 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
      * @returns the calculated width of the label
      * @return {Number}
      **/
-    getWidth : function() {
-        
+    getWidth : function() 
+    {    
         if (this.shape === null) {
             return 0;
         }
         
         if(this.cachedWidth===null){
-            this.cachedWidth = Math.max(this.width, this.getMinWidth());
+            if(this.resizeable===true){
+                this.cachedWidth = Math.max(this.width, this.getMinWidth());
+            }
+            else{
+                this.cachedWidth = this.getMinWidth();
+            }
         }
         
         
@@ -21269,7 +24088,8 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
      * 
      * @param {draw2d.ui.LabelEditor} editor
      */
-    installEditor: function( editor ){
+    installEditor: function( editor )
+    {
       this.editor = editor;  
       
       return this;
@@ -21280,7 +24100,8 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
      * Called when a user dbl clicks on the element
      * 
      */
-    onDoubleClick: function(){
+    onDoubleClick: function()
+    {
         if(this.editor!==null){
             this.editor.start(this);
         }
@@ -21321,16 +24142,18 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
       });
 
       this.fireEvent("resize");
-      
+      this.fireEvent("change:text");
+
       if(this.parent!==null){
           this.parent.repaint();
       }
-      
+
       return this;
     },
     
 
-    hitTest: function(x, y) {
+    hitTest: function(x, y) 
+    {
         // apply a simple bounding box test if the label isn'T rotated
         //
         if( this.rotationAngle === 0){
@@ -21453,13 +24276,12 @@ draw2d.shape.basic.Text= draw2d.shape.basic.Label.extend({
      * 
     * @param {Object} [attr] the configuration of the shape
       */
-    init : function(attr)
+    init: function(attr, setter, getter)
     {
         this.cachedWrappedAttr = null;
 
-        this._super($.extend({width:100, height:50},attr));
+        this._super($.extend({width:100, height:50, resizeable:true},attr), setter, getter);
         
-
         this.installEditPolicy(new draw2d.policy.figure.WidthSelectionFeedbackPolicy());
     },
     
@@ -21475,12 +24297,12 @@ draw2d.shape.basic.Text= draw2d.shape.basic.Label.extend({
         }
 
         // style the label
-       this.svgNodes.attr($.extend({},this.calculateTextAttr(),this.wrappedTextAttr(this.text, this.getWidth()-2*this.padding)));
+       this.svgNodes.attr($.extend({},this.calculateTextAttr(),this.wrappedTextAttr(this.text, this.getWidth()-this.padding.left-this.padding.right)));
         
         // set of the x/y must be done AFTER the font-size and bold has been set.
         // Reason: the getHeight method needs the font-size for calculation because
         //         it redirects the calculation to the SVG element.
-        this.svgNodes.attr({x:this.padding,y: this.getHeight()/2});
+        this.svgNodes.attr({x:this.padding.left, y: this.getHeight()/2});
 
         // this is an exception call. Don't call the super method (Label) to avoid 
         // the calculation in this method.
@@ -21495,18 +24317,24 @@ draw2d.shape.basic.Text= draw2d.shape.basic.Label.extend({
     {
         this.clearCache();
         var attr = this.wrappedTextAttr(this.text, w);
-        
-        this._super(Math.min(w,attr.width),attr.height);
-        
+
+        this.cachedMinWidth = Math.min(w,attr.width);
+        this.cachedMinHeight= attr.height;
+
+        draw2d.shape.node.Node.prototype.setDimension.call(this,this.cachedMinWidth, this.cachedMinHeight);
+      //  this._super(Math.min(w,attr.width),attr.height);
+        this.fireEvent("change:dimension");
+       
         return this;
     },
-    
+
     /**
      * @method
      * clear the internal cache for width/height precalculation
      * @private
      */
-    clearCache:function(){
+    clearCache:function()
+    {
         this._super();
         this.cachedWrappedAttr = null;
         
@@ -21514,16 +24342,6 @@ draw2d.shape.basic.Text= draw2d.shape.basic.Label.extend({
     },
  
 
-    
-    /**
-     * @inheritdoc
-     */
-    isResizeable:function()
-    {
-      return true;
-    },
-       
-    
     /**
      * @inheritdoc
      */
@@ -21540,7 +24358,7 @@ draw2d.shape.basic.Text= draw2d.shape.basic.Label.extend({
             var svgText = this.canvas.paper
                                      .text(0, 0, longestWord)
                                      .attr($.extend({},this.calculateTextAttr(),{text:longestWord}));
-            this.cachedMinWidth= svgText.getBBox(true).width+2*this.padding+2*this.getStroke();
+            this.cachedMinWidth= svgText.getBBox(true).width+this.padding.left+this.padding.right+2*this.getStroke();
             svgText.remove();
         }
         
@@ -21554,7 +24372,8 @@ draw2d.shape.basic.Text= draw2d.shape.basic.Label.extend({
      * 
      * @private
      */
-    wrappedTextAttr: function(text, width) {
+    wrappedTextAttr: function(text, width) 
+    {
     	var words = text.split(" ");
         if(this.canvas ===null || words.length===0){
             return {text:text, width:width, height:20};
@@ -21582,9 +24401,12 @@ draw2d.shape.basic.Text= draw2d.shape.basic.Label.extend({
                 }
                 s.push(w);
             }
+            // set the wrapped text and get the resulted boudning box
+            //
+            svgText.attr({text: s.join("")});
             var bbox = svgText.getBBox(true);
             svgText.remove();
-            this.cachedWrappedAttr= {text: s.join(""), width:(bbox.width+this.padding*2), height: (bbox.height+this.padding*2)};
+            this.cachedWrappedAttr= {text: s.join(""), width:(Math.max(width,bbox.width)+this.padding.left+this.padding.right), height: (bbox.height+this.padding.top+this.padding.bottom)};
         }
         return this.cachedWrappedAttr;
      },
@@ -21661,66 +24483,8 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function(attr ) {
-        /** @attr {Number} startX the x coordinate of the start point */
-        this.setterHooks.startX= function(attr, attrs, marker){ 
-            if("startY" in attrs){
-                marker.startY=true;
-                this.setStartPoint(attr, attrs.startY);
-            }
-            else{
-                this.setStartPoint(attr, this.startY);
-            }
-        };
-        /** @attr {Number} startY the y coordinate of the start point */
-        this.setterHooks.startY= function(attr, attrs, marker){ 
-            if("startX" in attrs){
-                marker.startX=true;
-                this.setStartPoint(attrs.startX, attr);
-            }
-            else{
-                this.setStartPoint(this.startX,attr);
-            }
-        };
-        /** @attr {Number} endX the x coordinate of the end */
-        this.setterHooks.endX= function(attr, attrs, marker){ 
-            if("endY" in attrs){
-                marker.endY=true;
-                this.setEndPoint(attr, attrs.endY);
-            }
-            else{
-                this.setEndPoint(attr, this.endY);
-            }
-        };
-        /** @attr {Number} endY the y coordinate of the end */
-        this.setterHooks.endY= function(attr, attrs, marker){ 
-            if("endX" in attrs){
-                marker.endX=true;
-                this.setEndPoint(attrs.endX, attr);
-            }
-            else{
-                this.setEndPoint(this.endX,attr);
-            }
-        };
-
-        /** @attr {String | draw2d.util.Color} outlineColor the outline color of the line */
-        this.setterWhitelist.outlineColor = this.setOutlineColor;
-        /** @attr {Number} outlineStroke the line width of the outline */
-        this.setterWhitelist.outlineStroke = this.setOutlineStroke;
-        /** @attr {String|draw2d.util.Color} color the color of the line */
-        this.setterWhitelist.color = this.setColor;
-        /** @attr {Number} stroke the line width of the color */
-        this.setterWhitelist.stroke = this.setStroke;
-        /** @attr {String} dasharray the line pattern see {@link draw2d.shape.basic.Line#setDashArray} for more information*/
-        this.setterWhitelist.dasharray = this.setDashArray;
-        /** @attr {Boolean} glow the glow flag for the shape. The representation of the "glow" depends on the shape */
-        this.setterWhitelist.glow  = this.setGlow;
-        
-        this.getterWhitelist.outlineColor= this.getOutlineColor;
-        this.getterWhitelist.outlineStroke= this.getOutlineStroke;
-        this.getterWhitelist.stroke= this.getStroke;
-        this.getterWhitelist.dasharray= this.getDashArray;
-
+    init: function(attr, setter, getter) 
+    {
         // click area for the line hit test
         this.corona = 10;
         this.isGlowing = false;
@@ -21739,7 +24503,36 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
         this.vertices.add(this.start);
         this.vertices.add(this.end);
         
-        this._super(attr);
+        this._super(attr, 
+             $.extend({},{
+                    /** @attr {Number} startX the x coordinate of the start point */
+                    startX: this.setStartX,
+                    /** @attr {Number} startY the y coordinate of the start point */
+                    startY: this.setStartY,
+                    /** @attr {Number} endX the x coordinate of the end */
+                    endX: this.setEndX,
+                    /** @attr {Number} endY the y coordinate of the end */
+                    endY: this.setEndY,
+                    /** @attr {String | draw2d.util.Color} outlineColor the outline color of the line */
+                    outlineColor : this.setOutlineColor,
+                    /** @attr {Number} outlineStroke the line width of the outline */
+                    outlineStroke : this.setOutlineStroke,
+                    /** @attr {String|draw2d.util.Color} color the color of the line */
+                    color : this.setColor,
+                    /** @attr {Number} stroke the line width of the color */
+                    stroke : this.setStroke,
+                    /** @attr {String} dasharray the line pattern see {@link draw2d.shape.basic.Line#setDashArray} for more information*/
+                    dasharray : this.setDashArray,
+                    /** @attr {Boolean} glow the glow flag for the shape. The representation of the "glow" depends on the shape */
+                    glow  : this.setGlow
+                }, setter),
+                
+             $.extend({},{
+                outlineColor:  this.getOutlineColor,
+                outlineStroke: this.getOutlineStroke,
+                stroke:        this.getStroke,
+                dasharray:     this.getDashArray
+            }, getter));
         
         // create the selections handles/decorations
         this.installEditPolicy(new draw2d.policy.line.LineSelectionFeedbackPolicy());
@@ -21764,6 +24557,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
    {
      this.outlineColor = new draw2d.util.Color(color);
      this.repaint();
+     this.fireEvent("change:outlineColor");
      
      return this;
    },
@@ -21796,6 +24590,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
    {
      this.outlineStroke=w;
      this.repaint();
+     this.fireEvent("change:outlineStroke");
      
      return this;
    },
@@ -21882,6 +24677,11 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
 	   
 	   // inform all other listener
        this.fireEvent("move");
+       
+       // fire an event
+       // @since 5.3.3
+       this.fireEvent("dragend",{x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
+
    },
 
    /**
@@ -21914,8 +24714,25 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
    setDashArray: function(dashPattern)
    {
        this.dasharray = dashPattern;
+       this.repaint();
        
+       this.fireEvent("change:dashArray");
+
        return this;
+   },
+   
+   /**
+    * @method
+    * Get the line style for this object.
+    * 
+    *      // Alternatively you can use the attr method:
+    *      figure.attr("dash");
+    *  
+    * @since 5.1.0
+    */
+   getDashArray: function(dashPattern)
+   {
+       return this.dasharray;
    },
    
    
@@ -21949,8 +24766,9 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
      set.push(this.canvas.paper.path("M"+this.start.x+" "+this.start.y+"L"+this.end.x+" "+this.end.y));
      set.node = set.items[1].node;
      
-     // indicate that the outline is visisble at the momenet
-     // the repaint update the status correct and set the attributes the first time
+     // indicate that the outline is visible at the moment
+     // the repaint update the status correct and set the attributes for 
+     // the first time
      this.outlineVisible = true;
      
      return set;
@@ -21974,6 +24792,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
                          "path":["M",this.start.x,this.start.y,"L",this.end.x,this.end.y].join(" ")};
        }
        else{
+    	   // may a router has calculate another path. don't override them.
     	   if(typeof attributes.path ==="undefined"){
     		   attributes.path =["M",this.start.x,this.start.y,"L",this.end.x,this.end.y].join(" ");
     	   }
@@ -22002,6 +24821,25 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
    
    /**
     * @method
+    * Moves the element to the background. Additional
+    * the internal model changed as well.
+    * 
+    * @since 4.7.2
+    */
+   toBack: function(figure )
+   {
+	   this._super(figure);
+	   
+	   if(this.outlineVisible===true){
+    	   this.shape.items[0].insertBefore(this.shape.items[1]);
+	   }
+       
+       return this;
+   },
+   
+   
+   /**
+    * @method
     * Highlight the element or remove the highlighting
     * 
     *      // Alternatively you can use the attr method:
@@ -22012,7 +24850,8 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     * @param {Boolean} flag indicates glow/noGlow
     * @template
     */
-   setGlow: function(flag){
+   setGlow: function(flag)
+   {
 	   if(this.isGlowing===flag){
 		   return;
 	   }
@@ -22062,6 +24901,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
      this.stroke=parseFloat(w);
      
      this.repaint();
+     this.fireEvent("change:stroke");
      
      return this;
    },
@@ -22095,6 +24935,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
    {
      this.lineColor = new draw2d.util.Color(color);
      this.repaint();
+     this.fireEvent("change:color");
      
      return this;
    },
@@ -22148,7 +24989,8 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     * @returns {draw2d.geo.Rectangle}
     * @since 4.8.2
     */
-   getBoundingBox: function(){
+   getBoundingBox: function()
+   {
        var minX = Math.min.apply(Math,$.map(this.vertices.asArray(),function(n,i){return n.x;}));
        var minY = Math.min.apply(Math,$.map(this.vertices.asArray(),function(n,i){return n.y;}));
        var maxX = Math.max.apply(Math,$.map(this.vertices.asArray(),function(n,i){return n.x;}));
@@ -22189,8 +25031,30 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
              e.moved(_this.canvas, _this);
          }
      });
-     
+     this.fireEvent("change:start");
+
      return this;
+  },
+
+
+  setStartX: function(x)
+  {
+      this.setStartPoint(x, this.start.y);
+  },
+  
+  setStartY: function(y)
+  {
+      this.setStartPoint(this.start.x, y);
+  },
+  
+  setEndX: function(x)
+  {
+      this.setEndPoint(x, this.end.y);
+  },
+  
+  setEndY: function(y)
+  {
+      this.setEndPoint(this.start.x, y);
   },
 
    /**
@@ -22222,6 +25086,8 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
          }
      });
      
+     this.fireEvent("change:end");
+
      return this;
  },
 
@@ -22359,6 +25225,8 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
            }
        });
 
+       this.fireEvent("change:vertices");
+
        return this;
    },
 
@@ -22384,11 +25252,6 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     **/
    getLength:function()
    {
-     // call native path method if possible
-     if(this.shape!==null){
-       return this.shape.getTotalLength();
-     }
-       
      return Math.sqrt((this.start.x-this.end.x)*(this.start.x-this.end.x)+(this.start.y-this.end.y)*(this.start.y-this.end.y));
    },
 
@@ -22397,18 +25260,18 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     * Returns the angle of the line in degree.
     *
     * <pre>
-    *                                 270¬?
+    *                                 270°
     *                               |
     *                               |
     *                               |
     *                               |
-    * 180¬? -------------------------+------------------------> +X
-    *                               |                        0¬?
+    * 180° -------------------------+------------------------> +X
+    *                               |                        0°
     *                               |
     *                               |
     *                               |
     *                               V +Y
-    *                              90¬?
+    *                              90°
     * </pre>
     * @return {Number}
     **/
@@ -22485,7 +25348,8 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     * @param {draw2d.shape.basic.Line} other
     * @returns {draw2d.util.ArrayList}
     */
-   intersection: function (other){
+   intersection: function (other)
+   {
        var result = new draw2d.util.ArrayList();
        
        // empty result. the lines are equal...infinit array
@@ -22585,7 +25449,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
  * 
  * @static
  * @private
- * @returns
+ * @returns {draw2d.geo.Point}
  */
 draw2d.shape.basic.Line.intersection = function(a1, a2, b1, b2) {
     var result=null;
@@ -22698,16 +25562,8 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr ) {
+    init: function( attr, setter, getter ) {
         
-      /** @attr {draw2d.layout.connection.ConnectionRouter} the router to use to layout the polyline */
-      this.setterWhitelist.router = this.setRouter;
-      /** @attr {Number} radius the radius to render the line edges */
-      this.setterWhitelist.radius = this.setRadius;
-        
-      this.getterWhitelist.router= this.getRouter;
-      this.getterWhitelist.radius= this.getRadius;
-
       // internal status handling for performance reasons
       //
       this.svgPathString = null;
@@ -22719,7 +25575,20 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
   
       this.radius = 2;
 
-      this._super($.extend({router:draw2d.shape.basic.PolyLine.DEFAULT_ROUTER},attr));
+      this._super(
+         $.extend(
+              {router:draw2d.shape.basic.PolyLine.DEFAULT_ROUTER},attr),
+         $.extend({},{
+             /** @attr {draw2d.layout.connection.ConnectionRouter} the router to use to layout the polyline */
+             router : this.setRouter,
+             /** @attr {Number} radius the radius to render the line edges */
+             radius : this.setRadius
+        }, setter),
+        $.extend({},{
+            router: this.getRouter,
+            radius: this.getRadius
+        }, getter)
+      );
     },
     
     /**
@@ -22729,10 +25598,12 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
      * @param {Number} radius the corner radius
      * @since 4.2.1
      */
-     setRadius: function(radius){
+     setRadius: function(radius)
+     {
         this.radius = radius;
         this.svgPathString =null;
         this.repaint();
+        this.fireEvent("change:radius");
         
         return this;
     },
@@ -22744,7 +25615,8 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
      * @return {Number}
      * @since 4.2.1
      */
-    getRadius:function() {
+    getRadius:function() 
+    {
         return this.radius;
     },
     
@@ -22756,7 +25628,8 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
      * @param {Number} x the x coordinate of the start point
      * @param {Number} y the y coordinate of the start point
      **/
-    setStartPoint:function( x, y){
+    setStartPoint:function( x, y)
+    {
         if (this.start.x === x && this.start.y === y) {
 			return this;
 		}
@@ -22769,6 +25642,7 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
 				e.moved(_this.canvas, _this);
 			}
 		});
+        this.fireEvent("change:start");
 		
 		return this;
     },
@@ -22796,6 +25670,7 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
                 e.moved(_this.canvas, _this);
             }
         });
+        this.fireEvent("change:end");
         
         return this;
     },
@@ -22829,6 +25704,7 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
                 }
             });
         }
+        this.fireEvent("change:vertices");
 
         return this;
     },
@@ -22852,7 +25728,7 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
         
         var vertex = this.vertices.get(index);
 
-        // invalid point or nothing todo
+        // invalid point or nothing to do
         //
         if (vertex === null || (vertex.x === x && vertex.y === y)) {
             return;
@@ -22874,6 +25750,7 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
                 e.moved(_this.canvas, _this);
             }
         });
+        this.fireEvent("change:vertices");
 
         return this;
     },
@@ -22910,6 +25787,7 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
 	            }
 	        });
         }
+        this.fireEvent("change:vertices");
 
         return this;
     },
@@ -22943,6 +25821,7 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
 	            }
 	        });
         }
+        this.fireEvent("change:vertices");
 
         return removedPoint;
     },
@@ -22974,6 +25853,8 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
       // repaint the connection with the new router
       this.repaint();
       
+      this.fireEvent("change:router");
+
       return this;
     },
     
@@ -23015,6 +25896,8 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
         //
         this.router.route(this, oldVertices);
         this.routingRequired=false;
+        this.fireEvent("routed");
+        this.fireEvent("change:route");
         
         // update the selection handles if the count of the vertices has changed. 
         // 
@@ -23052,22 +25935,12 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
 
     /**
      * @method
-     * Called if the DragDrop object leaving the current hover figure.
-     * 
-     * @param {draw2d.Figure} draggedFigure The figure which is currently dragging
-     * @template
-     **/
-    onDragLeave:function( draggedFigure ){
-    },
-
-
-    /**
-     * @method
      * Return all line segments of the polyline.
      * 
      * @returns {draw2d.util.ArrayList}
      */
-    getSegments: function(){
+    getSegments: function()
+    {
         return this.lineSegments;
     },
     
@@ -23123,7 +25996,7 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
      {
        for(var i = 0; i< this.lineSegments.getSize();i++){
           var segment = this.lineSegments.get(i);
-          if(draw2d.shape.basic.Line.hit(this.corona, segment.start.x,segment.start.y,segment.end.x, segment.end.y, px,py)){
+          if(draw2d.shape.basic.Line.hit(this.corona+this.stroke, segment.start.x,segment.start.y,segment.end.x, segment.end.y, px,py)){
             return {index: i, start:segment.start, end: segment.end};
           }
        }
@@ -23177,7 +26050,7 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
     {   
         var memento=  $.extend( this._super() ,{
             router : this.router.NAME,
-            radius : this.radius,
+            radius : this.radius
         });
       
         memento = this.router.getPersistentAttributes(this, memento);
@@ -23239,14 +26112,16 @@ draw2d.shape.basic.Image = draw2d.shape.node.Node.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function(attr)
+    init: function(attr, setter, getter)
     {
-        /** @attr {String} path the image path (absolute or relative) of the shape */
-        this.setterWhitelist.path  = this.setPath;
-        
-        this.getterWhitelist.path = this.getPath;
-
-        this._super(attr);
+        this._super(attr, 
+        $.extend({
+            /** @attr {String} path the image path (absolute or relative) of the shape */
+            path  : this.setPath
+        }, setter),
+        $.extend({
+            path : this.getPath
+        }, getter));
     },
       
 
@@ -23264,7 +26139,8 @@ draw2d.shape.basic.Image = draw2d.shape.node.Node.extend({
         if(this.shape!==null){
             this.shape.attr({src:this.path});
         }
-        
+        this.fireEvent("change:path");
+
         return this;
     },
     
@@ -23275,7 +26151,8 @@ draw2d.shape.basic.Image = draw2d.shape.node.Node.extend({
      * @returns {String}
      * @since 2.8.0
      */
-    getPath: function(){
+    getPath: function()
+    {
         return this.path;
     },
     
@@ -23295,6 +26172,10 @@ draw2d.shape.basic.Image = draw2d.shape.node.Node.extend({
         attributes.width = this.getWidth();
         attributes.height = this.getHeight();
         attributes.src = this.path;
+        
+        // propagate the width/height and the display:inline-block as CSS attribute as well because Chrome
+        // did some "flickering" in some versions and sometimes the image disappear complete 
+        $(this.shape.node).css({ display: "inline-block", "width":attributes.width, "height":attributes.height});
         
         this._super(attributes);
         
@@ -23367,7 +26248,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init:function(attr)
+    init: function(attr, setter, getter )
     {
       this.minX = 0;
       this.minY = 0;
@@ -23375,7 +26256,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
       this.maxY = 0;
       this.vertices   = new draw2d.util.ArrayList();
 
-      this._super(attr);
+      this._super(attr, setter, getter);
       
       // we must cache the initial width/height because the width/height of the shape
       // is recalculated in the addVertex method. After the first call this values are 0/0
@@ -23386,7 +26267,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
           this.addVertex(new draw2d.geo.Point(0,0) );
           this.addVertex(new draw2d.geo.Point(w,0) );
           this.addVertex(new draw2d.geo.Point(w,h) );
-          
+
           this.setPosition(pos);
       }
       
@@ -23398,10 +26279,12 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
     /**
      * @inheritdoc
      */
-     setRadius: function(radius){
+     setRadius: function(radius)
+     {
         this.svgPathString =null;
         
         this._super(radius);
+        this.fireEvent("change:radius");
         
         return this;
     },
@@ -23424,7 +26307,9 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
     {
         var radius = this.getRadius();
         var path = [];
-        if(radius ===0){
+        // hard corners
+        //
+        if(radius === 0){
             var length = this.vertices.getSize();
             var p = this.vertices.get(0);
             path.push("M",(p.x|0)+0.5," ",(p.y|0)+0.5);
@@ -23434,17 +26319,23 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
             }
             path.push("Z");
         }
+        // soften/round corners
+        //
         else{
             length = this.vertices.getSize();
             var start = this.vertices.first();
             var end   = this.vertices.last();
-            var begin   = this.insetPoint(start,end, radius);
+            if(start.equals(end)){
+                length = length-1;
+                end = this.vertices.get(length-1);
+            }
+            var begin   = draw2d.geo.Util.insetPoint(start,end, radius);
             path.push("M", (begin.x|0)+0.5, ",", (begin.y|0)+0.5);
             for( var i=0 ;i<length;i++){
                   start = this.vertices.get(i);
                   end   = this.vertices.get((i+1)%length);
-                  modStart = this.insetPoint(start,end, radius);
-                  modEnd   = this.insetPoint(end,start,radius);
+                  modStart = draw2d.geo.Util.insetPoint(start,end, radius);
+                  modEnd   = draw2d.geo.Util.insetPoint(end,start,radius);
                   path.push("Q",start.x,",",start.y," ", (modStart.x|0)+0.5, ", ", (modStart.y|0)+0.5);
                   path.push("L", (modEnd.x|0)+0.5, ",", (modEnd.y|0)+0.5);
             }
@@ -23453,30 +26344,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
         return this;
     },
     
-    /**
-     * @method
-     * Returns a new ray with the given length and the same direction.
-     * 
-     * @param start
-     * @param end
-     * @param distanceFromStart
-     * @private
-     * @returns
-     */
-    insetPoint: function(start, end, distanceFromStart)
-    {
-        if(start.equals(end)){
-            return start;
-        }
-        var vx = start.x-end.x;
-        var vy = start.y-end.y;
-        var length = Math.sqrt(vx*vx + vy*vy);
-        var localDistance = Math.min(length/2,distanceFromStart);
-        return {x: end.x + vx/length * (length - localDistance),
-               y: end.y + vy/length * (length - localDistance)};
 
-    },
-    
     /**
      * @inheritdoc
      */
@@ -23509,19 +26377,38 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
      **/
     translate:function(dx , dy )
     {
+        var _this = this;
+
+        // TODO: This is not good. If the polygon part of an "Composite" I should call
+        //       the adjustPosition. IF we DragDrap the composition the figures inside should follow
+        //       without modify the dx/dy.
+        //
+        dx = this.x+dx;
+        dy = this.y+dy;
+        this.editPolicy.each(function(i,e){
+            if(e instanceof draw2d.policy.figure.DragDropEditPolicy){
+                var newPos = e.adjustPosition(_this,dx,dy);
+                dx = newPos.x;
+                dy = newPos.y;
+            }
+        });
+        dx = dx-this.x;
+        dy = dy-this.y;
+
+
+
         this.vertices.each(function(i,e){
             e.translate(dx,dy);
         });
         this.svgPathString = null;
-        
-        this.repaint();
-        
         this.updateBoundingBox();
-        
+
+        this.repaint();
+
+
         // Update the resize handles if the user change the position of the
         // element via an API call.
         //
-        var _this = this;
         this.editPolicy.each(function(i, e) {
             if (e instanceof draw2d.policy.figure.DragDropEditPolicy) {
                 e.moved(_this.canvas, _this);
@@ -23529,6 +26416,8 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
         });
 
         this.fireEvent("move");
+        this.fireEvent("change:x");
+        this.fireEvent("change:y");
 
         return this;
     },
@@ -23546,14 +26435,16 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
             y = x.y;
             x = x.x;
         }
+        this.svgPathString = null;
 
         var dx = x-this.minX;
         var dy = y-this.minY;
+
         this.translate(dx,dy);
         
         this.x = x;
         this.y = y;
-        
+
         return this;
     },
     
@@ -23581,6 +26472,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
 
         this.svgPathString = null;
         this.repaint();
+        this.fireEvent("change:dimension");
         
         return this;
     },
@@ -23639,7 +26531,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
     {
         var vertex = this.vertices.get(index);
 
-        // invalid point or nothing todo
+        // invalid point or nothing to do
         //
         if (vertex === null || (vertex.x === x && vertex.y === y)) {
             return this;
@@ -23659,6 +26551,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
                 e.moved(_this.canvas, _this);
             }
         });
+        this.fireEvent("change:vertex");
 
         return this;
     },
@@ -23667,20 +26560,12 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
      * @method
      * Append a new vertex to the polygon.
      * 
-     * @param {Number} x
+     * @param {Number | draw2d.geo.Point} x
      * @param {Number} y
      */
     addVertex : function( x, y) 
     {
-        var vertex = null;
-        if(x instanceof draw2d.geo.Point){
-            vertex =x.clone();
-        }
-        else{
-            vertex =new draw2d.geo.Point(x,y);
-        }
-        this.vertices.add(vertex);
-        
+        this.vertices.add(new draw2d.geo.Point(x,y));
       
         this.svgPathString = null;
         this.repaint();
@@ -23693,6 +26578,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
                 e.moved(_this.canvas, _this);
             }
         });
+        this.fireEvent("change:vertices");
 
         return this;
     },
@@ -23708,9 +26594,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
      */
     insertVertexAt:function(index, x, y) 
     {
-        var vertex = new draw2d.geo.Point(x,y);
-
-        this.vertices.insertElementAt(vertex,index);
+        this.vertices.insertElementAt(new draw2d.geo.Point(x,y),index);
         
         this.svgPathString = null;
         this.repaint();
@@ -23726,6 +26610,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
 	            }
 	        });
         }
+        this.fireEvent("change:vertices");
 
         return this;
     },
@@ -23763,6 +26648,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
 	            }
 	        });
         }
+        this.fireEvent("change:vertices");
 
         return vertex;
     },
@@ -23809,6 +26695,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
         });
 
         this.repaint();
+        this.fireEvent("change:angle");
 
         return this;
     },
@@ -23922,8 +26809,8 @@ draw2d.shape.basic.Diamond = draw2d.shape.basic.Polygon.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr) {
-      this._super($.extend({bgColor:"#00a3f6",color:"#1B1B1B"},attr));
+    init: function( attr, setter, getter) {
+      this._super($.extend({bgColor:"#00a3f6",color:"#1B1B1B"},attr), setter, getter);
       
       var pos = this.getPosition();
       
@@ -23965,9 +26852,9 @@ draw2d.shape.composite.Composite = draw2d.shape.basic.Rectangle.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
     */
-    init: function( attr) 
+    init: function( attr, setter, getter) 
     {
-      this._super(attr);
+      this._super(attr, setter, getter);
 
     },
     
@@ -24060,15 +26947,35 @@ draw2d.shape.composite.StrongComposite = draw2d.shape.composite.Composite.extend
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr) 
+    init: function( attr, setter, getter) 
     {
         
         this.assignedFigures = new draw2d.util.ArrayList();
    
-        this._super(attr);
+        this._super(attr, setter, getter);
 
     },
-    
+
+    /**
+     * @method
+     * Check to see if a figure is a descendant of another figure.
+     * <br>
+     * The contains() method returns true if the figure provided by the argument is a descendant of this figure,
+     * whether it is a direct child or nested more deeply. Otherwise, it returns false.
+     *
+     * @param {draw2d.Figure} containedFigure The figure that may be contained by (a descendant of) this figure.
+     * @since 5.5.4
+     */
+    contains: function(containedFigure)
+    {
+        for(var i= 0,len=this.assignedFigures.getSize(); i<len;i++){
+            var child = this.assignedFigures.get(i);
+            if(child===containedFigure || child.contains(containedFigure)) {
+                return true;
+            }
+        }
+        return this._super(containedFigure);
+    },
 
     /**
      * @method
@@ -24144,7 +27051,7 @@ draw2d.shape.composite.StrongComposite = draw2d.shape.composite.Composite.extend
     
     /**
      * @method
-     * Moves the element so it is the closest to the viewer?Äôs eyes, on top of other elements. Additional
+     * Moves the element so it is the closest to the viewer?s eyes, on top of other elements. Additional
      * the internal model changed as well.
      * 
      * Optional: Inserts current object in front of the given one. 
@@ -24222,9 +27129,9 @@ draw2d.shape.composite.Group = draw2d.shape.composite.StrongComposite.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr) 
+    init: function( attr, setter, getter) 
     {
-      this._super($.extend({bgColor:null, color:null, resizeable:false},attr));
+      this._super($.extend({bgColor:null, color:null, resizeable:false},attr), setter, getter);
 
       
       this.stickFigures = false;
@@ -24355,7 +27262,28 @@ draw2d.shape.composite.Group = draw2d.shape.composite.StrongComposite.extend({
         }
 
         return this;
+    },
+
+    /**
+     * @inheritDoc
+     */
+    createCommand:function( request)
+    {
+        if(request===null){
+            return null;
+        }
+
+        if(request.getPolicy() === draw2d.command.CommandType.DELETE)
+        {
+            if(!this.isDeleteable()){
+                return null;
+            }
+            return new draw2d.command.CommandDeleteGroup(this);
+        }
+
+        return this._super(request);
     }
+
 });
 
 
@@ -24389,10 +27317,10 @@ draw2d.shape.composite.Jailhouse = draw2d.shape.composite.StrongComposite.extend
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr) 
+    init: function( attr, setter, getter) 
     {
       this.policy = new draw2d.policy.figure.RegionEditPolicy(0,0,10,10);
-      this._super($.extend({bgColor:"#f0f0f0",color:"#333333"},attr));
+      this._super($.extend({bgColor:"#f0f0f0",color:"#333333"},attr), setter, getter);
      
       this.stickFigures = false;
     },
@@ -24576,8 +27504,8 @@ draw2d.shape.composite.WeakComposite = draw2d.shape.composite.Composite.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr) {
-       this._super(attr);
+    init: function( attr, setter, getter) {
+       this._super(attr, setter, getter);
     }
 });
 
@@ -24622,11 +27550,11 @@ draw2d.shape.composite.Raft = draw2d.shape.composite.WeakComposite.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr) {
+    init: function( attr, setter, getter) {
        
       this.aboardFigures = new draw2d.util.ArrayList();
       
-      this._super($.extend({bgColor:"#f0f0f0", color:"#1B1B1B"},attr));
+      this._super($.extend({bgColor:"#f0f0f0", color:"#1B1B1B"},attr), setter, getter);
    },
     
 
@@ -24849,19 +27777,7 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr) {
-      this.setterWhitelist.router = this.setRouter;
-      this.setterWhitelist.sourceDecorator = this.setSourceDecorator;
-      this.setterWhitelist.targetDecorator = this.setTargetDecorator;
-      this.setterWhitelist.source = this.setSource;
-      this.setterWhitelist.target = this.setTarget;
-      
-      this.getterWhitelist.router= this.getRouter;
-      this.getterWhitelist.sourceDecorator= this.getSourceDecorator;
-      this.getterWhitelist.targetDecorator= this.getTargetDecorator;
-      this.getterWhitelist.source= this.getSource;
-      this.getterWhitelist.target= this.getTarget;
-      
+    init: function( attr, setter, getter) {
       
       this.sourcePort = null;
       this.targetPort = null;
@@ -24875,7 +27791,6 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
       //
       this.sourceDecoratorNode = null;
       this.targetDecoratorNode=null;
-      
       this.isMoving=false;
       
       var _this = this;
@@ -24889,24 +27804,57 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
           }
        };
       
-      this._super($.extend({color: "#1b1b1b", stroke:1},attr) );
+      this._super(
+          $.extend({color: "#1b1b1b", stroke:1},attr) ,
+          $.extend({
+              router : this.setRouter,
+              sourceDecorator : this.setSourceDecorator,
+              targetDecorator : this.setTargetDecorator,
+              source : this.setSource,
+              target : this.setTarget
+         },setter),
+          $.extend({
+              router : this.getRouter,
+              sourceDecorator: this.getSourceDecorator,
+              targetDecorator: this.getTargetDecorator,
+              source: this.getSource,
+              target: this.getTarget
+         },getter)
+
+      );
    },
     
 
     /**
      * @private
      **/
-    disconnect : function()
+    disconnect: function()
     {
         if (this.sourcePort!== null) {
             this.sourcePort.off(this.moveListener);
             this.sourcePort.connections.remove(this);
+
+            // fire the events to all listener
+            this.sourcePort.fireEvent("disconnect", this);
+            if(this.canvas!==null){
+                this.canvas.fireEvent("disconnect", {"port": this.sourcePort, "connection":this});
+            }
+            this.sourcePort.onDisconnect(this);
+
             this.fireSourcePortRouteEvent();
         }
 
         if (this.targetPort!== null) {
             this.targetPort.off(this.moveListener);
             this.targetPort.connections.remove(this);
+
+            // fire the events to all listener
+            this.targetPort.fireEvent("disconnect", this);
+            if(this.canvas!==null){
+                this.canvas.fireEvent("disconnect", {"port": this.targetPort, "connection":this});
+            }
+            this.targetPort.onDisconnect(this);
+
             this.fireTargetPortRouteEvent();
         }
     },
@@ -24915,17 +27863,33 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
     /**
      * @private
      **/
-    reconnect : function()
+    reconnect: function()
     {
         if (this.sourcePort !== null) {
             this.sourcePort.on("move",this.moveListener);
             this.sourcePort.connections.add(this);
+
+            // fire the events to all listener
+            this.sourcePort.fireEvent("connect", this);
+            if(this.canvas!==null){
+                this.canvas.fireEvent("connect", {"port": this.sourcePort, "connection":this});
+            }
+            this.sourcePort.onConnect(this);
+
             this.fireSourcePortRouteEvent();
         }
 
         if (this.targetPort !== null) {
             this.targetPort.on("move",this.moveListener);
             this.targetPort.connections.add(this);
+
+            // fire the events to all listener
+            this.targetPort.fireEvent("connect", this);
+            if(this.canvas!==null){
+                this.canvas.fireEvent("connect", {"port": this.targetPort, "connection":this});
+            }
+            this.targetPort.onConnect(this);
+
             this.fireTargetPortRouteEvent();
         }
         this.routingRequired =true;
@@ -25145,7 +28109,7 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
         }
         
         this.command.setTranslation(dx,dy);
-        
+
         // don't drag start/end around. This Points are bounded to the related
         // ports.
         var count = this.getVertices().getSize()-1;
@@ -25177,19 +28141,6 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
         });
 
         this.fireEvent("move");
-    },
-
-    
-    /**
-     * @method
-     * Called if the DragDrop object leaving the current hover figure.
-     * 
-     * @param {draw2d.Figure} draggedFigure The figure which is currently dragging
-     * @template
-     **/
-    onDragLeave:function( draggedFigure )
-    {
-//    	this.setGlow(false);
     },
 
 
@@ -25245,7 +28196,11 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
         this.sourcePort.off(this.moveListener);
         this.sourcePort.connections.remove(this);
         this.sourcePort.fireEvent("disconnect", this);
-        this.canvas.fireEvent("disconnect", {"port": this.sourcePort, "connection":this});
+        // it is possible that a connection has already a port but is not assigned to
+        // a canvas. In this case we must check if the canvas set correct before we fire this event
+        if(this.canvas!==null){
+            this.canvas.fireEvent("disconnect", {"port": this.sourcePort, "connection":this});
+        }
         this.sourcePort.onDisconnect(this);
       }
     
@@ -25260,10 +28215,12 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
       this.sourcePort.on("move",this.moveListener);
       if(this.canvas!==null){
           this.canvas.fireEvent("connect", {"port":this.sourcePort, "connection":this});
-          this.sourcePort.fireEvent("connect", this);
-          this.sourcePort.onConnect(this); 
       }
+      this.sourcePort.fireEvent("connect", this);
+      this.sourcePort.onConnect(this);
+
       this.setStartPoint(port.getAbsoluteX(), port.getAbsoluteY());
+      this.fireEvent("connect", {"port":this.sourcePort, "connection":this});
     },
     
     /**
@@ -25289,7 +28246,11 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
         this.targetPort.off(this.moveListener);
         this.targetPort.connections.remove(this);
         this.targetPort.fireEvent("disconnect", this);
-        this.canvas.fireEvent("disconnect", {"port": this.targetPort, "connection":this});
+        // it is possible that a connection has already a port but is not assigned to
+        // a canvas. In this case we must check if the canvas set correct before we fire this event
+        if(this.canvas!==null){
+            this.canvas.fireEvent("disconnect", {"port": this.targetPort, "connection":this});
+        }
         this.targetPort.onDisconnect(this);
       }
     
@@ -25304,10 +28265,12 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
       this.targetPort.on("move",this.moveListener);
       if(this.canvas!==null){
          this.canvas.fireEvent("connect", {"port": this.targetPort, "connection":this});
-         this.targetPort.fireEvent("connect", this);
-         this.targetPort.onConnect(this);
       }
+      this.targetPort.fireEvent("connect", this);
+      this.targetPort.onConnect(this);
+
       this.setEndPoint(port.getAbsoluteX(), port.getAbsoluteY());
+      this.fireEvent("connect", {"port":this.targetPort, "connection":this});
     },
     
     /**
@@ -25344,6 +28307,10 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
      */
     setCanvas: function( canvas )
     {
+       if(this.canvas === canvas){
+           return; // nothing to do
+       }
+        
        var notiCanvas = this.canvas==null? canvas: this.canvas;
        
        this._super(canvas);
@@ -25539,7 +28506,15 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
                   node:parentNode.getId(),
                   port:this.getTarget().getName()
                 };
-       
+
+        if(this.sourceDecorator!==null){
+            memento.source.decoration = this.sourceDecorator.NAME;
+        }
+
+        if(this.targetDecorator!==null){
+            memento.target.decoration = this.targetDecorator.NAME;
+        }
+
         return memento;
     },
     
@@ -25557,26 +28532,18 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
         // nothing to to for the connection creation. This will be done in the draw2d.io.Reader 
         // implementation
         //
+        // restore your custom attributes here
+        if(typeof memento.target.decoration !=="undefined" && memento.target.decoration!=null){
+            this.setTargetDecorator( eval("new "+memento.target.decoration));
+        }
+
+        if(typeof memento.source.decoration !=="undefined" && memento.source.decoration!=null){
+            this.setSourceDecorator( eval("new "+memento.source.decoration));
+        }
+
     }
 });
 
-/**
- * @method
- * Factory method to provide a default connection for all drag&drop connections. You
- * can override this method and customize this for your personal purpose.
- * 
- * Either you return a conection of "undefined". If "undefined" returned the "callback" must
- * be called by this method.
- * 
- * @param {draw2d.Port} sourcePort port of the source of the connection
- * @param {draw2d.Port} targetPort port of the target of the connection
- * @template
- * @returns {draw2d.Connection}
- */
-draw2d.Connection.createConnection=function(sourcePort, targetPort, callback, dropTarget){
-    
-    return new draw2d.Connection();
-};
 
 
 /**
@@ -25612,22 +28579,8 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function( attr)
+    init: function( attr, setter, getter)
     {
-        /** @attr {Number} radius the radius to render the line edges */
-        this.setterWhitelist.radius = this.setRadius;
-        /** @attr {String|draw2d.util.Color} bgColor the background color of the shape */
-        this.setterWhitelist.bgColor= this.setBackgroundColor;
-        /** @attr {String|draw2d.util.Color} color the main color of the shape */
-        this.setterWhitelist.color  = this.setColor;
-        /** @attr {Number} stroke the stroke width */
-        this.setterWhitelist.stroke = this.setStroke;
-        
-        this.getterWhitelist.radius = this.getRadius;
-        this.getterWhitelist.bgColor= this.getBackgroundColor;
-        this.getterWhitelist.color  = this.getColor;
-        this.getterWhitelist.stroke = this.getStroke;
-
         this.stroke = 1;
         this.radius = 0;
         this.bgColor= new draw2d.util.Color("#ffffff");
@@ -25638,7 +28591,24 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
         this.strokeBeforeGlow = this.stroke;
         this.glowIsActive = false;
         
-        this._super( attr);
+        this._super( attr, 
+            $.extend({
+                /** @attr {Number} radius the radius to render the line edges */
+                radius : this.setRadius,
+                /** @attr {String|draw2d.util.Color} bgColor the background color of the shape */
+                bgColor: this.setBackgroundColor,
+                /** @attr {String|draw2d.util.Color} color the main color of the shape */
+                color  : this.setColor,
+                /** @attr {Number} stroke the stroke width */
+                stroke : this.setStroke
+            }, setter),
+            $.extend({
+               radius : this.getRadius,
+               bgColor: this.getBackgroundColor,
+               color  : this.getColor,
+               stroke : this.getStroke
+            }, getter)
+        );
     },
 
     /**
@@ -25652,6 +28622,7 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
      {
         this.radius = radius;
         this.repaint();
+        this.fireEvent("change:radius");
         
         return this;
     },
@@ -25697,7 +28668,7 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     /**
      * @inheritdoc
      */
-    repaint : function(attributes)
+    repaint: function(attributes)
     {
         if (this.repaintBlocked===true || this.shape === null){
             return;
@@ -25735,6 +28706,11 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     * @method
     * Set the new background color of the figure. It is possible to hands over
     * <code>null</code> to set the background transparent.
+    * 
+    *      // Alternatively you can use the attr method:
+    *      figure.attr({
+    *        "bgColor": "#f0f0f0"
+    *      });
     *
     * @param {String|draw2d.util.Color} color The new background color of the figure
     **/
@@ -25743,6 +28719,7 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
         this.bgColor = new draw2d.util.Color(color);
 
         this.repaint();
+        this.fireEvent("change:bgColor");
         
         return this;
     },
@@ -25751,6 +28728,9 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     * @method
     * The current used background color.
     * 
+    *      // Alternatively you can use the attr method:
+    *      var color =figure.attr("bgColor");
+    *      
     * @return {draw2d.util.Color}
     */
    getBackgroundColor:function()
@@ -25762,12 +28742,18 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     * @method
     * Set the stroke to use.
     * 
+    *      // Alternatively you can use the attr method:
+    *      figure.attr({
+    *        "stroke": 2
+    *      });
+    * 
     * @param {Number} w The new line width of the figure
     **/
    setStroke:function( w )
    {
      this.stroke=w;
      this.repaint();
+     this.fireEvent("change:stroke");
      
      return this;
    },
@@ -25788,12 +28774,18 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     * Set the foreground color of the figure.
     * This method fires a <i>document dirty</i> event.
     * 
+    *      // Alternatively you can use the attr method:
+    *      figure.attr({
+    *        "color": "#f3f3f3"
+    *      });
+    *      
     * @param {String|draw2d.util.Color} color The new color of the line.
     **/
    setColor:function( color)
    {
      this.color = new draw2d.util.Color(color);
      this.repaint();
+     this.fireEvent("change:color");
      
      return this;
    },
@@ -25802,6 +28794,7 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     * @method
     * Get the current used foreground color
     * 
+    *      
     * @returns {draw2d.util.Color}
     */
    getColor:function()
@@ -25842,8 +28835,8 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
            this.setColor(memento.color);
        }
        
-       if(typeof memento.stroke !== "undefined"){
-           this.setStroke(parseFloat(memento.stroke));
+       if(typeof memento.stroke !== "undefined" ){
+           this.setStroke(memento.stroke===null?0:parseFloat(memento.stroke));
        }
         
        return this;
@@ -25890,7 +28883,7 @@ draw2d.ResizeHandle = draw2d.shape.basic.Rectangle.extend({
      */
     init: function( figure , type) {
  
-      this._super({bgColor:draw2d.Configuration.color.resizeHandle, stroke:1, radius:0});
+      this._super({bgColor:"#5bcaff", stroke:1, radius:0});
 
       // required in the SelectionEditPolicy to indicate the type of figure
       // which the user clicks
@@ -25901,7 +28894,7 @@ draw2d.ResizeHandle = draw2d.shape.basic.Rectangle.extend({
       this.command = null;
       this.commandMove=null;
       this.commandResize=null;
-
+      this.useGradient = true; 
       this.setSelectable(false);
      
       this.setDimension(); // get best if no params are given
@@ -25948,6 +28941,7 @@ draw2d.ResizeHandle = draw2d.shape.basic.Rectangle.extend({
     {
        var shape= this._super();
        
+       shape.node.setAttribute("type",this.type);
        this.updateCursor(shape);
        
        return shape;
@@ -26044,6 +29038,10 @@ draw2d.ResizeHandle = draw2d.shape.basic.Rectangle.extend({
 
         this.commandMove = this.owner.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.MOVE));
         this.commandResize = this.owner.createCommand(new draw2d.command.CommandType(draw2d.command.CommandType.RESIZE));
+
+        // fire an event
+        // @since 5.3.3
+        this.fireEvent("dragstart",{x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
 
         return true;
     },
@@ -26168,7 +29166,10 @@ draw2d.ResizeHandle = draw2d.shape.basic.Rectangle.extend({
             this.commandResize = null;
         }
 
-        this.canvas.hideSnapToHelperLines();
+        // fire an event
+        // @since 5.3.3
+        this.fireEvent("dragend",{x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
+
     },
 
     /**
@@ -26314,7 +29315,6 @@ draw2d.ResizeHandle = draw2d.shape.basic.Rectangle.extend({
          
          this.bgGradient= "90-"+color.hash()+"-"+color.darker(0.2).hash();
          this._super(color);
-         this.setColor(color.darker(0.3));
          
          return this;
      },
@@ -26333,7 +29333,7 @@ draw2d.ResizeHandle = draw2d.shape.basic.Rectangle.extend({
         if(this.bgColor.hash()==="none"){
             attributes.fill="none";
         }
-        else if(this.getAlpha()<0.9){
+        else if(this.getAlpha()<0.9 || this.useGradient===false){
             attributes.fill=this.bgColor.hash();
         }
         else{
@@ -26395,7 +29395,7 @@ draw2d.ResizeHandle = draw2d.shape.basic.Rectangle.extend({
 draw2d.shape.basic.LineResizeHandle = draw2d.shape.basic.Circle.extend({
     NAME : "draw2d.shape.basic.LineResizeHandle",
 
-    init : function(figure)
+    init: function(figure)
     {
         this._super();
         this.owner = figure;
@@ -26410,7 +29410,7 @@ draw2d.shape.basic.LineResizeHandle = draw2d.shape.basic.Circle.extend({
             this.setDimension(10, 10);
         }
 
-        this.setBackgroundColor(new draw2d.util.Color(draw2d.Configuration.color.vertexHandle));
+        this.setBackgroundColor("#5bcaff");
         this.setStroke(1);
         this.setSelectable(false);
 
@@ -26509,6 +29509,10 @@ draw2d.shape.basic.LineResizeHandle = draw2d.shape.basic.Circle.extend({
         this.setAlpha(0.2);
         this.shape.attr({"cursor":"crosshair"});
 
+        // fire an event
+        // @since 5.3.3
+        this.fireEvent("dragstart",{x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
+
         return true;
     },
     
@@ -26538,12 +29542,14 @@ draw2d.shape.basic.LineResizeHandle = draw2d.shape.basic.Circle.extend({
             if (this.currentTarget !== null) {
                 this.currentTarget.onDragLeave(port);
                 this.currentTarget.setGlow(false);
+                this.currentTarget.fireEvent("dragLeave", {draggingElement:port});
             }
 
             if (target !== null) {
                 this.currentTarget = target.onDragEnter(port);
                 if(this.currentTarget!==null){
                     this.currentTarget.setGlow(true);
+                    this.currentTarget.fireEvent("dragEnter", {draggingElement:port});
                 }
             }
         }
@@ -26577,6 +29583,7 @@ draw2d.shape.basic.LineResizeHandle = draw2d.shape.basic.Circle.extend({
                 this.onDrop(this.currentTarget, x, y, shiftKey, ctrlKey);
                 this.currentTarget.onDragLeave(port);
                 this.currentTarget.setGlow(false);
+                this.currentTarget.fireEvent("dragLeave", {draggingElement:port});
                 this.currentTarget.onCatch(this, x, y, shiftKey, ctrlKey);
                 this.currentTarget = null;
             }
@@ -26601,11 +29608,12 @@ draw2d.shape.basic.LineResizeHandle = draw2d.shape.basic.Circle.extend({
             }
         }
         this.command = null;
-        this.getCanvas().hideSnapToHelperLines();
 
         this.setAlpha(1);
 
-        return true;
+        // fire an event
+        // @since 5.3.3
+        this.fireEvent("dragend",{x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
     },
 
 
@@ -26914,7 +29922,7 @@ draw2d.shape.basic.LineEndResizeHandle = draw2d.shape.basic.LineResizeHandle.ext
         
         this.setPosition(anchor.x-resizeWidthHalf,anchor.y-resizeHeightHalf);
         
-        return this
+        return this;
     }    
 });
 /*****************************************
@@ -26989,6 +29997,12 @@ draw2d.shape.basic.VertexResizeHandle = draw2d.ResizeHandle.extend({
         
         // Vertex is a reference and not a copy of the point
         this.vertex = this.owner.getVertex(this.index).clone();
+        
+        // fire an event
+        // @since 5.3.3
+        this.fireEvent("dragstart",{x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
+
+        return true;
     },
     
     /**
@@ -27104,8 +30118,7 @@ draw2d.shape.basic.VertexResizeHandle = draw2d.ResizeHandle.extend({
         try{
 	        stack.execute(this.command);
 	        this.command = null;
-	        this.getCanvas().hideSnapToHelperLines();
-	
+
 	        var angle = this.getEnclosingAngle();
 	        if(angle>178){
 	           	var cmd  = new draw2d.command.CommandRemoveVertex(this.owner, this.index );
@@ -27118,7 +30131,9 @@ draw2d.shape.basic.VertexResizeHandle = draw2d.ResizeHandle.extend({
         
         this.setAlpha(1);
 
-        return true;
+        // fire an event
+        // @since 5.3.3
+        this.fireEvent("dragend",{x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
     },
     
     
@@ -27151,8 +30166,8 @@ draw2d.shape.basic.VertexResizeHandle = draw2d.ResizeHandle.extend({
         var points = this.owner.getVertices();
         var trans  = this.vertex.getScaled(-1);
         var size = points.getSize();
-        var left   = points.get((this.index-1 +size)%size).getTranslated(trans); // % is just to ensure the [0, size] interval
-        var right  = points.get((this.index+1)%size).getTranslated(trans);       // % is just to ensure the [0, size] interval
+        var left   = points.get((this.index-1 +size)%size).translated(trans); // % is just to ensure the [0, size] interval
+        var right  = points.get((this.index+1)%size).translated(trans);       // % is just to ensure the [0, size] interval
         
         var dot = left.dot(right);
         
@@ -27301,6 +30316,10 @@ draw2d.shape.basic.GhostVertexResizeHandle = draw2d.shape.basic.LineResizeHandle
      */
     onDragEnd : function(x, y, shiftKey, ctrlKey)
     {
+        // fire an event
+        // @since 5.3.3
+        this.fireEvent("dragend",{x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
+
         return true;
     },
     
@@ -27341,49 +30360,50 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
     NAME : "draw2d.Port",
 
     DEFAULT_BORDER_COLOR:new draw2d.util.Color("#1B1B1B"),
-    
+
+    MAX_SAFE_INTEGER : 9007199254740991,
+
     /**
      * @constructor
      * Creates a new Node element which are not assigned to any canvas.
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function( attr)
+    init: function( attr, setter, getter)
     {
+        var _this = this;
+
         this.locator = null;
         this.lighterBgColor =null;
         
-        this._super(attr);
+        this._super($.extend({
+                bgColor: "#4f6870",
+                stroke:1,
+                diameter:draw2d.isTouchDevice?25:10,
+                color:"#1B1B1B",
+                selectable:false
+            },attr),
+            setter,
+            getter);
         
-        if (draw2d.isTouchDevice) {
-            this.setDiameter(25);
-        }
-        else {
-            this.setDiameter(10);
-        }
 
-     
         // status var for user interaction
         //
         this.ox = this.x;
         this.oy = this.y;
         this.coronaWidth = 5; // the corona width for the hitTest method. Useful during drag&drop of ports. Better SnapTo behavior.
         this.corona = null; // Circle
+        this.useGradient = true;
         
         // currentTarget can be differ from the currentTargetPort. In this case
         // we must store booth of them for notifications hoverEnter/hoverLeft
         this.currentTargetPort = null; // port
         this.currentTarget = null; // Figure
+        this.preferredConnectionDirection = null;
         
         // current attached connections
         this.connections = new draw2d.util.ArrayList();
         
-        // visible representation
-        //
-        this.setBackgroundColor("#4f6870");
-        this.setStroke(1);
-        this.setColor(this.DEFAULT_BORDER_COLOR);
-        this.setSelectable(false);
     
         // avoid "undefined" values. This breaks the code on iOS.
         if(typeof name ==="undefined"){
@@ -27393,8 +30413,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
             this.name = name;
         }
         
-        var _this = this;
-        this.moveListener =function( figure){
+        this.moveListener = function( figure){
             _this.repaint();
             // Falls sich der parent bewegt hat, dann muss der Port dies seinen
             // Connections mitteilen
@@ -27406,7 +30425,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
         // for dynamic diagrams. A Port can have a value which is set by a connector
         //
         this.value = null; 
-        this.maxFanOut = Number.MAX_VALUE;
+        this.maxFanOut = this.MAX_SAFE_INTEGER;
         
         this.setCanSnapToHelper(false);
         
@@ -27425,6 +30444,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
     setMaxFanOut: function(count)
     {
         this.maxFanOut = Math.max(1,count);
+        this.fireEvent("change:maxFanOut");
         
         return this;
     },
@@ -27496,9 +30516,45 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
      */
     getConnectionDirection:function(conn, relatedPort)
     {
-       return this.getParent().getBoundingBox().getDirection(this.getAbsolutePosition());
+        // return the calculated connection direction if the port didn't have set any 
+        //
+        if(typeof this.preferredConnectionDirection==="undefined" || this.preferredConnectionDirection===null){
+            return this.getParent().getBoundingBox().getDirection(this.getAbsolutePosition());
+        }
+        
+        return this.preferredConnectionDirection;
     },
     
+ 
+    
+    /**
+     * @method
+     * Set the **direction** for the connection in relation to the given port and it's parent.
+     * 
+     * <p>
+     * Possible values:
+     * <ul>
+     *   <li>up -&gt; 0</li>
+     *   <li>right -&gt; 1</li>
+     *   <li>down -&gt; 2</li>
+     *   <li>left -&gt; 3</li>
+     *   <li>calculated -&gt; null</li>
+     * </ul>
+     * <p>
+     * 
+     * @since 5.2.1
+     * @param {Number} direction the preferred connection direction.
+     */
+    setConnectionDirection:function(direction)
+    {
+        this.preferredConnectionDirection = direction;
+
+        // needs an change event to recalculate the route
+        this.fireEvent("move");
+
+        return this;
+    },
+
     /**
      * @method
      * Set the locator/layouter of the port. A locator is responsive for the x/y arrangement of the 
@@ -27588,7 +30644,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
          attributes.ry = attributes.rx;
          attributes.cursor = "move";
          
-         if(this.getAlpha()<0.9){
+         if(this.getAlpha()<0.9 || this.useGradient===false){
              attributes.fill=this.bgColor.hash();
          }
          else{
@@ -27605,6 +30661,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
      **/
     onMouseEnter:function()
     {
+        this._oldstroke = this.getStroke();
         this.setStroke(2);
     },
     
@@ -27615,7 +30672,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
      **/
     onMouseLeave:function()
     {
-        this.setStroke(1);
+        this.setStroke(this._oldstroke);
     },
 
 
@@ -27713,6 +30770,10 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
             }
         });
 
+        // fire an event
+        // @since 5.3.3
+        this.fireEvent("dragstart",{x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
+
         return true;
     },
     
@@ -27738,6 +30799,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
       if(target!==this.currentTarget){
           if(this.currentTarget!==null){
               this.currentTarget.onDragLeave(this);
+              this.currentTarget.fireEvent("dragLeave",{draggingElement:this});
               this.editPolicy.each(function(i,e){
                   if(e instanceof draw2d.policy.port.PortFeedbackPolicy){
                       e.onHoverLeave(_this.canvas, _this, _this.currentTarget);
@@ -27750,6 +30812,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
           if(target!==null){
               this.currentTarget= target.onDragEnter(this);
               if(this.currentTarget!==null){
+                  this.currentTarget.fireEvent("dragEnter",{draggingElement:this});
             	  this.currentTargetPort = target;
                   this.editPolicy.each(function(i,e){
                       if(e instanceof draw2d.policy.port.PortFeedbackPolicy){
@@ -27761,8 +30824,13 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
           else{
         	  this.currentTarget = null;
           }
-          
       }
+
+        // fire an event
+        // @since 5.3.3
+        this.isInDragDrop =false;
+        this.fireEvent("drag",{dx:dx, dy:dy, dx2:dx2, dy2:dy2});
+        this.isInDragDrop =true;
     },
     
     
@@ -27808,6 +30876,10 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
       // Reset the drag&drop flyover information 
       //
       this.currentTarget = null;
+      
+      // fire an event
+      // @since 5.3.3
+      this.fireEvent("dragend",{x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
     },
     
     /**
@@ -27952,7 +31024,8 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
     {
       this.name=name;
     },
-    
+
+
     /**
      * @method
      * Hit test for ports. This method respect the corona diameter of the port for the hit test.
@@ -27997,7 +31070,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
       }
       else if(flag===false && this.corona!==null)
       {
-    	  this.parent.getCanvas().remove(this.corona);
+//    	  this.parent.getCanvas().remove(this.corona);
     	  this.corona.setCanvas(null);
     	  this.corona = null;
       }
@@ -28055,7 +31128,19 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
      */
     getPersistentAttributes : function(){
        var memento= this._super();
-         
+
+        memento.maxFanOut = this.maxFanOut;
+
+        // defined by the locator. Don't persist
+        //
+        delete memento.x;
+        delete memento.y;
+
+        // ports didn'T have children ports. In this case we
+        // delete this attribute as well to avoid confusions.
+        //
+        delete memento.ports;
+
         return memento;
     },
     
@@ -28068,7 +31153,20 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
     setPersistentAttributes : function(memento)
     {
         this._super(memento);
-         
+
+        if(typeof memento.maxFanOut !== "undefined"){
+            // Big bug in the past.
+            // I used Number.MAX_VALUE as maxFanOut which is 1.7976931348623157e+308
+            // parseInt creates "1" during the reading of the JSON - which is crap.
+            // BIG BIG BUG!!! my fault.
+            // Now check if the memenot.maxFanOut is a number and take this without crappy parsing.
+            if(typeof memento.maxFanOut ==="number"){
+                this.maxFanOut = memento.maxFanOut;
+            }
+            else {
+                this.maxFanOut = Math.max(1, parseInt(memento.maxFanOut));
+            }
+        }
         
         return this;
     }
@@ -28088,7 +31186,7 @@ draw2d.Corona = draw2d.shape.basic.Circle.extend({
      * Creates a new Node element which are not assigned to any canvas.
      * 
      */
-    init : function()
+    init: function()
     {
         this._super();
         this.setAlpha(0.3);
@@ -28134,9 +31232,9 @@ draw2d.InputPort = draw2d.Port.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function( attr)
+    init: function( attr, setter, getter)
     {
-        this._super( attr);
+        this._super( attr, setter, getter);
         
         // responsive for the arrangement of the port 
         // calculates the x/y coordinates in relation to the parent node
@@ -28194,7 +31292,7 @@ draw2d.OutputPort = draw2d.Port.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function(attr)
+    init: function(attr, setter, getter)
     {
         this._super(attr);
        
@@ -28255,9 +31353,9 @@ draw2d.HybridPort = draw2d.Port.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function(attr)
+    init: function(attr, setter, getter)
     {
-        this._super(attr);
+        this._super(attr, setter, getter);
 
         // responsive for the arrangement of the port 
         // calculates the x/y coordinates in relation to the parent node
@@ -28449,7 +31547,7 @@ draw2d.layout.anchor.ChopboxConnectionAnchor = draw2d.layout.anchor.ConnectionAn
 	 * @param {draw2d.Figure} owner the figure to use for the anchor calculation
 
 	 */
-	init : function(owner) {
+	init: function(owner) {
 		this._super(owner);
 	},
 
@@ -28544,7 +31642,7 @@ draw2d.layout.anchor.FanConnectionAnchor = draw2d.layout.anchor.ConnectionAnchor
 	 * @param {draw2d.Figure} owner the figure to use for the anchor calculation
 	 * @param {Number} [separation] the separation or fan distance between the concurrent/conflicting anchors 
 	 */
-	init : function(owner, separation) {
+	init: function(owner, separation) {
 		this._super(owner);
 		
 		if( separation ){
@@ -28695,7 +31793,7 @@ draw2d.layout.anchor.ShortesPathConnectionAnchor = draw2d.layout.anchor.Connecti
 	 * 
 	 * @param {draw2d.Figure} [owner] the figure to use for the anchor calculation
 	 */
-	init : function(owner) {
+	init: function(owner) {
 		this._super(owner);
 	},
 
@@ -28808,7 +31906,7 @@ draw2d.layout.anchor.CenterEdgeConnectionAnchor = draw2d.layout.anchor.Connectio
 	 * 
 	 * @param {draw2d.Figure} [owner] the figure to use for the anchor calculation
 	 */
-	init : function(owner) {
+	init: function(owner) {
 		this._super(owner);
 	},
 
@@ -28902,7 +32000,7 @@ draw2d.shape.arrow.CalligrapherArrowLeft = draw2d.SVGFigure.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init:function(attr){
+    init: function(attr, setter, getter ){
         this._super(attr);
     },
     
@@ -28962,7 +32060,7 @@ draw2d.shape.arrow.CalligrapherArrowDownLeft = draw2d.SVGFigure.extend({
      * Create a new instance
      * @param {Object} [attr] the configuration of the shape
      */
-    init:function(attr){
+    init: function(attr, setter, getter ){
         this._super(attr);
     },
     
@@ -29024,9 +32122,9 @@ draw2d.shape.node.Start = draw2d.shape.basic.Rectangle.extend({
 	 * 
      * @param {Object} [attr] the configuration of the shape
 	 */
-	init : function(attr)
+	init: function(attr, setter, getter )
     {
-        this._super($.extend({bgColor:this.DEFAULT_COLOR,color:this.DEFAULT_COLOR.darker(), width:50, height:50},attr));
+        this._super($.extend({bgColor:this.DEFAULT_COLOR,color:this.DEFAULT_COLOR.darker(), width:50, height:50},attr), setter, getter);
         
         this.createPort("output");
     }
@@ -29062,9 +32160,9 @@ draw2d.shape.node.End = draw2d.shape.basic.Rectangle.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function(attr)
+    init: function(attr, setter, getter )
     {
-        this._super($.extend({bgColor:this.DEFAULT_COLOR, color:this.DEFAULT_COLOR.darker() ,width:50, height:50},attr));
+        this._super($.extend({bgColor:this.DEFAULT_COLOR, color:this.DEFAULT_COLOR.darker() ,width:50, height:50},attr), setter, getter);
 
         this.createPort("input");
 
@@ -29100,9 +32198,9 @@ draw2d.shape.node.Between = draw2d.shape.basic.Rectangle.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
     */
-	init : function(attr)
+	init: function(attr, setter, getter )
     {
-        this._super($.extend({bgColor:this.DEFAULT_COLOR, color: this.DEFAULT_COLOR.darker(), width:50, height:50},attr));
+        this._super($.extend({bgColor:this.DEFAULT_COLOR, color: this.DEFAULT_COLOR.darker(), width:50, height:50},attr), setter, getter);
         
         this.createPort("output");
         this.createPort("input");
@@ -29142,7 +32240,7 @@ draw2d.shape.note.PostIt= draw2d.shape.basic.Label.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function(attr)
+    init: function(attr, setter, getter )
     {
         this._super(attr);
          
@@ -29162,6 +32260,124 @@ draw2d.shape.note.PostIt= draw2d.shape.basic.Label.extend({
 /*****************************************
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
+ ****************************************//**
+ * @class draw2d.shape.flowchart.Document
+ * 
+ * Typical flowchart <b>Document</b> shape
+ * 
+ * See the example:
+ *
+ *     @example preview small frame
+ *     
+ *     var figure = new draw2d.shape.flowchart.Document({
+ *        x:100,
+ *        y:60
+ *     });
+ *     
+ *     canvas.add( figure);
+ *     
+ * @extends draw2d.VectorFigure
+ */
+draw2d.shape.flowchart.Document = draw2d.VectorFigure.extend({
+	NAME : "draw2d.shape.flowchart.Document",
+
+	/**
+	 *
+	 * @constructor
+	 * Creates a new figure element which are not assigned to any canvas.
+	 *
+	 * @param {Object} [attr] the configuration of the shape
+	 */
+	init : function(attr, setter, getter) {
+		this.amplitude = 0.08; // percentage of height
+
+		this._super($.extend({
+			width : 80,
+			height : 50,
+			bgColor : "#2196f3",
+			color : "#1B1B1B",
+			stroke :1
+		}, attr), setter, getter);
+	},
+
+    /**
+     * @inheritdoc
+     */
+    createShapeElement : function()
+    {
+    	return this.canvas.paper.path(this.calcPath());
+	},
+	
+	calcPath : function()
+	{
+        var w  = this.getWidth();
+        var h  = this.getHeight();
+		var w2 = w / 2;
+		var w4 = w / 4;
+        var h2 = (h*this.amplitude)|0;
+        
+
+		return [
+			"M", this.getAbsoluteX(), ",", this.getAbsoluteY(), 
+			"l", w, ",", 0, 
+			"l", 0, ",", h-h2,
+			"q", -w4, ",", -h2, -w2, ",", 0,
+			"q", -w4, ",",  h2, -w2, ",", 0,
+			"z"].join(" ");
+	},
+	
+    /**
+     * @inheritdoc
+     **/
+    repaint : function(attributes)
+    {
+        if(this.repaintBlocked===true || this.shape===null){
+            return;
+        }
+        
+        attributes =$.extend({},{
+            path : this.calcPath()
+        },attributes);
+
+        this._super(attributes);
+        
+        return this;
+    }
+	/*
+	function draw_curve(Ax, Ay, Bx, By, M) {
+
+    // Find midpoint J
+    var Jx = Ax + (Bx - Ax) / 2
+    var Jy = Ay + (By - Ay) / 2
+
+    // We need a and b to find theta, and we need to know the sign of each to make sure that the orientation is correct.
+    var a = Bx - Ax
+    var asign = (a < 0 ? -1 : 1)
+    var b = By - Ay
+    var bsign = (b < 0 ? -1 : 1)
+    var theta = Math.atan(b / a)
+
+    // Find the point that's perpendicular to J on side
+    var costheta = asign * Math.cos(theta)
+    var sintheta = asign * Math.sin(theta)
+
+    // Find c and d
+    var c = M * sintheta
+    var d = M * costheta
+
+    // Use c and d to find Kx and Ky
+    var Kx = Jx - c
+    var Ky = Jy + d
+
+    return "M" + Ax + "," + Ay +
+           "Q" + Kx + "," + Ky +
+           " " + Bx + "," + By
+   }*/
+});
+
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
  ****************************************/
 /**
  * @class draw2d.shape.widget.Widget
@@ -29171,8 +32387,8 @@ draw2d.shape.note.PostIt= draw2d.shape.basic.Label.extend({
  */
 draw2d.shape.widget.Widget = draw2d.SetFigure.extend({
     
-    init: function( attr){
-        this._super( attr);
+    init: function( attr , setter, getter ){
+        this._super( attr, setter, getter);
     }
 });
 /*****************************************
@@ -29195,22 +32411,39 @@ draw2d.shape.widget.Slider = draw2d.shape.widget.Widget.extend({
     NAME : "draw2d.shape.widget.Slider",
     
     DEFAULT_COLOR_THUMB : new draw2d.util.Color("#bddf69"),
-    DEFAULT_COLOR_BG : new draw2d.util.Color("#d3d3d3"),
+    DEFAULT_COLOR_BG    : new draw2d.util.Color("#d3d3d3"),
     
     
-    init: function(attr){
+    init: function(attr, setter, getter ){
         this.currentValue = 0; // [0..100] 
         this.slideBoundingBox = new draw2d.geo.Rectangle(0,0,10,20);
+        this.padding = {top:4, right:4, bottom:4,left:4};
+        this.panning = false;
+        this.thumbGrow = 0;
 
-        this._super( $.extend({width:150, height:15}, attr));
-        
-        this.setBackgroundColor(this.DEFAULT_COLOR_BG);
-        this.setColor(this.DEFAULT_COLOR_THUMB);
-        this.setStroke(1);
-        this.setRadius(4);
-        this.setResizeable(true);
-        
-        this.setMinHeight(10);
+        this._super(
+            $.extend({
+                width:150,
+                height:15,
+                stroke:1,
+                radius:4,
+                resizeable:true,
+                color:this.DEFAULT_COLOR_THUMB,
+                bgColor:this.DEFAULT_COLOR_BG,
+                value:50
+            },attr),
+            $.extend({
+                /** @attr {Number} padding the padding in pixel around the text */
+                padding  : this.setPadding,
+                /** @attr {Number} value the new value of the slider. values must be in range of [0..100] */
+                value    : this.setValue
+            }, setter),
+            $.extend({
+                padding  : this.getPadding,
+                value    : this.getValue
+            }, getter));
+
+        this.setMinHeight(15);
         this.setMinWidth(80);
     },
     
@@ -29219,23 +32452,72 @@ draw2d.shape.widget.Slider = draw2d.shape.widget.Widget.extend({
      * Create the additional elements for the figure
      * 
      */
-    createSet: function(){
+    createSet: function()
+    {
         var result = this.canvas.paper.set();
-        var thumb= this.canvas.paper.rect(5,5,10,20);
+        var thumb= this.canvas.paper.rect(0,0,10,20);
         thumb.node.style.cursor=  "col-resize";
         result.push(thumb);
 
         return result;
     },
     
-    setDimension:function(w,h){
+    setDimension:function(w,h)
+    {
         this._super(w,h);
-        this.slideBoundingBox.setBoundary(0,0,this.getWidth()-10 , this.getHeight());
+        this.slideBoundingBox.setBoundary(this.padding.left,0,this.getWidth()-this.padding.right , this.getHeight());
         this.slideBoundingBox.setHeight(this.getHeight()+1);
-        
+
         // TODO: and repaint again.....two repaints for one "setDimension"....BAD
         //
         this.repaint();
+    },
+
+
+    /**
+     * @method
+     * Set the padding of the element
+     *
+     *      // Alternatively you can use the attr method:
+     *      //
+     *      // set the padding for top,left,bottom,right in one call
+     *      figure.attr({
+     *        padding: 3
+     *      });
+     *
+     *      // update the padding left and top
+     *      figure.attr({
+     *        padding: {left:3, top:30}
+     *      });
+     *
+     * @param {Number|Object} padding The new padding
+     * @since 5.6.0
+     **/
+    setPadding: function( padding)
+    {
+        this.clearCache();
+        if(typeof padding ==="number"){
+            this.padding = {top:padding, right:padding, bottom:padding, left:padding};
+        }
+        else{
+            $.extend(this.padding, padding);
+        }
+        this.repaint();
+        this.fireEvent("change:padding");
+
+        return this;
+    },
+
+
+    /**
+     * @method
+     * Get the padding of the element.
+     *
+     * @since 5.6.0
+     **/
+    getPadding: function( )
+    {
+        return this.padding;
     },
 
     /**
@@ -29245,7 +32527,8 @@ draw2d.shape.widget.Slider = draw2d.shape.widget.Widget.extend({
      * @param {Number} value The new value of the slider in percentage [0..100]
      * @template
      */
-    onValueChange:function(value){
+    onValueChange:function(value)
+    {
     },
     
     /**
@@ -29260,23 +32543,37 @@ draw2d.shape.widget.Slider = draw2d.shape.widget.Widget.extend({
      * 
      * @return {boolean} true if the figure accepts dragging
      **/
-    onDragStart : function(x, y , shiftKey, ctrlKey){
-        
-        // check if the use has been clicked on the thumb
+    onDragStart : function(x, y , shiftKey, ctrlKey)
+    {
+        // check if the use has been clicked on the thumb.
+        // Return "false" to prevent drag&drop operation.
         //
         if(this.slideBoundingBox.hitTest(x, y)){
-            this.origX=this.slideBoundingBox.getX();
-            this.origY=this.slideBoundingBox.getY();
+
+            this.panningX = x;
+            this.panningY = y;
+            this.panning=true;
+            this.tweenable = new Tweenable();
+            this.tweenable.tween({
+                from: { grow: this.thumbGrow  },
+                to:   { grow: 10 },
+                duration: 500,
+                easing: 'easeOutQuart',
+                step: $.proxy(function (state) {
+                    this.thumbGrow = state.grow;
+                    this.repaint();
+                },this)
+            });
             return false;
         }
         
         return this._super(x, y, shiftKey, ctrlKey);
     },
-    
+
     /**
      * @method
      * Called by the framework if the figure returns false for the drag operation. In this
-     * case we send a "panning" event - mouseDown + mouseMove. This is very usefull for
+     * case we send a "panning" event - mouseDown + mouseMove. This is very useful for
      * UI-Widget like slider, spinner,...
      * 
      * @param {Number} dx the x difference between the mouse down operation and now
@@ -29284,10 +32581,47 @@ draw2d.shape.widget.Slider = draw2d.shape.widget.Widget.extend({
      * @param {Number} dx2 The x diff since the last call of this dragging operation
      * @param {Number} dy2 The y diff since the last call of this dragging operation
      */
-    onPanning: function(dx, dy, dx2, dy2){
-        this.slideBoundingBox.setPosition(this.origX+dx, this.origY+dy);
-        // calculate the internal value of the slider
-        this.setValue(100/(this.slideBoundingBox.bw-this.slideBoundingBox.getWidth())*this.slideBoundingBox.getX());
+    onPanning: function(dx, dy, dx2, dy2)
+    {
+        // calculate the current position of the mouse pos
+        //
+        var thumbW2 = this.slideBoundingBox.w/2;
+        var width = this.getWidth();
+        var sliderWidth = width - this.padding.left - this.padding.right;
+
+        var figurePos = Math.min(width, Math.max(0,this.panningX+dx));
+        var sliderPos = Math.min(width-this.padding.left-this.padding.right,figurePos-this.padding.left)-thumbW2;
+
+        this.setValue(100/sliderWidth*sliderPos);
+    },
+
+
+    /**
+     * @inheritdoc
+     */
+    onPanningEnd : function()
+    {
+        this.panning=false;
+        if(this.tweenable!==null) {
+            this.tweenable.dispose();
+        }
+        this.tweenable = new Tweenable();
+        this.tweenable.tween({
+            from: { grow: this.thumbGrow  },
+            to:   { grow: 0 },
+            duration: 300,
+            easing: 'easeOutQuart',
+            step: $.proxy(function (state) {
+                this.thumbGrow = state.grow;
+                this.repaint();
+            },this),
+            finish: $.proxy(function(){
+                this.tweenable.dispose();
+                this.tweenable=null;
+            },this)
+        });
+        this.thumbGrow =0;
+        this.repaint();
     },
 
     /**
@@ -29296,19 +32630,35 @@ draw2d.shape.widget.Slider = draw2d.shape.widget.Widget.extend({
      * 
      * @param {Number} value values between [0..100]
      */
-    setValue:function(value){
+    setValue:function(value)
+    {
         this.currentValue = Math.min(Math.max(0,(value|0)),100);
         this.repaint();
         this.onValueChange(this.currentValue);
+        this.fireEvent("change:value");
+
+        return this;
     },
 
+    /**
+     * @method
+     * Returns the current value of the slider
+     *
+     * @since 5.6.0
+     *
+     * @returns {Number}
+     */
+    getValue: function()
+    {
+        return this.currentValue;
+    },
     
     /**
      * 
      * @param attributes
      */
-    repaint: function(attributes){
-        
+    repaint: function(attributes)
+    {
         if (this.repaintBlocked === true || this.shape === null){
             return;
         }
@@ -29317,7 +32667,7 @@ draw2d.shape.widget.Slider = draw2d.shape.widget.Widget.extend({
      
         // adjust the slider to the current value and the new dimension of the widget
         //
-        var thumbX = ((this.slideBoundingBox.bw-this.slideBoundingBox.getWidth())/100*this.currentValue)|0;
+        var thumbX =(((this.getWidth()-this.padding.left-this.padding.right)/100*this.currentValue)+this.padding.left)|0;
         this.slideBoundingBox.setX(thumbX);
 
 
@@ -29325,11 +32675,11 @@ draw2d.shape.widget.Slider = draw2d.shape.widget.Widget.extend({
         //
 		if (this.svgNodes !== null) {
 			var attr = this.slideBoundingBox.toJSON();
-			attr.y = attr.y - 5;
-			attr.height = attr.height + 10;
-			attr.fill = this.getColor().hash();
-			attr.stroke = this.getColor().darker(0.2).hash();
-			attr.r = 4;
+            attr.y      -= (this.thumbGrow/2);
+            attr.height += this.thumbGrow;
+			attr.fill    = this.getColor().hash();
+			attr.stroke  = this.getColor().darker(0.2).hash();
+			attr.r       = 4;
 			this.svgNodes.attr(attr);
 		}
  
@@ -29341,7 +32691,8 @@ draw2d.shape.widget.Slider = draw2d.shape.widget.Widget.extend({
     },
     
 
-    applyTransformation:function(){
+    applyTransformation:function()
+    {
         this.svgNodes.transform("T" + this.getAbsoluteX() + "," + this.getAbsoluteY());
     }
 
@@ -29364,17 +32715,21 @@ draw2d.shape.diagram.Diagram = draw2d.SetFigure.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr)
+    init: function( attr, setter, getter)
     {
-        /** @attr {Array} data the data to display in the diagram */
-        this.setterWhitelist.data  = this.setData;
-        
-        this.getterWhitelist.data = this.getData;
-
         this.data = [];
         this.cache = {}; 
         
-        this._super($.extend({data:[], bgColor:"#8dabf2", stroke:1, color:"#f0f0f0",radius:2, resizeable:true},attr));
+        this._super(
+            $.extend({data:[], bgColor:"#8dabf2", stroke:1, color:"#f0f0f0",radius:2, resizeable:true},attr),
+            $.extend({},{
+                /** @attr {Array} data the data to display in the diagram */
+                data  : this.setData
+            }, setter),
+            $.extend({},{
+                data : this.getData
+            }, getter)
+        );
     },
     
     /**
@@ -29396,6 +32751,8 @@ draw2d.shape.diagram.Diagram = draw2d.SetFigure.extend({
         }
         
        this.repaint();
+       this.fireEvent("change:data");
+
     },
 
     /**
@@ -29515,16 +32872,21 @@ draw2d.shape.diagram.Pie = draw2d.shape.diagram.Diagram.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr){
-        /** @attr {Number} diameter the diameter of the pie chart */
-        this.setterWhitelist.diameter  = this.setDiameter;
-        /** @attr {Number} radius the radius of the pie chart */
-        this.setterWhitelist.radius  = this.setRadius;
+    init: function( attr, setter, getter){
         
-        this.getterWhitelist.diameter = this.getDiameter;
-        this.getterWhitelist.radius = this.getRadius;
 
-        this._super( $.extend({stroke:0},attr));
+        this._super( 
+                $.extend({stroke:0},attr),
+                $.extend({
+                    /** @attr {Number} diameter the diameter of the pie chart */
+                    diameter  : this.setDiameter,
+                    /** @attr {Number} radius the radius of the pie chart */
+                    radius    : this.setRadius
+                },setter),
+                $.extend({
+                    diameter : this.getDiameter,
+                    radius   : this.getRadius
+                },getter));
     },
     
     /**
@@ -29539,7 +32901,8 @@ draw2d.shape.diagram.Pie = draw2d.shape.diagram.Diagram.extend({
         var center = this.getCenter();
         this.setDimension(d,d);
         this.setCenter(center); 
-        
+        this.fireEvent("change:diameter");
+
         return this;
     },
 
@@ -29565,7 +32928,8 @@ draw2d.shape.diagram.Pie = draw2d.shape.diagram.Diagram.extend({
     setRadius:function(r)
     {
         this.setDiameter(r*2);
-        
+        this.fireEvent("change:radius");
+
         return this;
     },
 
@@ -29575,7 +32939,8 @@ draw2d.shape.diagram.Pie = draw2d.shape.diagram.Diagram.extend({
      * Get the center of the circle
      * 
      */
-    getCenter: function(){
+    getCenter: function()
+    {
         var d2= this.getDiameter()/2;
         return this.getPosition().translate(d2,d2);
     },
@@ -29587,19 +32952,22 @@ draw2d.shape.diagram.Pie = draw2d.shape.diagram.Diagram.extend({
      * @param {Number|draw2d.geo.Point} x the new x coordinate of the center or a draw2d.geo.Point object with the center
      * @param {Number} y the y coordinate of the new center of the first argument isn't a draw2d.geo.Point object
      */
-    setCenter: function(x, y){
+    setCenter: function(x, y)
+    {
         var pos = new draw2d.geo.Point(x,y);
         var d2  = this.getDiameter()/2;
         pos.translate(-d2,-d2);
         this.setPosition(pos);
-        
+        this.fireEvent("change:center");
+
         return this;
     },
     
     /**
      * @inheritdoc
      */
-    setData:function( data){
+    setData:function( data)
+    {
         
         // Normalize the Data.
         // The SUM must be == 1.
@@ -29612,7 +32980,8 @@ draw2d.shape.diagram.Pie = draw2d.shape.diagram.Diagram.extend({
         //  pass the normalize data to the base implementation
         //
         this._super(data);
-        
+        this.fireEvent("change:data");
+
         return  this;
     },
       
@@ -29643,7 +33012,8 @@ draw2d.shape.diagram.Pie = draw2d.shape.diagram.Diagram.extend({
     /**
      * @inheritdoc
      */
-    setDimension:function(w,h){
+    setDimension:function(w,h)
+    {
         // keep the aspect ration
         //
         if(w>h){
@@ -29666,14 +33036,16 @@ draw2d.shape.diagram.Pie = draw2d.shape.diagram.Diagram.extend({
         return this;
     },
 
-    polarPath:function(radius, theta, rotation){
+    polarPath:function(radius, theta, rotation)
+    {
         var x, y;
         x = radius * Math.cos(theta + rotation)+radius;
         y = radius * Math.sin(theta + rotation)+radius;
         return "L " + x + " " + y + " "; 
     },
 
-    drawSegment:function(radius, value, rotation, resolution){
+    drawSegment:function(radius, value, rotation, resolution)
+    {
       var path = "M "+radius+" "+radius;
 
       for (var i = 0; i < value; i+=resolution){
@@ -29688,7 +33060,8 @@ draw2d.shape.diagram.Pie = draw2d.shape.diagram.Diagram.extend({
     /**
      * @inheritdoc
      */
-    applyTransformation:function(){
+    applyTransformation:function()
+    {
        this.svgNodes.transform("T" + this.getAbsoluteX() + "," + this.getAbsoluteY());
        
        return this;
@@ -29731,13 +33104,13 @@ draw2d.shape.diagram.Sparkline = draw2d.shape.diagram.Diagram.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr)
+    init: function( attr, setter, getter)
     {
         this.min = 0;
         this.max = 10;
         this.padding =4;
 
-        this._super( $.extend({width:180, height:50},attr));
+        this._super( $.extend({width:180, height:50},attr), setter, getter);
     },
     
     /**
@@ -29760,7 +33133,8 @@ draw2d.shape.diagram.Sparkline = draw2d.shape.diagram.Diagram.extend({
         }
         
         this._super(data);
-        
+        this.fireEvent("change:data");
+
         return this;
     },
     
@@ -29775,7 +33149,8 @@ draw2d.shape.diagram.Sparkline = draw2d.shape.diagram.Diagram.extend({
     /**
      * @inheritdoc
      */
-    repaint: function(attributes){
+    repaint: function(attributes)
+    {
         if(this.repaintBlocked===true || this.shape===null){
             return;
         }
@@ -29849,7 +33224,7 @@ draw2d.shape.analog.OpAmp = draw2d.SVGFigure.extend({
     
     // custom locator for the special design of the OpAmp Input area
     MyInputPortLocator : draw2d.layout.locator.PortLocator.extend({
-        init:function( ){
+        init: function( ){
           this._super();
         },    
         relocate:function(index, port){
@@ -29865,8 +33240,8 @@ draw2d.shape.analog.OpAmp = draw2d.SVGFigure.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init:function(attr){
-        this._super($.extend({stroke:0, bgColor:"#f0f0ff"},attr));
+    init: function(attr, setter,getter){
+        this._super($.extend({stroke:0, bgColor:"#f0f0ff"},attr), setter,getter);
         
         this.inputLocator = new this.MyInputPortLocator();
         
@@ -29940,7 +33315,7 @@ draw2d.shape.analog.ResistorBridge = draw2d.SVGFigure.extend({
    
     // custom locator for the special design of the ResistorBridge Input area
     MyInputPortLocator : draw2d.layout.locator.PortLocator.extend({
-        init:function( ){
+        init: function( ){
           this._super();
         },    
         relocate:function(index, figure){
@@ -29952,7 +33327,7 @@ draw2d.shape.analog.ResistorBridge = draw2d.SVGFigure.extend({
 
     // custom locator for the special design of the ResistorBridge Input area
     MyOutputPortLocator : draw2d.layout.locator.PortLocator.extend({
-        init:function( ){
+        init: function( ){
           this._super();
         },    
         relocate:function(index, figure){
@@ -29969,9 +33344,9 @@ draw2d.shape.analog.ResistorBridge = draw2d.SVGFigure.extend({
      * Create a new instance
      * @param {Object} [attr] the configuration of the shape
      */
-    init:function(attr){
+    init: function(attr, setter, getter ){
  
-        this._super($.extend({width:50, height:50},attr));
+        this._super($.extend({width:50, height:50},attr), setter, getter);
         
         this.inputLocator = new this.MyInputPortLocator();
         this.outputLocator = new this.MyOutputPortLocator();
@@ -30028,11 +33403,11 @@ draw2d.shape.analog.ResistorBridge = draw2d.SVGFigure.extend({
  */
 draw2d.shape.analog.ResistorVertical = draw2d.SetFigure.extend({
 
-    NAME:"draw2d.shape.analog.ResistorVertical",
+    NAME: "draw2d.shape.analog.ResistorVertical",
     
     // custom locator for the special design of the Input area
     MyInputPortLocator : draw2d.layout.locator.PortLocator.extend({
-        init:function( ){
+        init: function( ){
           this._super();
         },    
         relocate:function(index, figure){
@@ -30044,7 +33419,7 @@ draw2d.shape.analog.ResistorVertical = draw2d.SetFigure.extend({
     
     // custom locator for the special design of the Output area
     MyOutputPortLocator : draw2d.layout.locator.PortLocator.extend({
-        init:function( ){
+        init: function( ){
           this._super();
         },    
         relocate:function(index, figure){
@@ -30058,9 +33433,9 @@ draw2d.shape.analog.ResistorVertical = draw2d.SetFigure.extend({
      * Create a new instance
      * @param {Object} [attr] the configuration of the shape
      */
-    init:function(attr){
+    init: function(attr, setter, getter ){
   
-        this._super($.extend({width:30, height:50, bgColor:null},attr));
+        this._super($.extend({width:30, height:50, bgColor:null},attr), setter, getter);
         
         this.inputLocator = new this.MyInputPortLocator();
         this.outputLocator = new this.MyOutputPortLocator();
@@ -30105,7 +33480,7 @@ draw2d.shape.analog.VoltageSupplyHorizontal = draw2d.SVGFigure.extend({
     
     // custom locator for the special design of the Input area
     MyInputPortLocator : draw2d.layout.locator.PortLocator.extend({
-        init:function( ){
+        init: function( ){
           this._super();
         },    
         relocate:function(index, figure){
@@ -30116,7 +33491,7 @@ draw2d.shape.analog.VoltageSupplyHorizontal = draw2d.SVGFigure.extend({
     
     // custom locator for the special design of the Output area
     MyOutputPortLocator : draw2d.layout.locator.PortLocator.extend({
-        init:function( ){
+        init: function( ){
           this._super();
         },    
         relocate:function(index, figure){
@@ -30131,8 +33506,8 @@ draw2d.shape.analog.VoltageSupplyHorizontal = draw2d.SVGFigure.extend({
      * Create a new instance
      * @param {Object} [attr] the configuration of the shape
      */
-    init:function(attr){
-        this._super($.extend({width:50, height:30},attr));
+    init: function(attr, setter, getter ){
+        this._super($.extend({width:50, height:30},attr), setter, getter);
         
         this.createPort("hybrid", new this.MyInputPortLocator());  // GND
         this.createPort("hybrid", new this.MyOutputPortLocator()); // VCC
@@ -30173,7 +33548,7 @@ draw2d.shape.analog.VoltageSupplyVertical = draw2d.SVGFigure.extend({
     
     // custom locator for the special design of the Input area
     MyInputPortLocator : draw2d.layout.locator.PortLocator.extend({
-        init:function( ){
+        init: function( ){
           this._super();
         },    
         relocate:function(index, figure){
@@ -30185,7 +33560,7 @@ draw2d.shape.analog.VoltageSupplyVertical = draw2d.SVGFigure.extend({
     
     // custom locator for the special design of the Output area
     MyOutputPortLocator : draw2d.layout.locator.PortLocator.extend({
-        init:function( ){
+        init: function( ){
           this._super();
         },    
         relocate:function(index, figure){
@@ -30200,8 +33575,8 @@ draw2d.shape.analog.VoltageSupplyVertical = draw2d.SVGFigure.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init:function(attr){
-        this._super($.extend({width:30,height:50},attr));
+    init: function(attr, setter, getter ){
+        this._super($.extend({width:30,height:50},attr), setter, getter);
         
         this.inputLocator = new this.MyInputPortLocator();
         this.outputLocator = new this.MyOutputPortLocator();
@@ -30245,13 +33620,23 @@ draw2d.shape.layout.Layout= draw2d.shape.basic.Rectangle.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function(attr)
+    init: function(attr, setter, getter )
     {
-        this._super($.extend({bgColor:null, radius:0, stroke:0},attr));
-         
+        // @since 4.3.3
+        this.padding = {top:0, right:0, bottom:0,left:0};
+
+        this._super($.extend({bgColor:null, radius:0, stroke:0},attr),
+            $.extend({
+                /** @attr {Number} padding the padding in pixel around the text */
+                padding  : this.setPadding
+            }, setter),
+            $.extend({
+                padding  : this.getPadding
+            }, getter));
+
+
         var _this = this;
-        this.resizeListener = function(figure)
-        {
+        this.resizeListener = function(figure){
             // propagate the event to the parent or other listener if existing
             //
             if(_this.getParent() instanceof draw2d.shape.layout.Layout){
@@ -30260,6 +33645,7 @@ draw2d.shape.layout.Layout= draw2d.shape.basic.Rectangle.extend({
             // or we are the parent and must consume it self
             else {
                 _this.setDimension(1,1);
+                _this.fireEvent("resize");
             }
         };
         
@@ -30269,10 +33655,18 @@ draw2d.shape.layout.Layout= draw2d.shape.basic.Rectangle.extend({
     /**
      * @inheritdoc
      */
-    add : function(child, locator, index)
+    add: function(child, locator, index)
     {
        var r=this._super(child, locator, index);
+
        child.on("resize",this.resizeListener);
+       child.on("change:visibility", this.resizeListener);
+
+        // don't use the getter/setter. This considers the canvas assignment and
+        // the child is always invisible. BIG BUG. The example shape_db will break if you change this.
+//       child.setVisible(this.isVisible());
+       child.visible = this.visible;
+
        this.setDimension(1,1);
       
        return r;
@@ -30281,7 +33675,7 @@ draw2d.shape.layout.Layout= draw2d.shape.basic.Rectangle.extend({
     /**
      * @inheritdoc
      */
-    remove : function(child)
+    remove: function(child)
     {
        var r= this._super(child);
        child.off(this.resizeListener);
@@ -30292,14 +33686,95 @@ draw2d.shape.layout.Layout= draw2d.shape.basic.Rectangle.extend({
 
 
     /**
+     * @method
+     * Set the padding of the element
+     *
+     *      // Alternatively you can use the attr method:
+     *      //
+     *      // set the padding for top,left,bottom,right in one call
+     *      figure.attr({
+     *        padding: 3
+     *      });
+     *
+     *      // update the padding left and top
+     *      figure.attr({
+     *        padding: {left:3, top:30}
+     *      });
+     *
+     * @param {Number|Object} padding The new padding
+     * @since 4.3.3
+     **/
+    setPadding: function( padding)
+    {
+        if(typeof padding ==="number"){
+            this.padding = {top:padding, right:padding, bottom:padding, left:padding};
+        }
+        else{
+            $.extend(this.padding, padding);
+        }
+        this.fireEvent("change:padding");
+
+        // force a relayout of the figure
+        this.setDimension(1,1);
+
+
+        return this;
+    },
+
+
+    /**
+     * @method
+     * Get the padding of the element.
+     *
+     * @since 4.3.3
+     **/
+    getPadding: function( )
+    {
+        return this.padding;
+    },
+
+    /**
      * @inheritdoc
      */
-    setRotationAngle: function(angle)
+    setVisible: function(flag)
     {
-    	// ignore them for the layout elements
-        // Layout's can't rotate
+        // propagate the visibility to all children too.
+        //
+        this.children.each(function(i,e){
+            e.figure.setVisible(flag)
+        });
+
+
+        this._super(flag);
+
+        // force a relayout of the shape because the dimension has been changed
+        // by enable/disable of child shapes
+        this.setDimension(1,1);
+
+        return this;
+    },
+
+    /**
+     * @method
+     * Returns the Command to perform the specified Request or null.
+     *
+     * @param {draw2d.command.CommandType} request describes the Command being requested
+     * @return {draw2d.command.Command} null or a Command
+     * @private
+     **/
+    createCommand: function( request)
+    {
+        // it is not possible to rate a layout object
+        // ..at the moment
+        if(request.getPolicy() === draw2d.command.CommandType.ROTATE){
+            return null;
+        }
+
+
+        return this._super(request);
     }
-    
+
+
 });
 
 
@@ -30367,31 +33842,39 @@ draw2d.shape.layout.HorizontalLayout= draw2d.shape.layout.Layout.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function(attr)
+    init: function(attr, setter, getter)
     {
-        /** @attr {Number} gap the gap between the children shapes */
-        this.setterWhitelist.gap = this.setGap;
-        
-        this.getterWhitelist.gap= this.getGap;
-
         this.gap = 0;
         var _this = this;
         this.locator ={ 
+                translate: function(figure, diff){
+                    figure.setPosition(figure.x+diff.x,figure.y+diff.y);
+                },
                 relocate:function(index, target)
                 {
                     var stroke = _this.getStroke();
-                    var xPos = stroke; // respect the border of the parent
-                    
+                    var yPos = stroke+_this.padding.top;
+                    var xPos = stroke+_this.padding.left; // respect the border and padding of the parent
                     for (var i=0;i<index;i++){
                         var child = _this.children.get(i).figure;
-                        xPos+=child.getWidth()+_this.gap;
+                        if(child.isVisible()){
+                            xPos += child.getWidth()+_this.gap;
+                        }
                     }
                     
-                    target.setPosition(xPos,stroke);
+                    target.setPosition(xPos,yPos);
                  }
         };
 
-        this._super($.extend({width:1, height:1, gap:0},attr));
+        this._super(
+                $.extend({width:1, height:1, gap:0},attr),
+                $.extend({
+                    /** @attr {Number} gap the gap between the children shapes */
+                    gap : this.setGap
+                },setter),
+                $.extend({
+                    gap : this.getGap
+                },getter));
 
    },
 
@@ -30436,11 +33919,17 @@ draw2d.shape.layout.HorizontalLayout= draw2d.shape.layout.Layout.extend({
     */
     getMinWidth:function()
     {
-        var width=this.stroke*2+ Math.max(0,this.children.getSize()-1)*this.gap;
+        var _this = this;
+        var width=this.stroke*2+this.padding.left+this.padding.right;
+        var gap = 0;
+
         this.children.each(function(i,e){
-            width += e.figure.isResizeable()?e.figure.getMinWidth():e.figure.getWidth();
-            
+            if(e.figure.isVisible()){
+                width += (e.figure.isResizeable()?e.figure.getMinWidth():e.figure.getWidth()+gap);
+                gap = _this.gap;
+            }
         });
+
         return width;
     },
 
@@ -30449,11 +33938,14 @@ draw2d.shape.layout.HorizontalLayout= draw2d.shape.layout.Layout.extend({
      */
     getMinHeight:function()
     {
-        var height=10;
+        var markup=(this.stroke*2)+this.padding.top+this.padding.bottom;
+        var height=0;
+
         this.children.each(function(i,e){
-            height = Math.max(height,e.figure.isResizeable()? e.figure.getMinHeight(): e.figure.getHeight());
+            height = Math.max(height,(e.figure.isResizeable()? e.figure.getMinHeight(): e.figure.getHeight()));
         });
-        return height+this.stroke*2;
+
+        return height+markup;
     },
     
     /**
@@ -30473,17 +33965,19 @@ draw2d.shape.layout.HorizontalLayout= draw2d.shape.layout.Layout.extend({
             });
         }
         else{
+            var minHeight = this.getMinHeight();
             this.children.each(function(i,e){
                 // The layout respect the "resizeable" flag because a layout is a kind of layouter and 
                 // any kind of autolayouter must respect this flag
                 if(e.figure.isResizeable()===true){
                     // reset the shape to the minimum width/height. see setMinWidth/setMinHeight
-                    e.figure.setDimension(1,1);
+                    e.figure.setDimension(1,minHeight);
                 }
             });
         }
-     }
 
+        return this;
+    }
 });
 
 
@@ -30548,13 +34042,8 @@ draw2d.shape.layout.VerticalLayout= draw2d.shape.layout.Layout.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function(attr)
+    init: function(attr, setter, getter)
     {
-        /** @attr {Number} gap the gap between the children shapes */
-        this.setterWhitelist.gap = this.setGap;
-        
-        this.getterWhitelist.gap= this.getGap;
-
         // some layout parameter
         //
         this.gap = 0;
@@ -30563,21 +34052,35 @@ draw2d.shape.layout.VerticalLayout= draw2d.shape.layout.Layout.extend({
         var _this = this;
         
         this.locator = {
+            translate: function(figure, diff){
+                figure.setPosition(figure.x+diff.x,figure.y+diff.y);
+            },
             relocate:function(index, target)
             {
-                var stroke = _this.getStroke()/2;
-                var yPos =stroke; // respect the border of the shape
-                
-                for (var i=0;i<index;i++){
+                var stroke = _this.getStroke();
+                var yPos =stroke+ _this.padding.top; // respect the border and padding of the shape
+                var xPos =_this.padding.left;
+
+                for (var i=0;i<index;i++) {
                     var child = _this.children.get(i).figure;
-                    yPos=yPos+child.getHeight()+_this.gap;
+                    if (child.isVisible()){
+                        yPos += child.getHeight() + _this.gap;
+                    }
                 }
                 
-                target.setPosition(stroke,yPos);
+                target.setPosition(xPos,yPos);
              }
         };
         
-        this._super($.extend({width:10, height:10},attr));
+        this._super(
+                $.extend({width:10, height:10},attr),
+                $.extend({
+                    /** @attr {Number} gap the gap between the children shapes */
+                    gap : this.setGap
+                },setter),
+                $.extend({
+                    gap: this.getGap
+                },getter));
 
     },
     
@@ -30586,6 +34089,8 @@ draw2d.shape.layout.VerticalLayout= draw2d.shape.layout.Layout.extend({
      */
     add : function(child, locator, index)
     {
+    	// ignore the parameter "locator" and use the locator for the vertical layout instead
+    	
        return this._super(child, this.locator, index);
     },
 
@@ -30609,11 +34114,13 @@ draw2d.shape.layout.VerticalLayout= draw2d.shape.layout.Layout.extend({
      */
     getMinWidth:function()
     {
+        var markup=(this.stroke*2)+this.padding.left+this.padding.right;
         var width=10;
         this.children.each(function(i,e){
-            width = Math.max(width, e.figure.isResizeable()? e.figure.getMinWidth(): e.figure.getWidth());
+        	if(e.figure.isVisible())
+        		width = Math.max(width, e.figure.isResizeable()? e.figure.getMinWidth(): e.figure.getWidth());
         });
-        return width+this.stroke;
+        return width+markup;
     },
     
     /**
@@ -30621,12 +34128,20 @@ draw2d.shape.layout.VerticalLayout= draw2d.shape.layout.Layout.extend({
      */
     getMinHeight:function()
     {
-        var height=+this.stroke+ Math.max(0,this.children.getSize()-1)*this.gap;
+        var _this = this;
+    	var gap = 0;
+        var markup=(this.stroke*2)+this.padding.top+this.padding.bottom;
+        var height=0;
+
         this.children.each(function(i,e){
-            height += e.figure.isResizeable()?e.figure.getMinHeight():e.figure.getHeight();
+        	if(e.figure.isVisible()){
+        		height += ((e.figure.isResizeable()?e.figure.getMinHeight():e.figure.getHeight())+gap);
+        		// first element is iterated. Now we must add the gap to all next elements
+        		gap = _this.gap;
+        	}
         });
         
-        return height;
+        return height+markup;
     },
     
     /**
@@ -30636,15 +34151,1012 @@ draw2d.shape.layout.VerticalLayout= draw2d.shape.layout.Layout.extend({
     {
         this._super(w,h);
 
-        var width=this.width-this.stroke;
+        var width=this.width-this.padding.left-this.padding.right;
         this.children.each(function(i,e){
-            if(e.figure.isResizeable()){
-                e.figure.setDimension(width,e.figure.getHeight());
+            if(e.figure.isResizeable() && e.figure.isVisible()){
+                e.figure.setDimension(width,e.figure.getMinHeight());
             }
         });
+
+        return this;
     }
    
 
+});
+
+
+
+
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
+ ****************************************/
+/**
+ * @class draw2d.shape.layout.TableLayout
+ * 
+ * The TableLayout class arranges the children in a row/column order. Each cell can be styled 
+ * with valign, align and padding.
+ * 
+ * 
+ * See the example below with and without padding or alignment settings
+ * 
+ *     
+ *     @example preview small frame
+ *     
+ *         var label1 =  new draw2d.shape.basic.Label({text:"[0,1] with long long long long label", fontColor:"#00AF00"});
+ *         var label2 =  new draw2d.shape.basic.Label({text:"[1,1] padding:10", fontColor:"#00AF00"});
+ *         var label3 =  new draw2d.shape.basic.Label({text:"[2,1] align:right", fontColor:"#00AF00"});
+ *         var label4 =  new draw2d.shape.basic.Label({text:"[3,1] resize:true",resizeable:true, fontColor:"#00AF00"});
+ *     
+ *         var container = new draw2d.shape.layout.TableLayout();
+ *     
+ *         container.addRow("[0,0]", label1 ,"[0,2] align:center");
+ *         container.addRow("[1,0] valign:bottom", label2,"[1,2] long long long label");
+ *         container.addRow("[2,0]", label3,"[2,2]");
+ *         container.addRow("[3,0]", label4,"[3,2]");
+ *     
+ *         container.setPadding(0);
+ *         container.setCellPadding(1,1, 10);
+ *     
+ *         container.setCellAlign(0,2, "center");
+ *         container.setCellAlign(2,1, "right");
+ *     
+ *         container.setCellVerticalAlign(1, 0, "bottom");
+ *         canvas.add(container,10,10);
+ *     
+ *     
+ * @author Andreas Herz
+ * @extends draw2d.shape.layout.Layout
+ * @since 5.3.0
+ */
+draw2d.shape.layout.TableLayout= draw2d.shape.layout.Layout.extend({
+
+	NAME : "draw2d.shape.layout.TableLayout",
+    
+	DUMMY_CELL : {
+	               getMinHeight: function(){return 1;},
+	               getMinWidth:  function(){return 1;},
+	               off:          function(){}
+                 },
+    /**
+     * @constructor
+     * Create a new instance
+     * 
+     * @param {Object} [attr] the configuration of the shape
+     */
+    init: function(attr, setter, getter)
+    {
+        var _this = this;
+        this.cellLocator = {
+            relocate: function(index, figure){ 
+                if(_this.repaintBlocked===true){
+                    return;
+                }
+                var cell= figure.__cell;
+                var layout = _this.getCellLayout(cell.row,cell.column);
+                var outerWidth = _this.getWidth();
+                var minWidth   = _this.getMinWidth();
+                var widthOffset =0;
+                if(outerWidth!=minWidth){
+                	widthOffset= ((outerWidth-minWidth)/ _this.layoutInfos[0].length)*cell.column;
+                }
+
+                var width  = figure.getWidth();
+                var height = figure.getHeight();
+            	var x = layout.x+_this.padding.left+layout.padding.left+widthOffset;
+            	var y = layout.y+_this.padding.top +layout.padding.top;
+
+            	// stretch the figure to fill the complete cell
+                //
+                if(figure.isResizeable()){
+                	var w = Math.max(figure.getMinWidth() , layout.w-(layout.padding.left+layout.padding.right)+widthOffset);
+                	var h = Math.max(figure.getMinHeight(), layout.h-(layout.padding.top+layout.padding.bottom));
+                	figure.setDimension(w,h);
+                }
+                // else apply the valign and align property
+                //
+                else{
+                	// apply vertical alignment
+                	//
+                	switch(layout.valign){
+                	case "middle":
+                		y=y+ (layout.h-height)/2;
+                		break;
+                	case "bottom":
+                		y=y+ (layout.h-height);
+                		break;
+                	}
+                	
+                	// apply horizontal alignment
+                	//
+                	switch(layout.align){
+                	case "center":
+                		x=x+ (layout.w-width)/2+(widthOffset/2);
+                		break;
+                	case "right":
+                		x=x+ (layout.w-width)+widthOffset;
+                		break;
+                	}                	
+                }
+                figure.setPosition(x, y);
+            },
+            translate: function(figure, diff){
+                figure.setPosition(figure.x+diff.x,figure.y+diff.y);
+            }
+        };
+
+        this.padding = {top:4, right:4, bottom:4,left:4};
+
+        this.grid = [];
+        this.layoutInfos = [];
+        this.layoutInfos[0]=[];
+        this.layoutInfos[0][0]={x:0, y:0, w:1, h:1, valign:"top", align:"left"};
+        
+        
+        this._super(
+                $.extend({stroke:1, resizeable:false},attr),
+                $.extend({
+                    /** @attr {Number} padding the padding in pixel around the text */
+                    padding  : this.setPadding
+                }, setter),
+                $.extend({
+                    padding  : this.getPadding
+                }, getter));
+                
+
+    },
+    
+    /**
+     * @method
+     * Set the padding of the given cell.
+     * 
+     * 
+     * @param {Number|Object} padding The new padding
+     **/
+    setCellPadding: function(row, column, padding)
+    {
+    	var layout = this.getCellLayout(row, column);
+    	if(layout===null){
+    		return this;
+    	}
+
+    	if(typeof padding ==="number"){
+          layout.padding = {top:padding, right:padding, bottom:padding, left:padding};
+    	}
+    	else{
+          $.extend(layout.padding, padding);
+    	}
+    	
+        this.calculateLayout();
+    	this.setDimension(1,1);
+      
+    	return this;
+    },
+
+    /**
+     * @method
+     * Get the padding of the outer grid.
+     *
+     **/
+    getCellPadding: function(row, column )
+    {
+
+        var layout = this.getCellLayout(row, column);
+    	if(layout===null || typeof layout.padding==="undefined"){
+    		return {top:0, right:0, bottom:0, left:0};
+    	}
+    	return layout.padding;
+    },
+
+    
+    /**
+     * @method
+     * Set the padding of the outer grid.
+     * 
+     *      // Alternatively you can use the attr method:
+     *      //
+     *      // set the padding for top,left,bottom,right in one call 
+     *      figure.attr({
+     *        padding: 3
+     *      });
+     *      
+     *      // update the padding left and top
+     *      figure.attr({
+     *        padding: {left:3, top:30}
+     *      });
+     * 
+     * @param {Number|Object} padding The new padding
+     **/
+    setPadding: function( padding)
+    {
+        if(typeof padding ==="number"){
+            this.padding = {top:padding, right:padding, bottom:padding, left:padding };
+        }
+        else{
+            $.extend(this.padding, padding);
+        }
+        this.calculateLayout();
+        this.setDimension(1,1);
+        this.fireEvent("change:padding");
+      
+        return this;
+    },
+
+    /**
+     * @method
+     * Get the padding of the outer grid.
+     *
+     **/
+    getPadding: function( )
+    {
+      return this.padding;
+    },
+
+    setCanvas: function(canvas)
+    {
+         this._super(canvas);  
+         this.calculateLayout();
+         this.setDimension(2,2);
+
+        return this;
+    },
+
+    /**
+     * @method
+     * Removes the row from the TableLayout
+     *
+     * @returns the removed row
+     */
+    removeRow: function(index)
+    {
+        var _this = this;
+    	var removedRow = this.grid.splice(index, 1);
+    	removedRow[0].forEach(function(figure){
+    		_this.remove(figure);
+    	});
+    	
+    	this.calculateLayout();
+    	this.setDimension(2,2);
+
+        return removedRow;
+    },
+    
+    /**
+     * @method
+     * Add a row to the table grid.
+     * This method has a variable argument list. All arguments are added in one row.
+     * 
+     * @param {Array} figures variable count of figures to add as one row
+     */
+    addRow: function ()
+    {
+        var figuresToAdd = [];
+        var _this = this;
+    	var args = Array.prototype.slice.call(arguments); // sometimes js is stupid...
+    	
+    	var rowCount    = this.grid.length+1;
+    	var columnCount = this.grid.length>0?Math.max(this.grid[0].length, args.length):args.length;
+    	
+    	var row = [];
+   	
+    	args.forEach(function(figure, index){
+    		if(typeof figure ==="string"){
+    		    figure = new draw2d.shape.basic.Label({text:figure});
+    		}
+    		row.push(figure);
+    		figuresToAdd.push(figure);
+    	});
+    	this.grid.push(row);
+    	
+    	// adjust the columns. All rows must have the same column count. Add empty cells
+    	// if required.
+    	//
+    	this.grid.forEach(function(row, index){
+    	    var missingColumns = columnCount-row.length;
+    	    for(var i=0;i<missingColumns;i++){
+    	        row.push(_this.DUMMY_CELL);
+    	    }
+    	});
+
+    	this.repaintBlocked=true;
+        figuresToAdd.forEach(function(figure){
+            _this.add(figure, _this.cellLocator);
+        });
+        this.repaintBlocked = false;
+        
+        this.calculateLayout();
+        this.setDimension(1,1);
+        
+    	return this;
+    },
+    
+    getMinWidth: function()
+    {
+        // return some good default if we are not part of the canvas.
+        // A real width/height calculation isn'T possible if the canvas not set
+        if(this.canvas===null ||this.layoutInfos.length===0){
+            return 10;
+        }
+        
+    	var bottom     = this.layoutInfos[this.layoutInfos.length-1];
+    	var layout= bottom[bottom.length-1];
+    	
+    	return layout.w+layout.x+this.padding.left+this.padding.right;
+    },
+
+    getMinHeight: function()
+    {
+        // return some good default if we are not part of the canvas.
+        // A real width/height calculation isn'T possible if the canvas not set
+        if(this.canvas===null ||this.layoutInfos.length===0){
+            return 10;
+        }
+
+        var bottom     = this.layoutInfos[this.layoutInfos.length-1];
+    	var layout= bottom[bottom.length-1];
+    	
+    	return layout.h+layout.y+ this.padding.top+this.padding.bottom;
+    },
+    
+    
+    /**
+     * @method 
+     * Set the vertical alignment of a cell. Possible values are
+     * <ul>
+     * <li>top</li>
+     * <li>middle</li>
+     * <li>bottom</li>
+     * </ul>
+     * 
+     * @param {Number} row  The row index of the cell. Starting by 0
+     * @param {Number} column The column index of the cell. Starting by 0 
+     * @param {String} align The vertical alignment of the cell
+     */
+    setCellVerticalAlign:function(row, column, valign){
+       	var layout = this.getCellLayout(row, column);
+    	if(layout===null){
+    		return; // silently
+    	}
+   	
+    	switch(valign){
+	    	case "top":
+	    	case "middle":
+	    	case "bottom":
+	    		layout.valign = valign;
+	            this.calculateLayout();
+	            this.setDimension(1,1);
+    	}
+
+        return this;
+    },
+    
+        /**
+     * @method 
+     * Get the vertical alignment of a cell. Possible values are
+     * <ul>
+     * <li>top</li>
+     * <li>middle</li>
+     * <li>bottom</li>
+     * </ul>
+     * 
+     * @param {Number} row  The row index of the cell. Starting by 0
+     * @param {Number} column The column index of the cell. Starting by 0 
+     * @returns {String} The vertical alignment of the cell
+     */
+     getCellVerticalAlign:function(row, column){
+        var layout = this.getCellLayout(row, column);
+        if(layout===null){
+            return "top";
+        }
+    
+        return layout.valign;
+    },
+    
+    
+    /**
+     * @method 
+     * Set the alignment of a cell. Possible values are
+     * <ul>
+     * <li>left</li>
+     * <li>center</li>
+     * <li>right</li>
+     * </ul>
+     * 
+     * 
+     * @param {Number} row  The row index of the cell. Starting by 0
+     * @param {Number} column The column index of the cell. Starting by 0 
+     * @param {String} align The horizontal alignment of the cell
+     */
+    setCellAlign:function(row, column, align){
+
+    	var layout = this.getCellLayout(row, column);
+    	if(layout===null){
+    		return; // silently
+    	}
+    	
+    	switch(align){
+	    	case "left":
+	    	case "center":
+	    	case "right":
+	    		layout.align = align;
+	            this.calculateLayout();
+	            this.setDimension(1,1);
+    	}
+
+        return this;
+    },
+    
+        /**
+     * @method 
+     * Return the alignment of a cell. Possible values are
+     * <ul>
+     * <li>left</li>
+     * <li>center</li>
+     * <li>right</li>
+     * </ul>
+     * 
+     * 
+     * @param {Number} row  The row index of the cell. Starting by 0
+     * @param {Number} column The column index of the cell. Starting by 0 
+     * return {String} The horizontal alignment of the cell
+     */
+    getCellAlign:function(row, column){
+
+        var layout = this.getCellLayout(row, column);
+        if(layout===null){
+            return "left";
+        }
+        return layout.align;
+    },
+    
+    
+    /**
+     * @method
+     * Return the layout information for the given row/column or <b>null</b>
+     * if the row/column index is out of range.
+     * 
+     * @private
+     */
+    getCellLayout: function(row, column)
+    {
+    	if(row<0 || column<0){
+    		return null; // silently
+    	}
+
+    	if(row >= this.layoutInfos.length){
+    		return null; // silently
+    	}
+    	
+    	var layouts = this.layoutInfos[row];
+    	if(column >= layouts.length){
+    		return null; // silently
+    	}
+    	
+    	return layouts[column];
+    },
+    
+    /**
+     * @method
+     * Recalculate the layout of the table
+     * 
+     * @private
+     */
+    calculateLayout: function()
+    {
+    	var _this = this;
+    	var rowCount    = this.grid.length;
+    	var columnCount = this.grid.length>0?this.grid[0].length:0;
+ 
+    	var newLayoutInfos = [];
+        for (var row=0;row<rowCount;row++) {
+        	newLayoutInfos[row]=[];
+        	for (var column=0;column<columnCount;column++) {
+        		newLayoutInfos[row][column]={width:0, height:0, x:0, y:0, valign:this.getCellVerticalAlign(row, column), align:this.getCellAlign(row, column), padding: this.getCellPadding(row, column)};
+	         }
+        }
+
+    	// determine the heights/widths of the grid
+    	//
+        var layoutWidths = new Array(columnCount+1).join('0').split('').map(parseFloat);
+        var layoutHeights= new Array(rowCount+1).join('0').split('').map(parseFloat);
+        this.grid.forEach(function(figures, row){
+        	for(var column=0; column<columnCount; column++){
+        		var layout = newLayoutInfos[row][column];
+        		var figure = figures[column];
+                figure.__cell = {row:row, column:column};
+                layoutHeights[row]   = Math.max(layoutHeights[row]  , figure.getMinHeight() +layout.padding.top + layout.padding.bottom);
+                layoutWidths[column] = Math.max(layoutWidths[column], figure.getMinWidth()  +layout.padding.left+ layout.padding.right );
+        	}
+        });
+        
+        var x=0, y=0;
+        for (row=0;row<rowCount;row++) {
+       		for(column=0;column<columnCount;column++) {
+       			var layout = newLayoutInfos[row][column];
+       			layout.w = layoutWidths[column];
+       			layout.h = layoutHeights[row];
+       			layout.x = x;
+       			layout.y = y;
+       			x = x+layout.w;
+	        }
+       		y= y+layoutHeights[row];
+       		x=0;
+        }
+        
+        this.layoutInfos = newLayoutInfos;
+
+        return this;
+    }
+});
+
+
+
+
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
+ ****************************************/
+/**
+ * @class draw2d.shape.layout.FlexGridLayout
+ * 
+ * FlexGridLayout is a powerful, flexible and precise layout manager that aligns components vertically and 
+ * horizontally in a dynamic rectangular grid of cells, with each component occupying in one or more cell. 
+ * To define a form layout you specify the form's columns, rows. Everyhing that applies to columns applies 
+ * to rows too - just with a different orientation. FlexGridLayout uses the same API, algorithms and implementation 
+ * for column and rows. 
+ * 
+ * FlexGridLayout focuses on form-oriented panels much like the 'Segment' panel. Nevertheless, it is a general purpose 
+ * layout system that can be used for the vast majority of rectangular layouts.
+ * 
+ * Define your layout with:
+ * <ul>
+ *  <li>[number]px</li>
+ *  <li>grow</li>
+ *  <li>pref</li>
+ * </ul>
+ * 
+ * e.g. we want build a shape with a border on the left and right and a label in the
+ * center. We allow the center to grow, the shape is resizeable.
+ * 
+ * <pre>
+ *    10px       grow         10px
+ *  
+ *    -----+------------------+-----
+ *    |    |  [LABEL]         |    |
+ *    |    |                  |    |
+ *    |    |                  |    |    grow
+ *    |    |                  |    |
+ *    |    |                  |    |
+ *    -----+------------------+-----      
+ * </pre>
+ * 
+ * The number forces the exact width or height of the cell. <b>grow</b> respect the minimum width of the
+ * element and allows to resize the shape. The row/col with the <b>grow</b> declaration will be resized.
+ * The <b>pref</b> declaration forces the cell to the minimum width/height of the embedded figure.
+ * 
+ * Example Implementation of a shape:
+ * 
+ *     @example preview small frame
+ *     var PredefinedProcess = draw2d.shape.layout.FlexGridLayout.extend({
+ *     
+ *         
+ *          //     10px       grow         10px
+ *          //     
+ *          //    -----+------------------+-----
+ *          //    |    |  [LABEL]         |    |
+ *          //    |    |                  |    |
+ *          //    |    |                  |    |    grow
+ *          //    |    |                  |    |
+ *          //    |    |                  |    |
+ *          //    -----+------------------+-----
+ *          //    
+ *          // @param attr
+ *          //
+ *         init : function(attr, setter, getter)
+ *         {
+ *            this._super($.extend({
+ *                 columns:"10px, grow, 10px",
+ *                 rows:   "grow",
+ *                 bgColor:"#FFFFFF",
+ *                 stroke:2
+ *             },attr), 
+ *            setter, 
+ *             getter);
+ *             
+ *             
+ *             this.label = new draw2d.shape.basic.Label({text:"Process Name", resizeable:true, stroke:2});
+ *             this.label.installEditor(new draw2d.ui.LabelInplaceEditor());
+ *             this.add(this.label, {row:0, col:1});
+ *             
+ *             this.setDimension(120,80);
+ *         }
+ *     });
+ *     var shape = new PredefinedProcess();
+ *     canvas.add(shape,10,10);
+ *     
+ *     
+ * @author Andreas Herz
+ * @extends draw2d.shape.layout.Layout
+ * @since 2.5.1
+ */
+draw2d.shape.layout.FlexGridLayout= draw2d.shape.layout.Layout.extend({
+
+	NAME : "draw2d.shape.layout.FlexGridLayout",
+    
+
+    /**
+     * @constructor
+     * Create a new instance
+     * 
+     * @param {Object} [attr] the configuration of the shape
+     */
+    init: function(attr, setter, getter)
+    {
+        var _this = this;
+        this.cellLocator = {
+            relocate: function(index, figure){ 
+                if(_this.gridDef.layoutRequired===true){
+                    _this._layout();
+                }
+                var cell = figure.__cellConstraint;
+                var x = cell.x;
+                var y = cell.y;
+
+                // stretch the figure to fill the complete cell
+                //
+                if(figure.isResizeable()){
+                    figure.setDimension( 
+                            Math.max(figure.getMinWidth() , cell.width),
+                            Math.max(figure.getMinHeight(), cell.height));
+                }
+                // else apply the valign and align property
+                //
+                else{
+                    // apply vertical alignment
+                    //
+                    switch(cell.valign){
+                    case "middle":
+                        y=y+ (cell.height-figure.getHeight())/2;
+                        break;
+                    case "bottom":
+                        y=y+ (cell.height-figure.getHeight());
+                        break;
+                    }
+                    
+                    // apply horizontal alignment
+                    //
+                    switch(cell.align){
+                    case "center":
+                        x=x+ (cell.width-figure.getWidth())/2;
+                        break;
+                    case "right":
+                        x=x+ (cell.width-figure.getWidth());
+                        break;
+                    }                   
+                }
+                figure.setPosition(x, y);
+            },
+            translate: function(figure, diff){
+                figure.setPosition(figure.x+diff.x,figure.y+diff.y);
+            }
+        };
+
+        this.debug=false;
+        this.gridDef={
+            debugLines : [],
+            def_cols  : [],
+            def_rows  : [],
+            min_height: [],
+            min_width : [],      
+            minGridWidth:10,
+            minGridHeight:10,
+            hResizeable:false,
+            vResizeable:false,
+            layoutRequired:true
+        };
+        
+        this._super(
+                $.extend({stroke:2},attr),
+                $.extend({
+                 
+                }, setter),
+                $.extend({
+                  
+                }, getter));
+                
+        this.resizeListener = function(figure)
+        {
+            _this.gridDef.layoutRequired=true;
+            // propagate the event to the parent or other listener if existing
+            //
+            if(_this.getParent() instanceof draw2d.shape.layout.Layout){
+                _this.fireEvent("resize");
+            }
+            // or we are the parent and must consume it self
+            else {
+                _this.setDimension(
+                        _this.gridDef.hResizeable===true?_this.getWidth():1,
+                        _this.gridDef.vResizeable===true?_this.getHeight():1
+                        );
+
+            }
+        };
+        
+        var rows   = attr.rows.split(",");
+        var columns= attr.columns.split(",");
+        for(var i=0;i<columns.length;i++){
+            this.gridDef.def_cols[i]=this.cellWidthFromDef(columns[i]);
+        }
+        
+        for(var i=0;i<rows.length;i++){
+            this.gridDef.def_rows[i]=this.cellWidthFromDef(rows[i]);
+        }
+
+        this.installEditPolicy(new draw2d.policy.figure.RectangleSelectionFeedbackPolicy());
+    },
+    
+    add: function(figure, cellConstraint){
+      
+        figure.__cellConstraint=  $.extend({},{row:0, col:0, rowspan:1, colspan:1, align:"left", valign:"top", width:1, height:1}, cellConstraint);
+      
+      this._super(figure, this.cellLocator);
+      this._layout();
+    },
+
+    
+    /**
+     * @inheritdoc
+     */
+    getMinWidth: function()
+    {
+        return this.gridDef.minGridWidth;
+    },
+
+    /**
+     * @inheritdoc
+     */
+    getMinHeight: function()
+    {
+        return this.gridDef.minGridHeight;
+    },
+    
+    /**
+     * @inheritdoc
+     */
+    setCanvas: function(canvas){
+        // layout must be recalculated if the shape will be assigned
+        // to a canvas. "Text" elements can now calculate correct with the right font settings.
+        //
+        this.gridDef.layoutRequired=true;
+        this._super(canvas);
+
+        return this;
+    },
+    
+    repaint: function(attributes){
+        if (this.repaintBlocked===true || this.shape === null){
+            return this;
+        }
+        this._super(attributes);
+        if(this.debug){
+            this.paintDebugGrid();
+        }
+
+        return this;
+    },
+
+    setDimension: function(w,h)
+    {
+        // we need the calculated layout to determine the min width/height of the figure
+        //
+        if(this.gridDef.layoutRequired===true){
+            this._layout();
+        }
+        // set the new dimension
+        this._super(w,h);
+        
+        // after setting the new dimension a recalculation of the layout is required. May the shape
+        // has grown up
+        this.gridDef.layoutRequired=true;
+        this.repaint();
+
+        return this;
+    },
+    
+    _layout:function()
+    {
+       this.gridDef.layoutRequired=false;
+       
+       var figures = this.getChildren();
+
+       // copy the initial requested width/heights
+       //
+       this.gridDef.min_height = this.gridDef.def_rows.slice(0);
+       this.gridDef.min_width  = this.gridDef.def_cols.slice(0);
+            
+       // Calculate the basic width/height of the elements without considering the "span" and "grow"
+       //
+       for(var i=0;i<figures.getSize();i++){
+           var figure = figures.get(i);
+           var cell = figure.__cellConstraint;
+       		// ermitteln der derzeitig zur verfügung stehenden weite
+           this.gridDef.min_width[cell.col]=Math.max(this.gridDef.min_width[cell.col],figure.getMinWidth());
+       		
+       		// Falls das Elemente eine y_span hat, dann versuchen ob es auf die ganze
+       		// höhe rein passt. Wenn nicht wird der Teil der 'grow' angegeben hat verändert.
+       		// Wenn kein Element 'grow' angegeben hat, dann wird das letzte Element verändert
+       		if(cell.rowspan>1){
+       			var eHeight = figure.getMinHeight();         
+       			var cHeight = this.cellHeight(cell.row,cell.row+cell.rowspan);
+       		    if(cHeight<eHeight){
+       		        var diff= eHeight-cHeight;
+       		     this.gridDef.min_height[cell.row+cell.rowspan-1] = this.gridDef.min_height[cell.row+cell.rowspan-1]+diff;
+       		    }
+       		}
+       		else{
+       		 this.gridDef.min_height[cell.row]=Math.max(this.gridDef.min_height[cell.row],figure.getMinHeight());
+    	   	}
+       }
+       this.gridDef.minGridWidth =this._getGridWidth();
+       this.gridDef.minGridHeight=this._getGridHeight();
+
+       // Resize the grid height if at least one row supports "grow"
+       //
+       var gridHeight = this._getGridHeight();
+       for ( var i = 0; i < this.gridDef.def_rows.length; i++) {
+           // row found which can grow
+           if (this.gridDef.def_rows[i] === -1){
+               this.gridDef.min_height[i] = this.gridDef.min_height[i] +Math.max(0,this.getHeight() - gridHeight);
+               this.gridDef.vResizeable=true;
+               break;
+           }
+       }
+       
+       // Resize the grid if at least one column supports "grow"
+       //
+       var gridWidth= this._getGridWidth();
+       for(var i=0;i<this.gridDef.def_cols.length;i++){
+           // column found which can grow
+           if(this.gridDef.def_cols[i] === -1){
+               this.gridDef.min_width[i]= this.gridDef.min_width[i]+Math.max(0,this.getWidth()-gridWidth);
+               this.gridDef.hResizeable=true;
+      	       break;
+       	   }
+       }
+
+       // apply the cell constraints to the elements 
+       //
+       for(var i=0;i<figures.getSize();i++) {
+           var cell = figures.get(i).__cellConstraint;
+     	   cell.width  = this.cellWidth(cell.col ,cell.col+cell.colspan);
+     	   cell.height = this.cellHeight(cell.row,cell.row+cell.rowspan);
+           cell.x   = this.cellX(cell.col);
+           cell.y   = this.cellY(cell.row);
+       }
+
+        return this;
+    },
+
+    cellX:function(col )
+    {
+        var r=0;
+    	for(var i=0;i<col;i++){
+    	 r= r+this.gridDef.min_width[i];
+    	}
+
+    	return r;
+    },
+
+    cellY:function(row )
+    {
+        var r=0;
+    	for(var i=0;i<row;i++){
+    	    r= r+this.gridDef.min_height[i];
+    	}
+
+    	return r;
+    },
+
+    cellWidth:function(from, to)
+    {
+    	var r =0;
+    	for(var i=from;i<to;i++){
+    	    r= r+this.gridDef.min_width[i];
+    	}
+
+        return r;
+    },
+
+    cellHeight:function(from, to)
+    {
+    	var r =0;
+    	for(var i=from;i<to;i++){
+    	    r= r+this.gridDef.min_height[i];
+    	}
+
+    	return r;
+    },
+
+    paintDebugGrid: function()
+    {
+        // alte Linien erstmal entfernen bevor man neue zeichnet
+        //
+        for(var i=0;i<this.gridDef.debugLines.length;i++)
+            this.gridDef.debugLines[i].remove();
+        this.gridDef.debugLines= [];
+        
+    	var gridHeight=this._getGridHeight();
+    	var gridWidth=this._getGridWidth();
+    	var posX = this.getAbsoluteX();
+    	var posY = this.getAbsoluteY();
+        
+        // draw the cols first
+        var x=posX;
+        for(var i=0;i<=this.gridDef.min_width.length;i++)
+        {
+           var newLine =  this.canvas.paper.path("M "+x+" " + posY + " l 0 " + gridHeight) .attr({"stroke":"#FF0000","stroke-width":1});
+           this.gridDef.debugLines.push(newLine);
+           if(i<this.gridDef.min_width.length)
+    	       x=x+this.gridDef.min_width[i];
+        }
+        
+        var y=posY;
+        for(var i=0;i<=this.gridDef.min_height.length;i++)
+        {
+            var newLine =  this.canvas.paper.path("M "+posX+" " + y + " l " + gridWidth + " 0") .attr({"stroke":"#FF0000","stroke-width":1});
+            this.gridDef.debugLines.push(newLine);
+            if(i<this.gridDef.min_height.length)
+    	       y=y+this.gridDef.min_height[i];
+        }
+    },
+
+    _getGridWidth: function()
+    {
+        var gridWidth=0;
+        for(var i=0;i<this.gridDef.min_width.length;i++) {
+            gridWidth = gridWidth + this.gridDef.min_width[i];
+        }
+
+        return gridWidth;
+    },
+
+    _getGridHeight: function()
+    {
+        var gridHeight=0;
+        for(var i=0;i<this.gridDef.min_height.length;i++) {
+            gridHeight = gridHeight + this.gridDef.min_height[i];
+        }
+
+        return gridHeight;
+    },
+
+
+    cellWidthFromDef: function( def)
+    {
+      var pattern = new RegExp("(\\d+)(?:px)?");
+      var match = def.match(pattern);
+
+      if (match!=null) {
+          return parseInt(match[1]);
+      }
+
+      pattern = new RegExp("p(?:ref)?");
+      match = def.match(pattern);
+      if (match!=null) {
+          return 0;
+      }
+
+      pattern = new RegExp("g(?:row)?");
+      match = def.match(pattern);
+      if (match!=null){
+        this.autoResize=false;
+        return -1;
+      }
+
+      return 0;
+    }
+    
+    
 });
 
 
@@ -30670,8 +35182,8 @@ draw2d.shape.icon.Icon = draw2d.SetFigure.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
       this.setBackgroundColor("#333333");
       this.keepAspectRatio = false;
     },
@@ -30775,8 +35287,8 @@ draw2d.shape.icon.Thunder = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -30818,8 +35330,8 @@ draw2d.shape.icon.Snow = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -30861,8 +35373,8 @@ draw2d.shape.icon.Hail = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -30904,8 +35416,8 @@ draw2d.shape.icon.Rain = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -30947,8 +35459,8 @@ draw2d.shape.icon.Cloudy = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -30990,8 +35502,8 @@ draw2d.shape.icon.Sun = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31033,8 +35545,8 @@ draw2d.shape.icon.Undo = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31076,8 +35588,8 @@ draw2d.shape.icon.Detour = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31119,8 +35631,8 @@ draw2d.shape.icon.Merge = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31162,8 +35674,8 @@ draw2d.shape.icon.Split = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31205,8 +35717,8 @@ draw2d.shape.icon.Fork = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31248,8 +35760,8 @@ draw2d.shape.icon.ForkAlt = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31291,8 +35803,8 @@ draw2d.shape.icon.Exchange = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31334,8 +35846,8 @@ draw2d.shape.icon.Shuffle = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31377,8 +35889,8 @@ draw2d.shape.icon.Refresh = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31420,8 +35932,8 @@ draw2d.shape.icon.Ccw = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31463,8 +35975,8 @@ draw2d.shape.icon.Acw = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31506,8 +36018,8 @@ draw2d.shape.icon.Contract = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31549,8 +36061,8 @@ draw2d.shape.icon.Expand = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31592,8 +36104,8 @@ draw2d.shape.icon.Stop = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31635,8 +36147,8 @@ draw2d.shape.icon.End = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31678,8 +36190,8 @@ draw2d.shape.icon.Start = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31721,8 +36233,8 @@ draw2d.shape.icon.Ff = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31764,8 +36276,8 @@ draw2d.shape.icon.Rw = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31807,8 +36319,8 @@ draw2d.shape.icon.ArrowRight = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31850,8 +36362,8 @@ draw2d.shape.icon.ArrowLeft = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31893,8 +36405,8 @@ draw2d.shape.icon.ArrowUp = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31936,8 +36448,8 @@ draw2d.shape.icon.ArrowDown = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -31979,8 +36491,8 @@ draw2d.shape.icon.ArrowLeft2 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32022,8 +36534,8 @@ draw2d.shape.icon.ArrowRight2 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32065,8 +36577,8 @@ draw2d.shape.icon.Smile2 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32108,8 +36620,8 @@ draw2d.shape.icon.Smile = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32151,8 +36663,8 @@ draw2d.shape.icon.Alarm = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32194,8 +36706,8 @@ draw2d.shape.icon.Clock = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32237,8 +36749,8 @@ draw2d.shape.icon.StopWatch = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32280,8 +36792,8 @@ draw2d.shape.icon.History = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32323,8 +36835,8 @@ draw2d.shape.icon.Future = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32366,8 +36878,8 @@ draw2d.shape.icon.GlobeAlt2 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32409,8 +36921,8 @@ draw2d.shape.icon.GlobeAlt = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32452,8 +36964,8 @@ draw2d.shape.icon.Globe = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32495,8 +37007,8 @@ draw2d.shape.icon.Warning = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32538,8 +37050,8 @@ draw2d.shape.icon.Code = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32581,8 +37093,8 @@ draw2d.shape.icon.Pensil = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32624,8 +37136,8 @@ draw2d.shape.icon.Pen = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32667,8 +37179,8 @@ draw2d.shape.icon.Plus = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32710,8 +37222,8 @@ draw2d.shape.icon.Minus = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32753,8 +37265,8 @@ draw2d.shape.icon.TShirt = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32796,8 +37308,8 @@ draw2d.shape.icon.Sticker = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32839,8 +37351,8 @@ draw2d.shape.icon.Page2 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32882,8 +37394,8 @@ draw2d.shape.icon.Page = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32925,8 +37437,8 @@ draw2d.shape.icon.Landscape1 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -32968,8 +37480,8 @@ draw2d.shape.icon.Landscape2 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33011,8 +37523,8 @@ draw2d.shape.icon.Plugin = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33054,8 +37566,8 @@ draw2d.shape.icon.Bookmark = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33097,8 +37609,8 @@ draw2d.shape.icon.Hammer = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33140,8 +37652,8 @@ draw2d.shape.icon.Users = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33183,8 +37695,8 @@ draw2d.shape.icon.User = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33226,8 +37738,8 @@ draw2d.shape.icon.Customer = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33269,8 +37781,8 @@ draw2d.shape.icon.Employee = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33312,8 +37824,8 @@ draw2d.shape.icon.Anonymous = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33355,8 +37867,8 @@ draw2d.shape.icon.Skull = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33398,8 +37910,8 @@ draw2d.shape.icon.Mail = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33441,8 +37953,8 @@ draw2d.shape.icon.Picture = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33484,8 +37996,8 @@ draw2d.shape.icon.Bubble = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33527,8 +38039,8 @@ draw2d.shape.icon.CodeTalk = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33570,8 +38082,8 @@ draw2d.shape.icon.Talkq = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33613,8 +38125,8 @@ draw2d.shape.icon.Talke = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33656,8 +38168,8 @@ draw2d.shape.icon.Home = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33699,8 +38211,8 @@ draw2d.shape.icon.Lock = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33742,8 +38254,8 @@ draw2d.shape.icon.Clip = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33785,8 +38297,8 @@ draw2d.shape.icon.Star = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33828,8 +38340,8 @@ draw2d.shape.icon.StarOff = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33871,8 +38383,8 @@ draw2d.shape.icon.Star2 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33914,8 +38426,8 @@ draw2d.shape.icon.Star2Off = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -33957,8 +38469,8 @@ draw2d.shape.icon.Star3 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34000,8 +38512,8 @@ draw2d.shape.icon.Star3Off = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34043,8 +38555,8 @@ draw2d.shape.icon.Chat = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34086,8 +38598,8 @@ draw2d.shape.icon.Quote = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34129,8 +38641,8 @@ draw2d.shape.icon.Gear2 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34172,8 +38684,8 @@ draw2d.shape.icon.Gear = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34215,8 +38727,8 @@ draw2d.shape.icon.Wrench = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34258,8 +38770,8 @@ draw2d.shape.icon.Wrench2 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34301,8 +38813,8 @@ draw2d.shape.icon.Wrench3 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34344,8 +38856,8 @@ draw2d.shape.icon.ScrewDriver = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34387,8 +38899,8 @@ draw2d.shape.icon.HammerAndScrewDriver = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34430,8 +38942,8 @@ draw2d.shape.icon.Magic = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34473,8 +38985,8 @@ draw2d.shape.icon.Download = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34516,8 +39028,8 @@ draw2d.shape.icon.View = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34559,8 +39071,8 @@ draw2d.shape.icon.Noview = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34602,8 +39114,8 @@ draw2d.shape.icon.Cloud = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34645,8 +39157,8 @@ draw2d.shape.icon.Cloud2 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34688,8 +39200,8 @@ draw2d.shape.icon.CloudDown = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34731,8 +39243,8 @@ draw2d.shape.icon.CloudUp = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34774,8 +39286,8 @@ draw2d.shape.icon.Location = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34817,8 +39329,8 @@ draw2d.shape.icon.Volume0 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34860,8 +39372,8 @@ draw2d.shape.icon.Volume1 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34903,8 +39415,8 @@ draw2d.shape.icon.Volume2 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34946,8 +39458,8 @@ draw2d.shape.icon.Volume3 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -34989,8 +39501,8 @@ draw2d.shape.icon.Key = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35032,8 +39544,8 @@ draw2d.shape.icon.Ruler = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35075,8 +39587,8 @@ draw2d.shape.icon.Power = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35118,8 +39630,8 @@ draw2d.shape.icon.Unlock = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35161,8 +39673,8 @@ draw2d.shape.icon.Flag = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35204,8 +39716,8 @@ draw2d.shape.icon.Tag = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35247,8 +39759,8 @@ draw2d.shape.icon.Search = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35290,8 +39802,8 @@ draw2d.shape.icon.ZoomOut = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35333,8 +39845,8 @@ draw2d.shape.icon.ZoomIn = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35376,8 +39888,8 @@ draw2d.shape.icon.Cross = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35419,8 +39931,8 @@ draw2d.shape.icon.Check = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35462,8 +39974,8 @@ draw2d.shape.icon.Settings = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35505,8 +40017,8 @@ draw2d.shape.icon.SettingsAlt = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35548,8 +40060,8 @@ draw2d.shape.icon.Feed = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35591,8 +40103,8 @@ draw2d.shape.icon.Bug = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35634,8 +40146,8 @@ draw2d.shape.icon.Link = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35677,8 +40189,8 @@ draw2d.shape.icon.Calendar = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35720,8 +40232,8 @@ draw2d.shape.icon.Picker = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35763,8 +40275,8 @@ draw2d.shape.icon.No = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35806,8 +40318,8 @@ draw2d.shape.icon.CommandLine = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35849,8 +40361,8 @@ draw2d.shape.icon.Photo = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35892,8 +40404,8 @@ draw2d.shape.icon.Printer = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35935,8 +40447,8 @@ draw2d.shape.icon.Export = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -35978,8 +40490,8 @@ draw2d.shape.icon.Import = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36021,8 +40533,8 @@ draw2d.shape.icon.Run = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36064,8 +40576,8 @@ draw2d.shape.icon.Magnet = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36107,8 +40619,8 @@ draw2d.shape.icon.NoMagnet = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36150,8 +40662,8 @@ draw2d.shape.icon.ReflectH = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36193,8 +40705,8 @@ draw2d.shape.icon.ReflectV = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36236,8 +40748,8 @@ draw2d.shape.icon.Resize2 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36279,8 +40791,8 @@ draw2d.shape.icon.Rotate = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36322,8 +40834,8 @@ draw2d.shape.icon.Connect = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36365,8 +40877,8 @@ draw2d.shape.icon.Disconnect = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36408,8 +40920,8 @@ draw2d.shape.icon.Folder = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36451,8 +40963,8 @@ draw2d.shape.icon.Man = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36494,8 +41006,8 @@ draw2d.shape.icon.Woman = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36537,8 +41049,8 @@ draw2d.shape.icon.People = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36580,8 +41092,8 @@ draw2d.shape.icon.Parent = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36623,8 +41135,8 @@ draw2d.shape.icon.Notebook = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36666,8 +41178,8 @@ draw2d.shape.icon.Diagram = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36709,8 +41221,8 @@ draw2d.shape.icon.BarChart = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36752,8 +41264,8 @@ draw2d.shape.icon.PieChart = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36795,8 +41307,8 @@ draw2d.shape.icon.LineChart = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36838,8 +41350,8 @@ draw2d.shape.icon.Apps = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36881,8 +41393,8 @@ draw2d.shape.icon.Locked = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36924,8 +41436,8 @@ draw2d.shape.icon.Ppt = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -36967,8 +41479,8 @@ draw2d.shape.icon.Lab = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37010,8 +41522,8 @@ draw2d.shape.icon.Umbrella = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37053,8 +41565,8 @@ draw2d.shape.icon.Dry = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37096,8 +41608,8 @@ draw2d.shape.icon.Ipad = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37139,8 +41651,8 @@ draw2d.shape.icon.Iphone = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37182,8 +41694,8 @@ draw2d.shape.icon.Jigsaw = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37225,8 +41737,8 @@ draw2d.shape.icon.Lamp = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37268,8 +41780,8 @@ draw2d.shape.icon.Lamp_alt = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37311,8 +41823,8 @@ draw2d.shape.icon.Video = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37354,8 +41866,8 @@ draw2d.shape.icon.Palm = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37397,8 +41909,8 @@ draw2d.shape.icon.Fave = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37440,8 +41952,8 @@ draw2d.shape.icon.Help = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37483,8 +41995,8 @@ draw2d.shape.icon.Crop = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37526,8 +42038,8 @@ draw2d.shape.icon.BioHazard = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37569,8 +42081,8 @@ draw2d.shape.icon.WheelChair = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37612,8 +42124,8 @@ draw2d.shape.icon.Mic = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37655,8 +42167,8 @@ draw2d.shape.icon.MicMute = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37698,8 +42210,8 @@ draw2d.shape.icon.IMac = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37741,8 +42253,8 @@ draw2d.shape.icon.Pc = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37784,8 +42296,8 @@ draw2d.shape.icon.Cube = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37827,8 +42339,8 @@ draw2d.shape.icon.FullCube = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37870,8 +42382,8 @@ draw2d.shape.icon.Font = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37913,8 +42425,8 @@ draw2d.shape.icon.Trash = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37956,8 +42468,8 @@ draw2d.shape.icon.NewWindow = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -37999,8 +42511,8 @@ draw2d.shape.icon.DockRight = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38042,8 +42554,8 @@ draw2d.shape.icon.DockLeft = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38085,8 +42597,8 @@ draw2d.shape.icon.DockBottom = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38128,8 +42640,8 @@ draw2d.shape.icon.DockTop = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38171,8 +42683,8 @@ draw2d.shape.icon.Pallete = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38214,8 +42726,8 @@ draw2d.shape.icon.Cart = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38257,8 +42769,8 @@ draw2d.shape.icon.Glasses = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38300,8 +42812,8 @@ draw2d.shape.icon.Package = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38343,8 +42855,8 @@ draw2d.shape.icon.Book = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38386,8 +42898,8 @@ draw2d.shape.icon.Books = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38429,8 +42941,8 @@ draw2d.shape.icon.Icons = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38472,8 +42984,8 @@ draw2d.shape.icon.List = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38515,8 +43027,8 @@ draw2d.shape.icon.Db = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38558,8 +43070,8 @@ draw2d.shape.icon.Paper = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38601,8 +43113,8 @@ draw2d.shape.icon.TakeOff = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38644,8 +43156,8 @@ draw2d.shape.icon.Landing = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38687,8 +43199,8 @@ draw2d.shape.icon.Plane = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38730,8 +43242,8 @@ draw2d.shape.icon.Phone = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38773,8 +43285,8 @@ draw2d.shape.icon.HangUp = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38816,8 +43328,8 @@ draw2d.shape.icon.SlideShare = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38859,8 +43371,8 @@ draw2d.shape.icon.Twitter = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38902,8 +43414,8 @@ draw2d.shape.icon.TwitterBird = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38945,8 +43457,8 @@ draw2d.shape.icon.Skype = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -38988,8 +43500,8 @@ draw2d.shape.icon.Windows = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39031,8 +43543,8 @@ draw2d.shape.icon.Apple = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39074,8 +43586,8 @@ draw2d.shape.icon.Linux = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39117,8 +43629,8 @@ draw2d.shape.icon.NodeJs = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39160,8 +43672,8 @@ draw2d.shape.icon.JQuery = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39203,8 +43715,8 @@ draw2d.shape.icon.Sencha = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39246,8 +43758,8 @@ draw2d.shape.icon.Vim = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39289,8 +43801,8 @@ draw2d.shape.icon.InkScape = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39332,8 +43844,8 @@ draw2d.shape.icon.Aumade = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39375,8 +43887,8 @@ draw2d.shape.icon.Firefox = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39418,8 +43930,8 @@ draw2d.shape.icon.Ie = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39461,8 +43973,8 @@ draw2d.shape.icon.Ie9 = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39504,8 +44016,8 @@ draw2d.shape.icon.Opera = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39547,8 +44059,8 @@ draw2d.shape.icon.Chrome = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39590,8 +44102,8 @@ draw2d.shape.icon.Safari = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39633,8 +44145,8 @@ draw2d.shape.icon.LinkedIn = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39676,8 +44188,8 @@ draw2d.shape.icon.Flickr = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39719,8 +44231,8 @@ draw2d.shape.icon.GitHub = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39762,8 +44274,8 @@ draw2d.shape.icon.GitHubAlt = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39805,8 +44317,8 @@ draw2d.shape.icon.Raphael = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39848,8 +44360,8 @@ draw2d.shape.icon.GRaphael = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39891,8 +44403,8 @@ draw2d.shape.icon.Svg = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39934,8 +44446,8 @@ draw2d.shape.icon.Usb = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -39977,8 +44489,8 @@ draw2d.shape.icon.Ethernet = draw2d.shape.icon.Icon.extend({
      * 
      * @param {Object} attr the configuration of the shape
      */
-    init: function(attr) {
-      this._super($.extend({width:50,height:50},attr));
+    init: function(attr, setter, getter ) {
+      this._super($.extend({width:50,height:50},attr), setter, getter);
     },
 
     /**
@@ -40026,7 +44538,7 @@ draw2d.shape.pert.Activity = draw2d.shape.layout.VerticalLayout.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function(attr)
+    init: function(attr, setter, getter )
     {
         // shortcut for some callback methods to avoid $.proxy wrapper
         var _this = this;
@@ -40043,7 +44555,7 @@ draw2d.shape.pert.Activity = draw2d.shape.layout.VerticalLayout.extend({
         this.darkerBgColor = this.bgColor.darker(0.2).hash();
        
 
-        this._super($.extend({bgColor:this.bgColor, stroke:2, radius:2, color: this.darkerBgColor},attr));
+        this._super($.extend({bgColor:this.bgColor, stroke:2, radius:2, color: this.darkerBgColor},attr), setter, getter);
                 
         // Compose the top row of the shape
         //
@@ -40283,7 +44795,7 @@ draw2d.shape.pert.Start = draw2d.shape.layout.VerticalLayout.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init : function(attr)
+    init: function(attr, setter, getter )
     {
         // shortcut for some callback methods to avoid $.proxy wrapper
         var _this = this;
@@ -40300,7 +44812,7 @@ draw2d.shape.pert.Start = draw2d.shape.layout.VerticalLayout.extend({
         this.darkerBgColor = this.bgColor.darker(0.2).hash();
        
 
-        this._super($.extend({bgColor:this.bgColor, stroke:2, radius:2, color: this.darkerBgColor},attr));
+        this._super($.extend({bgColor:this.bgColor, stroke:2, radius:2, color: this.darkerBgColor},attr), setter, getter);
                 
         // Compose the top row of the shape
         //
@@ -40491,7 +45003,7 @@ draw2d.shape.state.Start = draw2d.shape.basic.Circle.extend({
 
 	DEFAULT_COLOR : new draw2d.util.Color("#3369E8"),
 
-	init : function(attr)
+	init: function(attr, setter, getter )
     {
         this._super(attr);
         
@@ -40538,7 +45050,7 @@ draw2d.shape.state.End = draw2d.shape.basic.Circle.extend({
 
 	DEFAULT_COLOR : new draw2d.util.Color("#4D90FE"),
 
-	init : function(attr)
+	init: function(attr, setter, getter )
     {
         this.innerCircle = new draw2d.shape.basic.Circle(20);
 
@@ -40605,7 +45117,7 @@ draw2d.shape.state.State = draw2d.shape.layout.VerticalLayout.extend({
 
 	NAME: "draw2d.shape.state.State",
 	
-    init : function(attr)
+    init: function(attr, setter, getter )
     {
         this._super(attr);
 
@@ -40656,7 +45168,8 @@ draw2d.shape.state.State = draw2d.shape.layout.VerticalLayout.extend({
      setLabel: function (text)
      {
          this.label.setText(text);
-         
+         this.fireEvent("change:label");
+
          return this;
      },
      
@@ -40680,7 +45193,8 @@ draw2d.shape.state.State = draw2d.shape.layout.VerticalLayout.extend({
       * @returns {draw2d.shape.basic.Label}
       * @private
       */
-     createLabel: function(txt){
+     createLabel: function(txt)
+     {
     	 var label =new draw2d.shape.basic.Label(txt);
     	 label.setStroke(1);
     	 label.setColor(this.darkerBgColor);
@@ -40760,9 +45274,9 @@ draw2d.shape.state.Connection = draw2d.Connection.extend({
 
 	DEFAULT_COLOR : new draw2d.util.Color("#4D90FE"),
 
-	init : function(attr)
+	init: function(attr, setter, getter )
     {
-        this._super($.extend({router: null, stroke:2},attr));
+        this._super($.extend({router: null, stroke:2},attr), setter, getter);
 
         this.setTargetDecorator(new draw2d.decoration.connection.ArrowDecorator(17,8));
 
@@ -40786,7 +45300,8 @@ draw2d.shape.state.Connection = draw2d.Connection.extend({
         
         // hide the label if no text available
         this.label.setVisible(!(text===null || text ===""));
-        
+        this.fireEvent("change:label");
+
         return this;
     },
     
@@ -40822,7 +45337,6 @@ draw2d.shape.state.Connection = draw2d.Connection.extend({
         if(typeof memento.label !=="undefined"){
             this.setLabel(memento.label);
         }
-
     }
 
 });
@@ -41050,7 +45564,7 @@ draw2d.decoration.connection.Decorator = Class.extend({
 	/**
 	 * @constructor 
 	 */
-	init : function(width, height) {
+	init: function(width, height) {
 
         if(typeof width === "undefined" || width<1){
             this.width  = 20;
@@ -41190,7 +45704,7 @@ draw2d.decoration.connection.ArrowDecorator = draw2d.decoration.connection.Decor
 	 * @param {Number} [width] the width of the arrow
 	 * @param {Number} [height] the height of the arrow
 	 */
-    init : function(width, height)
+    init: function(width, height)
     {   
         this._super( width, height);
     },
@@ -41279,7 +45793,7 @@ draw2d.decoration.connection.DiamondDecorator = draw2d.decoration.connection.Dec
 	 * @param {Number} [width] the width of the arrow
 	 * @param {Number} [height] the height of the arrow
 	 */
-	init : function(width, height)
+	init: function(width, height)
 	{	
         this._super( width, height);
 	},
@@ -41363,7 +45877,7 @@ draw2d.decoration.connection.CircleDecorator = draw2d.decoration.connection.Deco
 	 * @param {Number} [width] the width of the arrow
 	 * @param {Number} [height] the height of the arrow
 	 */
-    init : function(width, height)
+    init: function(width, height)
     {   
         this._super( width, height);
     },
@@ -41442,7 +45956,7 @@ draw2d.decoration.connection.BarDecorator = draw2d.decoration.connection.Decorat
 	 * @param {Number} [width] the width of the bar
 	 * @param {Number} [height] the height of the bar
 	 */
-	init : function(width, height)
+	init: function(width, height)
 	{	
         this._super( width, height);
 	},
@@ -41709,14 +46223,34 @@ draw2d.io.png.Writer = draw2d.io.Writer.extend({
             throw "Writer.marshal method signature has been change from version 2.10.1 to version 3.0.0. Please consult the API documentation about this issue.";
         }
 
-        canvas.hideDecoration();
 
-        var svg = canvas.getHtmlContainer().html().replace(/>\s+/g, ">").replace(/\s+</g, "<");
-       
-        // add missing namespace for images in SVG
+        var svg = "";
+
+        // the png.Writer can create Snapshots of a singel figure too.
+        // Didn't work in IE <10
+        // @status beta
+        // @since 5.5.0
+        if(canvas instanceof draw2d.Figure){
+            var origPos = canvas.getPosition();
+            canvas.setPosition(1,1);
+            svg =   "<svg xmlns:xlink=\"http://www.w3.org/1999/xlink\" >"
+                  + canvas.shape.node.outerHTML
+                  + "</svg>";
+            canvas.setPosition(origPos);
+            canvas.initialWidth = canvas.getWidth()+2;
+            canvas.initialHeight= canvas.getHeight()+2;
+        }
+        // create a snapshot of a complete canvas
         //
-        svg = svg.replace("<svg ", "<svg xmlns:xlink=\"http://www.w3.org/1999/xlink\" ");
-       
+        else {
+            canvas.hideDecoration();
+            svg = canvas.getHtmlContainer().html().replace(/>\s+/g, ">").replace(/\s+</g, "<");
+
+            // add missing namespace for images in SVG
+            //
+            svg = svg.replace("<svg ", "<svg xmlns:xlink=\"http://www.w3.org/1999/xlink\" ");
+        }
+
         // required for IE9 support. 
         // The following table contains ready-to-use conditions to detec IE Browser versions
         //
@@ -41743,7 +46277,8 @@ draw2d.io.png.Writer = draw2d.io.Writer.extend({
             ignoreAnimation: true,
             renderCallback : function(){
                 try{
-                   canvas.showDecoration();
+                    if(canvas instanceof draw2d.Canvas)
+                        canvas.showDecoration();
     
                     if(typeof cropBoundingBox!=="undefined"){
                           var sourceX = cropBoundingBox.x;
@@ -42014,6 +46549,14 @@ draw2d.storage.FileStorage = Class.extend({
     init:function(){
     },
 
+    requiresLogin: function(){
+        return false;
+    },
+    
+    isLoggedIn: function(callback){
+        callback(false);
+    },
+    
     /**
      * @method
      * 
@@ -42023,7 +46566,7 @@ draw2d.storage.FileStorage = Class.extend({
      * 
      * @since 4.0.0
      */
-    pickFileAndLoad: function(filenameFilter, successCallback, errorCallback) {    
+    pickFileAndLoad: function(filenameFilter, successCallback, errorCallback, abortCallback) {    
     },
     
     
@@ -42058,8 +46601,7 @@ draw2d.storage.FileStorage = Class.extend({
      * @param {Function} errorCallback method to call if any error happens
      * @since 4.0.0
      */
-    saveFile: function(fileName, content, contentIsBase64, base64Thumbnail, successCallback, errorCallback) {
-       
+    saveFile: function(fileName, content, contentIsBase64, base64Thumbnail, successCallback, errorCallback) {    
     },
     
     /**
@@ -42756,7 +47298,7 @@ draw2d.storage.LocalFileStorage = draw2d.storage.FileStorage.extend({
  * <b>BETA: changes can happen without notice</b>
  * <br>
  * <br>
- * TideSDK?Äôs versatility allows you to couple your favorite web technologies, e.g. Draw2D,  with TideSDK?Äôs powerful API to build native cross-platform desktop apps.
+ * TideSDK?s versatility allows you to couple your favorite web technologies, e.g. Draw2D,  with TideSDK?s powerful API to build native cross-platform desktop apps.
  * <br>
  * This storage provider contains methods that help a TideSDK application manage files and read/write data to them. 
  * <br>

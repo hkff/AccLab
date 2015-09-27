@@ -816,7 +816,6 @@
                             
                             var name = svg.trim(style[0]);
                             var value = svg.trim(style[1]);
-                            console.log(name+":"+value);
                             this.styles[name] = new svg.Property(name, value);
                         }
                     }
@@ -2847,6 +2846,16 @@
                     draw();             
                     svg.Mouse.runEvents(); // run and clear our events
                 }
+
+                // FREEGROUP Patch
+                // canvg didn't stop the interval is we didn't need the animation. In this case
+                // the DOM tree isn't cleanup correct. Memory Leak
+                // Reported by Michael Norgate 16.04.2015
+                //
+                if (svg.opts['ignoreAnimation']===true || isFirstRender===false && waitingForImages===false) {
+                    svg.stop();
+                }
+
             }, 1000 / svg.FRAMERATE);
         }
         
