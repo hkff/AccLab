@@ -268,7 +268,7 @@ var visualEditor = {
     about: function () {
         var abt = "" +
             "<img src='assets/icon_128.png' class='logoAbout' alt='AccLab logo'>" +
-            "<div class='versionAbout'>AccLab Version 1.0.2</div>" +
+            "<div class='versionAbout'>AccLab Version 1.1</div>" +
             "<div class='aboutCore'>AccLab is a web based accountability framework designed in the context of A4CLOUD project. " +
             "The main goal is to observe ”accountability in action” by simulating a software system with several" +
             " agents exchanging data and requiring different privacy policy." +

@@ -60,7 +60,9 @@ draw2d.RequiredPort = draw2d.OutputPort.extend({
         //this.plabel.installEditor(new draw2d.ui.LabelInplaceEditor());
 
         //this.decoration = new MarkerFigure();
-        //this.add(this.decoration, new draw2d.layout.locator.RightLocator(/*{margin:8}*/));
+        //this.decoration.setDefaultValue(name);
+
+        //this.add(this.decoration, new draw2d.layout.locator.RightLocator({margin:8}));
     },
 
     /**
@@ -136,7 +138,8 @@ draw2d.ProvidedPort = draw2d.InputPort.extend({
       	//this.plabel.installEditor(new draw2d.ui.LabelInplaceEditor());
 
         //this.decoration = new MarkerFigure();
-        //this.add(this.decoration, new draw2d.layout.locator.LeftLocator(/*{margin:8}*/));
+        //this.decoration.setDefaultValue(name);
+        //this.add(this.decoration, new draw2d.layout.locator.LeftLocator({margin:8}));
     },
 
     /**
@@ -189,6 +192,6 @@ draw2d.PolicyPort = draw2d.HybridPort.extend({
         this.plabel = new draw2d.shape.basic.Label({text:name, color:"#0d0d0d", fontColor:"#0d0d0d", stroke:0});
         // add the new decoration to the connection with a position locator.
         this.add(this.plabel, this.plabelLocator);
-        this.plabel.installEditor(new draw2d.ui.LabelInplaceEditor());
+        //this.plabel.installEditor(new draw2d.ui.LabelInplaceEditor());
     }
 });

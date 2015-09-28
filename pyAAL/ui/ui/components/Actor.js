@@ -471,7 +471,7 @@ draw2d.shape.basic.Rectangle.extend({
 
         json += ']}';
 
-        json += ']}'
+        json += ']}';
         return json;
     },
 

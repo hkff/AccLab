@@ -221,7 +221,7 @@ visualEditor.ui.properties = {
 		    selectize: {
 		        init: function(container, options){
 		            var input = $('<input type="text" style="z-index:99999999;">').appendTo(container);
-		            console.log(input[0])
+		            //console.log(input[0])
 		             // Make it selectize
 					$(input).selectize({ 
 						plugins: ['remove_button','restore_on_backspace','drag_drop'],
@@ -393,7 +393,7 @@ visualEditor.ui.properties = {
 	control: function(_this) {
 		$('#pg').propertygrid({
 			onAfterEdit: function(rowIndex, rowData, changes){
-				console.log(rowIndex)
+				//console.log(rowIndex)
 			}
 		});
 		
