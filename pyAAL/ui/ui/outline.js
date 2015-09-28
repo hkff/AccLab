@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 //
-//  AccLab UI BETA V 1.0 : outline.js
+//  AccLab UI : outline.js
 //
 // Copyright (C) 2014 Walid Benghabrit
 //

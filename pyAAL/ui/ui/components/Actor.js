@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 //
-//  AccLab UI BETA V 1.0 : Actor.js
+//  AccLab UI : Actor.js
 //
 // Copyright (C) 2014 Walid Benghabrit
 //

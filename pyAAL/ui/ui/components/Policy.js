@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 //
-//  AccLab UI BETA V 1.0 : Policy.js
+//  AccLab UI : Policy.js
 //
 // Copyright (C) 2014 Walid Benghabrit
 //

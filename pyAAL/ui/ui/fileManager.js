@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 //
-//  AccLab UI BETA V 1.0 : fileManager.js
+//  AccLab UI : fileManager.js
 //
 // Copyright (C) 2014 Walid Benghabrit
 //

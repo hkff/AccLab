@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 //
-//  AccLab UI BETA V 1.0 : Ports2.js
+//  AccLab UI : Ports2.js
 //
 // Copyright (C) 2014 Walid Benghabrit
 //

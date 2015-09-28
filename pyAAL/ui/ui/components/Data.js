@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 //
-//  AccLab UI BETA V 1.0 : Data.js
+//  AccLab UI : Data.js
 //
 // Copyright (C) 2014 Walid Benghabrit
 //

@@ -65,8 +65,8 @@ CLAUSE alice_pref (
 
 
 // Call validate macro to perform the compliance check
-//CALL conflict("css_policy" )
-CALL ecompliance("css_policy" "alice_pref")
+CALL econflict("css_policy" )
+//CALL ecompliance("css_policy" "alice_pref")
 //CALL sat_ue("css_policy")
 //CALL validate_usage("css_policy" "alice_pref")
 

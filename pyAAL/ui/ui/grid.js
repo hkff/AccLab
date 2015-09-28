@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 //
-//  AccLab UI BETA V 1.0 : grid.js
+//  AccLab UI : grid.js
 //
 // Copyright (C) 2014 Walid Benghabrit
 //

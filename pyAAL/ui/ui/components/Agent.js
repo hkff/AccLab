@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 //
-//  AccLab UI BETA V 1.0 : Agent.js
+//  AccLab UI : Agent.js
 //
 // Copyright (C) 2014 Walid Benghabrit
 //

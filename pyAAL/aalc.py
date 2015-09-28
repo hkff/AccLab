@@ -1,6 +1,6 @@
 #!/usr/bin/python3.4
 """
-aalc version 1.0 main AccLab program
+aalc version 1.1 main AccLab program
 Copyright (C) 2014 Walid Benghabrit
 
 This program is free software: you can redistribute it and/or modify
@@ -301,8 +301,7 @@ def main(argv):
     global ACCLAB_PATH
     inputfile = ""
     outputfile = ""
-    helpStr = "Usage : aalc.py [-c] [-i <inputfile>] [-s]"
-    help_str_extended = "AAL tools set. aalc is a part of Acclab tool.\n" + \
+    help_str_extended = "AAL tools set V 1.1 . aalc is a part of Acclab tool.\n" + \
                         "For more information see AccLab home page\n Usage : aalc.py [OPTIONS]" + \
                         "\n  -h \t--help          " + "\t display this help and exit" + \
                         "\n  -i \t--input= [file] " + "\t the input file" + \
@@ -356,7 +355,7 @@ def main(argv):
                                     "shell", "load", "fotl", "recompile", "init", "no-colors", "compile-stdlib",
                                     "hotswap", "ast", "synth", "reparse", "gui=", "no-browser", "timeout="])
     except getopt.GetoptError:
-        print(helpStr)
+        print(help_str_extended)
         sys.exit(2)
 
     if len(opts) == 0:
