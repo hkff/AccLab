@@ -49,20 +49,6 @@ actor = Class.extend({
 
 
 draw2d.shape.basic.Label2 = draw2d.shape.basic.Label.extend({
-
-    onMouseDown: function() {
-        visualEditor.ui.selectedNode = this.parent;
-        $(visualEditor.ui).trigger('nodeSelected');
-    },
-
-    onMouseEnter: function() {
-        //visualEditor.ui.selectedNode = this.parent;
-    },
-
-    onClick: function() {
-        visualEditor.ui.selectedNode = this.parent;
-        $(visualEditor.ui).trigger('nodeSelected');
-    }
 });
 
 //////////////////////////////////////////////////////////
@@ -177,13 +163,10 @@ draw2d.shape.basic.Rectangle.extend({
         }
     },
 
-    onMouseEnter: function() {
-    	//visualEditor.ui.selectedNode = this;
+    onMouseEnter: function(e) {
     },
 
-    onClick: function() {
-        visualEditor.ui.selectedNode = this;
-        $(visualEditor.ui).trigger('nodeSelected');
+    onClick: function(e) {
     },
 
     onMouseLeave: function (e) {
@@ -191,13 +174,9 @@ draw2d.shape.basic.Rectangle.extend({
 
     onDrop: function(x, y, shiftKey, ctrlKey) {
         this._super(x, y, shiftKey, ctrlKey);
-        visualEditor.ui.selectedNode = this;
-        $(visualEditor.ui).trigger('nodeSelected');
     },
 
     onDragEnter: function(draggedFigure) {
-        visualEditor.ui.selectedNode = this;
-        $(visualEditor.ui).trigger('nodeSelected');
          // redirect the dragEnter handling to the hybrid port
          if(draggedFigure.NAME == "draw2d.PolicyPort")
   		 	return this.getHybridPort(0).onDragEnter(draggedFigure);

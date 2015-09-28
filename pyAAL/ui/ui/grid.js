@@ -73,13 +73,18 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 		};
 
 		this.on("select", function(emitter,figure){
-	    	if(figure!==null){
-	        	//visualEditor.ui.selectedNode = figure;
-	        	//$(visualEditor.ui).trigger('nodeSelected');
-	        	//console.log("changed ")
-	     	}
+	    	if(figure!==null) {
+                // Update panel prop
+	        	visualEditor.ui.selectedNode = figure;
+	        	$(visualEditor.ui).trigger('nodeSelected');
+
+                $(visualEditor.ui.propertiesPanel.children()).css("opacity", 1);
+                visualEditor.ui.propertiesPanel[0].removeEventListener("click", visualEditor.ui.stoper, true);
+            }
 	     	else{
-				// ??
+                // Hide panel prop
+				$(visualEditor.ui.propertiesPanel.children()).css("opacity", 0.15);
+                visualEditor.ui.propertiesPanel[0].addEventListener("click", visualEditor.ui.stoper, true);
      		}
      	});
 	},
@@ -102,13 +107,13 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 
 var MyConnection= draw2d.Connection.extend({
     init:function(attr) {
-	this._super(attr);
-	this.setRouter(new draw2d.layout.connection.InteractiveManhattanConnectionRouter());
-	this.setOutlineStroke(0);
-	this.setOutlineColor("#303030");
-	this.setStroke(3);
-	this.setColor('#00A8F0');
-	this.setRadius(0);
+        this._super(attr);
+        this.setRouter(new draw2d.layout.connection.InteractiveManhattanConnectionRouter());
+        this.setOutlineStroke(0);
+        this.setOutlineColor("#303030");
+        this.setStroke(3);
+        this.setColor('#00A8F0');
+        this.setRadius(0);
     }
 });
 

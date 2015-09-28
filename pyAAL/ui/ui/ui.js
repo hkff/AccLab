@@ -85,7 +85,7 @@ visualEditor.ui = {
 
 	nodeSelected: function() {
 		visualEditor.ui.properties.updateProps();
-		visualEditor.ui.outline.select(visualEditor.ui.selectedNode.id);
+		//visualEditor.ui.outline.select(visualEditor.ui.selectedNode.id);
 	},
 
 	nodeUpdated: function() {
@@ -161,8 +161,8 @@ visualEditor.ui = {
 	 * @param node
 	 */
 	enableNode: function(node) {
-		node.children().fadeTo('slow', 1.0);
-		node[0].removeEventListener("click", this.stoper, true);
+        node.children().fadeTo('slow', 1.0);
+        node[0].removeEventListener("click", this.stoper, true);
 	},
 
 	/**
@@ -170,8 +170,8 @@ visualEditor.ui = {
 	 * @param node
 	 */
 	disableNode: function(node) {
-		node.children().fadeTo('slow', .15);
-		node[0].addEventListener("click", this.stoper, true);
+        node.children().fadeTo('slow', .15);
+        node[0].addEventListener("click", this.stoper, true);
 	},
 
 	/**

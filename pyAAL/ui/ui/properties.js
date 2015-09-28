@@ -403,7 +403,6 @@ visualEditor.ui.properties = {
         $('#properties_window').mouseover(function(){$('#pg').datagrid('resize');})
 								.mouseout(function(){$('#pg').datagrid('resize');});
 
-
 		/*
 		this.labelSizePropel.bind('input', function() { 
 			visualEditor.ui.selectedNode.tlabel.setFontSize($(this).val());
@@ -559,6 +558,10 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 
 		this.clearAALBtn = $('<div title="Clear" id="clearAALBtn" class="btn-action fa fa-file-o fa-lg"/>');
 		$("#inPlaceAALEditor-tools").append(this.clearAALBtn);
+
+		 // Hide panel prop
+		$(visualEditor.ui.propertiesPanel.children()).css("opacity", 0.15);
+		visualEditor.ui.propertiesPanel[0].addEventListener("click", visualEditor.ui.stoper, true);
 	},
 
 	/**
