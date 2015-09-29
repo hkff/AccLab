@@ -278,6 +278,8 @@ visualEditor.ui.fileManager = {
                         });
 
                         visualEditor.activeEditor = inPlaceAALEditor;
+                        visualEditor.ui.openedEditors[visualEditor.ui.activeTab.panel.title] = inPlaceAALEditor;
+
                         visualEditor.activeEditor.session.getUndoManager().markClean();
                          $(".tab-handle-text")[0].innerHTML += " *";
 

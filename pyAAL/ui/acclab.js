@@ -554,6 +554,7 @@ window.onload = function() {
     dockspawn.TabHost.prototype.onTabChanged = function (page) {
         visualEditor.ui.canvas = page.activeTab.container.canvas;
         visualEditor.ui.activeTab = page.activeTab;
+        visualEditor.activeEditor = visualEditor.ui.openedEditors[page.activeTab.panel.title];
         visualEditor.ui.updatePanel();
     };
 

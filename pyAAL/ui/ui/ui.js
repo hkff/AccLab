@@ -33,6 +33,7 @@ visualEditor.ui = {
     currentAAL       : null,
     interval         : null,
 	psUpdateInterval : 10000,
+	openedEditors    : {},
 
 	/**
 	 * init function
