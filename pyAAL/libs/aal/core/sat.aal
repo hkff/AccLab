@@ -1,12 +1,23 @@
-
 /*
  * Checking satisfiability
  */
+MACRO sat_toast(c1 scs) (
+"""
+### Web view ###
+if self.web:
+    msg = ("<h3>The clause %s is %s consistent</h3>" % (c1, ("" if scs else " not")))
+    web_toast(msg, scs)
+"""
+)
+
 MACRO sat(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, _c1.to_ltl(), check=True)["res"])
+    res = validate2(self, _c1.to_ltl(), check=True)
+    print(res["res"])
+    if self.web:
+        self.call("sat_toast", ["'" + c1 +"'", (res["ok"] == 'true')])
 """
 )
 
@@ -14,7 +25,10 @@ MACRO vsat(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, _c1.to_ltl(), check=True, verbose=True)["res"])
+    res = validate2(self, _c1.to_ltl(), check=True, verbose=True)
+    print(res["res"])
+    if self.web:
+        self.call("sat_toast", ["'" + c1 +"'", (res["ok"] == 'true')])
 """
 )
 
@@ -22,7 +36,10 @@ MACRO sat_ue(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True)["res"])
+    res = validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True)
+    print(res["res"])
+    if self.web:
+        self.call("sat_toast", ["'" + c1 +"'", (res["ok"] == 'true')])
 """
 )
 
@@ -30,7 +47,10 @@ MACRO vsat_ue(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True, verbose=True)["res"])
+    res = validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True, verbose=True)
+    print(res["res"])
+    if self.web:
+        self.call("sat_toast", ["'" + c1 +"'", (res["ok"] == 'true')])
 """
 )
 
@@ -38,7 +58,8 @@ MACRO sat_ae(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, "(always (" + _c1.audit.to_ltl() + "))", check=True)["res"])
+    res = validate2(self, "(always (" + _c1.audit.to_ltl() + "))", check=True)
+    print(res["res"])
 """
 )
 
@@ -46,7 +67,8 @@ MACRO vsat_ae(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, "(always (" + _c1.audit.to_ltl() + "))", check=True, verbose=True)["res"])
+    res = validate2(self, "(always (" + _c1.audit.to_ltl() + "))", check=True, verbose=True)
+    print(res["res"])
 """
 )
 
@@ -55,7 +77,8 @@ MACRO sat_re(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, "(always (" + _c1.rectification.to_ltl() + "))", check=True)["res"])
+    res = validate2(self, "(always (" + _c1.rectification.to_ltl() + "))", check=True)
+    print(res["res"])
 """
 )
 
@@ -63,6 +86,7 @@ MACRO vsat_re(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    print(validate2(self, "(always (" + _c1.rectification.to_ltl() + "))", check=True, verbose=True)["res"])
+    res = validate2(self, "(always (" + _c1.rectification.to_ltl() + "))", check=True, verbose=True)
+    print(res["res"])
 """
 )

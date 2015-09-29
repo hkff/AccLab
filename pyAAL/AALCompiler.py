@@ -79,11 +79,12 @@ class AALCompilerListener(AALListener.AALListener):
         - root_path = root_path
         - errors_listener = errors_listener
         - no_exec
+        - web
     """
     # Initializer
     def __init__(self, loadlibs: bool=True, serialize: bool=False, file: str="",
                  libs_path="libs/aal/", root_path=None, recompile=False,
-                 hotswaping=False, errors_listener=None, tspass_timeout=20, no_exec=False):
+                 hotswaping=False, errors_listener=None, tspass_timeout=20, no_exec=False, web=False):
         self.loadlibs = loadlibs
         self.serialize = serialize
         self.aalmm = aalmm()
@@ -116,6 +117,7 @@ class AALCompilerListener(AALListener.AALListener):
         self.errors_listener = errors_listener
         self.tspass_timeout = tspass_timeout
         self.no_exec = no_exec
+        self.web = web
 
         # FIXME
         if hotswaping:

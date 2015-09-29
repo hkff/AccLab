@@ -158,7 +158,7 @@ def api_compile_aal(f):
 
     res = ""
     try:
-        aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="")
+        aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="", web=True)
     except:
         res = "Compilation Error"
 
@@ -203,7 +203,7 @@ def api_compile_tspass(f):
 # Get AAL declaration in JSON format
 def api_get_aal_dec(f):
     try:
-        mm = aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="", no_exec=True)["mm"]
+        mm = aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="", no_exec=True, web=True)["mm"]
     except:
         # Compilation Error
         return '{"agents" : [], "services" : [], "types" : [], "data" : [], "clauses" : [], "dataTypes" : [], "actorTypes" : []}'

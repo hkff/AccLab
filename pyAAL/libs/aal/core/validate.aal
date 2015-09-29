@@ -10,15 +10,11 @@ if _c1 is not None and _c2 is not None:
     res = validate(self, _c1, _c2, resolve=resolve, verbose=verbose, use_always=use_always, acc_formula=acc_formula, chk=chk)
 
     ### Web view ###
-    ## NOTE : not a place for this
-    ###
-    opts = "'closeButton': true, 'preventDuplicates': true, 'tapToDismiss': true, 'timeOut': 5000 "
-    if res["ok"] == "true":
-        web = "<script> toastr.success('Check passed !', 'Result', {" + opts + " }); </script>"
-    else:
-        web = "<script> toastr.error('Check failed !', 'Result', {" + opts + " }); </script>"
-    print(web)
-
+    if self.web:
+        msg = ("<h3>The offered clause %s is compliant%s with the desired clause %s</h2>"
+                % (c1, ("" if res["ok"] == "true" else " not"), c2))
+        scs = True if res["ok"] == "true" else False
+        web_toast(msg, scs)
 """
 )
 

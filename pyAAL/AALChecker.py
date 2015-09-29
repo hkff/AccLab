@@ -441,7 +441,7 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
     :return:
     """
     res = ""
-    fres = {"res": "", "sat": "", "neg": "", "monodic": "", "psat": "", "pneg": ""}
+    fres = {"res": "", "sat": "", "neg": "", "monodic": "", "psat": "", "pneg": "", "ok": ""}
 
     # Monodic test
     res += "------------------------- Monodic check -------------------------\n"
@@ -465,9 +465,11 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
         v = False
         res += "{autored}  -> " + res2["res"] + "{/red}\n"
         fres["psat"] = "{autored}  -> " + res2["res"] + "{/red}"
+        fres["ok"] = "false"
     else:
         res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
         fres["psat"] = "{autogreen}  -> " + res2["res"] + "{/green}"
+        fres["ok"] = "true"
 
     if res2["res"] == "":
         res += res2["print"] + "\n"
@@ -482,9 +484,11 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
         if res2["res"] == "Unsatisfiable":
             res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
             fres["pneg"] = "{autogreen}  -> " + res2["res"] + "{/green}"
+            fres["ok"] = "true"
         else:
             res += "{autored}  -> " + res2["res"] + "{/red}\n"
             fres["pneg"] = "{autored}  -> " + res2["res"] + "{/red}"
+            fres["ok"] = "false"
 
         if res2["res"] == "":
             res += res2["print"] + "\n"
@@ -788,3 +792,11 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1):
         after_resolving = chk()
         print(Color("\n====== After Resolving : " + after_resolving["psat"] + "\n"))
 
+
+# Web toast printer
+def web_toast(msg, success):
+    opts = "'closeButton': true, 'preventDuplicates': true, 'tapToDismiss': false, 'timeOut': 10000 "
+    scs = "success" if success else "error"
+    size = "visualEditor.ui.updateToastSize('%s', {'width': 410, 'height': 100}, false);" % (scs)
+    web = "<script> toastr.%s('%s', 'Result', {%s}); %s </script>" % (scs, msg, opts, size)
+    print(web)
