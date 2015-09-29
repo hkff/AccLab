@@ -152,7 +152,7 @@ class aalmmnode():
         """ return a list that contains node's children """
         return []
 
-    def walk(self, filters: str=None, filter_type: type=None, pprint=False):
+    def walk(self, filters: str=None, filter_type: type=None, pprint=False, depth=-1):
         """
         Iterate tree in pre-order wide-first search order
 
@@ -164,9 +164,15 @@ class aalmmnode():
         if children is None:
             children = []
         res = []
+
+        if depth == 0:
+            return res
+        elif depth != -1:
+            depth -= 1
+
         for child in children:
             if isinstance(child, aalmmnode) or isinstance(child, sEnum):
-                tmp = child.walk(filters=filters, filter_type=filter_type, pprint=pprint)
+                tmp = child.walk(filters=filters, filter_type=filter_type, pprint=pprint, depth=depth)
                 if tmp:
                     res.extend(tmp)
 
@@ -859,16 +865,16 @@ class m_aexp(aalmmnode):
     def __init__(self):
         super().__init__()
 
-    def get_line(self):
-        """ Get line number in the source code (of the first child) """
-        try:
-            children = self.children()
-            if len(children) > 0:
-                return str(children[0].get_line())
-            else:
-                return str(self.name.parentCtx.getPayload().start.line)
-        except:
-            return " "
+    # def get_line(self):
+    #     """ Get line number in the source code (of the first child) """
+    #     try:
+    #         children = self.children()
+    #         if len(children) > 0:
+    #             return str(children[0].get_line())
+    #         else:
+    #             return str(self.name.parentCtx.getPayload().start.line)
+    #     except:
+    #         return " "
 
 
 # ActionExpr Action
@@ -1582,7 +1588,7 @@ class sEnum(Enum):
             return None
 
     # noinspection PyMethodMayBeStatic
-    def walk(self, filters: str=None, filter_type: type=None, pprint=False):
+    def walk(self, filters: str=None, filter_type: type=None, pprint=False, depth=-1):
         #print("child [" + str(self.__class__) + "] : " + str(self))
         return []
 

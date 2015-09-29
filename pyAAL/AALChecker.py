@@ -24,6 +24,15 @@ from tools.color import *
 from AALtoFOTL import *
 
 
+# Web toast printer
+def web_toast(msg, success):
+    opts = "'closeButton': true, 'preventDuplicates': true, 'tapToDismiss': false, 'timeOut': 10000 "
+    scs = "success" if success else "error"
+    size = "visualEditor.ui.updateToastSize('%s', {'width': 410, 'height': 100}, false);" % scs
+    web = "<script> toastr.%s('%s', 'Result', {%s}); %s </script>" % (scs, msg, opts, size)
+    print(web)
+
+
 # Check unused dec
 def check_unused_dec(mm) -> str:
     """
@@ -589,7 +598,7 @@ def solve_triggers(compiler, p=None, u=None, verbose=False, resolve=False):
 
 
 # Conflict detection
-def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1):
+def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1, depth=-1):
     """
     Detect conflicts in a clause / between two clauses using masking
     :param compiler:
@@ -723,27 +732,36 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1):
         else:
             masking(e)
 
-    print("============================= Starting conflict detection ===========================")
+    print("============================= Starting %s detection ==========================="
+          % ("conflict" if c2 is None else "compliance"))
+
+    verbose2 = False
+    ##
+    # Check if there is a conflict
+    ##
+    if chk()["ok"] == 'true':
+        print(Color("{autogreen}No problems detected !{/green}\n" + "="*78 + "\n\n"))
+        return
+
     # Enable masking
     enable_masking()
-    verbose2 = False
     res = []
     cmbs = []
 
     # Getting all comb in c1
     if c1 is not None:
-        cmbs = c1.usage.walk(filter_type=m_aexpComb)
+        cmbs = c1.usage.walk(filter_type=m_aexpComb, depth=depth)
         if len(cmbs) == 0:  # if there are no comb try with ifThenExp
-            cmbs = c1.usage.walk(filter_type=m_aexpIfthen)
+            cmbs = c1.usage.walk(filter_type=m_aexpIfthen, depth=depth)
 
         for x in cmbs:
             handle(x, cmbs)
 
     # Getting all comb in c2
     if c2 is not None:
-        cmbs2 = c2.usage.walk(filter_type=m_aexpComb)
+        cmbs2 = c2.usage.walk(filter_type=m_aexpComb, depth=depth)
         if len(cmbs2) == 0:  # if there are no comb try with ifThenExp
-            cmbs2 = c2.usage.walk(filter_type=m_aexpIfthen)
+            cmbs2 = c2.usage.walk(filter_type=m_aexpIfthen, depth=depth)
 
         if algo == 1:
             cmbs3 = cmbs + cmbs2
@@ -752,8 +770,6 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1):
         else:
             for x in cmbs2:
                 handle(x, cmbs2)
-
-    print("\n\n=============================================================================\n\n")
 
     ##
     # Minimizing unsat set
@@ -774,7 +790,8 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1):
             if isinstance(x, tuple) else str(x)
         print(Color(" * E {automagenta}at line %s{/magenta} : %s" % (line, tmp)))
 
-    print("\n------------------------- conflict detection End -------------------------\n")
+    print("\n\n============================== %s detection End  ==============================\n\n"
+          % ("Conflict" if c2 is None else "Compliance"))
 
     ##
     # Resolving
@@ -791,12 +808,3 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1):
 
         after_resolving = chk()
         print(Color("\n====== After Resolving : " + after_resolving["psat"] + "\n"))
-
-
-# Web toast printer
-def web_toast(msg, success):
-    opts = "'closeButton': true, 'preventDuplicates': true, 'tapToDismiss': false, 'timeOut': 10000 "
-    scs = "success" if success else "error"
-    size = "visualEditor.ui.updateToastSize('%s', {'width': 410, 'height': 100}, false);" % (scs)
-    web = "<script> toastr.%s('%s', 'Result', {%s}); %s </script>" % (scs, msg, opts, size)
-    print(web)

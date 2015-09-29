@@ -36,6 +36,21 @@ if _c1 is not None:
 """
 )
 
+MACRO conflict(c1 depth) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    conflict(self, _c1, algo=0, depth=int(depth))
+"""
+)
+
+MACRO vconflict(c1 depth) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    conflict(self, _c1, verbose=True, algo=0, depth=int(depth))
+"""
+)
 
 MACRO compliance(c1 c2) (
 """
@@ -55,6 +70,23 @@ if _c1 is not None and _c2 is not None:
 """
 )
 
+MACRO compliance(c1 c2 depth) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+if _c1 is not None and _c2 is not None:
+    conflict(self, _c1, c2=_c2, algo=0, depth=int(depth))
+"""
+)
+
+MACRO vcompliance(c1 c2 depth) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+if _c1 is not None and _c2 is not None:
+    conflict(self, _c1, c2=_c2, verbose=True, algo=0, depth=int(depth))
+"""
+)
 
 /******************************************************************
  ******************************************************************
@@ -111,5 +143,23 @@ _c1 = self.clause(c1)
 _c2 = self.clause(c2)
 if _c1 is not None and _c2 is not None:
     conflict(self, _c1, c2=_c2, verbose=True, algo=1)
+"""
+)
+
+MACRO ecompliance(c1 c2 depth) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+if _c1 is not None and _c2 is not None:
+    conflict(self, _c1, c2=_c2, algo=1, depth=int(depth))
+"""
+)
+
+MACRO vecompliance(c1 c2 depth) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+if _c1 is not None and _c2 is not None:
+    conflict(self, _c1, c2=_c2, verbose=True, algo=1, depth=int(depth))
 """
 )
