@@ -1,0 +1,52 @@
+{
+    "name": "Checking Compliance ",
+	"desc": "Checks if two clauses are compliant. is c1 compliant with c2 ?",
+	"vars": [
+      {"name": "", "id": "c1", "type": "select", "pre": " Clause 1 ", "post": " ", "src": "{aal.clauses}"},
+      {"name": "", "id": "c2", "type": "select", "pre": " Clause 2 ", "post": "", "src": "{aal.clauses}"},
+      {"name": "", "id": "verbose", "type": "checkbox", "pre": " Verbose ", "post": ""}
+    ],
+	"aal": [
+      "\nCALL {{({verbose}.checked)?'v':''}}wvalidate_usage(\"{c1}.val\" \"{c2}.val\")"
+    ],
+	"html": [
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Clauses :</h4>  {c1} {c2}</div> ",
+      "</br><div style='text-align: center;'> ",
+      "<button ",
+      "onclick='",
+      "visualEditor.activeEditor.gotoPageDown();",
+      "if(visualEditor.activeEditor.session.getLine(visualEditor.activeEditor.session.getLength()-1).startsWith(\"CALL wvalidate\") )",
+        "visualEditor.activeEditor.removeLines(0);",
+      "visualEditor.activeEditor.insert(visualEditor.ui.Template.genAAL(visualEditor.ui.Template.current));",
+      "",
+      "var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);",
+      "var file = visualEditor.ui.activeTab.container.title;",
+      "visualEditor.ui.fileManager.saveFile(file, editor.getValue(), function(){",
+        "var file = visualEditor.ui.activeTab.container.title;",
+            "$.ajax({",
+              "dataType: \"text\",",
+              "type: \"POST\",",
+              "url: visualEditor.backend,",
+              "data: {action: \"compileAAL\", file: file},",
+              "success: function(response){",
+                "$(\"#output_window\").empty().append(response).scrollTop(0);",
+                "$(\".aceLine\").click(function(e) {",
+                    "var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);",
+                    "if (editor != undefined && editor != null)",
+                        "editor.gotoLine(parseInt(e.target.innerHTML.replace(\"at line \", \"\")));",
+                "});",
+                "// Add inline result\n",
+                "if($(\"#output_window h3\").html().indexOf(\"not\") == -1) {",
+                  "$(\"#result\").empty().append(\"<h3 style=\\\"color:green;\\\">\" + $(\"#output_window h3\").html() + \"</h3>\" );",
+                "}else {",
+                  "$(\"#result\").empty().append(\"<h3 style=\\\"color:red;\\\">\" + $(\"#output_window h3\").html() + \"</h3>\" );",
+                "}",
+              "}",
+            "});",
+        "});",
+      "'",
+      "style='height: 25px;' class='fa fa-magic'>Check</button></div>",
+      "<div id='result'></div>"
+    ],
+	"xacml": ""
+}

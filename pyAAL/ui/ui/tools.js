@@ -931,6 +931,7 @@ visualEditor.ui.Template = {
     /**
      * Returns the generated html for the given var
      * @param varObj
+	 * @param counter
      */
     renderVar: function(varObj, counter) {
         // Generating options for select

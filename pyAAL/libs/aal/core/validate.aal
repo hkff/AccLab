@@ -11,7 +11,7 @@ if _c1 is not None and _c2 is not None:
 
     ### Web view ###
     if self.web:
-        msg = ("<h3>The offered clause %s is compliant%s with the desired clause %s</h2>"
+        msg = ("<h3>The offered clause %s is%s compliant with the desired clause %s</h2>"
                 % (c1, ("" if res["ok"] == "true" else " not"), c2))
         scs = True if res["ok"] == "true" else False
         web_toast(msg, scs)
@@ -114,6 +114,20 @@ self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 0, "
 """
 )
 
+/** Web version */
+MACRO wvalidate_usage(c1 c2) (
+"""
+_c1 = self.clause(c1)
+_c2 = self.clause(c2)
+if _c1 is not None and _c2 is not None:
+    res = validate(self, _c1, _c2, resolve=False, verbose=False, use_always=False, acc_formula=0, chk='all')
+
+    ### Web view ###
+    if self.web:
+        print("<br><h3>The offered clause %s is%s compliant with the desired clause %s</h2>"
+                % (c1, ("" if res["ok"] == "true" else " not"), c2))
+"""
+)
 
 /** Checking C1 & C2 : using only usage (formula 0)  */
 MACRO validate_usage_and(c1 c2) (
