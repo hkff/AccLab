@@ -54,6 +54,18 @@ if _c1 is not None:
 """
 )
 
+MACRO wsat_ue(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    res = validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True)
+    ### Web view ###
+    if self.web:
+        print("<br><h3>The clause %s is%s satisfiable</h2>"
+                % (c1, ("" if res["ok"] == "true" else " not")))
+"""
+)
+
 MACRO sat_ae(c1) (
 """
 _c1 = self.clause(c1)
