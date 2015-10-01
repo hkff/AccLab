@@ -291,6 +291,8 @@ class AALCompilerListener(AALListener.AALListener):
     # Enter Usage
     def enterUsage(self, ctx):
         self.currentUsage = m_usage()  # Set the current usage
+        # Add line number
+        self.currentUsage.line = ctx.parentCtx.getPayload().start.line
 
     # Exit Usage
     def exitUsage(self, ctx):
@@ -313,6 +315,8 @@ class AALCompilerListener(AALListener.AALListener):
     def enterAudit(self, ctx):
         self.isAudit = True
         self.currentAudit = m_audit()
+        # Add line number
+        self.currentAudit.line = ctx.parentCtx.getPayload().start.line
 
     # Exit Audit
     def exitAudit(self, ctx):
@@ -326,6 +330,8 @@ class AALCompilerListener(AALListener.AALListener):
     def enterRectification(self, ctx):
         self.isRectification = True
         self.currentRectification = m_rectification()
+        # Add line number
+        self.currentRectification.line = ctx.parentCtx.getPayload().start.line
 
     # Exit Rectification
     def exitRectification(self, ctx):
@@ -739,6 +745,8 @@ class AALCompilerListener(AALListener.AALListener):
     def exitActionExp(self, ctx):
         if ctx.booleanOp() is not None:  # Handle booleanOp
             aex = m_aexpComb()
+            # Add line number
+            aex.line = ctx.parentCtx.getPayload().start.line
             aex.operator = m_booleanOp.fromStr(ctx.booleanOp().children[0])
             aex.actionExp2 = self.actionExpStack.pop()
             aex.actionExp1 = self.actionExpStack.pop()
@@ -792,6 +800,8 @@ class AALCompilerListener(AALListener.AALListener):
     # ActionExp4condition
     def enterActionExp4condition(self, ctx):
         aex = m_aexpCondition()
+        # Add line number
+        aex.line = ctx.parentCtx.getPayload().start.line
         self.actionExpStack.append(aex)
 
     def exitActionExp4condition(self, ctx):
@@ -800,6 +810,8 @@ class AALCompilerListener(AALListener.AALListener):
     # ActionExp6Author
     def enterActionExp6Author(self, ctx):
         aex = m_aexpAuthor()
+        # Add line number
+        aex.line = ctx.parentCtx.getPayload().start.line
         self.actionExpStack.append(aex)
 
     def exitActionExp6Author(self, ctx):
@@ -815,6 +827,8 @@ class AALCompilerListener(AALListener.AALListener):
     # ActionExp7ifthen
     def enterActionExp7ifthen(self, ctx):
         aex = m_aexpIfthen()
+        # Add line number
+        aex.line = ctx.parentCtx.getPayload().start.line
         self.actionExpStack.append(aex)
 
     def exitActionExp7ifthen(self, ctx):
@@ -827,6 +841,8 @@ class AALCompilerListener(AALListener.AALListener):
     # ActionExp8Qvar
     def enterActionExp8qvar(self, ctx):
         aex = m_aexpQvar()
+        # Add line number
+        aex.line = ctx.parentCtx.getPayload().start.line
         self.actionExpStack.append(aex)
 
     def exitActionExp8qvar(self, ctx):
@@ -894,6 +910,8 @@ class AALCompilerListener(AALListener.AALListener):
     # ConditionNotExp
     def enterCondition1notExp(self, ctx):
         cond = m_conditionNotComb()
+        # Add line number
+        cond.line = ctx.parentCtx.getPayload().start.line
         self.condStack.append(cond)
 
     def exitCondition1notExp(self, ctx):
@@ -903,6 +921,8 @@ class AALCompilerListener(AALListener.AALListener):
     # ConditionCmp
     def enterCondition2cmpExp(self, ctx):
         cond = m_conditionCmp()
+        # Add line number
+        cond.line = ctx.parentCtx.getPayload().start.line
         self.condStack.append(cond)
 
     def exitCondition2cmpExp(self, ctx):
@@ -918,6 +938,8 @@ class AALCompilerListener(AALListener.AALListener):
         # We handle to third case here
         if len(ctx.condition()) > 0:
             cond = m_conditionComb()
+            # Add line number
+            cond.line = ctx.parentCtx.getPayload().start.line
             cond.cond2 = self.condStack.pop()  # Set the second param
             cond.cond1 = self.condStack.pop()  # Set the first param
             if ctx.O_and() is not None:

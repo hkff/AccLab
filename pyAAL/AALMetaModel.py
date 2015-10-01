@@ -141,6 +141,7 @@ class aalmmnode():
         self.name = name
         self.parent = None
         self.masked = False
+        self.line = "0"
 
     def mask(self):
         self.masked = True
@@ -255,7 +256,10 @@ class aalmmnode():
     def get_line(self):
         """ Get line number in the source code """
         try:
-            return str(self.name.parentCtx.getPayload().start.line)
+            if self.line != "0":
+                return self.line
+            else:
+                return str(self.name.parentCtx.getPayload().start.line)
         except:
             return "0"
 
