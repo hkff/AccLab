@@ -11,7 +11,7 @@ if _c1 is not None and _c2 is not None:
 
     ### Web view ###
     if self.web:
-        msg = ("<h3>The offered clause %s is%s compliant with the desired clause %s</h2>"
+        msg = ("<h3>The offered clause %s is%s compliant with the required clause %s</h2>"
                 % (c1, ("" if res["ok"] == "true" else " not"), c2))
         scs = True if res["ok"] == "true" else False
         web_toast(msg, scs)

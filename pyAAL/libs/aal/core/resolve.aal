@@ -128,6 +128,23 @@ if _c1 is not None:
 )
 
 
+MACRO econflict(c1 depth) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    conflict(self, _c1, algo=1, depth=int(depth))
+"""
+)
+
+MACRO veconflict(c1 depth) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    conflict(self, _c1, verbose=True, algo=1, depth=int(depth))
+"""
+)
+
+
 MACRO ecompliance(c1 c2) (
 """
 _c1 = self.clause(c1)

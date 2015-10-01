@@ -29,7 +29,7 @@ CLAUSE css_policy (
 
     // Allow users to read their data
     IF (d.subject == a) THEN {
-        PERMIT a.read[css](d)  AND DENY a.read[css](d) 
+        PERMIT a.read[css](d) AND DENY a.read[css](d)
     } AND
 
     // Deny access to read other
@@ -65,12 +65,13 @@ CLAUSE alice_pref (
 
 
 // Call validate macro to perform the compliance check
-//CALL econflict("css_policy" )
+CALL econflict("css_policy" "2")
 //CALL ecompliance("css_policy" "alice_pref")
-//CALL sat_ue("css_policy")CALL validate("css_policy" "css_policy")
+//CALL sat_ue("css_policy")
+//CALL validate_usage("css_policy" "alice_pref")
 
 /*
-EXECCALL wvalidate_usage("css_policy" "css_policy")
+EXEC
 """
 for x in self.aalprog.get_declared(m_type):
     print(str(x.name) + "  : " + str(x.lin()))
@@ -86,5 +87,7 @@ for l in self.aalprog.libs:
     print([str(x.name) for x in l.aalprog.declarations["types"]])
 
 print(self.isDeclared("goo", m_type))
+"""
 */
-CALL wvalidate_usage("css_policy" "css_policy")
+
+//CALL wvalidate_usage("css_policy" "alice_pref")
