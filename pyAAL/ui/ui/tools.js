@@ -1077,7 +1077,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.templatesTool",
 
 	view: function(parent) {
-		this.button = $('<div title="Templates (ctrl+e)" id="tmpBtn" class="btn-action fa fa-magic fa-lg"/>');
+		this.button = $('<div title="AAL policy wizard (ctrl+e)" id="tmpBtn" class="btn-action fa fa-magic fa-lg"/>');
 		parent.actionsPanel.append(this.button);
 	},
 
@@ -1088,7 +1088,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 
 			var p = "<div>" +
 			"<div style='width:19%; float: left;'>" +
-			"	<b>Templates</b>" +
+			"	<b>AAL policy wizard</b>" +
 			"<ul id='tt' class='easyui-tree unselectable'>" +
 			"</div>" +
 			"<div id='templateContent' style=''> </div>"+

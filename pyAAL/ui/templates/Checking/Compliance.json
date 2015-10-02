@@ -1,9 +1,9 @@
 {
     "name": "Checking Compliance ",
-	"desc": "Checks the offered clause is compliant with the required clause.",
+	"desc": "Checks if the offered privacy policy is compliant with the required one.",
 	"vars": [
-      {"name": "", "id": "c1", "type": "select", "pre": " Offered Clause ", "post": " ", "src": "{aal.clauses}"},
-      {"name": "", "id": "c2", "type": "select", "pre": " Required Clause ", "post": "", "src": "{aal.clauses}"},
+      {"name": "", "id": "c1", "type": "select", "pre": " Offered policy ", "post": " ", "src": "{aal.clauses}"},
+      {"name": "", "id": "c2", "type": "select", "pre": " Required policy ", "post": "", "src": "{aal.clauses}"},
       {"name": "", "id": "detection", "type": "checkbox", "pre": " Detection ", "post": ""}
     ],
 	"aal": [

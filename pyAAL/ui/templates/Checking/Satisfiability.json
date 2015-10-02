@@ -1,8 +1,8 @@
 {
     "name": "Checking Satisfiability ",
-	"desc": "Checks if a clause is satisfiable.",
+	"desc": "Checks if a privacy policy is satisfiable.",
 	"vars": [
-      {"name": "", "id": "c1", "type": "select", "pre": " Clause ", "post": " ", "src": "{aal.clauses}"},
+      {"name": "", "id": "c1", "type": "select", "pre": " Policy ", "post": " ", "src": "{aal.clauses}"},
       {"name": "", "id": "detection", "type": "checkbox", "pre": " Detection ", "post": ""}
     ],
 	"aal": [
