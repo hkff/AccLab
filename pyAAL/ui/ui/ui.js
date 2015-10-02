@@ -226,7 +226,7 @@ visualEditor.ui = {
     /**
      * Analyse opened AAL file and update info
      */
-	analyseAAL: function (aalFile) {
+	analyseAAL: function (aalFile, callback) {
         $.ajax({
             dataType: 'text',
             type:'POST',
@@ -234,6 +234,8 @@ visualEditor.ui = {
             data: {action: "getAALdec", file: aalFile},
             success: function(response) {
                 visualEditor.ui.currentAAL = jQuery.parseJSON(response);
+				if(callback != null || callback != undefined)
+					callback(response)
             }
 	    });
     },

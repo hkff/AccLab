@@ -778,6 +778,7 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
 					"extendedTimeOut": 0,
 					"positionClass": "toast-top-right"
 				});
+                $("#toast-container>.toast-info").attr("style","background-image: none !IMPORTANT;")
                 visualEditor.ui.updateToastSize("info", {"width": 950}, true);
 			};
 			this.button.click(fx);
@@ -1103,6 +1104,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-right"
 			});
+			$("#toast-container>.toast-info").attr("style","background-image: none !IMPORTANT;")
             visualEditor.ui.updateToastSize("info", {"width": 800}, false);
 
 			$("#tt").tree({

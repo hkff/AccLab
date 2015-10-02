@@ -295,6 +295,7 @@ var visualEditor = {
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-center"
 			});
+        $("#toast-container>.toast-info").attr("style","background-image: none !IMPORTANT;")
         visualEditor.ui.updateToastSize("info", {"width": 800}, false);
     },
 
