@@ -1,14 +1,15 @@
 {
     "name": "Checking Satisfiability ",
-	"desc": "Checks if a clause c1 is satisfiable.",
+	"desc": "Checks if a clause is satisfiable.",
 	"vars": [
-      {"name": "", "id": "c1", "type": "select", "pre": " Clause 1 ", "post": " ", "src": "{aal.clauses}"}
+      {"name": "", "id": "c1", "type": "select", "pre": " Clause ", "post": " ", "src": "{aal.clauses}"},
+      {"name": "", "id": "detection", "type": "checkbox", "pre": " Detection ", "post": ""}
     ],
 	"aal": [
-      "\nCALL wsat_ue(\"{c1}.val\")"
+      "\nCALL {{({detection}.checked)?'conflict':'wsat_ue'}}(\"{c1}.val\")"
     ],
 	"html": [
-      "<div class='varGroupe'>  <h4 class='varsHeader'>Clauses :</h4>  {c1}</div> ",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Clauses :</h4> {c1} {detection}</div> ",
       "</br><div style='text-align: center;'> ",
       "<button ",
       "onclick='",
@@ -34,10 +35,14 @@
                         "editor.gotoLine(parseInt(e.target.innerHTML.replace(\"at line \", \"\")));",
                 "});",
                 "// Add inline result\n",
-                "if($(\"#output_window h3\").html().indexOf(\"not\") == -1) {",
-                  "$(\"#result\").empty().append(\"<h3 style=\\\"color:green;\\\">\" + $(\"#output_window h3\").html() + \"</h3>\" );",
-                "}else {",
-                  "$(\"#result\").empty().append(\"<h3 style=\\\"color:red;\\\">\" + $(\"#output_window h3\").html() + \"</h3>\" );",
+                "if($(\"#output_window h3\").length != 0) {",
+                  "if($(\"#output_window h3\").html().indexOf(\"not\") == -1) {",
+                    "$(\"#result\").empty().append(\"<h3 style=\\\"color:green;\\\">\" + $(\"#output_window h3\").html() + \"</h3>\" );",
+                  "}else {",
+                    "$(\"#result\").empty().append(\"<h3 style=\\\"color:red;\\\">\" + $(\"#output_window h3\").html() + \"</h3>\" );",
+                  "}",
+                "} else {",
+                  "$(\"#result\").empty().append($(\"#output_window\").html());",
                 "}",
               "}",
             "});",

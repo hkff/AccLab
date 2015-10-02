@@ -115,12 +115,12 @@ self.call("gvalidate", ["'" + c1 + "'", "'" + c2 + "'", False, True, False, 0, "
 )
 
 /** Web version */
-MACRO wvalidate_usage(c1 c2) (
+MACRO wvalidate_usage_neg(c1 c2) (
 """
 _c1 = self.clause(c1)
 _c2 = self.clause(c2)
 if _c1 is not None and _c2 is not None:
-    res = validate(self, _c1, _c2, resolve=False, verbose=False, use_always=False, acc_formula=0, chk='all')
+    res = validate(self, _c1, _c2, resolve=False, verbose=False, use_always=False, acc_formula=0, chk='neg')
 
     ### Web view ###
     if self.web:

@@ -1,15 +1,16 @@
 {
     "name": "Checking Compliance ",
-	"desc": "Checks if two clauses are compliant. is c1 compliant with c2 ?",
+	"desc": "Checks the offered clause is compliant with the required clause.",
 	"vars": [
-      {"name": "", "id": "c1", "type": "select", "pre": " Clause 1 ", "post": " ", "src": "{aal.clauses}"},
-      {"name": "", "id": "c2", "type": "select", "pre": " Clause 2 ", "post": "", "src": "{aal.clauses}"}
+      {"name": "", "id": "c1", "type": "select", "pre": " Offered Clause ", "post": " ", "src": "{aal.clauses}"},
+      {"name": "", "id": "c2", "type": "select", "pre": " Required Clause ", "post": "", "src": "{aal.clauses}"},
+      {"name": "", "id": "detection", "type": "checkbox", "pre": " Detection ", "post": ""}
     ],
 	"aal": [
-      "\nCALL wvalidate_usage(\"{c1}.val\" \"{c2}.val\")"
+      "\nCALL {{({detection}.checked)?'compliance':'wvalidate_usage_neg' }}(\"{c1}.val\" \"{c2}.val\")"
     ],
 	"html": [
-      "<div class='varGroupe'>  <h4 class='varsHeader'>Clauses :</h4>  {c1} {c2}</div> ",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Clauses :</h4>  {c1} {c2} {detection}</div> ",
       "</br><div style='text-align: center;'> ",
       "<button ",
       "onclick='",
@@ -35,10 +36,14 @@
                         "editor.gotoLine(parseInt(e.target.innerHTML.replace(\"at line \", \"\")));",
                 "});",
                 "// Add inline result\n",
-                "if($(\"#output_window h3\").html().indexOf(\"not\") == -1) {",
-                  "$(\"#result\").empty().append(\"<h3 style=\\\"color:green;\\\">\" + $(\"#output_window h3\").html() + \"</h3>\" );",
-                "}else {",
-                  "$(\"#result\").empty().append(\"<h3 style=\\\"color:red;\\\">\" + $(\"#output_window h3\").html() + \"</h3>\" );",
+                "if($(\"#output_window h3\").length != 0) {",
+                  "if($(\"#output_window h3\").html().indexOf(\"not\") == -1) {",
+                    "$(\"#result\").empty().append(\"<h3 style=\\\"color:green;\\\">\" + $(\"#output_window h3\").html() + \"</h3>\" );",
+                  "}else {",
+                    "$(\"#result\").empty().append(\"<h3 style=\\\"color:red;\\\">\" + $(\"#output_window h3\").html() + \"</h3>\" );",
+                  "}",
+                "} else {",
+                  "$(\"#result\").empty().append($(\"#output_window\").html());",
                 "}",
               "}",
             "});",
