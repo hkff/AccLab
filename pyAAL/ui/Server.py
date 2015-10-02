@@ -92,6 +92,10 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             save_current_ps_id(os.getpid())
             res = api_compile_tspass(self.get_arg(args, "file", method))
 
+        elif val == "macroCallAPI":
+            save_current_ps_id(os.getpid())
+            res = api_macro_call(self.get_arg(args, "file", method), self.get_arg(args, "macro", method), self.get_arg(args, "args", method))
+
         elif val == "listTemplates":
             res = api_list_dir("ui/templates")
             res = res.replace(".json", "")

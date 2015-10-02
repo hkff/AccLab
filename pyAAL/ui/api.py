@@ -260,3 +260,33 @@ def api_monitor():
 def api_kill_ps(pid):
     p = Popen(['kill', '-KILL', pid], stdout=PIPE, stderr=PIPE, stdin=PIPE)
     return p.stdout.read().decode("utf-8")
+
+
+# Macro API
+def api_macro_call(f, macro_name, macro_args):
+
+    res = ""
+    try:
+        res = aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="", web=True)
+
+        # Save current context
+        sysout = sys.stdout
+        syserr = sys.stderr
+
+        # Capture the output
+        reportSIO = StringIO()
+        reportEIO = StringIO()
+        sys.stdout = reportSIO
+        sys.stderr = reportEIO
+        res["mm"].call(macro_name, macro_args[1:-1].split(','))
+        res = reportSIO.getvalue() + "\n" + reportEIO.getvalue()
+
+        # Restore context
+        sys.stdout = sysout
+        sys.stderr = syserr
+    except:
+        res = "Compilation Error"
+
+    print(res)
+    res = to_html_colors(res)
+    return res.replace("\n", "<br>")
