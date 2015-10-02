@@ -1084,55 +1084,55 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 	control: function(parent) {
 		var fx = function(e){
             // Get AAL info
-            visualEditor.ui.analyseAAL(visualEditor.ui.activeTab.panel.title);
+            visualEditor.ui.analyseAAL(visualEditor.ui.activeTab.panel.title, function(e) {
 
-			var p = "<div>" +
-			"<div style='width:19%; float: left;'>" +
-			"	<b>AAL policy wizard</b>" +
-			"<ul id='tt' class='easyui-tree unselectable'>" +
-			"</div>" +
-			"<div id='templateContent' style=''> </div>"+
-			"</div>";
+				var p = "<div>" +
+					"<div style='width:19%; float: left;'>" +
+					"	<b>AAL policy wizard</b>" +
+					"<ul id='tt' class='easyui-tree unselectable'>" +
+					"</div>" +
+					"<div id='templateContent' style=''> </div>" +
+					"</div>";
 
-			toastr.info(p, "", {
-				"closeButton": true,
-				"preventDuplicates": true,
-				"tapToDismiss": false,
-  				"showDuration": "3000",
-			  	"hideDuration": "1000",
-			  	"timeOut": 0,
-			  	"extendedTimeOut": 0,
-				"positionClass": "toast-top-right"
-			});
-			$("#toast-container>.toast-info").attr("style","background-image: none !IMPORTANT;")
-            visualEditor.ui.updateToastSize("info", {"width": 800}, false);
+				toastr.info(p, "", {
+					"closeButton": true,
+					"preventDuplicates": true,
+					"tapToDismiss": false,
+					"showDuration": "3000",
+					"hideDuration": "1000",
+					"timeOut": 0,
+					"extendedTimeOut": 0,
+					"positionClass": "toast-top-right"
+				});
+				visualEditor.ui.updateToastSize("info", {"width": 800}, false, "none");
 
-			$("#tt").tree({
-				animate: true,
-				checkbox:false,
-				url: visualEditor.backend + "?action=listTemplates",
+				$("#tt").tree({
+					animate: true,
+					checkbox: false,
+					url: visualEditor.backend + "?action=listTemplates",
 
-				onDblClick: function(node){
-                    if(node.children == undefined)
-					    loadTemplate(getAbsPath(node) + ".json");
-				},
+					onDblClick: function (node) {
+						if (node.children == undefined)
+							loadTemplate(getAbsPath(node) + ".json");
+					},
 
-                onClick: function(node){
-					if(node.children == undefined)
-					    loadTemplate(getAbsPath(node) + ".json");
-				},
+					onClick: function (node) {
+						if (node.children == undefined)
+							loadTemplate(getAbsPath(node) + ".json");
+					},
 
-				formatter:function(node){
-					var s = node.text;
-					if(node.children){
-						s += ' <span style=\'color:gray\'>(' + node.children.length + ')</span>';
+					formatter: function (node) {
+						var s = node.text;
+						if (node.children) {
+							s += ' <span style=\'color:gray\'>(' + node.children.length + ')</span>';
+						}
+						return s;
+					},
+
+					onLoadSuccess: function (node, data) {
+						$("#tt").tree("collapseAll");
 					}
-					return s;
-				},
-
-				onLoadSuccess: function(node, data){
-					$("#tt").tree("collapseAll");
-				}
+				});
 			});
 		};
 		this.button.click(fx);

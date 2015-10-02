@@ -364,14 +364,14 @@ body {
     padding-top: 5px;
 }
 
-.aceHighlightGreen{
+.aceHighlightGreen {
     position:absolute;
     background:rgba(100,200,100,0.5);
     z-index:20
 }
 
 
-.aceHighlightRed{
+.aceHighlightRed {
     position:absolute;
     background: rgba(200, 0, 14, 0.5);
     z-index:20

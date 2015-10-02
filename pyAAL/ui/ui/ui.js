@@ -98,12 +98,16 @@ visualEditor.ui = {
 		e.preventDefault()
 	},
 
-	updateToastSize: function(type, size, dragable) {
+	updateToastSize: function(type, size, dragable, icon) {
         var l = $(".toast-" + type);
         if(l[l.length - 1] != undefined) {
             if(size.width != undefined) $(l[l.length - 1]).css("width", size.width + "px");
             if(size.height != undefined) $(l[l.length - 1]).css("height", size.height + "px");
             if(dragable) $(l[l.length - 1]).draggable();
+			if(icon != undefined || icon != null) {
+                var p =  $(l[l.length - 1]).attr("style");
+				 $(l[l.length - 1]).attr("style", p + "background-image: " + icon + " !IMPORTANT;");
+            }
         }
     },
 
