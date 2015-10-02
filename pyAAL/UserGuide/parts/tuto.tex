@@ -20,23 +20,26 @@ If you want to run aalc using a symbolic link you need to set the environment va
 {\lstset{style=shell}
 \begin{lstlisting}[caption={aalc options}]
 root@root/:$ python aalc
-aalc 
-  -h    --help                   display this help and exit
-  -i    --input                  the input file
-  -i    --output                 the output file
-  -c    --compile                compile the file, that can be loaded after using -l
-  -m    --monodic                apply monodic check on aal file
-  -s    --shell                  run a shell after handling aal program
-  -k    --check                  perform a verbose check
-  -l    --load                   load a compiled aal file (.aalc) and run a shell
-  -t    --fotl                   translate the aal program into FOTL
-  -r    --reparse                reparse tspass file
-  -r    --recompile              recompile the external files
-  -b    --no-colors              disable colors in output
-  -x    --compile-stdlib         compile the standard library
-  -d    --hotswap                enable hotswaping (for development only)
-  -a    --ast                    show ast tree
-  -u    --gui [port]             run the gui on the specified port (default 8000)
+   Usage : aalc.py [OPTIONS]
+  -h 	--help          	 display this help and exit
+  -i 	--input= [file] 	 the input file
+  -o 	--output= [path]	 the output file
+  -c 	--compile       	 compile the file, that can be loaded after using -l
+  -m 	--monodic       	 apply monodic check on aal file
+  -s 	--shell         	 run a shell after handling aal program
+  -k 	--check         	 perform a verbose check
+  -l 	--load          	 load a compiled aal file (.aalc) and run a shell
+  -t 	--fotl          	 translate the aal program into FOTL
+  -r 	--reparse       	 reparse tspass file
+  -r 	--recompile     	 recompile the external files
+  -b 	--no-colors     	 disable colors in output
+  -x 	--compile-stdlib	 compile the standard library
+  -d 	--hotswap       	 enable hotswaping (for development only)
+  -a 	--ast           	 show ast tree
+  -u 	--gui= [port]   	 run the gui on the specified port
+  -n 	--no-browser    	 don't start the web browser
+  -q 	--timeout= [n]  	 TSPASS prover timeout (in seconds)
+
 \end{lstlisting}
 }
 
@@ -170,7 +173,7 @@ root@root/:$ python aalc -i examples/tuto0.aal -k
 [DECLARED AGENTS]   : 3
 [DECLARED SERVICES] : 6
 [DECLARED DATA]     : 0
-[DECLARED TYPES]    : 10
+[DECLARED TYPES]    : 11
 
 *** Forwards references check
 [AGENTS]   : 0
@@ -178,15 +181,46 @@ root@root/:$ python aalc -i examples/tuto0.aal -k
 [DATA]     : 0
 [TYPES]    : 0
 
+
+*** Unused declarations
+
+[WARNING] Unused agent declaration : bob  ->  at line 18
+[WARNING] Unused service declaration : read  ->  at line 12
+[WARNING] Unused service declaration : store  ->  at line 13
+[WARNING] Unused service declaration : delete  ->  at line 14
+[WARNING] Unused service declaration : write  ->  at line 20
+[WARNING] Unused service declaration : update  ->  at line 22
+[WARNING] Unused service declaration : audit  ->  at line 23
+
+
 ** LOADED libraries
 [LIBS] : 2
 
 ** CLAUSES
 [CLAUSES] : 2
-Monodic test :
-|css_policy | Formula is monodic ! |
-|alice_pref | Formula is monodic ! |
--------------------------- Checking End -------------------------
+
+*** Miscellaneous
+[PERMISSIONS]   : 3
+[PROHIBITIONS   : 2
+
+*** Sat test
+
+---------- css_policy ----------
+------------------------- Monodic check -------------------------
+Monodic check passed !
+------------------------ Starting  check ---------------------
+----- Checking c1 :
+  -> Satisfiable
+-------------------------  check End -------------------------
+
+
+---------- alice_pref ----------
+------------------------- Monodic check -------------------------
+Monodic check passed !
+------------------------ Starting  check ---------------------
+----- Checking c1 :
+  -> Satisfiable
+-------------------------  check End -------------------------
 \end{lstlisting}
 
 
@@ -208,41 +242,62 @@ root@root/:$ python aalc -i examples/tuto0.aal -t
 ------------------------- FOTL Translation start -------------------------
 
 %%%%%%%%% START EVN %%%%%%%%%%%
+(
+(always ![a] (Actor(a) => EQUAL(a, a))) &
+(always ![a, b] ((Actor(a) & Actor(b) & EQUAL(a, b)) => EQUAL(b, a))) &
+
 %%% Types knowledge
-data(CTS)  &
-Actor(CTS)  &
-DataSubject(CTS)  &
-DataController(CTS)  &
-DataProcessor(CTS)  &
-DwDataController(CTS)  &
-Auditor(CTS)  &
-CloudProvider(CTS)  &
-CloudCustomer(CTS)  &
-EndUser(CTS)  &
+always (
+ ( ?[a] data(a)  ) &
+ ( ?[a] actor(a)  ) &
+ ( ?[a] Actor(a)  ) &
+ ( ?[a] DataSubject(a) & (![x] ( (DataSubject(x) => Actor(x) ) )) ) &
+ ( ?[a] DataController(a) & (![x] ( (DataController(x) => Actor(x) ) )) ) &
+ ( ?[a] DataProcessor(a) & (![x] ( (DataProcessor(x) => Actor(x) ) )) ) &
+ ( ?[a] DwDataController(a) & (![x] ( (DwDataController(x) => Actor(x) ) )) ) &
+ ( ?[a] Auditor(a) & (![x] ( (Auditor(x) => Actor(x) ) )) ) &
+ ( ?[a] CloudProvider(a) & (![x] ( (CloudProvider(x) => Actor(x) ) )) ) &
+ ( ?[a] CloudCustomer(a) & (![x] ( (CloudCustomer(x) => Actor(x) ) )) ) &
+ ( ?[a] EndUser(a) & (![x] ( (EndUser(x) => Actor(x) ) )) )
+) &
 
 
 %%% Action authorizations
-(![x, y, z] (read(x, y, z) => Pread(x, y, z))) &
-(![x, y, z] (store(x, y, z) => Pstore(x, y, z))) &
-(![x, y, z] (delete(x, y, z) => Pdelete(x, y, z))) &
-(![x, y, z] (read(x, y, z) => Pread(x, y, z))) &
-(![x, y, z] (write(x, y, z) => Pwrite(x, y, z))) &
-(![x, y, z] (audit(x, y, z) => Paudit(x, y, z))) &
+always (
+( ![x, y, z] (read(x, y, z) => Pread(x, y, z)) ) &
+( ![x, y, z] (store(x, y, z) => Pstore(x, y, z)) ) &
+( ![x, y, z] (delete(x, y, z) => Pdelete(x, y, z)) ) &
+( ![x, y, z] (write(x, y, z) => Pwrite(x, y, z)) ) &
+( ![x, y, z] (update(x, y, z) => Pupdate(x, y, z)) ) &
+( ![x, y, z] (audit(x, y, z) => Paudit(x, y, z)) )
+) &
 
 
 %%% Actors knowledge
-Actor(alice)  &
-Actor(bob)  &
-Actor(css)  &
+always (
+ ( Actor(alice)  ) &
+ ( Actor(bob)  ) &
+ ( Actor(css)  )
+) &
 
+
+%%% Time knowledge
+
+
+%%% Data knowledge
+always (
+ ( ?[d](subject(d, alice)) ) &
+ ( ?[d](subject(d, bob)) ) &
+ ( ?[d](subject(d, css)) )
+)
+)
 %%%%%%%%% END EVN %%%%%%%%%%%
 
-%% Clause : css_policy
-always(![d] ( data(d) & (![a] ( Actor(a) & (((( (subject(d, a) => Pread(a, css, d)) &
-(~subject(d, a) => ~Pread(a, css, d))) & Pread(css, css, d)) & Pdelete(css, css, d)))))) )
-%% Clause : alice_pref
-always(![d] ( data(d) & ( (subject(d, alice) => Pread(alice, css, d)))) )
 
+%% Clause : css_policy
+((![d] ( data(d) => ((![a] ( Actor(a) => (((( ((subject(d, a)) => (Pread(a, css, d))) &  ((~subject(d, a)) => (~Pread(a, css, d)))) & Pread(css, css, d)) & Pdelete(css, css, d))) ))) )) )
+%% Clause : alice_pref
+((![d] ( data(d) => ( ((subject(d, alice)) => (~Pread(alice, css, d)))) )) )
 
 -------------------------- FOTL Translation end --------------------------
 \end{lstlisting}
