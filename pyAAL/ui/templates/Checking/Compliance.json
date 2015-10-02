@@ -7,27 +7,26 @@
       {"name": "", "id": "detection", "type": "checkbox", "pre": " Detection ", "post": ""}
     ],
 	"aal": [
-      "\nCALL {{({detection}.checked)?'compliance':'wvalidate_usage_neg' }}(\"{c1}.val\" \"{c2}.val\")"
+      "{{({detection}.checked)?'compliance':'wvalidate_usage_neg'}};[\"{c1}.val\", \"{c2}.val\"]"
     ],
 	"html": [
       "<div class='varGroupe'>  <h4 class='varsHeader'>Clauses :</h4>  {c1} {c2} {detection}</div> ",
       "</br><div style='text-align: center;'> ",
       "<button ",
       "onclick='",
-      "visualEditor.activeEditor.gotoPageDown();",
-      "if(visualEditor.activeEditor.session.getLine(visualEditor.activeEditor.session.getLength()-1).startsWith(\"CALL wvalidate\") )",
-        "visualEditor.activeEditor.removeLines(0);",
-      "visualEditor.activeEditor.insert(visualEditor.ui.Template.genAAL(visualEditor.ui.Template.current));",
-      "",
       "var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);",
       "var file = visualEditor.ui.activeTab.container.title;",
       "visualEditor.ui.fileManager.saveFile(file, editor.getValue(), function(){",
         "var file = visualEditor.ui.activeTab.container.title;",
+        "var code = visualEditor.ui.Template.genAAL(visualEditor.ui.Template.current).split(\";\");",
+        "var macro_name = code[0];",
+        "var macro_args = code[1];",
+
             "$.ajax({",
               "dataType: \"text\",",
               "type: \"POST\",",
               "url: visualEditor.backend,",
-              "data: {action: \"compileAAL\", file: file},",
+              "data: {action: \"macroCallAPI\", file: file, macro: macro_name, args:macro_args},",
               "success: function(response){",
                 "$(\"#output_window\").empty().append(response).scrollTop(0);",
                 "$(\".aceLine\").click(function(e) {",
