@@ -392,6 +392,22 @@ var visualEditor = {
         // Update moninfo
         visualEditor.getMonInfo();
         visualEditor.ui.interval = setInterval(visualEditor.getMonInfo, visualEditor.ui.psUpdateInterval);
+    },
+
+    /**
+     * Start together
+     */
+    startTogether: function() {
+        TogetherJSConfig_siteName = "AccLab";
+        //TogetherJSConfig_toolName = "";
+        TogetherJSConfig_dontShowClicks = true;
+        TogetherJSConfig_useMinimizedCode = true;
+        TogetherJSConfig_findRoom = "AccLab";
+        TogetherJSConfig_suppressJoinConfirmation = true;
+        TogetherJSConfig_autoStart = true;
+        TogetherJSConfig_inviteFromRoom = true;
+        TogetherJS(this);
+        return false;
     }
 };
 
