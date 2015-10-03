@@ -1,0 +1,42 @@
+ // 3/10/2015
+// Simple CustomerPolicy for user of wearable device
+// Could be completed 
+
+// Loading types & macros libraries
+LOAD "core.types"
+LOAD "core.macros"
+
+/***************************
+ *       Declarations
+ ****************************/
+// Actors
+AGENT cardioMon TYPES(DataProcessor ) REQUIRED() PROVIDED(read write update delete )
+AGENT wearableCo TYPES(DataController ) REQUIRED(read write update delete ) PROVIDED()
+AGENT customer TYPES(DataSubject ) REQUIRED() PROVIDED()
+AGENT mapOnWeb TYPES(DataProcessor ) REQUIRED() PROVIDED()
+AGENT dataSpacer TYPES(DataProcessor ) REQUIRED() PROVIDED()
+AGENT auditor TYPES(Auditor) REQUIRED() PROVIDED()
+
+// Services
+SERVICE read
+SERVICE write
+SERVICE update
+SERVICE delete
+SERVICE notify
+SERVICE transfer
+
+LOAD "DEMO_AB.DEMO_5.wtypes"
+LOAD "DEMO_AB.DEMO_5.locations"
+
+/***************************
+ *       Clauses
+ ****************************/
+
+// only access control rights
+CLAUSE CustomerPolicy (  
+  // Customer
+  (FORALL c:Customer FORALL d:data IF (d.subject==c)
+        THEN {PERMIT c.read[cardioMon](d) AND PERMIT c.write[cardioMon](d) 
+              AND PERMIT c.update[cardioMon](d) AND PERMIT c.delete[cardioMon](d)})
+)
+

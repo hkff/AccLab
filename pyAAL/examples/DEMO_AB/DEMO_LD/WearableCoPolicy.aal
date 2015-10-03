@@ -1,0 +1,67 @@
+ // 3/10/2015
+// WearableCoPolicy
+// with some access control rights, data retention and data transfer
+
+// Loading types & macros libraries
+LOAD "core.types"
+LOAD "core.macros"
+
+/***************************
+ *       Declarations
+ ****************************/
+// Actors
+AGENT cardioMon TYPES(DataProcessor ) REQUIRED() PROVIDED(read write update delete )
+AGENT wearableCo TYPES(DataController ) REQUIRED(read write update delete ) PROVIDED()
+AGENT customer TYPES(DataSubject ) REQUIRED() PROVIDED()
+AGENT mapOnWeb TYPES(DataProcessor ) REQUIRED() PROVIDED()
+AGENT dataSpacer TYPES(DataProcessor ) REQUIRED() PROVIDED()
+AGENT auditor TYPES(Auditor) REQUIRED() PROVIDED()
+
+// Services
+SERVICE read
+SERVICE write
+SERVICE update
+SERVICE delete
+SERVICE notify
+SERVICE transfer
+
+LOAD "DEMO_AB.DEMO_5.wtypes"
+LOAD "DEMO_AB.DEMO_5.locations"
+
+/***************************
+ *       Clauses
+ ****************************/
+ 
+// WearableCo  policy (not yet complete)
+CLAUSE wearableCoPolicy (  
+	(FORALL e:Employee FORALL d:UserName (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:TrainingActivity (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Password (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Height (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Weight (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:SugarLevel (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:BloodPressure (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Heartbeat (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:UserId (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:DisplayName (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Gender (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Age (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+    AND (FORALL e:Employee FORALL d:Country (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+
+// data retention 
+// From DPPT: WearableCo expects a data retention period of 3 months
+// DATA: sensitive PROVIDER: cardioMon RETENTION: 3 months 
+  AND  (FORALL ds:Sensitive MUST(cardioMon.delete[cardioMon](ds) BEFORE "3 month"))  
+  
+// data transfer 
+// From DPPT: Wearable Co defines Germany as a Location where data can be transferred
+// DATA: sensitive ACTION: transfer SOURCE: cardioMon TARGET-LOCATION : germany
+	AND  (FORALL d:Sensitive FORALL a:Actor IF (@Germany(a)) THEN {PERMIT cardioMon.transfer[a](d)}) 
+)
+
+
+
+
+
+
+

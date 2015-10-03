@@ -1,0 +1,52 @@
+// Types for locations
+// TODO add reverse way ?
+
+TYPE Location EXTENDS(data)
+
+TYPE EEA EXTENDS(Location)
+TYPE Europe EXTENDS(EEA)
+TYPE America EXTENDS(Location)
+TYPE Asia EXTENDS(Location)
+TYPE Africa EXTENDS(Location)
+
+// Europe 28 countries
+TYPE Germany EXTENDS(Europe)
+TYPE France EXTENDS(Europe)
+TYPE Italy EXTENDS(Europe)
+TYPE Austria  EXTENDS(Europe)
+TYPE Belgium EXTENDS(Europe)
+TYPE Bulgaria EXTENDS(Europe)
+TYPE Cyprus EXTENDS(Europe)
+TYPE Croatia EXTENDS(Europe)
+TYPE Denmark EXTENDS(Europe)
+TYPE Spain EXTENDS(Europe)
+TYPE Estonia EXTENDS(Europe)
+TYPE Finland EXTENDS(Europe)
+TYPE Greece EXTENDS(Europe)
+TYPE Hungary EXTENDS(Europe)
+TYPE Ireland EXTENDS(Europe)
+TYPE Latvia EXTENDS(Europe)
+TYPE Lithuania EXTENDS(Europe)
+TYPE Luxembourg EXTENDS(Europe)
+TYPE Malta EXTENDS(Europe)
+TYPE Netherlands EXTENDS(Europe)
+TYPE Poland EXTENDS(Europe)
+TYPE Portugal EXTENDS(Europe)
+TYPE Czechrepublic EXTENDS(Europe)
+TYPE Romania EXTENDS(Europe)
+TYPE Unitedkingdom EXTENDS(Europe)
+TYPE Slovakia EXTENDS(Europe)
+TYPE Slovenia EXTENDS(Europe)
+TYPE Sweden EXTENDS(Europe)
+
+// 3 more 
+TYPE Norway EXTENDS(EEA)
+TYPE Iceland EXTENDS(EEA)
+TYPE Liechtenstein EXTENDS(EEA)
+
+
+
+// add more 
+// (always (![a] (America(a) => ~Europe(a)))) &
+// TYPE America EXTENDS(NOT Europe) no
+// +union, disjoint, aggregation ?
