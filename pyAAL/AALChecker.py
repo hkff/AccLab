@@ -634,55 +634,34 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1, depth=-1):
             e2 = c.branchTrue
         else:
             return "Type %s not handled !" % type(c)
+
         if verbose:
             print("\n\n" + "="*20 + " Handling expression " + "="*20 + "\n" +
                   "== e1 : " + str(e1) + "\n== e2 : " + str(e2))
 
-        ##
-        # Masking e1
-        ##
-        before_masking_e1 = chk()
-        if verbose:
-            print(Color("\n====== Before masking e1 : " + before_masking_e1["psat"]))
+        es = [e1, e2]
+        i = 1
+        for e in es:
+            before_masking_e = chk()
+            if verbose:
+                print(Color("\n====== Before masking e%s : %s " % (i, before_masking_e["psat"])))
 
-        if verbose:
-            print(Color("{autoblue}Masking e1...{/autoblue}"))
+            if verbose:
+                print(Color("{autoblue}Masking e%s...{/autoblue}" % i))
 
-        e1.mask()
-        after_masking_e1 = chk()
-        if verbose:
-            print(Color("====== After Masking e1  : " + after_masking_e1["psat"]))
-        e1.unmask()
+            e.mask()
+            after_masking_e = chk()
+            if verbose:
+                print(Color("====== After Masking e%s : %s " % (i, after_masking_e["psat"])))
+            e.unmask()
 
-        if c2 is None:
-            if before_masking_e1["sat"] == "Unsatisfiable" and after_masking_e1["sat"] == "Satisfiable":
-                res.append(e1)
-        else:
-            if before_masking_e1["sat"] == "Satisfiable" and after_masking_e1["sat"] == "Unsatisfiable":
-                res.append(e1)
-
-        ##
-        # Masking e2
-        ##
-        before_masking_e2 = chk()
-        if verbose:
-            print(Color("\n====== Before masking e2 : " + before_masking_e2["psat"]))
-
-        if verbose:
-            print(Color("{autoblue}Masking e2...{/autoblue}"))
-
-        e2.mask()
-        after_masking_e2 = chk()
-        if verbose:
-            print(Color("====== After Masking e2  : " + after_masking_e2["psat"]))
-        e2.unmask()
-
-        if c2 is None:
-            if before_masking_e2["sat"] == "Unsatisfiable" and after_masking_e2["sat"] == "Satisfiable":
-                res.append(e2)
-        else:
-            if before_masking_e2["sat"] == "Satisfiable" and after_masking_e2["sat"] == "Unsatisfiable":
-                res.append(e2)
+            if c2 is None:
+                if before_masking_e["sat"] == "Unsatisfiable" and after_masking_e["sat"] == "Satisfiable":
+                    res.append(e)
+            else:
+                if before_masking_e["sat"] == "Satisfiable" and after_masking_e["sat"] == "Unsatisfiable":
+                    res.append(e)
+            i += 1
 
     #####################################
     # Combining expression algorithm
@@ -720,15 +699,24 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1, depth=-1):
         return l
 
     #####################################
+    # Get combinations
+    #####################################
+    def get_combs(c):
+        cmbs = c.usage.walk(filter_type=m_aexpComb, depth=depth)
+        if len(cmbs) == 0:  # if there are no comb try with ifThenExp
+            cmbs = c.usage.walk(filter_type=m_aexpIfthen, depth=depth)
+        return cmbs
+
+    #####################################
     # Conflict / Compliance detection
     #####################################
 
     # Choose algorithm to use
-    def handle(e, combs):
+    def handle(e, combinations):
         if algo == 0:
             masking(e)
         elif algo == 1:
-            combining(e, combs)
+            combining(e, combinations)
         else:
             masking(e)
 
@@ -746,30 +734,18 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1, depth=-1):
     # Enable masking
     enable_masking()
     res = []
-    cmbs = []
 
-    # Getting all comb in c1
-    if c1 is not None:
-        cmbs = c1.usage.walk(filter_type=m_aexpComb, depth=depth)
-        if len(cmbs) == 0:  # if there are no comb try with ifThenExp
-            cmbs = c1.usage.walk(filter_type=m_aexpIfthen, depth=depth)
+    # Choose conflict/compliance
+    if c2 is None:
+        # Conflict
+        combs = get_combs(c1)  # Getting all comb in c1
+    else:
+        # Compliance
+        combs = get_combs(c1) + get_combs(c2)  # Getting all comb in c1 and c2
 
-        for x in cmbs:
-            handle(x, cmbs)
-
-    # Getting all comb in c2
-    if c2 is not None:
-        cmbs2 = c2.usage.walk(filter_type=m_aexpComb, depth=depth)
-        if len(cmbs2) == 0:  # if there are no comb try with ifThenExp
-            cmbs2 = c2.usage.walk(filter_type=m_aexpIfthen, depth=depth)
-
-        if algo == 1:
-            cmbs3 = cmbs + cmbs2
-            for x in cmbs3:
-                combining(x, cmbs3)
-        else:
-            for x in cmbs2:
-                handle(x, cmbs2)
+    # Run detection
+    for x in combs:
+        handle(x, combs)
 
     ##
     # Minimizing unsat set
