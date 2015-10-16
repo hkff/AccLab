@@ -54,6 +54,7 @@ visualEditor.ui.components = {
 	 * Register components
 	 */
 	componentsRegistrator: function() {
+        this.components.push(new actor2());
 		this.components.push(new agent());
 		this.components.push(new data());
 		this.components.push(new policy());

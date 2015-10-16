@@ -376,3 +376,60 @@ body {
     background: rgba(200, 0, 14, 0.5);
     z-index:20
 }
+
+/* Context Menu */
+
+#acdWheelContextMenu, #aceWheelContextMenu {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 9999999;
+    display: none;
+}
+
+.trigger{
+    width:20px;
+    height: 20px;
+    position:absolute;
+    z-index: 10;
+    left:110px;
+    top:110px;
+    cursor: pointer;
+    background-color: #25B1E2;
+    opacity: 0.45;
+    border-radius: 20px;
+    /*background-image:url(assets/big_round.png); cursor: pointer;*/
+     /*margin-left: 750px;*/
+     /*margin-top: 250px;*/
+}
+
+.popcircle{
+    /*position:relative;*/
+    /*z-index: 9;*/
+    width: 143px;
+    height: 143px;
+    /*position: absolute;*/
+    /*z-index: 10;*/
+    margin-top: 47px;
+    margin-left: 47px;
+    /*cursor: pointer;*/
+    background-color: rgba(36, 37, 32, 0.92);
+    border-radius: 80px;
+    border-color: #2083D2;
+    border-width: 3px;
+    border-style: double;
+}
+.popcircle ul{
+    list-style:none;
+    padding:0px;
+    margin: 0px;
+    height: auto;
+    cursor: pointer;
+}
+.popcircle ul li{
+    top: 104.5px;
+    left: 105px;
+    /*height: 100px;*/
+    /*width: 100px;*/
+    position: absolute;
+}

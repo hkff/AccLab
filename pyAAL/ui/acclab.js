@@ -525,7 +525,7 @@ window.onload = function() {
     var onResized = function (e) {
         dockManager.resize(window.innerWidth - (divDockManager.clientLeft + divDockManager.offsetLeft),
             window.innerHeight - (divDockManager.clientTop + divDockManager.offsetTop));
-    }
+    };
     window.onresize = onResized;
     onResized(null);
 
@@ -585,4 +585,11 @@ window.onload = function() {
     shortcut.add("Alt+h", visualEditor.ui.clearHighlight);
     shortcut.add("Alt+z", visualEditor.ui.highlightRed);
     shortcut.add("Alt+a", visualEditor.ui.highlightGreen);
-}
+
+    // Init ace editor wheelContextMenu
+    visualEditor.ui.makeAceWheelContextMenu("acePops");
+
+    // TOREMOVE
+    visualEditor.ui.fileManager.openFile("demo_CIEL.acd");
+
+};

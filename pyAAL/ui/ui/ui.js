@@ -337,6 +337,60 @@ visualEditor.ui = {
             }
 
         }
-    }
+    },
 
+    /**
+     * Create the ace editor wheel context menu
+     */
+    makeAceWheelContextMenu: function(target_id) {
+        var pops = $("#" + target_id);
+
+        var btn = new visualEditor.ui.tools.saveTool();
+        btn.button = $('<li><div title="Save (ctrl+S)" id="saveBtn" class="btn-action fa fa-save fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops);
+
+        btn = new visualEditor.ui.tools.genTSPASSTool();
+        btn.button = $('<li><div title="Compile (ctrl+Enter)" id="genTSPASSBtn" class="btn-action fa fa-cog fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops);
+
+        btn = new visualEditor.ui.tools.AALSyntaxTool();
+        btn.button = $('<li><div title="AAL Syntax (ctrl+M)" id="aalSyntaxBtn" class="btn-action fa fa-file-code-o fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops);
+
+        btn = new visualEditor.ui.tools.templatesTool();
+        btn.button = $('<li><div title="AAL policy wizard (ctrl+e)" id="tmpBtn" class="btn-action fa fa-magic fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops);
+
+        btn = new visualEditor.ui.tools.clearOutputTool();
+        btn.button = $('<li><div title="Clear output" id="clearOutputBtn" class="btn-action fa fa-square-o  fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops);
+
+        // Bind the event listener to the trigger
+        $("#aceTrigger").bind("mousedown", visualEditor.ui.toggleAceWheelContextMenu);
+
+        // Make the wheel draggable
+        $("#aceWheelContextMenu").draggable()
+    },
+
+    /**
+     * Toggle Ace Wheel Context Menu
+     */
+    toggleAceWheelContextMenu: function(e) {
+        var wcm = $("#aceWheelContextMenu");
+        wcm.toggle("display");
+        wcm.css("top", e.clientY - 120);
+        wcm.css("left", e.clientX - 120);
+        $.popcircle('#acePops', {
+                spacing:'-50px',
+                type:'full',        // full, half, quad
+                offset:0,	        // 0, 1, 2, 3, 4, 5, 6, 7 or 5.1
+                ease:'easeOutQuad', // jquery ease effects,
+                time:'fast'         // slow, fast, 1000
+            });
+    }
 };

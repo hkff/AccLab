@@ -39,7 +39,7 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 	 * @param propertiesPanel
 	 */
 	init: function(grid, actionsPanel, componentsPanel, propertiesPanel) {
-		
+
 		// Get view elements
 		this.grid            = $('#'+ grid);
 		this.actionsPanel    = $('#'+ actionsPanel);
@@ -48,12 +48,13 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 
 		// init graph
 		//this.canvas = new draw2d.Canvas(grid);
+        this.makeWheelContextMenu("acdPops");
 
 		this._super(grid, 2000, 2000);
 		this.setScrollArea("#"+grid);
 
 		this.handleEvents();
-		
+
 		this.installEditPolicy(new CopyInterceptorPolicy());
 		this.installEditPolicy(new draw2d.policy.canvas.CoronaDecorationPolicy());
 		this.installEditPolicy(new draw2d.policy.canvas.SnapToGeometryEditPolicy());
@@ -90,8 +91,13 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 	},
 
     handleEvents: function() {
-    	 $(this.grid).bind("mousewheel", this.zoom);
-    	 $(this.grid).bind("onDrop", this.onDrop);
+    	$(this.grid).bind("mousewheel", this.zoom);
+    	$(this.grid).bind("onDrop", this.onDrop);
+
+        // Handle context menu
+        $(this.grid).bind("contextmenu", this.toggleWheelContextMenu);
+        $("#acdTrigger").bind("mousedown", this.toggleWheelContextMenu);
+        $("#acdWheelContextMenu").draggable()
     },
 
     zoom: function(event) {
@@ -100,6 +106,60 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 			else delta = 0.7;
 			visualEditor.ui.canvas.setZoom(visualEditor.ui.canvas.getZoom()*delta, true);	
     	}
+    },
+
+    /**
+     * Create the wheel context menu
+     */
+    makeWheelContextMenu: function(target_id) {
+        var pops = $("#" + target_id);
+
+        var btn = new visualEditor.ui.tools.saveTool();
+        btn.button = $('<li><div title="Save (ctrl+S)" id="saveBtn" class="btn-action fa fa-save fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops);
+
+        btn = new visualEditor.ui.tools.genTSPASSTool();
+        btn.button = $('<li><div title="Compile (ctrl+Enter)" id="genTSPASSBtn" class="btn-action fa fa-cog fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops);
+
+        btn = new visualEditor.ui.tools.AALSyntaxTool();
+        btn.button = $('<li><div title="AAL Syntax (ctrl+M)" id="aalSyntaxBtn" class="btn-action fa fa-file-code-o fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops);
+
+        btn = new visualEditor.ui.tools.templatesTool();
+        btn.button = $('<li><div title="AAL policy wizard (ctrl+e)" id="tmpBtn" class="btn-action fa fa-magic fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops);
+
+        btn = new visualEditor.ui.tools.clearOutputTool();
+        btn.button = $('<li><div title="Clear output" id="clearOutputBtn" class="btn-action fa fa-square-o  fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops);
+
+        // Bind the event listener to the trigger
+        $("#aceTrigger").bind("mousedown", visualEditor.ui.toggleAceWheelContextMenu);
+
+        // Make the wheel draggable
+        $("#aceWheelContextMenu").draggable()
+    },
+
+    toggleWheelContextMenu: function(e) {
+        var wcm = $("#acdWheelContextMenu");
+        wcm.toggle("display");
+        wcm.css("top", e.clientY - 120);
+        wcm.css("left", e.clientX - 120);
+
+        e.preventDefault();
+        $.popcircle('#acdPops', {
+            spacing:'-50px',
+            type:'full',        // full, half, quad
+            offset:0,	        // 0, 1, 2, 3, 4, 5, 6, 7 or 5.1
+            ease:'easeOutQuad', // jquery ease effects,
+            time:'fast'         // slow, fast, 1000
+        });
     }
 });
 

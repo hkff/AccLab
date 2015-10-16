@@ -281,7 +281,10 @@ visualEditor.ui.fileManager = {
                         visualEditor.ui.openedEditors[visualEditor.ui.activeTab.panel.title] = inPlaceAALEditor;
 
                         visualEditor.activeEditor.session.getUndoManager().markClean();
-                         $(".tab-handle-text")[0].innerHTML += " *";
+                        $(".tab-handle-text")[0].innerHTML += " *";
+
+                        // Add context menu handler
+                        $(inPlaceAALEditor.container).bind("contextmenu", visualEditor.ui.toggleAceWheelContextMenu);
 
 						// Switch to aal mode
                         visualEditor.aalMode();
