@@ -589,4 +589,6 @@ window.onload = function() {
     // TOREMOVE
     visualEditor.ui.fileManager.openFile("demo_CIEL.acd");
 
+    // Hide loader
+    $('#loading-image').hide();
 };
