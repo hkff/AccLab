@@ -96,8 +96,6 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 
         // Handle context menu
         $(this.grid).bind("contextmenu", this.toggleWheelContextMenu);
-        $("#acdTrigger").bind("mousedown", this.toggleWheelContextMenu);
-        $("#acdWheelContextMenu").draggable()
     },
 
     zoom: function(event) {
@@ -140,21 +138,21 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
         btn.control(pops);
 
         // Bind the event listener to the trigger
-        $("#aceTrigger").bind("mousedown", visualEditor.ui.toggleAceWheelContextMenu);
+        $("#acdTrigger").bind("mousedown", this.toggleWheelContextMenu);
 
         // Make the wheel draggable
-        $("#aceWheelContextMenu").draggable()
+        $("#acdWheelContextMenu").draggable();
     },
 
     toggleWheelContextMenu: function(e) {
         var wcm = $("#acdWheelContextMenu");
         wcm.toggle("display");
-        wcm.css("top", e.clientY - 120);
-        wcm.css("left", e.clientX - 120);
+        wcm.css("top", e.clientY - 75);
+        wcm.css("left", e.clientX - 75);
 
         e.preventDefault();
         $.popcircle('#acdPops', {
-            spacing:'-50px',
+            spacing:'-5px',
             type:'full',        // full, half, quad
             offset:0,	        // 0, 1, 2, 3, 4, 5, 6, 7 or 5.1
             ease:'easeOutQuad', // jquery ease effects,

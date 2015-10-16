@@ -28,7 +28,7 @@
         	var cls=$(this).attr('class');
         	var top=$(this).css('top');
         	var left=$(this).css('left');
-        	if(con_left==left&&con_top==top)
+        	if(parseInt(con_left)==parseInt(left) && parseInt(con_top)==parseInt(top))
         	{
         		
         		switch (config.type)

@@ -75,6 +75,9 @@ visualEditor.ui = {
 			"showMethod": "fadeIn",
 			"hideMethod": "fadeOut"
 		}
+
+		// Init ace editor wheelContextMenu
+    	this.makeAceWheelContextMenu("acePops");
 	},
 
 	// Events
@@ -383,10 +386,11 @@ visualEditor.ui = {
     toggleAceWheelContextMenu: function(e) {
         var wcm = $("#aceWheelContextMenu");
         wcm.toggle("display");
-        wcm.css("top", e.clientY - 120);
-        wcm.css("left", e.clientX - 120);
+        wcm.css("top", e.clientY - 75);
+        wcm.css("left", e.clientX - 75);
+
         $.popcircle('#acePops', {
-                spacing:'-50px',
+                spacing:'-5px',
                 type:'full',        // full, half, quad
                 offset:0,	        // 0, 1, 2, 3, 4, 5, 6, 7 or 5.1
                 ease:'easeOutQuad', // jquery ease effects,
