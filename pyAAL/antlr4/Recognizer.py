@@ -58,7 +58,7 @@ class Recognizer(object):
         return major, minor
 
     def checkVersion(self, toolVersion):
-        runtimeVersion = "4.4.1"
+        runtimeVersion = "4.5.2"
         rvmajor, rvminor = self.extractVersion(runtimeVersion)
         tvmajor, tvminor = self.extractVersion(toolVersion)
         if rvmajor!=tvmajor or rvminor!=tvminor:
@@ -66,6 +66,12 @@ class Recognizer(object):
 
     def addErrorListener(self, listener):
         self._listeners.append(listener)
+
+    def removeErrorListener(self, listener):
+        self._listeners.remove(listener)
+
+    def removeErrorListeners(self):
+        self._listeners = []
 
     def getTokenTypeMap(self):
         tokenNames = self.getTokenNames()

@@ -68,6 +68,7 @@ class RecognitionException(Exception):
 
     def __init__(self, message:str=None, recognizer:Recognizer=None, input:InputStream=None, ctx:ParserRulecontext=None):
         super().__init__(message)
+        self.message = message
         self.recognizer = recognizer
         self.input = input
         self.ctx = ctx
@@ -112,10 +113,10 @@ class LexerNoViableAltException(RecognitionException):
 
     def __str__(self):
         symbol = ""
-        if self.startIndex >= 0 and self.startIndex < self.input.size():
-            symbol = self.input.getText((self.startIndex,self.startIndex))
+        if self.startIndex >= 0 and self.startIndex < self.input.size:
+            symbol = self.input.getText(self.startIndex, self.startIndex)
             # TODO symbol = Utils.escapeWhitespace(symbol, false);
-        return "LexerNoViableAltException" + symbol
+        return "LexerNoViableAltException('" + symbol + "')"
 
 # Indicates that the parser could not decide which of two or more paths
 #  to take based upon the remaining input. It tracks the starting token
@@ -166,6 +167,7 @@ class FailedPredicateException(RecognitionException):
                          input=recognizer.getInputStream(), ctx=recognizer._ctx)
         s = recognizer._interp.atn.states[recognizer.state]
         trans = s.transitions[0]
+        from antlr4.atn.Transition import PredicateTransition
         if isinstance(trans, PredicateTransition):
             self.ruleIndex = trans.ruleIndex
             self.predicateIndex = trans.predIndex

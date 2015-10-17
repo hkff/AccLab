@@ -81,6 +81,7 @@ class ATNConfig(object):
         # outer context: depth &gt; 0.  Note that it may not be totally
         # accurate depth since I don't ever decrement. TODO: make it a boolean then
         self.reachesIntoOuterContext = 0 if config is None else config.reachesIntoOuterContext
+        self.precedenceFilterSuppressed = False if config is None else config.precedenceFilterSuppressed
 
 
     # An ATN configuration is equal to another if both have
@@ -96,7 +97,8 @@ class ATNConfig(object):
             return self.state.stateNumber==other.state.stateNumber \
                 and self.alt==other.alt \
                 and ((self.context is other.context) or (self.context==other.context)) \
-                and self.semanticContext==other.semanticContext
+                and self.semanticContext==other.semanticContext \
+                and self.precedenceFilterSuppressed==other.precedenceFilterSuppressed
 
     def __hash__(self):
         return hash( str(self.state.stateNumber) + "/" +
@@ -108,17 +110,17 @@ class ATNConfig(object):
         with StringIO() as buf:
             buf.write('(')
             buf.write(str(self.state))
-            buf.write(u",")
+            buf.write(",")
             buf.write(str(self.alt))
             if self.context is not None:
-                buf.write(u",[")
+                buf.write(",[")
                 buf.write(str(self.context))
-                buf.write(u"]")
+                buf.write("]")
             if self.semanticContext is not None and self.semanticContext is not SemanticContext.NONE:
-                buf.write(u",")
+                buf.write(",")
                 buf.write(str(self.semanticContext))
             if self.reachesIntoOuterContext>0:
-                buf.write(u",up=")
+                buf.write(",up=")
                 buf.write(str(self.reachesIntoOuterContext))
             buf.write(')')
             return buf.getvalue()

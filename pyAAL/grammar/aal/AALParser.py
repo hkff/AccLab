@@ -1,12 +1,8 @@
-# Generated from java-escape by ANTLR 4.4
+# Generated from grammar/aal/AAL.g4 by ANTLR 4.5.1
+# encoding: utf-8
 from antlr4 import *
 from io import StringIO
-package = globals().get("__package__", None)
-ischild = len(package)>0 if package is not None else False
-if ischild:
-    from .AALListener import AALListener
-else:
-    from AALListener import AALListener
+
 def serializedATN():
     with StringIO() as buf:
         buf.write("\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3O")
@@ -95,14 +91,14 @@ def serializedATN():
         buf.write("\2\2\2\u0094\u027c\3\2\2\2\u0096\u0287\3\2\2\2\u0098\u028a")
         buf.write("\3\2\2\2\u009a\u028d\3\2\2\2\u009c\u0293\3\2\2\2\u009e")
         buf.write("\u029c\3\2\2\2\u00a0\u029e\3\2\2\2\u00a2\u02a9\3\2\2\2")
-        buf.write("\u00a4\u00a5\7\b\2\2\u00a5\3\3\2\2\2\u00a6\u00a7\7\5\2")
-        buf.write("\2\u00a7\5\3\2\2\2\u00a8\u00a9\7\7\2\2\u00a9\7\3\2\2\2")
-        buf.write("\u00aa\u00ab\7\3\2\2\u00ab\t\3\2\2\2\u00ac\u00ad\7\4\2")
-        buf.write("\2\u00ad\13\3\2\2\2\u00ae\u00af\7\r\2\2\u00af\r\3\2\2")
-        buf.write("\2\u00b0\u00b1\7\6\2\2\u00b1\17\3\2\2\2\u00b2\u00b3\7")
-        buf.write("\t\2\2\u00b3\21\3\2\2\2\u00b4\u00b5\7\13\2\2\u00b5\23")
-        buf.write("\3\2\2\2\u00b6\u00b7\7\16\2\2\u00b7\25\3\2\2\2\u00b8\u00b9")
-        buf.write("\7\f\2\2\u00b9\27\3\2\2\2\u00ba\u00bb\7@\2\2\u00bb\31")
+        buf.write("\u00a4\u00a5\7\3\2\2\u00a5\3\3\2\2\2\u00a6\u00a7\7\4\2")
+        buf.write("\2\u00a7\5\3\2\2\2\u00a8\u00a9\7\5\2\2\u00a9\7\3\2\2\2")
+        buf.write("\u00aa\u00ab\7\6\2\2\u00ab\t\3\2\2\2\u00ac\u00ad\7\7\2")
+        buf.write("\2\u00ad\13\3\2\2\2\u00ae\u00af\7\b\2\2\u00af\r\3\2\2")
+        buf.write("\2\u00b0\u00b1\7\t\2\2\u00b1\17\3\2\2\2\u00b2\u00b3\7")
+        buf.write("\n\2\2\u00b3\21\3\2\2\2\u00b4\u00b5\7\13\2\2\u00b5\23")
+        buf.write("\3\2\2\2\u00b6\u00b7\7\f\2\2\u00b7\25\3\2\2\2\u00b8\u00b9")
+        buf.write("\7\r\2\2\u00b9\27\3\2\2\2\u00ba\u00bb\7@\2\2\u00bb\31")
         buf.write("\3\2\2\2\u00bc\u00bd\5\66\34\2\u00bd\33\3\2\2\2\u00be")
         buf.write("\u00c1\5&\24\2\u00bf\u00c1\5\62\32\2\u00c0\u00be\3\2\2")
         buf.write("\2\u00c0\u00bf\3\2\2\2\u00c1\35\3\2\2\2\u00c2\u00c3\7")
@@ -121,7 +117,7 @@ def serializedATN():
         buf.write("\2\2\2\u00e5\67\3\2\2\2\u00e6\u00e7\7@\2\2\u00e79\3\2")
         buf.write("\2\2\u00e8\u00ec\7@\2\2\u00e9\u00ea\5\20\t\2\u00ea\u00eb")
         buf.write("\58\35\2\u00eb\u00ed\3\2\2\2\u00ec\u00e9\3\2\2\2\u00ec")
-        buf.write("\u00ed\3\2\2\2\u00ed;\3\2\2\2\u00ee\u00ef\7\n\2\2\u00ef")
+        buf.write("\u00ed\3\2\2\2\u00ed;\3\2\2\2\u00ee\u00ef\7\16\2\2\u00ef")
         buf.write("\u00f0\7@\2\2\u00f0\u00f4\5\2\2\2\u00f1\u00f3\7@\2\2\u00f2")
         buf.write("\u00f1\3\2\2\2\u00f3\u00f6\3\2\2\2\u00f4\u00f2\3\2\2\2")
         buf.write("\u00f4\u00f5\3\2\2\2\u00f5\u00f7\3\2\2\2\u00f6\u00f4\3")
@@ -317,11 +313,11 @@ def serializedATN():
         buf.write("\u0239\u0242\u0246\u024a\u024e\u0255\u025a\u0267\u026d")
         buf.write("\u0277\u0282\u0296\u02a4")
         return buf.getvalue()
-		
+
 
 class AALParser ( Parser ):
 
-    grammarFileName = "java-escape"
+    grammarFileName = "AAL.g4"
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -329,100 +325,41 @@ class AALParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    EOF = Token.EOF
-    T__11=1
-    T__10=2
-    T__9=3
-    T__8=4
-    T__7=5
-    T__6=6
-    T__5=7
-    T__4=8
-    T__3=9
-    T__2=10
-    T__1=11
-    T__0=12
-    D_service=13
-    D_agent=14
-    D_data=15
-    D_clause=16
-    D_type=17
-    D_types=18
-    C_auditing=19
-    C_ifviolated=20
-    O_or=21
-    O_and=22
-    O_onlywhen=23
-    O_then=24
-    O_if=25
-    O_not=26
-    O_where=27
-    O_after=28
-    O_before=29
-    T_must=30
-    T_mustnot=31
-    T_always=32
-    T_never=33
-    T_sometime=34
-    T_until=35
-    T_unless=36
-    T_next=37
-    A_permit=38
-    A_deny=39
-    Q_forall=40
-    Q_exists=41
-    M_subject=42
-    M_rservice=43
-    M_pservice=44
-    M_purpose=45
-    M_extends=46
-    M_attr=47
-    M_actions=48
-    M_macro=49
-    M_call=50
-    M_load=51
-    M_check=52
-    M_apply=53
-    M_exec=54
-    M_behavior=55
-    M_env=56
-    C_clause=57
-    C_usage=58
-    C_audit=59
-    C_rectification=60
-    C_violation=61
-    ID=62
-    INT=63
-    NEWLINE=64
-    WS=65
-    BLANK=66
-    STRING=67
-    COMMENT=68
-    MLCOMMENT=69
-    MCODE=70
-    NEGATION=71
-    CONJUNCTION=72
-    DISJUNCTION=73
-    IMPLICATION=74
-    EQUIVALENCE=75
-    CONSTANTS=76
-    PREDICATE=77
+    literalNames = [ "<INVALID>", "'('", "')'", "'['", "']'", "'{'", "'}'", 
+                     "'.'", "':'", "'=='", "'!='", "'/'", "'@'", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "'SUBJECT'", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "'&'", "'|'" ]
 
-    tokenNames = [ "<INVALID>", "']'", "'{'", "')'", "'.'", "'['", "'('", 
-                   "':'", "'@'", "'=='", "'/'", "'}'", "'!='", "D_service", 
-                   "D_agent", "D_data", "D_clause", "D_type", "D_types", 
-                   "C_auditing", "C_ifviolated", "O_or", "O_and", "O_onlywhen", 
-                   "O_then", "O_if", "O_not", "O_where", "O_after", "O_before", 
-                   "T_must", "T_mustnot", "T_always", "T_never", "T_sometime", 
-                   "T_until", "T_unless", "T_next", "A_permit", "A_deny", 
-                   "Q_forall", "Q_exists", "M_subject", "M_rservice", "M_pservice", 
-                   "M_purpose", "M_extends", "M_attr", "M_actions", "M_macro", 
-                   "M_call", "M_load", "M_check", "M_apply", "M_exec", "M_behavior", 
-                   "M_env", "C_clause", "C_usage", "C_audit", "C_rectification", 
-                   "C_violation", "ID", "INT", "NEWLINE", "WS", "BLANK", 
-                   "STRING", "COMMENT", "MLCOMMENT", "MCODE", "NEGATION", 
-                   "'&'", "'|'", "IMPLICATION", "EQUIVALENCE", "CONSTANTS", 
-                   "PREDICATE" ]
+    symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                      "<INVALID>", "D_service", "D_agent", "D_data", "D_clause", 
+                      "D_type", "D_types", "C_auditing", "C_ifviolated", 
+                      "O_or", "O_and", "O_onlywhen", "O_then", "O_if", "O_not", 
+                      "O_where", "O_after", "O_before", "T_must", "T_mustnot", 
+                      "T_always", "T_never", "T_sometime", "T_until", "T_unless", 
+                      "T_next", "A_permit", "A_deny", "Q_forall", "Q_exists", 
+                      "M_subject", "M_rservice", "M_pservice", "M_purpose", 
+                      "M_extends", "M_attr", "M_actions", "M_macro", "M_call", 
+                      "M_load", "M_check", "M_apply", "M_exec", "M_behavior", 
+                      "M_env", "C_clause", "C_usage", "C_audit", "C_rectification", 
+                      "C_violation", "ID", "INT", "NEWLINE", "WS", "BLANK", 
+                      "STRING", "COMMENT", "MLCOMMENT", "MCODE", "NEGATION", 
+                      "CONJUNCTION", "DISJUNCTION", "IMPLICATION", "EQUIVALENCE", 
+                      "CONSTANTS", "PREDICATE" ]
 
     RULE_h_lpar = 0
     RULE_h_rpar = 1
@@ -525,9 +462,88 @@ class AALParser ( Parser ):
                    "exec", "loadlib", "behavior", "ltlCheck", "check", "checkApply", 
                    "env" ]
 
+    EOF = Token.EOF
+    T__0=1
+    T__1=2
+    T__2=3
+    T__3=4
+    T__4=5
+    T__5=6
+    T__6=7
+    T__7=8
+    T__8=9
+    T__9=10
+    T__10=11
+    T__11=12
+    D_service=13
+    D_agent=14
+    D_data=15
+    D_clause=16
+    D_type=17
+    D_types=18
+    C_auditing=19
+    C_ifviolated=20
+    O_or=21
+    O_and=22
+    O_onlywhen=23
+    O_then=24
+    O_if=25
+    O_not=26
+    O_where=27
+    O_after=28
+    O_before=29
+    T_must=30
+    T_mustnot=31
+    T_always=32
+    T_never=33
+    T_sometime=34
+    T_until=35
+    T_unless=36
+    T_next=37
+    A_permit=38
+    A_deny=39
+    Q_forall=40
+    Q_exists=41
+    M_subject=42
+    M_rservice=43
+    M_pservice=44
+    M_purpose=45
+    M_extends=46
+    M_attr=47
+    M_actions=48
+    M_macro=49
+    M_call=50
+    M_load=51
+    M_check=52
+    M_apply=53
+    M_exec=54
+    M_behavior=55
+    M_env=56
+    C_clause=57
+    C_usage=58
+    C_audit=59
+    C_rectification=60
+    C_violation=61
+    ID=62
+    INT=63
+    NEWLINE=64
+    WS=65
+    BLANK=66
+    STRING=67
+    COMMENT=68
+    MLCOMMENT=69
+    MCODE=70
+    NEGATION=71
+    CONJUNCTION=72
+    DISJUNCTION=73
+    IMPLICATION=74
+    EQUIVALENCE=75
+    CONSTANTS=76
+    PREDICATE=77
+
     def __init__(self, input:TokenStream):
         super().__init__(input)
-        self.checkVersion("4.4")
+        self.checkVersion("4.5.1")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
@@ -544,11 +560,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_lpar
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_lpar" ):
                 listener.enterH_lpar(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_lpar" ):
                 listener.exitH_lpar(self)
 
 
@@ -561,7 +577,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 162
-            self.match(self.T__6)
+            self.match(AALParser.T__0)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -581,11 +597,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_rpar
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_rpar" ):
                 listener.enterH_rpar(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_rpar" ):
                 listener.exitH_rpar(self)
 
 
@@ -598,7 +614,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 164
-            self.match(self.T__9)
+            self.match(AALParser.T__1)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -618,11 +634,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_lbar
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_lbar" ):
                 listener.enterH_lbar(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_lbar" ):
                 listener.exitH_lbar(self)
 
 
@@ -635,7 +651,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 166
-            self.match(self.T__7)
+            self.match(AALParser.T__2)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -655,11 +671,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_rbar
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_rbar" ):
                 listener.enterH_rbar(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_rbar" ):
                 listener.exitH_rbar(self)
 
 
@@ -672,7 +688,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 168
-            self.match(self.T__11)
+            self.match(AALParser.T__3)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -692,11 +708,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_lmar
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_lmar" ):
                 listener.enterH_lmar(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_lmar" ):
                 listener.exitH_lmar(self)
 
 
@@ -709,7 +725,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 170
-            self.match(self.T__10)
+            self.match(AALParser.T__4)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -729,11 +745,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_rmar
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_rmar" ):
                 listener.enterH_rmar(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_rmar" ):
                 listener.exitH_rmar(self)
 
 
@@ -746,7 +762,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 172
-            self.match(self.T__1)
+            self.match(AALParser.T__5)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -766,11 +782,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_dot
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_dot" ):
                 listener.enterH_dot(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_dot" ):
                 listener.exitH_dot(self)
 
 
@@ -783,7 +799,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 174
-            self.match(self.T__8)
+            self.match(AALParser.T__6)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -803,11 +819,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_colon
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_colon" ):
                 listener.enterH_colon(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_colon" ):
                 listener.exitH_colon(self)
 
 
@@ -820,7 +836,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 176
-            self.match(self.T__5)
+            self.match(AALParser.T__7)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -840,11 +856,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_equal
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_equal" ):
                 listener.enterH_equal(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_equal" ):
                 listener.exitH_equal(self)
 
 
@@ -857,7 +873,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 178
-            self.match(self.T__3)
+            self.match(AALParser.T__8)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -877,11 +893,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_inequal
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_inequal" ):
                 listener.enterH_inequal(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_inequal" ):
                 listener.exitH_inequal(self)
 
 
@@ -894,7 +910,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 180
-            self.match(self.T__0)
+            self.match(AALParser.T__9)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -914,11 +930,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_slash
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_slash" ):
                 listener.enterH_slash(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_slash" ):
                 listener.exitH_slash(self)
 
 
@@ -931,7 +947,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 182
-            self.match(self.T__2)
+            self.match(AALParser.T__10)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -953,11 +969,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_data
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_data" ):
                 listener.enterH_data(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_data" ):
                 listener.exitH_data(self)
 
 
@@ -970,7 +986,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 184
-            self.match(self.ID)
+            self.match(AALParser.ID)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -993,11 +1009,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_value
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_value" ):
                 listener.enterH_value(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_value" ):
                 listener.exitH_value(self)
 
 
@@ -1009,7 +1025,7 @@ class AALParser ( Parser ):
         self.enterRule(localctx, 24, self.RULE_h_value)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 186 
+            self.state = 186
             self.h_constant()
         except RecognitionException as re:
             localctx.exception = re
@@ -1037,11 +1053,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_time
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_time" ):
                 listener.enterH_time(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_time" ):
                 listener.exitH_time(self)
 
 
@@ -1054,14 +1070,14 @@ class AALParser ( Parser ):
         try:
             self.state = 190
             token = self._input.LA(1)
-            if token in [self.STRING]:
+            if token in [AALParser.STRING]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 188 
+                self.state = 188
                 self.h_date()
 
-            elif token in [self.INT]:
+            elif token in [AALParser.INT]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 189 
+                self.state = 189
                 self.h_duration()
 
             else:
@@ -1088,11 +1104,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_agentId
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_agentId" ):
                 listener.enterH_agentId(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_agentId" ):
                 listener.exitH_agentId(self)
 
 
@@ -1105,7 +1121,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 192
-            self.match(self.ID)
+            self.match(AALParser.ID)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1127,11 +1143,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_varTypeId
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_varTypeId" ):
                 listener.enterH_varTypeId(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_varTypeId" ):
                 listener.exitH_varTypeId(self)
 
 
@@ -1144,7 +1160,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 194
-            self.match(self.ID)
+            self.match(AALParser.ID)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1166,11 +1182,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_varId
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_varId" ):
                 listener.enterH_varId(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_varId" ):
                 listener.exitH_varId(self)
 
 
@@ -1183,7 +1199,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 196
-            self.match(self.ID)
+            self.match(AALParser.ID)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1205,11 +1221,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_dataId
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_dataId" ):
                 listener.enterH_dataId(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_dataId" ):
                 listener.exitH_dataId(self)
 
 
@@ -1222,7 +1238,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 198
-            self.match(self.ID)
+            self.match(AALParser.ID)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1244,11 +1260,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_date
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_date" ):
                 listener.enterH_date(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_date" ):
                 listener.exitH_date(self)
 
 
@@ -1261,7 +1277,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 200
-            self.match(self.STRING)
+            self.match(AALParser.STRING)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1283,11 +1299,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_purposeId
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_purposeId" ):
                 listener.enterH_purposeId(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_purposeId" ):
                 listener.exitH_purposeId(self)
 
 
@@ -1300,7 +1316,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 202
-            self.match(self.ID)
+            self.match(AALParser.ID)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1322,11 +1338,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_serviceId
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_serviceId" ):
                 listener.enterH_serviceId(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_serviceId" ):
                 listener.exitH_serviceId(self)
 
 
@@ -1339,7 +1355,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 204
-            self.match(self.ID)
+            self.match(AALParser.ID)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1361,11 +1377,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_clauseId
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_clauseId" ):
                 listener.enterH_clauseId(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_clauseId" ):
                 listener.exitH_clauseId(self)
 
 
@@ -1378,7 +1394,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 206
-            self.match(self.ID)
+            self.match(AALParser.ID)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1400,11 +1416,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_attribute
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_attribute" ):
                 listener.enterH_attribute(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_attribute" ):
                 listener.exitH_attribute(self)
 
 
@@ -1417,7 +1433,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 208
-            self.match(self.ID)
+            self.match(AALParser.ID)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1432,24 +1448,24 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def COMMENT(self):
+            return self.getToken(AALParser.COMMENT, 0)
+
         def NEWLINE(self):
             return self.getToken(AALParser.NEWLINE, 0)
 
         def MLCOMMENT(self):
             return self.getToken(AALParser.MLCOMMENT, 0)
 
-        def COMMENT(self):
-            return self.getToken(AALParser.COMMENT, 0)
-
         def getRuleIndex(self):
             return AALParser.RULE_h_comment
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_comment" ):
                 listener.enterH_comment(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_comment" ):
                 listener.exitH_comment(self)
 
 
@@ -1462,19 +1478,19 @@ class AALParser ( Parser ):
         try:
             self.state = 214
             token = self._input.LA(1)
-            if token in [self.COMMENT]:
+            if token in [AALParser.COMMENT]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 210
-                self.match(self.COMMENT)
+                self.match(AALParser.COMMENT)
                 self.state = 211
-                self.match(self.NEWLINE)
+                self.match(AALParser.NEWLINE)
 
-            elif token in [self.MLCOMMENT]:
+            elif token in [AALParser.MLCOMMENT]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 212
-                self.match(self.MLCOMMENT)
+                self.match(AALParser.MLCOMMENT)
                 self.state = 213
-                self.match(self.NEWLINE)
+                self.match(AALParser.NEWLINE)
 
             else:
                 raise NoViableAltException(self)
@@ -1507,11 +1523,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_duration
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_duration" ):
                 listener.enterH_duration(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_duration" ):
                 listener.exitH_duration(self)
 
 
@@ -1524,15 +1540,15 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 216
-            self.match(self.INT)
+            self.match(AALParser.INT)
             self.state = 217
-            self.match(self.INT)
-            self.state = 218 
+            self.match(AALParser.INT)
+            self.state = 218
             self.h_colon()
             self.state = 219
-            self.match(self.INT)
+            self.match(AALParser.INT)
             self.state = 220
-            self.match(self.INT)
+            self.match(AALParser.INT)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1547,23 +1563,23 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def h_variable(self):
-            return self.getTypedRuleContext(AALParser.H_variableContext,0)
-
-
         def h_constant(self):
             return self.getTypedRuleContext(AALParser.H_constantContext,0)
+
+
+        def h_variable(self):
+            return self.getTypedRuleContext(AALParser.H_variableContext,0)
 
 
         def getRuleIndex(self):
             return AALParser.RULE_h_parameters
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_parameters" ):
                 listener.enterH_parameters(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_parameters" ):
                 listener.exitH_parameters(self)
 
 
@@ -1576,14 +1592,14 @@ class AALParser ( Parser ):
         try:
             self.state = 224
             token = self._input.LA(1)
-            if token in [self.INT, self.STRING]:
+            if token in [AALParser.INT, AALParser.STRING]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 222 
+                self.state = 222
                 self.h_constant()
 
-            elif token in [self.ID]:
+            elif token in [AALParser.ID]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 223 
+                self.state = 223
                 self.h_variable()
 
             else:
@@ -1613,11 +1629,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_constant
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_constant" ):
                 listener.enterH_constant(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_constant" ):
                 listener.exitH_constant(self)
 
 
@@ -1634,7 +1650,8 @@ class AALParser ( Parser ):
             _la = self._input.LA(1)
             if not(_la==AALParser.INT or _la==AALParser.STRING):
                 self._errHandler.recoverInline(self)
-            self.consume()
+            else:
+                self.consume()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1656,11 +1673,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_type
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_type" ):
                 listener.enterH_type(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_type" ):
                 listener.exitH_type(self)
 
 
@@ -1673,7 +1690,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 228
-            self.match(self.ID)
+            self.match(AALParser.ID)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1703,11 +1720,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_h_variable
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_variable" ):
                 listener.enterH_variable(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_variable" ):
                 listener.exitH_variable(self)
 
 
@@ -1720,13 +1737,13 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 230
-            self.match(self.ID)
+            self.match(AALParser.ID)
             self.state = 234
             la_ = self._interp.adaptivePredict(self._input,3,self._ctx)
             if la_ == 1:
-                self.state = 231 
+                self.state = 231
                 self.h_colon()
-                self.state = 232 
+                self.state = 232
                 self.h_type()
 
 
@@ -1744,6 +1761,12 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def ID(self, i:int=None):
+            if i is None:
+                return self.getTokens(AALParser.ID)
+            else:
+                return self.getToken(AALParser.ID, i)
+
         def h_lpar(self):
             return self.getTypedRuleContext(AALParser.H_lparContext,0)
 
@@ -1752,21 +1775,15 @@ class AALParser ( Parser ):
             return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
-        def ID(self, i:int=None):
-            if i is None:
-                return self.getTokens(AALParser.ID)
-            else:
-                return self.getToken(AALParser.ID, i)
-
         def getRuleIndex(self):
             return AALParser.RULE_h_predicate
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterH_predicate" ):
                 listener.enterH_predicate(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitH_predicate" ):
                 listener.exitH_predicate(self)
 
 
@@ -1780,22 +1797,22 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 236
-            self.match(self.T__4)
+            self.match(AALParser.T__11)
             self.state = 237
-            self.match(self.ID)
-            self.state = 238 
+            self.match(AALParser.ID)
+            self.state = 238
             self.h_lpar()
             self.state = 242
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==AALParser.ID:
                 self.state = 239
-                self.match(self.ID)
+                self.match(AALParser.ID)
                 self.state = 244
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 245 
+            self.state = 245
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -1819,11 +1836,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_main
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterMain" ):
                 listener.enterMain(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitMain" ):
                 listener.exitMain(self)
 
 
@@ -1835,7 +1852,7 @@ class AALParser ( Parser ):
         self.enterRule(localctx, 60, self.RULE_main)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 247 
+            self.state = 247
             self.aalprog()
         except RecognitionException as re:
             localctx.exception = re
@@ -1851,6 +1868,55 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def clause(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(AALParser.ClauseContext)
+            else:
+                return self.getTypedRuleContext(AALParser.ClauseContext,i)
+
+
+        def declaration(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(AALParser.DeclarationContext)
+            else:
+                return self.getTypedRuleContext(AALParser.DeclarationContext,i)
+
+
+        def h_comment(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(AALParser.H_commentContext)
+            else:
+                return self.getTypedRuleContext(AALParser.H_commentContext,i)
+
+
+        def macro(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(AALParser.MacroContext)
+            else:
+                return self.getTypedRuleContext(AALParser.MacroContext,i)
+
+
+        def macroCall(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(AALParser.MacroCallContext)
+            else:
+                return self.getTypedRuleContext(AALParser.MacroCallContext,i)
+
+
+        def loadlib(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(AALParser.LoadlibContext)
+            else:
+                return self.getTypedRuleContext(AALParser.LoadlibContext,i)
+
+
+        def ltlCheck(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(AALParser.LtlCheckContext)
+            else:
+                return self.getTypedRuleContext(AALParser.LtlCheckContext,i)
+
+
         def checkApply(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(AALParser.CheckApplyContext)
@@ -1865,32 +1931,11 @@ class AALParser ( Parser ):
                 return self.getTypedRuleContext(AALParser.ExecContext,i)
 
 
-        def h_comment(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(AALParser.H_commentContext)
-            else:
-                return self.getTypedRuleContext(AALParser.H_commentContext,i)
-
-
-        def clause(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(AALParser.ClauseContext)
-            else:
-                return self.getTypedRuleContext(AALParser.ClauseContext,i)
-
-
         def behavior(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(AALParser.BehaviorContext)
             else:
                 return self.getTypedRuleContext(AALParser.BehaviorContext,i)
-
-
-        def declaration(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(AALParser.DeclarationContext)
-            else:
-                return self.getTypedRuleContext(AALParser.DeclarationContext,i)
 
 
         def env(self, i:int=None):
@@ -1900,43 +1945,15 @@ class AALParser ( Parser ):
                 return self.getTypedRuleContext(AALParser.EnvContext,i)
 
 
-        def loadlib(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(AALParser.LoadlibContext)
-            else:
-                return self.getTypedRuleContext(AALParser.LoadlibContext,i)
-
-
-        def macroCall(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(AALParser.MacroCallContext)
-            else:
-                return self.getTypedRuleContext(AALParser.MacroCallContext,i)
-
-
-        def ltlCheck(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(AALParser.LtlCheckContext)
-            else:
-                return self.getTypedRuleContext(AALParser.LtlCheckContext,i)
-
-
-        def macro(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(AALParser.MacroContext)
-            else:
-                return self.getTypedRuleContext(AALParser.MacroContext,i)
-
-
         def getRuleIndex(self):
             return AALParser.RULE_aalprog
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterAalprog" ):
                 listener.enterAalprog(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitAalprog" ):
                 listener.exitAalprog(self)
 
 
@@ -1952,51 +1969,51 @@ class AALParser ( Parser ):
             self.state = 262
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while ((((_la - 13)) & ~0x3f) == 0 and ((1 << (_la - 13)) & ((1 << (self.D_service - 13)) | (1 << (self.D_agent - 13)) | (1 << (self.D_data - 13)) | (1 << (self.D_clause - 13)) | (1 << (self.D_type - 13)) | (1 << (self.M_macro - 13)) | (1 << (self.M_call - 13)) | (1 << (self.M_load - 13)) | (1 << (self.M_check - 13)) | (1 << (self.M_apply - 13)) | (1 << (self.M_exec - 13)) | (1 << (self.M_behavior - 13)) | (1 << (self.M_env - 13)) | (1 << (self.ID - 13)) | (1 << (self.COMMENT - 13)) | (1 << (self.MLCOMMENT - 13)))) != 0):
+            while ((((_la - 13)) & ~0x3f) == 0 and ((1 << (_la - 13)) & ((1 << (AALParser.D_service - 13)) | (1 << (AALParser.D_agent - 13)) | (1 << (AALParser.D_data - 13)) | (1 << (AALParser.D_clause - 13)) | (1 << (AALParser.D_type - 13)) | (1 << (AALParser.M_macro - 13)) | (1 << (AALParser.M_call - 13)) | (1 << (AALParser.M_load - 13)) | (1 << (AALParser.M_check - 13)) | (1 << (AALParser.M_apply - 13)) | (1 << (AALParser.M_exec - 13)) | (1 << (AALParser.M_behavior - 13)) | (1 << (AALParser.M_env - 13)) | (1 << (AALParser.ID - 13)) | (1 << (AALParser.COMMENT - 13)) | (1 << (AALParser.MLCOMMENT - 13)))) != 0):
                 self.state = 260
                 token = self._input.LA(1)
-                if token in [self.D_clause]:
-                    self.state = 249 
+                if token in [AALParser.D_clause]:
+                    self.state = 249
                     self.clause()
 
-                elif token in [self.D_service, self.D_agent, self.D_data, self.D_type, self.ID]:
-                    self.state = 250 
+                elif token in [AALParser.D_service, AALParser.D_agent, AALParser.D_data, AALParser.D_type, AALParser.ID]:
+                    self.state = 250
                     self.declaration()
 
-                elif token in [self.COMMENT, self.MLCOMMENT]:
-                    self.state = 251 
+                elif token in [AALParser.COMMENT, AALParser.MLCOMMENT]:
+                    self.state = 251
                     self.h_comment()
 
-                elif token in [self.M_macro]:
-                    self.state = 252 
+                elif token in [AALParser.M_macro]:
+                    self.state = 252
                     self.macro()
 
-                elif token in [self.M_call]:
-                    self.state = 253 
+                elif token in [AALParser.M_call]:
+                    self.state = 253
                     self.macroCall()
 
-                elif token in [self.M_load]:
-                    self.state = 254 
+                elif token in [AALParser.M_load]:
+                    self.state = 254
                     self.loadlib()
 
-                elif token in [self.M_check]:
-                    self.state = 255 
+                elif token in [AALParser.M_check]:
+                    self.state = 255
                     self.ltlCheck()
 
-                elif token in [self.M_apply]:
-                    self.state = 256 
+                elif token in [AALParser.M_apply]:
+                    self.state = 256
                     self.checkApply()
 
-                elif token in [self.M_exec]:
-                    self.state = 257 
+                elif token in [AALParser.M_exec]:
+                    self.state = 257
                     self.exec()
 
-                elif token in [self.M_behavior]:
-                    self.state = 258 
+                elif token in [AALParser.M_behavior]:
+                    self.state = 258
                     self.behavior()
 
-                elif token in [self.M_env]:
-                    self.state = 259 
+                elif token in [AALParser.M_env]:
+                    self.state = 259
                     self.env()
 
                 else:
@@ -2020,38 +2037,38 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def NEWLINE(self):
-            return self.getToken(AALParser.NEWLINE, 0)
-
-        def dataDec(self):
-            return self.getTypedRuleContext(AALParser.DataDecContext,0)
+        def agentDec(self):
+            return self.getTypedRuleContext(AALParser.AgentDecContext,0)
 
 
         def serviceDec(self):
             return self.getTypedRuleContext(AALParser.ServiceDecContext,0)
 
 
-        def varDec(self):
-            return self.getTypedRuleContext(AALParser.VarDecContext,0)
+        def dataDec(self):
+            return self.getTypedRuleContext(AALParser.DataDecContext,0)
 
 
         def typeDec(self):
             return self.getTypedRuleContext(AALParser.TypeDecContext,0)
 
 
-        def agentDec(self):
-            return self.getTypedRuleContext(AALParser.AgentDecContext,0)
+        def varDec(self):
+            return self.getTypedRuleContext(AALParser.VarDecContext,0)
 
+
+        def NEWLINE(self):
+            return self.getToken(AALParser.NEWLINE, 0)
 
         def getRuleIndex(self):
             return AALParser.RULE_declaration
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterDeclaration" ):
                 listener.enterDeclaration(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitDeclaration" ):
                 listener.exitDeclaration(self)
 
 
@@ -2066,24 +2083,24 @@ class AALParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 270
             token = self._input.LA(1)
-            if token in [self.D_agent]:
-                self.state = 265 
+            if token in [AALParser.D_agent]:
+                self.state = 265
                 self.agentDec()
 
-            elif token in [self.D_service]:
-                self.state = 266 
+            elif token in [AALParser.D_service]:
+                self.state = 266
                 self.serviceDec()
 
-            elif token in [self.D_data]:
-                self.state = 267 
+            elif token in [AALParser.D_data]:
+                self.state = 267
                 self.dataDec()
 
-            elif token in [self.D_type]:
-                self.state = 268 
+            elif token in [AALParser.D_type]:
+                self.state = 268
                 self.typeDec()
 
-            elif token in [self.ID]:
-                self.state = 269 
+            elif token in [AALParser.ID]:
+                self.state = 269
                 self.varDec()
 
             else:
@@ -2093,7 +2110,7 @@ class AALParser ( Parser ):
             _la = self._input.LA(1)
             if _la==AALParser.NEWLINE:
                 self.state = 272
-                self.match(self.NEWLINE)
+                self.match(AALParser.NEWLINE)
 
 
         except RecognitionException as re:
@@ -2110,6 +2127,13 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def D_agent(self):
+            return self.getToken(AALParser.D_agent, 0)
+
+        def h_agentId(self):
+            return self.getTypedRuleContext(AALParser.H_agentIdContext,0)
+
+
         def D_types(self):
             return self.getToken(AALParser.D_types, 0)
 
@@ -2121,21 +2145,6 @@ class AALParser ( Parser ):
             return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
-        def psService(self):
-            return self.getTypedRuleContext(AALParser.PsServiceContext,0)
-
-
-        def h_agentId(self):
-            return self.getTypedRuleContext(AALParser.H_agentIdContext,0)
-
-
-        def D_agent(self):
-            return self.getToken(AALParser.D_agent, 0)
-
-        def rsService(self):
-            return self.getTypedRuleContext(AALParser.RsServiceContext,0)
-
-
         def agentType(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(AALParser.AgentTypeContext)
@@ -2143,15 +2152,23 @@ class AALParser ( Parser ):
                 return self.getTypedRuleContext(AALParser.AgentTypeContext,i)
 
 
+        def rsService(self):
+            return self.getTypedRuleContext(AALParser.RsServiceContext,0)
+
+
+        def psService(self):
+            return self.getTypedRuleContext(AALParser.PsServiceContext,0)
+
+
         def getRuleIndex(self):
             return AALParser.RULE_agentDec
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterAgentDec" ):
                 listener.enterAgentDec(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitAgentDec" ):
                 listener.exitAgentDec(self)
 
 
@@ -2165,40 +2182,40 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 275
-            self.match(self.D_agent)
-            self.state = 276 
+            self.match(AALParser.D_agent)
+            self.state = 276
             self.h_agentId()
             self.state = 294
             _la = self._input.LA(1)
             if _la==AALParser.D_types:
                 self.state = 277
-                self.match(self.D_types)
-                self.state = 278 
+                self.match(AALParser.D_types)
+                self.state = 278
                 self.h_lpar()
                 self.state = 282
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==AALParser.ID:
-                    self.state = 279 
+                    self.state = 279
                     self.agentType()
                     self.state = 284
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
-                self.state = 285 
+                self.state = 285
                 self.h_rpar()
                 self.state = 292
                 token = self._input.LA(1)
-                if token in [self.M_rservice]:
-                    self.state = 286 
+                if token in [AALParser.M_rservice]:
+                    self.state = 286
                     self.rsService()
-                    self.state = 287 
+                    self.state = 287
                     self.psService()
 
-                elif token in [self.M_pservice]:
-                    self.state = 289 
+                elif token in [AALParser.M_pservice]:
+                    self.state = 289
                     self.psService()
-                    self.state = 290 
+                    self.state = 290
                     self.rsService()
 
                 else:
@@ -2220,12 +2237,15 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def D_types(self):
-            return self.getToken(AALParser.D_types, 0)
+        def D_data(self):
+            return self.getToken(AALParser.D_data, 0)
 
         def h_dataId(self):
             return self.getTypedRuleContext(AALParser.H_dataIdContext,0)
 
+
+        def D_types(self):
+            return self.getToken(AALParser.D_types, 0)
 
         def h_lpar(self):
             return self.getTypedRuleContext(AALParser.H_lparContext,0)
@@ -2235,14 +2255,6 @@ class AALParser ( Parser ):
             return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
-        def psService(self):
-            return self.getTypedRuleContext(AALParser.PsServiceContext,0)
-
-
-        def h_agentId(self):
-            return self.getTypedRuleContext(AALParser.H_agentIdContext,0)
-
-
         def dataType(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(AALParser.DataTypeContext)
@@ -2250,25 +2262,30 @@ class AALParser ( Parser ):
                 return self.getTypedRuleContext(AALParser.DataTypeContext,i)
 
 
+        def M_subject(self):
+            return self.getToken(AALParser.M_subject, 0)
+
+        def h_agentId(self):
+            return self.getTypedRuleContext(AALParser.H_agentIdContext,0)
+
+
         def rsService(self):
             return self.getTypedRuleContext(AALParser.RsServiceContext,0)
 
 
-        def D_data(self):
-            return self.getToken(AALParser.D_data, 0)
+        def psService(self):
+            return self.getTypedRuleContext(AALParser.PsServiceContext,0)
 
-        def M_subject(self):
-            return self.getToken(AALParser.M_subject, 0)
 
         def getRuleIndex(self):
             return AALParser.RULE_dataDec
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterDataDec" ):
                 listener.enterDataDec(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitDataDec" ):
                 listener.exitDataDec(self)
 
 
@@ -2282,40 +2299,40 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 296
-            self.match(self.D_data)
-            self.state = 297 
+            self.match(AALParser.D_data)
+            self.state = 297
             self.h_dataId()
             self.state = 298
-            self.match(self.D_types)
-            self.state = 299 
+            self.match(AALParser.D_types)
+            self.state = 299
             self.h_lpar()
             self.state = 303
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==AALParser.ID:
-                self.state = 300 
+                self.state = 300
                 self.dataType()
                 self.state = 305
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 306 
+            self.state = 306
             self.h_rpar()
             self.state = 313
             token = self._input.LA(1)
-            if token in [self.M_rservice]:
-                self.state = 307 
+            if token in [AALParser.M_rservice]:
+                self.state = 307
                 self.rsService()
-                self.state = 308 
+                self.state = 308
                 self.psService()
                 pass
-            elif token in [self.M_pservice]:
-                self.state = 310 
+            elif token in [AALParser.M_pservice]:
+                self.state = 310
                 self.psService()
-                self.state = 311 
+                self.state = 311
                 self.rsService()
                 pass
-            elif token in [self.EOF, self.D_service, self.D_agent, self.D_data, self.D_clause, self.D_type, self.M_subject, self.M_macro, self.M_call, self.M_load, self.M_check, self.M_apply, self.M_exec, self.M_behavior, self.M_env, self.ID, self.NEWLINE, self.COMMENT, self.MLCOMMENT]:
+            elif token in [AALParser.EOF, AALParser.D_service, AALParser.D_agent, AALParser.D_data, AALParser.D_clause, AALParser.D_type, AALParser.M_subject, AALParser.M_macro, AALParser.M_call, AALParser.M_load, AALParser.M_check, AALParser.M_apply, AALParser.M_exec, AALParser.M_behavior, AALParser.M_env, AALParser.ID, AALParser.NEWLINE, AALParser.COMMENT, AALParser.MLCOMMENT]:
                 pass
             else:
                 raise NoViableAltException(self)
@@ -2323,8 +2340,8 @@ class AALParser ( Parser ):
             _la = self._input.LA(1)
             if _la==AALParser.M_subject:
                 self.state = 315
-                self.match(self.M_subject)
-                self.state = 316 
+                self.match(AALParser.M_subject)
+                self.state = 316
                 self.h_agentId()
 
 
@@ -2342,12 +2359,8 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def h_serviceId(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(AALParser.H_serviceIdContext)
-            else:
-                return self.getTypedRuleContext(AALParser.H_serviceIdContext,i)
-
+        def M_rservice(self):
+            return self.getToken(AALParser.M_rservice, 0)
 
         def h_lpar(self):
             return self.getTypedRuleContext(AALParser.H_lparContext,0)
@@ -2357,18 +2370,22 @@ class AALParser ( Parser ):
             return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
-        def M_rservice(self):
-            return self.getToken(AALParser.M_rservice, 0)
+        def h_serviceId(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(AALParser.H_serviceIdContext)
+            else:
+                return self.getTypedRuleContext(AALParser.H_serviceIdContext,i)
+
 
         def getRuleIndex(self):
             return AALParser.RULE_rsService
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterRsService" ):
                 listener.enterRsService(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitRsService" ):
                 listener.exitRsService(self)
 
 
@@ -2382,20 +2399,20 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 319
-            self.match(self.M_rservice)
-            self.state = 320 
+            self.match(AALParser.M_rservice)
+            self.state = 320
             self.h_lpar()
             self.state = 324
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==AALParser.ID:
-                self.state = 321 
+                self.state = 321
                 self.h_serviceId()
                 self.state = 326
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 327 
+            self.state = 327
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -2411,12 +2428,8 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def h_serviceId(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(AALParser.H_serviceIdContext)
-            else:
-                return self.getTypedRuleContext(AALParser.H_serviceIdContext,i)
-
+        def M_pservice(self):
+            return self.getToken(AALParser.M_pservice, 0)
 
         def h_lpar(self):
             return self.getTypedRuleContext(AALParser.H_lparContext,0)
@@ -2426,18 +2439,22 @@ class AALParser ( Parser ):
             return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
-        def M_pservice(self):
-            return self.getToken(AALParser.M_pservice, 0)
+        def h_serviceId(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(AALParser.H_serviceIdContext)
+            else:
+                return self.getTypedRuleContext(AALParser.H_serviceIdContext,i)
+
 
         def getRuleIndex(self):
             return AALParser.RULE_psService
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterPsService" ):
                 listener.enterPsService(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitPsService" ):
                 listener.exitPsService(self)
 
 
@@ -2451,20 +2468,20 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 329
-            self.match(self.M_pservice)
-            self.state = 330 
+            self.match(AALParser.M_pservice)
+            self.state = 330
             self.h_lpar()
             self.state = 334
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==AALParser.ID:
-                self.state = 331 
+                self.state = 331
                 self.h_serviceId()
                 self.state = 336
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 337 
+            self.state = 337
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -2480,11 +2497,22 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def D_service(self):
+            return self.getToken(AALParser.D_service, 0)
+
+        def h_serviceId(self):
+            return self.getTypedRuleContext(AALParser.H_serviceIdContext,0)
+
+
         def D_types(self):
             return self.getToken(AALParser.D_types, 0)
 
-        def M_purpose(self):
-            return self.getToken(AALParser.M_purpose, 0)
+        def h_lpar(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(AALParser.H_lparContext)
+            else:
+                return self.getTypedRuleContext(AALParser.H_lparContext,i)
+
 
         def h_rpar(self, i:int=None):
             if i is None:
@@ -2493,21 +2521,14 @@ class AALParser ( Parser ):
                 return self.getTypedRuleContext(AALParser.H_rparContext,i)
 
 
-        def D_service(self):
-            return self.getToken(AALParser.D_service, 0)
+        def M_purpose(self):
+            return self.getToken(AALParser.M_purpose, 0)
 
         def serviceType(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(AALParser.ServiceTypeContext)
             else:
                 return self.getTypedRuleContext(AALParser.ServiceTypeContext,i)
-
-
-        def h_lpar(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(AALParser.H_lparContext)
-            else:
-                return self.getTypedRuleContext(AALParser.H_lparContext,i)
 
 
         def h_purposeId(self, i:int=None):
@@ -2517,19 +2538,15 @@ class AALParser ( Parser ):
                 return self.getTypedRuleContext(AALParser.H_purposeIdContext,i)
 
 
-        def h_serviceId(self):
-            return self.getTypedRuleContext(AALParser.H_serviceIdContext,0)
-
-
         def getRuleIndex(self):
             return AALParser.RULE_serviceDec
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterServiceDec" ):
                 listener.enterServiceDec(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitServiceDec" ):
                 listener.exitServiceDec(self)
 
 
@@ -2543,27 +2560,27 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 339
-            self.match(self.D_service)
-            self.state = 340 
+            self.match(AALParser.D_service)
+            self.state = 340
             self.h_serviceId()
             self.state = 351
             _la = self._input.LA(1)
             if _la==AALParser.D_types:
                 self.state = 341
-                self.match(self.D_types)
-                self.state = 342 
+                self.match(AALParser.D_types)
+                self.state = 342
                 self.h_lpar()
                 self.state = 346
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==AALParser.ID:
-                    self.state = 343 
+                    self.state = 343
                     self.serviceType()
                     self.state = 348
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
-                self.state = 349 
+                self.state = 349
                 self.h_rpar()
 
 
@@ -2571,20 +2588,20 @@ class AALParser ( Parser ):
             _la = self._input.LA(1)
             if _la==AALParser.M_purpose:
                 self.state = 353
-                self.match(self.M_purpose)
-                self.state = 354 
+                self.match(AALParser.M_purpose)
+                self.state = 354
                 self.h_lpar()
                 self.state = 358
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==AALParser.ID:
-                    self.state = 355 
+                    self.state = 355
                     self.h_purposeId()
                     self.state = 360
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
-                self.state = 361 
+                self.state = 361
                 self.h_rpar()
 
 
@@ -2602,6 +2619,10 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def h_varTypeId(self):
+            return self.getTypedRuleContext(AALParser.H_varTypeIdContext,0)
+
+
         def h_varId(self):
             return self.getTypedRuleContext(AALParser.H_varIdContext,0)
 
@@ -2613,19 +2634,15 @@ class AALParser ( Parser ):
                 return self.getTypedRuleContext(AALParser.AttrValueContext,i)
 
 
-        def h_varTypeId(self):
-            return self.getTypedRuleContext(AALParser.H_varTypeIdContext,0)
-
-
         def getRuleIndex(self):
             return AALParser.RULE_varDec
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterVarDec" ):
                 listener.enterVarDec(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitVarDec" ):
                 listener.exitVarDec(self)
 
 
@@ -2637,16 +2654,16 @@ class AALParser ( Parser ):
         self.enterRule(localctx, 76, self.RULE_varDec)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 365 
+            self.state = 365
             self.h_varTypeId()
-            self.state = 366 
+            self.state = 366
             self.h_varId()
             self.state = 370
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,21,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
-                    self.state = 367 
+                    self.state = 367
                     self.attrValue() 
                 self.state = 372
                 self._errHandler.sync(self)
@@ -2666,16 +2683,16 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def h_attribute(self):
+            return self.getTypedRuleContext(AALParser.H_attributeContext,0)
+
+
         def h_lpar(self):
             return self.getTypedRuleContext(AALParser.H_lparContext,0)
 
 
         def h_rpar(self):
             return self.getTypedRuleContext(AALParser.H_rparContext,0)
-
-
-        def h_attribute(self):
-            return self.getTypedRuleContext(AALParser.H_attributeContext,0)
 
 
         def ID(self, i:int=None):
@@ -2688,11 +2705,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_attrValue
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterAttrValue" ):
                 listener.enterAttrValue(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitAttrValue" ):
                 listener.exitAttrValue(self)
 
 
@@ -2705,21 +2722,21 @@ class AALParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 373 
+            self.state = 373
             self.h_attribute()
-            self.state = 374 
+            self.state = 374
             self.h_lpar()
             self.state = 378
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==AALParser.ID:
                 self.state = 375
-                self.match(self.ID)
+                self.match(AALParser.ID)
                 self.state = 380
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 381 
+            self.state = 381
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -2735,9 +2752,8 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def type_actions(self):
-            return self.getTypedRuleContext(AALParser.Type_actionsContext,0)
-
+        def D_type(self):
+            return self.getToken(AALParser.D_type, 0)
 
         def ID(self):
             return self.getToken(AALParser.ID, 0)
@@ -2750,18 +2766,19 @@ class AALParser ( Parser ):
             return self.getTypedRuleContext(AALParser.Type_attrContext,0)
 
 
-        def D_type(self):
-            return self.getToken(AALParser.D_type, 0)
+        def type_actions(self):
+            return self.getTypedRuleContext(AALParser.Type_actionsContext,0)
+
 
         def getRuleIndex(self):
             return AALParser.RULE_typeDec
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterTypeDec" ):
                 listener.enterTypeDec(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitTypeDec" ):
                 listener.exitTypeDec(self)
 
 
@@ -2775,27 +2792,27 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 383
-            self.match(self.D_type)
+            self.match(AALParser.D_type)
             self.state = 384
-            self.match(self.ID)
+            self.match(AALParser.ID)
             self.state = 386
             _la = self._input.LA(1)
             if _la==AALParser.M_extends:
-                self.state = 385 
+                self.state = 385
                 self.type_super()
 
 
             self.state = 389
             _la = self._input.LA(1)
             if _la==AALParser.M_attr:
-                self.state = 388 
+                self.state = 388
                 self.type_attr()
 
 
             self.state = 392
             _la = self._input.LA(1)
             if _la==AALParser.M_actions:
-                self.state = 391 
+                self.state = 391
                 self.type_actions()
 
 
@@ -2813,6 +2830,9 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def M_extends(self):
+            return self.getToken(AALParser.M_extends, 0)
+
         def h_lpar(self):
             return self.getTypedRuleContext(AALParser.H_lparContext,0)
 
@@ -2820,9 +2840,6 @@ class AALParser ( Parser ):
         def h_rpar(self):
             return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
-
-        def M_extends(self):
-            return self.getToken(AALParser.M_extends, 0)
 
         def ID(self, i:int=None):
             if i is None:
@@ -2834,11 +2851,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_type_super
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterType_super" ):
                 listener.enterType_super(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitType_super" ):
                 listener.exitType_super(self)
 
 
@@ -2852,20 +2869,20 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 394
-            self.match(self.M_extends)
-            self.state = 395 
+            self.match(AALParser.M_extends)
+            self.state = 395
             self.h_lpar()
             self.state = 399
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==AALParser.ID:
                 self.state = 396
-                self.match(self.ID)
+                self.match(AALParser.ID)
                 self.state = 401
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 402 
+            self.state = 402
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -2902,11 +2919,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_type_attr
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterType_attr" ):
                 listener.enterType_attr(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitType_attr" ):
                 listener.exitType_attr(self)
 
 
@@ -2920,20 +2937,20 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 404
-            self.match(self.M_attr)
-            self.state = 405 
+            self.match(AALParser.M_attr)
+            self.state = 405
             self.h_lpar()
             self.state = 409
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==AALParser.ID:
                 self.state = 406
-                self.match(self.ID)
+                self.match(AALParser.ID)
                 self.state = 411
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 412 
+            self.state = 412
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -2949,6 +2966,9 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def M_actions(self):
+            return self.getToken(AALParser.M_actions, 0)
+
         def h_lpar(self):
             return self.getTypedRuleContext(AALParser.H_lparContext,0)
 
@@ -2956,9 +2976,6 @@ class AALParser ( Parser ):
         def h_rpar(self):
             return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
-
-        def M_actions(self):
-            return self.getToken(AALParser.M_actions, 0)
 
         def ID(self, i:int=None):
             if i is None:
@@ -2970,11 +2987,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_type_actions
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterType_actions" ):
                 listener.enterType_actions(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitType_actions" ):
                 listener.exitType_actions(self)
 
 
@@ -2988,20 +3005,20 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 414
-            self.match(self.M_actions)
-            self.state = 415 
+            self.match(AALParser.M_actions)
+            self.state = 415
             self.h_lpar()
             self.state = 419
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==AALParser.ID:
                 self.state = 416
-                self.match(self.ID)
+                self.match(AALParser.ID)
                 self.state = 421
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 422 
+            self.state = 422
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -3024,11 +3041,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_agentType
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterAgentType" ):
                 listener.enterAgentType(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitAgentType" ):
                 listener.exitAgentType(self)
 
 
@@ -3041,7 +3058,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 424
-            self.match(self.ID)
+            self.match(AALParser.ID)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -3063,11 +3080,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_serviceType
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterServiceType" ):
                 listener.enterServiceType(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitServiceType" ):
                 listener.exitServiceType(self)
 
 
@@ -3080,7 +3097,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 426
-            self.match(self.ID)
+            self.match(AALParser.ID)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -3102,11 +3119,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_dataType
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterDataType" ):
                 listener.enterDataType(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitDataType" ):
                 listener.exitDataType(self)
 
 
@@ -3119,7 +3136,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 428
-            self.match(self.ID)
+            self.match(AALParser.ID)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -3134,11 +3151,12 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def NEWLINE(self, i:int=None):
-            if i is None:
-                return self.getTokens(AALParser.NEWLINE)
-            else:
-                return self.getToken(AALParser.NEWLINE, i)
+        def D_clause(self):
+            return self.getToken(AALParser.D_clause, 0)
+
+        def h_clauseId(self):
+            return self.getTypedRuleContext(AALParser.H_clauseIdContext,0)
+
 
         def h_lpar(self):
             return self.getTypedRuleContext(AALParser.H_lparContext,0)
@@ -3148,34 +3166,33 @@ class AALParser ( Parser ):
             return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
-        def D_clause(self):
-            return self.getToken(AALParser.D_clause, 0)
-
         def usage(self):
             return self.getTypedRuleContext(AALParser.UsageContext,0)
-
-
-        def rectification(self):
-            return self.getTypedRuleContext(AALParser.RectificationContext,0)
-
-
-        def h_clauseId(self):
-            return self.getTypedRuleContext(AALParser.H_clauseIdContext,0)
 
 
         def audit(self):
             return self.getTypedRuleContext(AALParser.AuditContext,0)
 
 
+        def rectification(self):
+            return self.getTypedRuleContext(AALParser.RectificationContext,0)
+
+
+        def NEWLINE(self, i:int=None):
+            if i is None:
+                return self.getTokens(AALParser.NEWLINE)
+            else:
+                return self.getToken(AALParser.NEWLINE, i)
+
         def getRuleIndex(self):
             return AALParser.RULE_clause
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterClause" ):
                 listener.enterClause(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitClause" ):
                 listener.exitClause(self)
 
 
@@ -3189,31 +3206,31 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 430
-            self.match(self.D_clause)
-            self.state = 431 
+            self.match(AALParser.D_clause)
+            self.state = 431
             self.h_clauseId()
-            self.state = 432 
+            self.state = 432
             self.h_lpar()
 
-            self.state = 433 
+            self.state = 433
             self.usage()
             self.state = 435
             _la = self._input.LA(1)
             if _la==AALParser.NEWLINE:
                 self.state = 434
-                self.match(self.NEWLINE)
+                self.match(AALParser.NEWLINE)
 
 
             self.state = 441
             _la = self._input.LA(1)
             if _la==AALParser.C_auditing:
-                self.state = 437 
+                self.state = 437
                 self.audit()
                 self.state = 439
                 _la = self._input.LA(1)
                 if _la==AALParser.NEWLINE:
                     self.state = 438
-                    self.match(self.NEWLINE)
+                    self.match(AALParser.NEWLINE)
 
 
 
@@ -3221,18 +3238,18 @@ class AALParser ( Parser ):
             self.state = 447
             _la = self._input.LA(1)
             if _la==AALParser.C_ifviolated:
-                self.state = 443 
+                self.state = 443
                 self.rectification()
                 self.state = 445
                 _la = self._input.LA(1)
                 if _la==AALParser.NEWLINE:
                     self.state = 444
-                    self.match(self.NEWLINE)
+                    self.match(AALParser.NEWLINE)
 
 
 
 
-            self.state = 449 
+            self.state = 449
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -3256,11 +3273,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_usage
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterUsage" ):
                 listener.enterUsage(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitUsage" ):
                 listener.exitUsage(self)
 
 
@@ -3272,7 +3289,7 @@ class AALParser ( Parser ):
         self.enterRule(localctx, 96, self.RULE_usage)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 451 
+            self.state = 451
             self.actionExp(0)
         except RecognitionException as re:
             localctx.exception = re
@@ -3288,22 +3305,22 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def C_auditing(self):
+            return self.getToken(AALParser.C_auditing, 0)
+
         def usage(self):
             return self.getTypedRuleContext(AALParser.UsageContext,0)
 
-
-        def C_auditing(self):
-            return self.getToken(AALParser.C_auditing, 0)
 
         def getRuleIndex(self):
             return AALParser.RULE_audit
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterAudit" ):
                 listener.enterAudit(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitAudit" ):
                 listener.exitAudit(self)
 
 
@@ -3316,8 +3333,8 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 453
-            self.match(self.C_auditing)
-            self.state = 454 
+            self.match(AALParser.C_auditing)
+            self.state = 454
             self.usage()
         except RecognitionException as re:
             localctx.exception = re
@@ -3333,22 +3350,22 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def C_ifviolated(self):
+            return self.getToken(AALParser.C_ifviolated, 0)
+
         def usage(self):
             return self.getTypedRuleContext(AALParser.UsageContext,0)
 
-
-        def C_ifviolated(self):
-            return self.getToken(AALParser.C_ifviolated, 0)
 
         def getRuleIndex(self):
             return AALParser.RULE_rectification
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterRectification" ):
                 listener.enterRectification(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitRectification" ):
                 listener.exitRectification(self)
 
 
@@ -3361,8 +3378,8 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 456
-            self.match(self.C_ifviolated)
-            self.state = 457 
+            self.match(AALParser.C_ifviolated)
+            self.state = 457
             self.usage()
         except RecognitionException as re:
             localctx.exception = re
@@ -3378,28 +3395,36 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def booleanOp(self):
-            return self.getTypedRuleContext(AALParser.BooleanOpContext,0)
+        def actionExp1Action(self):
+            return self.getTypedRuleContext(AALParser.ActionExp1ActionContext,0)
 
 
-        def h_lpar(self):
-            return self.getTypedRuleContext(AALParser.H_lparContext,0)
+        def actionExp2notAction(self):
+            return self.getTypedRuleContext(AALParser.ActionExp2notActionContext,0)
 
 
-        def h_rpar(self):
-            return self.getTypedRuleContext(AALParser.H_rparContext,0)
+        def actionExp3modalAction(self):
+            return self.getTypedRuleContext(AALParser.ActionExp3modalActionContext,0)
 
 
-        def actionExp8qvar(self):
-            return self.getTypedRuleContext(AALParser.ActionExp8qvarContext,0)
+        def actionExp4condition(self):
+            return self.getTypedRuleContext(AALParser.ActionExp4conditionContext,0)
+
+
+        def actionExp6Author(self):
+            return self.getTypedRuleContext(AALParser.ActionExp6AuthorContext,0)
 
 
         def actionExp7ifthen(self):
             return self.getTypedRuleContext(AALParser.ActionExp7ifthenContext,0)
 
 
-        def actionExp3modalAction(self):
-            return self.getTypedRuleContext(AALParser.ActionExp3modalActionContext,0)
+        def actionExp8qvar(self):
+            return self.getTypedRuleContext(AALParser.ActionExp8qvarContext,0)
+
+
+        def h_lpar(self):
+            return self.getTypedRuleContext(AALParser.H_lparContext,0)
 
 
         def actionExp(self, i:int=None):
@@ -3409,31 +3434,23 @@ class AALParser ( Parser ):
                 return self.getTypedRuleContext(AALParser.ActionExpContext,i)
 
 
-        def actionExp2notAction(self):
-            return self.getTypedRuleContext(AALParser.ActionExp2notActionContext,0)
+        def h_rpar(self):
+            return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
-        def actionExp1Action(self):
-            return self.getTypedRuleContext(AALParser.ActionExp1ActionContext,0)
-
-
-        def actionExp6Author(self):
-            return self.getTypedRuleContext(AALParser.ActionExp6AuthorContext,0)
-
-
-        def actionExp4condition(self):
-            return self.getTypedRuleContext(AALParser.ActionExp4conditionContext,0)
+        def booleanOp(self):
+            return self.getTypedRuleContext(AALParser.BooleanOpContext,0)
 
 
         def getRuleIndex(self):
             return AALParser.RULE_actionExp
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterActionExp" ):
                 listener.enterActionExp(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitActionExp" ):
                 listener.exitActionExp(self)
 
 
@@ -3450,46 +3467,46 @@ class AALParser ( Parser ):
             self.state = 471
             la_ = self._interp.adaptivePredict(self._input,34,self._ctx)
             if la_ == 1:
-                self.state = 460 
+                self.state = 460
                 self.actionExp1Action()
                 pass
 
             elif la_ == 2:
-                self.state = 461 
+                self.state = 461
                 self.actionExp2notAction()
                 pass
 
             elif la_ == 3:
-                self.state = 462 
+                self.state = 462
                 self.actionExp3modalAction()
                 pass
 
             elif la_ == 4:
-                self.state = 463 
+                self.state = 463
                 self.actionExp4condition()
                 pass
 
             elif la_ == 5:
-                self.state = 464 
+                self.state = 464
                 self.actionExp6Author()
                 pass
 
             elif la_ == 6:
-                self.state = 465 
+                self.state = 465
                 self.actionExp7ifthen()
                 pass
 
             elif la_ == 7:
-                self.state = 466 
+                self.state = 466
                 self.actionExp8qvar()
                 pass
 
             elif la_ == 8:
-                self.state = 467 
+                self.state = 467
                 self.h_lpar()
-                self.state = 468 
+                self.state = 468
                 self.actionExp(0)
-                self.state = 469 
+                self.state = 469
                 self.h_rpar()
                 pass
 
@@ -3507,10 +3524,11 @@ class AALParser ( Parser ):
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_actionExp)
                     self.state = 473
                     if not self.precpred(self._ctx, 5):
+                        from antlr4.error.Errors import FailedPredicateException
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 5)")
-                    self.state = 474 
+                    self.state = 474
                     self.booleanOp()
-                    self.state = 475 
+                    self.state = 475
                     self.actionExp(6) 
                 self.state = 481
                 self._errHandler.sync(self)
@@ -3538,11 +3556,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_actionExp1Action
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterActionExp1Action" ):
                 listener.enterActionExp1Action(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitActionExp1Action" ):
                 listener.exitActionExp1Action(self)
 
 
@@ -3554,7 +3572,7 @@ class AALParser ( Parser ):
         self.enterRule(localctx, 104, self.RULE_actionExp1Action)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 482 
+            self.state = 482
             self.action()
         except RecognitionException as re:
             localctx.exception = re
@@ -3581,11 +3599,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_actionExp2notAction
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterActionExp2notAction" ):
                 listener.enterActionExp2notAction(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitActionExp2notAction" ):
                 listener.exitActionExp2notAction(self)
 
 
@@ -3598,8 +3616,8 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 484
-            self.match(self.O_not)
-            self.state = 485 
+            self.match(AALParser.O_not)
+            self.state = 485
             self.actionExp(0)
         except RecognitionException as re:
             localctx.exception = re
@@ -3615,31 +3633,31 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def modal(self):
+            return self.getTypedRuleContext(AALParser.ModalContext,0)
+
+
         def h_lpar(self):
             return self.getTypedRuleContext(AALParser.H_lparContext,0)
-
-
-        def h_rpar(self):
-            return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
         def actionExp(self):
             return self.getTypedRuleContext(AALParser.ActionExpContext,0)
 
 
-        def modal(self):
-            return self.getTypedRuleContext(AALParser.ModalContext,0)
+        def h_rpar(self):
+            return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
         def getRuleIndex(self):
             return AALParser.RULE_actionExp3modalAction
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterActionExp3modalAction" ):
                 listener.enterActionExp3modalAction(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitActionExp3modalAction" ):
                 listener.exitActionExp3modalAction(self)
 
 
@@ -3651,13 +3669,13 @@ class AALParser ( Parser ):
         self.enterRule(localctx, 108, self.RULE_actionExp3modalAction)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 487 
+            self.state = 487
             self.modal()
-            self.state = 488 
+            self.state = 488
             self.h_lpar()
-            self.state = 489 
+            self.state = 489
             self.actionExp(0)
-            self.state = 490 
+            self.state = 490
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -3681,11 +3699,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_actionExp4condition
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterActionExp4condition" ):
                 listener.enterActionExp4condition(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitActionExp4condition" ):
                 listener.exitActionExp4condition(self)
 
 
@@ -3697,7 +3715,7 @@ class AALParser ( Parser ):
         self.enterRule(localctx, 110, self.RULE_actionExp4condition)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 492 
+            self.state = 492
             self.condition(0)
         except RecognitionException as re:
             localctx.exception = re
@@ -3721,11 +3739,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_actionExp6Author
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterActionExp6Author" ):
                 listener.enterActionExp6Author(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitActionExp6Author" ):
                 listener.exitActionExp6Author(self)
 
 
@@ -3737,7 +3755,7 @@ class AALParser ( Parser ):
         self.enterRule(localctx, 112, self.RULE_actionExp6Author)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 494 
+            self.state = 494
             self.author()
         except RecognitionException as re:
             localctx.exception = re
@@ -3761,11 +3779,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_actionExp7ifthen
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterActionExp7ifthen" ):
                 listener.enterActionExp7ifthen(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitActionExp7ifthen" ):
                 listener.exitActionExp7ifthen(self)
 
 
@@ -3777,7 +3795,7 @@ class AALParser ( Parser ):
         self.enterRule(localctx, 114, self.RULE_actionExp7ifthen)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 496 
+            self.state = 496
             self.ifthen()
         except RecognitionException as re:
             localctx.exception = re
@@ -3805,11 +3823,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_actionExp8qvar
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterActionExp8qvar" ):
                 listener.enterActionExp8qvar(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitActionExp8qvar" ):
                 listener.exitActionExp8qvar(self)
 
 
@@ -3821,9 +3839,9 @@ class AALParser ( Parser ):
         self.enterRule(localctx, 116, self.RULE_actionExp8qvar)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 498 
+            self.state = 498
             self.qvar()
-            self.state = 499 
+            self.state = 499
             self.actionExp(0)
         except RecognitionException as re:
             localctx.exception = re
@@ -3849,11 +3867,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_quant
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterQuant" ):
                 listener.enterQuant(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitQuant" ):
                 listener.exitQuant(self)
 
 
@@ -3870,7 +3888,8 @@ class AALParser ( Parser ):
             _la = self._input.LA(1)
             if not(_la==AALParser.Q_forall or _la==AALParser.Q_exists):
                 self._errHandler.recoverInline(self)
-            self.consume()
+            else:
+                self.consume()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -3885,8 +3904,8 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def condition(self):
-            return self.getTypedRuleContext(AALParser.ConditionContext,0)
+        def quant(self):
+            return self.getTypedRuleContext(AALParser.QuantContext,0)
 
 
         def h_variable(self):
@@ -3896,19 +3915,19 @@ class AALParser ( Parser ):
         def O_where(self):
             return self.getToken(AALParser.O_where, 0)
 
-        def quant(self):
-            return self.getTypedRuleContext(AALParser.QuantContext,0)
+        def condition(self):
+            return self.getTypedRuleContext(AALParser.ConditionContext,0)
 
 
         def getRuleIndex(self):
             return AALParser.RULE_qvar
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterQvar" ):
                 listener.enterQvar(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitQvar" ):
                 listener.exitQvar(self)
 
 
@@ -3921,16 +3940,16 @@ class AALParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 503 
+            self.state = 503
             self.quant()
-            self.state = 504 
+            self.state = 504
             self.h_variable()
             self.state = 507
             _la = self._input.LA(1)
             if _la==AALParser.O_where:
                 self.state = 505
-                self.match(self.O_where)
-                self.state = 506 
+                self.match(AALParser.O_where)
+                self.state = 506
                 self.condition(0)
 
 
@@ -3948,12 +3967,6 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def T_unless(self):
-            return self.getToken(AALParser.T_unless, 0)
-
-        def T_until(self):
-            return self.getToken(AALParser.T_until, 0)
-
         def O_and(self):
             return self.getToken(AALParser.O_and, 0)
 
@@ -3963,15 +3976,21 @@ class AALParser ( Parser ):
         def O_onlywhen(self):
             return self.getToken(AALParser.O_onlywhen, 0)
 
+        def T_until(self):
+            return self.getToken(AALParser.T_until, 0)
+
+        def T_unless(self):
+            return self.getToken(AALParser.T_unless, 0)
+
         def getRuleIndex(self):
             return AALParser.RULE_booleanOp
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterBooleanOp" ):
                 listener.enterBooleanOp(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitBooleanOp" ):
                 listener.exitBooleanOp(self)
 
 
@@ -3986,9 +4005,10 @@ class AALParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 509
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << self.O_or) | (1 << self.O_and) | (1 << self.O_onlywhen) | (1 << self.T_until) | (1 << self.T_unless))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << AALParser.O_or) | (1 << AALParser.O_and) | (1 << AALParser.O_onlywhen) | (1 << AALParser.T_until) | (1 << AALParser.T_unless))) != 0)):
                 self._errHandler.recoverInline(self)
-            self.consume()
+            else:
+                self.consume()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -4003,12 +4023,6 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def NEWLINE(self):
-            return self.getToken(AALParser.NEWLINE, 0)
-
-        def A_deny(self):
-            return self.getToken(AALParser.A_deny, 0)
-
         def action(self):
             return self.getTypedRuleContext(AALParser.ActionContext,0)
 
@@ -4016,15 +4030,21 @@ class AALParser ( Parser ):
         def A_permit(self):
             return self.getToken(AALParser.A_permit, 0)
 
+        def A_deny(self):
+            return self.getToken(AALParser.A_deny, 0)
+
+        def NEWLINE(self):
+            return self.getToken(AALParser.NEWLINE, 0)
+
         def getRuleIndex(self):
             return AALParser.RULE_author
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterAuthor" ):
                 listener.enterAuthor(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitAuthor" ):
                 listener.exitAuthor(self)
 
 
@@ -4041,14 +4061,15 @@ class AALParser ( Parser ):
             _la = self._input.LA(1)
             if not(_la==AALParser.A_permit or _la==AALParser.A_deny):
                 self._errHandler.recoverInline(self)
-            self.consume()
-            self.state = 512 
+            else:
+                self.consume()
+            self.state = 512
             self.action()
             self.state = 514
             la_ = self._interp.adaptivePredict(self._input,37,self._ctx)
             if la_ == 1:
                 self.state = 513
-                self.match(self.NEWLINE)
+                self.match(AALParser.NEWLINE)
 
 
         except RecognitionException as re:
@@ -4065,23 +4086,12 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def h_rmar(self):
-            return self.getTypedRuleContext(AALParser.H_rmarContext,0)
-
+        def O_if(self):
+            return self.getToken(AALParser.O_if, 0)
 
         def h_lpar(self):
             return self.getTypedRuleContext(AALParser.H_lparContext,0)
 
-
-        def O_if(self):
-            return self.getToken(AALParser.O_if, 0)
-
-        def h_rpar(self):
-            return self.getTypedRuleContext(AALParser.H_rparContext,0)
-
-
-        def IMPLICATION(self):
-            return self.getToken(AALParser.IMPLICATION, 0)
 
         def actionExp(self, i:int=None):
             if i is None:
@@ -4090,22 +4100,33 @@ class AALParser ( Parser ):
                 return self.getTypedRuleContext(AALParser.ActionExpContext,i)
 
 
-        def h_lmar(self):
-            return self.getTypedRuleContext(AALParser.H_lmarContext,0)
+        def h_rpar(self):
+            return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
         def O_then(self):
             return self.getToken(AALParser.O_then, 0)
 
+        def h_lmar(self):
+            return self.getTypedRuleContext(AALParser.H_lmarContext,0)
+
+
+        def h_rmar(self):
+            return self.getTypedRuleContext(AALParser.H_rmarContext,0)
+
+
+        def IMPLICATION(self):
+            return self.getToken(AALParser.IMPLICATION, 0)
+
         def getRuleIndex(self):
             return AALParser.RULE_ifthen
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterIfthen" ):
                 listener.enterIfthen(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitIfthen" ):
                 listener.exitIfthen(self)
 
 
@@ -4121,44 +4142,44 @@ class AALParser ( Parser ):
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 516
-                self.match(self.O_if)
-                self.state = 517 
+                self.match(AALParser.O_if)
+                self.state = 517
                 self.h_lpar()
-                self.state = 518 
+                self.state = 518
                 self.actionExp(0)
-                self.state = 519 
+                self.state = 519
                 self.h_rpar()
                 self.state = 520
-                self.match(self.O_then)
-                self.state = 521 
+                self.match(AALParser.O_then)
+                self.state = 521
                 self.h_lmar()
-                self.state = 522 
+                self.state = 522
                 self.actionExp(0)
-                self.state = 523 
+                self.state = 523
                 self.h_rmar()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 525
-                self.match(self.O_if)
-                self.state = 526 
+                self.match(AALParser.O_if)
+                self.state = 526
                 self.actionExp(0)
                 self.state = 527
-                self.match(self.O_then)
-                self.state = 528 
+                self.match(AALParser.O_then)
+                self.state = 528
                 self.actionExp(0)
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 530
-                self.match(self.O_if)
-                self.state = 531 
+                self.match(AALParser.O_if)
+                self.state = 531
                 self.actionExp(0)
                 self.state = 532
-                self.match(self.IMPLICATION)
-                self.state = 533 
+                self.match(AALParser.IMPLICATION)
+                self.state = 533
                 self.actionExp(0)
                 pass
 
@@ -4177,23 +4198,23 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def h_dot(self):
-            return self.getTypedRuleContext(AALParser.H_dotContext,0)
+        def h_variable(self):
+            return self.getTypedRuleContext(AALParser.H_variableContext,0)
+
+
+        def h_constant(self):
+            return self.getTypedRuleContext(AALParser.H_constantContext,0)
 
 
         def h_predicate(self):
             return self.getTypedRuleContext(AALParser.H_predicateContext,0)
 
 
-        def h_variable(self):
-            return self.getTypedRuleContext(AALParser.H_variableContext,0)
-
-
         def ID(self):
             return self.getToken(AALParser.ID, 0)
 
-        def h_constant(self):
-            return self.getTypedRuleContext(AALParser.H_constantContext,0)
+        def h_dot(self):
+            return self.getTypedRuleContext(AALParser.H_dotContext,0)
 
 
         def h_attribute(self):
@@ -4204,11 +4225,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_exp
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterExp" ):
                 listener.enterExp(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitExp" ):
                 listener.exitExp(self)
 
 
@@ -4223,29 +4244,29 @@ class AALParser ( Parser ):
             la_ = self._interp.adaptivePredict(self._input,39,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 537 
+                self.state = 537
                 self.h_variable()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 538 
+                self.state = 538
                 self.h_constant()
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 539 
+                self.state = 539
                 self.h_predicate()
                 pass
 
             elif la_ == 4:
                 self.enterOuterAlt(localctx, 4)
                 self.state = 540
-                self.match(self.ID)
-                self.state = 541 
+                self.match(AALParser.ID)
+                self.state = 541
                 self.h_dot()
-                self.state = 542 
+                self.state = 542
                 self.h_attribute()
                 pass
 
@@ -4264,15 +4285,13 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def O_and(self):
-            return self.getToken(AALParser.O_and, 0)
-
         def condition1notExp(self):
             return self.getTypedRuleContext(AALParser.Condition1notExpContext,0)
 
 
-        def O_or(self):
-            return self.getToken(AALParser.O_or, 0)
+        def condition2cmpExp(self):
+            return self.getTypedRuleContext(AALParser.Condition2cmpExpContext,0)
+
 
         def condition(self, i:int=None):
             if i is None:
@@ -4281,19 +4300,21 @@ class AALParser ( Parser ):
                 return self.getTypedRuleContext(AALParser.ConditionContext,i)
 
 
-        def condition2cmpExp(self):
-            return self.getTypedRuleContext(AALParser.Condition2cmpExpContext,0)
+        def O_and(self):
+            return self.getToken(AALParser.O_and, 0)
 
+        def O_or(self):
+            return self.getToken(AALParser.O_or, 0)
 
         def getRuleIndex(self):
             return AALParser.RULE_condition
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterCondition" ):
                 listener.enterCondition(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitCondition" ):
                 listener.exitCondition(self)
 
 
@@ -4311,12 +4332,12 @@ class AALParser ( Parser ):
             self.state = 549
             la_ = self._interp.adaptivePredict(self._input,40,self._ctx)
             if la_ == 1:
-                self.state = 547 
+                self.state = 547
                 self.condition1notExp()
                 pass
 
             elif la_ == 2:
-                self.state = 548 
+                self.state = 548
                 self.condition2cmpExp()
                 pass
 
@@ -4334,13 +4355,15 @@ class AALParser ( Parser ):
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_condition)
                     self.state = 551
                     if not self.precpred(self._ctx, 1):
+                        from antlr4.error.Errors import FailedPredicateException
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
                     self.state = 552
                     _la = self._input.LA(1)
                     if not(_la==AALParser.O_or or _la==AALParser.O_and):
                         self._errHandler.recoverInline(self)
-                    self.consume()
-                    self.state = 553 
+                    else:
+                        self.consume()
+                    self.state = 553
                     self.condition(2) 
                 self.state = 558
                 self._errHandler.sync(self)
@@ -4360,22 +4383,22 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def O_not(self):
-            return self.getToken(AALParser.O_not, 0)
-
         def exp(self):
             return self.getTypedRuleContext(AALParser.ExpContext,0)
 
+
+        def O_not(self):
+            return self.getToken(AALParser.O_not, 0)
 
         def getRuleIndex(self):
             return AALParser.RULE_condition1notExp
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterCondition1notExp" ):
                 listener.enterCondition1notExp(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitCondition1notExp" ):
                 listener.exitCondition1notExp(self)
 
 
@@ -4392,10 +4415,10 @@ class AALParser ( Parser ):
             _la = self._input.LA(1)
             if _la==AALParser.O_not:
                 self.state = 559
-                self.match(self.O_not)
+                self.match(AALParser.O_not)
 
 
-            self.state = 562 
+            self.state = 562
             self.exp()
         except RecognitionException as re:
             localctx.exception = re
@@ -4411,10 +4434,6 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def h_inequal(self):
-            return self.getTypedRuleContext(AALParser.H_inequalContext,0)
-
-
         def exp(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(AALParser.ExpContext)
@@ -4426,15 +4445,19 @@ class AALParser ( Parser ):
             return self.getTypedRuleContext(AALParser.H_equalContext,0)
 
 
+        def h_inequal(self):
+            return self.getTypedRuleContext(AALParser.H_inequalContext,0)
+
+
         def getRuleIndex(self):
             return AALParser.RULE_condition2cmpExp
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterCondition2cmpExp" ):
                 listener.enterCondition2cmpExp(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitCondition2cmpExp" ):
                 listener.exitCondition2cmpExp(self)
 
 
@@ -4446,22 +4469,22 @@ class AALParser ( Parser ):
         self.enterRule(localctx, 134, self.RULE_condition2cmpExp)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 564 
+            self.state = 564
             self.exp()
             self.state = 567
             token = self._input.LA(1)
-            if token in [self.T__3]:
-                self.state = 565 
+            if token in [AALParser.T__8]:
+                self.state = 565
                 self.h_equal()
 
-            elif token in [self.T__0]:
-                self.state = 566 
+            elif token in [AALParser.T__9]:
+                self.state = 566
                 self.h_inequal()
 
             else:
                 raise NoViableAltException(self)
 
-            self.state = 569 
+            self.state = 569
             self.exp()
         except RecognitionException as re:
             localctx.exception = re
@@ -4477,41 +4500,15 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def h_dot(self):
-            return self.getTypedRuleContext(AALParser.H_dotContext,0)
-
-
-        def h_rbar(self):
-            return self.getTypedRuleContext(AALParser.H_rbarContext,0)
-
-
-        def h_lbar(self):
-            return self.getTypedRuleContext(AALParser.H_lbarContext,0)
-
-
-        def M_purpose(self):
-            return self.getToken(AALParser.M_purpose, 0)
-
-        def h_rpar(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(AALParser.H_rparContext)
-            else:
-                return self.getTypedRuleContext(AALParser.H_rparContext,i)
-
-
-        def time(self):
-            return self.getTypedRuleContext(AALParser.TimeContext,0)
-
-
-        def exp(self):
-            return self.getTypedRuleContext(AALParser.ExpContext,0)
-
-
         def h_agentId(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(AALParser.H_agentIdContext)
             else:
                 return self.getTypedRuleContext(AALParser.H_agentIdContext,i)
+
+
+        def h_dot(self):
+            return self.getTypedRuleContext(AALParser.H_dotContext,0)
 
 
         def h_lpar(self, i:int=None):
@@ -4521,6 +4518,36 @@ class AALParser ( Parser ):
                 return self.getTypedRuleContext(AALParser.H_lparContext,i)
 
 
+        def h_rpar(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(AALParser.H_rparContext)
+            else:
+                return self.getTypedRuleContext(AALParser.H_rparContext,i)
+
+
+        def h_serviceId(self):
+            return self.getTypedRuleContext(AALParser.H_serviceIdContext,0)
+
+
+        def h_lbar(self):
+            return self.getTypedRuleContext(AALParser.H_lbarContext,0)
+
+
+        def h_rbar(self):
+            return self.getTypedRuleContext(AALParser.H_rbarContext,0)
+
+
+        def exp(self):
+            return self.getTypedRuleContext(AALParser.ExpContext,0)
+
+
+        def time(self):
+            return self.getTypedRuleContext(AALParser.TimeContext,0)
+
+
+        def M_purpose(self):
+            return self.getToken(AALParser.M_purpose, 0)
+
         def h_purposeId(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(AALParser.H_purposeIdContext)
@@ -4528,19 +4555,15 @@ class AALParser ( Parser ):
                 return self.getTypedRuleContext(AALParser.H_purposeIdContext,i)
 
 
-        def h_serviceId(self):
-            return self.getTypedRuleContext(AALParser.H_serviceIdContext,0)
-
-
         def getRuleIndex(self):
             return AALParser.RULE_action
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterAction" ):
                 listener.enterAction(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitAction" ):
                 listener.exitAction(self)
 
 
@@ -4553,44 +4576,44 @@ class AALParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 571 
+            self.state = 571
             self.h_agentId()
-            self.state = 572 
+            self.state = 572
             self.h_dot()
 
-            self.state = 573 
+            self.state = 573
             self.h_serviceId()
             self.state = 580
             _la = self._input.LA(1)
-            if _la==AALParser.T__7:
-                self.state = 574 
+            if _la==AALParser.T__2:
+                self.state = 574
                 self.h_lbar()
                 self.state = 576
                 _la = self._input.LA(1)
                 if _la==AALParser.ID:
-                    self.state = 575 
+                    self.state = 575
                     self.h_agentId()
 
 
-                self.state = 578 
+                self.state = 578
                 self.h_rbar()
 
 
-            self.state = 582 
+            self.state = 582
             self.h_lpar()
             self.state = 584
             _la = self._input.LA(1)
-            if ((((_la - 8)) & ~0x3f) == 0 and ((1 << (_la - 8)) & ((1 << (self.T__4 - 8)) | (1 << (self.ID - 8)) | (1 << (self.INT - 8)) | (1 << (self.STRING - 8)))) != 0):
-                self.state = 583 
+            if ((((_la - 12)) & ~0x3f) == 0 and ((1 << (_la - 12)) & ((1 << (AALParser.T__11 - 12)) | (1 << (AALParser.ID - 12)) | (1 << (AALParser.INT - 12)) | (1 << (AALParser.STRING - 12)))) != 0):
+                self.state = 583
                 self.exp()
 
 
-            self.state = 586 
+            self.state = 586
             self.h_rpar()
             self.state = 588
             la_ = self._interp.adaptivePredict(self._input,47,self._ctx)
             if la_ == 1:
-                self.state = 587 
+                self.state = 587
                 self.time(0)
 
 
@@ -4598,20 +4621,20 @@ class AALParser ( Parser ):
             la_ = self._interp.adaptivePredict(self._input,49,self._ctx)
             if la_ == 1:
                 self.state = 590
-                self.match(self.M_purpose)
-                self.state = 591 
+                self.match(AALParser.M_purpose)
+                self.state = 591
                 self.h_lpar()
                 self.state = 595
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==AALParser.ID:
-                    self.state = 592 
+                    self.state = 592
                     self.h_purposeId()
                     self.state = 597
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
-                self.state = 598 
+                self.state = 598
                 self.h_rpar()
 
 
@@ -4629,30 +4652,30 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def T_must(self):
+            return self.getToken(AALParser.T_must, 0)
+
         def T_mustnot(self):
             return self.getToken(AALParser.T_mustnot, 0)
-
-        def T_sometime(self):
-            return self.getToken(AALParser.T_sometime, 0)
-
-        def T_never(self):
-            return self.getToken(AALParser.T_never, 0)
 
         def T_always(self):
             return self.getToken(AALParser.T_always, 0)
 
-        def T_must(self):
-            return self.getToken(AALParser.T_must, 0)
+        def T_never(self):
+            return self.getToken(AALParser.T_never, 0)
+
+        def T_sometime(self):
+            return self.getToken(AALParser.T_sometime, 0)
 
         def getRuleIndex(self):
             return AALParser.RULE_modal
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterModal" ):
                 listener.enterModal(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitModal" ):
                 listener.exitModal(self)
 
 
@@ -4667,9 +4690,10 @@ class AALParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 602
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << self.T_must) | (1 << self.T_mustnot) | (1 << self.T_always) | (1 << self.T_never) | (1 << self.T_sometime))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << AALParser.T_must) | (1 << AALParser.T_mustnot) | (1 << AALParser.T_always) | (1 << AALParser.T_never) | (1 << AALParser.T_sometime))) != 0)):
                 self._errHandler.recoverInline(self)
-            self.consume()
+            else:
+                self.consume()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -4684,21 +4708,8 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def O_and(self):
-            return self.getToken(AALParser.O_and, 0)
-
         def h_date(self):
             return self.getTypedRuleContext(AALParser.H_dateContext,0)
-
-
-        def O_or(self):
-            return self.getToken(AALParser.O_or, 0)
-
-        def time(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(AALParser.TimeContext)
-            else:
-                return self.getTypedRuleContext(AALParser.TimeContext,i)
 
 
         def O_after(self):
@@ -4707,15 +4718,28 @@ class AALParser ( Parser ):
         def O_before(self):
             return self.getToken(AALParser.O_before, 0)
 
+        def time(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(AALParser.TimeContext)
+            else:
+                return self.getTypedRuleContext(AALParser.TimeContext,i)
+
+
+        def O_and(self):
+            return self.getToken(AALParser.O_and, 0)
+
+        def O_or(self):
+            return self.getToken(AALParser.O_or, 0)
+
         def getRuleIndex(self):
             return AALParser.RULE_time
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterTime" ):
                 listener.enterTime(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitTime" ):
                 listener.exitTime(self)
 
 
@@ -4734,8 +4758,9 @@ class AALParser ( Parser ):
             _la = self._input.LA(1)
             if not(_la==AALParser.O_after or _la==AALParser.O_before):
                 self._errHandler.recoverInline(self)
-            self.consume()
-            self.state = 606 
+            else:
+                self.consume()
+            self.state = 606
             self.h_date()
             self._ctx.stop = self._input.LT(-1)
             self.state = 613
@@ -4750,13 +4775,15 @@ class AALParser ( Parser ):
                     self.pushNewRecursionContext(localctx, _startState, self.RULE_time)
                     self.state = 608
                     if not self.precpred(self._ctx, 1):
+                        from antlr4.error.Errors import FailedPredicateException
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
                     self.state = 609
                     _la = self._input.LA(1)
                     if not(_la==AALParser.O_or or _la==AALParser.O_and):
                         self._errHandler.recoverInline(self)
-                    self.consume()
-                    self.state = 610 
+                    else:
+                        self.consume()
+                    self.state = 610
                     self.time(2) 
                 self.state = 615
                 self._errHandler.sync(self)
@@ -4776,36 +4803,36 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def h_lpar(self):
-            return self.getTypedRuleContext(AALParser.H_lparContext,0)
-
-
-        def h_rpar(self):
-            return self.getTypedRuleContext(AALParser.H_rparContext,0)
-
-
         def M_macro(self):
             return self.getToken(AALParser.M_macro, 0)
 
         def ID(self):
             return self.getToken(AALParser.ID, 0)
 
-        def args(self):
-            return self.getTypedRuleContext(AALParser.ArgsContext,0)
+        def h_lpar(self):
+            return self.getTypedRuleContext(AALParser.H_lparContext,0)
 
 
         def MCODE(self):
             return self.getToken(AALParser.MCODE, 0)
 
+        def h_rpar(self):
+            return self.getTypedRuleContext(AALParser.H_rparContext,0)
+
+
+        def args(self):
+            return self.getTypedRuleContext(AALParser.ArgsContext,0)
+
+
         def getRuleIndex(self):
             return AALParser.RULE_macro
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterMacro" ):
                 listener.enterMacro(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitMacro" ):
                 listener.exitMacro(self)
 
 
@@ -4818,21 +4845,21 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 616
-            self.match(self.M_macro)
+            self.match(AALParser.M_macro)
             self.state = 617
-            self.match(self.ID)
+            self.match(AALParser.ID)
             self.state = 619
             la_ = self._interp.adaptivePredict(self._input,51,self._ctx)
             if la_ == 1:
-                self.state = 618 
+                self.state = 618
                 self.args()
 
 
-            self.state = 621 
+            self.state = 621
             self.h_lpar()
             self.state = 622
-            self.match(self.MCODE)
-            self.state = 623 
+            self.match(AALParser.MCODE)
+            self.state = 623
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -4866,11 +4893,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_args
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterArgs" ):
                 listener.enterArgs(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitArgs" ):
                 listener.exitArgs(self)
 
 
@@ -4883,19 +4910,19 @@ class AALParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 625 
+            self.state = 625
             self.h_lpar()
             self.state = 629
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==AALParser.ID:
                 self.state = 626
-                self.match(self.ID)
+                self.match(AALParser.ID)
                 self.state = 631
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 632 
+            self.state = 632
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -4911,11 +4938,11 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def STRING(self, i:int=None):
-            if i is None:
-                return self.getTokens(AALParser.STRING)
-            else:
-                return self.getToken(AALParser.STRING, i)
+        def M_call(self):
+            return self.getToken(AALParser.M_call, 0)
+
+        def ID(self):
+            return self.getToken(AALParser.ID, 0)
 
         def h_lpar(self):
             return self.getTypedRuleContext(AALParser.H_lparContext,0)
@@ -4925,21 +4952,21 @@ class AALParser ( Parser ):
             return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
-        def ID(self):
-            return self.getToken(AALParser.ID, 0)
-
-        def M_call(self):
-            return self.getToken(AALParser.M_call, 0)
+        def STRING(self, i:int=None):
+            if i is None:
+                return self.getTokens(AALParser.STRING)
+            else:
+                return self.getToken(AALParser.STRING, i)
 
         def getRuleIndex(self):
             return AALParser.RULE_macroCall
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterMacroCall" ):
                 listener.enterMacroCall(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitMacroCall" ):
                 listener.exitMacroCall(self)
 
 
@@ -4953,22 +4980,22 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 634
-            self.match(self.M_call)
+            self.match(AALParser.M_call)
             self.state = 635
-            self.match(self.ID)
-            self.state = 636 
+            self.match(AALParser.ID)
+            self.state = 636
             self.h_lpar()
             self.state = 640
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==AALParser.STRING:
                 self.state = 637
-                self.match(self.STRING)
+                self.match(AALParser.STRING)
                 self.state = 642
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 643 
+            self.state = 643
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -4994,11 +5021,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_exec
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterExec" ):
                 listener.enterExec(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitExec" ):
                 listener.exitExec(self)
 
 
@@ -5011,9 +5038,9 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 645
-            self.match(self.M_exec)
+            self.match(AALParser.M_exec)
             self.state = 646
-            self.match(self.MCODE)
+            self.match(AALParser.MCODE)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -5028,21 +5055,21 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def STRING(self):
-            return self.getToken(AALParser.STRING, 0)
-
         def M_load(self):
             return self.getToken(AALParser.M_load, 0)
+
+        def STRING(self):
+            return self.getToken(AALParser.STRING, 0)
 
         def getRuleIndex(self):
             return AALParser.RULE_loadlib
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterLoadlib" ):
                 listener.enterLoadlib(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitLoadlib" ):
                 listener.exitLoadlib(self)
 
 
@@ -5055,9 +5082,9 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 648
-            self.match(self.M_load)
+            self.match(AALParser.M_load)
             self.state = 649
-            self.match(self.STRING)
+            self.match(AALParser.STRING)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -5072,33 +5099,33 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def M_behavior(self):
+            return self.getToken(AALParser.M_behavior, 0)
+
+        def ID(self):
+            return self.getToken(AALParser.ID, 0)
+
         def h_lpar(self):
             return self.getTypedRuleContext(AALParser.H_lparContext,0)
+
+
+        def actionExp(self):
+            return self.getTypedRuleContext(AALParser.ActionExpContext,0)
 
 
         def h_rpar(self):
             return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
-        def ID(self):
-            return self.getToken(AALParser.ID, 0)
-
-        def M_behavior(self):
-            return self.getToken(AALParser.M_behavior, 0)
-
-        def actionExp(self):
-            return self.getTypedRuleContext(AALParser.ActionExpContext,0)
-
-
         def getRuleIndex(self):
             return AALParser.RULE_behavior
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterBehavior" ):
                 listener.enterBehavior(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitBehavior" ):
                 listener.exitBehavior(self)
 
 
@@ -5111,14 +5138,14 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 651
-            self.match(self.M_behavior)
+            self.match(AALParser.M_behavior)
             self.state = 652
-            self.match(self.ID)
-            self.state = 653 
+            self.match(AALParser.ID)
+            self.state = 653
             self.h_lpar()
-            self.state = 654 
+            self.state = 654
             self.actionExp(0)
-            self.state = 655 
+            self.state = 655
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -5137,19 +5164,19 @@ class AALParser ( Parser ):
         def M_check(self):
             return self.getToken(AALParser.M_check, 0)
 
-        def h_rmar(self):
-            return self.getTypedRuleContext(AALParser.H_rmarContext,0)
-
-
         def ID(self):
             return self.getToken(AALParser.ID, 0)
+
+        def h_lmar(self):
+            return self.getTypedRuleContext(AALParser.H_lmarContext,0)
+
 
         def check(self):
             return self.getTypedRuleContext(AALParser.CheckContext,0)
 
 
-        def h_lmar(self):
-            return self.getTypedRuleContext(AALParser.H_lmarContext,0)
+        def h_rmar(self):
+            return self.getTypedRuleContext(AALParser.H_rmarContext,0)
 
 
         def args(self):
@@ -5160,11 +5187,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_ltlCheck
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterLtlCheck" ):
                 listener.enterLtlCheck(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitLtlCheck" ):
                 listener.exitLtlCheck(self)
 
 
@@ -5178,21 +5205,21 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 657
-            self.match(self.M_check)
+            self.match(AALParser.M_check)
             self.state = 658
-            self.match(self.ID)
+            self.match(AALParser.ID)
             self.state = 660
             _la = self._input.LA(1)
-            if _la==AALParser.T__6:
-                self.state = 659 
+            if _la==AALParser.T__0:
+                self.state = 659
                 self.args()
 
 
-            self.state = 662 
+            self.state = 662
             self.h_lmar()
-            self.state = 663 
+            self.state = 663
             self.check()
-            self.state = 664 
+            self.state = 664
             self.h_rmar()
         except RecognitionException as re:
             localctx.exception = re
@@ -5215,11 +5242,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_check
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterCheck" ):
                 listener.enterCheck(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitCheck" ):
                 listener.exitCheck(self)
 
 
@@ -5232,7 +5259,7 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 666
-            self.match(self.MCODE)
+            self.match(AALParser.MCODE)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -5247,11 +5274,11 @@ class AALParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def STRING(self, i:int=None):
-            if i is None:
-                return self.getTokens(AALParser.STRING)
-            else:
-                return self.getToken(AALParser.STRING, i)
+        def M_apply(self):
+            return self.getToken(AALParser.M_apply, 0)
+
+        def ID(self):
+            return self.getToken(AALParser.ID, 0)
 
         def h_lpar(self):
             return self.getTypedRuleContext(AALParser.H_lparContext,0)
@@ -5261,21 +5288,21 @@ class AALParser ( Parser ):
             return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
-        def ID(self):
-            return self.getToken(AALParser.ID, 0)
-
-        def M_apply(self):
-            return self.getToken(AALParser.M_apply, 0)
+        def STRING(self, i:int=None):
+            if i is None:
+                return self.getTokens(AALParser.STRING)
+            else:
+                return self.getToken(AALParser.STRING, i)
 
         def getRuleIndex(self):
             return AALParser.RULE_checkApply
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterCheckApply" ):
                 listener.enterCheckApply(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitCheckApply" ):
                 listener.exitCheckApply(self)
 
 
@@ -5289,22 +5316,22 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 668
-            self.match(self.M_apply)
+            self.match(AALParser.M_apply)
             self.state = 669
-            self.match(self.ID)
-            self.state = 670 
+            self.match(AALParser.ID)
+            self.state = 670
             self.h_lpar()
             self.state = 674
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==AALParser.STRING:
                 self.state = 671
-                self.match(self.STRING)
+                self.match(AALParser.STRING)
                 self.state = 676
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 677 
+            self.state = 677
             self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
@@ -5330,11 +5357,11 @@ class AALParser ( Parser ):
             return AALParser.RULE_env
 
         def enterRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "enterEnv" ):
                 listener.enterEnv(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if isinstance( listener, AALListener ):
+            if hasattr( listener, "exitEnv" ):
                 listener.exitEnv(self)
 
 
@@ -5347,9 +5374,9 @@ class AALParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 679
-            self.match(self.M_env)
+            self.match(AALParser.M_env)
             self.state = 680
-            self.match(self.MCODE)
+            self.match(AALParser.MCODE)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -5372,9 +5399,9 @@ class AALParser ( Parser ):
         else:
             return pred(localctx, predIndex)
 
-    def time_sempred(self, localctx:TimeContext, predIndex:int):
-            if predIndex == 2:
-                return self.precpred(self._ctx, 1)
+    def actionExp_sempred(self, localctx:ActionExpContext, predIndex:int):
+            if predIndex == 0:
+                return self.precpred(self._ctx, 5)
          
 
     def condition_sempred(self, localctx:ConditionContext, predIndex:int):
@@ -5382,10 +5409,11 @@ class AALParser ( Parser ):
                 return self.precpred(self._ctx, 1)
          
 
-    def actionExp_sempred(self, localctx:ActionExpContext, predIndex:int):
-            if predIndex == 0:
-                return self.precpred(self._ctx, 5)
+    def time_sempred(self, localctx:TimeContext, predIndex:int):
+            if predIndex == 2:
+                return self.precpred(self._ctx, 1)
          
+
 
 
 
