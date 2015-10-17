@@ -390,7 +390,7 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
 		parent.actionsPanel.append(this.button);
 	},
 
-	control: function(parent) {
+	control: function(parent, disableShortcut) {
 
 		var fx = function(e) {
 			var file = visualEditor.ui.activeTab.container.title;
@@ -429,6 +429,7 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
 			}
 		}
 		this.button.click(fx);
+		if(disableShortcut != null) return;
 		shortcut.add("Ctrl+S", fx);
 	}
 });
@@ -543,12 +544,13 @@ visualEditor.ui.tools.genAALTool = visualEditor.ui.tool.extend({
 		parent.actionsPanel.append(this.button);
 	},
 
-	control: function(parent) {
+	control: function(parent, disableShortcut) {
 		var fx = function(e){
 			var active = visualEditor.ui.activeTab.container.title;
             visualEditor.ui.fileManager.showGeneratedAAL(active);
 		};
 		this.button.click(fx);
+		if(disableShortcut != null) return;
 		shortcut.add("Ctrl+G", fx);
 	}
 });
@@ -566,7 +568,7 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 		parent.actionsPanel.append(this.button);
 	},
 
-	control: function(parent) {
+	control: function(parent, disableShortcut) {
 		var fx = function(e){
 			//var active = visualEditor.ui.activeTab.container.title;
 			//visualEditor.ui.fileManager.showGeneratedTSPASS(active);
@@ -628,6 +630,7 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 		};
 
 		this.button.click(fx);
+		if(disableShortcut != null) return;
 		shortcut.add("Ctrl+Enter", fx);
 	}
 });
@@ -710,7 +713,7 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
 		parent.actionsPanel.append(this.button);
 	},
 
-	control: function(parent) {
+	control: function(parent, disableShortcut) {
 		var fx = function(e){
 			var p =
 			"<div id='modal-content'>" +
@@ -782,6 +785,7 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
                 visualEditor.ui.updateToastSize("info", {"width": 950}, true);
 			};
 			this.button.click(fx);
+		    if(disableShortcut != null) return;
 			shortcut.add("Ctrl+M", fx);
 /*
         	"<!-- Declarations -->" +
@@ -1081,7 +1085,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 		parent.actionsPanel.append(this.button);
 	},
 
-	control: function(parent) {
+	control: function(parent, disableShortcut) {
 		var fx = function(e){
             // Get AAL info
             visualEditor.ui.analyseAAL(visualEditor.ui.activeTab.panel.title, function(e) {
@@ -1136,6 +1140,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 			});
 		};
 		this.button.click(fx);
+		if(disableShortcut != null) return;
 		shortcut.add("Ctrl+e", fx);
 	}
 });
@@ -1209,11 +1214,12 @@ visualEditor.ui.tools.clearOutputTool = visualEditor.ui.tool.extend({
 		parent.actionsPanel.append(this.button);
 	},
 
-	control: function(parent) {
+	control: function(parent, disableShortcut) {
 		var fx = function(e){
             $("#output_window").empty();
 		};
 		this.button.click(fx);
+		if(disableShortcut != null) return;
 		//shortcut.add("Ctrl+G", fx);
 	}
 });

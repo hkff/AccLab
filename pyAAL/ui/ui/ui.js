@@ -351,27 +351,27 @@ visualEditor.ui = {
         var btn = new visualEditor.ui.tools.saveTool();
         btn.button = $('<li><div title="Save (ctrl+S)" id="saveBtn" class="btn-action fa fa-save fa-lg"/></li>');
         pops.append(btn.button);
-        btn.control(pops);
+        btn.control(pops, true);
 
         btn = new visualEditor.ui.tools.genTSPASSTool();
         btn.button = $('<li><div title="Compile (ctrl+Enter)" id="genTSPASSBtn" class="btn-action fa fa-cog fa-lg"/></li>');
         pops.append(btn.button);
-        btn.control(pops);
+        btn.control(pops, true);
 
         btn = new visualEditor.ui.tools.AALSyntaxTool();
         btn.button = $('<li><div title="AAL Syntax (ctrl+M)" id="aalSyntaxBtn" class="btn-action fa fa-file-code-o fa-lg"/></li>');
         pops.append(btn.button);
-        btn.control(pops);
+        btn.control(pops, true);
 
         btn = new visualEditor.ui.tools.templatesTool();
         btn.button = $('<li><div title="AAL policy wizard (ctrl+e)" id="tmpBtn" class="btn-action fa fa-magic fa-lg"/></li>');
         pops.append(btn.button);
-        btn.control(pops);
+        btn.control(pops, true);
 
         btn = new visualEditor.ui.tools.clearOutputTool();
         btn.button = $('<li><div title="Clear output" id="clearOutputBtn" class="btn-action fa fa-square-o  fa-lg"/></li>');
         pops.append(btn.button);
-        btn.control(pops);
+        btn.control(pops, true);
 
         // Bind the event listener to the trigger
         $("#aceTrigger").bind("mousedown", visualEditor.ui.toggleAceWheelContextMenu);

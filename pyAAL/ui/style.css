@@ -441,3 +441,24 @@ body {
     width: 30px;
     position: absolute;
 }
+
+
+rect.pointer{
+    cursor:pointer;
+    fill:white !important; /* cursor isn't show if the element didn't have any "fill" != transparent */
+    opacity:0.01 !important; /* make the fill almost invisible */
+}
+
+path.pointer{
+    cursor:pointer;
+}
+
+.draw2d_OutputPort{
+    fill: #157dfb;
+    stroke: white;
+}
+
+.draw2d_InputPort{
+    fill: #157dfb;
+    stroke: white;
+}

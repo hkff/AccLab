@@ -39,6 +39,7 @@
     <script src="./libs/draw2d/lib/jquery.autoresize.js"></script>
     <script src="./libs/draw2d/lib/jquery-touch_punch.js"></script>
     <script src="./libs/draw2d/lib/jquery.contextmenu.js"></script>
+    <link href="./libs/css/contextmenu.css" rel="stylesheet"/>
     <script src="./libs/draw2d/lib/raphael.js"></script>
     <script src="./libs/draw2d/lib/rgbcolor.js"></script>
     <script src="./libs/draw2d/lib/canvg.js"></script>
@@ -92,12 +93,8 @@
     <script src="ui/fileManager.js"></script>
     <script src="ui/grid.js"></script>
     <script src="ui/outline.js"></script>
-    <!--<script src="ui/components/MarkerFigure.js"></script>-->
-    <!--<script src="ui/components/MarkerStateAFigure.js"></script>-->
-    <!--<script src="ui/components/MarkerStateBFigure.js"></script>-->
     <script src="ui/components/components.js"></script>
     <script src="ui/components/Ports2.js"></script>
-    <script src="ui/components/Actor2.js"></script>
     <script src="ui/components/Actor.js"></script>
     <script src="ui/components/Agent.js"></script>
     <script src="ui/components/Data.js"></script>
@@ -106,7 +103,7 @@
     <script src="ui/properties.js"></script>
 
     <!-- Togetherjs -->
-    <script src="https://togetherjs.com/togetherjs-min.js"></script>
+    <script src="./libs/togetherjs-min.js"></script>
 </head>
 
 <body>
@@ -153,12 +150,7 @@
         <div class="trigger" id="acdTrigger"></div>
         <div class="popcircle">
           <ul id="acdPops">
-            <li><div title="AAL Mode" onclick="visualEditor.aalMode()" class="btn-action fa fa-pencil-square-o fa-lg"></div></li>
             <li><div title="Design Mode" onclick="visualEditor.acdMode()" class="btn-action fa fa-image fa-lg"></div></li>
-            <li><div title="Clear preferences" onclick="visualEditor.clearPrefs()" class="btn-action fa fa-recycle fa-lg"></div></li>
-            <li><div title="AAL Mode" onclick="visualEditor.aalMode()" class="btn-action fa fa-pencil-square-o fa-lg"></div></li>
-            <li><div title="Design Mode" onclick="visualEditor.acdMode()" class="btn-action fa fa-image fa-lg"></div></li>
-            <li><div title="Clear preferences" onclick="visualEditor.clearPrefs()" class="btn-action fa fa-recycle fa-lg"></div></li>
           </ul>
         </div>
     </div>

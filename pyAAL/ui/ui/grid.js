@@ -58,20 +58,33 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 		this.installEditPolicy(new CopyInterceptorPolicy());
 		this.installEditPolicy(new draw2d.policy.canvas.CoronaDecorationPolicy());
 		this.installEditPolicy(new draw2d.policy.canvas.SnapToGeometryEditPolicy());
-		this.installEditPolicy(new draw2d.policy.canvas.ShowDotEditPolicy());
+		this.installEditPolicy(new draw2d.policy.canvas.ShowDotEditPolicy()); // SnapToGridEditPolicy
 
-		// override the default method for connection create. 
-		// Now we create always the kind of connection which the user has been selected in the
-		// menubar. 
+
 		draw2d.Connection.createConnection=function(sourcePort, targetPort){
-		    var c = new MyConnection({
-	    	   		targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
-					sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
+            var c = new MyConnection({
+                //targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
+                //sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
+                sourceDecorator: new draw2d.decoration.connection.BarDecorator(),
+		        targetDecorator: new draw2d.decoration.connection.DiamondDecorator()
 		    });
 		    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
-		    c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
+		    //c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
 		    return c;
-		};
+        };
+
+        // Connection override
+        draw2d.Configuration.factory.createConnection=function(sourcePort, targetPort){
+             var c = new MyConnection({
+                //targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
+                //sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
+                sourceDecorator: new draw2d.decoration.connection.BarDecorator(),
+		        targetDecorator: new draw2d.decoration.connection.DiamondDecorator(),
+		    });
+		    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
+		    //c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
+		    return c;
+        };
 
 		this.on("select", function(emitter,figure){
 	    	if(figure!==null) {
@@ -84,6 +97,7 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
             }
 	     	else{
                 // Hide panel prop
+                visualEditor.ui.selectedNode = null;
 				$(visualEditor.ui.propertiesPanel.children()).css("opacity", 0.15);
                 visualEditor.ui.propertiesPanel[0].addEventListener("click", visualEditor.ui.stoper, true);
      		}
@@ -115,20 +129,21 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
         var btn = new visualEditor.ui.tools.saveTool();
         btn.button = $('<li><div title="Save (ctrl+S)" id="saveBtn" class="btn-action fa fa-save fa-lg"/></li>');
         pops.append(btn.button);
-        btn.control(pops);
+        btn.control(pops, true);
 
-        btn = new visualEditor.ui.tools.genTSPASSTool();
-        btn.button = $('<li><div title="Compile (ctrl+Enter)" id="genTSPASSBtn" class="btn-action fa fa-cog fa-lg"/></li>');
+        btn = new visualEditor.ui.tools.genAALTool();
+        btn.button = $('<li><div title="Generate AAL file (ctrl+G)" id="genAALBtn" class="btn-action fa fa-file-text-o fa-lg"/></li>');
         pops.append(btn.button);
-        btn.control(pops);
+        btn.control(pops, true);
 
         btn = new visualEditor.ui.tools.AALSyntaxTool();
-        btn.button = $('<li><div title="AAL Syntax (ctrl+M)" id="aalSyntaxBtn" class="btn-action fa fa-file-code-o fa-lg"/></li>');
+        btn.button = $('<li><div title="Agent (Ctrl+Shift+A)" class="btn-components fa fa-user fa-2x"></div></li>');
+        $(btn.button).on("click", function(e){ console.log("koko"); var a = new agent(); a.addElement() })
         pops.append(btn.button);
-        btn.control(pops);
+        //btn.control(pops, true);
 
-        btn = new visualEditor.ui.tools.templatesTool();
-        btn.button = $('<li><div title="AAL policy wizard (ctrl+e)" id="tmpBtn" class="btn-action fa fa-magic fa-lg"/></li>');
+        btn = new visualEditor.ui.tools.mselectTool();
+        btn.button = $('<li><div title="Multiple Selection Mode" id="mselectBtn" class="btn-action fa fa-square fa-lg"/></li>');
         pops.append(btn.button);
         btn.control(pops);
 
@@ -145,6 +160,9 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
     },
 
     toggleWheelContextMenu: function(e) {
+        if(visualEditor.ui.selectedNode != null)
+            return;
+
         var wcm = $("#acdWheelContextMenu");
         wcm.toggle("display");
         wcm.css("top", e.clientY - 75);
@@ -166,12 +184,58 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 var MyConnection= draw2d.Connection.extend({
     init:function(attr) {
         this._super(attr);
-        this.setRouter(new draw2d.layout.connection.InteractiveManhattanConnectionRouter());
+        //this.setRouter(new draw2d.layout.connection.InteractiveManhattanConnectionRouter());
+        this.setRouter(new draw2d.layout.connection.MazeConnectionRouter());
+        this.installEditPolicy(new draw2d.policy.line.VertexSelectionFeedbackPolicy());
         this.setOutlineStroke(0);
         this.setOutlineColor("#303030");
-        this.setStroke(3);
+        this.setStroke(4);
         this.setColor('#00A8F0');
-        this.setRadius(0);
+        this.setRadius(20);
+    },
+
+	onContextMenu:function(x,y){
+        $.contextMenu({
+            selector: 'body',
+            events:
+            {
+                hide:function(){ $.contextMenu( 'destroy' ); }
+            },
+            callback: $.proxy(function(key, options)
+            {
+               switch(key){
+               case "red":
+                   this.setColor('#f3546a');
+                   break;
+               case "green":
+                   this.setColor('#b9dd69');
+                   break;
+               case "blue":
+                   this.setColor('#00A8F0');
+                   break;
+               case "delete":
+                   // without undo/redo support
+              //     this.getCanvas().remove(this);
+
+                   // with undo/redo support
+                   var cmd = new draw2d.command.CommandDelete(this);
+                   this.getCanvas().getCommandStack().execute(cmd);
+               default:
+                   break;
+               }
+
+            },this),
+            x:x,
+            y:y,
+            items:
+            {
+                "red":    {name: "Red", icon: "edit"},
+                "green":  {name: "Green", icon: "cut"},
+                "blue":   {name: "Blue", icon: "copy"},
+                "sep1":   "---------",
+                "delete": {name: "Delete", icon: "delete"}
+            }
+        });
     }
 });
 

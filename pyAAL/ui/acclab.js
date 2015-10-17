@@ -587,7 +587,7 @@ window.onload = function() {
     shortcut.add("Alt+a", visualEditor.ui.highlightGreen);
 
     // TOREMOVE
-    visualEditor.ui.fileManager.openFile("demo_CIEL.acd");
+    visualEditor.ui.fileManager.openFile("toto.acd");
 
     // Hide loader
     $('#loading-image').hide();
