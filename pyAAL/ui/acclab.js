@@ -24,14 +24,14 @@ var visualEditor = {
 	/*currentCanvas : null,
 	activeTab     : null,
     canvas        : [],*/
-    activeEditor    : null,
+    activeEditor  : null,
     visualEditor  : false,
     activeCloseBtn: null,
-    userPrefs    : {"theme": "monokai", "username": "" },
+    userPrefs     : {"theme": "monokai", "username": "", "fontSize": 14},
     aceTheme      : "monokai",
     aceThemesList : ["monokai", "chrome", "tomorrow", "kuroir", "eclipse", "chaos"],
     backend       : "http://127.0.0.1:8000/",
-    username      : "",
+    //username      : "",
 
 
     /**
@@ -83,6 +83,18 @@ var visualEditor = {
             visualEditor.userPrefs["username"] = username;
             visualEditor.save_prefs();
         }
+        return visualEditor.userPrefs.username;
+    },
+
+    /**
+     * Get Font size
+     */
+    getFontSize: function() {
+        if(visualEditor.userPrefs["fontSize"] == null) {
+            visualEditor.userPrefs["fontSize"] = 14;
+            visualEditor.save_prefs();
+        }
+        return visualEditor.userPrefs.fontSize;
     },
 
     /**

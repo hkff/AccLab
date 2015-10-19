@@ -462,3 +462,22 @@ path.pointer{
     fill: #157dfb;
     stroke: white;
 }
+
+/* Ace statusbar */
+#statusBar {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 80px;
+    right: 30px;
+    bottom: 15px;
+    height: 20px;
+    color: gray;
+}
+
+.ace_status-indicator {
+    color: gray;
+    position: absolute;
+    right: 0;
+    border-left: 1px solid;
+}

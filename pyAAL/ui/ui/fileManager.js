@@ -389,14 +389,15 @@ visualEditor.ui.fileManager = {
 		var config = ace.require("ace/config");
         var editor = ace.edit(id);
 
+        // Setting options
 		editor.setOptions({
         	enableBasicAutocompletion: true,
         	enableSnippets: true,
-        	enableLiveAutocompletion: true
+        	enableLiveAutocompletion: true,
+            fontSize: visualEditor.getFontSize(),
+            theme: "ace/theme/" + visualEditor.aceTheme
     	});
 
-		// Set theme
-	    editor.setTheme("ace/theme/" + visualEditor.aceTheme);
 
         // Set Mode
 		if(this.supportedTypes.indexOf(type) != -1)
@@ -404,14 +405,13 @@ visualEditor.ui.fileManager = {
 		else
             editor.getSession().setMode("ace/mode/plain_text");
 
-	    editor.setFontSize(14);
 
-        //var StatusBar = ace.require("ace/ext/statusbar").StatusBar;
-        //console.log(StatusBar)
         // create a simple selection status indicator
-        //var statusBar = new StatusBar(editor, $("#statusBar"));
+        $(editor.container).append('<div id="statusBar"></div>');
+        var StatusBar = ace.require("ace/ext/statusbar").StatusBar;
+        var statusBar = new StatusBar(editor, $("#statusBar")[0]);
 
-        //editor.session.setOption("useWorker", true);
+        editor.session.setOption("useWorker", true);
 	    return editor;
 	},
 
@@ -420,7 +420,6 @@ visualEditor.ui.fileManager = {
 	 * @param file
 	 */
 	deleteFile: function(file) {
-		console.log("deleting " + file)
         $.ajax({
 			dataType: "text",
 			type:'POST',
