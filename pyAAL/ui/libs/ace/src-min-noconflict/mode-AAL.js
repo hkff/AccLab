@@ -2,15 +2,12 @@
  * AAL Mode
  */
 ace.define('ace/mode/AAL', function(require, exports, module) {
-    //window.Range = require('ace/range').Range;
-    //var StatusBar = require("ace/ext/statusbar").StatusBar;
-
     var oop = require("../lib/oop");
     var TextMode = require("./text").Mode;
     //var Tokenizer = require("../tokenizer").Tokenizer;
     var aalHighlightRules = require("./aal_highlight_rules").aalHighlightRules;
     var aalFoldMode = require("./aalFolding").FoldMode;
-    var WorkerClient = require("ace/worker/worker_client").WorkerClient;
+    var WorkerClient = require("../worker/worker_client").WorkerClient;
 
     var Mode = function() {
         //this.$tokenizer = new Tokenizer(new aalHighlightRules().getRules());
@@ -22,28 +19,9 @@ ace.define('ace/mode/AAL', function(require, exports, module) {
 
 
     (function() {
-        /*this.createWorker = function(session) {
-            var worker = new WorkerClient(["ace"], "ace/mode/aal-worker", "worker", "libs/ace/src-min-noconflict/worker-aal.js");
-            worker.attachToDocument(session.getDocument());
-
-            worker.on("annotate", function(results) {
-                session.setAnnotations(results.data);
-            });
-
-            worker.on("terminate", function() {
-                session.clearAnnotations();
-            });
-
-            return worker;
-        };*/
-        this.$id = "ace/mode/AAL";
-        // Extra logic goes here. (see below)
-        /*;
-        var WorkerClient = require("ace/worker/worker_client").WorkerClient;
-
+        // Creating AAL worker
         this.createWorker = function(session) {
-            this.$worker = new WorkerClient(["ace"], "ace/worker/worker-aal", "AALWorker", "" +
-                "libs/ace/src-min-noconflict/worker-aal.js");
+            this.$worker = new WorkerClient(["ace"], "ace/worker/aal_worker", "AALWorker");
             this.$worker.attachToDocument(session.getDocument());
 
             this.$worker.on("errors", function(e) {
@@ -59,7 +37,9 @@ ace.define('ace/mode/AAL', function(require, exports, module) {
             });
 
             return this.$worker;
-        };*/
+        };
+
+        this.$id = "ace/mode/AAL";
 
     }).call(Mode.prototype);
 
