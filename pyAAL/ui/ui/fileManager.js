@@ -40,15 +40,16 @@ visualEditor.ui.fileManager = {
 	 * @param propertiesPanel
 	 */
 	init: function(grid, actionsPanel, componentsPanel, propertiesPanel) {
-		
-		// Get view elements
-		this.grid            = $('#'+ grid);
-		this.actionsPanel    = $('#'+ actionsPanel);
-		this.componentsPanel = $('#'+ componentsPanel);
-		this.propertiesPanel = $('#'+ propertiesPanel);
-		this.view(this);
-		this.control(this);
-	},
+
+        // Get view elements
+        this.grid = $('#' + grid);
+        this.actionsPanel = $('#' + actionsPanel);
+        this.componentsPanel = $('#' + componentsPanel);
+        this.propertiesPanel = $('#' + propertiesPanel);
+        this.view(this);
+        this.control(this);
+
+    },
 
 	/**
 	 * View
@@ -385,8 +386,8 @@ visualEditor.ui.fileManager = {
 	 * @returns {*}
 	 */
 	openAceEditor: function(id, type) {
-		var editor = ace.edit(id);
 		var config = ace.require("ace/config");
+        var editor = ace.edit(id);
 
 		editor.setOptions({
         	enableBasicAutocompletion: true,
@@ -404,6 +405,13 @@ visualEditor.ui.fileManager = {
             editor.getSession().setMode("ace/mode/plain_text");
 
 	    editor.setFontSize(14);
+
+        //var StatusBar = ace.require("ace/ext/statusbar").StatusBar;
+        //console.log(StatusBar)
+        // create a simple selection status indicator
+        //var statusBar = new StatusBar(editor, $("#statusBar"));
+
+        //editor.session.setOption("useWorker", true);
 	    return editor;
 	},
 
