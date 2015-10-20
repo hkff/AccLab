@@ -157,6 +157,7 @@ var visualEditor = {
         // Restore default values
         visualEditor.userPrefs["username"] = "";
         visualEditor.userPrefs["theme"] = "monokai";
+        visualEditor.userPrefs["fontSize"] = 14;
 
         $.ajax({
             dataType: 'text',
@@ -599,7 +600,7 @@ window.onload = function() {
     shortcut.add("Alt+a", visualEditor.ui.highlightGreen);
 
     // TOREMOVE
-    visualEditor.ui.fileManager.openFile("tuto2.aal");
+    //visualEditor.ui.fileManager.openFile("tuto2.aal");
 
     // Hide loader
     $('#loading-image').hide();

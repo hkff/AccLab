@@ -428,16 +428,19 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 var sharedContextCache = new antlr4.PredictionContextCache();
 
 var literalNames = [ 'null', "'('", "')'", "'['", "']'", "'{'", "'}'", "'.'", 
-                     "':'", "'=='", "'!='", "'/'", "'@'", 'null', 'null', 
+                     "':'", "'=='", "'!='", "'/'", "'@'", "'SERVICE'", "'AGENT'", 
+                     "'DATA'", "'CLAUSE'", "'TYPE'", "'TYPES'", "'AUDITING'", 
+                     "'IF_VIOLATED_THEN'", "'OR'", "'AND'", "'ONLYWHEN'", 
+                     "'THEN'", "'IF'", "'NOT'", "'WHERE'", "'AFTER'", "'BEFORE'", 
+                     "'MUST'", "'MUSTNOT'", "'ALWAYS'", "'NEVER'", "'SOMETIME'", 
+                     "'UNTIL'", "'UNLESS'", "'NEXT'", "'PERMIT'", "'DENY'", 
+                     "'FORALL'", "'EXISTS'", "'SUBJECT'", "'REQUIRED'", 
+                     "'PROVIDED'", "'PURPOSE'", "'EXTENDS'", "'ATTRIBUTES'", 
+                     "'ACTIONS'", "'MACRO'", "'CALL'", "'LOAD'", "'CHECK'", 
+                     "'APPLY'", "'EXEC'", "'BEHAVIOR'", "'ENV'", 'null', 
                      'null', 'null', 'null', 'null', 'null', 'null', 'null', 
                      'null', 'null', 'null', 'null', 'null', 'null', 'null', 
-                     'null', 'null', 'null', 'null', 'null', 'null', 'null', 
-                     'null', 'null', 'null', 'null', 'null', 'null', "'SUBJECT'", 
-                     'null', 'null', 'null', 'null', 'null', 'null', 'null', 
-                     'null', 'null', 'null', 'null', 'null', 'null', 'null', 
-                     'null', 'null', 'null', 'null', 'null', 'null', 'null', 
-                     'null', 'null', 'null', 'null', 'null', 'null', 'null', 
-                     'null', "'&'", "'|'" ];
+                     "'&'", "'|'" ];
 
 var symbolicNames = [ 'null', 'null', 'null', 'null', 'null', 'null', 'null', 
                       'null', 'null', 'null', 'null', 'null', 'null', "D_service", 

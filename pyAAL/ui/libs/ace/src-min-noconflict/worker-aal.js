@@ -1128,6 +1128,7 @@ var validate = function(input) {
     parser.removeErrorListeners();
     parser.addErrorListener(listener);
     parser.main();
+    console.log(annotations)
     return annotations;
 };
 

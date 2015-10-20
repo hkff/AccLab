@@ -326,22 +326,20 @@ class AALParser ( Parser ):
     sharedContextCache = PredictionContextCache()
 
     literalNames = [ "<INVALID>", "'('", "')'", "'['", "']'", "'{'", "'}'", 
-                     "'.'", "':'", "'=='", "'!='", "'/'", "'@'", "<INVALID>", 
+                     "'.'", "':'", "'=='", "'!='", "'/'", "'@'", "'SERVICE'", 
+                     "'AGENT'", "'DATA'", "'CLAUSE'", "'TYPE'", "'TYPES'", 
+                     "'AUDITING'", "'IF_VIOLATED_THEN'", "'OR'", "'AND'", 
+                     "'ONLYWHEN'", "'THEN'", "'IF'", "'NOT'", "'WHERE'", 
+                     "'AFTER'", "'BEFORE'", "'MUST'", "'MUSTNOT'", "'ALWAYS'", 
+                     "'NEVER'", "'SOMETIME'", "'UNTIL'", "'UNLESS'", "'NEXT'", 
+                     "'PERMIT'", "'DENY'", "'FORALL'", "'EXISTS'", "'SUBJECT'", 
+                     "'REQUIRED'", "'PROVIDED'", "'PURPOSE'", "'EXTENDS'", 
+                     "'ATTRIBUTES'", "'ACTIONS'", "'MACRO'", "'CALL'", "'LOAD'", 
+                     "'CHECK'", "'APPLY'", "'EXEC'", "'BEHAVIOR'", "'ENV'", 
                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "'SUBJECT'", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "'&'", "'|'" ]
+                     "<INVALID>", "<INVALID>", "<INVALID>", "'&'", "'|'" ]
 
     symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                       "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
