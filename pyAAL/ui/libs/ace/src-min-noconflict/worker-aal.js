@@ -1109,23 +1109,56 @@ var AnnotatingErrorListener = function(annotations) {
     return this;
 };
 
+var error_rules =
+{
+    "rule1" : {"msg": "missing null at '<EOF>'", "level": "error", "hint": "Incomplete definition"},
+    "rule2" : {"msg": "mismatched input '<EOF>' expecting null", "level": "error", "hint": "Incomplete definition"}
+
+};
+
 AnnotatingErrorListener.prototype = Object.create(antlr4.error.ErrorListener.prototype);
 AnnotatingErrorListener.prototype.constructor = AnnotatingErrorListener;
 AnnotatingErrorListener.prototype.syntaxError = function(recognizer, offendingSymbol, line, column, msg, e) {
     var parser = recognizer._ctx.parser,
         tokens = parser.getTokenStream().tokens;
+    var level = "error";
 
+    // Applying the rules
+    for(var rule in error_rules) {
+        if(error_rules.hasOwnProperty(rule)){
+            if(msg === error_rules[rule].msg) {
+                // Push the annotation
+                this.annotations.push({
+                    row: line - 1,
+                    column: column,
+                    text: error_rules[rule].hint,
+                    type: error_rules[rule].level
+                });
+                return;
+            }
+        }
+    }
+
+    // Push the default annotation
     this.annotations.push({
         row: line - 1,
         column: column,
         text: msg,
-        type: "error"
+        type: level
     });
 };
+
 
 /**
  * Linter
  */
+
+var hint_rules =
+{
+    "rule1" : {"msg": "missing null at '<EOF>'", "level": "", "hint": ""}
+
+};
+
 var validate = function(input) {
     var stream = new antlr4.InputStream(input);
     var lexer = new aal.AALLexer(stream);
@@ -1135,10 +1168,11 @@ var validate = function(input) {
     var listener = new AnnotatingErrorListener(annotations);
     parser.removeErrorListeners();
     parser.addErrorListener(listener);
-    //parser.setErrorHandler(new antlr4.error.BailErrorStrategy())
-    parser.main();
-    console.log(annotations)
-    return (annotations.length > 0)?[annotations[0]]:[];
+    var tree = parser.main();
+    //var pattern = parser.compileParseTreePattern("<ACTION>", aal.AALParser.RULE_action);
+    //var matches = pattern.findAll(tree, "//action");
+    //return (annotations.length > 0)?[annotations[0]]:[];
+    return annotations;
 };
 
 
