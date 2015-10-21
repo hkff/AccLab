@@ -1084,6 +1084,7 @@
 // Worker
 //===================================
 
+// Loading antlr4
 var ace_require = require;
 require = undefined;
 var Honey = { 'requirePath': ['/ui/libs/'] };
@@ -1099,7 +1100,9 @@ try {
     require = ace_require;
 }
 
-// class for gathering errors and posting them to ACE editor
+/**
+ * Class for gathering errors and posting them to ACE editor
+ */
 var AnnotatingErrorListener = function(annotations) {
     antlr4.error.ErrorListener.call(this);
     this.annotations = annotations;
@@ -1109,6 +1112,9 @@ var AnnotatingErrorListener = function(annotations) {
 AnnotatingErrorListener.prototype = Object.create(antlr4.error.ErrorListener.prototype);
 AnnotatingErrorListener.prototype.constructor = AnnotatingErrorListener;
 AnnotatingErrorListener.prototype.syntaxError = function(recognizer, offendingSymbol, line, column, msg, e) {
+    var parser = recognizer._ctx.parser,
+        tokens = parser.getTokenStream().tokens;
+
     this.annotations.push({
         row: line - 1,
         column: column,
@@ -1117,22 +1123,28 @@ AnnotatingErrorListener.prototype.syntaxError = function(recognizer, offendingSy
     });
 };
 
-// Linter
+/**
+ * Linter
+ */
 var validate = function(input) {
     var stream = new antlr4.InputStream(input);
     var lexer = new aal.AALLexer(stream);
     var tokens = new antlr4.CommonTokenStream(lexer);
     var parser = new aal.AALParser(tokens);
     var annotations = [];
-    var listener = new AnnotatingErrorListener(annotations)
+    var listener = new AnnotatingErrorListener(annotations);
     parser.removeErrorListeners();
     parser.addErrorListener(listener);
+    //parser.setErrorHandler(new antlr4.error.BailErrorStrategy())
     parser.main();
     console.log(annotations)
-    return annotations;
+    return (annotations.length > 0)?[annotations[0]]:[];
 };
 
-// Worker
+
+/**
+ * Worker
+ */
 ace.define('ace/worker/aal_worker',["require","exports","module","ace/lib/oop","ace/worker/mirror"], function(require, exports, module) {
     "use strict";
 
