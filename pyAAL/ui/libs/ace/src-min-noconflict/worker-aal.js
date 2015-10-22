@@ -94,7 +94,7 @@ AnnotatingErrorListener.prototype.syntaxError = function(recognizer, offendingSy
     var parser = recognizer._ctx.parser,
         tokens = parser.getTokenStream().tokens;
     // Push the annotation
-    this.annotations.push({row: line - 1, column: column, text: error_linter(msg, tokens), type: "error"});
+    this.annotations.push({row: line - 1, column: column, text: error_linter(msg, tokens, offendingSymbol), type: "error"});
 };
 
 
@@ -115,14 +115,14 @@ var error_rules =
 };
 
 var handleANTLRmsg = function(msg) {
-    var rule, givenToken, expectedTokens = null;
+    var rule, givenToken, expectedTokens, expattern = null;
 
     // Checking rule1 / rule2
     rule = (msg.startsWith(error_rules["rule1"].msg))?error_rules["rule1"]:null;
     rule = (msg.startsWith(error_rules["rule2"].msg))?error_rules["rule2"]:rule;
 
     if(rule != null) {
-        var expattern = msg.indexOf("expecting");
+        expattern = msg.indexOf("expecting");
         givenToken = msg.substring(rule.msg.length, expattern - 1);
         expectedTokens = msg.substring(expattern + 10, msg.length).split(",");
         if(expectedTokens.length > 1) {
@@ -137,7 +137,7 @@ var handleANTLRmsg = function(msg) {
     // Checking rule3
     rule = (msg.startsWith(error_rules["rule3"].msg))?error_rules["rule3"]:null;
     if(rule != null) {
-        var expattern = msg.indexOf("at");
+        expattern = msg.indexOf("at");
         expectedTokens = msg.substring(rule.msg.length, expattern - 1);
         givenToken= msg.substring(expattern + 3, msg.length);
         return {"rule": 3, "givenToken": givenToken, "expectedTokens": expectedTokens, "msg": msg};
@@ -154,11 +154,13 @@ var handleANTLRmsg = function(msg) {
 };
 
 
-var findToken = function(tokenName, tokens, max) {
-    if(max == null || max == undefined) max = 0;
-    max = (tokens.length > max)? tokens.length - max : 0;
+var findToken = function(tokenName, tokens, options) {
+    if(!options) options = {};
+    if(!options.start) options.start = tokens.length - 1;
+    if(!options.end)   options.end = 0;
+    options.end = (tokens.length > options.end)? tokens.length - options.end : 0;
 
-    for(var i=tokens.length-1; i>=max; i--) {
+    for(var i=options.start; i>=options.end; i--) {
         if(tokens[i].text === tokenName)
             return true;
     }
@@ -172,12 +174,16 @@ var findToken = function(tokenName, tokens, max) {
  * @param tokens
  * @returns {*}
  */
-var error_linter = function(msg, tokens) {
+var error_linter = function(msg, tokens, offendingSymbol) {
     var res = "";
     var ant = handleANTLRmsg(msg);
 
-    res = tokens[tokens.length-1].toString() +" ;; " + tokens[tokens.length-2].toString()
-    + "  ;; " + tokens[tokens.length-3].toString() + "  ;; " + ant.msg + " " + ant.expectedTokens + " g" + ant.givenToken;
+    res = "token -1 : " + tokens[tokens.length-1].toString() +
+        "\ntoken -2 : " + tokens[tokens.length-2].toString() +
+        "\ntoken -3 : " + tokens[tokens.length-3].toString() +
+        "\nMsg : " + ant.msg +
+        "\nExpected : " + ant.expectedTokens + "\nGiven : " + ant.givenToken +
+        "\nOffendingSymbol : " + offendingSymbol;
 
     // Matching rules
     switch(ant.rule) {
@@ -185,22 +191,50 @@ var error_linter = function(msg, tokens) {
         // "extraneous input <tokenName> expecting  <expectedTokens>"
         //=============================================================
         case 1:
+            // RULE 1.1 : Comment
+            if(findToken("/", tokens, {"end": 5}) && ant.givenToken === "'/'")
+                return 'Maybe your are missing a / before your comment \nTo comment a line use : // ........';
+
+            // RULE 1.2 : AGENT declaration missing PROVIDED services
+            if(findToken("AGENT", tokens, {"end": 15}) && ant.expectedTokens.indexOf("'PROVIDED'") != -1)
+                return 'PROVIDED services are missing in your declaration \nHere is how to declare an agent : \n' +
+                    'AGENT name TYPES(type1 type2 ...) REQUIRED(service1 service2 ...) PROVIDED(s1 s2 ...)';
+
+            // RULE 1.3 : AGENT declaration missing REQUIRED services
+            if(findToken("AGENT", tokens, {"end": 15}) && ant.expectedTokens.indexOf("'REQUIRED'") != -1)
+                return 'REQUIRED services are missing in your declaration \nHere is how to declare an agent : \n' +
+                    'AGENT name TYPES(type1 type2 ...) REQUIRED(service1 service2 ...) PROVIDED(service1 service2 ...)';
+
             break;
 
         //=============================================================
         // "mismatched input <tokenName> expecting <expectedTokens>"
         //=============================================================
         case 2:
+            // RULE 2.1 : AGENT declaration missing PROVIDED services
+            if(findToken("AGENT", tokens, {"end": 15}) && ant.expectedTokens.indexOf("'PROVIDED'") != -1)
+                return 'PROVIDED services are missing in your declaration \nHere is how to declare an agent : \n' +
+                    'AGENT name TYPES(type1 type2 ...) REQUIRED(service1 service2 ...) PROVIDED(s1 s2 ...)';
+
+            // RULE 2.2 : AGENT declaration missing REQUIRED services
+            if(findToken("AGENT", tokens, {"end": 15}) && ant.expectedTokens.indexOf("'REQUIRED'") != -1)
+                return 'REQUIRED services are missing in your declaration \nHere is how to declare an agent : \n' +
+                    'AGENT name TYPES(type1 type2 ...) REQUIRED(service1 service2 ...) PROVIDED(service1 service2 ...)';
+
             break;
 
         //=============================================================
         // "missing <tokenName> at <token>"
         //=============================================================
         case 3:
-            // RULE 3.1: Load
-            if(findToken("LOAD", tokens, 5) && ant.expectedTokens === "null")
-                return "Maybe your are missing double quotes \" \"\n " +
-                    "here how to load a library : <h5>LOAD \"lib_path\"</h5>";
+            // RULE 3.1 : Load
+            if(findToken("LOAD", tokens, {"end": 5}) && ant.expectedTokens === "null")
+                return 'Maybe your are missing double quotes " "\nHere how to load a library : LOAD "lib_path"';
+
+            // RULE 3.2 : Clause
+            if(findToken("CLAUSE", tokens, {"end": 10}) && ant.expectedTokens === "'('")
+                return 'Maybe your are missing a parenthesis ( after clause name \nHere how declare a clause :\n' +
+                    'CLAUSE clause_name ( expr )';
 
             break;
 
@@ -208,6 +242,16 @@ var error_linter = function(msg, tokens) {
         // "no viable alternative at <input>"
         //=============================================================
         case 4:
+             // RULE 4.1 : Missing parenthesis in a IF_THEN
+            if(findToken("THEN", tokens, {"start": offendingSymbol.tokenIndex+1, "end": 3}))
+                return 'Maybe your are missing a parenthesis in a IF_THEN condition\n' +
+                    'Here how to use an IF_THEN : IF ( condition ) THEN { expression }';
+
+            // RULE 4.2 : Missing parenthesis in a clause
+            if(findToken("CLAUSE", tokens, {"start": offendingSymbol.tokenIndex+1, "end": 3}))
+                return 'Maybe your are missing a parenthesis in a CLAUSE \n' +
+                    'Here how declare a clause :\nCLAUSE clause_name ( expr )';
+
             break;
     }
 

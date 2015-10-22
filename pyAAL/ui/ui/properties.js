@@ -549,6 +549,7 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 	 * @param parent
 	 */
 	view: function(parent) {
+		return;
 		this.inPlaceAALEditor = ace.edit("inPlaceAALEditor-editor");
 	    this.inPlaceAALEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
 	    this.inPlaceAALEditor.getSession().setMode("ace/mode/AAL");
@@ -569,6 +570,7 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 	 * @param parent
 	 */
 	control: function(parent) {
+		return;
 		this.inPlaceAALEditor.on("change", function(e) {
 			// Check if a node is selected
 			if(visualEditor.ui.selectedNode == undefined || null) return;

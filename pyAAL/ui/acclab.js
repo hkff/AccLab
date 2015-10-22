@@ -63,9 +63,18 @@ var visualEditor = {
         if (visualEditor.activeCloseBtn.parent.container.containerType == "panel")
         {
             visualEditor.activeCloseBtn.undockInitiator.enabled = false;
+            delete visualEditor.ui.openedEditors[visualEditor.ui.activeTab.panel.title];
+
             var panel = visualEditor.activeCloseBtn.parent.container;
             panel.performUndock();
             visualEditor.activeCloseBtn = null;
+
+            // Clean editor to avoid memory leaks
+            if(visualEditor.activeEditor != null) {
+                //visualEditor.activeEditor.destroy();
+                //$(visualEditor.activeEditor.container).remove();
+                visualEditor.activeEditor = null;
+            }
         }
     },
 
@@ -131,6 +140,8 @@ var visualEditor = {
                 visualEditor.userPrefs = obj;
                 visualEditor.getUserName();
                 visualEditor.aceTheme = visualEditor.userPrefs["theme"];
+                // DEBUG : TOREMOVE
+                visualEditor.ui.fileManager.openFile("tuto1.aal");
             }
         });
     },
@@ -513,6 +524,13 @@ window.onload = function() {
             visualEditor.updateEditorsTheme();
     };
 
+    // Tabhost
+    dockspawn.TabHost.prototype.onTabChanged = function (page) {
+        visualEditor.ui.canvas = page.activeTab.container.canvas;
+        visualEditor.ui.activeTab = page.activeTab;
+        visualEditor.activeEditor = visualEditor.ui.openedEditors[page.activeTab.panel.title];
+        visualEditor.ui.updatePanel();
+    };
 
     dockspawn.PanelContainer.loadFromState = function(state, dockManager)
     {
@@ -579,13 +597,6 @@ window.onload = function() {
     this.componentsNode = dockManager.dockLeft(documentNode, components, prop);
     this.toolboxNode = dockManager.dockDown(componentsNode, toolbox, 0.80);
 
-    // Tabhost
-    dockspawn.TabHost.prototype.onTabChanged = function (page) {
-        visualEditor.ui.canvas = page.activeTab.container.canvas;
-        visualEditor.ui.activeTab = page.activeTab;
-        visualEditor.activeEditor = visualEditor.ui.openedEditors[page.activeTab.panel.title];
-        visualEditor.ui.updatePanel();
-    };
 
     this.panelNodes = [window.solution, window.outline, window.components, window.toolbox,
         window.properties, window.inplaceAAL, window.output];
@@ -599,8 +610,8 @@ window.onload = function() {
     shortcut.add("Alt+z", visualEditor.ui.highlightRed);
     shortcut.add("Alt+a", visualEditor.ui.highlightGreen);
 
-    // TOREMOVE
-    //visualEditor.ui.fileManager.openFile("tuto2.aal");
+    // DEBUG mode
+    console.log = console.error = function(e) { $("#output_window").append("<br>Console : " + e);}
 
     // Hide loader
     $('#loading-image').hide();
