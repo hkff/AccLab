@@ -88,16 +88,28 @@ var AnnotatingErrorListener = function(annotations) {
     return this;
 };
 
+var DEBUG = true;
+
 AnnotatingErrorListener.prototype = Object.create(antlr4.error.ErrorListener.prototype);
 AnnotatingErrorListener.prototype.constructor = AnnotatingErrorListener;
 AnnotatingErrorListener.prototype.syntaxError = function(recognizer, offendingSymbol, line, column, msg, e) {
     var parser = recognizer._ctx.parser,
         tokens = parser.getTokenStream().tokens;
     // Push the annotation
-    this.annotations.push({row: line - 1, column: column, text: error_linter(msg, tokens, offendingSymbol), type: "error"});
+    var res = error_linter(msg, tokens, offendingSymbol) +
+        "\n\nDEBUG :" +
+        "\ntoken -1 : " + tokens[tokens.length-1].toString() +
+        "\ntoken -2 : " + tokens[tokens.length-2].toString() +
+        "\ntoken -3 : " + tokens[tokens.length-3].toString() +
+        "\nMsg : " + msg +
+        "\nOffendingSymbol : " + offendingSymbol;
+    this.annotations.push({row: line - 1, column: column, text: res, type: "error"});
 };
 
 
+/***************************************
+ *  Syntax error linter
+ ***************************************/
 var error_rules =
 {
     // "extraneous input <tokenName> expecting  <expectedTokens>"
@@ -158,7 +170,7 @@ var findToken = function(tokenName, tokens, options) {
     if(!options) options = {};
     if(!options.start) options.start = tokens.length - 1;
     if(!options.end)   options.end = 0;
-    options.end = (tokens.length > options.end)? tokens.length - options.end : 0;
+    options.end = (tokens.length > options.end)? options.start - options.end : 0;
 
     for(var i=options.start; i>=options.end; i--) {
         if(tokens[i].text === tokenName)
@@ -172,6 +184,7 @@ var findToken = function(tokenName, tokens, options) {
  * Syntax error linter
  * @param msg
  * @param tokens
+ * @param offendingSymbol
  * @returns {*}
  */
 var error_linter = function(msg, tokens, offendingSymbol) {
@@ -191,16 +204,16 @@ var error_linter = function(msg, tokens, offendingSymbol) {
         // "extraneous input <tokenName> expecting  <expectedTokens>"
         //=============================================================
         case 1:
-            // RULE 1.1 : Comment
+            // RULE 1.1 (Accuracy 90%) : Comment
             if(findToken("/", tokens, {"end": 5}) && ant.givenToken === "'/'")
                 return 'Maybe your are missing a / before your comment \nTo comment a line use : // ........';
 
-            // RULE 1.2 : AGENT declaration missing PROVIDED services
+            // RULE 1.2 (Accuracy ??%) : AGENT declaration missing PROVIDED services
             if(findToken("AGENT", tokens, {"end": 15}) && ant.expectedTokens.indexOf("'PROVIDED'") != -1)
                 return 'PROVIDED services are missing in your declaration \nHere is how to declare an agent : \n' +
                     'AGENT name TYPES(type1 type2 ...) REQUIRED(service1 service2 ...) PROVIDED(s1 s2 ...)';
 
-            // RULE 1.3 : AGENT declaration missing REQUIRED services
+            // RULE 1.3 (Accuracy ??%) : AGENT declaration missing REQUIRED services
             if(findToken("AGENT", tokens, {"end": 15}) && ant.expectedTokens.indexOf("'REQUIRED'") != -1)
                 return 'REQUIRED services are missing in your declaration \nHere is how to declare an agent : \n' +
                     'AGENT name TYPES(type1 type2 ...) REQUIRED(service1 service2 ...) PROVIDED(service1 service2 ...)';
@@ -211,12 +224,12 @@ var error_linter = function(msg, tokens, offendingSymbol) {
         // "mismatched input <tokenName> expecting <expectedTokens>"
         //=============================================================
         case 2:
-            // RULE 2.1 : AGENT declaration missing PROVIDED services
+            // RULE 2.1 (Accuracy ??%) : AGENT declaration missing PROVIDED services
             if(findToken("AGENT", tokens, {"end": 15}) && ant.expectedTokens.indexOf("'PROVIDED'") != -1)
                 return 'PROVIDED services are missing in your declaration \nHere is how to declare an agent : \n' +
                     'AGENT name TYPES(type1 type2 ...) REQUIRED(service1 service2 ...) PROVIDED(s1 s2 ...)';
 
-            // RULE 2.2 : AGENT declaration missing REQUIRED services
+            // RULE 2.2 (Accuracy ??%) : AGENT declaration missing REQUIRED services
             if(findToken("AGENT", tokens, {"end": 15}) && ant.expectedTokens.indexOf("'REQUIRED'") != -1)
                 return 'REQUIRED services are missing in your declaration \nHere is how to declare an agent : \n' +
                     'AGENT name TYPES(type1 type2 ...) REQUIRED(service1 service2 ...) PROVIDED(service1 service2 ...)';
@@ -227,11 +240,11 @@ var error_linter = function(msg, tokens, offendingSymbol) {
         // "missing <tokenName> at <token>"
         //=============================================================
         case 3:
-            // RULE 3.1 : Load
+            // RULE 3.1 (Accuracy ??%) : Load
             if(findToken("LOAD", tokens, {"end": 5}) && ant.expectedTokens === "null")
                 return 'Maybe your are missing double quotes " "\nHere how to load a library : LOAD "lib_path"';
 
-            // RULE 3.2 : Clause
+            // RULE 3.2 (Accuracy ??%) : Clause
             if(findToken("CLAUSE", tokens, {"end": 10}) && ant.expectedTokens === "'('")
                 return 'Maybe your are missing a parenthesis ( after clause name \nHere how declare a clause :\n' +
                     'CLAUSE clause_name ( expr )';
@@ -242,27 +255,46 @@ var error_linter = function(msg, tokens, offendingSymbol) {
         // "no viable alternative at <input>"
         //=============================================================
         case 4:
-             // RULE 4.1 : Missing parenthesis in a IF_THEN
+            // RULE 4.1 (Accuracy 20%) : Missing the right-hand expression in a comparison of an IF_THEN condition
+            if((findToken("==", tokens, {"start": offendingSymbol.tokenIndex+1, "end": 3}) ||
+                findToken("!=", tokens, {"start": offendingSymbol.tokenIndex+1, "end": 3})) &&
+                offendingSymbol.text === ")")
+                return 'Maybe your are missing the right-hand expression in a condition\n' +
+                    'Here how to use a condition :\n (expression1 == expression2)\n (expression1 != expression2)';
+
+            // RULE 4.2 (Accuracy 20%) : Missing a left-hand expression in a comparison of an IF_THEN condition
+            if(findToken("(", tokens, {"start": offendingSymbol.tokenIndex+1, "end": 5}) &&
+                (offendingSymbol.text === "==" || offendingSymbol.text === "!="))
+                return 'Maybe your are missing a left-hand expression in a condition\n' +
+                    'Here how to use a condition :\n (expression1 == expression2)\n (expression1 != expression2)';
+
+             // RULE 4.3 (Accuracy ??%) : Missing parenthesis in a IF_THEN
             if(findToken("THEN", tokens, {"start": offendingSymbol.tokenIndex+1, "end": 3}))
                 return 'Maybe your are missing a parenthesis in a IF_THEN condition\n' +
                     'Here how to use an IF_THEN : IF ( condition ) THEN { expression }';
 
-            // RULE 4.2 : Missing parenthesis in a clause
+            // RULE 4.4 (Accuracy ??%) : Missing parenthesis in a clause
             if(findToken("CLAUSE", tokens, {"start": offendingSymbol.tokenIndex+1, "end": 3}))
                 return 'Maybe your are missing a parenthesis in a CLAUSE \n' +
                     'Here how declare a clause :\nCLAUSE clause_name ( expr )';
+
+            // RULE 4.5 (Accuracy 10%) : Possibly missing = in a comparison of an IF_THEN condition
+            if(findToken("THEN", tokens, {"start": offendingSymbol.tokenIndex+5, "end": 3}) ||
+               findToken("IF", tokens, {"start": offendingSymbol.tokenIndex+1, "end": 10}))
+                return 'Maybe your are missing an operator = or ! \n' +
+                    'Here how to use comparison : (expr == expr) // (expr != expr)';
 
             break;
     }
 
     return res;
-}
+};
 
 
 
-/**
- * Semantic Linter
- */
+/***************************************
+ *  Semantic linter
+ ***************************************/
 
 var hint_rules =
 {
@@ -270,10 +302,16 @@ var hint_rules =
 
 };
 
-var hint_linter = function() {
+var hint_linter = function(tree) {
 
 };
 
+
+/*****************************************
+ * Validation function
+ * @param input
+ * @returns {*}
+ ****************************************/
 var validate = function(input) {
     var stream = new antlr4.InputStream(input);
     var lexer = new aal.AALLexer(stream);
@@ -299,6 +337,7 @@ var validate = function(input) {
         return annotations;
     }
 };
+
 
 
 /**
