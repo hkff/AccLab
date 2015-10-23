@@ -295,15 +295,156 @@ var error_linter = function(msg, tokens, offendingSymbol) {
 /***************************************
  *  Semantic linter
  ***************************************/
+var walk = function(node, options) {
+    var res = [];
+    if(!options) options = {};
+    if(!options.filter_type) options.filter_type = null;
+    if(!options.filters) options.filters = null;
+    if(!options.depth) options.depth = -1;
 
-var hint_rules =
-{
-    "rule1" : {"msg": "missing null at '<EOF>'", "level": "", "hint": ""}
+    if(options.depth == 0)
+        return res;
 
+    for(var child in node.children) {
+        if(node.children.hasOwnProperty(child))
+            res = res.concat(walk(node.children[child], options));
+    }
+
+    if(options.filter_type == null) {
+        if(options.filters != null)
+            if(eval(filters))
+                res.push(node);
+        else
+            res.push(node);
+
+    } else if(node instanceof options.filter_type) {
+        if(options.filters != null) {
+            if(eval(filters))
+                res.push(node);
+        }
+        else
+            res.push(node);
+    }
+    return res;
 };
 
-var hint_linter = function(tree) {
+var getTokenName = function(token) {
+    var res = token;
+    if(token != undefined && token != null) {
+        if((token instanceof Array) && token.length > 0) {
+            if(token[0].hasOwnProperty("children"))
+                res = token[0].children[0].symbol.text;
+        }
+        else if(token.hasOwnProperty("children")) {
+            res = token.children[0].symbol.text;
+        } else if (token.hasOwnProperty("symbol")) {
+            res = token.symbol.text;
+        }
+    }
+    return res;
+};
 
+function replaceAll(find, replace, str) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
+
+var aalStdLib = ["core.macros", "core.types", "core.eu", "core.resolve", "core.sat", "core.validate"];
+
+var hint_linter = function(tree) {
+    var annotations = [];
+    var line = 0, column = 0, msg = "", msgType = "info";
+
+    var actions = walk(tree, {"filter_type": aal.AALParser.ActionContext});
+
+    var agents = walk(tree, {"filter_type": aal.AALParser.AgentDecContext});
+    var agentsNames = agents.map(function(v,i,a){ return getTokenName(walk(v, {"filter_type": aal.AALParser.H_agentIdContext})); });
+
+    var services = walk(tree, {"filter_type": aal.AALParser.ServiceDecContext});
+    var servicesNames = services.map(function(v,i,a){ return getTokenName(walk(v, {"filter_type": aal.AALParser.H_serviceIdContext})); });
+
+    var types = walk(tree, {"filter_type": aal.AALParser.TypeDecContext});
+
+    var clauses = walk(tree, {"filter_type": aal.AALParser.ClauseContext});
+    var clausesNames = clauses.map(function(v,i,a){ return getTokenName(walk(v, {"filter_type": aal.AALParser.H_clauseIdContext})); });
+
+    var libs = walk(tree, {"filter_type": aal.AALParser.LoadlibContext});
+    var libsNames = libs.map(function(v,i,a){ var l = getTokenName(v.children[1]); return l.substring(1, l.length -1);});
+
+
+    /**
+     * RULE 1 : Checking that all used services are declared
+     * Level : info | warning
+     */
+    for(var k in actions) {
+        if(actions.hasOwnProperty(k)) {
+            var serviceName = getTokenName(walk(actions[k], {"filter_type": aal.AALParser.H_serviceIdContext}));
+            if (servicesNames.indexOf(serviceName) == -1) {
+                line = actions[k].start.line - 1;
+                column = actions[k].start.column;
+                msg = serviceName + " service is not declared !";
+                msgType = "info";
+                annotations.push({row: line, column: column, text: msg, type: msgType});
+            }
+        }
+    }
+
+    /**
+     * RULE 2 : Checking that all agents are declared
+     */
+
+
+    /**
+     * RULE 3 : Checking types (basic)
+     */
+
+
+    /**
+     * RULE 4 : All clauses should have an auditing and rectification nodes
+     * Level : info
+     */
+
+    /**
+     * RULE 5 : Library core.types and should be loaded
+     * Level : info
+     */
+    if(libsNames.indexOf("core.types") === -1) {
+        msg = '- You should probably load the library core.types\n : LOAD "core.types"';
+        annotations.push({row: 0, column: 0, text: msg, type: "info"});
+    }
+
+    /**
+     * RULE 6 : Library core.macros and should be loaded
+     * Level : info
+     */
+    if(libsNames.indexOf("core.macros") === libsNames.indexOf("core.sat") === libsNames.indexOf("core.validate") === -1) {
+        msg = '- You should probably load the macros library, it is required to perform  ' +
+            '\n to do so use : LOAD "core.macros"';
+        annotations.push({row: 0, column: 0, text: msg, type: "info"});
+    }
+
+
+    /**
+     * RULE 7 : Unused declarations
+     * Level : warning
+     */
+
+
+    /**
+     * RULE 8 : At least a PERMIT/DENY on each service
+     * Level : info
+     */
+
+
+    /**
+     * RULE 9 : Clause naming convention (actorName_???)
+     * A clause is generally attached to an actor, thus the clause name should
+     * contains the actor name.
+     * Level : info
+     */
+
+
+    //annotations.push({row: line, column: column, text: msg, type: msgType});
+    return annotations;
 };
 
 
@@ -322,20 +463,13 @@ var validate = function(input) {
     parser.removeErrorListeners();
     parser.addErrorListener(listener);
     var tree = parser.main();
-    //var pattern = parser.compileParseTreePattern("<ACTION>", aal.AALParser.RULE_action);
-    //var matches = pattern.findAll(tree, "//action");
 
     // If there is parsing errors, return the first one
     if(annotations.length > 0)
         return [annotations[0]];
-    else{
+    else
         // Apply linter rules
-        for(var rule in hint_rules) {
-            if(hint_rules.hasOwnProperty(rule)) {
-            }
-        }
-        return annotations;
-    }
+        return hint_linter(tree);
 };
 
 
