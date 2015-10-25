@@ -501,3 +501,9 @@ path.pointer{
     background: rgb(117, 117, 117);
     -webkit-box-shadow: inset 0 0 6px rgba(189, 184, 177, 0.97);
 }
+
+.tab-handle-list-container {
+    background-color: #333;
+    height: 22px;
+    overflow: auto;
+}
