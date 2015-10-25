@@ -250,9 +250,9 @@ var visualEditor = {
         window.solutionNode = dockManager.dockLeft(window.documentNode, window.solution, prop);
         window.outlineNode = dockManager.dockDown(window.solutionNode, window.outline, 0.50);
 
-        prop = 145 / $(document).width();
+        prop = 100 / $(document).width();
         window.componentsNode = dockManager.dockLeft(window.documentNode, window.components, prop);
-        window.toolboxNode = dockManager.dockDown(window.componentsNode, window.toolbox, 0.80);
+        window.toolboxNode = dockManager.dockDown(window.componentsNode, window.toolbox, 0.50);
 
         prop = 250 / $(document).width();
         window.propertiesNode = dockManager.dockRight(window.documentNode, window.properties, prop);
@@ -409,9 +409,17 @@ var visualEditor = {
 				"positionClass": "toast-top-left",
                 "onHidden": function() { if(visualEditor.ui.interval != null) clearInterval(visualEditor.ui.interval); }
 			});
-        visualEditor.ui.updateToastSize("warning", {"width": 410, "height": 240}, true);
+        visualEditor.ui.updateToastSize("warning", {"width": 410, "height": 240}, true, "none");
         $(".toast-warning").css("padding-left", "5px");
         $("#monGrid").datagrid({fit:false});
+
+        // Minimazing on dbl click
+        $(".toast-warning").dblclick(function() {
+            if($(this).height() >= 20)
+                $(this).animate({width: "150px", height: "30px"});
+            else
+                $(this).animate({width: "410px", height: "240"});
+        });
 
         // Update moninfo
         visualEditor.getMonInfo();

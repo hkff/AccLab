@@ -1110,6 +1110,14 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 				});
 				visualEditor.ui.updateToastSize("info", {"width": 800}, false, "none");
 
+                // Minimazing on dbl click
+                $(".toast-info").dblclick(function() {
+                    if($(this).height() >= 20)
+                        $(this).animate({width: "250px", height: "30px"});
+                    else
+                        $(this).animate({width: "800px", height: "453"});
+                });
+
 				$("#tt").tree({
 					animate: true,
 					checkbox: false,
