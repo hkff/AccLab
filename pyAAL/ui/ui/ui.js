@@ -284,14 +284,6 @@ visualEditor.ui = {
         visualEditor.ui.highlight("aceHighlightGreen");
     },
 
-    /**
-     * Toggle comment in ace editor
-     */
-    toggleComment: function() {
-        if(visualEditor.activeEditor != null){
-
-        }
-    },
 
     /**
      * Create the ace editor wheel context menu
