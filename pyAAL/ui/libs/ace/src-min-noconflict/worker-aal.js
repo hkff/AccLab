@@ -353,34 +353,18 @@ var aalStdLib = ["core.macros", "core.types", "core.eu", "core.resolve", "core.s
 var hint_linter = function(tree) {
     var annotations = [];
     var line = 0, column = 0, msg = "", msgType = "info";
-
-    var actions = walk(tree, {"filter_type": aal.AALParser.ActionContext});
-
-    var agents = walk(tree, {"filter_type": aal.AALParser.AgentDecContext});
-    var agentsNames = agents.map(function(v,i,a){ return getTokenName(walk(v, {"filter_type": aal.AALParser.H_agentIdContext})); });
-
-    var services = walk(tree, {"filter_type": aal.AALParser.ServiceDecContext});
-    var servicesNames = services.map(function(v,i,a){ return getTokenName(walk(v, {"filter_type": aal.AALParser.H_serviceIdContext})); });
-
-    var types = walk(tree, {"filter_type": aal.AALParser.TypeDecContext});
-
-    var clauses = walk(tree, {"filter_type": aal.AALParser.ClauseContext});
-    var clausesNames = clauses.map(function(v,i,a){ return getTokenName(walk(v, {"filter_type": aal.AALParser.H_clauseIdContext})); });
-
-    var libs = walk(tree, {"filter_type": aal.AALParser.LoadlibContext});
-    var libsNames = libs.map(function(v,i,a){ var l = getTokenName(v.children[1]); return l.substring(1, l.length -1);});
-
+    var aat = analyseAALtree(tree);
 
     /**
      * RULE 1 : Checking that all used services are declared
      * Level : info | warning
      */
-    for(var k in actions) {
-        if(actions.hasOwnProperty(k)) {
-            var serviceName = getTokenName(walk(actions[k], {"filter_type": aal.AALParser.H_serviceIdContext}));
-            if (servicesNames.indexOf(serviceName) == -1) {
-                line = actions[k].start.line - 1;
-                column = actions[k].start.column;
+    for(var k in aat.actions) {
+        if(aat.actions.hasOwnProperty(k)) {
+            var serviceName = getTokenName(walk(aat.actions[k], {"filter_type": aal.AALParser.H_serviceIdContext}));
+            if (aat.servicesNames.indexOf(serviceName) == -1) {
+                line = aat.actions[k].start.line - 1;
+                column = aat.actions[k].start.column;
                 msg = serviceName + " service is not declared !";
                 msgType = "info";
                 annotations.push({row: line, column: column, text: msg, type: msgType});
@@ -407,8 +391,8 @@ var hint_linter = function(tree) {
      * RULE 5 : Library core.types and should be loaded
      * Level : info
      */
-    if(libsNames.indexOf("core.types") === -1) {
-        msg = '- You should probably load the library core.types\n : LOAD "core.types"';
+    if(aat.libsNames.indexOf("core.types") === -1) {
+        msg = '- You should probably load the library core.types\nUse : LOAD "core.types"';
         annotations.push({row: 0, column: 0, text: msg, type: "info"});
     }
 
@@ -416,7 +400,7 @@ var hint_linter = function(tree) {
      * RULE 6 : Library core.macros and should be loaded
      * Level : info
      */
-    if(libsNames.indexOf("core.macros") === libsNames.indexOf("core.sat") === libsNames.indexOf("core.validate") === -1) {
+    if(aat.libsNames.indexOf("core.macros") === aat.libsNames.indexOf("core.sat") === aat.libsNames.indexOf("core.validate") === -1) {
         msg = '- You should probably load the macros library, it is required to perform  ' +
             '\n to do so use : LOAD "core.macros"';
         annotations.push({row: 0, column: 0, text: msg, type: "info"});
@@ -472,7 +456,43 @@ var validate = function(input) {
         return hint_linter(tree);
 };
 
+/**
+ * Analyse AAL tree
+ * @param tree
+ * @returns {{actions, agents, agentsNames: *, services, servicesNames: *, types, clauses, clausesNames: *, libs, libsNames: *}}
+ */
+var analyseAALtree = function(tree) {
+    var actions = walk(tree, {"filter_type": aal.AALParser.ActionContext});
+    var agents = walk(tree, {"filter_type": aal.AALParser.AgentDecContext});
+    var agentsNames = agents.map(function(v,i,a){ return getTokenName(walk(v, {"filter_type": aal.AALParser.H_agentIdContext})); });
+    var services = walk(tree, {"filter_type": aal.AALParser.ServiceDecContext});
+    var servicesNames = services.map(function(v,i,a){ return getTokenName(walk(v, {"filter_type": aal.AALParser.H_serviceIdContext})); });
+    var types = walk(tree, {"filter_type": aal.AALParser.TypeDecContext});
+    var clauses = walk(tree, {"filter_type": aal.AALParser.ClauseContext});
+    var clausesNames = clauses.map(function(v,i,a){ return getTokenName(walk(v, {"filter_type": aal.AALParser.H_clauseIdContext})); });
+    var libs = walk(tree, {"filter_type": aal.AALParser.LoadlibContext});
+    var libsNames = libs.map(function(v,i,a){ var l = getTokenName(v.children[1]); return l.substring(1, l.length -1);});
 
+    return {"actions": actions,
+            "agents": agents, "agentsNames": agentsNames,
+            "services": services, "servicesNames" : servicesNames,
+            "types": types,
+            "clauses": clauses, "clausesNames": clausesNames,
+            "libs": libs, "libsNames": libsNames
+    }
+};
+
+/**
+ * Return the parsed AAL tree
+ * @param input
+ */
+var parseAAL = function(input) {
+    var stream = new antlr4.InputStream(input);
+    var lexer = new aal.AALLexer(stream);
+    var tokens = new antlr4.CommonTokenStream(lexer);
+    var parser = new aal.AALParser(tokens);
+    return parser.main();
+};
 
 /**
  * Worker
@@ -483,13 +503,13 @@ ace.define('ace/worker/aal_worker',["require","exports","module","ace/lib/oop","
     var oop = require("ace/lib/oop");
     var Mirror = require("ace/worker/mirror").Mirror;
 
-    var MyWorker = function(sender) {
+    var AALWorker = function(sender) {
         Mirror.call(this, sender);
         this.setTimeout(200);
         this.$dialect = null;
     };
 
-    oop.inherits(MyWorker, Mirror);
+    oop.inherits(AALWorker, Mirror);
 
     (function() {
 
@@ -499,7 +519,32 @@ ace.define('ace/worker/aal_worker',["require","exports","module","ace/lib/oop","
             this.sender.emit("annotate", annotations);
         };
 
-    }).call(MyWorker.prototype);
+        // Custom worker commands
+        this.analyseAALtree = function(e) {
+            var res = analyseAALtree(parseAAL(this.doc.getValue()));
+            res = {"agents": res.agentsNames, "services" : res.servicesNames, "types": res.types,
+                        "clauses": res.clausesNames, "libs": res.libsNames};
+            this.sender.emit("callback", { "cmd": "analyseAALtree", "result": res});
+        };
 
-    exports.MyWorker = MyWorker;
+        this.getAgents = function(e) {
+            var res = analyseAALtree(parseAAL(this.doc.getValue()));
+            this.sender.emit("callback", {"cmd": "getAgents", "result": {"agents": res.agentsNames}});
+        };
+
+        this.getServices = function(e) {
+            var res = analyseAALtree(parseAAL(this.doc.getValue()));
+            this.sender.emit("callback", {"cmd": "getServices", "result": {"services": res.servicesNames}});
+        };
+
+        this.getClauses = function(e) {
+            var res = analyseAALtree(parseAAL(this.doc.getValue()));
+            this.sender.emit("callback", {"cmd": "getClauses", "result": {"clauses": res.clausesNames}});
+        };
+
+
+
+    }).call(AALWorker.prototype);
+
+    exports.MyWorker = AALWorker;
 });

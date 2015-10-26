@@ -19,6 +19,9 @@ ace.define('ace/mode/AAL', function(require, exports, module) {
 
 
     (function() {
+        this.lineCommentStart = "//";
+        this.blockComment = {start: "/*", end: "*/"};
+
         // Creating AAL worker
         this.createWorker = function(session) {
             this.$worker = new WorkerClient(["ace"], "ace/worker/aal_worker", "AALWorker");
@@ -34,6 +37,14 @@ ace.define('ace/mode/AAL', function(require, exports, module) {
 
             this.$worker.on("terminate", function() {
                 session.clearAnnotations();
+            });
+
+            this.$worker.on("log", function(e) {
+                visualEditor.log(e.data);
+            });
+
+            this.$worker.on("callback", function(e) {
+                visualEditor.ui.workerCallback(e.data.result, e.data.cmd);
             });
 
             return this.$worker;

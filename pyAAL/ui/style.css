@@ -468,11 +468,16 @@ path.pointer{
     margin: 0;
     padding: 0;
     position: absolute;
-    left: 80px;
-    right: 30px;
-    bottom: 15px;
+    left: 0;
+    right: 0;
+    bottom: 0;
     height: 20px;
     color: gray;
+    background-color: #F7F7F7;
+    z-index: 9999;
+    border-top-color: #0061A5;
+    border-top-width: thin;
+    border-top-style: outset
 }
 
 .ace_status-indicator {
@@ -480,6 +485,17 @@ path.pointer{
     position: absolute;
     right: 0;
     border-left: 1px solid;
+}
+
+#cmd {
+    height: 18px;
+    width: 70%;
+    border-width: 0;
+    color: #0061A5;
+}
+
+#cmd:focus {
+    outline: 0;
 }
 
 /* Custom webkit scrollbar */

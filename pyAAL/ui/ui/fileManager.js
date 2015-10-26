@@ -398,7 +398,6 @@ visualEditor.ui.fileManager = {
             theme: "ace/theme/" + visualEditor.aceTheme
     	});
 
-
         // Set Mode
 		if(this.supportedTypes.indexOf(type) != -1)
 			editor.getSession().setMode("ace/mode/" + this.typesMode[type]);
@@ -407,9 +406,27 @@ visualEditor.ui.fileManager = {
 
 
         // create a simple selection status indicator
-        $(editor.container).append('<div id="statusBar"></div>');
+        $(editor.container).append('<div id="statusBar">Command : <input id="cmd"></div>');
         var StatusBar = ace.require("ace/ext/statusbar").StatusBar;
-        var statusBar = new StatusBar(editor, $("#statusBar")[0]);
+        var jstatusbar = $("#statusBar");
+        var statusBar = new StatusBar(editor, jstatusbar[0]);
+        jstatusbar.mouseover(function(e){
+            //jstatusbar.animate({"background-color": "rgba(247, 247, 247, 1)"});
+            //jstatusbar.animate({"color": "rgba(128, 128, 128, 1)"});
+            //$("#cmd").animate({"opacity": "1.0"});
+        });
+
+        $("#cmd").keypress(function(e) {
+            if(e.which == 13) {
+                visualEditor.ui.evalCmd($(this).val());
+                $(this).val("");
+            }
+        });
+
+        // Worker communication
+        editor.postMsgWorker = function(cmd, args) {
+            editor.session.$worker.$worker.postMessage({"command" : cmd, "args": args});
+        };
 
         editor.session.setOption("useWorker", true);
 	    return editor;

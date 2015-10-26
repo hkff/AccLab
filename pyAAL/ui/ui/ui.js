@@ -396,5 +396,74 @@ visualEditor.ui = {
                 ease:'easeOutQuad', // jquery ease effects,
                 time:'fast'         // slow, fast, 1000
             });
+    },
+
+    /**
+     * Eval command
+     * @param input
+     */
+	evalCmd: function(input) {
+        console.log(input);
+        var tmp = input.split(" ");
+        var cmd = tmp[0];
+        var args = tmp[1];
+
+        switch(cmd) {
+            case "clear": $("#output_window").empty(); break;
+
+            // Calling Macros
+            case "CALL":
+                var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
+                var file = visualEditor.ui.activeTab.container.title;
+                visualEditor.ui.fileManager.saveFile(file, editor.getValue(), function() {
+                    var file = visualEditor.ui.activeTab.container.title;
+                    $.ajax({
+                        dataType: "text",
+                        type: "POST",
+                        url: visualEditor.backend,
+                        data: {action: "macroCallAPI", file: file, macro: macro_name, args: macro_args},
+                        success: function (response) {
+                            toastr.clear($(".toast-error"));
+                            $("#output_window").empty().append(response).scrollTop(0);
+                            $(".aceLine").click(function (e) {
+                                var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
+                                if (editor != undefined && editor != null)
+                                    editor.gotoLine(parseInt(e.target.innerHTML.replace("at line ", "")));
+                            });
+                        }
+                    });
+                });
+                break;
+
+            // Get AAL nodes
+            case "agents"  : visualEditor.activeEditor.postMsgWorker("getAgents"); break;
+            case "services": visualEditor.activeEditor.postMsgWorker("getServices"); break;
+            case "clauses" : visualEditor.activeEditor.postMsgWorker("getClauses"); break;
+
+            default:
+                // Should print help
+                break;
+        }
+    },
+
+
+    /**
+     * Worker Callback
+     * @param res
+     * @param cmd
+     */
+    workerCallback: function(res, cmd) {
+        switch (cmd) {
+            case "getAgents":
+                // TODO improve
+                visualEditor.log(res.agents);
+                break;
+            case "getServices":
+                visualEditor.log(res.services);
+                break;
+            case "getClauses":
+                visualEditor.log(res.clauses);
+                break;
+        }
     }
 };

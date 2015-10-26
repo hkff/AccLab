@@ -440,6 +440,14 @@ var visualEditor = {
         TogetherJSConfig_inviteFromRoom = true;
         TogetherJS(this);
         return false;
+    },
+
+    /**
+     * Log msg into output
+     * @param msg
+     */
+    log: function(msg) {
+        $("#output_window").append(msg + "<br>");
     }
 };
 
@@ -619,7 +627,7 @@ window.onload = function() {
     shortcut.add("Alt+a", visualEditor.ui.highlightGreen);
 
     // DEBUG mode
-    console.log = console.error = function(e) { $("#output_window").append("<br>Console : " + e);}
+    //console.log = console.error = function(e) { $("#output_window").append("<br>Console : " + e);}
 
     // Hide loader
     $('#loading-image').hide();
