@@ -668,6 +668,7 @@ visualEditor.ui.tools.keyboardShortcutsTool = visualEditor.ui.tool.extend({
 					"<li><b class='keyword'>CTRL+M -</b> AAL Syntax</li>" +
 					"<li><b class='keyword'>CTRL+K -</b> Keyboard shortcuts</li>" +
                     "<li><b class='keyword'>ALT+C -</b> Toggle comment</li>" +
+					"<li><b class='keyword'>ALT+SHIFT-C -</b> Toggle multi-line comment</li>" +
 					"<li><b class='keyword'>F11 -</b> Full screen</li>" +
 					"<li><b class='keyword'>ALT+Up-</b>Arrow - Move current line(s) up</li>" +
 					"<li><b class='keyword'>ALT+Down-</b>Arrow - Move current line(s) down</li>" +

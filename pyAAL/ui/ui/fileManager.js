@@ -427,8 +427,15 @@ visualEditor.ui.fileManager = {
         editor.postMsgWorker = function(cmd, args) {
             editor.session.$worker.$worker.postMessage({"command" : cmd, "args": args});
         };
-
         editor.session.setOption("useWorker", true);
+
+        // Add custom shortcuts
+        editor.commands.addCommand({name: "togglecomment", bindKey: {win: "Alt-c", mac: "Command-Option-c"},
+                exec: function(e) {e.toggleCommentLines()}, multiSelectAction: "forEachLine", scrollIntoView: "selectionPart"});
+        editor.commands.addCommand({name: "toggleBlockComment", bindKey: {win: "Alt-Shift-c", mac: "Command-Option-Shift-c"},
+                exec: function(e) { e.toggleBlockComment()}, multiSelectAction: "forEach", scrollIntoView: "selectionPart" });
+
+
 	    return editor;
 	},
 
