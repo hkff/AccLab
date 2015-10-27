@@ -222,14 +222,17 @@ var visualEditor = {
     /**
      * AAL view mode
      */
-    aalMode: function() {
+    aalMode: function(flat) {
         visualEditor.clearPanels();
         var prop = 200 / $(document).width();
 
-        window.solutionNode = dockManager.dockLeft(window.documentNode, window.solution, 0.20);
-        window.outputNode = dockManager.dockRight(window.documentNode, window.output, 0.4);
-        window.toolboxNode = dockManager.dockUp(window.solutionNode, window.toolbox, 0.2);
-
+        if(flat != undefined) {
+            window.solutionNode = dockManager.dockRight(window.documentNode, window.output, 0.40);
+        } else {
+            window.solutionNode = dockManager.dockLeft(window.documentNode, window.solution, 0.20);
+            window.outputNode = dockManager.dockRight(window.documentNode, window.output, 0.4);
+            window.toolboxNode = dockManager.dockUp(window.solutionNode, window.toolbox, 0.2);
+        }
         //window.outlineNode = dockManager.dockFill(solutionNode, outline);
         /*
         window.problemsNode = dockManager.dockDown(window.propertiesNode, inplaceAAL, 0.40);
