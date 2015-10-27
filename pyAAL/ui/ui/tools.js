@@ -42,11 +42,11 @@ visualEditor.ui.tools = {
 		this.componentsPanel = $('#'+ componentsPanel);
 		this.propertiesPanel = $('#'+ propertiesPanel);
 
-		$('#clear-graph').toolbar({
-			content: '#user-toolbar-options', 
-			position: 'top',
-			hideOnClick: true
-		});
+		//$('#clear-graph').toolbar({
+		//	content: '#user-toolbar-options',
+		//	position: 'top',
+		//	hideOnClick: true
+		//});
 
 		this.toolsRegistrator();
 		this.view(this);
