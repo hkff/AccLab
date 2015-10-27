@@ -346,7 +346,6 @@ visualEditor.ui = {
      * @param input
      */
 	evalCmd: function(input) {
-        console.log(input);
         var tmp = input.split(" ");
         var cmd = tmp[0];
         var args = tmp[1];
@@ -358,6 +357,9 @@ visualEditor.ui = {
             case "CALL":
                 var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
                 var file = visualEditor.ui.activeTab.container.title;
+                var macro_name = input.substring(cmd.length + 1, input.indexOf('(')).trim();
+                var macro_args = "[" + input.substring(input.indexOf('(') + 1, input.indexOf(')')).replace(/\s\s+/g, ' ')
+                    .split(" ").toString() + "]";
                 visualEditor.ui.fileManager.saveFile(file, editor.getValue(), function() {
                     var file = visualEditor.ui.activeTab.container.title;
                     $.ajax({
@@ -407,6 +409,29 @@ visualEditor.ui = {
             case "getClauses":
                 visualEditor.log(res.clauses);
                 break;
+            case "analyseAALtreeForAcd":
+                var agentGenerator = new agent();
+                for(var i=0; i<res.agents.length; i++) {
+                    agentGenerator.addElement()
+                }
+                break;
+        }
+    },
+
+
+    createVisualAAL: function(file) {
+        if(visualEditor.activeEditor != null) {
+            // Create a new editor window
+            var id = visualEditor.guid();
+            var editor = $('<div id="'+id+'" caption="' + file + '" class="editor1-window editor-host"></div>');
+            $(document.body).append(editor);
+            var editor4 = new dockspawn.PanelContainer($("#"+id)[0], dockManager);
+            var editor4Node  = dockManager.dockRight(documentNode, editor4, 0.5);
+            editor4.canvas = new visualEditor.ui.gridEditor(id, "toolbox_window", "componentbox_window", "properties_window");
+            visualEditor.ui.canvas = editor4.canvas;
+
+            // AAL to nodes
+            visualEditor.activeEditor.postMsgWorker("analyseAALtreeForAcd");
         }
     }
 };

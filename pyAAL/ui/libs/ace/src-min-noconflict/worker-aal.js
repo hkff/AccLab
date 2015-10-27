@@ -542,6 +542,13 @@ ace.define('ace/worker/aal_worker',["require","exports","module","ace/lib/oop","
             this.sender.emit("callback", {"cmd": "getClauses", "result": {"clauses": res.clausesNames}});
         };
 
+        this.analyseAALtreeForAcd = function(e) {
+            var res = analyseAALtree(parseAAL(this.doc.getValue()));
+            res = {"agents": res.agentsNames, "services" : res.servicesNames, "types": res.types,
+                        "clauses": res.clausesNames, "libs": res.libsNames};
+            this.sender.emit("callback", { "cmd": "analyseAALtreeForAcd", "result": res});
+        };
+
 
 
     }).call(AALWorker.prototype);

@@ -159,8 +159,8 @@ def api_compile_aal(f):
     res = ""
     try:
         aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="", web=True)
-    except:
-        res = "Compilation Error"
+    except Exception as e:
+        res = "Compilation Error : " + str(e)
 
     res = reportSIO.getvalue() + "\n" + reportEIO.getvalue()
 
@@ -187,8 +187,8 @@ def api_compile_tspass(f):
 
     try:
         res = tspassc(file=base_dir + "/" + f, output="tmp.tspass")["print"]
-    except:
-        res = "Compilation Error"
+    except Exception as e:
+        res = "Compilation Error : " + str(e)
 
     res += "\n" + reportSIO.getvalue() + "\n" + reportEIO.getvalue()
 
@@ -284,8 +284,8 @@ def api_macro_call(f, macro_name, macro_args):
         # Restore context
         sys.stdout = sysout
         sys.stderr = syserr
-    except:
-        res = "Compilation Error"
+    except Exception as e:
+        res = "Compilation Error : " + str(e)
 
     print(res)
     res = to_html_colors(res)
