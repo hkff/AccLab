@@ -141,7 +141,7 @@ var visualEditor = {
                 visualEditor.getUserName();
                 visualEditor.aceTheme = visualEditor.userPrefs["theme"];
                 // DEBUG : TOREMOVE
-                visualEditor.ui.fileManager.openFile("tuto1.aal");
+                visualEditor.ui.fileManager.openFile("t.acd");
             }
         });
     },
@@ -469,6 +469,11 @@ window.onload = function() {
             visualEditor.activeEditor.session.getUndoManager().isClean())
             visualEditor.closeFile();
         else {
+            if(visualEditor.ui.getOpenedFile().endsWith(".acd")) {
+                visualEditor.closeFile();
+                return;
+            }
+
             var p = '<button type="button" class="btn" onclick="visualEditor.closeFile()">YES' +
                 '</button> <button type="button" class="btn">NO</button>';
             toastr.error(p, "Close file without Saving ?", {
@@ -595,7 +600,7 @@ window.onload = function() {
 
     prop = 500 / $(document).height();
     this.outputNode = dockManager.dockDown(documentNode, output, prop);
-    this.inplaceAALNode = dockManager.dockDown(this.propertiesNode, inplaceAAL, 0.40);
+    //this.inplaceAALNode = dockManager.dockDown(this.propertiesNode, inplaceAAL, 0.40);
 
     prop = 145 / $(document).width();
     this.componentsNode = dockManager.dockLeft(documentNode, components, prop);

@@ -39,17 +39,16 @@ policy = Class.extend({
         shortcut.add("Ctrl+Shift+E", this.addElement);
 	},
 
-	addElement: function() {
+	addElement: function(e, name) {
 		var element = new PolicyUI2();
+        if(name != undefined) element.setName(name);
         element.addEntity("id", "RS");
         element.addEntity("ezeze", "PS");
-        //element.addEntity("fzfz");
-        //element.setName("NewTable");
 		visualEditor.ui.canvas.add(element, 100, 100);
 	}
 });
 
-
+/*
 PolicyUI = draw2d.shape.basic.Text.extend({
 	NAME   : "PolicyUI",
 	tlabel : null,
@@ -58,10 +57,6 @@ PolicyUI = draw2d.shape.basic.Text.extend({
 	DEFAULT_bgColor : "#0d0d0d",
     DEFAULT_labelColor : "#0d0d0d",
 
-	/**
-	 * @method
-	 * init
-	 */
     init:function(attr) {
       this._super(attr);
       // Create any Draw2D figure as decoration for the connection
@@ -85,7 +80,7 @@ PolicyUI = draw2d.shape.basic.Text.extend({
         this.repaint();
     }
 });
-
+*/
 
 
 var CollapsibleLocator =  {
@@ -127,7 +122,7 @@ var CollapsibleLocator =  {
     }
 };
 
-var CollapsibleInputLocator =  draw2d.layout.locator.InputPortLocator.extend({
+var CollapsibleInputLocator = draw2d.layout.locator.InputPortLocator.extend({
 
     init: function( ) {
         this._super();
@@ -143,7 +138,7 @@ var CollapsibleInputLocator =  draw2d.layout.locator.InputPortLocator.extend({
     }
 });
 
-var CollapsibleOutputLocator =  draw2d.layout.locator.OutputPortLocator.extend({
+var CollapsibleOutputLocator = draw2d.layout.locator.OutputPortLocator.extend({
 
     init: function() {
         this._super();
@@ -164,40 +159,36 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
     NAME: "PolicyUI2",
     type: "Policy",
     policy: "",
-    pservices : new draw2d.util.ArrayList(),
-    rservices : new draw2d.util.ArrayList(),
-    types     : new draw2d.util.ArrayList(),
-    PSO : new draw2d.util.ArrayList(),
-    RSO : new draw2d.util.ArrayList(),
+    types: new draw2d.util.ArrayList(),
+    PSO: new draw2d.util.ArrayList(),
+    RSO: new draw2d.util.ArrayList(),
     classLabel: null,
     inputLocator: null,
     outputLocator: null,
     header: null,
-    DEFAULT_bgColor : "#0d0d0d",
-    DEFAULT_rsColor : "#0d0d0d",
-    DEFAULT_psColor : "#0d0d0d",
-    DEFAULT_labelColor : "#0d0d0d",
-    outlineIcon : "outlineIcons-agent fa fa-user",
+    DEFAULT_bgColor: "#93d7f3",
+    DEFAULT_rsColor: "#0d0d0d",
+    DEFAULT_psColor: "#0d0d0d",
+    DEFAULT_labelColor: "#0d0d0d",
+    outlineIcon: "outlineIcons-agent fa fa-user",
 
+    /**
+     * Init
+     * @param attr
+     */
     init : function(attr) {
         this.inputLocator  = new CollapsibleInputLocator();
         this.outputLocator = new CollapsibleOutputLocator();
-        this.pservices = new draw2d.util.ArrayList();
-        this.rservices = new draw2d.util.ArrayList();
         this.types = new draw2d.util.ArrayList();
         this.PSO = new draw2d.util.ArrayList();
         this.RSO = new draw2d.util.ArrayList();
 
-        this._super($.extend({bgColor:"#93d7f3", color:"#39b2e5", stroke:1, radius:2, gap:5},attr));
+        this._super($.extend({bgColor: this.DEFAULT_bgColor, color:"#39b2e5", stroke:1, radius:2, gap:5}, attr));
 
-        this.header = new draw2d.shape.layout.HorizontalLayout({
-            stroke: 0,
-            radius: 0,
-            bgColor: "#1daeef"
-        });
+        this.header = new draw2d.shape.layout.HorizontalLayout({stroke: 0, radius: 0, bgColor: "#1daeef"});
 
         this.classLabel = new draw2d.shape.basic.Label({
-            text:"ClassName",
+            text: "Actor Name",
             stroke:0,
             fontColor:"#ffffff",
             radius: this.getRadius(),
@@ -208,7 +199,7 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
         });
         this.classLabel.installEditor(new draw2d.ui.LabelEditor());
 
-        var _table=this;
+        var _table = this;
         this.classLabel.on("contextmenu", function(emitter, event) {
             $.contextMenu({
                 selector: 'body',
@@ -217,18 +208,13 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
                 },
                 callback: $.proxy(function (key, options) {
                     switch (key) {
-                        case "rename":
-                            setTimeout(function () { emitter.onDoubleClick(); }, 10);
+                        case "rename": setTimeout(function() { emitter.onDoubleClick(); }, 10);
                             break;
-                        case "newRS":
-                            setTimeout(function () { _table.addEntity("_new_", "RS").onDoubleClick(); }, 10);
+                        case "newRS": setTimeout(function() { _table.addEntity("_new_", "RS").onDoubleClick(); }, 10);
                             break;
-                        case "newPS":
-                            setTimeout(function () {_table.addEntity("_new_", "PS").onDoubleClick(); }, 10);
+                        case "newPS": setTimeout(function() {_table.addEntity("_new_", "PS").onDoubleClick(); }, 10);
                             break;
-                        case "delete":
-                            var cmd = new draw2d.command.CommandDelete(emitter);
-                            emitter.getCanvas().getCommandStack().execute(cmd);
+                        case "delete": _table.getCanvas().getCommandStack().execute(new draw2d.command.CommandDelete(_table));
                             break;
                         default:
                             break;
@@ -271,16 +257,17 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
      * Add an entity to the db shape
      *
      * @param {String} txt the label to show
+     * @param {String} kind the type of entity RS/PS
      * @param {Number} [optionalIndex] index where to insert the entity
      */
     addEntity: function(txt, kind, optionalIndex) {
         var label = new draw2d.shape.basic.Label({
-            text:txt,
-            stroke:0,
-            radius:0,
-            padding:{left:20},
-            fontColor:"#303030",
-            resizeable:true
+            text: txt,
+            stroke: 0,
+            radius: 0,
+            padding: {left:20},
+            fontColor: "#303030",
+            resizeable: true
         });
 
         label.installEditor(new draw2d.ui.LabelEditor());
@@ -290,15 +277,17 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
                 var input = label.createPort("input", this.inputLocator);
                 input.setName("input_"+label.id);
                 this.PSO.add(label);
+                label.userData = "PS";
             }
             else if(kind === "RS") {
                 var output = label.createPort("output", this.outputLocator);
                 output.setName("output_"+label.id);
                 this.RSO.add(label);
+                label.userData = "RS";
             }
         }
 
-        var _table=this;
+        var _table = this;
         label.on("contextmenu", function(emitter, event) {
             $.contextMenu({
                 selector: 'body',
@@ -308,18 +297,13 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
                 callback: $.proxy(function(key, options)
                 {
                     switch(key){
-                    case "rename":
-                        setTimeout(function(){ emitter.onDoubleClick(); },10);
+                    case "rename": setTimeout(function(){ emitter.onDoubleClick(); },10);
                         break;
-                    case "newRS":
-                        setTimeout(function(){ _table.addEntity("_new_", "RS").onDoubleClick(); },10);
+                    case "newRS": setTimeout(function(){ _table.addEntity("_new_", "RS").onDoubleClick(); },10);
                         break;
-                    case "newPS":
-                        setTimeout(function(){ _table.addEntity("_new_", "PS").onDoubleClick(); },10);
+                    case "newPS": setTimeout(function(){ _table.addEntity("_new_", "PS").onDoubleClick(); },10);
                         break;
-                    case "delete":
-                        var cmd = new draw2d.command.CommandDelete(emitter);
-                        emitter.getCanvas().getCommandStack().execute(cmd);
+                    case "delete": emitter.getCanvas().getCommandStack().execute(new draw2d.command.CommandDelete(emitter));
                         break;
                     default:
                         break;
@@ -367,6 +351,11 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
         return this.children.get(index+1).figure;
     },
 
+    /**
+     * Set/get Name
+     * @param name
+     * @returns {PolicyUI2}
+     */
     setName: function(name) {
          this.classLabel.setText(name);
          return this;
@@ -387,8 +376,8 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
         var memento= this._super();
         // add all decorations to the memento
         memento.policy             = this.policy;
-        memento.pservices          = this.getPservices();
-        memento.rservices          = this.getRservices();
+        memento.RSO                = this.getPservices();
+        memento.PSO                = this.getRservices();
         memento.types              = this.types;
         memento.DEFAULT_bgColor    = this.DEFAULT_bgColor;
         memento.DEFAULT_rsColor    = this.DEFAULT_rsColor;
@@ -398,11 +387,12 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
         memento.name = this.classLabel.getText();
         memento.entities   = [];
         this.children.each(function(i,e) {
-
-            if(i>0){ // skip the header of the figure
+            if(i > 0) { // skip the header of the figure
+                console.log(e)
                 memento.entities.push({
                     text: e.figure.getText(),
-                    id: e.figure.id
+                    id: e.figure.id,
+                    userData: e.userData
                 });
             }
         });
@@ -421,8 +411,8 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
     {
         this._super(memento);
         this.policy             = memento.policy;
-        this.pservices          = this.toArrayList(memento.pservices);
-        this.rservices          = this.toArrayList(memento.rservices);
+        var PSO                 = memento.PSO;
+        var RSO                 = memento.RSO;
         this.types              = this.toArrayList(memento.types);
         this.DEFAULT_bgColor    = memento.DEFAULT_bgColor;
         this.DEFAULT_rsColor    = memento.DEFAULT_rsColor;
@@ -432,13 +422,14 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
         this.setName(memento.name);
 
         if(typeof memento.entities !== "undefined"){
-            $.each(memento.entities, $.proxy(function(i,e){
-                var entity =this.addEntity(e.text);
+            $.each(memento.entities, $.proxy(function(i,e) {
+                console.log(e)
+                var entity =this.addEntity(e.text, e.userData);
                 entity.id = e.id;
-                if(entity.getInputPort(0) != null)
-                    entity.getInputPort(0).setName("input_"+e.id);
-                if(entity.getOutputPort(0) != null)
-                    entity.getOutputPort(0).setName("output_"+e.id);
+                //if(entity.getInputPort(0) != null)
+                //    entity.getInputPort(0).setName("input_"+e.id);
+                //if(entity.getOutputPort(0) != null)
+                //    entity.getOutputPort(0).setName("output_"+e.id);
             }, this));
         }
 
@@ -451,10 +442,6 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
             l.push(e);
         });
         return l;
-    },
-
-    getPolicy: function() {
-        return this.policy;
     },
 
      /**
@@ -476,7 +463,6 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
     getPservices: function() {
         var res = [];
         this.PSO.data.forEach(function(e){
-            console.log(e)
             res.push(e.text);
         });
         return res;
@@ -489,27 +475,27 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
     getAALDeclaration: function() {
         var dec = this.type.toUpperCase()+" "+this.getName();
         var lng = this.types.getSize();
-        var i = 0;
-        dec += " TYPES("
+        var i;
+        dec += " TYPES(";
         for (i = 0; i < lng; i++) {
             dec += this.types.get(i)+" ";
         }
         dec += ")";
 
         lng = this.rservices.getSize();
-        dec += " REQUIRED("
+        dec += " REQUIRED(";
         for (i = 0; i < lng; i++) {
             dec += this.rservices.get(i).getName()+" ";
         }
         dec += ")";
 
         lng = this.pservices.getSize();
-        dec += " PROVIDED("
+        dec += " PROVIDED(";
         for (i = 0; i < lng; i++) {
             dec += this.pservices.get(i).getName()+" ";
         }
         dec += ")";
 
         return dec;
-    },
+    }
 });

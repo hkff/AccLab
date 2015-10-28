@@ -166,6 +166,14 @@ visualEditor.ui = {
 		}
 	},
 
+    /**
+     * Get current opened file name
+     * @returns {*}
+     */
+    getOpenedFile: function() {
+        return visualEditor.ui.activeTab.container.title;
+    },
+
 	/**
 	 * Enable a node
 	 * @param node
@@ -225,7 +233,7 @@ visualEditor.ui = {
 		aal += "\n/***************************\n *       Clauses\n ****************************/\n";
 		for(var i=0; i<figs.getSize(); i++) {
 			tmp = figs.get(i);
-			var tmp_policy = tmp.getPolicy();
+			var tmp_policy = tmp.policy;
 			if(tmp_policy != "")
 				aal += tmp_policy + "\n\n";
 		}

@@ -102,6 +102,13 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
                 visualEditor.ui.propertiesPanel[0].addEventListener("click", visualEditor.ui.stoper, true);
      		}
      	});
+
+        // add an event listener to the Canvas for change notifications.
+        var _this = this;
+        this.getCommandStack().addEventListener(function(e){
+            if(e.isPostChangeEvent())
+                _this.updatePreview();
+        });
 	},
 
     handleEvents: function() {
@@ -176,6 +183,27 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
             ease:'easeOutQuad', // jquery ease effects,
             time:'fast'         // slow, fast, 1000
         });
+    },
+
+    updatePreview: function() {
+        // convert the canvas into a PNG image source string
+        //
+        var xCoords = [];
+        var yCoords = [];
+        this.getFigures().each(function(i,f) {
+            var b = f.getBoundingBox();
+            xCoords.push(b.x, b.x+b.w);
+            yCoords.push(b.y, b.y+b.h);
+        });
+        var minX   = Math.min.apply(Math, xCoords);
+        var minY   = Math.min.apply(Math, yCoords);
+        var width  = Math.max.apply(Math, xCoords)-minX;
+        var height = Math.max.apply(Math, yCoords)-minY;
+
+        var writer = new draw2d.io.png.Writer();
+        writer.marshal(this,function(png){
+           $("#preview").attr("src", png);
+        }, new draw2d.geo.Rectangle(minX,minY,width,height));
     }
 });
 
