@@ -31,7 +31,7 @@ var visualEditor = {
     aceTheme      : "monokai",
     aceThemesList : ["monokai", "chrome", "tomorrow", "kuroir", "eclipse", "chaos"],
     backend       : "http://127.0.0.1:8000/",
-    //username      : "",
+    version       : "2.0 (alpha)",
 
 
     /**
@@ -90,7 +90,7 @@ var visualEditor = {
             while(username.length < 0);
             // Save the username
             visualEditor.userPrefs["username"] = username;
-            visualEditor.save_prefs();
+            visualEditor.savePrefs();
         }
         return visualEditor.userPrefs.username;
     },
@@ -101,7 +101,7 @@ var visualEditor = {
     getFontSize: function() {
         if(visualEditor.userPrefs["fontSize"] == null) {
             visualEditor.userPrefs["fontSize"] = 14;
-            visualEditor.save_prefs();
+            visualEditor.savePrefs();
         }
         return visualEditor.userPrefs.fontSize;
     },
@@ -113,7 +113,7 @@ var visualEditor = {
     updateAceTheme: function(theme) {
         visualEditor.aceTheme = $(theme).val();
         visualEditor.userPrefs["theme"] = visualEditor.aceTheme;
-        visualEditor.save_prefs();
+        visualEditor.savePrefs();
         this.updateEditorsTheme();
     },
 
@@ -129,7 +129,7 @@ var visualEditor = {
     /**
      * Load user preferences
      */
-    load_prefs: function() {
+    loadPrefs: function() {
         $.ajax({
             dataType: 'text',
             type: 'POST',
@@ -149,7 +149,7 @@ var visualEditor = {
     /**
      * Save user preferences
      */
-    save_prefs: function() {
+    savePrefs: function() {
         $.ajax({
             dataType: 'text',
             type: 'POST',
@@ -224,8 +224,6 @@ var visualEditor = {
      */
     aalMode: function(flat) {
         visualEditor.clearPanels();
-        var prop = 200 / $(document).width();
-
         if(flat != undefined) {
             window.solutionNode = dockManager.dockRight(window.documentNode, window.output, 0.40);
         } else {
@@ -233,13 +231,6 @@ var visualEditor = {
             window.outputNode = dockManager.dockRight(window.documentNode, window.output, 0.4);
             window.toolboxNode = dockManager.dockUp(window.solutionNode, window.toolbox, 0.2);
         }
-        //window.outlineNode = dockManager.dockFill(solutionNode, outline);
-        /*
-        window.problemsNode = dockManager.dockDown(window.propertiesNode, inplaceAAL, 0.40);
-        window.propertiesNode = dockManager.dockRight(documentNode, properties, 0.20);
-        window.inplaceAALNode = dockManager.dockFill(window.propertiesNode, window.inplaceAAL);
-        window.componentsNode = dockManager.dockFill(window.propertiesNode, components);
-        */
     },
 
     /**
@@ -259,11 +250,6 @@ var visualEditor = {
 
         prop = 250 / $(document).width();
         window.propertiesNode = dockManager.dockRight(window.documentNode, window.properties, prop);
-        //window.inplaceAALNode = dockManager.dockRight(window.documentNode, window.inplaceAAL, prop);
-        //window.propertiesNode = dockManager.dockFill(window.inplaceAALNode, window.properties);
-
-        //prop = 500 / $(document).height();
-        //window.outputNode = dockManager.dockDown(window.documentNode, window.output, prop);
     },
 
     /**
@@ -295,7 +281,7 @@ var visualEditor = {
     about: function () {
         var abt = "" +
             "<img src='assets/icon_128.png' class='logoAbout' alt='AccLab logo'>" +
-            "<div class='versionAbout'>AccLab Version 1.1</div>" +
+            "<div class='versionAbout'>AccLab Version 2.0 ALPHA</div>" +
             "<div class='aboutCore'>AccLab is a web based accountability framework designed in the context of A4CLOUD project. " +
             "The main goal is to observe ”accountability in action” by simulating a software system with several" +
             " agents exchanging data and requiring different privacy policy." +
@@ -370,9 +356,7 @@ var visualEditor = {
                 type: 'POST',
                 url: visualEditor.backend,
                 data: {action: "killPs", pid: pid},
-                success: function (response) {
-                    console.log(response)
-                }
+                success: function (response) {}
             });
         }
     },
@@ -539,8 +523,9 @@ window.onload = function() {
         }
 
         // Update theme
-        if(visualEditor.aceTheme != null)
+        if(visualEditor.aceTheme != null) {
             visualEditor.updateEditorsTheme();
+        }
     };
 
     // Tabhost
@@ -621,7 +606,7 @@ window.onload = function() {
         window.properties, window.inplaceAAL, window.output];
 
     // Load prefs
-    visualEditor.userPrefs = visualEditor.load_prefs();
+    visualEditor.userPrefs = visualEditor.loadPrefs();
 
     // Add shortcuts
     shortcut.add("Alt+h", visualEditor.ui.clearHighlight);

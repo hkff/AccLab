@@ -309,7 +309,7 @@ visualEditor.ui.fileManager = {
 	},
 
 	/**
-	 * Check it is a dir
+	 * Check file is a dir
 	 * @param file
 	 */
 	isDir: function(file) {
@@ -317,7 +317,7 @@ visualEditor.ui.fileManager = {
 	},
 
 	/**
-	 * Create file
+	 * Create a file
 	 * @param file
 	 */
 	createFile: function(file) {
@@ -333,10 +333,7 @@ visualEditor.ui.fileManager = {
 			type:'POST',
 			url: visualEditor.backend,
 			data: {action: "write", file: file, data: data},
-			success: function(response){
-				// Notify
-				console.log(response)
-			}
+			success: function(response){}
 		});
 
 		// Update explorer
@@ -354,10 +351,7 @@ visualEditor.ui.fileManager = {
 			type:'POST',
 			url: visualEditor.backend,
 			data: {action: "createDir", file: file},
-			success: function(response){
-				// Notify
-				console.log(response)
-			}
+			success: function(response){}
 		});
 
 		// Update explorer
@@ -405,17 +399,13 @@ visualEditor.ui.fileManager = {
             editor.getSession().setMode("ace/mode/plain_text");
 
 
-        // create a simple selection status indicator
+        // create statusBar with command shell
         $(editor.container).append('<div id="statusBar">Command : <input id="cmd"></div>');
         var StatusBar = ace.require("ace/ext/statusbar").StatusBar;
         var jstatusbar = $("#statusBar");
         var statusBar = new StatusBar(editor, jstatusbar[0]);
-        jstatusbar.mouseover(function(e){
-            //jstatusbar.animate({"background-color": "rgba(247, 247, 247, 1)"});
-            //jstatusbar.animate({"color": "rgba(128, 128, 128, 1)"});
-            //$("#cmd").animate({"opacity": "1.0"});
-        });
 
+        // Eval command on ENTER key
         $("#cmd").keypress(function(e) {
             if(e.which == 13) {
 				visualEditor.ui.consoleLog.push($(this).val());
@@ -451,11 +441,9 @@ visualEditor.ui.fileManager = {
 			type:'POST',
 			url: visualEditor.backend,
 			data: {action: "delete", file: file},
-			success: function(response){
-				// Notify
-				console.log(response)
-			}
+			success: function(response){}
 		});
+
 		// Update explorer
 		$("#explorer").tree("reload");
 	},
@@ -464,6 +452,7 @@ visualEditor.ui.fileManager = {
 	 * Save file
 	 * @param file
 	 * @param data
+     * @param callback
 	 */
 	saveFile: function(file, data, callback) {
 		var fileType = file.split('.').pop().toLowerCase();
@@ -479,7 +468,6 @@ visualEditor.ui.fileManager = {
 							url: visualEditor.backend,
 							data: {action: "write", file: file, data: data},
 							success: function(response){
-						  		//console.log(response)
 								if(callback != undefined)
 									callback();
 								else
@@ -496,11 +484,10 @@ visualEditor.ui.fileManager = {
 					url: visualEditor.backend,
 					data: {action: "write", file: file, data: data},
 					success: function(response){
-				  		//console.log(response)
                         if(callback != undefined)
                             callback();
                         else
-						toastr.success('File saved !');
+						    toastr.success('File saved !');
 					}
 				});
 				break;

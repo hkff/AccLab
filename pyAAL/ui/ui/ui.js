@@ -84,8 +84,8 @@ visualEditor.ui = {
 
 	// Events
 	handleEvents: function() {
-		$(this).bind('nodeSelected', this.nodeSelected)
-		$(this).bind('nodeUpdated', this.nodeUpdated)
+		$(this).bind('nodeSelected', this.nodeSelected);
+		$(this).bind('nodeUpdated', this.nodeUpdated);
 
 	},
 
