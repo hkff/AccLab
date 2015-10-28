@@ -1,3 +1,23 @@
+//////////////////////////////////////////////////////////
+//
+//  AccLab UI : worker-aal.js
+//
+// Copyright (C) 2014 Walid Benghabrit
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+//////////////////////////////////////////////////////////
 "no use strict";
 (function(c){if("undefined"==typeof c.window||!c.document){c.console=function(){var c=Array.prototype.slice.call(arguments,0);postMessage({type:"log",data:c})};c.console.error=c.console.warn=c.console.log=c.console.trace=c.console;c.window=c;c.ace=c;c.onerror=function(c,a,d,g,b){postMessage({type:"error",data:{message:c,file:a,line:d,col:g,stack:b.stack}})};c.normalizeModule=function(h,a){if(-1!==a.indexOf("!")){var d=a.split("!");return c.normalizeModule(h,d[0])+"!"+c.normalizeModule(h,d[1])}if("."==
 a.charAt(0))for(d=h.split("/").slice(0,-1).join("/"),a=(d?d+"/":"")+a;-1!==a.indexOf(".")&&g!=a;){var g=a;a=a.replace(/^\.\//,"").replace(/\/\.\//,"/").replace(/[^\/]+\/\.\.\//,"")}return a};c.require=function(h,a){a||(a=h,h=null);if(!a.charAt)throw Error("worker.js require() accepts only (parentId, id) as arguments");a=c.normalizeModule(h,a);var d=c.require.modules[a];if(d)return d.initialized||(d.initialized=!0,d.exports=d.factory().exports),d.exports;d=a.split("/");if(!c.require.tlns)return console.log("unable to load "+
