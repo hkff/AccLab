@@ -140,7 +140,7 @@ var visualEditor = {
                 visualEditor.userPrefs = obj;
                 visualEditor.getUserName();
                 visualEditor.aceTheme = visualEditor.userPrefs["theme"];
-                // DEBUG : TOREMOVE
+                // DEBUG :make TOREMOVE
                 visualEditor.ui.fileManager.openFile("t.acd");
             }
         });

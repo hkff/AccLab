@@ -47,7 +47,6 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 		this.propertiesPanel = $('#'+ propertiesPanel);
 
 		// init graph
-		//this.canvas = new draw2d.Canvas(grid);
         this.makeWheelContextMenu("acdPops");
 
 		this._super(grid, 2000, 2000);
@@ -116,7 +115,7 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
     	$(this.grid).bind("onDrop", this.onDrop);
 
         // Handle context menu
-        $(this.grid).bind("contextmenu", this.toggleWheelContextMenu);
+        //$(this.grid).bind("contextmenu", this.toggleWheelContextMenu);
     },
 
     zoom: function(event) {

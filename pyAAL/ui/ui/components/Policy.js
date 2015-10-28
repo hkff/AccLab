@@ -42,8 +42,6 @@ policy = Class.extend({
 	addElement: function(e, name) {
 		var element = new PolicyUI2();
         if(name != undefined) element.setName(name);
-        element.addEntity("id", "RS");
-        element.addEntity("ezeze", "PS");
 		visualEditor.ui.canvas.add(element, 100, 100);
 	}
 });
@@ -197,7 +195,7 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
             fontFamily:"Verdana",
             padding:{left:20, right:20}
         });
-        this.classLabel.installEditor(new draw2d.ui.LabelEditor());
+        this.classLabel.installEditor(new draw2d.ui.LabelInplaceEditor());
 
         var _table = this;
         this.classLabel.on("contextmenu", function(emitter, event) {
@@ -270,18 +268,18 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
             resizeable: true
         });
 
-        label.installEditor(new draw2d.ui.LabelEditor());
+        label.installEditor(new draw2d.ui.LabelInplaceEditor());
 
         if(kind != null && kind != undefined) {
             if(kind === "PS") {
                 var input = label.createPort("input", this.inputLocator);
-                input.setName("input_"+label.id);
+                input.setName(label.id);
                 this.PSO.add(label);
                 label.userData = "PS";
             }
             else if(kind === "RS") {
                 var output = label.createPort("output", this.outputLocator);
-                output.setName("output_"+label.id);
+                output.setName(label.id);
                 this.RSO.add(label);
                 label.userData = "RS";
             }
@@ -392,7 +390,11 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
                 memento.entities.push({
                     text: e.figure.getText(),
                     id: e.figure.id,
-                    userData: e.userData
+                    userData: {
+                        "type": e.figure.userData,
+                        "RSPortID": (e.figure.getOutputPort(0) != null)? e.figure.getOutputPorts(0).id:"",
+                        "PSPortID": (e.figure.getInputPort(0) != null)? e.figure.getInputPorts(0).id:""
+                    }
                 });
             }
         });
@@ -411,8 +413,8 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
     {
         this._super(memento);
         this.policy             = memento.policy;
-        var PSO                 = memento.PSO;
-        var RSO                 = memento.RSO;
+        //var PSO                 = memento.PSO;
+        //var RSO                 = memento.RSO;
         this.types              = this.toArrayList(memento.types);
         this.DEFAULT_bgColor    = memento.DEFAULT_bgColor;
         this.DEFAULT_rsColor    = memento.DEFAULT_rsColor;
@@ -420,16 +422,18 @@ PolicyUI2 = draw2d.shape.layout.VerticalLayout.extend({
         this.DEFAULT_labelColor = memento.DEFAULT_labelColor;
 
         this.setName(memento.name);
-
         if(typeof memento.entities !== "undefined"){
             $.each(memento.entities, $.proxy(function(i,e) {
-                console.log(e)
-                var entity =this.addEntity(e.text, e.userData);
+                var entity = this.addEntity(e.text, e.userData.type);
                 entity.id = e.id;
-                //if(entity.getInputPort(0) != null)
-                //    entity.getInputPort(0).setName("input_"+e.id);
-                //if(entity.getOutputPort(0) != null)
-                //    entity.getOutputPort(0).setName("output_"+e.id);
+                if(entity.getInputPort(0) != null) {
+                    entity.getInputPort(0).setName(e.id);
+                    entity.getInputPort(0).setId(e.userData.PSPortID);
+                }
+                if(entity.getOutputPort(0) != null) {
+                    entity.getOutputPort(0).setName(e.id);
+                    entity.getOutputPorts(0).setId(e.userData.RSPortID);
+                }
             }, this));
         }
 
