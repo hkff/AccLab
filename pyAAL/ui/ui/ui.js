@@ -350,11 +350,11 @@ visualEditor.ui = {
         var cmd = tmp[0];
         var args = tmp[1];
 
-        switch(cmd) {
+        switch(cmd.toLowerCase()) {
             case "clear": $("#output_window").empty(); break;
 
             // Calling Macros
-            case "CALL":
+            case "call":
                 var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
                 var file = visualEditor.ui.activeTab.container.title;
                 var macro_name = input.substring(cmd.length + 1, input.indexOf('(')).trim();

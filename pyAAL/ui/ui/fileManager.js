@@ -422,6 +422,11 @@ visualEditor.ui.fileManager = {
                 $(this).val("");
             }
         });
+        $('#cmd').typeAhead({
+            source: ['call', 'clear', 'agents', 'services', 'clauses'],
+            finish: function() {},
+            scope: this
+          });
 
         // Worker communication
         editor.postMsgWorker = function(cmd, args) {
