@@ -34,6 +34,8 @@ visualEditor.ui = {
     interval         : null,
 	psUpdateInterval : 10000,
 	openedEditors    : {},
+    consoleLog       : [],
+    consolePredefs   : ['call', 'clear', 'agents', 'services', 'clauses'],
 
 	/**
 	 * init function

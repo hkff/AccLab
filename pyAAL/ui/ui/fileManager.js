@@ -418,15 +418,12 @@ visualEditor.ui.fileManager = {
 
         $("#cmd").keypress(function(e) {
             if(e.which == 13) {
+				visualEditor.ui.consoleLog.push($(this).val());
                 visualEditor.ui.evalCmd($(this).val());
                 $(this).val("");
+                $(this).typeAhead({source: visualEditor.ui.consoleLog.concat(visualEditor.ui.consolePredefs)});
             }
-        });
-        $('#cmd').typeAhead({
-            source: ['call', 'clear', 'agents', 'services', 'clauses'],
-            finish: function() {},
-            scope: this
-          });
+        }).typeAhead({source: visualEditor.ui.consoleLog.concat(visualEditor.ui.consolePredefs)});
 
         // Worker communication
         editor.postMsgWorker = function(cmd, args) {
