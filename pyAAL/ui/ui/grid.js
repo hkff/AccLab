@@ -22,7 +22,6 @@
 visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 
 	NAME : "visualEditor.ui.gridEditor",
-
 	grid            : null,
 	actionsPanel    : null,
 	componentsPanel : null,
@@ -78,7 +77,7 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
                 //targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
                 //sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
                 sourceDecorator: new draw2d.decoration.connection.BarDecorator(),
-		        targetDecorator: new draw2d.decoration.connection.DiamondDecorator(),
+		        targetDecorator: new draw2d.decoration.connection.DiamondDecorator()
 		    });
 		    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
 		    //c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
@@ -207,7 +206,9 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 });
 
 
-
+/**
+ * Custom connection
+ */
 var MyConnection= draw2d.Connection.extend({
     init:function(attr) {
         this._super(attr);
