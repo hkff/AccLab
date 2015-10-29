@@ -420,15 +420,21 @@ visualEditor.ui = {
                 visualEditor.log(res.clauses);
                 break;
             case "analyseAALtreeForAcd":
-                var agentGenerator = new agent();
+                var agentGenerator = new Actor();
                 for(var i=0; i<res.agents.length; i++) {
-                    agentGenerator.addElement()
+                    var e = agentGenerator.addElement(null, res.agents[i].name);
+                    res.agents[i].rs.forEach(function(v) {e.addEntity(v, "RS");});
+                    res.agents[i].ps.forEach(function(v) {e.addEntity(v, "PS");});
                 }
                 break;
         }
     },
 
 
+    /**
+     *
+     * @param file
+     */
     createVisualAAL: function(file) {
         if(visualEditor.activeEditor != null) {
             // Create a new editor window

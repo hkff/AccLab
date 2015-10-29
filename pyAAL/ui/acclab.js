@@ -141,7 +141,7 @@ var visualEditor = {
                 visualEditor.getUserName();
                 visualEditor.aceTheme = visualEditor.userPrefs["theme"];
                 // DEBUG :make TOREMOVE
-                visualEditor.ui.fileManager.openFile("t.acd");
+                visualEditor.ui.fileManager.openFile("tuto2.aal");
             }
         });
     },

@@ -42,6 +42,7 @@ Actor = Class.extend({
 		var element = new ActorUI2();
         if(name != undefined) element.setName(name);
 		visualEditor.ui.canvas.add(element, 100, 100);
+        return element;
 	}
 });
 

@@ -564,7 +564,19 @@ ace.define('ace/worker/aal_worker',["require","exports","module","ace/lib/oop","
 
         this.analyseAALtreeForAcd = function(e) {
             var res = analyseAALtree(parseAAL(this.doc.getValue()));
-            res = {"agents": res.agentsNames, "services" : res.servicesNames, "types": res.types,
+            var agents = [];
+            for(var i= 0; i<res.agents.length; i++) {
+                var rs = walk(walk(res.agents[i],{"filter_type": aal.AALParser.RsServiceContext})[0],
+                    {"filter_type": aal.AALParser.H_serviceIdContext});
+                var rsNames = rs.map(function(v,i,a){ return getTokenName(v); });
+
+                var ps = walk(walk(res.agents[i],{"filter_type": aal.AALParser.PsServiceContext})[0],
+                    {"filter_type": aal.AALParser.H_serviceIdContext});
+                var psNames = ps.map(function(v,i,a){ return getTokenName(v); });
+
+                agents.push({name: getTokenName(res.agents[i].children[1]), types:[], ps:psNames, rs: rsNames})
+            }
+            res = {"agents": agents, "services" : res.servicesNames, "types": res.types,
                         "clauses": res.clausesNames, "libs": res.libsNames};
             this.sender.emit("callback", { "cmd": "analyseAALtreeForAcd", "result": res});
         };
