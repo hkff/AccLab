@@ -7,14 +7,14 @@ SERVICE cloud
 AGENT Kim
 AGENT Hospital
 AGENT d
-/*
+
 BEHAVIOR bob (
-    PERMIT bob.read[alice](d),
-    bob.write[d](d),
-    IF bob.notify[d](d) => PERMIT bob.read[d](d),
+    PERMIT bob.read[alice](d) AND
+    bob.write[d](d) AND
+    IF bob.notify[d](d) => PERMIT bob.read[d](d) AND
     IF bob.notify[d](d) => PERMIT bob.read[d](d)
 )
-*/
+
 
 CLAUSE Kim_policy (
 (FORALL ag:Age 
@@ -28,6 +28,6 @@ AND
 EXEC
 """
 from simul.SimulGenerator import *
-#generate_simulation(self.aalprog)
+generate_simulation(self.aalprog)
 """
 //CALL vsat("Kim_policy")

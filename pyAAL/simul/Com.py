@@ -21,7 +21,7 @@ __author__ = 'walid'
 
 
 # Action
-class Action():
+class Action:
     def __init__(self, service=None, agent1=None, agent2=None, args=None, time=None, purpose=[]):
         super().__init__()
         self.service = service
@@ -41,6 +41,9 @@ class Action():
             res += " PURPOSE(" + str(self.purpose) + ")"
 
         return res
+
+    def to_trace(self):
+        return "%s('%s', '%s', '%s')" % (self.service, self.agent1, self.agent2, self.args)
 
     # Action builder
     @staticmethod
@@ -77,7 +80,7 @@ class Action():
 
 
 # Author
-class Author():
+class Author:
     def __init__(self, author=None, action=None):
         self.action = action
         self.author = author
@@ -93,6 +96,10 @@ class MsgProtocol(Enum):
     CALL_CHECK = "CALL_CHECK"
     CALL_OK = "CALL_OK"
     LOG = "LOG"
+    GET_TRACE = "GET_TRACE"
+    PRINT_TRACE = "PRINT_TRACE"
+    GET_FORMULA = "GET_FORMULA"
+    PRINT_FORMULA = "PRINT_FORMULA"
 
     def __str__(self):
         return self.value
@@ -117,4 +124,4 @@ class Message(dict):
         return res
 
     def __str__(self):
-        return str(self["protocol"]) + " " + str(self["sender"]) + " " + str(self["receiver"]) + " " + str(self["msg"])
+        return "%s %s->%s : [%s]" % (self["protocol"], self["sender"], self["receiver"], self["msg"])

@@ -27,10 +27,10 @@ from enum import Enum
 
 
 # Simulation
-class Simulation():
+class Simulation:
 
     def __init__(self):
-        self.watcher = Proxy.start("Proxy")
+        self.watcher = Proxy.start("Proxy", debug=False)
 
     # Stopping simulation
     def stop(self):
