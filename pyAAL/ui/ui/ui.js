@@ -395,8 +395,19 @@ visualEditor.ui = {
             case "services": visualEditor.activeEditor.postMsgWorker("getServices"); break;
             case "clauses" : visualEditor.activeEditor.postMsgWorker("getClauses"); break;
 
+            // Miscellaneous
+            case "visu" : visualEditor.ui.createVisualAAL(); break;
+
             default:
                 // Should print help
+                visualEditor.log("HELP : (note : commands are not case sensitive)" +
+                    "\n- CLEAR : clean the output console" +
+                    "\n- CALL macro_name(macro_args) : Call a macro" +
+                    "\n- AGENTS : Print all declared agents in the current AAL file" +
+                    "\n- SERVICES: Print all declared services in the current AAL file" +
+                    "\n- CLAUSES : Print all declared clauses in the current AAL file" +
+                    "\n- VISU : Generate diagram for the current AAL file"
+                );
                 break;
         }
     },

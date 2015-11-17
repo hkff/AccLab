@@ -434,7 +434,7 @@ var visualEditor = {
      * @param msg
      */
     log: function(msg) {
-        $("#output_window").append(msg + "<br>");
+        $("#output_window").append(replaceAll("\n", "<br>", msg) + "<br>");
     }
 };
 

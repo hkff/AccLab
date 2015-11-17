@@ -369,12 +369,22 @@ function replaceAll(find, replace, str) {
 }
 
 var aalStdLib = ["core.macros", "core.types", "core.eu", "core.resolve", "core.sat", "core.validate"];
+var aalStdLib_types = [];
+var aalStdLib_services = [];
+var aalStdLib_agents = [];
+var aalStdLib_macros = [];
+
 
 var hint_linter = function(tree) {
     var annotations = [];
     var line = 0, column = 0, msg = "", msgType = "info";
     var aat = analyseAALtree(tree);
-
+    var loadedUserLibs = aat.libsNames.slice();
+    for(var lib in aalStdLib) {
+        var tmp = loadedUserLibs.indexOf(aalStdLib[lib]);
+        if(tmp != -1)
+            loadedUserLibs.splice(tmp, 1);
+    }
     /**
      * RULE 1 : Checking that all used services are declared
      * Level : info | warning
@@ -382,11 +392,13 @@ var hint_linter = function(tree) {
     for(var k in aat.actions) {
         if(aat.actions.hasOwnProperty(k)) {
             var serviceName = getTokenName(walk(aat.actions[k], {"filter_type": aal.AALParser.H_serviceIdContext}));
-            if (aat.servicesNames.indexOf(serviceName) == -1) {
+            if (aat.servicesNames.indexOf(serviceName) === -1) {
                 line = aat.actions[k].start.line - 1;
                 column = aat.actions[k].start.column;
-                msg = serviceName + " service is not declared !";
-                msgType = "info";
+                msg = "- " + serviceName + ((loadedUserLibs.length === 0)?" service is not declared !":
+                        " service may be not declared !\n  Hint : you should compile the file in order to perform a backend check.");
+                msgType = (loadedUserLibs.length > 0)?"info": "warning";
+
                 annotations.push({row: line, column: column, text: msg, type: msgType});
             }
         }
@@ -394,11 +406,25 @@ var hint_linter = function(tree) {
 
     /**
      * RULE 2 : Checking that all agents are declared
+     * Level : info | warning
      */
-
+    for(var k in aat.actions) {
+        if(aat.actions.hasOwnProperty(k)) {
+            var agentName = getTokenName(walk(aat.actions[k], {"filter_type": aal.AALParser.H_agentIdContext}));
+            if (aat.agentsNames.indexOf(agentName) === -1) {
+                line = aat.actions[k].start.line - 1;
+                column = aat.actions[k].start.column;
+                msg = "- " + agentName + ((loadedUserLibs.length === 0)?" agent is not declared !":
+                        " agent may be not declared !\n  Hint : you should compile the file in order to perform a backend check.");
+                msgType = (loadedUserLibs.length > 0)?"info": "warning";
+                annotations.push({row: line, column: column, text: msg, type: msgType});
+            }
+        }
+    }
 
     /**
      * RULE 3 : Checking types (basic)
+     * Level : info
      */
 
 
@@ -412,7 +438,7 @@ var hint_linter = function(tree) {
      * Level : info
      */
     if(aat.libsNames.indexOf("core.types") === -1) {
-        msg = '- You should probably load the library core.types\nUse : LOAD "core.types"';
+        msg = '- You should probably load the library core.types\n  Use : LOAD "core.types"';
         annotations.push({row: 0, column: 0, text: msg, type: "info"});
     }
 
@@ -422,7 +448,7 @@ var hint_linter = function(tree) {
      */
     if(aat.libsNames.indexOf("core.macros") === aat.libsNames.indexOf("core.sat") === aat.libsNames.indexOf("core.validate") === -1) {
         msg = '- You should probably load the macros library, it is required to perform  ' +
-            '\n to do so use : LOAD "core.macros"';
+            '\n  to do so use : LOAD "core.macros"';
         annotations.push({row: 0, column: 0, text: msg, type: "info"});
     }
 
