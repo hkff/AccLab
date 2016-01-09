@@ -80,6 +80,9 @@ visualEditor.ui = {
 
 		// Init ace editor wheelContextMenu
     	this.makeAceWheelContextMenu("acePops");
+
+        // Hide ACD preview
+        $("#preview").draggable().hide();
 	},
 
 	// Events
@@ -128,6 +131,7 @@ visualEditor.ui = {
 		var tt = visualEditor.ui.tools.tools;
 		// If it is not a diagram, disable gui elements
 		if(fileType != "acd") {
+            $("#preview").hide();
 			this.disableNode(this.propertiesPanel);
 			//this.disableNode(this.actionsPanel);
 			for(var i=0; i<tt.length; i++) {
@@ -151,6 +155,7 @@ visualEditor.ui = {
 			}
 
 		} else {
+            $("#preview").show();
 			// Enable them
 			this.enableNode(this.propertiesPanel);
 			//this.enableNode(this.actionsPanel);
