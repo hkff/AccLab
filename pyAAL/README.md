@@ -37,29 +37,9 @@ checking, etc) AccLab needs the following dependency :
 * In order to use monitor synthetization / simulation features,
 AccLab needs the following dependencies :
 
-    ###### Temporal Logic Planning (TuLiP) Toolbox
-    AccLab embeds a modified version of TuLiP (based on v1.1-a)
-    and a modified version of polytope  
-    TuLip depends on the following packages :
-    NumPy, SciPy, CVXOPT, NetworkX, ply, Matplotlib, pydot, Graphviz  
-
     You need to install the following dependencies :  
     
-            $ sudo apt-get install python3-numpy python3-scipy python3-networkx python3-ply python3-matplotlib graphviz
-            
-    Installing cvxopt :  
-    
-        sudo apt-get install python3-cvxopt  
-    If this not works for you, you have to install it manually :  
-    cvxopt depends on the following packages :  
-    
-            $ sudo apt-get install liblapack3 liblapack-dev  
-            $ sudo apt-get install libblas-dev liblapack3gf
-            $ sudo apt-get install python3-dev
-        
-    After that you can download and install cvxopt from  http://cvxopt.org/  
-    For more information on TuLip see
-    http://tulip-control.sourceforge.net/
+            $ sudo apt-get install pykka
 
     ###### ltl2ba / ltl3ba :
     LTL to Buchi automata tools.  

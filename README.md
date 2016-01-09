@@ -37,50 +37,30 @@ checking, etc) AccLab needs the following dependency :
 * In order to use monitor synthetization / simulation features,
 AccLab needs the following dependencies :
 
-    ###### Temporal Logic Planning (TuLiP) Toolbox
-    AccLab embeds a modified version of TuLiP (based on v1.1-a)
-    and a modified version of polytope  
-    TuLip depends on the following packages :
-    NumPy, SciPy, CVXOPT, NetworkX, ply, Matplotlib, pydot, Graphviz  
+    You need to install the following dependencies :
 
-    You need to install the following dependencies :  
-    
-            $ sudo apt-get install python3-numpy python3-scipy python3-networkx python3-ply python3-matplotlib graphviz
-            
-    Installing cvxopt :  
-    
-        sudo apt-get install python3-cvxopt  
-    If this not works for you, you have to install it manually :  
-    cvxopt depends on the following packages :  
-    
-            $ sudo apt-get install liblapack3 liblapack-dev  
-            $ sudo apt-get install libblas-dev liblapack3gf
-            $ sudo apt-get install python3-dev
-        
-    After that you can download and install cvxopt from  http://cvxopt.org/  
-    For more information on TuLip see
-    http://tulip-control.sourceforge.net/
+            $ sudo apt-get install pykka
 
     ###### ltl2ba / ltl3ba :
-    LTL to Buchi automata tools.  
-    Binaries are provided for linux x64 in the folder tools/_platformName_/ . 
-    For other platforms you have to compile the sources.  
+    LTL to Buchi automata tools.
+    Binaries are provided for linux x64 in the folder tools/_platformName_/ .
+    For other platforms you have to compile the sources.
     Note : ltl3ba depends on buddy-2.4, you need to compile and install it.
-    
+
         $ ./configure --prefix=/usr
         $ sudo make & make install
-    The source code for ltl3ba-1.1.2, ltl2ba-1.2b1 and buddy-2.4 
+    The source code for ltl3ba-1.1.2, ltl2ba-1.2b1 and buddy-2.4
     are provided with this tool, see folder tools/thirdparty_src/ .
-    
-    http://www.lsv.ens-cachan.fr/~gastin/ltl2ba/  
-    http://sourceforge.net/projects/ltl3ba/  
+
+    http://www.lsv.ens-cachan.fr/~gastin/ltl2ba/
+    http://sourceforge.net/projects/ltl3ba/
     http://sourceforge.net/projects/buddy/
 
 
-AAL Syntax highlighting modes for emacs, intellij, nano and ace, 
-can be found in tools/utils/.  
-If you want to run aalc using a symbolic link you need to set the 
-environment variable ACCLAB_PATH 
+AAL Syntax highlighting modes for emacs, intellij, nano and ace,
+can be found in tools/utils/.
+If you want to run aalc using a symbolic link you need to set the
+environment variable ACCLAB_PATH
 
     $ export ACCLAB_PATH=<AccLab_install_dir>
 
@@ -96,12 +76,12 @@ Contacts
 >   Walid Benghabrit        <Walid.Benghabrit@mines-nantes.fr>
 
 ###### Contributors :
->   Pr.Jean-Claude Royer  <Jean-Claude.Royer@mines-nantes.fr>  (Kernel/Theory/UI)  
->   Dr. Hervé Grall       <Herve.Grall@mines-nantes.fr>        (Theory)  
->   Dr. Mohamed Sellami   <Mohamed.Sellami@isep.fr>            (Theory)  
->   Pierre Teilhard    (Kernel)  
->   Anqi Tong          (UI)  
->   Julie Spens         (UI)  
+>   Pr.Jean-Claude Royer  <Jean-Claude.Royer@mines-nantes.fr>  (Kernel/Theory/UI)
+>   Dr. Hervé Grall       <Herve.Grall@mines-nantes.fr>        (Theory)
+>   Dr. Mohamed Sellami   <Mohamed.Sellami@isep.fr>            (Theory)
+>   Pierre Teilhard    (Kernel)
+>   Anqi Tong          (UI)
+>   Julie Spens         (UI)
 
 -------------------------------------------------------------------------------
 Copyright (C) 2014-2015 Walid Benghabrit  
