@@ -240,6 +240,12 @@ if (!Array.prototype.indexOf) {
   };
 }
 
+if (!String.prototype.includes) {
+  String.prototype.includes = function() {'use strict';
+    return String.prototype.indexOf.apply(this, arguments) !== -1;
+  };
+}
+
 
 if(!Number.MAX_SAFE_INTEGER){
   Number.MAX_SAFE_INTEGER = 9007199254740991; // Math.pow(2, 53) - 1
@@ -4034,6 +4040,93 @@ draw2d.command.CommandMove = draw2d.command.Command.extend({
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/
 /**
+ * @class draw2d.command.CommandAattr
+ * 
+ * Add a vertex to a polyline or polygon
+ *
+ * @inheritable
+ * @author Andreas Herz
+ * 
+ * @extends draw2d.command.Command
+ */
+draw2d.command.CommandAttr = draw2d.command.Command.extend({
+    NAME : "draw2d.command.CommandAttr",
+  
+    /**
+     * @constructor
+     * Create a new Command objects which provides undo/redo for attributes.
+     *
+     * @param {draw2d.shape.basic.Figure} figure the figure to handle
+     * @param {Number} x the x coordinate for the new vertex
+     * @param {Number} y the y coordinate for the new vertex
+     */
+    init: function(figure, newAttributes)
+    {
+        var _this = this;
+
+        this._super(draw2d.Configuration.i18n.command.changeAttributes);
+        
+        this.figure = figure;
+        this.newAttributes = newAttributes;
+        this.oldAttributes = {};
+        $.each(newAttributes, function(key, value){
+            _this.oldAttributes[key] = figure.attr(key);
+        });
+    },
+    
+  
+    /**
+     * @method
+     * Returns [true] if the command can be execute and the execution of the
+     * command modify the model. A CommandMove with [startX,startX] == [endX,endY] should
+     * return false. <br>
+     * the execution of the Command doesn't modify the model.
+     *
+     * @return {boolean}
+     **/
+    canExecute:function()
+    {
+      // return false if we doesn't modify the model => NOP Command
+      return true;
+    },
+    
+    /**
+     * @method
+     * Execute the command the first time
+     * 
+     **/
+    execute:function()
+    {
+       this.redo();
+    },
+    
+    /**
+     * @method
+     *
+     * Undo the move command
+     *
+     **/
+    undo:function()
+    {
+        this.figure.attr(this.oldAttributes);
+    },
+    
+    /**
+     * @method
+     * 
+     * Redo the move command after the user has undo this command
+     *
+     **/
+    redo:function()
+    {
+        this.figure.attr(this.newAttributes);
+    }
+});
+/*****************************************
+ *   Library is under GPL License (GPL)
+ *   Copyright (c) 2012 Andreas Herz
+ ****************************************/
+/**
  * @class draw2d.command.CommandMoveLine
  * 
  * Command for the movement of figures.
@@ -5054,8 +5147,8 @@ draw2d.command.CommandGroup = draw2d.command.Command.extend({
            this.figures = figures;
        }
        
-       // figures which already part of an non "Group" composite are removed from the set.
-       // It is not possible to assign a figure to two different composite
+       // figures which already part of an non "Group" composite will be removed from the set.
+       // It is not possible to assign a figure to two different composites.
        //
        this.figures.grep(function(figure){
            return figure.getComposite()===null;
@@ -10457,9 +10550,58 @@ draw2d.policy.canvas.SelectionPolicy = draw2d.policy.canvas.CanvasPolicy.extend(
         figure.unselect();
 
         canvas.fireEvent("select",null);
-   }
+   },
+
+    /**
+     * @method
+     * Called by the canvas if the user click on a figure.
+     *
+     * @param {draw2d.Figure} the figure under the click event. Can be null
+     * @param {Number} mouseX the x coordinate of the mouse during the click event
+     * @param {Number} mouseY the y coordinate of the mouse during the click event
+     * @param {Boolean} shiftKey true if the shift key has been pressed during this event
+     * @param {Boolean} ctrlKey true if the ctrl key has been pressed during the event
+     *
+     * @since 3.0.0
+     *
+     * @template
+     */
+    onClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey)
+    {
+        if(figure!==null){
+            figure.fireEvent("click", {x:mouseX, y:mouseY, shiftKey:shiftKey, ctrlKey:ctrlKey});
+            figure.onClick();
+        }
+    },
+
+    /**
+     * @method
+     * Called by the canvas if the user double click on a figure.
+     *
+     * @param {draw2d.Figure} the figure under the double click event. Can be null
+     * @param {Number} mouseX the x coordinate of the mouse during the click event
+     * @param {Number} mouseY the y coordinate of the mouse during the click event
+     * @param {Boolean} shiftKey true if the shift key has been pressed during this event
+     * @param {Boolean} ctrlKey true if the ctrl key has been pressed during the event
+     *
+     * @since 4.1.0
+     *
+     * @template
+     */
+    onDoubleClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey)
+    {
+        if(figure!==null){
+            figure.fireEvent("dblclick", {x:mouseX, y:mouseY, shiftKey:shiftKey, ctrlKey:ctrlKey});
+            figure.onDoubleClick();
+        }
+    }
 
 });
+
+
+
+
+
 
 /*****************************************
  *   Library is under GPL License (GPL)
@@ -11365,7 +11507,8 @@ draw2d.policy.canvas.ReadOnlySelectionPolicy = draw2d.policy.canvas.SelectionPol
      * @constructor 
      * Creates a new Router object
      */
-    init: function(){
+    init: function()
+    {
         this._super();
     },
     
@@ -11375,7 +11518,8 @@ draw2d.policy.canvas.ReadOnlySelectionPolicy = draw2d.policy.canvas.SelectionPol
      * 
      * @param {draw2d.Canvas/draw2d.Canvas} canvas
      */
-    onInstall: function(canvas){
+    onInstall: function(canvas)
+    {
         canvas.getAllPorts().each(function(i,port){
             port.setVisible(false);
         });
@@ -11387,7 +11531,8 @@ draw2d.policy.canvas.ReadOnlySelectionPolicy = draw2d.policy.canvas.SelectionPol
      * 
      * @param {draw2d.Canvas/draw2d.Canvas} canvas
      */
-    onUninstall: function(canvas){
+    onUninstall: function(canvas)
+    {
         canvas.getAllPorts().each(function(i,port){
             port.setVisible(true);
         });
@@ -11403,12 +11548,49 @@ draw2d.policy.canvas.ReadOnlySelectionPolicy = draw2d.policy.canvas.SelectionPol
      * @param {Number} dy2 The y diff since the last call of this dragging operation
      * @template
      */
-    onMouseDrag:function(canvas, dx, dy, dx2, dy2){
+    onMouseDrag:function(canvas, dx, dy, dx2, dy2)
+    {
         var area = canvas.getScrollArea();
         area.scrollTop(area.scrollTop()-dy2);
         area.scrollLeft(area.scrollLeft()-dx2);
+    },
+
+
+    /**
+     * @method
+     * Called by the canvas if the user click on a figure.
+     *
+     * @param {draw2d.Figure} the figure under the click event. Can be null
+     * @param {Number} mouseX the x coordinate of the mouse during the click event
+     * @param {Number} mouseY the y coordinate of the mouse during the click event
+     * @param {Boolean} shiftKey true if the shift key has been pressed during this event
+     * @param {Boolean} ctrlKey true if the ctrl key has been pressed during the event
+     *
+     * @since 3.0.0
+     *
+     * @template
+     */
+    onClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey)
+    {
+    },
+
+    /**
+     * @method
+     * Called by the canvas if the user double click on a figure.
+     *
+     * @param {draw2d.Figure} the figure under the double click event. Can be null
+     * @param {Number} mouseX the x coordinate of the mouse during the click event
+     * @param {Number} mouseY the y coordinate of the mouse during the click event
+     * @param {Boolean} shiftKey true if the shift key has been pressed during this event
+     * @param {Boolean} ctrlKey true if the ctrl key has been pressed during the event
+     *
+     * @since 4.1.0
+     *
+     * @template
+     */
+    onDoubleClick: function(figure, mouseX, mouseY, shiftKey, ctrlKey)
+    {
     }
-    
 });
 
 /*****************************************
@@ -11993,30 +12175,37 @@ draw2d.policy.canvas.ShowGridEditPolicy = draw2d.policy.canvas.CanvasPolicy.exte
      * @constructor 
      * Creates a new constraint policy for snap to grid
      * 
-     * @param {Number} grid the grid width of the canvas
+     * @param {Number} [grid] the grid width of the canvas
+     * @param {boolean} [considerCanvasZoom] indicates whenever the grid should be adapted to the canvas zoom factor. default is <code>false</code>
      */
-    init: function( grid)
+    init: function( grid, considerCanvasZoom)
     {
         this.color = new draw2d.util.Color(this.GRID_COLOR);
         this.canvas = null;
 
         this._super();
 
-        if(typeof grid ==="undefined"){
-            this.grid = this.GRID_WIDTH;
+        if(typeof grid ==="number"){
+            this.grid = grid;
         }
         else{
-            this.grid = grid;
+            this.grid = this.GRID_WIDTH;
         }
         this.zoom=1;
  
 
         this.generateBackgroundImage(this.grid/this.zoom, this.color);
-        this.zoomListener = $.proxy(function(canvas, zoomData){
-           this.zoom= zoomData.factor;
-           this.setGrid(this.grid);
-        },this);
-	},
+
+        if (considerCanvasZoom) {
+            this.zoomListener = $.proxy(function(canvas, zoomData){
+                this.zoom= zoomData.factor;
+                this.setGrid(this.grid);
+            },this);
+        }
+        else{
+            this.zoomListener = function(){};
+        }
+    },
 	
 	onInstall: function(canvas)
 	{
@@ -12025,12 +12214,12 @@ draw2d.policy.canvas.ShowGridEditPolicy = draw2d.policy.canvas.CanvasPolicy.exte
         this.generateBackgroundImage(this.grid/this.zoom, this.color);
 	    this.oldBg =  this.canvas.html.css("background-image");
 	    $(canvas.paper.canvas).css({"background-image": "url('"+this.imageDataURL+"')"});
-//	    canvas.on("zoom", this.zoomListener);
+	    canvas.on("zoom", this.zoomListener);
 	},
 	
 	onUninstall: function(canvas)
 	{
-//        canvas.off(this.zoomListener);
+        canvas.off(this.zoomListener);
 	    this.canvas = null;
 	    $(canvas.paper.canvas).css({"background-image": this.oldBg});
 	},
@@ -13178,7 +13367,6 @@ draw2d.policy.canvas.SnapToInBetweenEditPolicy = draw2d.policy.canvas.SnapToEdit
              bounds.push(figure.getBoundingBox());
          }
        });
-        console.log(bounds);
     },
 
     showHorizontalGuides:function(causedFigure, constraint)
@@ -16300,7 +16488,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "5.6.7",
+    version : "5.7.1",
     i18n : {
         command : {
             move : "Move Shape",
@@ -16317,6 +16505,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
             resizeShape : "Resize Shape",
             collection : "Execute Commands",
             addVertex : "Add Vertex",
+            changeAttributes:"Change Attributes",
             connectPorts : "Connect Ports"
         },
         menu : {
@@ -16853,19 +17042,6 @@ draw2d.Canvas = Class.extend(
                 return stay;
             });
         }
-        /*
-        // only one SnapToXYZ edit policy at once
-        else if (policy instanceof draw2d.policy.canvas.SnapToEditPolicy){
-            // remove existing snapTo policy
-            this.editPolicy.grep(function(p){
-                var stay = !(p instanceof draw2d.policy.canvas.SnapToEditPolicy); 
-                if(stay===false){
-                    p.onUninstall(_this);
-                }
-                return stay;
-            });
-        }
-        */
         else if( policy instanceof draw2d.policy.canvas.ConnectionInterceptorPolicy){
             // think about if I allow to install more than one
         }
@@ -17665,7 +17841,7 @@ draw2d.Canvas = Class.extend(
         var testFigure = null;
 
         var contains = function(testFigure, figuresToCheck){
-            var i,len; // inner function scope of vars. take care about this and don't ove them outside
+            var i,len; // inner function scope of vars. take care about this and don't move them outside
             for(i=0,len=figuresToCheck.length; i<len;i++){
                 if(figuresToCheck[i]===testFigure || figuresToCheck[i].contains(testFigure)){
                     return true;
@@ -17731,6 +17907,14 @@ draw2d.Canvas = Class.extend(
             }
 
             if(result !==null){
+                //added check for best line to allow connections in composites to be selected
+                //
+                if (result instanceof draw2d.shape.composite.Composite) {
+                    var resultLine = this.getBestLine(x,y,result);
+                    if(resultLine !==null){
+                        return resultLine;
+                    }
+                }
                 return result;
             }
         }
@@ -17891,11 +18075,6 @@ draw2d.Canvas = Class.extend(
         //
         var figure = this.getBestFigure(x, y);
 
-        if(figure!==null){
-            figure.fireEvent("dblclick", {x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey});
-            figure.onDoubleClick();
-        }
-        
         // forward the event to all install policies as well.
         // (since 4.0.0)
         this.editPolicy.each(function(i,policy){
@@ -17924,12 +18103,7 @@ draw2d.Canvas = Class.extend(
         if(figure===null){
             figure = this.getBestLine(x,y);
         }
-        
-        if(figure!==null){
-            figure.fireEvent("click", {x:x, y:y, shiftKey:shiftKey, ctrlKey:ctrlKey}); // since 5.0.0
-            figure.onClick();          // backward compatiblity 
-        }
-        
+
         // forward the event to all install policies as well.
         // (since 3.0.0)
         this.editPolicy.each(function(i,policy){
@@ -18474,7 +18648,9 @@ draw2d.Figure = Class.extend({
      * @returns
      **/
     attr: function(name, value){
-        this.repaintBlocked=true;
+        var _this = this;
+        var orig = this.repaintBlocked;
+  //      this.repaintBlocked=true;
         try{
             // call of attr as setter method with {name1:val1, name2:val2 }  argument list
             //
@@ -18525,6 +18701,16 @@ draw2d.Figure = Class.extend({
                     if (setter){setter.call(this,value);}
                 }
             }
+            // may it is a array of attributes used for the getter
+            //
+            else if($.isArray(name)){
+                result = {};
+
+                $.each(name,function(index, entry){
+                    result[entry] = _this.attr(entry);
+                });
+                return result;
+            }
             // generic getter of all registered attributes
             else if(typeof name === "undefined"){
             	var result = {};
@@ -18535,9 +18721,9 @@ draw2d.Figure = Class.extend({
             }
         }
         finally{
-            this.repaintBlocked=false;
+            this.repaintBlocked=orig;
         }
-        this.repaint();
+      //  this.repaint();
         
         return this;
     },
@@ -18976,8 +19162,10 @@ draw2d.Figure = Class.extend({
          }
          
          // bring all children in front of the parent
+         var _this = this;
          this.children.each(function(i,child){
-             child.figure.toFront(figure);
+             child.figure.toFront(_this);
+           //  child.figure.toFront(figure);
          });
 
          // and last but not lease the ResizeHandles if any present
@@ -20179,6 +20367,8 @@ draw2d.Figure = Class.extend({
      * @param {Number} [y] The new y coordinate of the figure 
      **/
     setPosition: function(x, y) {
+        var oldPos = {x:this.x, y:this.y};
+
         if (x instanceof draw2d.geo.Point) {
             this.x = x.x;
             this.y = x.y;
@@ -20188,8 +20378,7 @@ draw2d.Figure = Class.extend({
             this.y = y;
         }
 
-//        var oldPos = {x:this.x, y:this.y};
-        
+
         var _this = this;
 
         this.editPolicy.each(function(i,e){
@@ -20199,21 +20388,27 @@ draw2d.Figure = Class.extend({
                 _this.y = newPos.y;
             }
         });
-  
+
         this.repaint();
 
-        // Update the resize handles if the user change the position of the
-        // element via an API call.
+        // don't fire any events or update the ResizeHandles if nothing has happen
         //
-        this.editPolicy.each(function(i, e) {
-            if (e instanceof draw2d.policy.figure.DragDropEditPolicy) {
-                e.moved(_this.canvas, _this);
-            }
-        });
+      //  if(oldPos.x!=this.x || oldPos.y!=this.y)
+        {
 
-        this.fireEvent("move");
-        this.fireEvent("change:x");
-        this.fireEvent("change:y");
+            // Update the resize handles if the user change the position of the
+            // element via an API call.
+            //
+            this.editPolicy.each(function (i, e) {
+                if (e instanceof draw2d.policy.figure.DragDropEditPolicy) {
+                    e.moved(_this.canvas, _this);
+                }
+            });
+
+            this.fireEvent("move");
+            this.fireEvent("change:x");
+            this.fireEvent("change:y");
+        }
 
         return this;
     },
@@ -20262,6 +20457,8 @@ draw2d.Figure = Class.extend({
      **/
     setDimension:function(w, h)
     {
+        var old = {w:this.width, h:this.height};
+
         var _this = this;
         w = Math.max(this.getMinWidth(),w);
         h = Math.max(this.getMinHeight(),h);
@@ -20308,18 +20505,24 @@ draw2d.Figure = Class.extend({
         }
 
 
-		this.repaint();
 
-        this.fireEvent("resize");
-        this.fireEvent("change:dimension");
-		
-		// Update the resize handles if the user change the position of the element via an API call.
-		//
-		this.editPolicy.each(function(i,e){
-		   if(e instanceof draw2d.policy.figure.DragDropEditPolicy){
-		       e.moved(_this.canvas, _this);
-		   }
-		});
+        // just fire the event if really something happens
+        //
+        //if(old.w!=this.width || old.h != this.height)
+        {
+            this.repaint();
+
+            this.fireEvent("resize");
+            this.fireEvent("change:dimension");
+
+            // Update the resize handles if the user change the position of the element via an API call.
+            //
+            this.editPolicy.each(function (i, e) {
+                if (e instanceof draw2d.policy.figure.DragDropEditPolicy) {
+                    e.moved(_this.canvas, _this);
+                }
+            });
+        }
 
 		return this;
     },
@@ -20348,10 +20551,11 @@ draw2d.Figure = Class.extend({
     setBoundingBox:function(rect)
     {
     	rect = new draw2d.geo.Rectangle(rect);
-    	
+
+        var orig = this.repaintBlocked;
         this.repaintBlocked=true;
         this.setPosition(rect.x, rect.y);
-        this.repaintBlocked=false;
+        this.repaintBlocked=orig;
         this.setDimension(rect.w,rect.h);
         
         return this;
@@ -20839,7 +21043,11 @@ draw2d.Figure = Class.extend({
         clone.resetChildren();
         this.children.each(function(i,entry){
                 var child =entry.figure.clone();
-                var locator=eval("new "+entry.locator.NAME+"();");
+                // we can ignore the locator if this didn't provide a "correct" name, this can happen in some
+                // Layout shapes like VerticalLayout or Horziontal Layout. This figures injects it own kind
+                // of layouter...so didn'T care about this.
+
+                var locator=entry.locator.NAME?eval("new "+entry.locator.NAME+"();"):null;
                 clone.add(child,locator);
         });
 
@@ -20863,6 +21071,7 @@ draw2d.Figure = Class.extend({
             width : this.width,
             height: this.height,
             alpha : this.alpha,
+            angle : this.rotationAngle,
            userData: $.extend(true,{},this.userData)
         };
 
@@ -20875,10 +21084,6 @@ draw2d.Figure = Class.extend({
             memento.composite = this.composite.getId();
         }
 
-        if(typeof memento.alpha !== "undefined"){
-            this.setAlpha(parseFloat(memento.alpha));
-        }
-         
         return memento;
     },
     
@@ -20915,6 +21120,11 @@ draw2d.Figure = Class.extend({
         if(typeof memento.alpha !== "undefined"){
             this.setAlpha(parseFloat(memento.alpha));
         }
+
+        if(typeof memento.angle !== "undefined"){
+            this.rotationAngle = parseFloat(memento.angle);
+        }
+
         return this;
     }  
 
@@ -21624,7 +21834,8 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
         this.radius = 0;
         this.bgColor= new draw2d.util.Color("#ffffff");
         this.color  = new draw2d.util.Color("#303030");
-           
+        this.dasharray = null;
+
         // memento for the stroke if we reset the glow effect of this shape
         //
         this.strokeBeforeGlow = this.stroke;
@@ -21632,6 +21843,8 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
         
         this._super( attr, 
             $.extend({
+                /** @attr {String} dasharray the line pattern see {@link draw2d.shape.basic.Line#setDashArray} for more information*/
+                dasharray : this.setDashArray,
                 /** @attr {Number} radius the radius to render the line edges */
                 radius : this.setRadius,
                 /** @attr {String|draw2d.util.Color} bgColor the background color of the shape */
@@ -21642,10 +21855,11 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
                 stroke : this.setStroke
             }, setter),
             $.extend({
-               radius : this.getRadius,
-               bgColor: this.getBackgroundColor,
-               color  : this.getColor,
-               stroke : this.getStroke
+               dasharray: this.getDashArray,
+               radius :   this.getRadius,
+               bgColor:   this.getBackgroundColor,
+               color  :   this.getColor,
+               stroke :   this.getStroke
             }, getter)
         );
     },
@@ -21677,8 +21891,44 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     {
         return this.radius;
     },
-    
-    
+
+
+
+    /**
+     * @method
+     * Set the line style for this object.
+     *
+     *      // Alternatively you can use the attr method:
+     *      figure.attr({
+    *        dash: dashPattern
+    *      });
+     *
+     * @param dash can be one of this ["", "-", ".", "-.", "-..", ". ", "- ", "--", "- .", "--.", "--.."]
+     */
+    setDashArray: function(dashPattern)
+    {
+        this.dasharray = dashPattern;
+        this.repaint();
+
+        this.fireEvent("change:dashArray");
+
+        return this;
+    },
+
+    /**
+     * @method
+     * Get the line style for this object.
+     *
+     *      // Alternatively you can use the attr method:
+     *      figure.attr("dash");
+     *
+     * @since 5.1.0
+     */
+    getDashArray: function()
+    {
+        return this.dasharray;
+    },
+
     /**
      * @method
      * Highlight the element or remove the highlighting
@@ -21733,6 +21983,10 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
         
         if(typeof attributes.fill === "undefined"){
        	   attributes.fill = this.bgColor.hash();
+        }
+
+        if(this.dasharray!==null){
+            attributes["stroke-dasharray"]=this.dasharray;
         }
 
         this._super(attributes);
@@ -21847,12 +22101,15 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     */
    getPersistentAttributes : function()
    {
-       return $.extend(this._super(), {
+       var memento = $.extend(this._super(), {
            bgColor : this.bgColor.hash(),
            color   : this.color.hash(),
            stroke  : this.stroke,
-           radius  : this.radius
+           radius  : this.radius,
+           dasharray : this.dasharray
        });
+
+       return memento;
    },
    
    /**
@@ -21877,7 +22134,12 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
        if(typeof memento.stroke !== "undefined" ){
            this.setStroke(memento.stroke===null?0:parseFloat(memento.stroke));
        }
-        
+
+       if(typeof memento.dasharray ==="string"){
+           this.dasharray = memento.dasharray;
+       }
+
+
        return this;
    }  
 
@@ -23626,7 +23888,7 @@ draw2d.shape.basic.Label= draw2d.SetFigure.extend({
      **/
     repaint: function(attributes)
     {
-        if(this.repaintBlocked===true || this.shape===null){
+        if(this.repaintBlocked===true || this.shape===null || (this.parent && this.parent.repaintBlocked===true)){
             return;
         }
 
@@ -24318,7 +24580,7 @@ draw2d.shape.basic.Text= draw2d.shape.basic.Label.extend({
         this.clearCache();
         var attr = this.wrappedTextAttr(this.text, w);
 
-        this.cachedMinWidth = Math.min(w,attr.width);
+        this.cachedMinWidth = Math.max(w,attr.width);
         this.cachedMinHeight= attr.height;
 
         draw2d.shape.node.Node.prototype.setDimension.call(this,this.cachedMinWidth, this.cachedMinHeight);
@@ -24350,7 +24612,7 @@ draw2d.shape.basic.Text= draw2d.shape.basic.Label.extend({
         if (this.shape === null) {
             return 0;
         }
-        
+
         if(this.cachedMinWidth === null){
             // get the longest word in the text
             //
@@ -24602,7 +24864,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     * @type {Number}
     * @since 4.2.1
     **/
-   getOutlineStroke:function( )
+   getOutlineStroke: function()
    {
      return this.outlineStroke;
    },
@@ -24619,19 +24881,18 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     * @param {Number} dx2 The x diff since the last call of this dragging operation
     * @param {Number} dy2 The y diff since the last call of this dragging operation
     **/
-   onDrag : function( dx, dy, dx2, dy2)
+   onDrag: function( dx, dy, dx2, dy2)
    {
+
        if(this.command ===null){
            return;
        }
-       
+
        this.command.setTranslation(dx,dy);
        
        this.vertices.each(function(i,e){
            e.translate(dx2, dy2);
        });
-       this.start=this.vertices.first().clone();
-       this.end=this.vertices.last().clone();
 
        this.svgPathString = null;
        this._super(dx, dy, dx2, dy2);
@@ -24644,7 +24905,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     * @param {Boolean} shiftKey true if the shift key has been pressed during this event
     * @param {Boolean} ctrlKey true if the ctrl key has been pressed during the event
     */
-   onDragEnd : function( x, y, shiftKey, ctrlKey)
+   onDragEnd: function( x, y, shiftKey, ctrlKey)
    {
        // Element ist zwar schon an seine Position, das Command muss aber trotzdem
        // in dem CommandStack gelegt werden damit das Undo funktioniert.
@@ -24730,7 +24991,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     *  
     * @since 5.1.0
     */
-   getDashArray: function(dashPattern)
+   getDashArray: function()
    {
        return this.dasharray;
    },
@@ -24964,8 +25225,6 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
        this.vertices.each(function(i,e){
            e.translate(dx, dy);
        });
-       this.start=this.vertices.first().clone();
-       this.end=this.vertices.last().clone();
 
        var _this = this;
        this.editPolicy.each(function(i,e){
@@ -25054,7 +25313,7 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
   
   setEndY: function(y)
   {
-      this.setEndPoint(this.start.x, y);
+      this.setEndPoint(this.end.x, y);
   },
 
    /**
@@ -25198,8 +25457,8 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
    {
        this.vertices= vertices.clone(true);
 
-       this.start=this.vertices.first().clone();
-       this.end=this.vertices.last().clone();
+       this.start=this.vertices.first();
+       this.end=this.vertices.last();
 
        // update the UI and the segment parts
        this.svgPathString = null;
@@ -25309,14 +25568,13 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
     **/
    createCommand:function( request)
    {
-     if(request.getPolicy() === draw2d.command.CommandType.MOVE)
-     {
+     if(request.getPolicy() === draw2d.command.CommandType.MOVE){
          if(this.isDraggable()){
              return new draw2d.command.CommandMoveLine(this);
           }
      }
-     if(request.getPolicy() === draw2d.command.CommandType.DELETE)
-     {
+
+     if(request.getPolicy() === draw2d.command.CommandType.DELETE){
         if(this.isDeleteable()===false){
            return null;
         }
@@ -25395,9 +25653,18 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
        }
 
        if(this.editPolicy.getSize()>0){
-           memento.policy = this.editPolicy.getFirstElement().NAME;
+           memento.policy = this.editPolicy.first().NAME;
        }
-       
+
+       // the attribute "vertex" will be overridden by a router if the element is a
+       // "PolyLine" instance and has the correct router. Connections mainly ignore this
+       // attribute because the start/end is defined by the ports and the vertices in between are
+       // calculated by a router.
+       memento.vertex = [];
+       this.getVertices().each(function(i,e){
+           memento.vertex.push({x:e.x, y:e.y});
+       });
+
        return memento;
    },
    
@@ -25435,6 +25702,19 @@ draw2d.shape.basic.Line = draw2d.Figure.extend({
                debug.warn("Unable to install edit policy '"+memento.policy+"' forced by "+this.NAME+".setPersistendAttributes. Using default.");
            }
        }
+
+       // restore the vertex of the connection/line if any are given
+       //
+       // it makes no sense to restore vertices with only zero or one vertex. This
+       // isn't a "line" at all.
+       if($.isArray(memento.vertex) && memento.vertex.length>1) {
+           var tmp = new draw2d.util.ArrayList();
+           $.each(memento.vertex, function (i, e) {
+               tmp.add(new draw2d.geo.Point(e));
+           });
+           this.setVertices(tmp);
+       }
+
    }
 });
 
@@ -25898,20 +26178,7 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
         this.routingRequired=false;
         this.fireEvent("routed");
         this.fireEvent("change:route");
-        
-        // update the selection handles if the count of the vertices has changed. 
-        // 
-        /*
-        if(oldVertices.getSize()!==this.vertices.getSize() && !this.selectionHandles.isEmpty()){
-            this.editPolicy.each($.proxy(function(i, e) {
-                if (e instanceof draw2d.policy.figure.SelectionFeedbackPolicy) {
-                    e.onUnselect(this.canvas, this);
-                    e.onSelect(this.canvas, this);
-                }
-            }, this));
-        }
-        */
-    },
+     },
     
     /**
      * @inheritdoc
@@ -25967,18 +26234,6 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
       this.oldPoint = p;
     },
 
-    /**
-     * @inheritdoc
-     */
-    onOtherFigureIsMoving:function(/*:draw2d.Figure*/ figure)
-    {
-      this.repaintBlocked=true;
-      this._super(figure);
-      this.calculatePath();
-      
-      this.repaintBlocked=false;
-      this.repaint();
-    },
 
     /**
      * @method
@@ -26080,8 +26335,10 @@ draw2d.shape.basic.PolyLine = draw2d.shape.basic.Line.extend({
 
         this.router.setPersistentAttributes(this, memento);
 
-        this.start=this.vertices.first().clone();
-        this.end=this.vertices.last().clone();
+        if(this.vertices.getSize()>1) {
+            this.start = this.vertices.first().clone();
+            this.end = this.vertices.last().clone();
+        }
     }
 });
 
@@ -26250,30 +26507,30 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
      */
     init: function(attr, setter, getter )
     {
-      this.minX = 0;
-      this.minY = 0;
-      this.maxX = 0;
-      this.maxY = 0;
-      this.vertices   = new draw2d.util.ArrayList();
+        this.minX = 0;
+        this.minY = 0;
+        this.maxX = 0;
+        this.maxY = 0;
+        this.vertices   = new draw2d.util.ArrayList();
 
-      this._super(attr, setter, getter);
-      
-      // we must cache the initial width/height because the width/height of the shape
-      // is recalculated in the addVertex method. After the first call this values are 0/0
-      if(this.vertices.getSize()===0){
-          var w= this.width;
-          var h= this.height;
-          var pos= this.getPosition();
-          this.addVertex(new draw2d.geo.Point(0,0) );
-          this.addVertex(new draw2d.geo.Point(w,0) );
-          this.addVertex(new draw2d.geo.Point(w,h) );
+        this._super(attr, setter, getter);
 
-          this.setPosition(pos);
-      }
-      
-      this.svgPathString=null;
-      
-      this.installEditPolicy(new draw2d.policy.figure.VertexSelectionFeedbackPolicy());
+        // we must cache the initial width/height because the width/height of the shape
+        // is recalculated in the addVertex method. After the first call this values are 0/0
+        if(this.vertices.getSize()===0){
+            var w= this.width;
+            var h= this.height;
+            var pos= this.getPosition();
+            this.addVertex(new draw2d.geo.Point(0,0) );
+            this.addVertex(new draw2d.geo.Point(w,0) );
+            this.addVertex(new draw2d.geo.Point(w,h) );
+
+            this.setPosition(pos);
+        }
+
+        this.svgPathString=null;
+
+        this.installEditPolicy(new draw2d.policy.figure.VertexSelectionFeedbackPolicy());
     },
     
     /**
@@ -26363,7 +26620,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
         if(typeof attributes.path ==="undefined"){
             attributes.path = this.svgPathString;
         }
-        
+
         this._super(attributes);
     },
 
@@ -26750,7 +27007,7 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
         var memento = this._super();
         
         memento.vertices = [];
-        
+
         this.vertices.each(function(i,e){
             memento.vertices.push({x:e.x, y:e.y});
         });
@@ -26761,10 +27018,10 @@ draw2d.shape.basic.Polygon = draw2d.VectorFigure.extend({
     /**
      * @inheritdoc
      */
-   setPersistentAttributes : function( memento)
+    setPersistentAttributes : function( memento)
     {
         this._super(memento);
-        
+
         // restore the points from the JSON data and add them to the polyline
         //
         if(typeof memento.vertices !=="undefined"){
@@ -28146,6 +28403,60 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
 
     /**
      * @method
+     * Moves the element so it is the closest to the viewer?s eyes, on top of other elements. Additional
+     * the internal model changed as well.
+     *
+     * Optional: Inserts current object in front of the given one.
+     *
+     * @param {draw2d.Figure} [figure] move current object in front of the given one.
+     * @since 3.0.0
+     */
+    toFront: function(figure)
+    {
+        this._super(figure);
+
+        // ensure that the decoration is always in front of the connection
+        //
+        if( this.shape!==null) {
+            if (this.targetDecoratorNode !== null) {
+                this.targetDecoratorNode.insertAfter(this.shape);
+            }
+            if (this.sourceDecoratorNode !== null) {
+                this.sourceDecoratorNode.insertAfter(this.shape);
+            }
+        }
+
+        return this;
+    },
+
+    /**
+     * @method
+     * Moves the element to the background. Additional
+     * the internal model changed as well.
+     *
+     * @param {draw2d.Figure} [figure] move this object behind of the 'figure'.
+     * @since 4.7.2
+     */
+    toBack: function(figure )
+    {
+        this._super(figure);
+
+        if( this.shape!==null) {
+            if (this.targetDecoratorNode !== null) {
+                this.targetDecoratorNode.insertAfter(this.shape);
+            }
+            if (this.sourceDecoratorNode !== null) {
+                this.sourceDecoratorNode.insertAfter(this.shape);
+            }
+        }
+
+
+        return this;
+    },
+
+
+    /**
+     * @method
      * Return the recalculated position of the start point with the usage of 
      * the installed connection anchor locator.
      * 
@@ -28585,7 +28896,8 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
         this.radius = 0;
         this.bgColor= new draw2d.util.Color("#ffffff");
         this.color  = new draw2d.util.Color("#303030");
-           
+        this.dasharray = null;
+
         // memento for the stroke if we reset the glow effect of this shape
         //
         this.strokeBeforeGlow = this.stroke;
@@ -28593,6 +28905,8 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
         
         this._super( attr, 
             $.extend({
+                /** @attr {String} dasharray the line pattern see {@link draw2d.shape.basic.Line#setDashArray} for more information*/
+                dasharray : this.setDashArray,
                 /** @attr {Number} radius the radius to render the line edges */
                 radius : this.setRadius,
                 /** @attr {String|draw2d.util.Color} bgColor the background color of the shape */
@@ -28603,10 +28917,11 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
                 stroke : this.setStroke
             }, setter),
             $.extend({
-               radius : this.getRadius,
-               bgColor: this.getBackgroundColor,
-               color  : this.getColor,
-               stroke : this.getStroke
+               dasharray: this.getDashArray,
+               radius :   this.getRadius,
+               bgColor:   this.getBackgroundColor,
+               color  :   this.getColor,
+               stroke :   this.getStroke
             }, getter)
         );
     },
@@ -28638,8 +28953,44 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     {
         return this.radius;
     },
-    
-    
+
+
+
+    /**
+     * @method
+     * Set the line style for this object.
+     *
+     *      // Alternatively you can use the attr method:
+     *      figure.attr({
+    *        dash: dashPattern
+    *      });
+     *
+     * @param dash can be one of this ["", "-", ".", "-.", "-..", ". ", "- ", "--", "- .", "--.", "--.."]
+     */
+    setDashArray: function(dashPattern)
+    {
+        this.dasharray = dashPattern;
+        this.repaint();
+
+        this.fireEvent("change:dashArray");
+
+        return this;
+    },
+
+    /**
+     * @method
+     * Get the line style for this object.
+     *
+     *      // Alternatively you can use the attr method:
+     *      figure.attr("dash");
+     *
+     * @since 5.1.0
+     */
+    getDashArray: function()
+    {
+        return this.dasharray;
+    },
+
     /**
      * @method
      * Highlight the element or remove the highlighting
@@ -28694,6 +29045,10 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
         
         if(typeof attributes.fill === "undefined"){
        	   attributes.fill = this.bgColor.hash();
+        }
+
+        if(this.dasharray!==null){
+            attributes["stroke-dasharray"]=this.dasharray;
         }
 
         this._super(attributes);
@@ -28808,12 +29163,15 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
     */
    getPersistentAttributes : function()
    {
-       return $.extend(this._super(), {
+       var memento = $.extend(this._super(), {
            bgColor : this.bgColor.hash(),
            color   : this.color.hash(),
            stroke  : this.stroke,
-           radius  : this.radius
+           radius  : this.radius,
+           dasharray : this.dasharray
        });
+
+       return memento;
    },
    
    /**
@@ -28838,7 +29196,12 @@ draw2d.VectorFigure = draw2d.shape.node.Node.extend({
        if(typeof memento.stroke !== "undefined" ){
            this.setStroke(memento.stroke===null?0:parseFloat(memento.stroke));
        }
-        
+
+       if(typeof memento.dasharray ==="string"){
+           this.dasharray = memento.dasharray;
+       }
+
+
        return this;
    }  
 
@@ -29779,7 +30142,7 @@ draw2d.shape.basic.LineStartResizeHandle = draw2d.shape.basic.LineResizeHandle.e
     {
     	this.owner.isMoving=false;
     
-      // The ResizeHandle of a Connection has been droped on a Port
+      // The ResizeHandle of a Connection has been dropped on a Port
       // This will enforce a ReconnectCommand
       if(this.owner instanceof draw2d.Connection && this.command !==null) {
          this.command.setNewPorts(dropTarget, this.owner.getTarget());
@@ -29802,10 +30165,7 @@ draw2d.shape.basic.LineStartResizeHandle = draw2d.shape.basic.LineResizeHandle.e
         var anchor   = this.owner.getStartPoint();
         
         this.setPosition(anchor.x-resizeWidthHalf,anchor.y-resizeHeightHalf);
-    }    
-  
-    
-
+    }
 });
 /*****************************************
  *   Library is under GPL License (GPL)
@@ -29875,8 +30235,7 @@ draw2d.shape.basic.LineEndResizeHandle = draw2d.shape.basic.LineResizeHandle.ext
     {
       this._super(dx,dy, dx2, dy2);
     
-      var objPos = this.owner.end.clone();//getEndPoint();
-     // objPos.translate(dx2,dy2);
+      var objPos = this.owner.end.clone();
       
       this.owner.setEndPoint(objPos.x+dx2, objPos.y+dy2);
       
@@ -31100,7 +31459,9 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
     
        return null;
     },
-    
+
+
+
     /**
      * @method
      * Called from the figure itself when any position changes happens. All listener
@@ -31130,6 +31491,7 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
        var memento= this._super();
 
         memento.maxFanOut = this.maxFanOut;
+        memento.name      = this.name;
 
         // defined by the locator. Don't persist
         //
@@ -31167,7 +31529,10 @@ draw2d.Port = draw2d.shape.basic.Circle.extend({
                 this.maxFanOut = Math.max(1, parseInt(memento.maxFanOut));
             }
         }
-        
+        if(typeof memento.name !== "undefined") {
+            this.setName( memento.name);
+        }
+
         return this;
     }
 });
@@ -33665,7 +34030,8 @@ draw2d.shape.layout.Layout= draw2d.shape.basic.Rectangle.extend({
         // don't use the getter/setter. This considers the canvas assignment and
         // the child is always invisible. BIG BUG. The example shape_db will break if you change this.
 //       child.setVisible(this.isVisible());
-       child.visible = this.visible;
+        // respect the "visible" flag of th child as well
+       child.visible =  child.visible && this.visible;
 
        this.setDimension(1,1);
       
@@ -33977,7 +34343,37 @@ draw2d.shape.layout.HorizontalLayout= draw2d.shape.layout.Layout.extend({
         }
 
         return this;
+    },
+
+
+    /**
+     * @inheritdoc
+     */
+    getPersistentAttributes : function()
+    {
+        var memento = this._super();
+
+        memento.gap = this.gap;
+
+        return memento;
+    },
+
+
+    /**
+     * @inheritdoc
+     */
+    setPersistentAttributes : function(memento)
+    {
+        this._super(memento);
+
+        if(typeof memento.gap ==="number"){
+            this.gap = memento.gap;
+        }
+
+        return this;
     }
+
+
 });
 
 
@@ -34152,11 +34548,45 @@ draw2d.shape.layout.VerticalLayout= draw2d.shape.layout.Layout.extend({
         this._super(w,h);
 
         var width=this.width-this.padding.left-this.padding.right;
+        if (width === this._recursiveWidth) {
+            return this;
+        }
+        this._recursiveWidth = width;
+
         this.children.each(function(i,e){
             if(e.figure.isResizeable() && e.figure.isVisible()){
                 e.figure.setDimension(width,e.figure.getMinHeight());
             }
         });
+
+        delete this._recursiveWidth;
+
+        return this;
+    },
+
+    /**
+     * @inheritdoc
+     */
+    getPersistentAttributes : function()
+    {
+        var memento = this._super();
+
+        memento.gap = this.gap;
+
+        return memento;
+    },
+
+
+    /**
+     * @inheritdoc
+     */
+    setPersistentAttributes : function(memento)
+    {
+        this._super(memento);
+
+        if(typeof memento.gap ==="number"){
+            this.gap = memento.gap;
+        }
 
         return this;
     }
@@ -34458,11 +34888,12 @@ draw2d.shape.layout.TableLayout= draw2d.shape.layout.Layout.extend({
     	    }
     	});
 
+        var orig = this.repaintBlocked;
     	this.repaintBlocked=true;
         figuresToAdd.forEach(function(figure){
             _this.add(figure, _this.cellLocator);
         });
-        this.repaintBlocked = false;
+        this.repaintBlocked = orig;
         
         this.calculateLayout();
         this.setDimension(1,1);
@@ -35170,7 +35601,7 @@ draw2d.shape.layout.FlexGridLayout= draw2d.shape.layout.Layout.extend({
  * @class draw2d.shape.icon.Icon
  * @inheritable
  * @author Andreas Herz
- * @extends draw2d.VectorFigure
+ * @extends draw2d.SetFigure
  */
 draw2d.shape.icon.Icon = draw2d.SetFigure.extend({
     NAME : "draw2d.shape.icon.Icon",
@@ -35227,7 +35658,6 @@ draw2d.shape.icon.Icon = draw2d.SetFigure.extend({
            trans.push("T"+(-this.offsetX) + "," + (-this.offsetY));
 
        }
-       
        if (this.isResizeable()===true) {
             trans.push(
               		   "T"+ this.getAbsoluteX() + "," + this.getAbsoluteY()+
@@ -45392,7 +45822,9 @@ draw2d.ui.LabelEditor = Class.extend({
     start: function( label){
         var newText = prompt(this.configuration.text, label.getText());
         if(newText){
-            label.setText(newText);
+            var cmd =new draw2d.command.CommandAttr(label, {text:newText});
+            label.getCanvas().getCommandStack().execute(cmd);
+
             this.configuration.onCommit(label.getText());
         }
         else{
@@ -45520,7 +45952,8 @@ draw2d.ui.LabelInplaceEditor =  draw2d.ui.LabelEditor.extend({
         this.html.unbind("blur",this.commitCallback);
         $("body").unbind("click",this.commitCallback);
         var label = this.html.val();
-        this.label.setText(label);
+        var cmd =new draw2d.command.CommandAttr(this.label, {text:label});
+        this.label.getCanvas().getCommandStack().execute(cmd);
         this.html.fadeOut($.proxy(function(){
             this.html.remove();
             this.html = null;
@@ -46246,9 +46679,11 @@ draw2d.io.png.Writer = draw2d.io.Writer.extend({
             canvas.hideDecoration();
             svg = canvas.getHtmlContainer().html().replace(/>\s+/g, ">").replace(/\s+</g, "<");
 
-            // add missing namespace for images in SVG
-            //
-            svg = svg.replace("<svg ", "<svg xmlns:xlink=\"http://www.w3.org/1999/xlink\" ");
+            // add missing namespace for images in SVG if missing
+            // depends on raphaelJS version
+            if(!svg.includes("http://www.w3.org/1999/xlink")) {
+                svg = svg.replace("<svg ", "<svg xmlns:xlink=\"http://www.w3.org/1999/xlink\" ");
+            }
         }
 
         // required for IE9 support. 
@@ -47519,7 +47954,7 @@ draw2d.storage.TideSDKStorage = draw2d.storage.FileStorage.extend({
 document.ontouchmove = function(e){e.preventDefault();};
 
 // hide context menu
-document.oncontextmenu = function() {return false;};
+//document.oncontextmenu = function() {return false;};
 
 
 // hacking RaphaelJS to support groups of elements
