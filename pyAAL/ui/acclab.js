@@ -295,7 +295,7 @@ var visualEditor = {
             " - Anqi Tong (UI)" +
             " - Julie Spens (UI)</div>" +
 
-            "<div class='footerAbout'>Copyright (C) 2014-2015 Walid Benghabrit - Ecole des Mines de Nantes - ARMINES</br>" +
+            "<div class='footerAbout'>Copyright (C) 2014-2016 Walid Benghabrit - Ecole des Mines de Nantes - ARMINES</br>" +
             "ASCOLA Research Group - A4CLOUD Project http://www.a4cloud.eu/ </div>";
 
        toastr.info(abt, "About", {
