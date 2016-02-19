@@ -405,6 +405,8 @@ visualEditor.ui.fileManager = {
         var StatusBar = ace.require("ace/ext/statusbar").StatusBar;
         var jstatusbar = $("#statusBar");
         var statusBar = new StatusBar(editor, jstatusbar[0]);
+		jstatusbar.on("mouseover", function(e) { $(e.target).css("opacity", 1.0) })
+			.on("mouseout", function(e) { $(e.target).css("opacity", 0.2) });
 
         // Eval command on ENTER key
         $("#cmd").keypress(function(e) {
@@ -415,6 +417,9 @@ visualEditor.ui.fileManager = {
                 $(this).typeAhead({source: visualEditor.ui.consoleLog.concat(visualEditor.ui.consolePredefs)});
             }
         }).typeAhead({source: visualEditor.ui.consoleLog.concat(visualEditor.ui.consolePredefs)});
+
+		$("#cmd").on("focus mouseover keydown", function(e) { $("#statusBar").css("opacity", 1.0) })
+			.on("mouseout focusout", function(e) { $("#statusBar").css("opacity", 0.2) });
 
         // Worker communication
         editor.postMsgWorker = function(cmd, args) {

@@ -470,14 +470,15 @@ path.pointer{
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 10px;
     height: 20px;
     color: gray;
     background-color: #F7F7F7;
     z-index: 9999;
     border-top-color: #0061A5;
     border-top-width: thin;
-    border-top-style: outset
+    border-top-style: outset;
+    opacity: 0.2;
 }
 
 .ace_status-indicator {
