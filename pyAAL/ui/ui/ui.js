@@ -469,7 +469,7 @@ visualEditor.ui = {
 
     /**
      * Generate Djfodtlmon spec
-     */s
+     */
     generateDjfodtlmon: function(spec) {
         spec = (spec === "")?" ": spec;
         $.ajax({

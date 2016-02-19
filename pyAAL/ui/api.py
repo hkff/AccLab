@@ -296,11 +296,27 @@ def api_macro_call(f, macro_name, macro_args):
 # Gen Djfodtlmon
 def api_gen_Djfodtlmon(file, spec):
     try:
-        # agent: alice => ;agent: alice => ;type:Actor => ;type:Actor => ;type:Actor => ;agent: alice => ;
-        print(spec)
+        mspec = MappingSpec()
+        tmp = spec.split(";")
+        for x in tmp:
+            tmp2 = x.split(":")
+            if len(tmp2) > 1:
+                args = tmp2[1].split("=>")
+                if tmp2[0] == "clause":
+                    if len(args) > 2:
+                        mspec.clauses.append(MappingSpec.ClauseMap(args[0], args[1], args[2]))
+                elif tmp2[0] == "service":
+                    if len(args) > 1:
+                        mspec.services.append(MappingSpec.ServiceMap(args[0], args[1]))
+                elif tmp2[0] == "agent":
+                    if len(args) > 1:
+                        mspec.agents.append(MappingSpec.AgentMap(args[0], args[1]))
+                elif tmp2[0] == "type":
+                    if len(args) > 1:
+                        mspec.types.append(MappingSpec.TypeMap(args[0], args[1]))
 
         mm = aalc(base_dir + "/" + file, libs_path="libs/aal/", root_path="", no_exec=True, web=True)["mm"]
-        res = AALtoDJFODTLMON(mm, spec)
+        res = AALtoDJFODTLMON(mm, mspec)
         api_write_file(file.replace('.aal', '.py'), res)
         return file.replace('.aal', '.py')
     except:

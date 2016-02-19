@@ -35,8 +35,11 @@ class MappingSpec:
 
     class BaseMap:
         def __init__(self, name, target):
-            self.name = name
-            self.target = target
+            self.name = name.strip()
+            self.target = target.strip()
+
+        def __str__(self):
+            return "%s: %s => %s" % (self.__class__.__name__, self.name, self.target)
 
     class ServiceMap(BaseMap):
         pass
@@ -50,7 +53,10 @@ class MappingSpec:
     class ClauseMap(BaseMap):
         def __init__(self, name, target, control_type):
             super().__init__(name, target)
-            self.control_type = control_type
+            self.control_type = control_type.strip()
+
+        def __str__(self):
+            return "%s: %s => %s => %s" % (self.__class__.__name__, self.name, self.target, self.control_type)
 
 
 # AALtoDJFODTLMON
@@ -62,6 +68,30 @@ def AALtoDJFODTLMON(mm: aalmm, spec: MappingSpec, output_file=None):
     response_rules = []
     header = ""
 
+    # Clause handling
+    for rule in spec.clauses:
+        print(rule.name)
+        r = ""
+        control_type = "Monitor.MonControlType.POSTERIORI"
+        if rule.control_type == "REAL_TIME":
+            control_type = "Monitor.MonControlType.REAL_TIME"
+
+        target = "http"
+        formula = ""
+        description = ""
+
+        if rule.target == "HTTP":
+            http_rules.append('Sysmon.add_http_rule("%s", "%s", description="%s", control_type=%s)'
+                                  % (rule.name, formula, description, control_type))
+        elif rule.target == "VIEW":
+            view_rules.append('Sysmon.add_view_rule("%s", "%s", description="%s", control_type=%s)'
+                                  % (rule.name, formula, description, control_type))
+        elif rule.target == "RESPONSE":
+            response_rules.append('Sysmon.add_response_rule("%s", "%s", description="%s", control_type=%s)'
+                                  % (rule.name, formula, description, control_type))
+
+
+    # Result
     res = """# %s
 from fodtlmon_middleware.sysmon import *
 from django.contrib.auth.models import User

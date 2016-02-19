@@ -65,10 +65,12 @@ CLAUSE alice_pref (
 
 
 // Call validate macro to perform the compliance check
-CALL econflict("css_policy" "2")
+//CALL econflict("css_policy" "2")
 //CALL ecompliance("css_policy" "alice_pref")
 //CALL sat_ue("css_policy")
 //CALL validate_usage("css_policy" "alice_pref")
+
+
 
 /*
 EXEC
@@ -89,5 +91,5 @@ for l in self.aalprog.libs:
 print(self.isDeclared("goo", m_type))
 """
 */
-
+CALL to_djfodtlmon()
 //CALL wvalidate_usage("css_policy" "alice_pref")
