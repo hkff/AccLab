@@ -288,7 +288,8 @@ visualEditor.ui.fileManager = {
                         $(inPlaceAALEditor.container).bind("contextmenu", visualEditor.ui.toggleAceWheelContextMenu);
 
 						// Switch to aal mode
-                        visualEditor.aalMode();
+						if(fileType === "aal")
+                        	visualEditor.aalMode();
 						break;
 				}
 			}

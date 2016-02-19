@@ -1,0 +1,47 @@
+{
+    "name": "Sysmon",
+	"desc": "Generate Mapping file for AAL to Djfodtlmon.",
+	"vars": [
+      {"name": "", "id": "c1", "type": "select", "pre": " Clause ", "post": " ", "src": "{aal.clauses}"},
+      {"name": "", "id": "ruleTarget", "type": "select", "pre": " Target ", "post": " ",
+        "src": "[\"HTTP\", \"VIEW\", \"RESPONSE\"]"},
+      {"name": "", "id": "ruleType", "type": "select", "pre": " Type ", "post": " ",
+        "src": "[\"POSTERIORI\", \"REAL_TIME\"]"},
+      {"name": "Add", "id": "clause_add", "type": "button", "pre": " ", "post": "",
+        "onclick": "$('#rulesList').append($('<option></option>').val(2).html( 'clause: ' + $('#c1').val() +' => '+ $('#ruleTarget').val()+' => '+ $('#ruleType').val()+';' ))"},
+
+      {"name": "", "id": "agents", "type": "select", "pre": " Agent ", "post": " ", "src": "{aal.agents}"},
+      {"name": "", "id": "agentTarget", "type": "text", "pre": "Name ", "post": ""},
+      {"name": "Add", "id": "agent_add", "type": "button", "pre": " ", "post": "",
+        "onclick": "$('#rulesList').append($('<option></option>').val(2).html( 'agent: ' + $('#agents').val() +' => '+ $('#agentTarget').val() +';' ))"},
+
+      {"name": "", "id": "services", "type": "select", "pre": " Service ", "post": " ", "src": "{aal.services}"},
+      {"name": "", "id": "serviceTarget", "type": "text", "pre": "URL ", "post": ""},
+      {"name": "Add", "id": "service_add", "type": "button", "pre": " ", "post": "",
+        "onclick": "$('#rulesList').append($('<option></option>').val(2).html( 'service:' + $('#services').val() +' => '+ $('#serviceTarget').val() +';' ))"},
+
+      {"name": "", "id": "types", "type": "select", "pre": " Type ", "post": " ", "src": "{aal.types}"},
+      {"name": "", "id": "typeTarget", "type": "text", "pre": "Name ", "post": ""},
+      {"name": "Add", "id": "type_add", "type": "button", "pre": " ", "post": "",
+        "onclick": "$('#rulesList').append($('<option></option>').val(2).html( 'type:' + $('#types').val() +' => '+ $('#typeTarget').val() +';' ))"},
+
+      {"name": "Remove", "id": "remove_list", "type": "button", "pre": " ", "post": "", "onclick": "$('#rulesList option:selected').remove()"},
+
+      {"name": "Clear all", "id": "clear", "type": "button", "pre": " ", "post": "", "onclick": "$('#rulesList option').remove()"},
+
+      {"name": "Generate", "id": "gen", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.generateDjfodtlmon($('#rulesList').text())"}
+    ],
+	"aal": [
+      "\nCALL to_djfodtlmon()\n"
+    ],
+	"html": [
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Clauses : </h4>  {c1} {ruleTarget} {ruleType} {clause_add} </div> ",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Services : </h4>  {services} {serviceTarget} {service_add} </div> ",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Agents : </h4>  {agents} {agentTarget} {agent_add} </div> ",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Types : </h4>  {types} {typeTarget} {type_add} </div> ",
+      "<div class='varGroupe'> <h4 class='varsHeader'>Rules list : </h4> <select id='rulesList' multiple style='width: 80%;'></select> </div>",
+      "<div class='varGroupe'> {remove_list} {clear} </div>",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Generate : </h4> {gen} </div> "
+    ],
+	"xacml": ""
+}

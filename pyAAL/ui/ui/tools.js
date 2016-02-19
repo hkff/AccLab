@@ -925,7 +925,8 @@ visualEditor.ui.Template = {
     "desc": "",
     "vars": [
       {"name": "Field1", "id": "Filed1", "type": "input", "pre": "Text before", "post": "Text after"},
-      {"name": "Field2", "id": "Filed2", "type": "select", "pre": "Text before", "post": "Text after"}
+      {"name": "Field2", "id": "Filed2", "type": "select", "pre": "Text before", "post": "Text after"},
+      {"name": "Field3", "id": "Filed3", "type": "button", "pre": "Text before", "post": "Text after", "onclick": "js"}
     ],
     "aal": "",
     "html": "Template test {vars}",
@@ -994,7 +995,9 @@ visualEditor.ui.Template = {
             view: "<div class='templateVar'>" + //<div class='templateVarName'>" + varObj.name + "</div>" +
                 varObj.pre +
                 ((varObj.type != "select")?
-                    ("<input type='" + varObj.type + "' id='" + varObj.id +  "' name='" + varObj.name + "'" +
+                    ("<input type='" + varObj.type + "' id='" + varObj.id + "' name='" + varObj.name + "'" +
+                    ((varObj.onclick != undefined)? " onclick=\"" + varObj.onclick + "\" ":"") +
+                    ((varObj.type === "button")? " value='" + varObj.name + "' ":"") +
                     ((varObj.checked != undefined)?" checked />":"/>")):
                 ("<select id='" + varObj.id + "'>" + options +" </select>"))+
                 varObj.post + "</div>",

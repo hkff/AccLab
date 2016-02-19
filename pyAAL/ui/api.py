@@ -22,6 +22,7 @@ from urllib.parse import *
 import sys, shutil
 from io import StringIO
 from aalc import *
+from AALtoDJfodtlmon import *
 
 base_dir = "examples"
 
@@ -290,3 +291,18 @@ def api_macro_call(f, macro_name, macro_args):
     print(res)
     res = to_html_colors(res)
     return res.replace("\n", "<br>")
+
+
+# Gen Djfodtlmon
+def api_gen_Djfodtlmon(file, spec):
+    try:
+        # agent: alice => ;agent: alice => ;type:Actor => ;type:Actor => ;type:Actor => ;agent: alice => ;
+        print(spec)
+
+        mm = aalc(base_dir + "/" + file, libs_path="libs/aal/", root_path="", no_exec=True, web=True)["mm"]
+        res = AALtoDJFODTLMON(mm, spec)
+        api_write_file(file.replace('.aal', '.py'), res)
+        return file.replace('.aal', '.py')
+    except:
+        # Compilation Error
+        return 'Error'

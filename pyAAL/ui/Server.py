@@ -121,6 +121,9 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         elif val == "killPs":
             res = api_kill_ps(self.get_arg(args, "pid", method))
 
+        elif val == "genDjfodtlmon":
+            res = api_gen_Djfodtlmon(self.get_arg(args, "file", method), self.get_arg(args, "spec", method))
+
         elif val == "cancelCurrentPS":
             res = "No aalc/tspassc process is running"
             ps = get_current_ps_id()
