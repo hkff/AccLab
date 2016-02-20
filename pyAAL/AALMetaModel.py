@@ -465,7 +465,6 @@ class m_aalprog(aalmmnode):
         return [x for x in macros if str(x.name) == name and len(x.param) == len(args)]
 
 
-
 # Usage
 class m_usage(aalmmnode):
     """

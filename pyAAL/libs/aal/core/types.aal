@@ -12,6 +12,7 @@ TYPE Auditor          EXTENDS(Actor) ATTRIBUTES() ACTIONS()
 TYPE CloudProvider    EXTENDS(Actor) ATTRIBUTES() ACTIONS()
 TYPE CloudCustomer    EXTENDS(Actor) ATTRIBUTES() ACTIONS()
 TYPE EndUser          EXTENDS(Actor) ATTRIBUTES() ACTIONS()
+TYPE User             EXTENDS(Actor) ATTRIBUTES() ACTIONS()
 
 //=====================================================//
 //================= Defining services =================//

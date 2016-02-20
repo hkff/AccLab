@@ -109,7 +109,7 @@ ace.define('ace/mode/aal_highlight_rules', function(require, exports, module) {
         //this.$keywordList = keywords;
 
         // Predefined Types
-        var types = ("Actor DataSubject DataController DataProcessor DwDataController Auditor CloudProvider CloudCustomer EndUser");
+        var types = ("Actor DataSubject DataController DataProcessor DwDataController Auditor CloudProvider CloudCustomer EndUser User");
         
         // Operators
         var operators = ("OR AND NOT THEN ONLYWHEN FORALL EXISTS IF WHERE");
