@@ -31,6 +31,10 @@
 
       {"name": "Clear all", "id": "clear", "type": "button", "pre": " ", "post": "", "onclick": "$('#rulesList option').remove()"},
 
+      {"name": "Save", "id": "saveSpecBtn", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.fileManager.saveTextAsFile($('#rulesList').text(), visualEditor.ui.activeTab.panel.title + '.spec')"},
+      {"name": "Select file", "id": "selectSpecBtn", "type": "file", "pre": " ", "post": "", "onclick": ""},
+      {"name": "Load", "id": "loadSpecBtn", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.fileManager.loadFileAsList('selectSpecBtn', 'rulesList')"},
+
       {"name": "Generate", "id": "gen", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.generateDjfodtlmon($('#rulesList').text())"}
     ],
 	"aal": [
@@ -43,7 +47,7 @@
       "<div class='varGroupe'>  <h4 class='varsHeader'>Types : </h4>  {types} {typeTarget} {type_add} </div> ",
       "<div class='varGroupe'> <h4 class='varsHeader'>Rules list : </h4> <select id='rulesList' multiple style='width: 80%;'></select> </div>",
       "<div class='varGroupe'> {remove_list} {clear} </div>",
-      "<div class='varGroupe'>  <h4 class='varsHeader'>Generate : </h4> {gen} </div> "
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Generate : </h4> {selectSpecBtn} {loadSpecBtn} {saveSpecBtn} {gen} </div> "
     ],
 	"xacml": ""
 }
