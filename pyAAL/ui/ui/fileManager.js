@@ -273,16 +273,20 @@ visualEditor.ui.fileManager = {
 					    var inPlaceAALEditor = visualEditor.ui.fileManager.openAceEditor(id, fileType.toUpperCase());
 					    inPlaceAALEditor.setValue(response);
 					    inPlaceAALEditor.clearSelection();
-
+                        inPlaceAALEditor.first = true;
+                        inPlaceAALEditor.session.getUndoManager().markClean();
                         inPlaceAALEditor.on("input", function() {
-							visualEditor.markPanelEdited();
+                            if(inPlaceAALEditor.first) {
+                                inPlaceAALEditor.first = false;
+                                inPlaceAALEditor.session.getUndoManager().markClean();
+                                inPlaceAALEditor.on("input", function () {
+                                    visualEditor.markPanelEdited();
+                                });
+                            }
                         });
 
                         visualEditor.activeEditor = inPlaceAALEditor;
                         visualEditor.ui.openedEditors[visualEditor.ui.activeTab.panel.title] = inPlaceAALEditor;
-
-                        visualEditor.activeEditor.session.getUndoManager().markClean();
-                        $(".tab-handle-text")[0].innerHTML += " *";
 
                         // Add context menu handler
                         $(inPlaceAALEditor.container).bind("contextmenu", visualEditor.ui.toggleAceWheelContextMenu);
@@ -290,6 +294,7 @@ visualEditor.ui.fileManager = {
 						// Switch to aal mode
 						if(fileType === "aal")
                         	visualEditor.aalMode();
+
 						break;
 				}
 			}
