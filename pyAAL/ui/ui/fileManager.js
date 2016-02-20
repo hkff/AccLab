@@ -289,7 +289,10 @@ visualEditor.ui.fileManager = {
                         visualEditor.ui.openedEditors[visualEditor.ui.activeTab.panel.title] = inPlaceAALEditor;
 
                         // Add context menu handler
-                        $(inPlaceAALEditor.container).bind("contextmenu", visualEditor.ui.toggleAceWheelContextMenu);
+                        $(inPlaceAALEditor.container).bind("contextmenu", function(e) {
+                            visualEditor.ui.toggleAceWheelContextMenu(e);
+                            return false;
+                        });
 
 						// Switch to aal mode
 						if(fileType === "aal")
