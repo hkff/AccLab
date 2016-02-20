@@ -15,9 +15,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-__author__ = 'walid'
+from datetime import datetime
 
-from AALMetaModel import *
+__author__ = 'walid'
 
 
 class MappingSpec:
@@ -60,25 +60,54 @@ class MappingSpec:
 
 
 # AALtoDJFODTLMON
-def AALtoDJFODTLMON(mm: aalmm, spec: MappingSpec, output_file=None):
+def AALtoDJFODTLMON(mm, spec: MappingSpec, output_file=None):
+    """
+    Translate AAL program to Djfodtlmon using a spec file
+    """
     log_attributes = []
     custom_predicates = []
     http_rules = []
     view_rules = []
     response_rules = []
-    header = ""
+    header = "###\n# Mapping file for %s\n# created on %s\n###\n" % (mm.file, datetime.today())
 
-    # Clause handling
+    ###################################
+    # Attributes
+    ###################################
+    log_attributes.append("""
+## 1. User type log attribute
+def log_user_type(request, view, args, kwargs, response):
+        # The evaluation function
+        # Do your custom logic to determine the user type
+        # The current django user can be accessed via : request.user
+        #
+        user_type = "..."
+        return P("USER_TYPE", args=[Constant(user_type)])
+
+# Create and add the attribute
+utype_log_attr = LogAttribute('USER_TYPE', enabled=True, eval_fx=log_user_type,
+    description='The type of the current user.', )
+Sysmon.add_log_attribute(utype_log_attr, target=Monitor.MonType.HTTP)
+    """)
+
+    ###################################
+    # Predicates/Functions
+    ###################################
+
+    ###################################
+    # Rules
+    ###################################
     for rule in spec.clauses:
-        print(rule.name)
-        r = ""
         control_type = "Monitor.MonControlType.POSTERIORI"
         if rule.control_type == "REAL_TIME":
             control_type = "Monitor.MonControlType.REAL_TIME"
 
-        target = "http"
         formula = ""
-        description = ""
+        clause = mm.clause(rule.name)
+        if clause is not None:
+            formula = clause.to_ltl()
+
+        description = "Rule for clause %s" % rule.name
 
         if rule.target == "HTTP":
             http_rules.append('Sysmon.add_http_rule("%s", "%s", description="%s", control_type=%s)'
@@ -90,9 +119,10 @@ def AALtoDJFODTLMON(mm: aalmm, spec: MappingSpec, output_file=None):
             response_rules.append('Sysmon.add_response_rule("%s", "%s", description="%s", control_type=%s)'
                                   % (rule.name, formula, description, control_type))
 
-
+    ###################################
     # Result
-    res = """# %s
+    ###################################
+    res = """%s
 from fodtlmon_middleware.sysmon import *
 from django.contrib.auth.models import User
 
