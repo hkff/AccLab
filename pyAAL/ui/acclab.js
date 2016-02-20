@@ -434,7 +434,10 @@ var visualEditor = {
      * @param msg
      */
     log: function(msg) {
-        $("#output_window").append(replaceAll("\n", "<br>", msg) + "<br>");
+        if(typeof(msg) == "string")
+            $("#output_window").append(replaceAll("\n", "<br>", msg) + "<br>");
+        else
+            $("#output_window").append(msg + "<br>");
     }
 };
 
@@ -447,6 +450,7 @@ var visualEditor = {
  * @returns {XML|string|*|void}
  */
 function replaceAll(find, replace, str) {
+    console.log(str)
   return str.replace(new RegExp(find, 'g'), replace);
 }
 
