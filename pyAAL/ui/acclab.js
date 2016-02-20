@@ -122,8 +122,8 @@ var visualEditor = {
         if (visualEditor.activeEditor != null)
             visualEditor.activeEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
 
-        if (visualEditor.ui.properties.aalEditor.inPlaceAALEditor != null)
-            visualEditor.ui.properties.aalEditor.inPlaceAALEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
+        //if (visualEditor.ui.properties.aalEditor.inPlaceAALEditor != null)
+        //    visualEditor.ui.properties.aalEditor.inPlaceAALEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
     },
 
     /**
@@ -248,8 +248,8 @@ var visualEditor = {
         window.componentsNode = dockManager.dockLeft(window.documentNode, window.components, prop);
         window.toolboxNode = dockManager.dockDown(window.componentsNode, window.toolbox, 0.50);
 
-        prop = 250 / $(document).width();
-        window.propertiesNode = dockManager.dockRight(window.documentNode, window.properties, prop);
+        //prop = 250 / $(document).width();
+        //window.propertiesNode = dockManager.dockRight(window.documentNode, window.properties, prop);
     },
 
     /**
@@ -263,8 +263,8 @@ var visualEditor = {
         window.solutionNode = dockManager.dockLeft(documentNode, solution, prop);
         window.outlineNode = dockManager.dockDown(solutionNode, outline, 0.50);
 
-        prop = 250 / $(document).width();
-        window.propertiesNode = dockManager.dockRight(documentNode, properties, prop);
+        //prop = 250 / $(document).width();
+        //window.propertiesNode = dockManager.dockRight(documentNode, properties, prop);
 
         prop = 500 / $(document).height();
         window.outputNode = dockManager.dockDown(documentNode, output, prop);
@@ -581,8 +581,8 @@ window.onload = function() {
     this.components.elementButtonClose.innerHTML = "";
     this.toolbox = new dockspawn.PanelContainer($("#toolbox_window")[0], dockManager);
     this.toolbox.elementButtonClose.innerHTML = "";
-    this.properties = new dockspawn.PanelContainer($("#properties_window")[0], dockManager);
-    this.properties.elementButtonClose.innerHTML = "";
+    //this.properties = new dockspawn.PanelContainer($("#properties_window")[0], dockManager);
+    //this.properties.elementButtonClose.innerHTML = "";
     this.inplaceAAL = new dockspawn.PanelContainer($("#inPlaceAALEditor")[0], dockManager);
     this.inplaceAAL.elementButtonClose.innerHTML = "";
     this.output = new dockspawn.PanelContainer($("#output_window")[0], dockManager);
@@ -595,8 +595,8 @@ window.onload = function() {
     this.solutionNode = dockManager.dockLeft(documentNode, solution, prop);
     this.outlineNode = dockManager.dockDown(solutionNode, outline, 0.50);
 
-    prop = 250 / $(document).width();
-    this.propertiesNode = dockManager.dockRight(documentNode, properties, prop);
+    //prop = 250 / $(document).width();
+    //this.propertiesNode = dockManager.dockRight(documentNode, properties, prop);
 
     prop = 500 / $(document).height();
     this.outputNode = dockManager.dockDown(documentNode, output, prop);
@@ -608,7 +608,7 @@ window.onload = function() {
 
 
     this.panelNodes = [window.solution, window.outline, window.components, window.toolbox,
-        window.properties, window.inplaceAAL, window.output];
+        /*window.properties,*/ window.inplaceAAL, window.output];
 
     // Load prefs
     visualEditor.userPrefs = visualEditor.loadPrefs();

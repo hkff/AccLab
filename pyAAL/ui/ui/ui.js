@@ -54,7 +54,7 @@ visualEditor.ui = {
 		this.inplacePanel    = $('#' + inplacePanel);
 
 		//visualEditor.ui.canvas = new visualEditor.ui.gridEditor(grid, actionsPanel, componentsPanel, propertiesPanel);
-		visualEditor.ui.properties.init(grid, actionsPanel, componentsPanel, propertiesPanel);
+		//visualEditor.ui.properties.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.tools.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.outline.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.fileManager.init(grid, actionsPanel, componentsPanel, propertiesPanel);
@@ -93,7 +93,7 @@ visualEditor.ui = {
 	},
 
 	nodeSelected: function() {
-		visualEditor.ui.properties.updateProps();
+		//visualEditor.ui.properties.updateProps();
 		//visualEditor.ui.outline.select(visualEditor.ui.selectedNode.id);
 	},
 
@@ -132,7 +132,7 @@ visualEditor.ui = {
 		// If it is not a diagram, disable gui elements
 		if(fileType != "acd") {
             $("#preview").hide();
-			this.disableNode(this.propertiesPanel);
+			//this.disableNode(this.propertiesPanel);
 			//this.disableNode(this.actionsPanel);
 			for(var i=0; i<tt.length; i++) {
 				$(tt[i].button).hide();
@@ -157,7 +157,7 @@ visualEditor.ui = {
 		} else {
             $("#preview").show();
 			// Enable them
-			this.enableNode(this.propertiesPanel);
+			//this.enableNode(this.propertiesPanel);
 			//this.enableNode(this.actionsPanel);
 			for(var i=0; i<tt.length; i++) {
 				$(tt[i].button).show();

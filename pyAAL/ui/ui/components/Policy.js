@@ -68,7 +68,7 @@ PolicyUI = draw2d.shape.basic.Text.extend({
 
     onClick: function() {
         visualEditor.ui.selectedNode = this;
-        visualEditor.ui.properties.updateProps();
+        //visualEditor.ui.properties.updateProps();
     },
 
     refresh: function() {
