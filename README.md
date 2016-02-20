@@ -1,3 +1,7 @@
+[![Version](https://img.shields.io/badge/version-1.1-orange.svg)]()
+[![License](https://img.shields.io/badge/license-GPL3-blue.svg)]()
+[![Python](https://img.shields.io/badge/python->%3D3.4-green.svg)]()
+
 AccLab Last release : Version 1.1 02/10/2015
 
 What is it?
