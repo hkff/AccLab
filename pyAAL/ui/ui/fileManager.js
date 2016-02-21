@@ -68,7 +68,8 @@ visualEditor.ui.fileManager = {
 		  //'<div class="menu-sep"></div>'+
 		  '<div id="fmm-delete" data-options="iconCls:\'fa fa-times\'" class="menu-item cmenuBtn">Delete</div>'+
 		  '<div id="fmm-refresh" data-options="iconCls:\'fa fa-refresh\'" class="menu-item cmenuBtn">Refresh</div>'+
-		  '<div id="fmm-compile" data-options="iconCls:\'fa fa-cog\'" class="menu-item cmenuBtn">Compile</div>'+ '</div>';
+		  '<div id="fmm-compile" data-options="iconCls:\'fa fa-cog\'" class="menu-item cmenuBtn">Compile</div>'+
+          '<div id="fmm-run" data-options="iconCls:\'fa fa-flash\'" class="menu-item cmenuBtn">Run</div>'+ '</div>';
 		$('body').append(this.ctMenu);
 
 		$("#explorer").tree({
@@ -210,6 +211,28 @@ visualEditor.ui.fileManager = {
 					toastr.info('Compiling...');
 				}
 			});
+		});
+
+        $('#fmm-run').click(function(e){
+			var node = $("#explorer").tree('getSelected');
+			var file = _this.getAbsPath(node);
+            var dType = "text";
+			var action = "runDjango";
+			var fileType = file.split('.').pop().toLowerCase();
+            if(node.text == "manage.py") {
+                $.ajax({
+                    dataType: dType,
+                    type:'POST',
+                    url: visualEditor.backend,
+                    data: {action: action, file: file},
+                    success: function(response){
+                        $("#output_window").empty().append(response);
+                        toastr.info('Running...');
+                    }
+                });
+            } else {
+                toastr.error('Not a runnable file !');
+            }
 		});
 	},
 

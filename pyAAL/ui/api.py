@@ -328,3 +328,10 @@ def api_gen_Djfodtlmon(file, spec):
 # Generate django app skeleton
 def api_generate_django(aal_file, spec_file, output_folder):
     return generate_django_skeleton(aal_file, spec_file, output_folder)
+
+
+# Run django app
+def api_run_django(app, port=9000):
+    p = Popen(['python3', "examples/"+app, 'runserver', str(port)], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    res = p.stdout.read().decode("utf-8")
+    return res.replace("\n", "<br>")
