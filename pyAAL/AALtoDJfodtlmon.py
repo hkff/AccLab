@@ -16,6 +16,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from datetime import datetime
+from subprocess import Popen, PIPE
+import os.path
+import shutil
 
 __author__ = 'walid'
 
@@ -153,3 +156,48 @@ from django.contrib.auth.models import User
     """ % (header, "\n".join(log_attributes), "\n".join(custom_predicates), "\n".join(http_rules),
            "\n".join(view_rules), "\n".join(response_rules))
     return res
+
+
+def generate_django_skeleton(aal_file, spec_file, output_folder):
+    project_name = "test1"
+    project_path = "examples/"
+    app_name = "app1"
+
+    # Start project
+    p = Popen(['django-admin', 'startproject', project_name], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    res = p.stdout.read().decode("utf-8")
+    if res != "": return res
+
+    # Create app
+    p = Popen(['python3', project_name+'/manage.py', 'startapp', app_name], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    res = p.stdout.read().decode("utf-8")
+    print(res)
+    if res != "": return res
+
+    # Configure fodtlmon
+    wsgi = project_name + "/" + project_name + "/wsgi.py"
+    if not os.path.isfile(wsgi):
+        return "wsgi file doesn't exists !"
+    with open(wsgi, "a+") as f:
+        f.write("from fodtlmon_middleware.sysmon import Sysmon\nSysmon.init()\nimport %s.%s\n" % (project_name, spec_file))
+
+    settings = project_name + "/" + project_name + "/settings.py"
+    if not os.path.isfile(settings):
+        return "settings file doesn't exists !"
+    res = ""
+    f = open(settings, "r")
+    res = f.read()
+    res = res.replace("'django.contrib.staticfiles',",
+                      "'django.contrib.staticfiles',\n    'fodtlmon_middleware',\n    '%s'" % app_name)
+    res = res.replace("'django.middleware.security.SecurityMiddleware',",
+                      "'django.middleware.security.SecurityMiddleware',\n    'fodtlmon_middleware.middleware.FodtlmonMiddleware'")
+    f.close()
+    f = open(settings, "w")
+    f.flush()
+    f.write(res)
+    f.close()
+
+    # Move to the path
+    shutil.move(app_name, project_name+"/")
+    shutil.move(project_name, project_path)
+    return "Django !"

@@ -1,0 +1,18 @@
+{
+    "name": "Django",
+	"desc": "Create a django application skeleton.",
+	"vars": [
+      {"name": "", "id": "projectName", "type": "text", "pre": "Project name ", "post": ""},
+      {"name": "", "id": "appName", "type": "text", "pre": "App name ", "post": ""},
+
+      {"name": "", "id": "aalFile", "type": "select", "pre": " AAL file ", "post": " ", "src": "[]"},
+      {"name": "", "id": "specFile", "type": "select", "pre": " Spec file ", "post": " ", "src": "[]"},
+
+      {"name": "Generate", "id": "djGenBtn", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.fileManager.django('aal_file', 'spec_file', 'output_file')"}
+    ],
+	"aal": [""],
+	"html": [
+      "<div class='varGroupe'> {appName} {projectName} {aalFile} {specFile} </div> {djGenBtn}"
+    ],
+	"xacml": ""
+}

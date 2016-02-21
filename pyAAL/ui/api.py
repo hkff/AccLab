@@ -317,8 +317,14 @@ def api_gen_Djfodtlmon(file, spec):
 
         mm = aalc(base_dir + "/" + file, libs_path="libs/aal/", root_path="", no_exec=True, web=True)["mm"]
         res = AALtoDJFODTLMON(mm, mspec)
-        api_write_file(file.replace('.aal', '.py'), res)
-        return file.replace('.aal', '.py')
+        file_name = file.replace('.aal', '_rules.py')
+        api_write_file(file_name, res)
+        return file_name
     except:
         # Compilation Error
         return 'Error'
+
+
+# Generate django app skeleton
+def api_generate_django(aal_file, spec_file, output_folder):
+    return generate_django_skeleton(aal_file, spec_file, output_folder)

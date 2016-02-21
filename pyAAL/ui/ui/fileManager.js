@@ -555,6 +555,37 @@ visualEditor.ui.fileManager = {
             document.getElementById(inputToLoadId).value = textFromFileLoaded;
         };
         fileReader.readAsText(fileToLoad, "UTF-8");
-    }
+    },
 
+    /**
+     * Generate django app template
+     * @param aal_file
+     * @param spec_file
+     * @param output_file
+     */
+	django: function(aal_file, spec_file, output_folder) {
+        $.ajax({
+			dataType: "text",
+			type:'POST',
+			url: visualEditor.backend,
+			data: {action: "django", aal_file: aal_file, spec_file: spec_file, output_folder: output_folder},
+			success: function(response){
+                console.log(response)
+            }
+		});
+
+		// Update explorer
+		$("#explorer").tree("reload");
+	},
+
+    filterTree: function(filterType) {
+        var roots = $("#explorer").tree("getRoots");
+        roots.forEach(function(e, i) {
+            if(e.text.endsWith(".aal")) {
+                console.log(e.text)
+            }
+            //var children = $("#explorer").tree("getChildren", e);
+
+        });
+    }
 };

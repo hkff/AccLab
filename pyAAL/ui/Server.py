@@ -124,6 +124,10 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         elif val == "genDjfodtlmon":
             res = api_gen_Djfodtlmon(self.get_arg(args, "file", method), self.get_arg(args, "spec", method))
 
+        elif val == "django":
+            res = api_generate_django(self.get_arg(args, "aal_file", method), self.get_arg(args, "spec_file", method),
+                                    self.get_arg(args, "output_folder", method))
+
         elif val == "cancelCurrentPS":
             res = "No aalc/tspassc process is running"
             ps = get_current_ps_id()
