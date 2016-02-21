@@ -105,18 +105,18 @@ Sysmon.add_log_attribute(utype_log_attr, target=Monitor.MonType.HTTP)
         formula = ""
         clause = mm.clause(rule.name)
         if clause is not None:
-            formula = clause.to_ltl()
+            formula = clause.to_ltl()[:-1]
 
         description = "Rule for clause %s" % rule.name
 
         if rule.target == "HTTP":
-            http_rules.append('Sysmon.add_http_rule("%s", "%s", description="%s", control_type=%s)'
+            http_rules.append('Sysmon.add_http_rule("%s", "%s", \n\tdescription="%s", control_type=%s)'
                                   % (rule.name, formula, description, control_type))
         elif rule.target == "VIEW":
-            view_rules.append('Sysmon.add_view_rule("%s", "%s", description="%s", control_type=%s)'
+            view_rules.append('Sysmon.add_view_rule("%s", "%s", \n\tdescription="%s", control_type=%s)'
                                   % (rule.name, formula, description, control_type))
         elif rule.target == "RESPONSE":
-            response_rules.append('Sysmon.add_response_rule("%s", "%s", description="%s", control_type=%s)'
+            response_rules.append('Sysmon.add_response_rule("%s", "%s", \n\tdescription="%s", control_type=%s)'
                                   % (rule.name, formula, description, control_type))
 
     ###################################

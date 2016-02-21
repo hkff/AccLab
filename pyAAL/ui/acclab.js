@@ -450,7 +450,6 @@ var visualEditor = {
  * @returns {XML|string|*|void}
  */
 function replaceAll(find, replace, str) {
-    console.log(str)
   return str.replace(new RegExp(find, 'g'), replace);
 }
 
