@@ -158,29 +158,43 @@ from django.contrib.auth.models import User
     return res
 
 
+# Generate django skeleton app
 def generate_django_skeleton(aal_file, spec_file, output_folder):
+    """
+    NOTE : consider using AST modifications for source code
+    :param aal_file:
+    :param spec_file:
+    :param output_folder:
+    :return:
+    """
     project_name = "test1"
     project_path = "examples/"
     app_name = "app1"
+    spec_file = "tuto2_rules.py"
+    # 1. Remove previous project
+    if os.path.isdir("examples/%s" % project_name):
+        shutil.rmtree("examples/%s" % project_name)
 
-    # Start project
+    # 2. Start project
     p = Popen(['django-admin', 'startproject', project_name], stdout=PIPE, stderr=PIPE, stdin=PIPE)
     res = p.stdout.read().decode("utf-8")
     if res != "": return res
 
-    # Create app
+    # 3. Create app
     p = Popen(['python3', project_name+'/manage.py', 'startapp', app_name], stdout=PIPE, stderr=PIPE, stdin=PIPE)
     res = p.stdout.read().decode("utf-8")
     print(res)
     if res != "": return res
 
-    # Configure fodtlmon
+    # 4. Configure fodtlmon
+    # 4.1 wsgi
     wsgi = project_name + "/" + project_name + "/wsgi.py"
     if not os.path.isfile(wsgi):
         return "wsgi file doesn't exists !"
     with open(wsgi, "a+") as f:
         f.write("from fodtlmon_middleware.sysmon import Sysmon\nSysmon.init()\nimport %s.%s\n" % (project_name, spec_file))
 
+    # 4.2 settings
     settings = project_name + "/" + project_name + "/settings.py"
     if not os.path.isfile(settings):
         return "settings file doesn't exists !"
@@ -197,7 +211,25 @@ def generate_django_skeleton(aal_file, spec_file, output_folder):
     f.write(res)
     f.close()
 
+    # 4.3 urls
+    urls = project_name + "/" + project_name + "/urls.py"
+    if not os.path.isfile(urls):
+        return "urls file doesn't exists !"
+    res = ""
+    f = open(urls, "r")
+    res = f.read()
+    res = res.replace("from django.contrib import admin",
+                      "from django.contrib import admin\nfrom fodtlmon_middleware import urls as fodtlurls")
+    res = res.replace("url(r'^admin/', include(admin.site.urls)),",
+                      "url(r'^admin/', include(admin.site.urls)),\n    url(r'^mon/', include(fodtlurls.urlpatterns)),")
+    f.close()
+    f = open(urls, "w")
+    f.flush()
+    f.write(res)
+    f.close()
+
     # Move to the path
+    os.symlink(spec_file, project_name+"/"+project_name+"/"+spec_file.split("/")[-1])
     shutil.move(app_name, project_name+"/")
     shutil.move(project_name, project_path)
     return "Django !"

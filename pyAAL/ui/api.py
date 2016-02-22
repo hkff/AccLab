@@ -15,6 +15,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+from threading import Thread
+from time import sleep
+
 __author__ = 'walid'
 
 import os
@@ -325,13 +328,49 @@ def api_gen_Djfodtlmon(file, spec):
         return 'Error'
 
 
-# Generate django app skeleton
+# Generate django app skeleton
 def api_generate_django(aal_file, spec_file, output_folder):
     return generate_django_skeleton(aal_file, spec_file, output_folder)
 
 
-# Run django app
+# Run django app
 def api_run_django(app, port=9000):
-    p = Popen(['python3', "examples/"+app, 'runserver', str(port)], stdout=PIPE, stderr=PIPE, stdin=PIPE)
-    res = p.stdout.read().decode("utf-8")
-    return res.replace("\n", "<br>")
+    p = Popen(['python3', "examples/"+app, 'migrate'], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    # p = Popen(['python3', "examples/"+app, 'runserver', str(port)], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+
+    # IMPORTANT: Run the server using non blocking IO in order to capture errors and show them to the client
+    from queue import Queue, Empty
+    ON_POSIX = 'posix' in sys.builtin_module_names
+
+    def enqueue_output(out, err, queue):
+        for line in iter(out.readline, b''):
+            queue.put(line.decode("utf-8"))
+        out.close()
+        for line in iter(err.readline, b''):
+            queue.put(line.decode("utf-8"))
+        err.close()
+
+    p = Popen(['python3', "examples/"+app, 'runserver', str(port)], stdout=PIPE, stderr=PIPE, stdin=PIPE,
+              bufsize=1, close_fds=ON_POSIX)
+    q = Queue()
+    t = Thread(target=enqueue_output, args=(p.stdout, p.stderr, q))
+    t.daemon = True
+    t.start()
+
+    # Wait to get some data
+    sleep(5)
+
+    # Get output
+    items = []
+    max = 100
+    for numOfItemsRetrieved in range(0, max):
+        try:
+            if numOfItemsRetrieved == max:
+                break
+            items.append(q.get_nowait())
+        except Exception:
+            break
+    print("=====================================")
+    print("".join(items))
+    print("=====================================")
+    return "".join(items).replace("\n", "<br>")

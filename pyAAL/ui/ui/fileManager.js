@@ -226,6 +226,7 @@ visualEditor.ui.fileManager = {
                     url: visualEditor.backend,
                     data: {action: action, file: file},
                     success: function(response){
+						//visualEditor.log(response);
                         $("#output_window").empty().append(response);
                         toastr.info('Running...');
                     }
@@ -593,12 +594,11 @@ visualEditor.ui.fileManager = {
 			url: visualEditor.backend,
 			data: {action: "django", aal_file: aal_file, spec_file: spec_file, output_folder: output_folder},
 			success: function(response){
-                console.log(response)
+				// Update explorer
+				$("#explorer").tree("reload");
+				visualEditor.log(response)
             }
 		});
-
-		// Update explorer
-		$("#explorer").tree("reload");
 	},
 
     filterTree: function(filterType) {
