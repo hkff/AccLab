@@ -121,8 +121,8 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         elif val == "killPs":
             res = api_kill_ps(self.get_arg(args, "pid", method))
 
-        elif val == "genDjfodtlmon":
-            res = api_gen_Djfodtlmon(self.get_arg(args, "file", method), self.get_arg(args, "spec", method))
+        elif val == "genAccmon":
+            res = api_gen_accmon(self.get_arg(args, "file", method), self.get_arg(args, "spec", method))
 
         elif val == "django":
             res = api_generate_django(self.get_arg(args, "aal_file", method), self.get_arg(args, "spec_file", method),

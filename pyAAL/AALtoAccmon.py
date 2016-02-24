@@ -126,7 +126,7 @@ Sysmon.add_log_attribute(utype_log_attr, target=Monitor.MonType.HTTP)
     # Result
     ###################################
     res = """%s
-from fodtlmon_middleware.sysmon import *
+from accmon.sysmon import *
 from django.contrib.auth.models import User
 
 ################################
@@ -192,7 +192,7 @@ def generate_django_skeleton(aal_file, spec_file, output_folder):
     if not os.path.isfile(wsgi):
         return "wsgi file doesn't exists !"
     with open(wsgi, "a+") as f:
-        f.write("from fodtlmon_middleware.sysmon import Sysmon\nSysmon.init()\nimport %s.%s\n" % (project_name, spec_file))
+        f.write("from accmon.sysmon import Sysmon\nSysmon.init()\nimport %s.%s\n" % (project_name, spec_file))
 
     # 4.2 settings
     settings = project_name + "/" + project_name + "/settings.py"
@@ -204,7 +204,7 @@ def generate_django_skeleton(aal_file, spec_file, output_folder):
     res = res.replace("'django.contrib.staticfiles',",
                       "'django.contrib.staticfiles',\n    'fodtlmon_middleware',\n    '%s'" % app_name)
     res = res.replace("'django.middleware.security.SecurityMiddleware',",
-                      "'django.middleware.security.SecurityMiddleware',\n    'fodtlmon_middleware.middleware.FodtlmonMiddleware'")
+                      "'django.middleware.security.SecurityMiddleware',\n    'accmon.middleware.FodtlmonMiddleware'")
     f.close()
     f = open(settings, "w")
     f.flush()
@@ -219,7 +219,7 @@ def generate_django_skeleton(aal_file, spec_file, output_folder):
     f = open(urls, "r")
     res = f.read()
     res = res.replace("from django.contrib import admin",
-                      "from django.contrib import admin\nfrom fodtlmon_middleware import urls as fodtlurls")
+                      "from django.contrib import admin\nfrom accmon import urls as fodtlurls")
     res = res.replace("url(r'^admin/', include(admin.site.urls)),",
                       "url(r'^admin/', include(admin.site.urls)),\n    url(r'^mon/', include(fodtlurls.urlpatterns)),")
     f.close()

@@ -1,6 +1,6 @@
 {
-    "name": "Sysmon",
-	"desc": "Generate Mapping file for AAL to Djfodtlmon.",
+    "name": "Accmon",
+	"desc": "Generate Mapping file for AAL to Accmon.",
 	"vars": [
       {"name": "", "id": "c1", "type": "select", "pre": " Clause ", "post": " ", "src": "{aal.clauses}"},
       {"name": "", "id": "ruleTarget", "type": "select", "pre": " Target ", "post": " ",
@@ -35,7 +35,7 @@
       {"name": "Select file", "id": "selectSpecBtn", "type": "file", "pre": " ", "post": "", "onclick": ""},
       {"name": "Load", "id": "loadSpecBtn", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.fileManager.loadFileAsList('selectSpecBtn', 'rulesList')"},
 
-      {"name": "Generate", "id": "gen", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.generateDjfodtlmon($('#rulesList').text())"}
+      {"name": "Generate", "id": "gen", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.generateAccmon($('#rulesList').text())"}
     ],
 	"aal": [
       "\nCALL to_djfodtlmon()\n"

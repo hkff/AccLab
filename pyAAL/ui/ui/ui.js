@@ -468,15 +468,15 @@ visualEditor.ui = {
     },
 
     /**
-     * Generate Djfodtlmon spec
+     * Generate Accmon spec
      */
-    generateDjfodtlmon: function(spec) {
+    generateAccmon: function(spec) {
         spec = (spec === "")?" ": spec;
         $.ajax({
             dataType: 'text',
             type:'POST',
             url: visualEditor.backend,
-            data: {action: "genDjfodtlmon", spec: spec, file: visualEditor.ui.activeTab.container.title},
+            data: {action: "genAccmon", spec: spec, file: visualEditor.ui.activeTab.container.title},
             success: function(response){
                 if(response != 'Error') {
                     $("#explorer").tree("reload");

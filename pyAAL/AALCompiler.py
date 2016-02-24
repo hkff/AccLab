@@ -32,7 +32,7 @@ from tools.color import Color, disable_all_colors, set_light_background, Windows
 import tools.hottie as hottie
 from tools.hottie import hot
 from AALChecker import *
-from AALtoDJfodtlmon import *
+from AALtoAccmon import *
 
 
 # Note : To avoid cyclic import

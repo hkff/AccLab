@@ -25,7 +25,7 @@ from urllib.parse import *
 import sys, shutil
 from io import StringIO
 from aalc import *
-from AALtoDJfodtlmon import *
+from AALtoAccmon import *
 
 base_dir = "examples"
 
@@ -296,8 +296,8 @@ def api_macro_call(f, macro_name, macro_args):
     return res.replace("\n", "<br>")
 
 
-# Gen Djfodtlmon
-def api_gen_Djfodtlmon(file, spec):
+# Gen accmon
+def api_gen_accmon(file, spec):
     try:
         mspec = MappingSpec()
         tmp = spec.split(";")
