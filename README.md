@@ -22,6 +22,9 @@ up-to-date documentation can be found at AccLab webpage.
 Installation
 ------------
 
+WARNING : AccLab is designed to run on local machines, DO NOT use it as a web service since
+the AAL macros are written in python, which allows arbitrary code execution.
+
 You need PythonX.X.X >= Python3.4.0 installed on your system
 To run the main program : python aalc.py
 
