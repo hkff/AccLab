@@ -19,6 +19,7 @@ from datetime import datetime
 from subprocess import Popen, PIPE
 import os.path
 import shutil
+from AALMetaModel import *
 
 __author__ = 'walid'
 
@@ -108,7 +109,7 @@ Sysmon.add_log_attribute(utype_log_attr, target=Monitor.MonType.HTTP)
         formula = ""
         clause = mm.clause(rule.name)
         if clause is not None:
-            formula = clause.to_ltl()[:-1]
+            formula = aal_clause_to_fodtl(clause)
 
         description = "Rule for clause %s" % rule.name
 
@@ -233,3 +234,28 @@ def generate_django_skeleton(aal_file, spec_file, output_folder):
     shutil.move(app_name, project_name+"/")
     shutil.move(project_name, project_path)
     return "Django !"
+
+
+def aal_clause_to_fodtl(clause: m_clause):
+    """
+    Transform an AAL clause into fodtl formula
+    :param clause:
+    :return:
+    """
+    # TODO handle rectification
+    def transform(exp: aalmmnode):
+        if isinstance(exp, m_clause):
+            return transform(exp.usage)
+        if isinstance(exp, m_usage):
+            return transform(exp.actionExp[0])
+
+        if isinstance(exp, m_aexpQvar):
+            q = [str(x) for x in exp.qvars]
+            return "(" + str(" ".join(q)) + "(" + transform(exp.actionExp) + ") " + (")"*len(q)) + ")"
+
+        if isinstance(exp, str):
+            return exp
+        else:
+            return "<Unsupported type %s>" % exp.__class__.__name__
+
+    return transform(clause)
