@@ -161,7 +161,8 @@ h_parameters : h_constant | h_variable;
 h_constant   : INT |  STRING;
 h_type       : ID;
 h_variable   : ID (h_colon h_type)?;
-h_predicate  : '@' ID h_lpar ID* h_rpar;
+h_predicate  : '@' ID h_lpar (h_pArgs)* h_rpar;
+h_pArgs      : ID | STRING;
 
 //-------------------------------------------------------//
 //----------------- Lexer rules ------------------------//
@@ -226,7 +227,8 @@ actionExp  : actionExp1Action
            | actionExp6Author
            | actionExp7ifthen
            | actionExp8qvar
-           | h_lpar actionExp h_rpar;
+           | h_lpar actionExp h_rpar
+           | h_predicate;
 
 actionExp1Action      : action;
 actionExp2notAction   : O_not actionExp;
@@ -276,7 +278,7 @@ exec   : M_exec MCODE;
 loadlib : M_load STRING;
 
 
-//****  Behavior ****//
+//****  Behavior extension ****//
 behavior :  M_behavior ID h_lpar actionExp h_rpar;
 
 

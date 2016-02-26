@@ -278,6 +278,15 @@ class AALListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by AALParser#h_pArgs.
+    def enterH_pArgs(self, ctx:AALParser.H_pArgsContext):
+        pass
+
+    # Exit a parse tree produced by AALParser#h_pArgs.
+    def exitH_pArgs(self, ctx:AALParser.H_pArgsContext):
+        pass
+
+
     # Enter a parse tree produced by AALParser#main.
     def enterMain(self, ctx:AALParser.MainContext):
         pass

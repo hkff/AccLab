@@ -756,7 +756,7 @@ class m_type(m_declarable):
         return str(supertype) in self.lin()
 
 
-# Macro
+# Macro
 class m_macro(aalmmnode):
     """
     Macro class
