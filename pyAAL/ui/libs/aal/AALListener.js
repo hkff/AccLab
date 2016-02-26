@@ -281,6 +281,15 @@ AALListener.prototype.exitH_predicate = function(ctx) {
 };
 
 
+// Enter a parse tree produced by AALParser#h_pArgs.
+AALListener.prototype.enterH_pArgs = function(ctx) {
+};
+
+// Exit a parse tree produced by AALParser#h_pArgs.
+AALListener.prototype.exitH_pArgs = function(ctx) {
+};
+
+
 // Enter a parse tree produced by AALParser#main.
 AALListener.prototype.enterMain = function(ctx) {
 };
