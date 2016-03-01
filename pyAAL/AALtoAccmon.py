@@ -246,14 +246,50 @@ def aal_clause_to_fodtl(clause: m_clause):
     def transform(exp: aalmmnode):
         if isinstance(exp, m_clause):
             return transform(exp.usage)
-        if isinstance(exp, m_usage):
+        elif isinstance(exp, m_usage):
             return transform(exp.actionExp[0])
 
-        if isinstance(exp, m_aexpQvar):
-            q = [str(x) for x in exp.qvars]
-            return "(" + str(" ".join(q)) + "(" + transform(exp.actionExp) + ") " + (")"*len(q)) + ")"
+        elif isinstance(exp, m_aexpQvar):
+            qs = ""
+            for x in exp.qvars:
+                qs += transform(x) + "("
+            return "%s %s %s" % (qs, transform(exp.actionExp), (")"*(len(exp.qvars))))
 
-        if isinstance(exp, str):
+        elif isinstance(exp, m_qvar):
+            return "%s[%s]" % (exp.quant.to_ltl(), transform(exp.variable))
+
+        elif isinstance(exp, m_ref):
+            return exp.target
+
+        elif isinstance(exp, m_aexpComb):
+            return "(%s %s %s)" % (transform(exp.actionExp1), transform(exp.operator), transform(exp.actionExp2))
+
+        elif isinstance(exp, m_aexpIfthen):
+            return "((%s) => (%s))" % (transform(exp.condition), transform(exp.branchTrue))
+
+        elif isinstance(exp, m_booleanOp):
+            if exp == m_booleanOp.O_and: return "&"
+            elif exp == m_booleanOp.O_or: return "|"
+            elif exp == m_booleanOp.O_not: return "~"
+            elif exp == m_booleanOp.O_true: return "true"
+            elif exp == m_booleanOp.O_false: return "false"
+            else: return "<Unsupported boolean op %s>" % exp
+
+        elif isinstance(exp, m_aexpCondition):
+            return transform(exp.condition)
+
+        elif isinstance(exp, m_conditionCmp):
+            return "(%s %s %s)" % (transform(exp.exp1), transform(exp.operator), transform(exp.exp2))
+
+        elif isinstance(exp, m_conditionNotComb):
+            return "(%s)" % (transform(exp.exp)) if exp.operator is None else "~(%s)" % (transform(exp.exp))
+
+        elif isinstance(exp, m_predicate):
+            print(exp)
+            q = [str(x).replace('"', '\\"') for x in exp.args]
+            return "%s(%s)" % (exp.name, " ".join(q))
+
+        elif isinstance(exp, str):
             return exp
         else:
             return "<Unsupported type %s>" % exp.__class__.__name__

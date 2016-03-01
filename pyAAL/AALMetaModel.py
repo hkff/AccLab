@@ -1272,7 +1272,7 @@ class m_predicate(m_exp):
         self.args = []
 
     def __str__(self):
-        q = [str(x) for x in self.args][1:]
+        q = [str(x) for x in self.args]
         return "@" + str(self.name) + "(" + str(" ".join(q)) + ")"
 
     def to_ltl(self):

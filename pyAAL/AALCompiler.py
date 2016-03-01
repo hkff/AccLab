@@ -982,7 +982,10 @@ class AALCompilerListener(AALListener.AALListener):
             if ctx.h_predicate().ID() is not None:
                 cts.name = ctx.h_predicate().ID()
                 for x in ctx.h_predicate().h_pArgs():
-                    cts.args.append(x)
+                    if x.STRING() is not None:
+                        cts.args.append(x.STRING())
+                    elif x.ID() is not None:
+                        cts.args.append(x.ID())
             self.expStack[-1] = cts
 
         elif (ctx.ID() is not None) and (ctx.h_attribute() is not None):  # Test attribute var
