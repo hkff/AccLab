@@ -203,7 +203,7 @@ def generate_django_skeleton(aal_file, spec_file, output_folder):
     f = open(settings, "r")
     res = f.read()
     res = res.replace("'django.contrib.staticfiles',",
-                      "'django.contrib.staticfiles',\n    'fodtlmon_middleware',\n    '%s'" % app_name)
+                      "'django.contrib.staticfiles',\n    'accmon',\n    '%s'" % app_name)
     res = res.replace("'django.middleware.security.SecurityMiddleware',",
                       "'django.middleware.security.SecurityMiddleware',\n    'accmon.middleware.FodtlmonMiddleware'")
     f.close()
@@ -233,6 +233,12 @@ def generate_django_skeleton(aal_file, spec_file, output_folder):
     os.symlink(spec_file, project_name+"/"+project_name+"/"+spec_file.split("/")[-1])
     shutil.move(app_name, project_name+"/")
     shutil.move(project_name, project_path)
+
+    # Create admin user
+    USERNAME = "admin"
+    p = Popen(['django-admin', 'createsuperuser', '--username', USERNAME], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    res = p.stdout.read().decode("utf-8")
+    if res != "": return res
     return "Django !"
 
 
@@ -284,8 +290,10 @@ def aal_clause_to_fodtl(clause: m_clause):
         elif isinstance(exp, m_conditionNotComb):
             return "(%s)" % (transform(exp.exp)) if exp.operator is None else "~(%s)" % (transform(exp.exp))
 
+        elif isinstance(exp, m_conditionComb):
+             return "(%s %s %s)" % (transform(exp.cond1), transform(exp.operator), transform(exp.cond2))
+
         elif isinstance(exp, m_predicate):
-            print(exp)
             q = [str(x).replace('"', '\\"') for x in exp.args]
             return "%s(%s)" % (exp.name, " ".join(q))
 
