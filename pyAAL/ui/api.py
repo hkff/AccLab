@@ -29,7 +29,7 @@ from AALtoAccmon import *
 
 base_dir = "examples"
 
-ALLOWED_CMD = ["tspass", "aalc.py", "fotl-translate"]
+ALLOWED_CMD = ["tspass", "aalc.py", "fotl-translate", "manage.py"]
 
 
 # Filter ps

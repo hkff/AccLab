@@ -178,22 +178,30 @@ def generate_django_skeleton(aal_file, spec_file, output_folder):
 
     # 2. Start project
     p = Popen(['django-admin', 'startproject', project_name], stdout=PIPE, stderr=PIPE, stdin=PIPE)
-    res = p.stdout.read().decode("utf-8")
+    # res = p.stdout.read().decode("utf-8")
+    res = p.stderr.read().decode("utf-8")
     if res != "": return res
 
     # 3. Create app
     p = Popen(['python3', project_name+'/manage.py', 'startapp', app_name], stdout=PIPE, stderr=PIPE, stdin=PIPE)
-    res = p.stdout.read().decode("utf-8")
-    print(res)
-    if res != "": return res
+    res = p.stderr.read().decode("utf-8")
+    if res != "":
+        # Rollaback
+        if os.path.isdir(project_name): shutil.rmtree(project_name)
+        if os.path.isdir(app_name): shutil.rmtree(app_name)
+        return res
 
     # 4. Configure fodtlmon
     # 4.1 wsgi
     wsgi = project_name + "/" + project_name + "/wsgi.py"
+    admin = "from django.contrib.auth.models import User\n# Create a superuser (for test only)\n" \
+            "if len(User.objects.filter(username='root')) == 0:\n"\
+            "\tUser.objects.create_superuser(username='root', password='root', email='')"
     if not os.path.isfile(wsgi):
         return "wsgi file doesn't exists !"
     with open(wsgi, "a+") as f:
-        f.write("from accmon.sysmon import Sysmon\nSysmon.init()\nimport %s.%s\n" % (project_name, spec_file))
+        f.write("\nfrom accmon.sysmon import Sysmon\nSysmon.init()\nimport %s.%s\n\n%s\n"
+                % (project_name, spec_file.replace(".py", ""), admin))
 
     # 4.2 settings
     settings = project_name + "/" + project_name + "/settings.py"
@@ -229,16 +237,32 @@ def generate_django_skeleton(aal_file, spec_file, output_folder):
     f.write(res)
     f.close()
 
-    # Move to the path
-    os.symlink(spec_file, project_name+"/"+project_name+"/"+spec_file.split("/")[-1])
+    # Move app to the project path
     shutil.move(app_name, project_name+"/")
+
+    # Migration
+    p = Popen(['python3', project_name+'/manage.py', 'makemigrations'], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    res = p.stderr.read().decode("utf-8")
+    if res != "":
+        # Rollaback
+        if os.path.isdir(project_name): shutil.rmtree(project_name)
+        if os.path.isdir(app_name): shutil.rmtree(app_name)
+        return res
+
+    p = Popen(['python3', project_name+'/manage.py', 'migrate'], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    res = p.stderr.read().decode("utf-8")
+    if res != "":
+        # Rollaback
+        if os.path.isdir(project_name): shutil.rmtree(project_name)
+        if os.path.isdir(app_name): shutil.rmtree(app_name)
+        return res
+
+    # Copy the spec file
+    shutil.copy(project_path + spec_file, project_name+"/"+project_name+"/"+spec_file.split("/")[-1])
+
+    # Move project
     shutil.move(project_name, project_path)
 
-    # Create admin user
-    USERNAME = "admin"
-    p = Popen(['django-admin', 'createsuperuser', '--username', USERNAME], stdout=PIPE, stderr=PIPE, stdin=PIPE)
-    res = p.stdout.read().decode("utf-8")
-    if res != "": return res
     return "Django !"
 
 
