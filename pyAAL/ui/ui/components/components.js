@@ -58,5 +58,27 @@ visualEditor.ui.components = {
 		//this.components.push(new data());
 		//this.components.push(new policy());
 		this.components.push(new Actor());
-	}
+
+		this.components.push(new this.Separator());
+		this.components.push(new Fodtl_always());
+		this.components.push(new Fodtl_future());
+		this.components.push(new Fodtl_next());
+		this.components.push(new Fodtl_until());
+		this.components.push(new Fodtl_release());
+		this.components.push(new this.Separator());
+
+	},
+
+	/**
+	 * Separator component
+	 */
+	Separator: Class.extend({
+		init: function() {
+			this.parent = visualEditor.ui.components;
+		},
+
+		view: function () {
+			this.parent.componentsPanel.append("<br><hr>");
+		}
+	})
 };

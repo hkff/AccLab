@@ -405,7 +405,7 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
 					visualEditor.markPanelClear();
 					break;
 
-				case "acd":
+				case "acd": case "vfodtl":
 					var writer = new draw2d.io.json.Writer();
 					writer.marshal(visualEditor.ui.canvas, function (json) {
 						// convert the json object into string representation
@@ -427,7 +427,7 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
                     visualEditor.markPanelClear();
 					break;
 			}
-		}
+		};
 		this.button.click(fx);
 		if(disableShortcut != null) return;
 		shortcut.add("Ctrl+S", fx);

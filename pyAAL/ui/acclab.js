@@ -141,7 +141,7 @@ var visualEditor = {
                 visualEditor.getUserName();
                 visualEditor.aceTheme = visualEditor.userPrefs["theme"];
                 // DEBUG :make TOREMOVE
-                visualEditor.ui.fileManager.openFile("tuto2.aal");
+                visualEditor.ui.fileManager.openFile("atest.vfodtl");
             }
         });
     },
@@ -472,7 +472,8 @@ window.onload = function() {
             visualEditor.activeEditor.session.getUndoManager().isClean())
             visualEditor.closeFile();
         else {
-            if(visualEditor.ui.getOpenedFile().endsWith(".acd")) {
+            var of = visualEditor.ui.getOpenedFile();
+            if(of.endsWith(".acd") || of.endsWith(".vfodtl")) {
                 visualEditor.closeFile();
                 return;
             }

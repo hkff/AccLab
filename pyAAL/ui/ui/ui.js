@@ -130,7 +130,7 @@ visualEditor.ui = {
 		var fileType = file.split('.').pop().toLowerCase();
 		var tt = visualEditor.ui.tools.tools;
 		// If it is not a diagram, disable gui elements
-		if(fileType != "acd") {
+		if(fileType != "acd" && fileType != "vfodtl") {
             $("#preview").hide();
 			//this.disableNode(this.propertiesPanel);
 			//this.disableNode(this.actionsPanel);

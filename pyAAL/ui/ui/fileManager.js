@@ -255,7 +255,7 @@ visualEditor.ui.fileManager = {
 	openFile: function(file) {
 		var fileType = file.split('.').pop().toLowerCase();
 		var dType = "text";
-		if(fileType == "acd")
+		if(fileType === "acd" || fileType === "vfodtl" )
 			dType = "json";
 
 		if(this.isOpened(file) != -1)
@@ -281,6 +281,19 @@ visualEditor.ui.fileManager = {
 				switch(fileType) {
 					case "acd":
 						// Load ACD diagram
+						editor4.canvas = new visualEditor.ui.gridEditor(id, "toolbox_window", "componentbox_window", "properties_window");
+						visualEditor.ui.canvas = editor4.canvas;
+						var reader = new draw2d.io.json.Reader();
+						visualEditor.ui.canvas.clear();
+			 			reader.unmarshal(visualEditor.ui.canvas, response);
+						visualEditor.ui.outline.canvasToTree();
+
+                        // Switch to acd mode
+                        visualEditor.acdMode();
+			 			break;
+
+					case "vfodtl":
+						// Load Fodtl diagram
 						editor4.canvas = new visualEditor.ui.gridEditor(id, "toolbox_window", "componentbox_window", "properties_window");
 						visualEditor.ui.canvas = editor4.canvas;
 						var reader = new draw2d.io.json.Reader();
@@ -357,7 +370,7 @@ visualEditor.ui.fileManager = {
 		var fileType = file.split('.').pop().toLowerCase();
 		var dType = "text";
 		var data = " ";
-		if(fileType == "acd"){
+		if(fileType === "acd" || fileType === "vfodtl"){
 			dType = "json";
 			data = "[]";
 		}
@@ -496,7 +509,7 @@ visualEditor.ui.fileManager = {
 		var fileType = file.split('.').pop().toLowerCase();
 		var dType = "";
 		switch(fileType) {
-			case "acd": 
+            case "acd": case "vfodtl":
 				dType = "json";
 				var writer = new draw2d.io.json.Writer();
 					writer.marshal(visualEditor.ui.canvas, function(json){
