@@ -253,6 +253,19 @@ var visualEditor = {
     },
 
     /**
+     * vFodtl view mode
+     */
+    vfodtlMode: function() {
+        visualEditor.clearPanels();
+
+        var prop = 100 / $(document).width();
+        window.componentsNode = dockManager.dockLeft(window.documentNode, window.components, prop);
+        window.toolboxNode = dockManager.dockRight(window.documentNode, window.toolbox, prop);
+        prop = 200 / $(document).height();
+        window.outputNode = dockManager.dockDown(documentNode, output, prop);
+    },
+
+    /**
      * Default mode
      */
     defaultMode: function() {

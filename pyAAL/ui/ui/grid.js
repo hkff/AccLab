@@ -49,7 +49,7 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
         this.mode = mode;
 
 		// init graph
-        this.makeWheelContextMenu("acdPops");
+        //this.makeWheelContextMenu("acdPops");
 
 		this._super(grid, 2000, 2000);
 		this.setScrollArea("#"+grid);
@@ -106,19 +106,20 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
                         visualEditor.ui.propertiesPanel[0].addEventListener("click", visualEditor.ui.stoper, true);
                     }
                 });
-
-                // add an event listener to the Canvas for change notifications.
-                var _this = this;
-                this.getCommandStack().addEventListener(function (e) {
-                    if (e.isPostChangeEvent())
-                        _this.updatePreview();
-                });
                 break;
 
             // ------------------ VFODTL mode ------------------- //
             case "vfodtl":
+                this.installEditPolicy(new draw2d.policy.canvas.BoundingboxSelectionPolicy());
                 break;
         }
+
+        // add an event listener to the Canvas for change notifications.
+        var _this = this;
+        this.getCommandStack().addEventListener(function (e) {
+            if (e.isPostChangeEvent())
+                _this.updatePreview();
+        });
 	},
 
     handleEvents: function() {

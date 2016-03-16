@@ -46,7 +46,7 @@ visualEditor.ui.components = {
 
 		// Load components
 		this.components.forEach(function(e){
-			e.view();
+			e.view(e);
 		});
 	},
 
@@ -54,10 +54,30 @@ visualEditor.ui.components = {
 	 * Register components
 	 */
 	componentsRegistrator: function() {
+		// ACD
 		//this.components.push(new agent());
 		//this.components.push(new data());
 		//this.components.push(new policy());
 		this.components.push(new Actor());
+
+		// FODTL
+		this.components.push(new this.Separator());
+		this.components.push(new Fodtl_formula());
+
+		this.components.push(new this.Separator());
+		this.components.push(new Fodtl_value());
+		this.components.push(new Fodtl_true());
+		this.components.push(new Fodtl_false());
+		this.components.push(new Fodtl_constant());
+		this.components.push(new Fodtl_variable());
+		this.components.push(new Fodtl_regexp());
+		this.components.push(new Fodtl_predicate());
+
+		this.components.push(new this.Separator());
+		this.components.push(new Fodtl_and());
+		this.components.push(new Fodtl_or());
+		this.components.push(new Fodtl_not());
+		this.components.push(new Fodtl_imply());
 
 		this.components.push(new this.Separator());
 		this.components.push(new Fodtl_always());
@@ -65,8 +85,13 @@ visualEditor.ui.components = {
 		this.components.push(new Fodtl_next());
 		this.components.push(new Fodtl_until());
 		this.components.push(new Fodtl_release());
-		this.components.push(new this.Separator());
 
+		this.components.push(new this.Separator());
+		this.components.push(new Fodtl_forall());
+		this.components.push(new Fodtl_exists());
+
+		this.components.push(new this.Separator());
+		this.components.push(new Fodtl_at());
 	},
 
 	/**
