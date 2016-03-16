@@ -459,7 +459,7 @@ visualEditor.ui = {
             $(document.body).append(editor);
             var editor4 = new dockspawn.PanelContainer($("#"+id)[0], dockManager);
             var editor4Node  = dockManager.dockRight(documentNode, editor4, 0.5);
-            editor4.canvas = new visualEditor.ui.gridEditor(id, "toolbox_window", "componentbox_window", "properties_window");
+            editor4.canvas = new visualEditor.ui.gridEditor(id, "toolbox_window", "componentbox_window", "properties_window", "acd");
             visualEditor.ui.canvas = editor4.canvas;
 
             // AAL to nodes

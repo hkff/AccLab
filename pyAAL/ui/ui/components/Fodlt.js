@@ -40,6 +40,26 @@ Fodtl_rectOpUI = draw2d.shape.basic.Rectangle.extend({
     }
 });
 
+Fodtl_ovalOpUI = draw2d.shape.basic.Oval.extend({
+	NAME : "Fodtl_ovalOpUI",
+	type : "Fodtl_ovalOpUI",
+    tlabel : null,
+	outlineIcon : "outlineIcons-data fa fa-database",
+    name : "",
+    color: "#007386",
+
+    init: function(name) {
+        this._super();
+        this.setBackgroundColor(this.color);
+        this.tlabel = new draw2d.shape.basic.Label2({
+            text: name,
+            color:"#0d0d0d",
+            fontColor: "#ffffff",
+            stroke:0
+        });
+        this.add(this.tlabel, new draw2d.layout.locator.CenterLocator(this));
+    }
+});
 
 /***************************************
  * Unary operators model

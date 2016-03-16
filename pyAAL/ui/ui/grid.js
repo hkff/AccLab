@@ -29,6 +29,7 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 	_this           : this,
 	labelColor      : null,
 	editPolicies    : [],
+    mode            : "acd",
 
 	/**
 	 * init function
@@ -36,14 +37,16 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 	 * @param actionsPanel
 	 * @param componentsPanel
 	 * @param propertiesPanel
+     * @param mode
 	 */
-	init: function(grid, actionsPanel, componentsPanel, propertiesPanel) {
+	init: function(grid, actionsPanel, componentsPanel, propertiesPanel, mode) {
 
 		// Get view elements
 		this.grid            = $('#'+ grid);
 		this.actionsPanel    = $('#'+ actionsPanel);
 		this.componentsPanel = $('#'+ componentsPanel);
 		this.propertiesPanel = $('#'+ propertiesPanel);
+        this.mode = mode;
 
 		// init graph
         this.makeWheelContextMenu("acdPops");
@@ -53,60 +56,69 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 
 		this.handleEvents();
 
-		this.installEditPolicy(new CopyInterceptorPolicy());
-		this.installEditPolicy(new draw2d.policy.canvas.CoronaDecorationPolicy());
-		this.installEditPolicy(new draw2d.policy.canvas.SnapToGeometryEditPolicy());
-		this.installEditPolicy(new draw2d.policy.canvas.ShowDotEditPolicy()); // SnapToGridEditPolicy
+        switch (mode) {
+            // ------------------ ACD mode ------------------- //
+            case "acd":
+                this.installEditPolicy(new CopyInterceptorPolicy());
+                this.installEditPolicy(new draw2d.policy.canvas.CoronaDecorationPolicy());
+                this.installEditPolicy(new draw2d.policy.canvas.SnapToGeometryEditPolicy());
+                this.installEditPolicy(new draw2d.policy.canvas.ShowDotEditPolicy()); // SnapToGridEditPolicy
 
 
-		draw2d.Connection.createConnection=function(sourcePort, targetPort){
-            var c = new MyConnection({
-                //targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
-                //sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
-                sourceDecorator: new draw2d.decoration.connection.BarDecorator(),
-		        targetDecorator: new draw2d.decoration.connection.DiamondDecorator()
-		    });
-		    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
-		    //c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
-		    return c;
-        };
+                draw2d.Connection.createConnection = function (sourcePort, targetPort) {
+                    var c = new MyConnection({
+                        //targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
+                        //sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
+                        sourceDecorator: new draw2d.decoration.connection.BarDecorator(),
+                        targetDecorator: new draw2d.decoration.connection.DiamondDecorator()
+                    });
+                    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
+                    //c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
+                    return c;
+                };
 
-        // Connection override
-        draw2d.Configuration.factory.createConnection=function(sourcePort, targetPort){
-             var c = new MyConnection({
-                //targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
-                //sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
-                sourceDecorator: new draw2d.decoration.connection.BarDecorator(),
-		        targetDecorator: new draw2d.decoration.connection.DiamondDecorator()
-		    });
-		    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
-		    //c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
-		    return c;
-        };
+                // Connection override
+                draw2d.Configuration.factory.createConnection = function (sourcePort, targetPort) {
+                    var c = new MyConnection({
+                        //targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
+                        //sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
+                        sourceDecorator: new draw2d.decoration.connection.BarDecorator(),
+                        targetDecorator: new draw2d.decoration.connection.DiamondDecorator()
+                    });
+                    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
+                    //c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
+                    return c;
+                };
 
-		this.on("select", function(emitter,figure){
-	    	if(figure!==null) {
-                // Update panel prop
-	        	visualEditor.ui.selectedNode = figure;
-	        	$(visualEditor.ui).trigger('nodeSelected');
+                this.on("select", function (emitter, figure) {
+                    if (figure !== null) {
+                        // Update panel prop
+                        visualEditor.ui.selectedNode = figure;
+                        $(visualEditor.ui).trigger('nodeSelected');
 
-                $(visualEditor.ui.propertiesPanel.children()).css("opacity", 1);
-                visualEditor.ui.propertiesPanel[0].removeEventListener("click", visualEditor.ui.stoper, true);
-            }
-	     	else{
-                // Hide panel prop
-                visualEditor.ui.selectedNode = null;
-				$(visualEditor.ui.propertiesPanel.children()).css("opacity", 0.15);
-                visualEditor.ui.propertiesPanel[0].addEventListener("click", visualEditor.ui.stoper, true);
-     		}
-     	});
+                        $(visualEditor.ui.propertiesPanel.children()).css("opacity", 1);
+                        visualEditor.ui.propertiesPanel[0].removeEventListener("click", visualEditor.ui.stoper, true);
+                    }
+                    else {
+                        // Hide panel prop
+                        visualEditor.ui.selectedNode = null;
+                        $(visualEditor.ui.propertiesPanel.children()).css("opacity", 0.15);
+                        visualEditor.ui.propertiesPanel[0].addEventListener("click", visualEditor.ui.stoper, true);
+                    }
+                });
 
-        // add an event listener to the Canvas for change notifications.
-        var _this = this;
-        this.getCommandStack().addEventListener(function(e){
-            if(e.isPostChangeEvent())
-                _this.updatePreview();
-        });
+                // add an event listener to the Canvas for change notifications.
+                var _this = this;
+                this.getCommandStack().addEventListener(function (e) {
+                    if (e.isPostChangeEvent())
+                        _this.updatePreview();
+                });
+                break;
+
+            // ------------------ VFODTL mode ------------------- //
+            case "vfodtl":
+                break;
+        }
 	},
 
     handleEvents: function() {

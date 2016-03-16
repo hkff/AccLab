@@ -281,7 +281,7 @@ visualEditor.ui.fileManager = {
 				switch(fileType) {
 					case "acd":
 						// Load ACD diagram
-						editor4.canvas = new visualEditor.ui.gridEditor(id, "toolbox_window", "componentbox_window", "properties_window");
+						editor4.canvas = new visualEditor.ui.gridEditor(id, "toolbox_window", "componentbox_window", "properties_window", "acd");
 						visualEditor.ui.canvas = editor4.canvas;
 						var reader = new draw2d.io.json.Reader();
 						visualEditor.ui.canvas.clear();
@@ -294,7 +294,7 @@ visualEditor.ui.fileManager = {
 
 					case "vfodtl":
 						// Load Fodtl diagram
-						editor4.canvas = new visualEditor.ui.gridEditor(id, "toolbox_window", "componentbox_window", "properties_window");
+						editor4.canvas = new visualEditor.ui.gridEditor(id, "toolbox_window", "componentbox_window", "properties_window", "vfodtl");
 						visualEditor.ui.canvas = editor4.canvas;
 						var reader = new draw2d.io.json.Reader();
 						visualEditor.ui.canvas.clear();
