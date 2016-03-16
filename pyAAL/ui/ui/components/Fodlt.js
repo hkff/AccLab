@@ -401,5 +401,25 @@ visualEditor.vFodtl_to_fodtl = function(diag) {
     }
 };
 
+/**
+ * Check VFodtl diagram
+ */
+visualEditor.vFodtl_check = function(diag) {
+    var figs = visualEditor.ui.canvas.getFigures();
+    for(var i=0; i<figs.getSize(); i++) {
+        var tmp = figs.get(i);
+        var inputs = tmp.getInputPorts();
+        var outputs = tmp.getOutputPorts();
 
+        for(var j=0; j<inputs.getSize(); j++) {
+            if(inputs.get(j).connections.getSize() === 0)
+                console.log("Error missing connection !")
+        }
+
+        for(var j=0; j<outputs.getSize(); j++) {
+            if(outputs.get(j).connections.getSize() === 0)
+                console.log("Error missing connection !")
+        }
+    }
+};
 
