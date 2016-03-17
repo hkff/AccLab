@@ -1,0 +1,14 @@
+{
+    "name": "AccMon monitors",
+	"desc": "Add monitor to AccMon.",
+	"vars": [
+      {"name": "", "id": "accmonUrl", "type": "text", "pre": "AccMon url ", "post": ""},
+
+      {"name": "", "id": "monName", "type": "text", "pre": "Mon name ", "post": ""},
+      {"name": "Register current vfodtl formula", "id": "registerBtn", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.registerVfodtlToAccMon($('#accmonUrl').val(), $('#monName').val())"}
+    ],
+	"aal": [""],
+	"html": [
+      "<div class='varGroupe'> {accmonUrl} </div> <div class='varGroupe'> {monName} </div> <div class='varGroupe'> {registerBtn} </div>"
+    ]
+}

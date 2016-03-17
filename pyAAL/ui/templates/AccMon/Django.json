@@ -13,6 +13,5 @@
 	"aal": [""],
 	"html": [
       "<div class='varGroupe'> {appName} {projectName} {aalFile} {specFile} </div> {djGenBtn}"
-    ],
-	"xacml": ""
+    ]
 }

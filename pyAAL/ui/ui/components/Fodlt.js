@@ -399,13 +399,17 @@ visualEditor.vFodtl_to_fodtl = function(diag) {
         }
     };
 
-    var figs = visualEditor.ui.canvas.getFigures();
+    //var figs = visualEditor.ui.canvas.getFigures();
+    var figs = diag.getFigures();
+
     for(var i=0; i<figs.getSize(); i++) {
         var tmp = figs.get(i);
         // Handle formulas only
         if(tmp._type === "fodtl_formula") {
             var res = _eval(tmp);
             //console.log(res);
+            // TODO fix it and return a list of formula
+            return res;
         }
     }
 };

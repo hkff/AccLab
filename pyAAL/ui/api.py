@@ -436,7 +436,17 @@ def api_fodtl_to_vfodtl(formula):
     except Exception as e:
         return "%s" % e
 
-        # fodtl_always: "G", fodtl_future: "F", fodtl_next: "X", fodtl_until: "U", fodtl_release: "R",
-        # fodtl_and: "&", fodtl_or: "|", fodtl_imply: "=>", fodtl_not: "~", fodtl_forall: "!",
-        # fodtl_exists: "?", fodtl_at: "@", fodtl_true: "ture", fodtl_false: "false"
 
+# Register formula in accmon
+def api_register_accmon_monitor(formula, mon_name, accmon_url):
+    import urllib.request, urllib.parse
+    res = "Error"
+    values = {'formula_id': mon_name, 'formula': formula}
+    data = urllib.parse.urlencode(values)
+    data = data.encode('ascii') # data should be bytes
+    url = accmon_url + "/sysmon/remote/register_formula/"
+    with urllib.request.urlopen(url, data) as response:
+        res = str(response.read())
+        print(res)
+
+    return res

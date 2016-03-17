@@ -48,6 +48,5 @@
       "<div class='varGroupe'> <h4 class='varsHeader'>Rules list : </h4> <select id='rulesList' multiple style='width: 80%;'></select> </div>",
       "<div class='varGroupe'> {remove_list} {clear} </div>",
       "<div class='varGroupe'>  <h4 class='varsHeader'>Generate : </h4> {selectSpecBtn} {loadSpecBtn} {saveSpecBtn} {gen} </div> "
-    ],
-	"xacml": ""
+    ]
 }

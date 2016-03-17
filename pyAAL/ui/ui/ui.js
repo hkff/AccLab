@@ -501,5 +501,21 @@ visualEditor.ui = {
                 }
             }
 	    });
+    },
+
+    /**
+     * Register the current opened vfodtl file in AccMon
+     */
+    registerVfodtlToAccMon: function(url, name) {
+        var formula = visualEditor.vFodtl_to_fodtl(visualEditor.ui.canvas);
+        $.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "registerAccMonMonitor", formula: formula, name: name, accmon_url: url},
+            success: function(response){
+                console.log(response);
+            }
+	    });
     }
 };
