@@ -263,6 +263,23 @@ visualEditor.ui = {
     },
 
     /**
+     * Convert fodtl formula to diagram
+     */
+    fodtlToDiagram: function(formula, callback) {
+        $.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "fodtlToDiagram", formula: formula},
+            success: function(response) {
+                visualEditor.fodtl_to_vfodtl(response);
+				if(callback != null || callback != undefined)
+					callback(response)
+            }
+	    });
+    },
+
+    /**
      * Highligh line
      */
     clearHighlight: function() {

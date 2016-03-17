@@ -115,8 +115,8 @@ Fodtl_OpUI = function() {
                 count = this.outputPorts.getSize();
                 // On connect
                 newPort.on("connect", function(emitterPort, connection){
-                    console.log( connection);
-                    console.log(emitterPort)
+                    //console.log( connection);
+                    //console.log(emitterPort)
                 });
 
                 break;
@@ -207,6 +207,7 @@ Fodtl_atomOp = Class.extend({
         element.createPort("input", this.leftLocator);
         if(position == undefined) position = {x:100, y:100};
         visualEditor.ui.canvas.add(element, position.x, position.y);
+        return element;
 	}
 });
 
@@ -221,6 +222,7 @@ Fodtl_atom2Op = Fodtl_atomOp.extend({
         element.createPort("output", this.leftLocator);
         if(position == undefined) position = {x:100, y:100};
         visualEditor.ui.canvas.add(element, position.x, position.y);
+        return element;
 	}
 });
 
@@ -242,6 +244,7 @@ Fodtl_unaryOp = Fodtl_atomOp.extend({
         element.createPort("output", this.leftLocator);
         if(position == undefined) position = {x:100, y:100};
         visualEditor.ui.canvas.add(element, position.x, position.y);
+        return element;
 	}
 });
 
@@ -266,6 +269,7 @@ Fodtl_binaryOp = Fodtl_unaryOp.extend({
         element.createPort("output", this.leftLocator);
         if(position == undefined) position = {x:100, y:100};
         visualEditor.ui.canvas.add(element, position.x, position.y);
+        return element;
 	}
 });
 
@@ -401,7 +405,7 @@ visualEditor.vFodtl_to_fodtl = function(diag) {
         // Handle formulas only
         if(tmp._type === "fodtl_formula") {
             var res = _eval(tmp);
-            console.log(res);
+            //console.log(res);
         }
     }
 };
@@ -432,11 +436,71 @@ visualEditor.vFodtl_check = function(diag) {
 /**
  * Convert Fodtl formula to vFodtl diagram
  */
-visualEditor.fodtl_to_vfodtl = function(diag) {
-    var dic = {
-        fodtl_always: "G", fodtl_future: "F", fodtl_next: "X", fodtl_until: "U", fodtl_release: "R",
-        fodtl_and: "&", fodtl_or: "|", fodtl_imply: "=>", fodtl_not: "~", fodtl_forall: "!",
-        fodtl_exists: "?", fodtl_at: "@", fodtl_true: "ture", fodtl_false: "false"
+visualEditor.fodtl_to_vfodtl = function(formula) {
+
+    var ast = jQuery.parseJSON(formula);
+    console.log(formula)
+    var base_position = {x: 100, y: 200};
+
+    var drawElement = function(element, position) {
+        var e = eval("new " + element + "()");
+        return e.addElement({data: e}, position);
     };
+
+    var addConnection = function(a, b) {
+        var connection = new draw2d.Connection();
+        connection.setSource(a);
+        connection.setTarget(b);
+        visualEditor.ui.canvas.add(connection);
+    };
+
+    var handleElement = function(element, hstep, vstep) {
+        var i=0;
+        if(element instanceof Array) {
+            var res = [];
+            for(i=0; i<element.length; i++) {
+                var e = handleElement(element[i], hstep + 1, vstep + i);
+                res = res.concat(e);
+            }
+            return res;
+        }
+        else if(element instanceof Object) {
+            for (var x in element) {
+                if(element.hasOwnProperty(x)){
+                    var a = drawElement(x, {x: 100 + (100* hstep), y: 200 + (100 * vstep)});
+                    var b = handleElement(element[x], hstep+1, vstep);
+
+                    // Connect
+                    if(b instanceof Array){
+                        if(eval(x + ".prototype instanceof Fodtl_binaryOp")) {
+                            addConnection(a.getOutputPort(0), b[0].getInputPort(0));
+                            addConnection(a.getOutputPort(1), b[1].getInputPort(0));
+                        } else {
+                            for(i=0; i<b.length; i++)
+                                if(b[i] !== undefined && b[i] !== null)
+                                    addConnection(a.getOutputPort(0), b[i].getInputPort(0));
+                        }
+
+                    } else {
+                        if(b !== undefined && b !== null) {
+                            if (eval(x + ".prototype instanceof Fodtl_binaryOp")) {
+                                addConnection(a.getOutputPort(0), b.getInputPort(0));
+                                addConnection(a.getOutputPort(1), b.getInputPort(0));
+                            }
+                            else
+                                addConnection(a.getOutputPort(0), b.getInputPort(0));
+                        }
+                    }
+                    return a;
+                }
+            }
+        } else {
+            console.log(element)
+        }
+    };
+
+    var entry_formula = drawElement("Fodtl_formula", base_position);
+    var formula_inner = handleElement(ast, 1, 0);
+    addConnection(entry_formula.getOutputPort(0), formula_inner.getInputPort(0));
 
 };

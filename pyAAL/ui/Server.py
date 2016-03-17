@@ -132,6 +132,9 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             save_current_ps_id(os.getpid())
             res = api_run_django(self.get_arg(args, "file", method))
 
+        elif val == "fodtlToDiagram":
+            res = api_fodtl_to_vfodtl(self.get_arg(args, "formula", method))
+
         elif val == "cancelCurrentPS":
             res = "No aalc/tspassc process is running"
             ps = get_current_ps_id()

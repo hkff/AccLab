@@ -17,6 +17,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from threading import Thread
 from time import sleep
+try:
+    from fodtlmon.fodtl.fodtlmon import *
+except:
+    pass
 
 __author__ = 'walid'
 
@@ -374,3 +378,65 @@ def api_run_django(app, port=9000):
     print("".join(items))
     print("=====================================")
     return "".join(items).replace("\n", "<br>")
+
+
+# Convert Fodtl formula to vFodtl diagram
+def api_fodtl_to_vfodtl(formula):
+    print(formula)
+    try:
+        from fodtlmon.parser.Parser import FodtlParser
+    except:
+        return "fodtlmon is not installed !"
+    try:
+        def prg(formula):
+            res = ""
+            js_class = "Fodtl_%s" % formula.__class__.__name__.lower()
+
+            if isinstance(formula, Predicate):
+                arguments = []
+                for x in formula.args:
+                    arguments.append(prg(x))
+
+                res = '{ "%s": [%s] }' % (js_class, ",".join(arguments))
+
+            elif isinstance(formula, Constant):
+                res = '{ "%s": {"Fodtl_value": "%s"} }' % (js_class, formula.name)
+
+            elif isinstance(formula, Variable):
+                res = '{ "%s": {"Fodtl_value": "%s"} }' % (js_class, formula.name)
+
+            elif isinstance(formula, At):
+                pass
+
+            elif isinstance(formula, Forall):
+                pass
+
+            elif isinstance(formula, Exists):
+                pass
+
+            elif isinstance(formula, true) or isinstance(formula, false):
+                res = '{ "%s": "" }' % js_class
+
+            elif isinstance(formula, UExp):
+                inner = prg(formula.inner)
+                res = '{"%s" : %s}' % (js_class, inner)
+
+            elif isinstance(formula, BExp):
+                exp1 = prg(formula.left)
+                exp2 = prg(formula.right)
+                res = '{ "%s" : [%s, %s] }' % (js_class, exp1, exp2)
+
+            else:
+                raise Exception("Error %s of type %s" % (formula, type(formula)))
+            return res
+
+        f = FodtlParser.parse(formula)
+        res = prg(f)
+        return res
+    except Exception as e:
+        return "%s" % e
+
+        # fodtl_always: "G", fodtl_future: "F", fodtl_next: "X", fodtl_until: "U", fodtl_release: "R",
+        # fodtl_and: "&", fodtl_or: "|", fodtl_imply: "=>", fodtl_not: "~", fodtl_forall: "!",
+        # fodtl_exists: "?", fodtl_at: "@", fodtl_true: "ture", fodtl_false: "false"
+
