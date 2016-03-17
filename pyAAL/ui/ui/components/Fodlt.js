@@ -189,22 +189,24 @@ Fodtl_atomOp = Class.extend({
 
 	view: function(_this) {
         this.cmp_data = $('<div title="'+this.name+'" class="btn-components"><p style="font-size: 15px">'+this.name+'</p></div>');
-		var args = {
-            name: this.name,
-            figure: this.figure,
-            color: _this.color,
-            size: _this.size,
-            label_editable: _this.label_editable,
-            _type: _this._type
-        };
-        this.cmp_data.click(args, this.addElement);
+        //var args = {
+        //    name: this.name,
+        //    figure: this.figure,
+        //    color: _this.color,
+        //    size: _this.size,
+        //    label_editable: _this.label_editable,
+        //    _type: _this._type
+        //};
+        //var args = _this;
+        this.cmp_data.click(_this, this.addElement);
 		this.parent.componentsPanel.append(this.cmp_data);
 	},
 
-	addElement: function(event) {
+	addElement: function(event, position) {
     	var element = new event.data.figure(event.data);
         element.createPort("input", this.leftLocator);
-        visualEditor.ui.canvas.add(element, 100, 100);
+        if(position == undefined) position = {x:100, y:100};
+        visualEditor.ui.canvas.add(element, position.x, position.y);
 	}
 });
 
@@ -214,10 +216,11 @@ Fodtl_atomOp = Class.extend({
 Fodtl_atom2Op = Fodtl_atomOp.extend({
 	NAME      : "Fodtl_atom2Op",
 
-	addElement: function(event) {
+	addElement: function(event, position) {
     	var element = new event.data.figure(event.data);
         element.createPort("output", this.leftLocator);
-        visualEditor.ui.canvas.add(element, 100, 100);
+        if(position == undefined) position = {x:100, y:100};
+        visualEditor.ui.canvas.add(element, position.x, position.y);
 	}
 });
 
@@ -233,11 +236,12 @@ Fodtl_unaryOp = Fodtl_atomOp.extend({
     //figure    : Fodtl_rectOpUI,
     //size      : {width: 80, height: 80},
 
-	addElement: function(event) {
+	addElement: function(event, position) {
     	var element = new event.data.figure(event.data);
         element.createPort("input", this.leftLocator);
         element.createPort("output", this.leftLocator);
-        visualEditor.ui.canvas.add(element, 100, 100);
+        if(position == undefined) position = {x:100, y:100};
+        visualEditor.ui.canvas.add(element, position.x, position.y);
 	}
 });
 
@@ -255,12 +259,13 @@ Fodtl_binaryOp = Fodtl_unaryOp.extend({
     //figure    : Fodtl_rectOpUI,
     //size      : {width: 80, height: 80},
 
-	addElement: function(event) {
+	addElement: function(event, position) {
     	var element = new event.data.figure(event.data);
         element.createPort("input", this.leftLocator);
         element.createPort("output", this.leftLocator);
         element.createPort("output", this.leftLocator);
-        visualEditor.ui.canvas.add(element, 100, 100);
+        if(position == undefined) position = {x:100, y:100};
+        visualEditor.ui.canvas.add(element, position.x, position.y);
 	}
 });
 
@@ -423,3 +428,15 @@ visualEditor.vFodtl_check = function(diag) {
     }
 };
 
+
+/**
+ * Convert Fodtl formula to vFodtl diagram
+ */
+visualEditor.fodtl_to_vfodtl = function(diag) {
+    var dic = {
+        fodtl_always: "G", fodtl_future: "F", fodtl_next: "X", fodtl_until: "U", fodtl_release: "R",
+        fodtl_and: "&", fodtl_or: "|", fodtl_imply: "=>", fodtl_not: "~", fodtl_forall: "!",
+        fodtl_exists: "?", fodtl_at: "@", fodtl_true: "ture", fodtl_false: "false"
+    };
+
+};
