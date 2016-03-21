@@ -23,7 +23,7 @@ from urllib.parse import urlparse
 from socketserver import ThreadingMixIn, ForkingMixIn
 import webbrowser
 import sys
-from os import *
+import os
 import threading
 from ui.api import *
 import signal

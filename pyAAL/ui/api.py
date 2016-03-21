@@ -443,7 +443,7 @@ def api_register_accmon_monitor(formula, mon_name, accmon_url):
     res = "Error"
     values = {'formula_id': mon_name, 'formula': formula}
     data = urllib.parse.urlencode(values)
-    data = data.encode('ascii') # data should be bytes
+    data = data.encode('ascii')  # data should be bytes
     url = accmon_url + "/sysmon/remote/register_formula/"
     with urllib.request.urlopen(url, data) as response:
         res = str(response.read())
