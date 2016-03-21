@@ -257,9 +257,11 @@ visualEditor.ui.fileManager = {
 		var dType = "text";
 		if(fileType === "acd" || fileType === "vfodtl" )
 			dType = "json";
-
-		if(this.isOpened(file) != -1)
+        var i = this.isOpened(file);
+		if(i != -1) {
+            window.documentNode.container.setActiveChild(documentNode.children[i].container);
 			return;
+		}
 
 		if(this.isDir(file))
 			return;
