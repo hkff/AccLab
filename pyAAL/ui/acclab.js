@@ -141,7 +141,7 @@ var visualEditor = {
                 visualEditor.getUserName();
                 visualEditor.aceTheme = visualEditor.userPrefs["theme"];
                 // DEBUG :make TOREMOVE
-                visualEditor.ui.fileManager.openFile("atest.vfodtl");
+                //visualEditor.ui.fileManager.openFile("atest.vfodtl");
             }
         });
     },
@@ -246,7 +246,7 @@ var visualEditor = {
 
         prop = 100 / $(document).width();
         window.componentsNode = dockManager.dockLeft(window.documentNode, window.components, prop);
-        window.toolboxNode = dockManager.dockDown(window.componentsNode, window.toolbox, 0.50);
+        window.toolboxNode = dockManager.dockRight(window.documentNode, window.toolbox, prop);
 
         //prop = 250 / $(document).width();
         //window.propertiesNode = dockManager.dockRight(window.documentNode, window.properties, prop);
