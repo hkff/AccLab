@@ -152,6 +152,7 @@ visualEditor.ui = {
 				$(visualEditor.ui.tools.tools[20].button).show();
 				$(visualEditor.ui.tools.tools[21].button).show();
 				$(visualEditor.ui.tools.tools[22].button).show();
+                visualEditor.ui.analyseAAL(file);
 			}
 
 		} else {
