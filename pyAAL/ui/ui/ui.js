@@ -297,6 +297,7 @@ visualEditor.ui = {
      * Highlight selected text / current line
      */
     highlight: function(theme) {
+        var Range = ace.require('ace/range').Range;
         if(visualEditor.activeEditor != null) {
             var sr = visualEditor.activeEditor.getSelectionRange();
             // Select one line
