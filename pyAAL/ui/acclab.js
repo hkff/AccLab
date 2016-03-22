@@ -142,6 +142,7 @@ var visualEditor = {
                 visualEditor.aceTheme = visualEditor.userPrefs["theme"];
                 // DEBUG :make TOREMOVE
                 //visualEditor.ui.fileManager.openFile("atest.vfodtl");
+                visualEditor.ui.fileManager.openFile("aa.acd");
             }
         });
     },
@@ -242,11 +243,14 @@ var visualEditor = {
         // Dock the panels on the dock manager
         var prop = 200 / $(document).width();
         window.solutionNode = dockManager.dockLeft(window.documentNode, window.solution, prop);
-        window.outlineNode = dockManager.dockDown(window.solutionNode, window.outline, 0.50);
+        window.outlineNode = dockManager.dockDown(window.solutionNode, window.outline, 0.30);
 
         prop = 100 / $(document).width();
         window.componentsNode = dockManager.dockLeft(window.documentNode, window.components, prop);
-        window.toolboxNode = dockManager.dockRight(window.documentNode, window.toolbox, prop);
+        window.toolboxNode = dockManager.dockRight(window.documentNode, window.toolbox, prop/1.5);
+
+        prop = 200 / $(document).height();
+        window.outputNode = dockManager.dockDown(documentNode, output, prop);
 
         //prop = 250 / $(document).width();
         //window.propertiesNode = dockManager.dockRight(window.documentNode, window.properties, prop);

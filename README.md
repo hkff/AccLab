@@ -1,4 +1,4 @@
-[![Version](https://img.shields.io/badge/version-1.1-orange.svg)]()
+[![Version](https://img.shields.io/badge/version-2.0-orange.svg)]()
 [![License](https://img.shields.io/badge/license-GPL3-blue.svg)]()
 [![Python](https://img.shields.io/badge/python->%3D3.4-green.svg)]()
 
@@ -39,6 +39,14 @@ checking, etc) AccLab needs the following dependency :
     <http://lat.inf.tu-dresden.de/~michel/software/tspass/>  
     The source code for TSPASS version 0.95-0.17 is provided
     with this tool.
+
+* In order to use AccMon features AccLab needs the following dependency :
+
+    ###### Django > 1.8 :
+        sudo pip3 install django
+        
+    ###### AccMon > 1.0 :
+        sudo pip3 install accmon
 
 #### Optional : (Under Development)
 * In order to use monitor synthetization / simulation features,

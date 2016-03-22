@@ -60,52 +60,56 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
             // ------------------ ACD mode ------------------- //
             case "acd":
                 this.installEditPolicy(new CopyInterceptorPolicy());
-                this.installEditPolicy(new draw2d.policy.canvas.CoronaDecorationPolicy());
+                //this.installEditPolicy(new draw2d.policy.canvas.CoronaDecorationPolicy());
                 this.installEditPolicy(new draw2d.policy.canvas.SnapToGeometryEditPolicy());
                 this.installEditPolicy(new draw2d.policy.canvas.ShowDotEditPolicy()); // SnapToGridEditPolicy
 
-
-                draw2d.Connection.createConnection = function (sourcePort, targetPort) {
-                    var c = new MyConnection({
-                        //targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
-                        //sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
-                        sourceDecorator: new draw2d.decoration.connection.BarDecorator(),
-                        targetDecorator: new draw2d.decoration.connection.DiamondDecorator()
-                    });
-                    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
-                    //c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
-                    return c;
-                };
-
-                // Connection override
-                draw2d.Configuration.factory.createConnection = function (sourcePort, targetPort) {
-                    var c = new MyConnection({
-                        //targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
-                        //sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
-                        sourceDecorator: new draw2d.decoration.connection.BarDecorator(),
-                        targetDecorator: new draw2d.decoration.connection.DiamondDecorator()
-                    });
-                    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
-                    //c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
-                    return c;
-                };
-
-                this.on("select", function (emitter, figure) {
-                    if (figure !== null) {
-                        // Update panel prop
-                        visualEditor.ui.selectedNode = figure;
-                        $(visualEditor.ui).trigger('nodeSelected');
-
-                        $(visualEditor.ui.propertiesPanel.children()).css("opacity", 1);
-                        visualEditor.ui.propertiesPanel[0].removeEventListener("click", visualEditor.ui.stoper, true);
+                this.installEditPolicy(new draw2d.policy.connection.DragConnectionCreatePolicy({
+                    createConnection: function(){
+                        return new MyConnection();
                     }
-                    else {
-                        // Hide panel prop
-                        visualEditor.ui.selectedNode = null;
-                        $(visualEditor.ui.propertiesPanel.children()).css("opacity", 0.15);
-                        visualEditor.ui.propertiesPanel[0].addEventListener("click", visualEditor.ui.stoper, true);
-                    }
-                });
+                }));
+                //draw2d.Connection.createConnection = function (sourcePort, targetPort) {
+                //    var c = new MyConnection({
+                //        //targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
+                //        //sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
+                //        sourceDecorator: new draw2d.decoration.connection.BarDecorator(),
+                //        targetDecorator: new draw2d.decoration.connection.DiamondDecorator()
+                //    });
+                //    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
+                //    //c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
+                //    return c;
+                //};
+                //
+                //// Connection override
+                //draw2d.Configuration.factory.createConnection = function (sourcePort, targetPort) {
+                //    var c = new MyConnection({
+                //        //targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
+                //        //sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
+                //        sourceDecorator: new draw2d.decoration.connection.BarDecorator(),
+                //        targetDecorator: new draw2d.decoration.connection.DiamondDecorator()
+                //    });
+                //    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
+                //    //c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
+                //    return c;
+                //};
+
+                //this.on("select", function (emitter, figure) {
+                //    if (figure !== null) {
+                //        // Update panel prop
+                //        visualEditor.ui.selectedNode = figure;
+                //        $(visualEditor.ui).trigger('nodeSelected');
+                //
+                //        $(visualEditor.ui.propertiesPanel.children()).css("opacity", 1);
+                //        visualEditor.ui.propertiesPanel[0].removeEventListener("click", visualEditor.ui.stoper, true);
+                //    }
+                //    else {
+                //        // Hide panel prop
+                //        visualEditor.ui.selectedNode = null;
+                //        $(visualEditor.ui.propertiesPanel.children()).css("opacity", 0.15);
+                //        visualEditor.ui.propertiesPanel[0].addEventListener("click", visualEditor.ui.stoper, true);
+                //    }
+                //});
                 break;
 
             // ------------------ VFODTL mode ------------------- //
@@ -226,8 +230,8 @@ var MyConnection= draw2d.Connection.extend({
     init:function(attr) {
         this._super(attr);
         //this.setRouter(new draw2d.layout.connection.InteractiveManhattanConnectionRouter());
-        this.setRouter(new draw2d.layout.connection.MazeConnectionRouter());
-        this.installEditPolicy(new draw2d.policy.line.VertexSelectionFeedbackPolicy());
+        //this.setRouter(new draw2d.layout.connection.MazeConnectionRouter());
+        //this.installEditPolicy(new draw2d.policy.line.VertexSelectionFeedbackPolicy());
         this.setOutlineStroke(0);
         this.setOutlineColor("#303030");
         this.setStroke(4);
@@ -255,9 +259,6 @@ var MyConnection= draw2d.Connection.extend({
                    this.setColor('#00A8F0');
                    break;
                case "delete":
-                   // without undo/redo support
-              //     this.getCanvas().remove(this);
-
                    // with undo/redo support
                    var cmd = new draw2d.command.CommandDelete(this);
                    this.getCanvas().getCommandStack().execute(cmd);
@@ -270,11 +271,11 @@ var MyConnection= draw2d.Connection.extend({
             y:y,
             items:
             {
-                "red":    {name: "Red", icon: "edit"},
-                "green":  {name: "Green", icon: "cut"},
-                "blue":   {name: "Blue", icon: "copy"},
+                "red":    {name: "Red", icon: ""},
+                "green":  {name: "Green", icon: ""},
+                "blue":   {name: "Blue", icon: ""},
                 "sep1":   "---------",
-                "delete": {name: "Delete", icon: "delete"}
+                "delete": {name: "Delete", icon: ""}
             }
         });
     }
@@ -324,7 +325,7 @@ var CopyInterceptorPolicy = draw2d.policy.canvas.SingleSelectionPolicy.extend({
 	    		this.mouseDraggingElement  = this.mouseDraggingElement.clone();
 	    		
 	    		// add the clone to the canvas and start dragging of the clone
-	    		canvas.addFigure(this.mouseDraggingElement, pos);
+	    		canvas.add(this.mouseDraggingElement, pos);
 	    		// select the clone
 	    		this.select(canvas,this.mouseDraggingElement);
 

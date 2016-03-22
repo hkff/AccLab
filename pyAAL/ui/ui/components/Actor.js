@@ -250,21 +250,21 @@ draw2d.shape.basic.Rectangle.extend({
         var dec = this.type.toUpperCase()+" "+this.getName();
         var lng = this.types.getSize();
         var i = 0;
-        dec += " TYPES("
+        dec += " TYPES(";
         for (i = 0; i < lng; i++) {
             dec += this.types.get(i)+" ";
         }
         dec += ")";
 
         lng = this.rservices.getSize();
-        dec += " REQUIRED("
+        dec += " REQUIRED(";
         for (i = 0; i < lng; i++) {
             dec += this.rservices.get(i)+" ";
         }
         dec += ")";
 
         lng = this.pservices.getSize();
-        dec += " PROVIDED("
+        dec += " PROVIDED(";
         for (i = 0; i < lng; i++) {
             dec += this.pservices.get(i)+" ";
         }

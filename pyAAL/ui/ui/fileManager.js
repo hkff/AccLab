@@ -363,6 +363,15 @@ visualEditor.ui.fileManager = {
 		return file.split('.').length <= 1;
 	},
 
+    /**
+     * Get file extension
+     * @param file
+     * @returns {string}
+     */
+    getFileType: function (file) {
+        return file.split('.').pop().toLowerCase();
+    },
+
 	/**
 	 * Create a file
 	 * @param file

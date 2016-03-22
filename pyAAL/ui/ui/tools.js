@@ -540,14 +540,20 @@ visualEditor.ui.tools.genAALTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.genAALTool",
 	
 	view: function(parent) {
-		this.button = $('<div title="Generate AAL file (ctrl+G)" id="genAALBtn" class="btn-action fa fa-file-text-o fa-lg"/>');
+		this.button = $('<div title="Generate (ctrl+G)" id="genAALBtn" class="btn-action fa fa-file-text-o fa-lg"/>');
 		parent.actionsPanel.append(this.button);
 	},
 
 	control: function(parent, disableShortcut) {
 		var fx = function(e){
 			var active = visualEditor.ui.activeTab.container.title;
-            visualEditor.ui.fileManager.showGeneratedAAL(active);
+			var activeFileType = visualEditor.ui.fileManager.getFileType(active);
+            if(activeFileType === "acd"){
+                //visualEditor.ui.fileManager.showGeneratedAAL(active);
+                visualEditor.log(visualEditor.ui.generateAAL(active));
+            } else if(activeFileType === "vfodtl"){
+                visualEditor.log(visualEditor.vFodtl_to_fodtl(visualEditor.ui.canvas));
+            }
 		};
 		this.button.click(fx);
 		if(disableShortcut != null) return;

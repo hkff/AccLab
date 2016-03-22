@@ -169,6 +169,11 @@ visualEditor.ui = {
 			$(visualEditor.ui.tools.tools[18].button).hide();
 			$(visualEditor.ui.tools.tools[20].button).hide();
 			$(visualEditor.ui.tools.tools[21].button).hide();
+
+            if(fileType === "acd")
+                visualEditor.ui.components.hideVfodtlCompnents();
+            else if(fileType === "vfodtl")
+                visualEditor.ui.components.hideAcdCompnents();
 		}
 	},
 

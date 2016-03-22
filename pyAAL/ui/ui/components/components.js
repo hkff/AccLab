@@ -103,7 +103,18 @@ visualEditor.ui.components = {
 		},
 
 		view: function () {
-			this.parent.componentsPanel.append("<br><hr>");
+			this.parent.componentsPanel.append("<div class='separators'><br><hr></div>");
 		}
-	})
+	}),
+
+	hideAcdCompnents: function(){
+        $('#componentbox_window .btn-components').show().first().hide();
+        $('.separators').show();
+	},
+
+	hideVfodtlCompnents: function(){
+        $('#componentbox_window .btn-components').hide().first().show();
+        $('.separators').hide();
+	}
+
 };
