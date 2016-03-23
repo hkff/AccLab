@@ -51,7 +51,7 @@ AccLab needs the following dependencies :
 
     You need to install the following dependencies :
 
-            $ sudo apt-get install pykka
+            $ sudo pip3 install pykka
 
 
 
