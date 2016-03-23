@@ -315,11 +315,27 @@ def aal_clause_to_fodtl(clause: m_clause):
             return "(%s)" % (transform(exp.exp)) if exp.operator is None else "~(%s)" % (transform(exp.exp))
 
         elif isinstance(exp, m_conditionComb):
-             return "(%s %s %s)" % (transform(exp.cond1), transform(exp.operator), transform(exp.cond2))
+            return "(%s %s %s)" % (transform(exp.cond1), transform(exp.operator), transform(exp.cond2))
 
         elif isinstance(exp, m_predicate):
-            q = [str(x).replace('"', '\\"') for x in exp.args]
-            return "%s(%s)" % (exp.name, " ".join(q))
+            q = []
+            for x in exp.args:
+                x = str(x)
+                if x[0] == '"' and x[-1] == '"':
+                    x = 'r\\"%s\\"' % x[1:-1]
+                q.append(str(x))
+            return "%s(%s)" % (exp.name, ", ".join(q))
+
+        elif isinstance(exp, m_aexpModal):
+            return "%s(%s)" % (transform(exp.modality), transform(exp.actionExpression))
+
+        elif isinstance(exp, m_modal):
+            if exp == m_modal.T_always: return "G"
+            elif exp == m_modal.T_must: return "F"
+            elif exp == m_modal.T_unless: return "R"
+            elif exp == m_modal.T_until: return "U"
+            elif exp == m_modal.T_sometime: return "F"
+            else: return "<Unsupported boolean op %s>" % exp
 
         elif isinstance(exp, str):
             return exp
