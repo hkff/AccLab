@@ -69,52 +69,15 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
                         return new MyConnection();
                     }
                 }));
-                //draw2d.Connection.createConnection = function (sourcePort, targetPort) {
-                //    var c = new MyConnection({
-                //        //targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
-                //        //sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
-                //        sourceDecorator: new draw2d.decoration.connection.BarDecorator(),
-                //        targetDecorator: new draw2d.decoration.connection.DiamondDecorator()
-                //    });
-                //    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
-                //    //c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
-                //    return c;
-                //};
-                //
-                //// Connection override
-                //draw2d.Configuration.factory.createConnection = function (sourcePort, targetPort) {
-                //    var c = new MyConnection({
-                //        //targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
-                //        //sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
-                //        sourceDecorator: new draw2d.decoration.connection.BarDecorator(),
-                //        targetDecorator: new draw2d.decoration.connection.DiamondDecorator()
-                //    });
-                //    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
-                //    //c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
-                //    return c;
-                //};
-
-                //this.on("select", function (emitter, figure) {
-                //    if (figure !== null) {
-                //        // Update panel prop
-                //        visualEditor.ui.selectedNode = figure;
-                //        $(visualEditor.ui).trigger('nodeSelected');
-                //
-                //        $(visualEditor.ui.propertiesPanel.children()).css("opacity", 1);
-                //        visualEditor.ui.propertiesPanel[0].removeEventListener("click", visualEditor.ui.stoper, true);
-                //    }
-                //    else {
-                //        // Hide panel prop
-                //        visualEditor.ui.selectedNode = null;
-                //        $(visualEditor.ui.propertiesPanel.children()).css("opacity", 0.15);
-                //        visualEditor.ui.propertiesPanel[0].addEventListener("click", visualEditor.ui.stoper, true);
-                //    }
-                //});
                 break;
 
             // ------------------ VFODTL mode ------------------- //
             case "vfodtl":
                 this.installEditPolicy(new draw2d.policy.canvas.BoundingboxSelectionPolicy());
+                this.installEditPolicy(  new draw2d.policy.connection.DragConnectionCreatePolicy({
+                    createConnection: visualEditor.createFodtlConnection
+                }));
+                this.installEditPolicy(new visualEditor.FodtlInterceptorPolicy());
                 break;
         }
 
@@ -202,23 +165,26 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 
     updatePreview: function() {
         // convert the canvas into a PNG image source string
-        //
-        var xCoords = [];
-        var yCoords = [];
-        this.getFigures().each(function(i,f) {
-            var b = f.getBoundingBox();
-            xCoords.push(b.x, b.x+b.w);
-            yCoords.push(b.y, b.y+b.h);
-        });
-        var minX   = Math.min.apply(Math, xCoords);
-        var minY   = Math.min.apply(Math, yCoords);
-        var width  = Math.max.apply(Math, xCoords)-minX;
-        var height = Math.max.apply(Math, yCoords)-minY;
+        try {
+            var xCoords = [];
+            var yCoords = [];
+            this.getFigures().each(function (i, f) {
+                var b = f.getBoundingBox();
+                xCoords.push(b.x, b.x + b.w);
+                yCoords.push(b.y, b.y + b.h);
+            });
+            var minX = Math.min.apply(Math, xCoords);
+            var minY = Math.min.apply(Math, yCoords);
+            var width = Math.max.apply(Math, xCoords) - minX;
+            var height = Math.max.apply(Math, yCoords) - minY;
 
-        var writer = new draw2d.io.png.Writer();
-        writer.marshal(this,function(png){
-           $("#preview").attr("src", png);
-        }, new draw2d.geo.Rectangle(minX,minY,width,height));
+            var writer = new draw2d.io.png.Writer();
+            writer.marshal(this, function (png) {
+                $("#preview").attr("src", png);
+            }, new draw2d.geo.Rectangle(minX, minY, width, height));
+        } catch (err) {
+            console.log(err);
+        }
     }
 });
 

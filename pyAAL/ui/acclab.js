@@ -366,7 +366,7 @@ var visualEditor = {
             "<a class='catElement' onclick='visualEditor.about()'><i class='fa fa-question'></i> About</a></br></br>"+
             "</div></div>"+
             "</div>"+
-            "<div style='padding-top: 130px; display: inline-block; padding-right: 60px;'>AccLab version 2.0 2014-2016</div>";
+            "<div style='padding-top: 150px; display: inline-block; padding-right: 60px;'>AccLab version 2.0 2014-2016</div>";
 
         toastr.info(abt, "Get started", {
 				"closeButton": true,

@@ -59,7 +59,7 @@ Fodtl_OpUI = function() {
             });
 
             if(this.label_editable) {
-                //this.tlabel.installEditor(new draw2d.ui.LabelInplaceEditor());
+                this.tlabel.installEditor(new draw2d.ui.LabelInplaceEditor());
             } else {
                 this.installEditPolicy(new draw2d.policy.figure.AntSelectionFeedbackPolicy());
             }
@@ -101,7 +101,7 @@ Fodtl_OpUI = function() {
             this.add(this.tlabel, new draw2d.layout.locator.CenterLocator(this));
         },
 
-        createPort: function(type, locator){
+        createPort: function(type, locator) {
             var newPort = null;
             var count =0;
 
@@ -137,6 +137,19 @@ Fodtl_OpUI = function() {
             this.layoutPorts();
 
             return newPort;
+        },
+
+        onDrop:function(dropTarget, x, y, shiftKey, ctrlKey) {
+            // Activate a "smart insert" If the user drop this figure on connection
+            if(dropTarget instanceof draw2d.Connection){
+                var oldSource = dropTarget.getSource();
+                dropTarget.setSource(this.getOutputPort(0));
+
+                var additionalConnection = visualEditor.createFodtlConnection();
+                this.getCanvas().add(additionalConnection);
+                additionalConnection.setSource(oldSource);
+                additionalConnection.setTarget(this.getInputPort(0));
+            }
         }
     }
 };
@@ -443,7 +456,6 @@ visualEditor.vFodtl_check = function(diag) {
 visualEditor.fodtl_to_vfodtl = function(formula) {
 
     var ast = jQuery.parseJSON(formula);
-    console.log(formula)
     var base_position = {x: 100, y: 200};
 
     var drawElement = function(element, position) {
@@ -507,4 +519,42 @@ visualEditor.fodtl_to_vfodtl = function(formula) {
     var formula_inner = handleElement(ast, 1, 0);
     addConnection(entry_formula.getOutputPort(0), formula_inner.getInputPort(0));
 
+};
+
+
+visualEditor.FodtlInterceptorPolicy = draw2d.policy.canvas.DropInterceptorPolicy.extend({
+
+    init : function(attr, getter, setter) {
+        this._super(attr, getter, setter);
+    },
+
+    delegateTarget: function(requestingFigure, connectTarget) {
+        if(requestingFigure.outputPorts.data.length > 0 && connectTarget instanceof draw2d.Connection){
+            return connectTarget;
+        }
+        return this._super(requestingFigure, connectTarget);
+    }
+});
+
+visualEditor.createFodtlConnection = function(sourcePort, targetPort){
+    console.log(targetPort)
+    var conn= new draw2d.Connection({
+        router:new draw2d.layout.connection.InteractiveManhattanConnectionRouter(),
+        outlineStroke:1,
+        outlineColor:"#303030",
+        stroke:2,
+        color:"#00a8f0",
+        radius:20,
+        source:sourcePort,
+        target:targetPort
+    });
+
+    conn.on("dragEnter", function(emitter, event) {
+        conn.attr({outlineColor:"#30ff30"});
+    });
+    conn.on("dragLeave", function(emitter, event) {
+        conn.attr({outlineColor:"#303030"});
+    });
+
+    return conn;
 };
