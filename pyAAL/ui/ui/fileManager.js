@@ -136,8 +136,8 @@ visualEditor.ui.fileManager = {
 			var path = _this.getAbsPath(node);
 			file = path.replace(node.text, "") + file;
 
-			_this.createFile(file);
-			_this.openFile(file);
+			_this.createFile(file, true);
+			//_this.openFile(file);
 		});
 
 		$('#fmm-new-aal').click(function(e){
@@ -151,8 +151,8 @@ visualEditor.ui.fileManager = {
 			var path = _this.getAbsPath(node);
 			file = path.replace(node.text, "") + file;
 
-			_this.createFile(file);
-			_this.openFile(file);
+			_this.createFile(file, true);
+			//_this.openFile(file);
 		});
 
 		$('#fmm-rename').click(function(e){
@@ -280,6 +280,9 @@ visualEditor.ui.fileManager = {
 				var editor4 = new dockspawn.PanelContainer($("#"+id)[0], dockManager);
 				var editor4Node  = dockManager.dockFill(documentNode, editor4);
 
+                // Add file in recent files
+                visualEditor.ui.fileManager.addToRecentFiles(file);
+
 				switch(fileType) {
 					case "acd":
 						// Load ACD diagram
@@ -376,7 +379,7 @@ visualEditor.ui.fileManager = {
 	 * Create a file
 	 * @param file
 	 */
-	createFile: function(file) {
+	createFile: function(file, open) {
 		var fileType = file.split('.').pop().toLowerCase();
 		var dType = "text";
 		var data = " ";
@@ -389,7 +392,10 @@ visualEditor.ui.fileManager = {
 			type:'POST',
 			url: visualEditor.backend,
 			data: {action: "write", file: file, data: data},
-			success: function(response){}
+			success: function(response){
+                if(open == true)
+                    visualEditor.ui.fileManager.openFile(file);
+            }
 		});
 
 		// Update explorer
@@ -413,6 +419,21 @@ visualEditor.ui.fileManager = {
 		// Update explorer
 		$("#explorer").tree("reload");
 	},
+
+    /**
+     * Add a file to recent opened files
+     * @param file
+     */
+    addToRecentFiles: function(file) {
+        var exists = visualEditor.userPrefs["recentFiles"].indexOf(file);
+        if (exists > -1)
+            visualEditor.userPrefs["recentFiles"].splice(exists, 1);
+
+        visualEditor.userPrefs["recentFiles"].unshift(file);
+        if(visualEditor.userPrefs["recentFiles"].length > 15)
+            visualEditor.userPrefs["recentFiles"].pop();
+        visualEditor.savePrefs();
+    },
 
 	/**
 	 * Show generated aal file

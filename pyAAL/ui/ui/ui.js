@@ -106,8 +106,9 @@ visualEditor.ui = {
 		e.preventDefault()
 	},
 
-	updateToastSize: function(type, size, dragable, icon) {
+	updateToastSize: function(type, size, dragable, icon, top) {
         var l = $(".toast-" + type);
+        if(top != undefined) $(l[l.length - 1]).css("top", top);
         if(l[l.length - 1] != undefined) {
             if(size.width != undefined) $(l[l.length - 1]).css("width", size.width + "px");
             if(size.height != undefined) $(l[l.length - 1]).css("height", size.height + "px");

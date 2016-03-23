@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 //
-//  AccLab UI V 1.1 : acclab.js
+//  AccLab UI V 2.0 : acclab.js
 //
 // Copyright (C) 2014 Walid Benghabrit
 //
@@ -27,7 +27,7 @@ var visualEditor = {
     activeEditor  : null,
     visualEditor  : false,
     activeCloseBtn: null,
-    userPrefs     : {"theme": "monokai", "username": "", "fontSize": 14},
+    userPrefs     : {"theme": "monokai", "username": "", "fontSize": 14, "recentFiles": []},
     aceTheme      : "monokai",
     aceThemesList : ["monokai", "chrome", "tomorrow", "kuroir", "eclipse", "chaos"],
     backend       : "http://127.0.0.1:8000/",
@@ -140,9 +140,7 @@ var visualEditor = {
                 visualEditor.userPrefs = obj;
                 visualEditor.getUserName();
                 visualEditor.aceTheme = visualEditor.userPrefs["theme"];
-                // DEBUG :make TOREMOVE
-                //visualEditor.ui.fileManager.openFile("atest.vfodtl");
-                visualEditor.ui.fileManager.openFile("aa.acd");
+                visualEditor.startup();
             }
         });
     },
@@ -315,7 +313,7 @@ var visualEditor = {
             "<div class='footerAbout'>Copyright (C) 2014-2016 Walid Benghabrit - Ecole des Mines de Nantes - ARMINES</br>" +
             "ASCOLA Research Group - A4CLOUD Project http://www.a4cloud.eu/ </div>";
 
-       toastr.info(abt, "About", {
+        toastr.info(abt, "About", {
 				"closeButton": true,
 				"preventDuplicates": true,
 				"tapToDismiss": true,
@@ -325,7 +323,62 @@ var visualEditor = {
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-center"
 			});
-        visualEditor.ui.updateToastSize("info", {"width": 800}, false, "none");
+        visualEditor.ui.updateToastSize("info", {"width": 800, height:350}, false, "none", (window.innerHeight - 600)/2 + "px");
+    },
+
+     /**
+     * Startup panel
+     */
+    startup: function () {
+        var recentFiles = "";
+        var files = visualEditor.userPrefs["recentFiles"];
+        var file = "";
+        for(var i=0; i<files.length; i++) {
+            if(files[i].length > 25)
+                file = "..." + files[i].substr(files[i].length-25);
+            else
+                file = files[i];
+
+            recentFiles += "<a class='catElement' onclick='visualEditor.ui.fileManager.openFile(\""+files[i]+"\")'>"+file+"</a></br>"
+        }
+        var abt = "" +
+            "<div>"+
+            "<div class='startedCat'> <div class='startedCatInner'> <h3 style='color: rgb(9, 9, 9);'>" +
+            "<i class='fa fa-folder-open'></i> Recent files</h3>"+ recentFiles +"</div> </div>"+
+
+            "<div class='startedCat'><div class='startedCatInner'> <h3 style='color: rgb(9, 9, 9);'>" +
+            "<i class='fa fa-file'></i> Create new file</h3> " +
+            "<a class='catElement' onclick='visualEditor.ui.fileManager.createFile(\"new_diagram.acd\", true)'>" +
+            "<i class='fa fa-edit'></i> New component diagram</a></br></br>"+
+            "<a class='catElement' onclick='visualEditor.ui.fileManager.createFile(\"new_aal_policy.aal\", true)'>" +
+            "<i class='fa fa-file-code-o'></i> New AAL policy</a></br></br>"+
+            "<a class='catElement' onclick='visualEditor.ui.fileManager.createFile(\"new_fodtl_diagram.vfodtl\", true)'>" +
+            "<i class='fa fa-calendar-o'></i> New Fodtl diagram</a></br></br>"+
+            "</div></div>"+
+
+            "<div class='startedCat'><div class='startedCatInner'><h3 style='color: rgb(9, 9, 9); margin-top: 6px;'>" +
+            "<i class='fa fa-question-circle'></i> Help</h3>"+
+
+            "<a class='catElement' target='_blank' href='https://github.com/hkff/AccLab/raw/master/pyAAL/UserGuide/UserGuide.pdf'>" +
+            "<i class='fa fa-file-text-o'></i> User guide</a></br></br>"+
+            "<a class='catElement' target='_blank' href='https://github.com/hkff/AccLab'>" +
+            "<i class='fa fa-github'></i> Github page</a></br></br>"+
+            "<a class='catElement' onclick='visualEditor.about()'><i class='fa fa-question'></i> About</a></br></br>"+
+            "</div></div>"+
+            "</div>"+
+            "<div style='padding-top: 130px; display: inline-block; padding-right: 60px;'>AccLab version 2.0 2014-2016</div>";
+
+        toastr.info(abt, "Get started", {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": true,
+  				"showDuration": "1000",
+			  	"hideDuration": "1000",
+			  	"timeOut": 0,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-center"
+			});
+        visualEditor.ui.updateToastSize("info", {"width": 800, "height": 400}, false, "none", (window.innerHeight - 600)/2 + "px");
     },
 
     /**

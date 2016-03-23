@@ -114,7 +114,7 @@ def api_save_prefs(d):
 # Load preferences
 def api_load_prefs():
     if not os.path.isfile("ui/prefs.json"):
-        api_save_prefs('{"theme": "monokai", "username": "", "fontSize": 14 }')
+        api_save_prefs('{"theme": "monokai", "username": "", "fontSize": 14, "recentFiles": [] }')
     with open("ui/prefs.json") as fd:
         return fd.read()
 
