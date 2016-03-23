@@ -195,7 +195,7 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 var MyConnection= draw2d.Connection.extend({
     init:function(attr) {
         this._super(attr);
-        //this.setRouter(new draw2d.layout.connection.InteractiveManhattanConnectionRouter());
+        this.setRouter(new draw2d.layout.connection.InteractiveManhattanConnectionRouter());
         //this.setRouter(new draw2d.layout.connection.MazeConnectionRouter());
         //this.installEditPolicy(new draw2d.policy.line.VertexSelectionFeedbackPolicy());
         this.setOutlineStroke(0);

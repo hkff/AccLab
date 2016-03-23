@@ -216,7 +216,6 @@ visualEditor.ui.tools.copyTool = visualEditor.ui.tool.extend({
 	control: function(parent) {
 		this.button.click(function(e) {
 			var p = visualEditor.ui.canvas.getSelection().primary.clone();
-			console.log(p)
 			visualEditor.ui.canvas.add(p, 100, 100);
 		});
 	}
@@ -588,7 +587,7 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
                 if(fileType == "tspass")
                     action = "compileFOTL";
 
-                toastr.info("<i class='fa fa-cog fa-spin'></i>", "Compiling...", {
+                toastr.error("<i class='fa fa-cog fa-spin'></i>", "Compiling...", {
                     "closeButton": true,
                     "preventDuplicates": true,
                     "tapToDismiss": false,
@@ -617,7 +616,7 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
                     success: function(response){
                         $("#output_window").empty().append(response).scrollTop(0);
                         // Clear toastr
-						toastr.clear( $(".toast-info"));
+						toastr.clear( $(".toast-error"));
                         // Setup lines
                         $(".aceLine").click(function(e) {
                             var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
@@ -795,112 +794,6 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
 			this.button.click(fx);
 		    if(disableShortcut != null) return;
 			shortcut.add("Ctrl+M", fx);
-/*
-        	"<!-- Declarations -->" +
-                "<b class='coms'>/ Declarations /</b><br>" +
-                "</p><div class='rule'>" +
-                    "<b id='agentDec' class='keyword hint--top hint--info' style='float: left;' data-hint='Click to insert Agent declaration'>AGENT</b>"  +
-                    "<input id='agentIdDec' list='agents' type='text' class='select' placeholder='agent_Id'>" +
-                    "<b class='keyword'>TYPES</b>(Type*) " +
-                    "<b class='keyword'>RS</b>(service*) <b class='keyword'>PS</b>(service*)<br><br>" +
-                "</div>" +
-                "<div class='rule'>" +
-                    "<b id='serviceDec' class='keyword hint--top hint--info' style='float:left;' data-hint='Click to insert Service declaration'>SERVICE</b>" +
-                    "<input id='serviceIdDec' list='services' type='text' class='select' placeholder='service_Id'>" +
-                    "<b class='keyword'>TYPES</b>(Type*) [Purpose]<br><br>" +
-                "</div>" +
-                "<div class='rule'>" +
-                    "<b id='dataDec' class='keyword  hint--top hint--info' style='float:left;' data-hint='Click to insert Data declaration'>DATA</b>" +
-                    "<input id='dataIdDec' list='data' type='text' class='select' placeholder='data_Id'>" +
-                    "<b class='keyword' style='float:left;'> TYPES </b>(Type*) " +
-                    "<b class='keyword' > SUBJECT </b> " +
-                    "<input id='agentIdDataDec' list='agents' type='text' class='select' placeholder='agent_Id'>" +
-                    "<br>" +
-                "</div>" +
-            "<br>" +
-            "<div class='rule'>" +
-                "<b class='coms'>/ Clause /</b><br>" +
-                "<b id='clause' class='keyword hint--top hint--info' data-hint='Click to insert Clause'>CLAUSE</b> clauseName (<br>" +
-            "</div>" +
-                "" +
-                "<div id='usage' class='rule' style='margin-left: 10px;' title='Click to insert Usage'>" +
-                    "<b class='coms'>// Usage</b><br>" +
-                   "[&nbsp;(<b class='keyword'>FORALL</b>&nbsp;|&nbsp;<b class='keyword'>EXISTS</b>)&nbsp;var:Type]* &nbsp;ActionExp <br>" +
-                "</div>" +
-        	"<!-- Audit -->" +
-                "<div class='rule' style='margin-left: 10px;'>" +
-                    "<b class='coms'>//Audit</b><br>" +
-                    "<b id='audit' class='keyword' style='float:left;'>AUDITING</b> <b class='ref'>Usage</b><br><br>" +
-                "</div>" +
-        	"<!-- Rectification -->        " +
-                "<div class='rule' style='margin-left: 0px;'>" +
-                    "<b class='coms'>//Rectification</b><br>    " +
-                    "<b class='keyword' id='rectification'>IF_VIOLATED_THEN</b> <b class='ref'>Usage</b>)<br>" +
-                "</div>" +
-            "</div>" +
-            "<br>" +
-            "<b class='coms'>/ ActionExp /</b><br>" +
-        "" +
-        "<!-- Action -->" +
-            "<div class='rule' title='Click to insert action'>" +
-                "<b class='coms'>// Action</b><br>" +
-                "<input id='may' type='checkbox' value='may' style='float: left; margin-top: 3px;'>" +
-                "<b id='action' class='keyword hint--top hint--info' style='float: left;' data-hint='Click to insert action'>MAY</b>" +
-                "<input id='agent1IdAction' list='agents' type='text' class='select' placeholder='agent_Id'>" +
-                "<b style='float:left'>.</b>" +
-                "<input id='serviceIdAction' list='services' type='text' class='select' placeholder='service_Id'>" +
-                "<b style='float:left'>[</b>" +
-                "<input id='agent2IdAction' list='agents' type='text' class='select' placeholder='agent_Id'>" +
-                "<b style='float:left'>]</b>(Exp) [Time] [Purpose] <br>" +
-            "</div><br>" +
-            "|&nbsp; <b class='keyword'>NOT</b> ActionExp <br>" +
-            "|&nbsp;" +
-               "(<b class='keyword' title='Click to insert must modality'>MUST</b>&nbsp;|&nbsp;" +
-               "<b class='keyword' title='Click to insert mustnot modality'>MUSTNOT</b>&nbsp;|&nbsp;" +
-               "<b class='keyword' title='Click to insert always modality'>ALWAYS</b>) ActionExp <br>" +
-            "|&nbsp; Condition <br>" +
-            "|&nbsp; ActionExp (<b class='keyword'>AND|OR|THEN|ONLYWHEN</b>) ActionExp <br>" +
-            "<p></p>" +
-            "<!---------------  Script -------------------->" +
-            "<script>" +
-                "$('#agentDec').click(function(){" +
-                    "insertSnippet('AGENT '+$('#agentIdDec').val()+' TYPE(AgentType*) RS(service*) PS(service*)\\n');" +
-                    "$('#agentIdDec').val('');" +
-                "});" +
-                "$('#serviceDec').click(function(){" +
-                    "insertSnippet('SERVICE '+$('#serviceIdDec').val()+' TYPE(Type*) [Purpose]\\n');" +
-                    "$('#serviceIdDec').val('');" +
-                "});" +
-                "$('#dataDec').click(function(){" +
-                    "insertSnippet('DATA '+$('#dataIdDec').val()+' TYPE(Type*) SUBJECT '+$('#agentIdDataDec').val()+'\\n');" +
-                    "$('#dataIdDec').val('');" +
-                    "$('#agentIdDataDec').val('');" +
-                "});" +
-                "$('#clause').click(function(){insertSnippet('CLAUSE clauseName (\\n\\tUsageExp\\n\\tAUDITING Usage\\n\\tIF_VIOLATED_THEN Usage\\n)')});" +
-                "$('#usage').click(function(){" +
-                "});" +
-                "$('#audit').click(function(){" +
-                    "insertSnippet('AUDITING [Usage THEN] '+$('#agent1IdAudit').val()+'.audit['+" +
-                        "$('#agent2IdAudit').val()+']()');" +
-                    "$('#agent1IdAudit').val('');" +
-                    "$('#agent2IdAudit').val('');" +
-                "});" +
-                "$('#rectification').click(function(){insertSnippet('IF_VIOLATED_THEN Usage')});" +
-                "$('#action').click(function(){" +
-                    "insertSnippet(" +
-                        "(($('#may').is(':checked'))? 'MAY ' : '') +" +
-                        "(($('#agent1IdAction').val() == '')? 'agentId': $('#agent1IdAction').val())+" +
-                        "'.'+" +
-                        "(($('#serviceIdAction').val() == '')? 'ServiceId': $('#serviceIdAction').val())+" +
-                        "'['+" +
-                        "(($('#agent2IdAction').val() == '')? 'agentId':$('#agent2IdAction').val()) +'](Exp)');" +
-                    "" +
-                    "$('#agent1IdAction').val('');" +
-                    "$('#agent2IdAction').val('');" +
-                    "$('#serviceIdAction').val('');" +
-                "});" +
-            "</script>" +
-*/
 	}
 });
 

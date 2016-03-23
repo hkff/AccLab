@@ -27,7 +27,7 @@ Actor = Class.extend({
 
 	init: function() {
 		this.parent = visualEditor.ui.components;
-        this.uiElement = "PolicyUI2";
+        this.uiElement = "ActorUI2";
 	},
 
 	view: function() {
