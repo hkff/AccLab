@@ -131,7 +131,7 @@ visualEditor.ui.fileManager = {
 			do {
 				file=prompt("Enter file name");
 			}
-			while(file.length < 0);
+			while(file.length <= 0);
 			file = file + ".acd";
 			var path = _this.getAbsPath(node);
 			file = path.replace(node.text, "") + file;
@@ -162,7 +162,7 @@ visualEditor.ui.fileManager = {
 			do {
 				file=prompt("Enter file name", path);
 			}
-			while(file.length < 0);
+			while(file.length <= 0);
 
 			$.ajax({
 				dataType: 'text',
@@ -419,6 +419,20 @@ visualEditor.ui.fileManager = {
 		// Update explorer
 		$("#explorer").tree("reload");
 	},
+
+    /**
+     * Create file of a given type
+     * @param fileType
+     */
+    createFileType: function(fileType) {
+        var file;
+        do {
+            file=prompt("Enter file name");
+        }
+        while(file.length <= 0);
+        file = file + "." + fileType;
+        this.createFile(file, true);
+    },
 
     /**
      * Add a file to recent opened files

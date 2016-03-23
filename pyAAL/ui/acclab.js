@@ -348,11 +348,11 @@ var visualEditor = {
 
             "<div class='startedCat'><div class='startedCatInner'> <h3 style='color: rgb(9, 9, 9);'>" +
             "<i class='fa fa-file'></i> Create new file</h3> " +
-            "<a class='catElement' onclick='visualEditor.ui.fileManager.createFile(\"new_diagram.acd\", true)'>" +
+            "<a class='catElement' onclick='visualEditor.ui.fileManager.createFileType(\"acd\", true)'>" +
             "<i class='fa fa-edit'></i> New component diagram</a></br></br>"+
-            "<a class='catElement' onclick='visualEditor.ui.fileManager.createFile(\"new_aal_policy.aal\", true)'>" +
+            "<a class='catElement' onclick='visualEditor.ui.fileManager.createFileType(\"aal\", true)'>" +
             "<i class='fa fa-file-code-o'></i> New AAL policy</a></br></br>"+
-            "<a class='catElement' onclick='visualEditor.ui.fileManager.createFile(\"new_fodtl_diagram.vfodtl\", true)'>" +
+            "<a class='catElement' onclick='visualEditor.ui.fileManager.createFileType(\"vfodtl\", true)'>" +
             "<i class='fa fa-calendar-o'></i> New Fodtl diagram</a></br></br>"+
             "</div></div>"+
 
