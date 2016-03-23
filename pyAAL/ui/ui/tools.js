@@ -215,7 +215,7 @@ visualEditor.ui.tools.copyTool = visualEditor.ui.tool.extend({
 
 	control: function(parent) {
 		this.button.click(function(e) {
-			var p = visualEditor.ui.canvas.getCurrentSelection().clone();
+			var p = visualEditor.ui.canvas.getSelection().primary.clone();
 			console.log(p)
 			visualEditor.ui.canvas.add(p, 100, 100);
 		});
@@ -239,9 +239,8 @@ visualEditor.ui.tools.deleteTool = visualEditor.ui.tool.extend({
 
 	control: function(parent) {
 		this.button.click(function(e){
-			visualEditor.ui.canvas.getCommandStack().execute(
-				new draw2d.command.CommandDelete(visualEditor.ui.canvas.getCurrentSelection())
-			);
+            visualEditor.ui.canvas.getCommandStack().execute(
+                new draw2d.command.CommandDelete(visualEditor.ui.canvas.getSelection().primary));
 		});
 	}
 });
