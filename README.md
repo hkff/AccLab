@@ -2,7 +2,7 @@
 [![License](https://img.shields.io/badge/license-GPL3-blue.svg)]()
 [![Python](https://img.shields.io/badge/python->%3D3.4-green.svg)]()
 
-AccLab Last release : Version 1.1 02/10/2015
+AccLab Last release : Version 2.0 26/03/2016
 
 What is it?
 -----------
@@ -42,10 +42,7 @@ checking, etc) AccLab needs the following dependency :
 
 * In order to use AccMon features AccLab needs the following dependency :
 
-    ###### Django > 1.8 :
-        sudo pip3 install django
-        
-    ###### AccMon > 1.0 :
+    ###### AccMon >= 1.0 :
         sudo pip3 install accmon
 
 #### Optional : (Under Development)
@@ -56,20 +53,6 @@ AccLab needs the following dependencies :
 
             $ sudo apt-get install pykka
 
-    ###### ltl2ba / ltl3ba :
-    LTL to Buchi automata tools.
-    Binaries are provided for linux x64 in the folder tools/_platformName_/ .
-    For other platforms you have to compile the sources.
-    Note : ltl3ba depends on buddy-2.4, you need to compile and install it.
-
-        $ ./configure --prefix=/usr
-        $ sudo make & make install
-    The source code for ltl3ba-1.1.2, ltl2ba-1.2b1 and buddy-2.4
-    are provided with this tool, see folder tools/thirdparty_src/ .
-
-    http://www.lsv.ens-cachan.fr/~gastin/ltl2ba/
-    http://sourceforge.net/projects/ltl3ba/
-    http://sourceforge.net/projects/buddy/
 
 
 AAL Syntax highlighting modes for emacs, intellij, nano and ace,

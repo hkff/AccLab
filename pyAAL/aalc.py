@@ -1,6 +1,6 @@
 #!/usr/bin/python3.4
 """
-aalc version 1.1 main AccLab program
+aalc version 2.0 main AccLab program
 Copyright (C) 2014 Walid Benghabrit
 
 This program is free software: you can redistribute it and/or modify
