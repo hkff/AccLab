@@ -503,7 +503,8 @@ var visualEditor = {
      * Log msg into output
      * @param msg
      */
-    log: function(msg) {
+    log: function(msg, clear) {
+        if(clear == true) $("#output_window").empty();
         if(typeof(msg) == "string")
             $("#output_window").append(replaceAll("\n", "<br>", msg) + "<br>");
         else

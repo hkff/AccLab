@@ -63,6 +63,7 @@ visualEditor.ui.components = {
 		// FODTL
 		this.components.push(new this.Separator());
 		this.components.push(new Fodtl_formula());
+        this.components.push(new Fodtl_formula_inline());
 
 		this.components.push(new this.Separator());
 		this.components.push(new Fodtl_value());

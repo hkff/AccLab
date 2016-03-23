@@ -150,6 +150,22 @@ Fodtl_OpUI = function() {
                 additionalConnection.setSource(oldSource);
                 additionalConnection.setTarget(this.getInputPort(0));
             }
+        },
+
+        setGlow: function(flag) {
+            if(flag === this.glowIsActive)
+                return this;
+
+            this.glowIsActive = flag;
+            if(flag===true){
+                this.strokeBeforeGlow = this.getStroke();
+                this.setStroke(this.strokeBeforeGlow*2.5);
+            }
+            else {
+                this.setStroke(this.strokeBeforeGlow);
+            }
+
+            return this;
         }
     }
 };
@@ -183,8 +199,8 @@ Fodtl_diamondOpUI = draw2d.shape.basic.Diamond.extend(
 /***************************************
  * Atom in operators model
  **************************************/
-Fodtl_atomOp = Class.extend({
-	NAME      : "Fodtl_atomOp",
+Fodtl_atom0Op = Class.extend({
+	NAME      : "Fodtl_atom0Op",
 	uiElement : null,
     parent    : null,
     name      : "",
@@ -215,7 +231,21 @@ Fodtl_atomOp = Class.extend({
 		this.parent.componentsPanel.append(this.cmp_data);
 	},
 
-	addElement: function(event, position) {
+    addElement: function(event, position) {
+    	var element = new event.data.figure(event.data);
+        if(position == undefined) position = {x:100, y:100};
+        visualEditor.ui.canvas.add(element, position.x, position.y);
+        return element;
+	}
+});
+
+/***************************************
+ * Atom none operators model
+ **************************************/
+Fodtl_atomOp = Fodtl_atom0Op.extend({
+	NAME      : "Fodtl_atomOp",
+
+    addElement: function(event, position) {
     	var element = new event.data.figure(event.data);
         element.createPort("input", this.leftLocator);
         if(position == undefined) position = {x:100, y:100};
@@ -290,6 +320,7 @@ Fodtl_binaryOp = Fodtl_unaryOp.extend({
 /***************************************
  * Fodtl operators
  **************************************/
+Fodtl_formula_inline = Fodtl_atom0Op.extend({NAME: "fodtl_formula_inline", name: "Inline Formula", figure: Fodtl_rectOpUI, color: "#3B3B3B", size: {width: 85, height: 40}, label_editable: true});
 Fodtl_formula = Fodtl_atom2Op.extend({NAME: "fodtl_formula", name: "Formula", figure: Fodtl_rectOpUI, color: "#3B3B3B", size: {width: 85, height: 40}});
 
 // Predicates and constants
@@ -412,41 +443,54 @@ visualEditor.vFodtl_to_fodtl = function(diag) {
         }
     };
 
-    //var figs = visualEditor.ui.canvas.getFigures();
     var figs = diag.getFigures();
-
+    var formulas = [];
     for(var i=0; i<figs.getSize(); i++) {
         var tmp = figs.get(i);
         // Handle formulas only
         if(tmp._type === "fodtl_formula") {
             var res = _eval(tmp);
-            //console.log(res);
-            // TODO fix it and return a list of formula
-            return res;
+            formulas.push(res);
+        }
+        else if(tmp._type === "fodtl_formula_inline") {
+            visualEditor.ui.fodtlToDiagram(tmp.tlabel.text);
         }
     }
+    return formulas;
 };
 
 /**
  * Check VFodtl diagram
  */
 visualEditor.vFodtl_check = function(diag) {
+    var res = true;
     var figs = visualEditor.ui.canvas.getFigures();
+    visualEditor.log("", true);
+
     for(var i=0; i<figs.getSize(); i++) {
         var tmp = figs.get(i);
         var inputs = tmp.getInputPorts();
         var outputs = tmp.getOutputPorts();
 
+        tmp.setGlow(false);
+
         for(var j=0; j<inputs.getSize(); j++) {
-            if(inputs.get(j).connections.getSize() === 0)
-                console.log("Error missing connection !")
+            if(inputs.get(j).connections.getSize() === 0) {
+                tmp.setGlow(true);
+                visualEditor.log("Error missing input connection in node " + tmp.tlabel.text);
+                res = false;
+            }
         }
 
         for(var j=0; j<outputs.getSize(); j++) {
-            if(outputs.get(j).connections.getSize() === 0)
-                console.log("Error missing connection !")
+            if(outputs.get(j).connections.getSize() === 0) {
+                tmp.setGlow(true);
+                visualEditor.log("Error missing output connection in node " + tmp.tlabel.text);
+                res = false;
+            }
         }
     }
+    return res;
 };
 
 
@@ -471,7 +515,7 @@ visualEditor.fodtl_to_vfodtl = function(formula) {
     };
 
     var handleElement = function(element, hstep, vstep) {
-        var i=0;
+        var i = 0;
         if(element instanceof Array) {
             var res = [];
             for(i=0; i<element.length; i++) {
