@@ -747,7 +747,8 @@ class m_type(m_declarable):
         for x in p:
             for y in x:
                 res.append(y)
-        return list(set(res))
+        # FIXME
+        return list(res)
 
     def subtype_of(self, supertype):
         """
