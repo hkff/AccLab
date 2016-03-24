@@ -550,7 +550,10 @@ visualEditor.ui.tools.genAALTool = visualEditor.ui.tool.extend({
                 //visualEditor.ui.fileManager.showGeneratedAAL(active);
                 visualEditor.log(visualEditor.ui.generateAAL(active));
             } else if(activeFileType === "vfodtl"){
-                visualEditor.log(visualEditor.vFodtl_to_fodtl(visualEditor.ui.canvas));
+                if(visualEditor.vFodtl_check(visualEditor.ui.canvas) == true)
+                    var formulas = visualEditor.vFodtl_to_fodtl(visualEditor.ui.canvas);
+                    for(var i=0; i<formulas.length; i++)
+                        visualEditor.log(formulas[i]);
             }
 		};
 		this.button.click(fx);

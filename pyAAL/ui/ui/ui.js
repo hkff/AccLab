@@ -515,7 +515,7 @@ visualEditor.ui = {
      * Register the current opened vfodtl file in AccMon
      */
     registerVfodtlToAccMon: function(url, name) {
-        var formula = visualEditor.vFodtl_to_fodtl(visualEditor.ui.canvas);
+        var formula = visualEditor.vFodtl_to_fodtl(visualEditor.ui.canvas)[0];
         $.ajax({
             dataType: 'text',
             type:'POST',
