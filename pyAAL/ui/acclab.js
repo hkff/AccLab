@@ -276,18 +276,14 @@ var visualEditor = {
         window.documentNode = dockManager.context.model.documentManagerNode;
         var prop = 200 / $(document).width();
         window.solutionNode = dockManager.dockLeft(documentNode, solution, prop);
-        window.outlineNode = dockManager.dockDown(solutionNode, outline, 0.50);
-
-        //prop = 250 / $(document).width();
-        //window.propertiesNode = dockManager.dockRight(documentNode, properties, prop);
-
-        prop = 500 / $(document).height();
-        window.outputNode = dockManager.dockDown(documentNode, output, prop);
-        window.inplaceAALNode = dockManager.dockDown(this.propertiesNode, inplaceAAL, 0.40);
+        window.outlineNode = dockManager.dockDown(solutionNode, outline, 0.30);
 
         prop = 145 / $(document).width();
-        window.componentsNode = dockManager.dockLeft(documentNode, components, prop);
-        window.toolboxNode = dockManager.dockDown(componentsNode, toolbox, 0.80);
+        window.toolboxNode = dockManager.dockRight(documentNode, toolbox, prop);
+        window.componentsNode = dockManager.dockDown(toolboxNode, components, 0.50);
+
+         prop = 300 / $(document).height();
+        window.outputNode = dockManager.dockDown(documentNode, output, prop);
     },
 
     /**
@@ -661,25 +657,19 @@ window.onload = function() {
     this.inplaceAAL.elementButtonClose.innerHTML = "";
     this.output = new dockspawn.PanelContainer($("#output_window")[0], dockManager);
     this.output.elementButtonClose.innerHTML = "";
-//            this.editor1 = new dockspawn.PanelContainer($("#editor1_window")[0], dockManager);
 
     // Dock the panels on the dock manager
     this.documentNode = dockManager.context.model.documentManagerNode;
     var prop = 200 / $(document).width();
     this.solutionNode = dockManager.dockLeft(documentNode, solution, prop);
-    this.outlineNode = dockManager.dockDown(solutionNode, outline, 0.50);
-
-    //prop = 250 / $(document).width();
-    //this.propertiesNode = dockManager.dockRight(documentNode, properties, prop);
-
-    prop = 500 / $(document).height();
-    this.outputNode = dockManager.dockDown(documentNode, output, prop);
-    //this.inplaceAALNode = dockManager.dockDown(this.propertiesNode, inplaceAAL, 0.40);
+    this.outlineNode = dockManager.dockDown(solutionNode, outline, 0.30);
 
     prop = 145 / $(document).width();
-    this.componentsNode = dockManager.dockLeft(documentNode, components, prop);
-    this.toolboxNode = dockManager.dockDown(componentsNode, toolbox, 0.80);
+    this.toolboxNode = dockManager.dockRight(documentNode, toolbox, prop);
+    this.componentsNode = dockManager.dockDown(toolboxNode, components, 0.50);
 
+     prop = 300 / $(document).height();
+    this.outputNode = dockManager.dockDown(documentNode, output, prop);
 
     this.panelNodes = [window.solution, window.outline, window.components, window.toolbox,
         /*window.properties,*/ window.inplaceAAL, window.output];
