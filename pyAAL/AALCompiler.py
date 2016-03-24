@@ -166,7 +166,6 @@ class AALCompilerListener(AALListener.AALListener):
 
         lib_path = lib_name.replace('"', '').replace(".", "/") + ".aal"
         #  Search in the file scope before
-        # FIXME
         if not internal:
             lib_path2 = root_path + lib_path
             # print(lib_path2)
@@ -176,40 +175,14 @@ class AALCompilerListener(AALListener.AALListener):
             elif os.path.exists(lib_path2):
                 found_lib_path = lib_path2
 
-                # for root, dirs, files in os.walk(root_path):
-                #     for file in files:
-                #         tmp = os.path.join(root, file)
-                #         if tmp == lib_path2:
-                #             if self.DEBUG:
-                #                 print("file founded 0 ! " + tmp)
-                #             found_lib_path = lib_path2
-                #         elif tmp == lib_path2 + "c" and not self.recompile:
-                #             if self.DEBUG:
-                #                 print("file founded 0 ! " + tmp)
-                #             found_lib_path = lib_path2 + "c"
-                #             break
-
         if found_lib_path is None:
             # Search in internal libs
-            root_path = self.libsPath
+            # root_path = self.libsPath
             lib_path2 = self.libsPath + lib_path
             if os.path.exists(lib_path2 + "c"):
                 found_lib_path = lib_path2 + "c"
             elif os.path.exists(lib_path2):
                 found_lib_path = lib_path2
-
-                # for root, dirs, files in os.walk(root_path):
-                #     for file in files:
-                #         tmp = os.path.join(root, file)
-                #         if tmp == lib_path2:
-                #             if self.DEBUG:
-                #                 print("file founded ! " + tmp)
-                #             found_lib_path = lib_path2
-                #         elif tmp == lib_path2 + "c" and not self.recompile:
-                #             if self.DEBUG:
-                #                 print("file founded ! " + tmp)
-                #             found_lib_path = lib_path2 + "c"
-                #             break
 
         # Try absolute path
         if os.path.exists(lib_name.replace("\"", "")):
@@ -230,8 +203,9 @@ class AALCompilerListener(AALListener.AALListener):
             stream = CommonTokenStream(lexer)
             parser = AALParser(stream)
             # !IMPORTANT : set loadlibs false to avoid infinite rec
-            parser.addParseListener(AALCompilerListener(file=found_lib_path, root_path=root_path,
-                                                        loadlibs=False, serialize=False))
+            desec = DescriptiveErrorListener()
+            parser.addParseListener(AALCompilerListener(file=found_lib_path, root_path=self.root_path,
+                                                        errors_listener=desec, loadlibs=False, serialize=False))
             parser.buildParseTrees = True
             tr = parser.main()
             l = parser.getParseListeners().pop(0)
