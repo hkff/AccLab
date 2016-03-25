@@ -168,6 +168,7 @@ var visualEditor = {
         visualEditor.userPrefs["username"] = "";
         visualEditor.userPrefs["theme"] = "monokai";
         visualEditor.userPrefs["fontSize"] = 14;
+        visualEditor.userPrefs["recentFiles"] = [];
 
         $.ajax({
             dataType: 'text',
