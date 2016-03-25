@@ -1,4 +1,10 @@
 /***************************
+ *       Libs
+ ****************************/
+ LOAD "core.types"
+ LOAD "core.macros"
+ 
+/***************************
  *       Declarations
  ****************************/
 // Actors
@@ -9,6 +15,9 @@ AGENT cloudZ TYPES(DataProcessor DataController ) REQUIRED(uploadData ) PROVIDED
 AGENT sandra TYPES(DataController ) REQUIRED(access uploadActivity ) PROVIDED()
 AGENT hospital TYPES(DataController DataProcessor ) REQUIRED(research ) PROVIDED(report uploadActivity uploadData audit )
 AGENT leslie TYPES(Auditor ) REQUIRED(report audit ) PROVIDED()
+AGENT DPA
+AGENT alice
+AGENT cloudS
 
 // Services
 SERVICE sensor
@@ -25,6 +34,9 @@ SERVICE research
 SERVICE uploadData
 SERVICE auditreport
 SERVICE audit
+SERVICE read
+SERVICE write
+SERVICE sanction
 
 /***************************
  *       Clauses
@@ -40,7 +52,7 @@ CLAUSE kim_policy (
 
 /*** CloudX's policy ***/
 CLAUSE cloudX_policy (
-    FORALL a:agent FORALL file:data WHERE file.subject == a
+    FORALL a:actor FORALL file:data WHERE file.subject == a
     DENY a.read[cloudX](file)
     AND cloudX.delete[file]() BEFORE "2 Years"
     AUDITING DPA.audit[cloudS]()
@@ -50,7 +62,7 @@ CLAUSE cloudX_policy (
 
 /*** CloudY's policy ***/
 CLAUSE cloudY_policy (
-    FORALL a:agent FORALL file:data WHERE file.subject == a
+    FORALL a:actor FORALL file:data WHERE file.subject == a
     PERMIT a.read[cloudS](file)
     AUDITING DPA.audit[cloudS]()
     IF_VIOLATED_THEN DPA.sanction[cloudS]()
@@ -59,8 +71,7 @@ CLAUSE cloudY_policy (
 
 /*** CloudZ's policy ***/
 CLAUSE cloudZ_policy (
-    FORALL a:agent FORALL file:data WHERE file.subject == a
-
+    FORALL a:actor FORALL file:data WHERE file.subject == a
     PERMIT a.read[cloudS](file)
     AND PERMIT a.write[cloudS](file)
     AUDITING DPA.audit[cloudS]()
@@ -71,7 +82,7 @@ CLAUSE cloudZ_policy (
 /*** Sandra's user preference ***/
 CLAUSE sandra_policy (
     FORALL file:data WHERE file.subject == alice
-    EXISTS a:agent
+    EXISTS a:actor
     PERMIT alice.read[cloudS](d)
     AND PERMIT alice.write[cloudS](file)
     AUDITING DPA.audit[cloudS]()
@@ -81,7 +92,7 @@ CLAUSE sandra_policy (
 
 /*** Hospital's policy ***/
 CLAUSE hospital_policy (
-    FORALL a:agent FORALL file:data WHERE file.subject == a
+    FORALL a:actor FORALL file:data WHERE file.subject == a
     PERMIT a.read[cloudS](file)
     AUDITING DPA.audit[cloudS]()
     IF_VIOLATED_THEN DPA.sanction[cloudS]()

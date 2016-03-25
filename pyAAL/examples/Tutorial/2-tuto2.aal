@@ -64,6 +64,24 @@ CLAUSE alice_pref (
 )
 
 
+TYPE uname 
+
+TYPE uname EXTENDS(LogAttr)
+
+CLAUSE a (
+    FORALL i:uname 
+    IF ( @ReqIn("/ooko/dz" 'o')  ) THEN {
+        @UserEq(id) AND @p(x)
+    }
+)
+
+CLAUSE b (
+    FORALL i:uname 
+    IF ( @ReqIn("/ooko/dz" 'o')  ) THEN {
+        @UserEq(id)  AND @p(x)
+    }
+)
+CALL vvalidate("a" "b")
 // Call validate macro to perform the compliance check
 //CALL econflict("css_policy" "2")
 //CALL ecompliance("css_policy" "alice_pref")
@@ -91,5 +109,5 @@ for l in self.aalprog.libs:
 print(self.isDeclared("goo", m_type))
 """
 */
-CALL to_djfodtlmon()
+// CALL to_djfodtlmon()
 //CALL wvalidate_usage("css_policy" "alice_pref")

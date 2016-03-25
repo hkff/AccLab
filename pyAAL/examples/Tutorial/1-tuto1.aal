@@ -56,7 +56,7 @@ CLAUSE alice_pref (
 
 ENV """ (![f] ((subject(f, alice) )=> ~subject(f, bob))) """
 // Call validate macro to perform the compliance check
-//CALL vvalidate("css_policy" "alice_pref" "1")
+// CALL validate("css_policy" "alice_pref" "1")
 
 
 // Extended check
@@ -84,4 +84,4 @@ CHECK c1() {
 )
 """
 }
-//APPLY c1()
+// APPLY c1()
