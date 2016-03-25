@@ -47,11 +47,11 @@ def is_cmd_allowed(cmds):
 #  List dir
 def api_list_dir(wpath):
     tmp = "["
-    dirs = os.listdir(wpath)[::-1]
+    dirs = sorted(os.listdir(wpath)[::-1])
     for d in dirs:
         if d.startswith("."):
             continue
-        tmp += '{' + '"id":"cb8", "text":"' + d + '"," iconCls":""'
+        tmp += '{' + '"id":"' + wpath+'/'+d + '", "text":"' + d + '"," iconCls":""'
 
         if os.path.isdir(wpath + "/" + d):
             tmp += ',"children": '

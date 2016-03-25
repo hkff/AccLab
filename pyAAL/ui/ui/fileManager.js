@@ -28,6 +28,7 @@ visualEditor.ui.fileManager = {
 	commandStack    : null,
 	canvas          : null,
 	selectedNode    : null,
+    oldTreeState    : [],
     supportedTypes  : ["AAL", "TSPASS", "PY", "JSON", "XML", "HTML", "JS"],
     typesMode       : {"AAL":"AAL", "TSPASS": "TSPASS", "PY": "python",
                         "JSON": "json", "XML": "xml", "HTML": "html", "JS": "javascript"},
@@ -101,7 +102,14 @@ visualEditor.ui.fileManager = {
 			},
 
 			onLoadSuccess: function(node, data){
-				$("#explorer").tree("collapseAll");
+                var ex = $("#explorer");
+                ex.tree("collapseAll");
+                for(var i=0; i<visualEditor.ui.fileManager.oldTreeState.length; i++) {
+                    var e = ex.tree('find', visualEditor.ui.fileManager.oldTreeState[i]);
+                    if(e != null && e!= undefined) {
+                        ex.tree("expand", e.target);
+                    }
+                }
 			}
 		});
 	},
@@ -147,7 +155,7 @@ visualEditor.ui.fileManager = {
 				url: visualEditor.backend,
 				data: {action: "rename", file: path, new_name: file},
 				success: function(response){
-					$("#explorer").tree("reload");
+					visualEditor.ui.fileManager.reloadWithState();
 				}
 			});
 		});
@@ -373,9 +381,25 @@ visualEditor.ui.fileManager = {
         return file.split('.').pop().toLowerCase();
     },
 
+    /**
+     * Reload file tree and restore state
+     */
+    reloadWithState: function() {
+        var ex = $("#explorer");
+        visualEditor.ui.fileManager.oldTreeState = [];
+        var oldState = ex.tree('getChildren', ex.tree('getRoot'));
+
+        for(var i=0; i<oldState.length; i++) {
+            if(oldState[i].state === "open" && this.isDir(oldState[i].id))
+                visualEditor.ui.fileManager.oldTreeState.push(oldState[i].id);
+        }
+        ex.tree("reload");
+    },
+
 	/**
 	 * Create a file
 	 * @param file
+     * @param open
 	 */
 	createFile: function(file, open) {
 		var fileType = file.split('.').pop().toLowerCase();
@@ -397,7 +421,7 @@ visualEditor.ui.fileManager = {
 		});
 
 		// Update explorer
-		$("#explorer").tree("reload");
+		visualEditor.ui.fileManager.reloadWithState();
 	},
 
 	/**
@@ -415,7 +439,7 @@ visualEditor.ui.fileManager = {
 		});
 
 		// Update explorer
-		$("#explorer").tree("reload");
+		visualEditor.ui.fileManager.reloadWithState();
 	},
 
     /**
@@ -459,7 +483,7 @@ visualEditor.ui.fileManager = {
 		toastr.success('AAL file generated !');
 
 		// Update explorer
-		$("#explorer").tree("reload");
+		visualEditor.ui.fileManager.reloadWithState();
 	},
 
 	/**
@@ -539,7 +563,7 @@ visualEditor.ui.fileManager = {
 		});
 
 		// Update explorer
-		$("#explorer").tree("reload");
+		visualEditor.ui.fileManager.reloadWithState();
 	},
 
 	/**
@@ -651,7 +675,7 @@ visualEditor.ui.fileManager = {
 			data: {action: "django", aal_file: aal_file, spec_file: spec_file, output_folder: output_folder},
 			success: function(response){
 				// Update explorer
-				$("#explorer").tree("reload");
+				visualEditor.ui.fileManager.reloadWithState();
 				visualEditor.log(response)
             }
 		});
