@@ -63,6 +63,7 @@ visualEditor.ui.fileManager = {
           '<div id="fmm-new-folder" data-options="iconCls:\'fa fa-folder\'" class="menu-item cmenuBtn" >New Folder</div>'+
 		  '<div id="fmm-new-diagram" data-options="iconCls:\'fa fa-edit\'" class="menu-item cmenuBtn" >New Diagram</div>'+
 		  '<div id="fmm-new-aal" data-options="iconCls:\'fa fa-file-code-o\'" class="menu-item cmenuBtn" >New AAL file</div>'+
+          '<div id="fmm-new-vfodtl" data-options="iconCls:\'fa fa-calendar-o\'" class="menu-item cmenuBtn" >New VFODTL file</div>'+
 		  '<div id="fmm-open"  data-options="iconCls:\'fa fa-folder-open\'" class="menu-item cmenuBtn">Open</div>'+
 		  '<div id="fmm-rename" data-options="iconCls:\'fa fa-edit\'" class="menu-item cmenuBtn" >Rename</div>'+
 		  //'<div class="menu-sep"></div>'+
@@ -125,35 +126,11 @@ visualEditor.ui.fileManager = {
 			_this.createFolder(file);
 		});
 
-		$('#fmm-new-diagram').click(function(e){
-			var node = $("#explorer").tree('getSelected');
-			var file;
-			do {
-				file=prompt("Enter file name");
-			}
-			while(file.length <= 0);
-			file = file + ".acd";
-			var path = _this.getAbsPath(node);
-			file = path.replace(node.text, "") + file;
+        $('#fmm-new-vfodtl').click({"type": ".vfodtl"}, visualEditor.ui.fileManager.createFileMenu);
 
-			_this.createFile(file, true);
-			//_this.openFile(file);
-		});
+		$('#fmm-new-diagram').click({"type": ".acd"}, visualEditor.ui.fileManager.createFileMenu);
 
-		$('#fmm-new-aal').click(function(e){
-			var node = $("#explorer").tree('getSelected');
-			var file;
-			do {
-				file=prompt("Enter file name");
-			}
-			while(file.length < 0);
-			file = file + ".aal";
-			var path = _this.getAbsPath(node);
-			file = path.replace(node.text, "") + file;
-
-			_this.createFile(file, true);
-			//_this.openFile(file);
-		});
+		$('#fmm-new-aal').click({"type": ".aal"}, visualEditor.ui.fileManager.createFileMenu);
 
 		$('#fmm-rename').click(function(e){
 			var node = $("#explorer").tree('getSelected');
@@ -236,6 +213,27 @@ visualEditor.ui.fileManager = {
             }
 		});
 	},
+
+    /**
+     * Create a file from menu btn
+     * @param e
+     */
+    createFileMenu: function(e){
+        var node = $("#explorer").tree('getSelected');
+        var file;
+        do {
+            file=prompt("Enter file name");
+        }
+        while(file.length <= 0);
+        file = file + e.data.type;
+        var path = visualEditor.ui.fileManager.getAbsPath(node);
+        if(visualEditor.ui.fileManager.isDir(path))
+            file = path + "/" + file;
+        else
+            file = path.replace(node.text, "") + file;
+
+        visualEditor.ui.fileManager.createFile(file, true);
+    },
 
 	/**
 	 * Get absolute path
