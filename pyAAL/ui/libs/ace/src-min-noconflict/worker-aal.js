@@ -108,7 +108,6 @@ var AnnotatingErrorListener = function(annotations) {
     return this;
 };
 
-var DEBUG = true;
 
 AnnotatingErrorListener.prototype = Object.create(antlr4.error.ErrorListener.prototype);
 AnnotatingErrorListener.prototype.constructor = AnnotatingErrorListener;
@@ -116,13 +115,13 @@ AnnotatingErrorListener.prototype.syntaxError = function(recognizer, offendingSy
     var parser = recognizer._ctx.parser,
         tokens = parser.getTokenStream().tokens;
     // Push the annotation
-    var res = error_linter(msg, tokens, offendingSymbol) +
-        "\n\nDEBUG :" +
-        "\ntoken -1 : " + tokens[tokens.length-1].toString() +
-        "\ntoken -2 : " + tokens[tokens.length-2].toString() +
-        "\ntoken -3 : " + tokens[tokens.length-3].toString() +
-        "\nMsg : " + msg +
-        "\nOffendingSymbol : " + offendingSymbol;
+    var res = error_linter(msg, tokens, offendingSymbol);// +
+        //"\n\nDEBUG :" +
+        //"\ntoken -1 : " + tokens[tokens.length-1].toString() +
+        //"\ntoken -2 : " + tokens[tokens.length-2].toString() +
+        //"\ntoken -3 : " + tokens[tokens.length-3].toString() +
+        //"\nMsg : " + msg +
+        //"\nOffendingSymbol : " + offendingSymbol);
     this.annotations.push({row: line - 1, column: column, text: res, type: "error"});
 };
 
