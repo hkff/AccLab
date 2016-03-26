@@ -24,7 +24,8 @@ import os
 
 cmd = sys.argv[1]
 if cmd == "aal":
-    exec("os.system('java -jar grammar/antlr4.4.jar -Dlanguage=Python3 grammar/aal/AAL.g4')")
-else:
-    if cmd == "tspass":
-        exec("os.system('java -jar grammar/antlr4.4.jar -Dlanguage=Python3 grammar/tspass/TSPASS.g4')")
+    exec("os.system('java -jar grammar/antlr4.5.1.jar -Dlanguage=Python3 grammar/aal/AAL.g4')")
+elif cmd == "tspass":
+        exec("os.system('java -jar grammar/antlr4.5.1.jar -Dlanguage=Python3 grammar/tspass/TSPASS.g4')")
+elif cmd == "aaljs":
+    exec("os.system('java -jar grammar/antlr4.5.1.jar -Dlanguage=JavaScript grammar/aal/AAL.g4')")

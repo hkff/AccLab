@@ -23,42 +23,57 @@
 
 
 body {
-  background-color: #F8F8F8;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1.2em;
-  margin: 0px;
-  overflow: hidden;
-  position:fixed;
+    background-color: black;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.2em;
+    margin: 0px;
+    overflow: hidden;
+    position:fixed;
+}
+
+#loading-image {
+	background-color: #333;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	z-index: 9999999;
+    text-align: center;
+    padding-top: 100px;
+}
+
+.loaderContent {
+    color: whitesmoke;
+    font-size: 20px;
 }
 
 .demo-header {
-  background-color: #000;
-  color: #888;
-  width: 100%;
-  height: 46px;
+    background-color: #000;
+    color: #888;
+    width: 100%;
+    height: 46px;
 }
 
 .demo-header-title {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 22px;
-  padding: 15px;
-  float: left;
-  position:relative;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 22px;
+    padding: 15px;
+    float: left;
+    position:relative;
 }
 
 .demo-header-description {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  float: left;
-  padding: 15px;
-  position:relative;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    float: left;
+    padding: 15px;
+    position:relative;
 }
 
 .my-dock-manager {
-  background-color: #F8F8F8;
-  clear: both;
+    background-color: #F8F8F8;
+    clear: both;
 }
 
 .solution-window {
@@ -375,4 +390,162 @@ body {
     position:absolute;
     background: rgba(200, 0, 14, 0.5);
     z-index:20
+}
+
+/* Context Menu */
+
+#acdWheelContextMenu, #aceWheelContextMenu {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 9999999;
+    display: none;
+}
+
+.trigger{
+    width:20px;
+    height: 20px;
+    position:absolute;
+    z-index: 10;
+    left:65px;
+    top:65px;
+    cursor: pointer;
+    background-color: #25B1E2;
+    opacity: 0.45;
+    border-radius: 20px;
+}
+
+.popcircle{
+    width: 143px;
+    height: 143px;
+    margin-top: 2px;
+    margin-left: 2px;
+    cursor: pointer;
+    background-color: rgba(36, 37, 32, 0.92);
+    border-radius: 80px;
+    border-color: #2083D2;
+    border-width: 3px;
+    border-style: double;
+}
+.popcircle ul{
+    list-style:none;
+    padding:0px;
+    margin: 0px;
+    height: auto;
+    cursor: pointer;
+}
+.popcircle ul li{
+    top: 60px;
+    left: 60px;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+}
+
+
+rect.pointer{
+    cursor:pointer;
+    fill:white !important; /* cursor isn't show if the element didn't have any "fill" != transparent */
+    opacity:0.01 !important; /* make the fill almost invisible */
+}
+
+path.pointer{
+    cursor:pointer;
+}
+
+.draw2d_OutputPort{
+    fill: #157dfb;
+    stroke: white;
+}
+
+.draw2d_InputPort{
+    fill: #157dfb;
+    stroke: white;
+}
+
+/* Ace statusbar */
+#statusBar {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    height: 20px;
+    color: gray;
+    background-color: #F7F7F7;
+    z-index: 9999;
+    border-top-color: #0061A5;
+    border-top-width: thin;
+    border-top-style: outset;
+    opacity: 0.2;
+}
+
+.ace_status-indicator {
+    color: gray;
+    position: absolute;
+    right: 0;
+    border-left: 1px solid;
+}
+
+#cmd {
+    height: 18px;
+    width: 70%;
+    border-width: 0;
+    color: #0061A5;
+}
+
+#cmd:focus {
+    outline: 0;
+}
+
+/* Custom webkit scrollbar */
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(238, 238, 238, 0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    margin-top: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgb(117, 117, 117);
+    -webkit-box-shadow: inset 0 0 6px rgba(189, 184, 177, 0.97);
+}
+
+.tab-handle-list-container {
+    background-color: #333;
+    height: 22px;
+    overflow: auto;
+}
+
+#preview {
+    border-radius: 5px;
+    overflow: auto;
+    position: absolute;
+    top:10px;
+    right:10px;
+    width:150px;
+    border:3px solid gray;
+}
+
+.startedCat {
+    float: left;
+    width: 33%;
+    padding-top: 30px;
+}
+
+.startedCatInner {
+    padding-left: 15px;
+}
+
+.catElement {
+    float: left;
+    text-decoration: none;
 }

@@ -22,7 +22,6 @@
 visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 
 	NAME : "visualEditor.ui.gridEditor",
-
 	grid            : null,
 	actionsPanel    : null,
 	componentsPanel : null,
@@ -30,6 +29,7 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 	_this           : this,
 	labelColor      : null,
 	editPolicies    : [],
+    mode            : "acd",
 
 	/**
 	 * init function
@@ -37,61 +37,64 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 	 * @param actionsPanel
 	 * @param componentsPanel
 	 * @param propertiesPanel
+     * @param mode
 	 */
-	init: function(grid, actionsPanel, componentsPanel, propertiesPanel) {
-		
+	init: function(grid, actionsPanel, componentsPanel, propertiesPanel, mode) {
+
 		// Get view elements
 		this.grid            = $('#'+ grid);
 		this.actionsPanel    = $('#'+ actionsPanel);
 		this.componentsPanel = $('#'+ componentsPanel);
 		this.propertiesPanel = $('#'+ propertiesPanel);
+        this.mode = mode;
 
 		// init graph
-		//this.canvas = new draw2d.Canvas(grid);
+        //this.makeWheelContextMenu("acdPops");
 
 		this._super(grid, 2000, 2000);
 		this.setScrollArea("#"+grid);
 
 		this.handleEvents();
-		
-		this.installEditPolicy(new CopyInterceptorPolicy());
-		this.installEditPolicy(new draw2d.policy.canvas.CoronaDecorationPolicy());
-		this.installEditPolicy(new draw2d.policy.canvas.SnapToGeometryEditPolicy());
-		this.installEditPolicy(new draw2d.policy.canvas.ShowDotEditPolicy());
 
-		// override the default method for connection create. 
-		// Now we create always the kind of connection which the user has been selected in the
-		// menubar. 
-		draw2d.Connection.createConnection=function(sourcePort, targetPort){
-		    var c = new MyConnection({
-	    	   		targetDecorator : new draw2d.decoration.connection.CircleDecorator(10,10),
-					sourceDecorator : new draw2d.decoration.connection.RequiredDecorator(0, 200)
-		    });
-		    //c.setRouter(draw2d.Connection.DEFAULT_ROUTER);
-		    c.setRouter(new draw2d.layout.connection.SplineConnectionRouter());
-		    return c;
-		};
+        switch (mode) {
+            // ------------------ ACD mode ------------------- //
+            case "acd":
+                this.installEditPolicy(new CopyInterceptorPolicy());
+                //this.installEditPolicy(new draw2d.policy.canvas.CoronaDecorationPolicy());
+                this.installEditPolicy(new draw2d.policy.canvas.SnapToGeometryEditPolicy());
+                this.installEditPolicy(new draw2d.policy.canvas.ShowDotEditPolicy()); // SnapToGridEditPolicy
 
-		this.on("select", function(emitter,figure){
-	    	if(figure!==null) {
-                // Update panel prop
-	        	visualEditor.ui.selectedNode = figure;
-	        	$(visualEditor.ui).trigger('nodeSelected');
+                this.installEditPolicy(new draw2d.policy.connection.DragConnectionCreatePolicy({
+                    createConnection: function(){
+                        return new MyConnection();
+                    }
+                }));
+                break;
 
-                $(visualEditor.ui.propertiesPanel.children()).css("opacity", 1);
-                visualEditor.ui.propertiesPanel[0].removeEventListener("click", visualEditor.ui.stoper, true);
-            }
-	     	else{
-                // Hide panel prop
-				$(visualEditor.ui.propertiesPanel.children()).css("opacity", 0.15);
-                visualEditor.ui.propertiesPanel[0].addEventListener("click", visualEditor.ui.stoper, true);
-     		}
-     	});
+            // ------------------ VFODTL mode ------------------- //
+            case "vfodtl":
+                this.installEditPolicy(new draw2d.policy.canvas.BoundingboxSelectionPolicy());
+                this.installEditPolicy(  new draw2d.policy.connection.DragConnectionCreatePolicy({
+                    createConnection: visualEditor.createFodtlConnection
+                }));
+                this.installEditPolicy(new visualEditor.FodtlInterceptorPolicy());
+                break;
+        }
+
+        // add an event listener to the Canvas for change notifications.
+        var _this = this;
+        this.getCommandStack().addEventListener(function (e) {
+            if (e.isPostChangeEvent())
+                _this.updatePreview();
+        });
 	},
 
     handleEvents: function() {
-    	 $(this.grid).bind("mousewheel", this.zoom);
-    	 $(this.grid).bind("onDrop", this.onDrop);
+    	$(this.grid).bind("mousewheel", this.zoom);
+    	$(this.grid).bind("onDrop", this.onDrop);
+
+        // Handle context menu
+        //$(this.grid).bind("contextmenu", this.toggleWheelContextMenu);
     },
 
     zoom: function(event) {
@@ -100,20 +103,147 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
 			else delta = 0.7;
 			visualEditor.ui.canvas.setZoom(visualEditor.ui.canvas.getZoom()*delta, true);	
     	}
+    },
+
+    /**
+     * Create the wheel context menu
+     */
+    makeWheelContextMenu: function(target_id) {
+        var pops = $("#" + target_id);
+
+        var btn = new visualEditor.ui.tools.saveTool();
+        btn.button = $('<li><div title="Save (ctrl+S)" id="saveBtn" class="btn-action fa fa-save fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops, true);
+
+        btn = new visualEditor.ui.tools.genAALTool();
+        btn.button = $('<li><div title="Generate AAL file (ctrl+G)" id="genAALBtn" class="btn-action fa fa-file-text-o fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops, true);
+
+        btn = new visualEditor.ui.tools.AALSyntaxTool();
+        btn.button = $('<li><div title="Agent (Ctrl+Shift+A)" class="btn-components fa fa-user fa-2x"></div></li>');
+        $(btn.button).on("click", function(e){ console.log("koko"); var a = new agent(); a.addElement() })
+        pops.append(btn.button);
+        //btn.control(pops, true);
+
+        btn = new visualEditor.ui.tools.mselectTool();
+        btn.button = $('<li><div title="Multiple Selection Mode" id="mselectBtn" class="btn-action fa fa-square fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops);
+
+        btn = new visualEditor.ui.tools.clearOutputTool();
+        btn.button = $('<li><div title="Clear output" id="clearOutputBtn" class="btn-action fa fa-square-o  fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops);
+
+        // Bind the event listener to the trigger
+        $("#acdTrigger").bind("mousedown", this.toggleWheelContextMenu);
+
+        // Make the wheel draggable
+        $("#acdWheelContextMenu").draggable();
+    },
+
+    toggleWheelContextMenu: function(e) {
+        if(visualEditor.ui.selectedNode != null)
+            return;
+
+        var wcm = $("#acdWheelContextMenu");
+        wcm.toggle("display");
+        wcm.css("top", e.clientY - 75);
+        wcm.css("left", e.clientX - 75);
+
+        e.preventDefault();
+        $.popcircle('#acdPops', {
+            spacing:'-5px',
+            type:'full',        // full, half, quad
+            offset:0,	        // 0, 1, 2, 3, 4, 5, 6, 7 or 5.1
+            ease:'easeOutQuad', // jquery ease effects,
+            time:'fast'         // slow, fast, 1000
+        });
+    },
+
+    updatePreview: function() {
+        // convert the canvas into a PNG image source string
+        try {
+            var xCoords = [];
+            var yCoords = [];
+            this.getFigures().each(function (i, f) {
+                var b = f.getBoundingBox();
+                xCoords.push(b.x, b.x + b.w);
+                yCoords.push(b.y, b.y + b.h);
+            });
+            var minX = Math.min.apply(Math, xCoords);
+            var minY = Math.min.apply(Math, yCoords);
+            var width = Math.max.apply(Math, xCoords) - minX;
+            var height = Math.max.apply(Math, yCoords) - minY;
+
+            var writer = new draw2d.io.png.Writer();
+            writer.marshal(this, function (png) {
+                $("#preview").attr("src", png);
+            }, new draw2d.geo.Rectangle(minX, minY, width, height));
+        } catch (err) {
+            console.log(err);
+        }
     }
 });
 
 
-
+/**
+ * Custom connection
+ */
 var MyConnection= draw2d.Connection.extend({
     init:function(attr) {
         this._super(attr);
         this.setRouter(new draw2d.layout.connection.InteractiveManhattanConnectionRouter());
+        //this.setRouter(new draw2d.layout.connection.MazeConnectionRouter());
+        //this.installEditPolicy(new draw2d.policy.line.VertexSelectionFeedbackPolicy());
         this.setOutlineStroke(0);
         this.setOutlineColor("#303030");
-        this.setStroke(3);
+        this.setStroke(4);
         this.setColor('#00A8F0');
-        this.setRadius(0);
+        this.setRadius(20);
+    },
+
+	onContextMenu:function(x,y){
+        $.contextMenu({
+            selector: 'body',
+            events:
+            {
+                hide:function(){ $.contextMenu( 'destroy' ); }
+            },
+            callback: $.proxy(function(key, options)
+            {
+               switch(key){
+               case "red":
+                   this.setColor('#f3546a');
+                   break;
+               case "green":
+                   this.setColor('#b9dd69');
+                   break;
+               case "blue":
+                   this.setColor('#00A8F0');
+                   break;
+               case "delete":
+                   // with undo/redo support
+                   var cmd = new draw2d.command.CommandDelete(this);
+                   this.getCanvas().getCommandStack().execute(cmd);
+               default:
+                   break;
+               }
+
+            },this),
+            x:x,
+            y:y,
+            items:
+            {
+                "red":    {name: "Red", icon: ""},
+                "green":  {name: "Green", icon: ""},
+                "blue":   {name: "Blue", icon: ""},
+                "sep1":   "---------",
+                "delete": {name: "Delete", icon: ""}
+            }
+        });
     }
 });
 
@@ -161,7 +291,7 @@ var CopyInterceptorPolicy = draw2d.policy.canvas.SingleSelectionPolicy.extend({
 	    		this.mouseDraggingElement  = this.mouseDraggingElement.clone();
 	    		
 	    		// add the clone to the canvas and start dragging of the clone
-	    		canvas.addFigure(this.mouseDraggingElement, pos);
+	    		canvas.add(this.mouseDraggingElement, pos);
 	    		// select the clone
 	    		this.select(canvas,this.mouseDraggingElement);
 

@@ -23,7 +23,7 @@ from urllib.parse import urlparse
 from socketserver import ThreadingMixIn, ForkingMixIn
 import webbrowser
 import sys
-from os import *
+import os
 import threading
 from ui.api import *
 import signal
@@ -120,6 +120,24 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
 
         elif val == "killPs":
             res = api_kill_ps(self.get_arg(args, "pid", method))
+
+        elif val == "genAccmon":
+            res = api_gen_accmon(self.get_arg(args, "file", method), self.get_arg(args, "spec", method))
+
+        elif val == "django":
+            res = api_generate_django(self.get_arg(args, "aal_file", method), self.get_arg(args, "spec_file", method),
+                                    self.get_arg(args, "output_folder", method))
+
+        elif val == "runDjango":
+            save_current_ps_id(os.getpid())
+            res = api_run_django(self.get_arg(args, "file", method))
+
+        elif val == "fodtlToDiagram":
+            res = api_fodtl_to_vfodtl(self.get_arg(args, "formula", method))
+
+        elif val == "registerAccMonMonitor":
+            res = api_register_accmon_monitor(self.get_arg(args, "formula", method), self.get_arg(args, "name", method),
+                                              self.get_arg(args, "accmon_url", method))
 
         elif val == "cancelCurrentPS":
             res = "No aalc/tspassc process is running"

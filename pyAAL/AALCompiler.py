@@ -32,6 +32,7 @@ from tools.color import Color, disable_all_colors, set_light_background, Windows
 import tools.hottie as hottie
 from tools.hottie import hot
 from AALChecker import *
+from AALtoAccmon import *
 
 
 # Note : To avoid cyclic import
@@ -165,7 +166,6 @@ class AALCompilerListener(AALListener.AALListener):
 
         lib_path = lib_name.replace('"', '').replace(".", "/") + ".aal"
         #  Search in the file scope before
-        # FIXME
         if not internal:
             lib_path2 = root_path + lib_path
             # print(lib_path2)
@@ -175,40 +175,14 @@ class AALCompilerListener(AALListener.AALListener):
             elif os.path.exists(lib_path2):
                 found_lib_path = lib_path2
 
-                # for root, dirs, files in os.walk(root_path):
-                #     for file in files:
-                #         tmp = os.path.join(root, file)
-                #         if tmp == lib_path2:
-                #             if self.DEBUG:
-                #                 print("file founded 0 ! " + tmp)
-                #             found_lib_path = lib_path2
-                #         elif tmp == lib_path2 + "c" and not self.recompile:
-                #             if self.DEBUG:
-                #                 print("file founded 0 ! " + tmp)
-                #             found_lib_path = lib_path2 + "c"
-                #             break
-
         if found_lib_path is None:
             # Search in internal libs
-            root_path = self.libsPath
+            # root_path = self.libsPath
             lib_path2 = self.libsPath + lib_path
             if os.path.exists(lib_path2 + "c"):
                 found_lib_path = lib_path2 + "c"
             elif os.path.exists(lib_path2):
                 found_lib_path = lib_path2
-
-                # for root, dirs, files in os.walk(root_path):
-                #     for file in files:
-                #         tmp = os.path.join(root, file)
-                #         if tmp == lib_path2:
-                #             if self.DEBUG:
-                #                 print("file founded ! " + tmp)
-                #             found_lib_path = lib_path2
-                #         elif tmp == lib_path2 + "c" and not self.recompile:
-                #             if self.DEBUG:
-                #                 print("file founded ! " + tmp)
-                #             found_lib_path = lib_path2 + "c"
-                #             break
 
         # Try absolute path
         if os.path.exists(lib_name.replace("\"", "")):
@@ -229,8 +203,9 @@ class AALCompilerListener(AALListener.AALListener):
             stream = CommonTokenStream(lexer)
             parser = AALParser(stream)
             # !IMPORTANT : set loadlibs false to avoid infinite rec
-            parser.addParseListener(AALCompilerListener(file=found_lib_path, root_path=root_path,
-                                                        loadlibs=False, serialize=False))
+            desec = DescriptiveErrorListener()
+            parser.addParseListener(AALCompilerListener(file=found_lib_path, root_path=self.root_path,
+                                                        errors_listener=desec, loadlibs=False, serialize=False))
             parser.buildParseTrees = True
             tr = parser.main()
             l = parser.getParseListeners().pop(0)
@@ -979,9 +954,12 @@ class AALCompilerListener(AALListener.AALListener):
         elif ctx.h_predicate() is not None:  # Test Predicate
             cts = m_predicate()
             if ctx.h_predicate().ID() is not None:
-                cts.name = ctx.h_predicate().ID()[0]
-                for x in ctx.h_predicate().ID():
-                    cts.args.append(x)
+                cts.name = ctx.h_predicate().ID()
+                for x in ctx.h_predicate().h_pArgs():
+                    if x.STRING() is not None:
+                        cts.args.append(x.STRING())
+                    elif x.ID() is not None:
+                        cts.args.append(x.ID())
             self.expStack[-1] = cts
 
         elif (ctx.ID() is not None) and (ctx.h_attribute() is not None):  # Test attribute var

@@ -11,8 +11,8 @@
       {"name": "", "id": "resource", "type": "select", "pre": " Resource ", "post": " ", "src": "{aal.data}"},
       {"name": "", "id": "owner", "type": "select", "pre": " Owner ", "post": " ", "src": "{aal.agents}"},
       {"name": "", "id": "user", "type": "select", "pre": " User ", "post": " ", "src": "{aal.agents}"},
-      {"name": "", "id": "permit", "type": "radio", "pre": "", "post": "Permit"},
-      {"name": "", "id": "deny", "type": "radio", "pre": "", "post": "Deny", "checked":""},
+      {"name": "a", "id": "permit", "type": "radio", "pre": "", "post": "Permit"},
+      {"name": "a", "id": "deny", "type": "radio", "pre": "", "post": "Deny", "checked":""},
       {"name": "", "id": "provider", "type": "select", "pre": " Provider ", "post": " ", "src": "{aal.agents}"}
     ],
 	"aal": [
@@ -30,14 +30,14 @@
       "{{('{provider}.ctext'.startsWith('EXISTS')?'EXISTS ' + '{provider}.cval:{provider}.ctext '.replace('EXISTS ',''):'')}}",
 
       "{{'\\n'+ (({read}.checked)?'\\n' + (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.read[{provider}.val]({resource}.val)':'') }}",
-      "+{{ (({read}.checked && {write}.checked)?' AND \\n':'') + (({write}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ",
+      "{{ (({read}.checked && {write}.checked)?' AND \\n':'') + (({write}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ",
         "' {user}.val.write[{provider}.val]({resource}.val)') : '') }}",
-      "+{{ (({update}.checked && ({read}.checked || {write}.checked )) ?' AND \\n':'') + (({update}.checked)? ( (({deny}.checked)?'DENY':'PERMIT')",
+      "{{ (({update}.checked && ({read}.checked || {write}.checked )) ?' AND \\n':'') + (({update}.checked)? ( (({deny}.checked)?'DENY':'PERMIT')",
         " + ' {user}.val.update[{provider}.val]({resource}.val)') : '') }}",
-      "+{{ (({delete}.checked && ({read}.checked || {write}.checked || {update}.checked))?' AND \\n':'') + (({delete}.checked)? ",
+      "{{ (({delete}.checked && ({read}.checked || {write}.checked || {update}.checked))?' AND \\n':'') + (({delete}.checked)? ",
         "( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.delete[{provider}.val]({resource}.val)') : '') }}",
 
-      "+{{ (({useaction}.checked && ({read}.checked || {write}.checked || {update}.checked ||{delete}.checked))?' AND \\n':'') +",
+      "{{ (({useaction}.checked && ({read}.checked || {write}.checked || {update}.checked ||{delete}.checked))?' AND \\n':'') +",
         " (({useaction}.checked)? ( (({deny}.checked)?'DENY':'PERMIT') + ' {user}.val.{action}.val[{provider}.val]({resource}.val)') : '') }} AND\n<...>",
       ")"
 

@@ -69,10 +69,12 @@ def generate_simulation(aalprog: m_aalprog):
 
     # Creating all actors with their Reference monitors
     for x in agents:
-        actors.append(MyActor.start(x, proxy=sim.watcher, behavior=behaviors.get(x)))
-        actors.append(LoggerRefMonitor.start("RM_" + x, actor=actors[-1], proxy=sim.watcher, behavior=Behavior()))
+        actors.append(MyActor2.start(x, proxy=sim.watcher, behavior=behaviors.get(x)))
+        actors.append(LoggerRefMonitor.start("RM_" + x, actor=actors[-1], proxy=sim.watcher, behavior=Behavior(),
+                                             formula="G A x:data. ~ read('bob', 'alice', x) U Pread('bob', 'alice', x)"))
 
     sim.eval_action("bob.read[alice](d)")
 
     # sim.run_shell()
     sim.stop()
+    print("\n\n\n")

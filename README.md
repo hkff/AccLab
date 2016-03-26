@@ -1,4 +1,8 @@
-AccLab Last release : Version 1.1 02/10/2015
+[![Version](https://img.shields.io/badge/version-2.0-orange.svg)]()
+[![License](https://img.shields.io/badge/license-GPL3-blue.svg)]()
+[![Python](https://img.shields.io/badge/python->%3D3.4-green.svg)]()
+
+AccLab Last release : Version 2.0 26/03/2016
 
 What is it?
 -----------
@@ -18,6 +22,9 @@ up-to-date documentation can be found at AccLab webpage.
 Installation
 ------------
 
+WARNING : AccLab is designed to run on local machines, DO NOT use it as a web service since
+the AAL macros are written in python, which allows arbitrary code execution.
+
 You need PythonX.X.X >= Python3.4.0 installed on your system
 To run the main program : python aalc.py
 
@@ -33,54 +40,25 @@ checking, etc) AccLab needs the following dependency :
     The source code for TSPASS version 0.95-0.17 is provided
     with this tool.
 
+* In order to use AccMon features AccLab needs the following dependency :
+
+    ###### AccMon >= 1.0 :
+        sudo pip3 install accmon
+
 #### Optional : (Under Development)
 * In order to use monitor synthetization / simulation features,
 AccLab needs the following dependencies :
 
-    ###### Temporal Logic Planning (TuLiP) Toolbox
-    AccLab embeds a modified version of TuLiP (based on v1.1-a)
-    and a modified version of polytope  
-    TuLip depends on the following packages :
-    NumPy, SciPy, CVXOPT, NetworkX, ply, Matplotlib, pydot, Graphviz  
+    You need to install the following dependencies :
 
-    You need to install the following dependencies :  
-    
-            $ sudo apt-get install python3-numpy python3-scipy python3-networkx python3-ply python3-matplotlib graphviz
-            
-    Installing cvxopt :  
-    
-        sudo apt-get install python3-cvxopt  
-    If this not works for you, you have to install it manually :  
-    cvxopt depends on the following packages :  
-    
-            $ sudo apt-get install liblapack3 liblapack-dev  
-            $ sudo apt-get install libblas-dev liblapack3gf
-            $ sudo apt-get install python3-dev
-        
-    After that you can download and install cvxopt from  http://cvxopt.org/  
-    For more information on TuLip see
-    http://tulip-control.sourceforge.net/
-
-    ###### ltl2ba / ltl3ba :
-    LTL to Buchi automata tools.  
-    Binaries are provided for linux x64 in the folder tools/_platformName_/ . 
-    For other platforms you have to compile the sources.  
-    Note : ltl3ba depends on buddy-2.4, you need to compile and install it.
-    
-        $ ./configure --prefix=/usr
-        $ sudo make & make install
-    The source code for ltl3ba-1.1.2, ltl2ba-1.2b1 and buddy-2.4 
-    are provided with this tool, see folder tools/thirdparty_src/ .
-    
-    http://www.lsv.ens-cachan.fr/~gastin/ltl2ba/  
-    http://sourceforge.net/projects/ltl3ba/  
-    http://sourceforge.net/projects/buddy/
+            $ sudo pip3 install pykka
 
 
-AAL Syntax highlighting modes for emacs, intellij, nano and ace, 
-can be found in tools/utils/.  
-If you want to run aalc using a symbolic link you need to set the 
-environment variable ACCLAB_PATH 
+
+AAL Syntax highlighting modes for emacs, intellij, nano and ace,
+can be found in tools/utils/.
+If you want to run aalc using a symbolic link you need to set the
+environment variable ACCLAB_PATH
 
     $ export ACCLAB_PATH=<AccLab_install_dir>
 
@@ -104,7 +82,7 @@ Contacts
 >   Julie Spens         (UI)  
 
 -------------------------------------------------------------------------------
-Copyright (C) 2014-2015 Walid Benghabrit  
+Copyright (C) 2014-2016 Walid Benghabrit  
 Ecole des Mines de Nantes - ARMINES  
 ASCOLA Research Group  
 A4CLOUD Project http://www.a4cloud.eu/

@@ -34,6 +34,8 @@ visualEditor.ui = {
     interval         : null,
 	psUpdateInterval : 10000,
 	openedEditors    : {},
+    consoleLog       : [],
+    consolePredefs   : ['call', 'clear', 'agents', 'services', 'clauses'],
 
 	/**
 	 * init function
@@ -52,7 +54,7 @@ visualEditor.ui = {
 		this.inplacePanel    = $('#' + inplacePanel);
 
 		//visualEditor.ui.canvas = new visualEditor.ui.gridEditor(grid, actionsPanel, componentsPanel, propertiesPanel);
-		visualEditor.ui.properties.init(grid, actionsPanel, componentsPanel, propertiesPanel);
+		//visualEditor.ui.properties.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.tools.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.outline.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.fileManager.init(grid, actionsPanel, componentsPanel, propertiesPanel);
@@ -74,18 +76,24 @@ visualEditor.ui = {
 			"hideEasing": "linear",
 			"showMethod": "fadeIn",
 			"hideMethod": "fadeOut"
-		}
+		};
+
+		// Init ace editor wheelContextMenu
+    	this.makeAceWheelContextMenu("acePops");
+
+        // Hide ACD preview
+        $("#preview").draggable().hide();
 	},
 
 	// Events
 	handleEvents: function() {
-		$(this).bind('nodeSelected', this.nodeSelected)
-		$(this).bind('nodeUpdated', this.nodeUpdated)
+		$(this).bind('nodeSelected', this.nodeSelected);
+		$(this).bind('nodeUpdated', this.nodeUpdated);
 
 	},
 
 	nodeSelected: function() {
-		visualEditor.ui.properties.updateProps();
+		//visualEditor.ui.properties.updateProps();
 		//visualEditor.ui.outline.select(visualEditor.ui.selectedNode.id);
 	},
 
@@ -98,8 +106,9 @@ visualEditor.ui = {
 		e.preventDefault()
 	},
 
-	updateToastSize: function(type, size, dragable, icon) {
+	updateToastSize: function(type, size, dragable, icon, top) {
         var l = $(".toast-" + type);
+        if(top != undefined) $(l[l.length - 1]).css("top", top);
         if(l[l.length - 1] != undefined) {
             if(size.width != undefined) $(l[l.length - 1]).css("width", size.width + "px");
             if(size.height != undefined) $(l[l.length - 1]).css("height", size.height + "px");
@@ -122,8 +131,9 @@ visualEditor.ui = {
 		var fileType = file.split('.').pop().toLowerCase();
 		var tt = visualEditor.ui.tools.tools;
 		// If it is not a diagram, disable gui elements
-		if(fileType != "acd") {
-			this.disableNode(this.propertiesPanel);
+		if(fileType != "acd" && fileType != "vfodtl") {
+            $("#preview").hide();
+			//this.disableNode(this.propertiesPanel);
 			//this.disableNode(this.actionsPanel);
 			for(var i=0; i<tt.length; i++) {
 				$(tt[i].button).hide();
@@ -143,11 +153,13 @@ visualEditor.ui = {
 				$(visualEditor.ui.tools.tools[20].button).show();
 				$(visualEditor.ui.tools.tools[21].button).show();
 				$(visualEditor.ui.tools.tools[22].button).show();
+                visualEditor.ui.analyseAAL(file);
 			}
 
 		} else {
+            $("#preview").show();
 			// Enable them
-			this.enableNode(this.propertiesPanel);
+			//this.enableNode(this.propertiesPanel);
 			//this.enableNode(this.actionsPanel);
 			for(var i=0; i<tt.length; i++) {
 				$(tt[i].button).show();
@@ -158,8 +170,21 @@ visualEditor.ui = {
 			$(visualEditor.ui.tools.tools[18].button).hide();
 			$(visualEditor.ui.tools.tools[20].button).hide();
 			$(visualEditor.ui.tools.tools[21].button).hide();
+
+            if(fileType === "acd")
+                visualEditor.ui.components.hideVfodtlCompnents();
+            else if(fileType === "vfodtl")
+                visualEditor.ui.components.hideAcdCompnents();
 		}
 	},
+
+    /**
+     * Get current opened file name
+     * @returns {*}
+     */
+    getOpenedFile: function() {
+        return visualEditor.ui.activeTab.container.title;
+    },
 
 	/**
 	 * Enable a node
@@ -220,7 +245,7 @@ visualEditor.ui = {
 		aal += "\n/***************************\n *       Clauses\n ****************************/\n";
 		for(var i=0; i<figs.getSize(); i++) {
 			tmp = figs.get(i);
-			var tmp_policy = tmp.getPolicy();
+			var tmp_policy = tmp.policy;
 			if(tmp_policy != "")
 				aal += tmp_policy + "\n\n";
 		}
@@ -245,6 +270,23 @@ visualEditor.ui = {
     },
 
     /**
+     * Convert fodtl formula to diagram
+     */
+    fodtlToDiagram: function(formula, callback) {
+        $.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "fodtlToDiagram", formula: formula},
+            success: function(response) {
+                visualEditor.fodtl_to_vfodtl(response);
+				if(callback != null || callback != undefined)
+					callback(response)
+            }
+	    });
+    },
+
+    /**
      * Highligh line
      */
     clearHighlight: function() {
@@ -261,6 +303,7 @@ visualEditor.ui = {
      * Highlight selected text / current line
      */
     highlight: function(theme) {
+        var Range = ace.require('ace/range').Range;
         if(visualEditor.activeEditor != null) {
             var sr = visualEditor.activeEditor.getSelectionRange();
             // Select one line
@@ -281,62 +324,206 @@ visualEditor.ui = {
         visualEditor.ui.highlight("aceHighlightGreen");
     },
 
+
     /**
-     * Toggle comment in ace editor
+     * Create the ace editor wheel context menu
      */
-    toggleComment: function() {
-        if(visualEditor.activeEditor != null){
-            var selectRange = visualEditor.activeEditor.getSelectionRange();
-            var single = false;
+    makeAceWheelContextMenu: function(target_id) {
+        var pops = $("#" + target_id);
 
-            // Check if single/multiple selection
-            if (selectRange.start.row == selectRange.end.row && selectRange.start.column == selectRange.end.column)
-                single = true;
+        var btn = new visualEditor.ui.tools.saveTool();
+        btn.button = $('<li><div title="Save (ctrl+S)" id="saveBtn" class="btn-action fa fa-save fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops, true);
 
-            if (single) {
-                // Single line comment
-                var line = visualEditor.activeEditor.getCursorPosition().row;
-                visualEditor.activeEditor.gotoLine(line+1);
-                if (visualEditor.activeEditor.getSession().getLine(line).startsWith("//")) {
-                    visualEditor.activeEditor.remove();
-                    visualEditor.activeEditor.remove();
-                }
-                else
-                    visualEditor.activeEditor.insert("//");
-            } else {
-                // Multiple chars comment
-                if (visualEditor.activeEditor.getSelectedText().startsWith("/*") &&
-                    visualEditor.activeEditor.getSelectedText().endsWith("*/")) {
-                    var start = {row: visualEditor.activeEditor.getSession().getSelection().selectionLead.row,
-                                 column: visualEditor.activeEditor.getSession().getSelection().selectionLead.column};
+        btn = new visualEditor.ui.tools.genTSPASSTool();
+        btn.button = $('<li><div title="Compile (ctrl+Enter)" id="genTSPASSBtn" class="btn-action fa fa-cog fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops, true);
 
-                    var end = {row : visualEditor.activeEditor.getSession().getSelection().selectionAnchor.row,
-                                column : visualEditor.activeEditor.getSession().getSelection().selectionAnchor.column};
+        btn = new visualEditor.ui.tools.AALSyntaxTool();
+        btn.button = $('<li><div title="AAL Syntax (ctrl+M)" id="aalSyntaxBtn" class="btn-action fa fa-file-code-o fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops, true);
 
-                    visualEditor.activeEditor.moveCursorToPosition({row: end.row, column: end.column-2});
-                        visualEditor.activeEditor.remove();
+        btn = new visualEditor.ui.tools.templatesTool();
+        btn.button = $('<li><div title="AAL policy wizard (ctrl+e)" id="tmpBtn" class="btn-action fa fa-magic fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops, true);
 
-                    visualEditor.activeEditor.moveCursorToPosition({row: start.row, column: start.column});
-                        visualEditor.activeEditor.remove();
-                        visualEditor.activeEditor.remove();
-                }
-                else{
-                    var start = {row: visualEditor.activeEditor.getSession().getSelection().selectionLead.row,
-                                 column: visualEditor.activeEditor.getSession().getSelection().selectionLead.column};
+        btn = new visualEditor.ui.tools.clearOutputTool();
+        btn.button = $('<li><div title="Clear output" id="clearOutputBtn" class="btn-action fa fa-square-o  fa-lg"/></li>');
+        pops.append(btn.button);
+        btn.control(pops, true);
 
-                    var end = {row : visualEditor.activeEditor.getSession().getSelection().selectionAnchor.row,
-                                column : visualEditor.activeEditor.getSession().getSelection().selectionAnchor.column};
+        // Bind the event listener to the trigger
+        $("#aceTrigger").bind("mousedown", visualEditor.ui.toggleAceWheelContextMenu);
 
-                    visualEditor.activeEditor.moveCursorToPosition({row: end.row, column: end.column});
-                        visualEditor.activeEditor.insert("*/");
+        // Make the wheel draggable
+        $("#aceWheelContextMenu").draggable()
+    },
 
-                    visualEditor.activeEditor.moveCursorToPosition({row: start.row, column: start.column});
-                        visualEditor.activeEditor.insert("/*");
-                }
+    /**
+     * Toggle Ace Wheel Context Menu
+     */
+    toggleAceWheelContextMenu: function(e) {
+        var wcm = $("#aceWheelContextMenu");
+        wcm.toggle("display");
+        wcm.css("top", e.clientY - 75);
+        wcm.css("left", e.clientX - 75);
 
-            }
+        $.popcircle('#acePops', {
+                spacing:'-5px',
+                type:'full',        // full, half, quad
+                offset:0,	        // 0, 1, 2, 3, 4, 5, 6, 7 or 5.1
+                ease:'easeOutQuad', // jquery ease effects,
+                time:'fast'         // slow, fast, 1000
+            });
+    },
 
+    /**
+     * Eval command
+     * @param input
+     */
+	evalCmd: function(input) {
+        var tmp = input.split(" ");
+        var cmd = tmp[0];
+        var args = tmp[1];
+
+        switch(cmd.toLowerCase()) {
+            case "clear": $("#output_window").empty(); break;
+
+            // Calling Macros
+            case "call":
+                var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
+                var file = visualEditor.ui.activeTab.container.title;
+                var macro_name = input.substring(cmd.length + 1, input.indexOf('(')).trim();
+                var macro_args = "[" + input.substring(input.indexOf('(') + 1, input.indexOf(')')).replace(/\s\s+/g, ' ')
+                    .split(" ").toString() + "]";
+                visualEditor.ui.fileManager.saveFile(file, editor.getValue(), function() {
+                    var file = visualEditor.ui.activeTab.container.title;
+                    $.ajax({
+                        dataType: "text",
+                        type: "POST",
+                        url: visualEditor.backend,
+                        data: {action: "macroCallAPI", file: file, macro: macro_name, args: macro_args},
+                        success: function (response) {
+                            toastr.clear($(".toast-error"));
+                            $("#output_window").empty().append(response).scrollTop(0);
+                            $(".aceLine").click(function (e) {
+                                var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
+                                if (editor != undefined && editor != null)
+                                    editor.gotoLine(parseInt(e.target.innerHTML.replace("at line ", "")));
+                            });
+                        }
+                    });
+                });
+                break;
+
+            // Get AAL nodes
+            case "agents"  : visualEditor.activeEditor.postMsgWorker("getAgents"); break;
+            case "services": visualEditor.activeEditor.postMsgWorker("getServices"); break;
+            case "clauses" : visualEditor.activeEditor.postMsgWorker("getClauses"); break;
+
+            // Miscellaneous
+            case "visu" : visualEditor.ui.createVisualAAL(); break;
+
+            default:
+                // Should print help
+                visualEditor.log("HELP : (note : commands are not case sensitive)" +
+                    "\n- CLEAR : clean the output console" +
+                    "\n- CALL macro_name(macro_args) : Call a macro" +
+                    "\n- AGENTS : Print all declared agents in the current AAL file" +
+                    "\n- SERVICES: Print all declared services in the current AAL file" +
+                    "\n- CLAUSES : Print all declared clauses in the current AAL file" +
+                    "\n- VISU : Generate diagram for the current AAL file"
+                );
+                break;
         }
-    }
+    },
 
+
+    /**
+     * Worker Callback
+     * @param res
+     * @param cmd
+     */
+    workerCallback: function(res, cmd) {
+        switch (cmd) {
+            case "getAgents":
+                // TODO improve
+                visualEditor.log(res.agents);
+                break;
+            case "getServices":
+                visualEditor.log(res.services);
+                break;
+            case "getClauses":
+                visualEditor.log(res.clauses);
+                break;
+            case "analyseAALtreeForAcd":
+                var agentGenerator = new Actor();
+                for(var i=0; i<res.agents.length; i++) {
+                    var e = agentGenerator.addElement(null, res.agents[i].name);
+                    res.agents[i].rs.forEach(function(v) {e.addEntity(v, "RS");});
+                    res.agents[i].ps.forEach(function(v) {e.addEntity(v, "PS");});
+                }
+                break;
+        }
+    },
+
+
+    /**
+     *
+     * @param file
+     */
+    createVisualAAL: function(file) {
+        if(visualEditor.activeEditor != null) {
+            // Create a new editor window
+            var id = visualEditor.guid();
+            var editor = $('<div id="'+id+'" caption="' + file + '" class="editor1-window editor-host"></div>');
+            $(document.body).append(editor);
+            var editor4 = new dockspawn.PanelContainer($("#"+id)[0], dockManager);
+            var editor4Node  = dockManager.dockRight(documentNode, editor4, 0.5);
+            editor4.canvas = new visualEditor.ui.gridEditor(id, "toolbox_window", "componentbox_window", "properties_window", "acd");
+            visualEditor.ui.canvas = editor4.canvas;
+
+            // AAL to nodes
+            visualEditor.activeEditor.postMsgWorker("analyseAALtreeForAcd");
+        }
+    },
+
+    /**
+     * Generate Accmon spec
+     */
+    generateAccmon: function(spec) {
+        spec = (spec === "")?" ": spec;
+        $.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "genAccmon", spec: spec, file: visualEditor.ui.activeTab.container.title},
+            success: function(response){
+                if(response != 'Error') {
+                    $("#explorer").tree("reload");
+                    visualEditor.ui.fileManager.openFile(response);
+                }
+            }
+	    });
+    },
+
+    /**
+     * Register the current opened vfodtl file in AccMon
+     */
+    registerVfodtlToAccMon: function(url, name) {
+        var formula = visualEditor.vFodtl_to_fodtl(visualEditor.ui.canvas)[0];
+        $.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "registerAccMonMonitor", formula: formula, name: name, accmon_url: url},
+            success: function(response){
+                console.log(response);
+            }
+	    });
+    }
 };

@@ -465,7 +465,6 @@ class m_aalprog(aalmmnode):
         return [x for x in macros if str(x.name) == name and len(x.param) == len(args)]
 
 
-
 # Usage
 class m_usage(aalmmnode):
     """
@@ -748,7 +747,8 @@ class m_type(m_declarable):
         for x in p:
             for y in x:
                 res.append(y)
-        return list(set(res))
+        # FIXME
+        return list(res)
 
     def subtype_of(self, supertype):
         """
@@ -757,7 +757,7 @@ class m_type(m_declarable):
         return str(supertype) in self.lin()
 
 
-# Macro
+# Macro
 class m_macro(aalmmnode):
     """
     Macro class
@@ -1273,11 +1273,11 @@ class m_predicate(m_exp):
         self.args = []
 
     def __str__(self):
-        q = [str(x) for x in self.args][1:]
+        q = [str(x) for x in self.args]
         return "@" + str(self.name) + "(" + str(" ".join(q)) + ")"
 
     def to_ltl(self):
-        q = [str(x) for x in self.args][1:]
+        q = [str(x) for x in self.args]#[1:]
         return str(self.name) + "(" + str(" ".join(q)) + ")"
 
     def children(self):

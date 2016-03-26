@@ -21,20 +21,20 @@ from pykka import *
 import logging
 from tools.color import *
 from simul.Com import *
+from subprocess import Popen, PIPE
 
 # logging.basicConfig(level=logging.DEBUG)
 
 
 # Behavior
-class Behavior():
+class Behavior:
     def __init__(self, name=""):
         self.name = name
         self.actions = []
         self.author = []
         self.triggers = []
 
-    def is_permited(self, action):
-        # return True
+    def is_permitted(self, action):
         for x in self.author:
             print(str(x.action.equal(action)) + " " + str(x.action) + " " + str(action))
             if str(x.author) == "PERMIT" and x.action.equal(action):
@@ -54,6 +54,13 @@ class Behavior():
 # AActor
 class AActor(ThreadingActor):
     def __init__(self, name, proxy=None, behavior=None):
+        """
+        Init
+        :param name: Actor name
+        :param proxy: The network proxy
+        :param behavior: Actor's behavior
+        :return:
+        """
         super(AActor, self).__init__()
         self.name = name
         self.proxy = proxy
@@ -62,32 +69,75 @@ class AActor(ThreadingActor):
     def on_start(self):
         super(AActor, self).on_start()
         # print("[" + str(self.name) + "]" + " my behavior : " + str(self.behavior))
-        # My optional setup code in same context as on_receive()
 
     def on_stop(self):
         super(AActor, self).on_stop()
-        # My optional cleanup code in same context as on_receive()
 
     def on_failure(self, exception_type, exception_value, traceback):
         super(AActor, self).on_failure()
-        # My optional cleanup code in same context as on_receive()
 
     def on_receive(self, msg):
         super(AActor, self).on_receive(msg)
         print("[" + str(self.name) + "]" + " MSG received : " + str(msg))
-        # My optional message handling code for a plain actor
 
     def load_behavior(self):
         pass
 
-    def set_proxy(self, proxy):
-        self.proxy = proxy
+
+# Monitor
+class Monitor:
+    """
+    Internal monitor
+    """
+    def __init__(self, rootmon=None, formula="", trace=[], kv={}):
+        self.trace = trace
+        self.formula = formula
+        self.rootmon = rootmon
+        self.KV = kv
+
+    def monitor(self):
+        # Handling trace
+        tmp = []
+        for e in self.trace:
+            tmp.append("{" + ", ".join(e) + "}" if isinstance(e, list) else "{" + str(e) + "}")
+        trace = ", ".join(tmp)
+
+        # Replace kv in formula
+        formula = self.formula
+        for k in self.KV:
+            formula.replace(k, self.KV[k])
+
+        # p = Popen(['echo', trace, '|', 'java -jar tools/ltlfo2mon.jar -p', formula],
+        #           stdout=PIPE, stderr=PIPE, stdin=PIPE)
+        # res = p.stdout.read().decode("utf-8")
+        print("\t-Trace : " + trace)
+        print("\t-Formula : " + formula)
+        res = os.system('echo "' + trace + '" | java -jar tools/ltlfo2mon.jar -p "' + formula + '"')
+        # print(res)
+
 
 # RefMonitor
 class RefMonitor(AActor):
-    def __init__(self, name, actor: ThreadingActor=None, proxy=None, behavior=None):
+
+    def __init__(self, name, actor: ThreadingActor=None, proxy=None, behavior=None, formula="", trace=[], kv={}):
+        """
+        Reference monitor
+        :param name:
+        :param actor:
+        :param proxy:
+        :param behavior:
+        :param formula:
+        :param trace:
+        :param kv:
+        :return:
+        """
         super(RefMonitor, self).__init__(name, proxy=proxy, behavior=behavior)
         self.actor = actor
+        self.trace = trace
+        self.KV = kv
+        self.formula = formula
+        self.sub_mons = {}
+        self.main_mon = Monitor(rootmon=self, formula=formula, trace=trace, kv=kv)
 
     def on_receive(self, msg):
         # super(RefMonitor, self).on_receive(message)
@@ -97,7 +147,7 @@ class RefMonitor(AActor):
         if proto == MsgProtocol.CALL_CHECK:
             # Handling msg via policy
             # Reply to proxy
-            if self.behavior.is_permited(msg):
+            if self.behavior.is_permitted(msg):
                 msg["protocol"] = MsgProtocol.CALL_OK
                 self.proxy.tell(msg)
             else:
@@ -106,32 +156,41 @@ class RefMonitor(AActor):
         elif proto == MsgProtocol.CALL:
             # Handling msg via policy
             # Forward to agent
-            if self.behavior.is_permited(msg):
+            if self.behavior.is_permitted(msg):
                 self.actor.tell(msg)
 
                 # Check if it is from/to agent
 
+        elif proto == MsgProtocol.PRINT_TRACE:
+            print("[" + self.name + "]" + str(self.trace))
+
+        elif proto == MsgProtocol.PRINT_FORMULA:
+            print("[" + self.name + "]" + str(self.trace))
+
+    def init_submonitors(self):
+        pass
+
+    def monitor(self):
+        self.main_mon.monitor()
+
+
+
 
 # LoggerRefMonitor
-class LoggerRefMonitor(AActor):
-    def __init__(self, name, actor: ThreadingActor=None, proxy=None, behavior=None):
-        super(LoggerRefMonitor, self).__init__(name, proxy=proxy, behavior=behavior)
+class LoggerRefMonitor(RefMonitor):
+    def __init__(self, name, actor: ThreadingActor=None, proxy=None, behavior=None, formula="", trace=[], kv={}):
+        super(LoggerRefMonitor, self).__init__(name, proxy=proxy, behavior=behavior, formula=formula, trace=trace, kv=kv)
         self.actor = actor
 
-    # def on_start(self):
-    #     super(LoggerRefMonitor, self).on_start()
-    #
-    # def on_stop(self):
-    #     super(LoggerRefMonitor, self).on_stop()
-    #
-    # def on_failure(self, exception_type, exception_value, traceback):
-    #     super(LoggerRefMonitor, self).on_failure()
-    #
     def on_receive(self, msg):
         # super(RefMonitor, self).on_receive(message)
         print(Color("{autoblue}[" + str(self.name) + "]" + " MSG received : " + str(msg) + "{/autoblue}"))
         msg["protocol"] = MsgProtocol.LOG
-        self.proxy.tell(msg)
+        self.trace.append("data('" + msg["msg"].args + "')")
+        self.trace.append(msg["msg"].to_trace())
+        # self.proxy.tell(msg)
+        self.monitor()
+
 
 # MyActor
 class MyActor(AActor):
@@ -143,7 +202,7 @@ class MyActor(AActor):
         protocol = msg.get("protocol")
 
         if protocol == MsgProtocol.INTERNAL:
-            if self.behavior.is_permited(msg.get("msg")):
+            if self.behavior.is_permitted(msg.get("msg")):
                 msg["protocol"] = MsgProtocol.CALL
                 self.proxy.ask(msg)
             else:
@@ -156,13 +215,36 @@ class MyActor(AActor):
         return self.name
 
 
-# Proxy
-class Proxy(AActor):
-    def __init__(self, name, behavior=None):
-        super(Proxy, self).__init__(name, behavior=behavior)
+# MyActor
+class MyActor2(AActor):
+    def __init__(self, name, proxy=None, behavior=None):
+        super(MyActor2, self).__init__(name, proxy=proxy, behavior=behavior)
 
     def on_receive(self, msg):
-        print("[PROXY]" + " MSG received : " + str(msg))
+        print("[" + str(self.name) + "]" + " MSG received : " + str(msg))
+        protocol = msg.get("protocol")
+
+        if protocol == MsgProtocol.INTERNAL:
+            msg["protocol"] = MsgProtocol.CALL
+            self.proxy.ask(msg)
+
+        elif protocol == MsgProtocol.CALL:
+            print("[" + str(self.name) + "]" + " Running action")
+
+    def name(self):
+        return self.name
+
+
+# Proxy
+class Proxy(AActor):
+    def __init__(self, name, behavior=None, debug=False):
+        super(Proxy, self).__init__(name, behavior=behavior)
+        self.DEBUG = debug
+
+    def on_receive(self, msg):
+        if self.DEBUG:
+            print("[PROXY]" + " MSG received : " + str(msg))
+
         protocol = msg.get("protocol")
         receiver = msg.get("receiver")
         sender = msg.get("sender")
@@ -186,6 +268,7 @@ class Proxy(AActor):
             # If the msg is an internal actor action, forward it to the destination
             receivers = [x for x in ActorRegistry.get_all() if x.proxy().name.get() == receiver]
 
+        # Sending the message
         for receiver in receivers:
             receiver.tell(msg)
 

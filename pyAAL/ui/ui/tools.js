@@ -42,11 +42,11 @@ visualEditor.ui.tools = {
 		this.componentsPanel = $('#'+ componentsPanel);
 		this.propertiesPanel = $('#'+ propertiesPanel);
 
-		$('#clear-graph').toolbar({
-			content: '#user-toolbar-options', 
-			position: 'top',
-			hideOnClick: true
-		});
+		//$('#clear-graph').toolbar({
+		//	content: '#user-toolbar-options',
+		//	position: 'top',
+		//	hideOnClick: true
+		//});
 
 		this.toolsRegistrator();
 		this.view(this);
@@ -215,8 +215,7 @@ visualEditor.ui.tools.copyTool = visualEditor.ui.tool.extend({
 
 	control: function(parent) {
 		this.button.click(function(e) {
-			var p = visualEditor.ui.canvas.getCurrentSelection().clone();
-			console.log(p)
+			var p = visualEditor.ui.canvas.getSelection().primary.clone();
 			visualEditor.ui.canvas.add(p, 100, 100);
 		});
 	}
@@ -239,9 +238,8 @@ visualEditor.ui.tools.deleteTool = visualEditor.ui.tool.extend({
 
 	control: function(parent) {
 		this.button.click(function(e){
-			visualEditor.ui.canvas.getCommandStack().execute(
-				new draw2d.command.CommandDelete(visualEditor.ui.canvas.getCurrentSelection())
-			);
+            visualEditor.ui.canvas.getCommandStack().execute(
+                new draw2d.command.CommandDelete(visualEditor.ui.canvas.getSelection().primary));
 		});
 	}
 });
@@ -390,7 +388,7 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
 		parent.actionsPanel.append(this.button);
 	},
 
-	control: function(parent) {
+	control: function(parent, disableShortcut) {
 
 		var fx = function(e) {
 			var file = visualEditor.ui.activeTab.container.title;
@@ -405,7 +403,7 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
 					visualEditor.markPanelClear();
 					break;
 
-				case "acd":
+				case "acd": case "vfodtl":
 					var writer = new draw2d.io.json.Writer();
 					writer.marshal(visualEditor.ui.canvas, function (json) {
 						// convert the json object into string representation
@@ -427,8 +425,9 @@ visualEditor.ui.tools.saveTool = visualEditor.ui.tool.extend({
                     visualEditor.markPanelClear();
 					break;
 			}
-		}
+		};
 		this.button.click(fx);
+		if(disableShortcut != null) return;
 		shortcut.add("Ctrl+S", fx);
 	}
 });
@@ -539,16 +538,26 @@ visualEditor.ui.tools.genAALTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.genAALTool",
 	
 	view: function(parent) {
-		this.button = $('<div title="Generate AAL file (ctrl+G)" id="genAALBtn" class="btn-action fa fa-file-text-o fa-lg"/>');
+		this.button = $('<div title="Generate (ctrl+G)" id="genAALBtn" class="btn-action fa fa-file-text-o fa-lg"/>');
 		parent.actionsPanel.append(this.button);
 	},
 
-	control: function(parent) {
+	control: function(parent, disableShortcut) {
 		var fx = function(e){
 			var active = visualEditor.ui.activeTab.container.title;
-            visualEditor.ui.fileManager.showGeneratedAAL(active);
+			var activeFileType = visualEditor.ui.fileManager.getFileType(active);
+            if(activeFileType === "acd"){
+                //visualEditor.ui.fileManager.showGeneratedAAL(active);
+                visualEditor.log(visualEditor.ui.generateAAL(active));
+            } else if(activeFileType === "vfodtl"){
+                if(visualEditor.vFodtl_check(visualEditor.ui.canvas) == true)
+                    var formulas = visualEditor.vFodtl_to_fodtl(visualEditor.ui.canvas);
+                    for(var i=0; i<formulas.length; i++)
+                        visualEditor.log(formulas[i]);
+            }
 		};
 		this.button.click(fx);
+		if(disableShortcut != null) return;
 		shortcut.add("Ctrl+G", fx);
 	}
 });
@@ -566,7 +575,7 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 		parent.actionsPanel.append(this.button);
 	},
 
-	control: function(parent) {
+	control: function(parent, disableShortcut) {
 		var fx = function(e){
 			//var active = visualEditor.ui.activeTab.container.title;
 			//visualEditor.ui.fileManager.showGeneratedTSPASS(active);
@@ -581,7 +590,7 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
                 if(fileType == "tspass")
                     action = "compileFOTL";
 
-                toastr.info("<i class='fa fa-cog fa-spin'></i>", "Compiling...", {
+                toastr.error("<i class='fa fa-cog fa-spin'></i>", "Compiling...", {
                     "closeButton": true,
                     "preventDuplicates": true,
                     "tapToDismiss": false,
@@ -610,7 +619,7 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
                     success: function(response){
                         $("#output_window").empty().append(response).scrollTop(0);
                         // Clear toastr
-						toastr.clear( $(".toast-info"));
+						toastr.clear( $(".toast-error"));
                         // Setup lines
                         $(".aceLine").click(function(e) {
                             var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
@@ -628,6 +637,7 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 		};
 
 		this.button.click(fx);
+		if(disableShortcut != null) return;
 		shortcut.add("Ctrl+Enter", fx);
 	}
 });
@@ -665,11 +675,14 @@ visualEditor.ui.tools.keyboardShortcutsTool = visualEditor.ui.tool.extend({
 					"<li><b class='keyword'>CTRL+M -</b> AAL Syntax</li>" +
 					"<li><b class='keyword'>CTRL+K -</b> Keyboard shortcuts</li>" +
                     "<li><b class='keyword'>ALT+C -</b> Toggle comment</li>" +
+					"<li><b class='keyword'>ALT+SHIFT+C -</b> Toggle multi-line comment</li>" +
+                    "<li><b class='keyword'>ALT+0 -</b> Fold all</li>" +
+                    "<li><b class='keyword'>ALT+SHIFT+0 -</b> Unfold all</li>" +
 					"<li><b class='keyword'>F11 -</b> Full screen</li>" +
-					"<li><b class='keyword'>ALT+Up-</b>Arrow - Move current line(s) up</li>" +
-					"<li><b class='keyword'>ALT+Down-</b>Arrow - Move current line(s) down</li>" +
-					"<li><b class='keyword'>ALT+Shift+Up-</b>Arrow - Copy current line(s) above current</li>" +
-					"<li><b class='keyword'>ALT+Shift+Down-</b>Arrow - Copy current line(s) below current</li>" +
+					"<li><b class='keyword'>ALT+Up -</b>Arrow - Move current line(s) up</li>" +
+					"<li><b class='keyword'>ALT+Down -</b>Arrow - Move current line(s) down</li>" +
+					"<li><b class='keyword'>ALT+Shift+Up -</b>Arrow - Copy current line(s) above current</li>" +
+					"<li><b class='keyword'>ALT+Shift+Down -</b>Arrow - Copy current line(s) below current</li>" +
 					"<li><b class='keyword'>CTRL+Space bar -</b> Autocomplete</li>" +
 					"<li><b class='keyword'>CTRL+Click -</b> Multiedit</li>" +
 					"<li><b class='keyword'>ALT+A -</b> Highlight green</li>" +
@@ -710,7 +723,7 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
 		parent.actionsPanel.append(this.button);
 	},
 
-	control: function(parent) {
+	control: function(parent, disableShortcut) {
 		var fx = function(e){
 			var p =
 			"<div id='modal-content'>" +
@@ -782,113 +795,8 @@ visualEditor.ui.tools.AALSyntaxTool = visualEditor.ui.tool.extend({
                 visualEditor.ui.updateToastSize("info", {"width": 950}, true);
 			};
 			this.button.click(fx);
+		    if(disableShortcut != null) return;
 			shortcut.add("Ctrl+M", fx);
-/*
-        	"<!-- Declarations -->" +
-                "<b class='coms'>/ Declarations /</b><br>" +
-                "</p><div class='rule'>" +
-                    "<b id='agentDec' class='keyword hint--top hint--info' style='float: left;' data-hint='Click to insert Agent declaration'>AGENT</b>"  +
-                    "<input id='agentIdDec' list='agents' type='text' class='select' placeholder='agent_Id'>" +
-                    "<b class='keyword'>TYPES</b>(Type*) " +
-                    "<b class='keyword'>RS</b>(service*) <b class='keyword'>PS</b>(service*)<br><br>" +
-                "</div>" +
-                "<div class='rule'>" +
-                    "<b id='serviceDec' class='keyword hint--top hint--info' style='float:left;' data-hint='Click to insert Service declaration'>SERVICE</b>" +
-                    "<input id='serviceIdDec' list='services' type='text' class='select' placeholder='service_Id'>" +
-                    "<b class='keyword'>TYPES</b>(Type*) [Purpose]<br><br>" +
-                "</div>" +
-                "<div class='rule'>" +
-                    "<b id='dataDec' class='keyword  hint--top hint--info' style='float:left;' data-hint='Click to insert Data declaration'>DATA</b>" +
-                    "<input id='dataIdDec' list='data' type='text' class='select' placeholder='data_Id'>" +
-                    "<b class='keyword' style='float:left;'> TYPES </b>(Type*) " +
-                    "<b class='keyword' > SUBJECT </b> " +
-                    "<input id='agentIdDataDec' list='agents' type='text' class='select' placeholder='agent_Id'>" +
-                    "<br>" +
-                "</div>" +
-            "<br>" +
-            "<div class='rule'>" +
-                "<b class='coms'>/ Clause /</b><br>" +
-                "<b id='clause' class='keyword hint--top hint--info' data-hint='Click to insert Clause'>CLAUSE</b> clauseName (<br>" +
-            "</div>" +
-                "" +
-                "<div id='usage' class='rule' style='margin-left: 10px;' title='Click to insert Usage'>" +
-                    "<b class='coms'>// Usage</b><br>" +
-                   "[&nbsp;(<b class='keyword'>FORALL</b>&nbsp;|&nbsp;<b class='keyword'>EXISTS</b>)&nbsp;var:Type]* &nbsp;ActionExp <br>" +
-                "</div>" +
-        	"<!-- Audit -->" +
-                "<div class='rule' style='margin-left: 10px;'>" +
-                    "<b class='coms'>//Audit</b><br>" +
-                    "<b id='audit' class='keyword' style='float:left;'>AUDITING</b> <b class='ref'>Usage</b><br><br>" +
-                "</div>" +
-        	"<!-- Rectification -->        " +
-                "<div class='rule' style='margin-left: 0px;'>" +
-                    "<b class='coms'>//Rectification</b><br>    " +
-                    "<b class='keyword' id='rectification'>IF_VIOLATED_THEN</b> <b class='ref'>Usage</b>)<br>" +
-                "</div>" +
-            "</div>" +
-            "<br>" +
-            "<b class='coms'>/ ActionExp /</b><br>" +
-        "" +
-        "<!-- Action -->" +
-            "<div class='rule' title='Click to insert action'>" +
-                "<b class='coms'>// Action</b><br>" +
-                "<input id='may' type='checkbox' value='may' style='float: left; margin-top: 3px;'>" +
-                "<b id='action' class='keyword hint--top hint--info' style='float: left;' data-hint='Click to insert action'>MAY</b>" +
-                "<input id='agent1IdAction' list='agents' type='text' class='select' placeholder='agent_Id'>" +
-                "<b style='float:left'>.</b>" +
-                "<input id='serviceIdAction' list='services' type='text' class='select' placeholder='service_Id'>" +
-                "<b style='float:left'>[</b>" +
-                "<input id='agent2IdAction' list='agents' type='text' class='select' placeholder='agent_Id'>" +
-                "<b style='float:left'>]</b>(Exp) [Time] [Purpose] <br>" +
-            "</div><br>" +
-            "|&nbsp; <b class='keyword'>NOT</b> ActionExp <br>" +
-            "|&nbsp;" +
-               "(<b class='keyword' title='Click to insert must modality'>MUST</b>&nbsp;|&nbsp;" +
-               "<b class='keyword' title='Click to insert mustnot modality'>MUSTNOT</b>&nbsp;|&nbsp;" +
-               "<b class='keyword' title='Click to insert always modality'>ALWAYS</b>) ActionExp <br>" +
-            "|&nbsp; Condition <br>" +
-            "|&nbsp; ActionExp (<b class='keyword'>AND|OR|THEN|ONLYWHEN</b>) ActionExp <br>" +
-            "<p></p>" +
-            "<!---------------  Script -------------------->" +
-            "<script>" +
-                "$('#agentDec').click(function(){" +
-                    "insertSnippet('AGENT '+$('#agentIdDec').val()+' TYPE(AgentType*) RS(service*) PS(service*)\\n');" +
-                    "$('#agentIdDec').val('');" +
-                "});" +
-                "$('#serviceDec').click(function(){" +
-                    "insertSnippet('SERVICE '+$('#serviceIdDec').val()+' TYPE(Type*) [Purpose]\\n');" +
-                    "$('#serviceIdDec').val('');" +
-                "});" +
-                "$('#dataDec').click(function(){" +
-                    "insertSnippet('DATA '+$('#dataIdDec').val()+' TYPE(Type*) SUBJECT '+$('#agentIdDataDec').val()+'\\n');" +
-                    "$('#dataIdDec').val('');" +
-                    "$('#agentIdDataDec').val('');" +
-                "});" +
-                "$('#clause').click(function(){insertSnippet('CLAUSE clauseName (\\n\\tUsageExp\\n\\tAUDITING Usage\\n\\tIF_VIOLATED_THEN Usage\\n)')});" +
-                "$('#usage').click(function(){" +
-                "});" +
-                "$('#audit').click(function(){" +
-                    "insertSnippet('AUDITING [Usage THEN] '+$('#agent1IdAudit').val()+'.audit['+" +
-                        "$('#agent2IdAudit').val()+']()');" +
-                    "$('#agent1IdAudit').val('');" +
-                    "$('#agent2IdAudit').val('');" +
-                "});" +
-                "$('#rectification').click(function(){insertSnippet('IF_VIOLATED_THEN Usage')});" +
-                "$('#action').click(function(){" +
-                    "insertSnippet(" +
-                        "(($('#may').is(':checked'))? 'MAY ' : '') +" +
-                        "(($('#agent1IdAction').val() == '')? 'agentId': $('#agent1IdAction').val())+" +
-                        "'.'+" +
-                        "(($('#serviceIdAction').val() == '')? 'ServiceId': $('#serviceIdAction').val())+" +
-                        "'['+" +
-                        "(($('#agent2IdAction').val() == '')? 'agentId':$('#agent2IdAction').val()) +'](Exp)');" +
-                    "" +
-                    "$('#agent1IdAction').val('');" +
-                    "$('#agent2IdAction').val('');" +
-                    "$('#serviceIdAction').val('');" +
-                "});" +
-            "</script>" +
-*/
 	}
 });
 
@@ -918,7 +826,8 @@ visualEditor.ui.Template = {
     "desc": "",
     "vars": [
       {"name": "Field1", "id": "Filed1", "type": "input", "pre": "Text before", "post": "Text after"},
-      {"name": "Field2", "id": "Filed2", "type": "select", "pre": "Text before", "post": "Text after"}
+      {"name": "Field2", "id": "Filed2", "type": "select", "pre": "Text before", "post": "Text after"},
+      {"name": "Field3", "id": "Filed3", "type": "button", "pre": "Text before", "post": "Text after", "onclick": "js"}
     ],
     "aal": "",
     "html": "Template test {vars}",
@@ -987,7 +896,9 @@ visualEditor.ui.Template = {
             view: "<div class='templateVar'>" + //<div class='templateVarName'>" + varObj.name + "</div>" +
                 varObj.pre +
                 ((varObj.type != "select")?
-                    ("<input type='" + varObj.type + "' id='" + varObj.id +  "' name='" + varObj.name + "'" +
+                    ("<input type='" + varObj.type + "' id='" + varObj.id + "' name='" + varObj.name + "'" +
+                    ((varObj.onclick != undefined)? " onclick=\"" + varObj.onclick + "\" ":"") +
+                    ((varObj.type === "button")? " value='" + varObj.name + "' ":"") +
                     ((varObj.checked != undefined)?" checked />":"/>")):
                 ("<select id='" + varObj.id + "'>" + options +" </select>"))+
                 varObj.post + "</div>",
@@ -1081,7 +992,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 		parent.actionsPanel.append(this.button);
 	},
 
-	control: function(parent) {
+	control: function(parent, disableShortcut) {
 		var fx = function(e){
             // Get AAL info
             visualEditor.ui.analyseAAL(visualEditor.ui.activeTab.panel.title, function(e) {
@@ -1105,6 +1016,14 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 					"positionClass": "toast-top-right"
 				});
 				visualEditor.ui.updateToastSize("info", {"width": 800}, false, "none");
+
+                // Minimazing on dbl click
+                $(".toast-info").dblclick(function() {
+                    if($(this).height() >= 20)
+                        $(this).animate({width: "250px", height: "30px"});
+                    else
+                        $(this).animate({width: "800px", height: "453"});
+                });
 
 				$("#tt").tree({
 					animate: true,
@@ -1136,6 +1055,7 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 			});
 		};
 		this.button.click(fx);
+		if(disableShortcut != null) return;
 		shortcut.add("Ctrl+e", fx);
 	}
 });
@@ -1209,11 +1129,12 @@ visualEditor.ui.tools.clearOutputTool = visualEditor.ui.tool.extend({
 		parent.actionsPanel.append(this.button);
 	},
 
-	control: function(parent) {
+	control: function(parent, disableShortcut) {
 		var fx = function(e){
             $("#output_window").empty();
 		};
 		this.button.click(fx);
+		if(disableShortcut != null) return;
 		//shortcut.add("Ctrl+G", fx);
 	}
 });

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 //
-//  AccLab UI V 1.1 : acclab.js
+//  AccLab UI V 2.0 : acclab.js
 //
 // Copyright (C) 2014 Walid Benghabrit
 //
@@ -24,14 +24,14 @@ var visualEditor = {
 	/*currentCanvas : null,
 	activeTab     : null,
     canvas        : [],*/
-    activeEditor    : null,
+    activeEditor  : null,
     visualEditor  : false,
     activeCloseBtn: null,
-    userPrefs    : {"theme": "monokai", "username": "" },
+    userPrefs     : {"theme": "monokai", "username": "", "fontSize": 14, "recentFiles": []},
     aceTheme      : "monokai",
     aceThemesList : ["monokai", "chrome", "tomorrow", "kuroir", "eclipse", "chaos"],
     backend       : "http://127.0.0.1:8000/",
-    username      : "",
+    version       : "2.0",
 
 
     /**
@@ -63,9 +63,18 @@ var visualEditor = {
         if (visualEditor.activeCloseBtn.parent.container.containerType == "panel")
         {
             visualEditor.activeCloseBtn.undockInitiator.enabled = false;
+            delete visualEditor.ui.openedEditors[visualEditor.ui.activeTab.panel.title];
+
             var panel = visualEditor.activeCloseBtn.parent.container;
             panel.performUndock();
             visualEditor.activeCloseBtn = null;
+
+            // Clean editor to avoid memory leaks
+            if(visualEditor.activeEditor != null) {
+                //visualEditor.activeEditor.destroy();
+                //$(visualEditor.activeEditor.container).remove();
+                visualEditor.activeEditor = null;
+            }
         }
     },
 
@@ -81,8 +90,20 @@ var visualEditor = {
             while(username.length < 0);
             // Save the username
             visualEditor.userPrefs["username"] = username;
-            visualEditor.save_prefs();
+            visualEditor.savePrefs();
         }
+        return visualEditor.userPrefs.username;
+    },
+
+    /**
+     * Get Font size
+     */
+    getFontSize: function() {
+        if(visualEditor.userPrefs["fontSize"] == null) {
+            visualEditor.userPrefs["fontSize"] = 14;
+            visualEditor.savePrefs();
+        }
+        return visualEditor.userPrefs.fontSize;
     },
 
     /**
@@ -92,7 +113,7 @@ var visualEditor = {
     updateAceTheme: function(theme) {
         visualEditor.aceTheme = $(theme).val();
         visualEditor.userPrefs["theme"] = visualEditor.aceTheme;
-        visualEditor.save_prefs();
+        visualEditor.savePrefs();
         this.updateEditorsTheme();
     },
 
@@ -101,14 +122,14 @@ var visualEditor = {
         if (visualEditor.activeEditor != null)
             visualEditor.activeEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
 
-        if (visualEditor.ui.properties.aalEditor.inPlaceAALEditor != null)
-            visualEditor.ui.properties.aalEditor.inPlaceAALEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
+        //if (visualEditor.ui.properties.aalEditor.inPlaceAALEditor != null)
+        //    visualEditor.ui.properties.aalEditor.inPlaceAALEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
     },
 
     /**
      * Load user preferences
      */
-    load_prefs: function() {
+    loadPrefs: function() {
         $.ajax({
             dataType: 'text',
             type: 'POST',
@@ -119,6 +140,7 @@ var visualEditor = {
                 visualEditor.userPrefs = obj;
                 visualEditor.getUserName();
                 visualEditor.aceTheme = visualEditor.userPrefs["theme"];
+                visualEditor.startup();
             }
         });
     },
@@ -126,7 +148,7 @@ var visualEditor = {
     /**
      * Save user preferences
      */
-    save_prefs: function() {
+    savePrefs: function() {
         $.ajax({
             dataType: 'text',
             type: 'POST',
@@ -145,6 +167,8 @@ var visualEditor = {
         // Restore default values
         visualEditor.userPrefs["username"] = "";
         visualEditor.userPrefs["theme"] = "monokai";
+        visualEditor.userPrefs["fontSize"] = 14;
+        visualEditor.userPrefs["recentFiles"] = [];
 
         $.ajax({
             dataType: 'text',
@@ -198,21 +222,15 @@ var visualEditor = {
     /**
      * AAL view mode
      */
-    aalMode: function() {
+    aalMode: function(flat) {
         visualEditor.clearPanels();
-        var prop = 200 / $(document).width();
-
-        window.solutionNode = dockManager.dockLeft(window.documentNode, window.solution, 0.20);
-        window.outputNode = dockManager.dockRight(window.documentNode, window.output, 0.4);
-        window.toolboxNode = dockManager.dockUp(window.solutionNode, window.toolbox, 0.2);
-
-        //window.outlineNode = dockManager.dockFill(solutionNode, outline);
-        /*
-        window.problemsNode = dockManager.dockDown(window.propertiesNode, inplaceAAL, 0.40);
-        window.propertiesNode = dockManager.dockRight(documentNode, properties, 0.20);
-        window.inplaceAALNode = dockManager.dockFill(window.propertiesNode, window.inplaceAAL);
-        window.componentsNode = dockManager.dockFill(window.propertiesNode, components);
-        */
+        if(flat != undefined) {
+            window.solutionNode = dockManager.dockRight(window.documentNode, window.output, 0.40);
+        } else {
+            window.solutionNode = dockManager.dockLeft(window.documentNode, window.solution, 0.20);
+            window.outputNode = dockManager.dockRight(window.documentNode, window.output, 0.4);
+            window.toolboxNode = dockManager.dockUp(window.solutionNode, window.toolbox, 0.2);
+        }
     },
 
     /**
@@ -224,19 +242,30 @@ var visualEditor = {
         // Dock the panels on the dock manager
         var prop = 200 / $(document).width();
         window.solutionNode = dockManager.dockLeft(window.documentNode, window.solution, prop);
-        window.outlineNode = dockManager.dockDown(window.solutionNode, window.outline, 0.50);
+        window.outlineNode = dockManager.dockDown(window.solutionNode, window.outline, 0.30);
 
-        prop = 145 / $(document).width();
+        prop = 100 / $(document).width();
         window.componentsNode = dockManager.dockLeft(window.documentNode, window.components, prop);
-        window.toolboxNode = dockManager.dockDown(window.componentsNode, window.toolbox, 0.80);
+        window.toolboxNode = dockManager.dockRight(window.documentNode, window.toolbox, prop/1.5);
 
-        prop = 250 / $(document).width();
-        window.propertiesNode = dockManager.dockRight(window.documentNode, window.properties, prop);
-        //window.inplaceAALNode = dockManager.dockRight(window.documentNode, window.inplaceAAL, prop);
-        //window.propertiesNode = dockManager.dockFill(window.inplaceAALNode, window.properties);
+        prop = 200 / $(document).height();
+        window.outputNode = dockManager.dockDown(documentNode, output, prop);
 
-        //prop = 500 / $(document).height();
-        //window.outputNode = dockManager.dockDown(window.documentNode, window.output, prop);
+        //prop = 250 / $(document).width();
+        //window.propertiesNode = dockManager.dockRight(window.documentNode, window.properties, prop);
+    },
+
+    /**
+     * vFodtl view mode
+     */
+    vfodtlMode: function() {
+        visualEditor.clearPanels();
+
+        var prop = 100 / $(document).width();
+        window.componentsNode = dockManager.dockLeft(window.documentNode, window.components, prop);
+        window.toolboxNode = dockManager.dockRight(window.documentNode, window.toolbox, prop);
+        prop = 200 / $(document).height();
+        window.outputNode = dockManager.dockDown(documentNode, output, prop);
     },
 
     /**
@@ -248,18 +277,14 @@ var visualEditor = {
         window.documentNode = dockManager.context.model.documentManagerNode;
         var prop = 200 / $(document).width();
         window.solutionNode = dockManager.dockLeft(documentNode, solution, prop);
-        window.outlineNode = dockManager.dockDown(solutionNode, outline, 0.50);
-
-        prop = 250 / $(document).width();
-        window.propertiesNode = dockManager.dockRight(documentNode, properties, prop);
-
-        prop = 500 / $(document).height();
-        window.outputNode = dockManager.dockDown(documentNode, output, prop);
-        window.inplaceAALNode = dockManager.dockDown(this.propertiesNode, inplaceAAL, 0.40);
+        window.outlineNode = dockManager.dockDown(solutionNode, outline, 0.30);
 
         prop = 145 / $(document).width();
-        window.componentsNode = dockManager.dockLeft(documentNode, components, prop);
-        window.toolboxNode = dockManager.dockDown(componentsNode, toolbox, 0.80);
+        window.toolboxNode = dockManager.dockRight(documentNode, toolbox, prop);
+        window.componentsNode = dockManager.dockDown(toolboxNode, components, 0.50);
+
+         prop = 300 / $(document).height();
+        window.outputNode = dockManager.dockDown(documentNode, output, prop);
     },
 
     /**
@@ -268,7 +293,7 @@ var visualEditor = {
     about: function () {
         var abt = "" +
             "<img src='assets/icon_128.png' class='logoAbout' alt='AccLab logo'>" +
-            "<div class='versionAbout'>AccLab Version 1.1</div>" +
+            "<div class='versionAbout'>AccLab Version 2.0</div>" +
             "<div class='aboutCore'>AccLab is a web based accountability framework designed in the context of A4CLOUD project. " +
             "The main goal is to observe ”accountability in action” by simulating a software system with several" +
             " agents exchanging data and requiring different privacy policy." +
@@ -282,10 +307,10 @@ var visualEditor = {
             " - Anqi Tong (UI)" +
             " - Julie Spens (UI)</div>" +
 
-            "<div class='footerAbout'>Copyright (C) 2014-2015 Walid Benghabrit - Ecole des Mines de Nantes - ARMINES</br>" +
+            "<div class='footerAbout'>Copyright (C) 2014-2016 Walid Benghabrit - Ecole des Mines de Nantes - ARMINES</br>" +
             "ASCOLA Research Group - A4CLOUD Project http://www.a4cloud.eu/ </div>";
 
-       toastr.info(abt, "About", {
+        toastr.info(abt, "About", {
 				"closeButton": true,
 				"preventDuplicates": true,
 				"tapToDismiss": true,
@@ -295,7 +320,62 @@ var visualEditor = {
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-center"
 			});
-        visualEditor.ui.updateToastSize("info", {"width": 800}, false, "none");
+        visualEditor.ui.updateToastSize("info", {"width": 800, height:350}, false, "none", (window.innerHeight - 600)/2 + "px");
+    },
+
+     /**
+     * Startup panel
+     */
+    startup: function () {
+        var recentFiles = "";
+        var files = visualEditor.userPrefs["recentFiles"];
+        var file = "";
+        for(var i=0; i<files.length; i++) {
+            if(files[i].length > 25)
+                file = "..." + files[i].substr(files[i].length-25);
+            else
+                file = files[i];
+
+            recentFiles += "<a class='catElement' onclick='visualEditor.ui.fileManager.openFile(\""+files[i]+"\")'>"+file+"</a></br>"
+        }
+        var abt = "" +
+            "<div>"+
+            "<div class='startedCat'> <div class='startedCatInner'> <h3 style='color: rgb(9, 9, 9);'>" +
+            "<i class='fa fa-folder-open'></i> Recent files</h3>"+ recentFiles +"</div> </div>"+
+
+            "<div class='startedCat'><div class='startedCatInner'> <h3 style='color: rgb(9, 9, 9);'>" +
+            "<i class='fa fa-file'></i> Create new file</h3> " +
+            "<a class='catElement' onclick='visualEditor.ui.fileManager.createFileType(\"acd\", true)'>" +
+            "<i class='fa fa-edit'></i> New component diagram</a></br></br>"+
+            "<a class='catElement' onclick='visualEditor.ui.fileManager.createFileType(\"aal\", true)'>" +
+            "<i class='fa fa-file-code-o'></i> New AAL policy</a></br></br>"+
+            "<a class='catElement' onclick='visualEditor.ui.fileManager.createFileType(\"vfodtl\", true)'>" +
+            "<i class='fa fa-calendar-o'></i> New Fodtl diagram</a></br></br>"+
+            "</div></div>"+
+
+            "<div class='startedCat'><div class='startedCatInner'><h3 style='color: rgb(9, 9, 9); margin-top: 6px;'>" +
+            "<i class='fa fa-question-circle'></i> Help</h3>"+
+
+            "<a class='catElement' target='_blank' href='https://github.com/hkff/AccLab/raw/master/pyAAL/UserGuide/UserGuide.pdf'>" +
+            "<i class='fa fa-file-text-o'></i> User guide</a></br></br>"+
+            "<a class='catElement' target='_blank' href='https://github.com/hkff/AccLab'>" +
+            "<i class='fa fa-github'></i> Github page</a></br></br>"+
+            "<a class='catElement' onclick='visualEditor.about()'><i class='fa fa-question'></i> About</a></br></br>"+
+            "</div></div>"+
+            "</div>"+
+            "<div style='padding-top: 150px; display: inline-block; padding-right: 60px;'>AccLab version 2.0 2014-2016</div>";
+
+        toastr.info(abt, "Get started", {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": true,
+  				"showDuration": "1000",
+			  	"hideDuration": "1000",
+			  	"timeOut": 0,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-center"
+			});
+        visualEditor.ui.updateToastSize("info", {"width": 800, "height": 400}, false, "none", (window.innerHeight - 600)/2 + "px");
     },
 
     /**
@@ -343,9 +423,7 @@ var visualEditor = {
                 type: 'POST',
                 url: visualEditor.backend,
                 data: {action: "killPs", pid: pid},
-                success: function (response) {
-                    console.log(response)
-                }
+                success: function (response) {}
             });
         }
     },
@@ -385,9 +463,17 @@ var visualEditor = {
 				"positionClass": "toast-top-left",
                 "onHidden": function() { if(visualEditor.ui.interval != null) clearInterval(visualEditor.ui.interval); }
 			});
-        visualEditor.ui.updateToastSize("warning", {"width": 410, "height": 240}, true);
+        visualEditor.ui.updateToastSize("warning", {"width": 410, "height": 240}, true, "none");
         $(".toast-warning").css("padding-left", "5px");
         $("#monGrid").datagrid({fit:false});
+
+        // Minimazing on dbl click
+        $(".toast-warning").dblclick(function() {
+            if($(this).height() >= 20)
+                $(this).animate({width: "150px", height: "30px"});
+            else
+                $(this).animate({width: "410px", height: "240"});
+        });
 
         // Update moninfo
         visualEditor.getMonInfo();
@@ -408,6 +494,18 @@ var visualEditor = {
         TogetherJSConfig_inviteFromRoom = true;
         TogetherJS(this);
         return false;
+    },
+
+    /**
+     * Log msg into output
+     * @param msg
+     */
+    log: function(msg, clear) {
+        if(clear == true) $("#output_window").empty();
+        if(typeof(msg) == "string")
+            $("#output_window").append(replaceAll("\n", "<br>", msg) + "<br>");
+        else
+            $("#output_window").append(msg + "<br>");
     }
 };
 
@@ -442,6 +540,12 @@ window.onload = function() {
             visualEditor.activeEditor.session.getUndoManager().isClean())
             visualEditor.closeFile();
         else {
+            var of = visualEditor.ui.getOpenedFile();
+            if(of.endsWith(".acd") || of.endsWith(".vfodtl")) {
+                visualEditor.closeFile();
+                return;
+            }
+
             var p = '<button type="button" class="btn" onclick="visualEditor.closeFile()">YES' +
                 '</button> <button type="button" class="btn">NO</button>';
             toastr.error(p, "Close file without Saving ?", {
@@ -496,10 +600,18 @@ window.onload = function() {
         }
 
         // Update theme
-        if(visualEditor.aceTheme != null)
+        if(visualEditor.aceTheme != null) {
             visualEditor.updateEditorsTheme();
+        }
     };
 
+    // Tabhost
+    dockspawn.TabHost.prototype.onTabChanged = function (page) {
+        visualEditor.ui.canvas = page.activeTab.container.canvas;
+        visualEditor.ui.activeTab = page.activeTab;
+        visualEditor.activeEditor = visualEditor.ui.openedEditors[page.activeTab.panel.title];
+        visualEditor.ui.updatePanel();
+    };
 
     dockspawn.PanelContainer.loadFromState = function(state, dockManager)
     {
@@ -525,7 +637,7 @@ window.onload = function() {
     var onResized = function (e) {
         dockManager.resize(window.innerWidth - (divDockManager.clientLeft + divDockManager.offsetLeft),
             window.innerHeight - (divDockManager.clientTop + divDockManager.offsetTop));
-    }
+    };
     window.onresize = onResized;
     onResized(null);
 
@@ -541,48 +653,40 @@ window.onload = function() {
     this.components.elementButtonClose.innerHTML = "";
     this.toolbox = new dockspawn.PanelContainer($("#toolbox_window")[0], dockManager);
     this.toolbox.elementButtonClose.innerHTML = "";
-    this.properties = new dockspawn.PanelContainer($("#properties_window")[0], dockManager);
-    this.properties.elementButtonClose.innerHTML = "";
+    //this.properties = new dockspawn.PanelContainer($("#properties_window")[0], dockManager);
+    //this.properties.elementButtonClose.innerHTML = "";
     this.inplaceAAL = new dockspawn.PanelContainer($("#inPlaceAALEditor")[0], dockManager);
     this.inplaceAAL.elementButtonClose.innerHTML = "";
     this.output = new dockspawn.PanelContainer($("#output_window")[0], dockManager);
     this.output.elementButtonClose.innerHTML = "";
-//            this.editor1 = new dockspawn.PanelContainer($("#editor1_window")[0], dockManager);
 
     // Dock the panels on the dock manager
     this.documentNode = dockManager.context.model.documentManagerNode;
     var prop = 200 / $(document).width();
     this.solutionNode = dockManager.dockLeft(documentNode, solution, prop);
-    this.outlineNode = dockManager.dockDown(solutionNode, outline, 0.50);
-
-    prop = 250 / $(document).width();
-    this.propertiesNode = dockManager.dockRight(documentNode, properties, prop);
-
-    prop = 500 / $(document).height();
-    this.outputNode = dockManager.dockDown(documentNode, output, prop);
-    this.inplaceAALNode = dockManager.dockDown(this.propertiesNode, inplaceAAL, 0.40);
+    this.outlineNode = dockManager.dockDown(solutionNode, outline, 0.30);
 
     prop = 145 / $(document).width();
-    this.componentsNode = dockManager.dockLeft(documentNode, components, prop);
-    this.toolboxNode = dockManager.dockDown(componentsNode, toolbox, 0.80);
+    this.toolboxNode = dockManager.dockRight(documentNode, toolbox, prop);
+    this.componentsNode = dockManager.dockDown(toolboxNode, components, 0.50);
 
-    // Tabhost
-    dockspawn.TabHost.prototype.onTabChanged = function (page) {
-        visualEditor.ui.canvas = page.activeTab.container.canvas;
-        visualEditor.ui.activeTab = page.activeTab;
-        visualEditor.activeEditor = visualEditor.ui.openedEditors[page.activeTab.panel.title];
-        visualEditor.ui.updatePanel();
-    };
+     prop = 300 / $(document).height();
+    this.outputNode = dockManager.dockDown(documentNode, output, prop);
 
     this.panelNodes = [window.solution, window.outline, window.components, window.toolbox,
-        window.properties, window.inplaceAAL, window.output];
+        /*window.properties,*/ window.inplaceAAL, window.output];
 
     // Load prefs
-    visualEditor.userPrefs = visualEditor.load_prefs();
+    visualEditor.userPrefs = visualEditor.loadPrefs();
 
     // Add shortcuts
-    shortcut.add("Alt+c", visualEditor.ui.toggleComment);
     shortcut.add("Alt+h", visualEditor.ui.clearHighlight);
     shortcut.add("Alt+z", visualEditor.ui.highlightRed);
     shortcut.add("Alt+a", visualEditor.ui.highlightGreen);
-}
+
+    // DEBUG mode
+    //console.log = console.error = function(e) { $("#output_window").append("<br>Console : " + e);}
+
+    // Hide loader
+    $('#loading-image').hide();
+};

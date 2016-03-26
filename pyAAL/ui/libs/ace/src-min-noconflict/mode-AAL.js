@@ -2,13 +2,12 @@
  * AAL Mode
  */
 ace.define('ace/mode/AAL', function(require, exports, module) {
-    window.Range = require('ace/range').Range;
-
     var oop = require("../lib/oop");
     var TextMode = require("./text").Mode;
     //var Tokenizer = require("../tokenizer").Tokenizer;
     var aalHighlightRules = require("./aal_highlight_rules").aalHighlightRules;
     var aalFoldMode = require("./aalFolding").FoldMode;
+    var WorkerClient = require("../worker/worker_client").WorkerClient;
 
     var Mode = function() {
         //this.$tokenizer = new Tokenizer(new aalHighlightRules().getRules());
@@ -20,12 +19,43 @@ ace.define('ace/mode/AAL', function(require, exports, module) {
 
 
     (function() {
-        // Extra logic goes here. (see below)
+        this.lineCommentStart = "//";
+        this.blockComment = {start: "/*", end: "*/"};
+
+        // Creating AAL worker
+        this.createWorker = function(session) {
+            this.$worker = new WorkerClient(["ace"], "ace/worker/aal_worker", "AALWorker");
+            this.$worker.attachToDocument(session.getDocument());
+
+            this.$worker.on("errors", function(e) {
+                session.setAnnotations(e.data);
+            });
+
+            this.$worker.on("annotate", function(e) {
+                session.setAnnotations(e.data);
+            });
+
+            this.$worker.on("terminate", function() {
+                session.clearAnnotations();
+            });
+
+            this.$worker.on("log", function(e) {
+                visualEditor.log(e.data);
+            });
+
+            this.$worker.on("callback", function(e) {
+                visualEditor.ui.workerCallback(e.data.result, e.data.cmd);
+            });
+
+            return this.$worker;
+        };
+
+        this.$id = "ace/mode/AAL";
+
     }).call(Mode.prototype);
 
     exports.Mode = Mode;
 });
-
 
 /**
  * AAL Folding mode
@@ -79,7 +109,7 @@ ace.define('ace/mode/aal_highlight_rules', function(require, exports, module) {
         //this.$keywordList = keywords;
 
         // Predefined Types
-        var types = ("Actor DataSubject DataController DataProcessor DwDataController Auditor CloudProvider CloudCustomer EndUser");
+        var types = ("Actor DataSubject DataController DataProcessor DwDataController Auditor CloudProvider CloudCustomer EndUser User");
         
         // Operators
         var operators = ("OR AND NOT THEN ONLYWHEN FORALL EXISTS IF WHERE");

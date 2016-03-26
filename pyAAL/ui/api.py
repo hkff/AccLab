@@ -15,6 +15,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
+from threading import Thread
+from time import sleep
+try:
+    from fodtlmon.fodtl.fodtlmon import *
+except:
+    pass
+
 __author__ = 'walid'
 
 import os
@@ -22,10 +29,11 @@ from urllib.parse import *
 import sys, shutil
 from io import StringIO
 from aalc import *
+from AALtoAccmon import *
 
 base_dir = "examples"
 
-ALLOWED_CMD = ["tspass", "aalc.py", "fotl-translate"]
+ALLOWED_CMD = ["tspass", "aalc.py", "fotl-translate", "manage.py"]
 
 
 # Filter ps
@@ -39,11 +47,11 @@ def is_cmd_allowed(cmds):
 #  List dir
 def api_list_dir(wpath):
     tmp = "["
-    dirs = os.listdir(wpath)[::-1]
+    dirs = sorted(os.listdir(wpath)[::-1])
     for d in dirs:
         if d.startswith("."):
             continue
-        tmp += '{' + '"id":"cb8", "text":"' + d + '"," iconCls":""'
+        tmp += '{' + '"id":"' + wpath+'/'+d + '", "text":"' + d + '"," iconCls":""'
 
         if os.path.isdir(wpath + "/" + d):
             tmp += ',"children": '
@@ -106,7 +114,7 @@ def api_save_prefs(d):
 # Load preferences
 def api_load_prefs():
     if not os.path.isfile("ui/prefs.json"):
-        api_save_prefs('{"theme": "monokai", "username": "" }')
+        api_save_prefs('{"theme": "monokai", "username": "", "fontSize": 14, "recentFiles": [] }')
     with open("ui/prefs.json") as fd:
         return fd.read()
 
@@ -159,8 +167,8 @@ def api_compile_aal(f):
     res = ""
     try:
         aalc(base_dir + "/" + f, libs_path="libs/aal/", root_path="", web=True)
-    except:
-        res = "Compilation Error"
+    except Exception as e:
+        res = "Compilation Error : " + str(e)
 
     res = reportSIO.getvalue() + "\n" + reportEIO.getvalue()
 
@@ -187,8 +195,8 @@ def api_compile_tspass(f):
 
     try:
         res = tspassc(file=base_dir + "/" + f, output="tmp.tspass")["print"]
-    except:
-        res = "Compilation Error"
+    except Exception as e:
+        res = "Compilation Error : " + str(e)
 
     res += "\n" + reportSIO.getvalue() + "\n" + reportEIO.getvalue()
 
@@ -284,9 +292,161 @@ def api_macro_call(f, macro_name, macro_args):
         # Restore context
         sys.stdout = sysout
         sys.stderr = syserr
-    except:
-        res = "Compilation Error"
+    except Exception as e:
+        res = "Compilation Error : " + str(e)
 
     print(res)
     res = to_html_colors(res)
     return res.replace("\n", "<br>")
+
+
+# Gen accmon
+def api_gen_accmon(file, spec):
+    try:
+        mspec = MappingSpec()
+        tmp = spec.split(";")
+        for x in tmp:
+            tmp2 = x.split(":")
+            if len(tmp2) > 1:
+                args = tmp2[1].split("=>")
+                if tmp2[0] == "clause":
+                    if len(args) > 2:
+                        mspec.clauses.append(MappingSpec.ClauseMap(args[0], args[1], args[2]))
+                elif tmp2[0] == "service":
+                    if len(args) > 1:
+                        mspec.services.append(MappingSpec.ServiceMap(args[0], args[1]))
+                elif tmp2[0] == "agent":
+                    if len(args) > 1:
+                        mspec.agents.append(MappingSpec.AgentMap(args[0], args[1]))
+                elif tmp2[0] == "type":
+                    if len(args) > 1:
+                        mspec.types.append(MappingSpec.TypeMap(args[0], args[1]))
+
+        mm = aalc(base_dir + "/" + file, libs_path="libs/aal/", root_path="", no_exec=True, web=True)["mm"]
+        res = AALtoDJFODTLMON(mm, mspec)
+        file_name = file.replace('.aal', '_rules.py')
+        api_write_file(file_name, res)
+        return file_name
+    except:
+        # Compilation Error
+        return 'Error'
+
+
+# Generate django app skeleton
+def api_generate_django(aal_file, spec_file, output_folder):
+    return generate_django_skeleton(aal_file, spec_file, output_folder)
+
+
+# Run django app
+def api_run_django(app, port=9000):
+    p = Popen(['python3', "examples/"+app, 'migrate'], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    # p = Popen(['python3', "examples/"+app, 'runserver', str(port)], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+
+    # IMPORTANT: Run the server using non blocking IO in order to capture errors and show them to the client
+    from queue import Queue, Empty
+    ON_POSIX = 'posix' in sys.builtin_module_names
+
+    def enqueue_output(out, err, queue):
+        for line in iter(out.readline, b''):
+            queue.put(line.decode("utf-8"))
+        out.close()
+        for line in iter(err.readline, b''):
+            queue.put(line.decode("utf-8"))
+        err.close()
+
+    p = Popen(['python3', "examples/"+app, 'runserver', str(port)], stdout=PIPE, stderr=PIPE, stdin=PIPE,
+              bufsize=1, close_fds=ON_POSIX)
+    q = Queue()
+    t = Thread(target=enqueue_output, args=(p.stdout, p.stderr, q))
+    t.daemon = True
+    t.start()
+
+    # Wait to get some data
+    sleep(5)
+
+    # Get output
+    items = []
+    max = 100
+    for numOfItemsRetrieved in range(0, max):
+        try:
+            if numOfItemsRetrieved == max:
+                break
+            items.append(q.get_nowait())
+        except Exception:
+            break
+    print("=====================================")
+    print("".join(items))
+    print("=====================================")
+    return "".join(items).replace("\n", "<br>")
+
+
+# Convert Fodtl formula to vFodtl diagram
+def api_fodtl_to_vfodtl(formula):
+    print(formula)
+    try:
+        from fodtlmon.parser.Parser import FodtlParser
+    except:
+        return "fodtlmon is not installed !"
+    try:
+        def prg(formula):
+            res = ""
+            js_class = "Fodtl_%s" % formula.__class__.__name__.lower()
+
+            if isinstance(formula, Predicate):
+                arguments = []
+                for x in formula.args:
+                    arguments.append(prg(x))
+
+                res = '{ "%s": [%s] }' % (js_class, ",".join(arguments))
+
+            elif isinstance(formula, Constant):
+                res = '{ "%s": {"Fodtl_value": "%s"} }' % (js_class, formula.name)
+
+            elif isinstance(formula, Variable):
+                res = '{ "%s": {"Fodtl_value": "%s"} }' % (js_class, formula.name)
+
+            elif isinstance(formula, At):
+                pass
+
+            elif isinstance(formula, Forall):
+                pass
+
+            elif isinstance(formula, Exists):
+                pass
+
+            elif isinstance(formula, true) or isinstance(formula, false):
+                res = '{ "%s": "" }' % js_class
+
+            elif isinstance(formula, UExp):
+                inner = prg(formula.inner)
+                res = '{"%s" : %s}' % (js_class, inner)
+
+            elif isinstance(formula, BExp):
+                exp1 = prg(formula.left)
+                exp2 = prg(formula.right)
+                res = '{ "%s" : [%s, %s] }' % (js_class, exp1, exp2)
+
+            else:
+                raise Exception("Error %s of type %s" % (formula, type(formula)))
+            return res
+
+        f = FodtlParser.parse(formula)
+        res = prg(f)
+        return res
+    except Exception as e:
+        return "%s" % e
+
+
+# Register formula in accmon
+def api_register_accmon_monitor(formula, mon_name, accmon_url):
+    import urllib.request, urllib.parse
+    res = "Error"
+    values = {'formula_id': mon_name, 'formula': formula}
+    data = urllib.parse.urlencode(values)
+    data = data.encode('ascii')  # data should be bytes
+    url = accmon_url + "/sysmon/remote/register_formula/"
+    with urllib.request.urlopen(url, data) as response:
+        res = str(response.read())
+        print(res)
+
+    return res

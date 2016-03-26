@@ -1,0 +1,113 @@
+/**
+ * AccLab UserGuide : Getting started
+ * Tuto 2
+ * Author : Walid Benghabrit
+ */
+
+// Loading types & macros libraries
+LOAD "core.types"
+LOAD "core.macros"
+
+
+// Declaring services
+SERVICE read
+SERVICE store
+SERVICE delete
+
+// Declaring actors
+AGENT alice TYPES(Actor) REQUIRED(read store delete) PROVIDED()
+AGENT bob   TYPES(Actor) REQUIRED(read store delete) PROVIDED()
+AGENT css   TYPES(Actor) REQUIRED() PROVIDED(read store delete)
+
+LOG log
+
+/*
+ * Cloud storage service provider policy
+ */
+CLAUSE css_policy (
+    FORALL d:data FORALL a:Actor
+
+    // Allow users to read their data
+    IF (d.subject == a) THEN {
+        PERMIT a.read[css](d) AND DENY a.read[css](d)
+    } AND
+
+    // Deny access to read other
+    IF (d.subject != a) THEN {
+        DENY a.read[css](d)
+    } AND
+
+    // Allow css to read/delete stored data
+    PERMIT css.read[css](d) AND
+    PERMIT css.delete[css](d)
+
+    AUDITING dpa.audit[css](log)
+    IF_VIOLATED_THEN MUST(dpa.sanction[css](d) AND css.delete[css](d))
+)
+
+
+/*
+ * Alice's preferences
+ */
+CLAUSE alice_pref (
+    FORALL d:data
+    // Alice want to be able to read all her data stored on css
+    IF (d.subject == alice AND d.subject != bob) THEN {
+        DENY alice.read[css](d)
+        AND
+        // Bob cannot read Alice's data
+        DENY bob.read[css](d)
+    }
+
+    AUDITING dpa.audit[css](log)
+    IF_VIOLATED_THEN MUST(dpa.sanction[css](d) AND css.delete[css](d))
+)
+
+
+TYPE uname 
+
+TYPE uname EXTENDS(LogAttr)
+
+CLAUSE a (
+    FORALL i:uname 
+    IF ( @ReqIn("/ooko/dz" 'o')  ) THEN {
+        @UserEq(id) AND @p(x)
+    }
+)
+
+CLAUSE b (
+    FORALL i:uname 
+    IF ( @ReqIn("/ooko/dz" 'o')  ) THEN {
+        @UserEq(id)  AND @p(x)
+    }
+)
+CALL vvalidate("a" "b")
+// Call validate macro to perform the compliance check
+//CALL econflict("css_policy" "2")
+//CALL ecompliance("css_policy" "alice_pref")
+//CALL sat_ue("css_policy")
+//CALL validate_usage("css_policy" "alice_pref")
+
+
+
+/*
+EXEC
+"""
+for x in self.aalprog.get_declared(m_type):
+    print(str(x.name) + "  : " + str(x.lin()))
+
+tts = self.aalprog.get_declared(m_type)
+print(",".join(['"' + str(x.name) + '"' for x in list(filter(lambda x: x.subtype_of("Actor"), tts))]))
+
+print(",".join(['"' + str(x.name) + '"' for x in list(filter(lambda x: x.subtype_of("data"), tts))]))
+
+for l in self.aalprog.libs:
+    print("======================= " + l.file)
+    print(l.refForwardTypes)
+    print([str(x.name) for x in l.aalprog.declarations["types"]])
+
+print(self.isDeclared("goo", m_type))
+"""
+*/
+// CALL to_djfodtlmon()
+//CALL wvalidate_usage("css_policy" "alice_pref")

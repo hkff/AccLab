@@ -125,3 +125,12 @@ else:
 print(web)
 """
 )
+
+/*
+ * Translate to DjFodtlmon
+ */
+MACRO to_djfodtlmon() (
+"""
+AALtoDJFODTLMON(self, MappingSpec())
+"""
+)

@@ -57,70 +57,71 @@ grammar AAL;
     Behavior    ::= BEHAVIOR Id '(' ActionExp ')'
 */
 
+
 //-------------------------------------------------------//
 //------------------- Keywords -------------------------//
 //------------------------------------------------------//
 
 /** Declarable **/
-D_service : 'SERVICE' | 'Service';
-D_agent	  : 'AGENT'   | 'Agent';
-D_data    : 'DATA'    | 'Data';
-D_clause  : 'CLAUSE'  | 'Clause';
-D_type    : 'TYPE'    | 'Type';
-D_types   : 'TYPES'   | 'Types';
+D_service : 'SERVICE'; // | 'Service';
+D_agent	  : 'AGENT';   // | 'Agent';
+D_data    : 'DATA';    // | 'Data';
+D_clause  : 'CLAUSE';  // | 'Clause';
+D_type    : 'TYPE';    // | 'Type';
+D_types   : 'TYPES';   // | 'Types';
 
 /** Clause **/
-C_auditing   : 'AUDITING' | 'Auditing';
-C_ifviolated : 'IF_VIOLATED_THEN' | 'If_Violated_Then';
+C_auditing   : 'AUDITING';         // | 'Auditing';
+C_ifviolated : 'IF_VIOLATED_THEN'; // | 'If_Violated_Then';
 
 /** Logical Operators **/
-O_or       : 'OR'       | 'or';
-O_and      : 'AND'      | 'and' | ',';
-O_onlywhen : 'ONLYWHEN' | 'onlywhen';
-O_then     : 'THEN'     | 'then';
-O_if       : 'IF'       | 'if';
-O_not      : 'NOT'      | 'not';
-O_where    : 'WHERE'    | 'where';
-O_after    : 'AFTER'    | 'after';
-O_before   : 'BEFORE'   | 'before';
+O_or       : 'OR';       // | 'or';
+O_and      : 'AND';      // | 'and' | ',';
+O_onlywhen : 'ONLYWHEN'; // | 'onlywhen';
+O_then     : 'THEN';     // | 'then';
+O_if       : 'IF';       // | 'if';
+O_not      : 'NOT';      // | 'not';
+O_where    : 'WHERE';    // | 'where';
+O_after    : 'AFTER';    // | 'after';
+O_before   : 'BEFORE';   // | 'before';
 
 /** Temporal operators **/
-T_must     : 'MUST'     | 'must';
-T_mustnot  : 'MUSTNOT'  | 'mustnot';
-T_always   : 'ALWAYS'   | 'always';
-T_never    : 'NEVER'    | 'never';
-T_sometime : 'SOMETIME' | 'sometime';
-T_until    : 'UNTIL'    | 'until';
-T_unless   : 'UNLESS'   | 'unless';
-T_next     : 'NEXT'     | 'next';
+T_must     : 'MUST';     // | 'must';
+T_mustnot  : 'MUSTNOT';  // | 'mustnot';
+T_always   : 'ALWAYS';   // | 'always';
+T_never    : 'NEVER';    // | 'never';
+T_sometime : 'SOMETIME'; // | 'sometime';
+T_until    : 'UNTIL';    // | 'until';
+T_unless   : 'UNLESS';   // | 'unless';
+T_next     : 'NEXT';     // | 'next';
 
 /** Authorizations **/
-A_permit   : 'PERMIT' | 'permit';
-A_deny     : 'DENY'   | 'deny';
+A_permit   : 'PERMIT'; // | 'permit';
+A_deny     : 'DENY';   // | 'deny';
 
 
 /** Quantifications **/
-Q_forall   : 'FORALL' | 'forall';
-Q_exists   : 'EXISTS' | 'exists';
+Q_forall   : 'FORALL'; // | 'forall';
+Q_exists   : 'EXISTS'; // | 'exists';
 
 
 /** Misc **/
 M_subject  : 'SUBJECT';
-M_rservice : 'RS' | 'REQUIRED' | 'required';
-M_pservice : 'PS' | 'PROVIDED' | 'provided';
-M_purpose  : 'PURPOSE' | 'purpose';
+M_rservice : 'REQUIRED'; // | 'RS' | 'required';
+M_pservice : 'PROVIDED'; // | 'PS' | 'provided';
+M_purpose  : 'PURPOSE';  // | 'purpose';
 //M_audit    : 'AUDIT' | 'audit';
-M_extends  : 'EXTENDS' | 'extends';
-M_attr     : 'ATTRIBUTES' | 'attributes';
-M_actions  : 'ACTIONS' | 'actions';
-M_macro    : 'MACRO' | 'macro';
-M_call     : 'CALL' | 'call';
-M_load     : 'LOAD' | 'load';
-M_check    : 'CHECK' | 'check';
-M_apply    : 'APPLY' | 'apply';
-M_exec     : 'EXEC' | 'exec';
-M_behavior : 'BEHAVIOR'  | 'behavior';
-M_env      : 'ENV'  | 'env';
+M_extends  : 'EXTENDS';    // | 'extends';
+M_attr     : 'ATTRIBUTES'; // | 'attributes';
+M_actions  : 'ACTIONS';    // | 'actions';
+M_macro    : 'MACRO';      // | 'macro';
+M_call     : 'CALL';       // | 'call';
+M_load     : 'LOAD';       // | 'load';
+M_check    : 'CHECK';      // | 'check';
+M_apply    : 'APPLY';      // | 'apply';
+M_exec     : 'EXEC';       // | 'exec';
+M_behavior : 'BEHAVIOR';   // | 'behavior';
+M_env      : 'ENV';        // | 'env';
 
 /** Check **/
 C_clause        : 'clause'           | 'cl';
@@ -145,12 +146,11 @@ h_slash   : '/';
 h_data    : ID;
 h_value   : h_constant;
 h_time    : h_date | h_duration;
-h_agentId : ID;
-h_varTypeId   : ID;
-h_varId   : ID;
-h_dataId  : ID;
-h_date    : STRING; // INT INT h_slash INT INT h_slash INT INT INT INT;
-
+h_agentId    : ID;
+h_varTypeId  : ID;
+h_varId      : ID;
+h_dataId     : ID;
+h_date       : STRING; // INT INT h_slash INT INT h_slash INT INT INT INT;
 h_purposeId  : ID;
 h_serviceId  : ID;
 h_clauseId   : ID;
@@ -161,7 +161,8 @@ h_parameters : h_constant | h_variable;
 h_constant   : INT |  STRING;
 h_type       : ID;
 h_variable   : ID (h_colon h_type)?;
-h_predicate  : '@' ID h_lpar ID* h_rpar;
+h_predicate  : '@' ID h_lpar (h_pArgs)* h_rpar;
+h_pArgs      : ID | STRING;
 
 //-------------------------------------------------------//
 //----------------- Lexer rules ------------------------//
@@ -211,7 +212,7 @@ dataType    : ID;
 //**** Program core ****//
 
 //Clause        ::= CLAUSE Id '(' [Usage] [Audit Rectification] ')'
-clause  : D_clause h_clauseId h_lpar (usage NEWLINE?) (audit NEWLINE?)? (rectification NEWLINE?)? h_rpar ;
+clause        : D_clause h_clauseId h_lpar (usage NEWLINE?) (audit NEWLINE?)? (rectification NEWLINE?)? h_rpar ;
 usage         : actionExp;
 audit         : C_auditing usage;
 rectification : C_ifviolated usage;
@@ -226,7 +227,8 @@ actionExp  : actionExp1Action
            | actionExp6Author
            | actionExp7ifthen
            | actionExp8qvar
-           | h_lpar actionExp h_rpar;
+           | h_lpar actionExp h_rpar
+           | h_predicate;
 
 actionExp1Action      : action;
 actionExp2notAction   : O_not actionExp;
@@ -273,11 +275,12 @@ args   : h_lpar ID* h_rpar;
 MCODE : '"""' (.)*? '"""';
 macroCall : M_call ID h_lpar STRING* h_rpar;
 exec   : M_exec MCODE;
-
 loadlib : M_load STRING;
 
-//****  Behavior ****//
+
+//****  Behavior extension ****//
 behavior :  M_behavior ID h_lpar actionExp h_rpar;
+
 
 //****  LTL checking extension ****//
 ltlCheck : M_check ID args? h_lmar check h_rmar;

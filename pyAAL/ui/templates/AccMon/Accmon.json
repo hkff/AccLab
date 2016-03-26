@@ -1,0 +1,52 @@
+{
+    "name": "Accmon",
+	"desc": "Generate Mapping file for AAL to Accmon.",
+	"vars": [
+      {"name": "", "id": "c1", "type": "select", "pre": " Clause ", "post": " ", "src": "{aal.clauses}"},
+      {"name": "", "id": "ruleTarget", "type": "select", "pre": " Target ", "post": " ",
+        "src": "[\"HTTP\", \"VIEW\", \"RESPONSE\"]"},
+      {"name": "", "id": "ruleType", "type": "select", "pre": " Type ", "post": " ",
+        "src": "[\"POSTERIORI\", \"REAL_TIME\"]"},
+      {"name": "Add", "id": "clause_add", "type": "button", "pre": " ", "post": "",
+        "onclick": "$('#rulesList').append($('<option></option>').val(2).html( 'clause: ' + $('#c1').val() +' => '+ $('#ruleTarget').val()+' => '+ $('#ruleType').val()+';' ))"},
+
+      {"name": "", "id": "agents", "type": "select", "pre": " Agent ", "post": " ", "src": "{aal.agents}"},
+      {"name": "", "id": "agentTarget", "type": "text", "pre": "Name ", "post": ""},
+      {"name": "Add", "id": "agent_add", "type": "button", "pre": " ", "post": "",
+        "onclick": "$('#rulesList').append($('<option></option>').val(2).html( 'agent: ' + $('#agents').val() +' => '+ $('#agentTarget').val() +' => '+ $('#agentLocation').val() +';' ))"},
+      {"name": "", "id": "agentLocation", "type": "text", "pre": "IP address if remote ? ", "post": ""},
+
+      {"name": "", "id": "services", "type": "select", "pre": " Service ", "post": " ", "src": "{aal.services}"},
+      {"name": "", "id": "serviceTarget", "type": "text", "pre": "URL ", "post": ""},
+      {"name": "Add", "id": "service_add", "type": "button", "pre": " ", "post": "",
+        "onclick": "$('#rulesList').append($('<option></option>').val(2).html( 'service:' + $('#services').val() +' => '+ $('#serviceTarget').val() +' => '+ $('#serviceMethod').val() +';' ))"},
+      {"name": "", "id": "serviceMethod", "type": "select", "pre": " Method ", "post": " ", "src": "[\"GET\", \"POST\"]"},
+
+      {"name": "", "id": "types", "type": "select", "pre": " Type ", "post": " ", "src": "{aal.types}"},
+      {"name": "", "id": "typeTarget", "type": "text", "pre": "Name ", "post": ""},
+      {"name": "Add", "id": "type_add", "type": "button", "pre": " ", "post": "",
+        "onclick": "$('#rulesList').append($('<option></option>').val(2).html( 'type:' + $('#types').val() +' => '+ $('#typeTarget').val() +';' ))"},
+
+      {"name": "Remove", "id": "remove_list", "type": "button", "pre": " ", "post": "", "onclick": "$('#rulesList option:selected').remove()"},
+
+      {"name": "Clear all", "id": "clear", "type": "button", "pre": " ", "post": "", "onclick": "$('#rulesList option').remove()"},
+
+      {"name": "Save", "id": "saveSpecBtn", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.fileManager.saveTextAsFile($('#rulesList').text(), visualEditor.ui.activeTab.panel.title + '.spec')"},
+      {"name": "Select file", "id": "selectSpecBtn", "type": "file", "pre": " ", "post": "", "onclick": ""},
+      {"name": "Load", "id": "loadSpecBtn", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.fileManager.loadFileAsList('selectSpecBtn', 'rulesList')"},
+
+      {"name": "Generate", "id": "gen", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.generateAccmon($('#rulesList').text())"}
+    ],
+	"aal": [
+      "\nCALL to_djfodtlmon()\n"
+    ],
+	"html": [
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Clauses : </h4>  {c1} {ruleTarget} {ruleType} {clause_add} </div> ",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Services : </h4>  {services} {serviceTarget} {serviceMethod} {service_add} </div> ",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Agents : </h4>  {agents} {agentTarget} {agentLocation} {agent_add} </div> ",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Types : </h4>  {types} {typeTarget} {type_add} </div> ",
+      "<div class='varGroupe'> <h4 class='varsHeader'>Rules list : </h4> <select id='rulesList' multiple style='width: 80%;'></select> </div>",
+      "<div class='varGroupe'> {remove_list} {clear} </div>",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>Generate : </h4> {selectSpecBtn} {loadSpecBtn} {saveSpecBtn} {gen} </div> "
+    ]
+}
