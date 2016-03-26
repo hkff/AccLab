@@ -303,7 +303,7 @@ def main(argv):
     global ACCLAB_PATH
     inputfile = ""
     outputfile = ""
-    help_str_extended = "AAL tools set V 1.1 . aalc is a part of Acclab tool.\n" + \
+    help_str_extended = "AAL tools set V 2.0 . aalc is a part of Acclab tool.\n" + \
                         "For more information see AccLab home page\n Usage : aalc.py [OPTIONS]" + \
                         "\n  -h \t--help          " + "\t display this help and exit" + \
                         "\n  -i \t--input= [file] " + "\t the input file" + \
