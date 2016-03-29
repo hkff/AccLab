@@ -19227,7 +19227,7 @@ draw2d.policy.line.OrthogonalSelectionFeedbackPolicy = draw2d.policy.line.LineSe
  * @class draw2d.policy.port.PortFeedbackPolicy
  *
  * Base class for all port feedback policies. Used for grow, highlight or
- * other decorationhs during drag&drop and connecting of ports.
+ * other decorations during drag&drop and connecting of ports.
  *
  * @author Andreas Herz
  * @extends draw2d.policy.figure.DragDropEditPolicy
@@ -19268,8 +19268,6 @@ draw2d.policy.port.PortFeedbackPolicy = draw2d.policy.figure.DragDropEditPolicy.
     onHoverLeave: function(canvas, draggedFigure, hoverFigure)
     {
     }
-
-        
 });
 
 /*****************************************
@@ -19522,7 +19520,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "6.1.0",
+    version : "6.1.5",
     i18n : {
         command : {
             move : "Move Shape",
