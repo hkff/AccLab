@@ -60,6 +60,10 @@ visualEditor.ui.components = {
 		//this.components.push(new policy());
 		this.components.push(new Actor());
 
+		this.components.push(new this.Separator());
+        this.components.push(new this.Note());
+        this.components.push(new this.Picture());
+
 		// FODTL
 		this.components.push(new this.Separator());
 		this.components.push(new Fodtl_formula());
@@ -108,13 +112,73 @@ visualEditor.ui.components = {
 		}
 	}),
 
+    /**
+	 * Note component
+	 */
+	Note: Class.extend({
+		init: function() {
+			this.parent = visualEditor.ui.components;
+		},
+
+        view: function(_this) {
+            this.cmp_data = $('<div title="Note" class="btn-components fa fa-sticky-note"></div>');
+            this.cmp_data.click(_this, this.addElement);
+            this.parent.componentsPanel.append(this.cmp_data);
+        },
+
+        addElement: function(event, position) {
+            var element =  new draw2d.shape.note.PostIt({
+               text:"Click to edit this note",
+               color:"#000000",
+               padding:20
+            });
+            element.installEditor(new draw2d.ui.LabelInplaceEditor());
+            if(position == undefined) position = {x:100, y:100};
+            visualEditor.ui.canvas.add(element, position.x, position.y);
+            return element;
+        }
+	}),
+
+    /**
+	 * Picture component
+	 */
+	Picture: Class.extend({
+		init: function() {
+			this.parent = visualEditor.ui.components;
+		},
+
+        view: function(_this) {
+            this.cmp_data = $('<div title="Note" class="btn-components fa fa-file-image-o"></div>');
+            this.cmp_data.click(_this, this.addElement);
+            this.parent.componentsPanel.append(this.cmp_data);
+        },
+
+        addElement: function(event, position) {
+            var file;
+			do {
+				file=prompt("Select an image file");
+			}
+			while(file.length < 0);
+
+            var element =  new draw2d.shape.basic.Image({
+               path: '../examples/'+file
+            });
+            if(position == undefined) position = {x:100, y:100};
+            visualEditor.ui.canvas.add(element, position.x, position.y);
+            return element;
+        }
+	}),
+
 	hideAcdCompnents: function(){
         $('#componentbox_window .btn-components').show().first().hide();
         $('.separators').show();
 	},
 
 	hideVfodtlCompnents: function(){
-        $('#componentbox_window .btn-components').hide().first().show();
+        var elements = $('#componentbox_window .btn-components');
+        elements.hide();
+        for(var i=0; i<3; i++)
+            $(elements.get(i)).show();
         $('.separators').hide();
 	}
 

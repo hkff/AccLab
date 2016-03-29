@@ -212,21 +212,21 @@ visualEditor.ui = {
 		var aal = "/**\n * Generated AAL file \n * @diagram source : " + file_name +
             "\n * @author : " + visualEditor.getUserName() + "\n * @on : " + date + "\n */\n\n" +
             "\n// Loading types & macros libraries\nLOAD \"core.types\"\nLOAD \"core.macros\"\n\n";
-		var figs = visualEditor.ui.canvas.getFigures();
+		var figs = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Actor"});
 		var tmp = null;
 		
 		// Handle declarations
 		aal += "/***************************\n *       Declarations\n ****************************/\n";
 		aal += "// Actors\n";
-		for(var i=0; i<figs.getSize(); i++) {
-			tmp = figs.get(i);
+		for(var i=0; i<figs.length; i++) {
+			tmp = figs[i];
 			aal += tmp.getAALDeclaration()+"\n";
 		}
 
 		aal += "\n// Services\n";
 		var services = "";
-		for(var i=0; i<figs.getSize(); i++) {
-			tmp = figs.get(i);
+		for(var i=0; i<figs.length; i++) {
+			tmp = figs[i];
 			services += tmp.getRservices().data + ",";
 			services += tmp.getPservices().data + ",";
 		}
@@ -243,8 +243,8 @@ visualEditor.ui = {
 
 		// Handle clauses
 		aal += "\n/***************************\n *       Clauses\n ****************************/\n";
-		for(var i=0; i<figs.getSize(); i++) {
-			tmp = figs.get(i);
+		for(var i=0; i<figs.length; i++) {
+			tmp = figs[i];
 			var tmp_policy = tmp.policy;
 			if(tmp_policy != "")
 				aal += tmp_policy + "\n\n";

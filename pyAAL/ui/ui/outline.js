@@ -89,10 +89,10 @@ visualEditor.ui.outline = {
 	control: function(_this) {
 		this.tree.tree({
 			onSelect: function(node) {
-				var figs = visualEditor.ui.canvas.getFigures();
-				for (var i=0; i<figs.getSize(); i++) {
-					if(figs.get(i).id == node.id && figs.get(i).type == node.type) {
-						visualEditor.ui.canvas.setCurrentSelection(figs.get(i));
+				var figs = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Actor"});
+				for (var i=0; i<figs.length; i++) {
+					if(figs[i].id == node.id && figs[i].type == node.type) {
+						visualEditor.ui.canvas.setCurrentSelection(figs[i]);
 						//visualEditor.ui.selectedNode = figs.get(i);
         				//$(visualEditor.ui).trigger('nodeSelected');
 					}
@@ -118,20 +118,18 @@ visualEditor.ui.outline = {
 	 * Canvas to tree converter
 	 */
 	canvasToTree: function() {
-		var fig = visualEditor.ui.canvas.getFigures();
+		var fig = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Actor"});
 		var nodes = this.tree.tree('getRoots');
 		var lng = nodes.length;
 		for (var i=0; i<lng; i++) {
 			this.tree.tree('remove', nodes[0].target);
 		}
 
-		for (var i=0; i<fig.getSize(); i++) {
-			//console.log(fig.get(i).toJSONtree())
-			//console.log(JSON.parse(fig.get(i).toJSONtree()))
+		for (var i=0; i<fig.length; i++) {
 			// Get the JSON tree representation of the node and insert it
 			this.tree.tree('insert',{
 		    		after:this.tree.tree('getRoot'),
-		    		data:[JSON.parse(fig.get(i).toJSONtree())]});
+		    		data:[JSON.parse(fig[i].toJSONtree())]});
 		}
 	},
 

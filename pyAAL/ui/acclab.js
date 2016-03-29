@@ -499,6 +499,7 @@ var visualEditor = {
     /**
      * Log msg into output
      * @param msg
+     * @param clear
      */
     log: function(msg, clear) {
         if(clear == true) $("#output_window").empty();
