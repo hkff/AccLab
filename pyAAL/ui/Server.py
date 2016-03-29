@@ -135,6 +135,9 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         elif val == "fodtlToDiagram":
             res = api_fodtl_to_vfodtl(self.get_arg(args, "formula", method))
 
+        elif val == "clauseToFodtl":
+            res = api_clause_to_fodtl(self.get_arg(args, "file", method), self.get_arg(args, "clause", method))
+
         elif val == "registerAccMonMonitor":
             res = api_register_accmon_monitor(self.get_arg(args, "formula", method), self.get_arg(args, "name", method),
                                               self.get_arg(args, "accmon_url", method))

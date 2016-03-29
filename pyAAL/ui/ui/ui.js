@@ -525,5 +525,30 @@ visualEditor.ui = {
                 console.log(response);
             }
 	    });
+    },
+
+    /**
+     * Register AAL clause in AccMon
+     */
+    registerClauseToAccMon: function(url, name, clause) {
+        console.log(clause)
+        $.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "clauseToFodtl", file: visualEditor.ui.getOpenedFile(), clause: clause},
+            success: function(response){
+                console.log(response)
+                $.ajax({
+                    dataType: 'text',
+                    type:'POST',
+                    url: visualEditor.backend,
+                    data: {action: "registerAccMonMonitor", formula: response, name: name, accmon_url: url},
+                    success: function(response){
+                        console.log(response);
+                    }
+                });
+            }
+	    });
     }
 };

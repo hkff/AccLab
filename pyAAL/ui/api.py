@@ -450,3 +450,14 @@ def api_register_accmon_monitor(formula, mon_name, accmon_url):
         print(res)
 
     return res
+
+
+# Transform a clause into Fodtl formula
+def api_clause_to_fodtl(file, clause):
+    res = "Error"
+    mm = aalc(base_dir + "/" + file, libs_path="libs/aal/", root_path="", no_exec=True, web=True)["mm"]
+    if mm is not None:
+        c = mm.clause(clause)
+        if c is not None:
+            res = aal_clause_to_fodtl(c)
+    return res
