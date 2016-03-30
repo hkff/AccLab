@@ -204,7 +204,7 @@ visualEditor.ui.components = {
         },
 
         addElement: function(event, position) {
-            var a = new visualEditor.ui.components.ZoomFigure({ width:50, height:50});
+            var a = new visualEditor.ui.components.ZoomFigure({width:150, height:100}, true);
             if(position == undefined) position = {x:100, y:100};
             visualEditor.ui.canvas.add(a, position.x, position.y);
             return a;
@@ -212,34 +212,43 @@ visualEditor.ui.components = {
 	}),
 
 	ZoomFigure: draw2d.shape.layout.StackLayout.extend({
+        pictures: [],
 
-        addTitle: function() {
-            var title;
-			do { title=prompt("Enter a title"); } while(title.length <= 0);
-            return new draw2d.shape.note.PostIt({
-                text: title,
-                color: "#000000",
-                padding: 20,
-                width: 100
-            });
-        },
+        Picture: draw2d.SetFigure.extend({
+            init: function(path) {
+                this._super();
+                this.strokeScale = false;
+                this.setKeepAspectRatio(true);
+                this.img_path = path;
+            },
 
-        addPicture: function() {
+            createSet: function() {
+                this.canvas.paper.setStart();
+                this.canvas.paper.image('../examples/'+ this.img_path, 0, 0, 100, 100);
+                return this.canvas.paper.setFinish();
+            }
+        }),
+
+        addPicture: function(msg) {
             var file;
-			do { file=prompt("Select an image file"); } while(file.length <= 0);
-            return new draw2d.shape.basic.Image({path: '../examples/'+file});
+			do { file=prompt(msg); } while(file.length <= 0);
+            this.pictures.push(file);
+            return new this.Picture(file);
         },
 
-        init: function (attr, getter, setter) {
-            this._super(attr, getter, setter);
-
-            this.add(this.addPicture());
-            this.add(this.addTitle());
+        init: function (attr, ui) {
+            this._super(attr);
+            if(ui) {
+                var pic2 = this.addPicture("Select the first image file");
+                var pic1 = this.addPicture("Select the second image file");
+                this.add(pic1);
+                this.add(pic2);
+            }
             this.setKeepAspectRatio(true);
             this.lastZoom = 1;
-
-            this.createPort("input");
-            this.createPort("output");
+            this.installEditPolicy(new draw2d.policy.figure.FigureEditPolicy());
+            //this.createPort("input");
+            //this.createPort("output");
 
             var _this = this;
             var zoomHandler = function (emitter, event) {
@@ -261,6 +270,36 @@ visualEditor.ui.components = {
             this.on("removed", function (emitter, event) {
                 event.canvas.off("zoom", zoomHandler);
             });
+        },
+
+         getPersistentAttributes: function() {
+            var memento= this._super();
+            memento.pic2 = this.pictures.pop();
+            memento.pic1 = this.pictures.pop();
+            memento.type = "visualEditor.ui.components.ZoomFigure";
+            return memento;
+         },
+
+        setPersistentAttributes: function(memento) {
+            this._super(memento);
+            this.pictures.push(memento.pic1);
+            this.pictures.push(memento.pic2);
+            this.add(new this.Picture(memento.pic2));
+            this.add(new this.Picture(memento.pic1));
+            return this;
         }
     })
+};
+
+
+var originalRaphaelImageFn = Raphael.fn.image;
+Raphael.fn.image2 = function(url, x, y, w, h) {
+    // fix the image dimensions to match original scale unless otherwise provided
+    if( !w || !h ) {
+        var img = new Image();
+        img.src = url;
+        if( !w ) w = img.width;
+        if( !h ) h = img.height;
+    }
+    return originalRaphaelImageFn.call(this, url, x, y, w, h);
 };
