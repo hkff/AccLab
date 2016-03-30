@@ -63,6 +63,7 @@ visualEditor.ui.components = {
 		this.components.push(new this.Separator());
         this.components.push(new this.Note());
         this.components.push(new this.Picture());
+        this.components.push(new this.Slide());
 
 		// FODTL
 		this.components.push(new this.Separator());
@@ -148,7 +149,7 @@ visualEditor.ui.components = {
 		},
 
         view: function(_this) {
-            this.cmp_data = $('<div title="Note" class="btn-components fa fa-file-image-o"></div>');
+            this.cmp_data = $('<div title="Picture" class="btn-components fa fa-file-image-o"></div>');
             this.cmp_data.click(_this, this.addElement);
             this.parent.componentsPanel.append(this.cmp_data);
         },
@@ -158,7 +159,7 @@ visualEditor.ui.components = {
 			do {
 				file=prompt("Select an image file");
 			}
-			while(file.length < 0);
+			while(file.length <= 0);
 
             var element =  new draw2d.shape.basic.Image({
                path: '../examples/'+file
@@ -169,17 +170,97 @@ visualEditor.ui.components = {
         }
 	}),
 
+    /**
+     * Hide Acd components (1)
+     */
 	hideAcdCompnents: function(){
         $('#componentbox_window .btn-components').show().first().hide();
         $('.separators').show();
 	},
 
+    /**
+     * Hide Vfodtl components (4-n)
+     */
 	hideVfodtlCompnents: function(){
         var elements = $('#componentbox_window .btn-components');
         elements.hide();
-        for(var i=0; i<3; i++)
+        for(var i=0; i<4; i++)
             $(elements.get(i)).show();
         $('.separators').hide();
-	}
+	},
 
+	/**
+	 * Slide component
+	 */
+    Slide: Class.extend({
+        init: function() {
+			this.parent = visualEditor.ui.components;
+		},
+
+        view: function(_this) {
+            this.cmp_data = $('<div title="Slide" class="btn-components fa fa-outdent"></div>');
+            this.cmp_data.click(_this, this.addElement);
+            this.parent.componentsPanel.append(this.cmp_data);
+        },
+
+        addElement: function(event, position) {
+            var a = new visualEditor.ui.components.ZoomFigure({ width:50, height:50});
+            if(position == undefined) position = {x:100, y:100};
+            visualEditor.ui.canvas.add(a, position.x, position.y);
+            return a;
+        }
+	}),
+
+	ZoomFigure: draw2d.shape.layout.StackLayout.extend({
+
+        addTitle: function() {
+            var title;
+			do { title=prompt("Enter a title"); } while(title.length <= 0);
+            return new draw2d.shape.note.PostIt({
+                text: title,
+                color: "#000000",
+                padding: 20,
+                width: 100
+            });
+        },
+
+        addPicture: function() {
+            var file;
+			do { file=prompt("Select an image file"); } while(file.length <= 0);
+            return new draw2d.shape.basic.Image({path: '../examples/'+file});
+        },
+
+        init: function (attr, getter, setter) {
+            this._super(attr, getter, setter);
+
+            this.add(this.addPicture());
+            this.add(this.addTitle());
+            this.setKeepAspectRatio(true);
+            this.lastZoom = 1;
+
+            this.createPort("input");
+            this.createPort("output");
+
+            var _this = this;
+            var zoomHandler = function (emitter, event) {
+                var border = 0.7;
+
+                if (_this.lastZoom >= border && event.value < border) {
+                    _this.setVisibleLayer(0, 500);
+                }
+                else if (_this.lastZoom <= border && event.value > border) {
+                    _this.setVisibleLayer(1, 700);
+                }
+                _this.lastZoom = event.value;
+            };
+
+            this.on("added", function (emitter, event) {
+                event.canvas.on("zoom", zoomHandler);
+            });
+
+            this.on("removed", function (emitter, event) {
+                event.canvas.off("zoom", zoomHandler);
+            });
+        }
+    })
 };
