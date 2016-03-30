@@ -218,13 +218,13 @@ visualEditor.ui.components = {
             init: function(path) {
                 this._super();
                 this.strokeScale = false;
-                this.setKeepAspectRatio(true);
+                this.setKeepAspectRatio(false);
                 this.img_path = path;
             },
 
             createSet: function() {
                 this.canvas.paper.setStart();
-                this.canvas.paper.image('../examples/'+ this.img_path, 0, 0, 100, 100);
+                this.canvas.paper.image('../examples/'+ this.img_path, 0, 0, 150, 100);
                 return this.canvas.paper.setFinish();
             }
         }),
@@ -293,7 +293,7 @@ visualEditor.ui.components = {
 
 
 var originalRaphaelImageFn = Raphael.fn.image;
-Raphael.fn.image2 = function(url, x, y, w, h) {
+Raphael.fn.image = function(url, x, y, w, h) {
     // fix the image dimensions to match original scale unless otherwise provided
     if( !w || !h ) {
         var img = new Image();
