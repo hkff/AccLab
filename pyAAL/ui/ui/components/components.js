@@ -204,7 +204,7 @@ visualEditor.ui.components = {
         },
 
         addElement: function(event, position) {
-            var a = new visualEditor.ui.components.ZoomFigure({width:150, height:100}, true);
+            var a = new visualEditor.ui.components.ZoomFigure({width:100, height:60}, true);
             if(position == undefined) position = {x:100, y:100};
             visualEditor.ui.canvas.add(a, position.x, position.y);
             return a;
@@ -212,7 +212,6 @@ visualEditor.ui.components = {
 	}),
 
 	ZoomFigure: draw2d.shape.layout.StackLayout.extend({
-        pictures: [],
 
         Picture: draw2d.SetFigure.extend({
             init: function(path) {
@@ -224,7 +223,7 @@ visualEditor.ui.components = {
 
             createSet: function() {
                 this.canvas.paper.setStart();
-                this.canvas.paper.image('../examples/'+ this.img_path, 0, 0, 150, 100);
+                this.canvas.paper.image('../examples/'+ this.img_path, 0, 0, 100, 60);
                 return this.canvas.paper.setFinish();
             }
         }),
@@ -238,6 +237,7 @@ visualEditor.ui.components = {
 
         init: function (attr, ui) {
             this._super(attr);
+            this.pictures = [];
             if(ui) {
                 var pic2 = this.addPicture("Select the first image file");
                 var pic1 = this.addPicture("Select the second image file");
@@ -270,12 +270,21 @@ visualEditor.ui.components = {
             this.on("removed", function (emitter, event) {
                 event.canvas.off("zoom", zoomHandler);
             });
+
+            this.on("dblclick", function(emitter, event) {
+                //var zoomer = new draw2d.policy.canvas.WheelZoomPolicy();
+                //zoomer.canvas = visualEditor.ui.canvas;
+                //zoomer.onMouseWheel(10, event.x, event.y, true, false);
+                //visualEditor.ui.canvas.setZoom(0.3, true);
+                //visualEditor.ui.canvas.scrollTo(emitter.x*3, emitter.y*3);
+                // FIXME
+            });
         },
 
          getPersistentAttributes: function() {
-            var memento= this._super();
-            memento.pic2 = this.pictures.pop();
-            memento.pic1 = this.pictures.pop();
+            var memento = this._super();
+            memento.pic2 = this.pictures[1];
+            memento.pic1 = this.pictures[0];
             memento.type = "visualEditor.ui.components.ZoomFigure";
             return memento;
          },
