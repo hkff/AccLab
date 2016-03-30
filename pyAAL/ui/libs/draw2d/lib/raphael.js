@@ -5990,7 +5990,7 @@
             /* FREEGROUP: don't push URL parameter into the drawing. This will break Apps with "?" in the URL
              * see: https://github.com/DmitryBaranovskiy/raphael/issues/693
              **/
-            var url =document.location.protocol + "//" + document.location.host  + document.location.pathname;
+            var url ="";//document.location.protocol + "//" + document.location.host  + document.location.pathname;
             $(o, {
                 fill: "url('" + url + "#" + id + "')",
                 opacity: 1,
