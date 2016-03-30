@@ -269,6 +269,13 @@ var visualEditor = {
     },
 
     /**
+     * Presentation mode
+     */
+    presentationMode: function() {
+        visualEditor.clearPanels();
+    },
+
+    /**
      * Default mode
      */
     defaultMode: function() {
