@@ -167,7 +167,7 @@ visualEditor.ui = {
 			this.enableNode(this.componentsPanel);
 			this.enableNode(this.outlinePanel);
 			this.enableNode(this.inplacePanel);
-			$(visualEditor.ui.tools.tools[18].button).hide();
+			//$(visualEditor.ui.tools.tools[18].button).hide();
 			$(visualEditor.ui.tools.tools[20].button).hide();
 			$(visualEditor.ui.tools.tools[21].button).hide();
 
@@ -243,6 +243,7 @@ visualEditor.ui = {
 
 		// Handle clauses
 		aal += "\n/***************************\n *       Clauses\n ****************************/\n";
+        var figs = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Policy"});
 		for(var i=0; i<figs.length; i++) {
 			tmp = figs[i];
 			var tmp_policy = tmp.policy;
@@ -251,6 +252,25 @@ visualEditor.ui = {
 		}
 		return aal;
 	},
+
+    /**
+     * Check compliance and consistency of diagram policies
+     */
+    checkPolicies: function() {
+        var res = {aal: "", spec: " "};
+        var clauses = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Policy"});
+        for(var i=0; i<clauses.length; i++) {
+            var op = clauses[i].getOutputPorts();
+            for(var j=0; j<op.getSize(); j++) {
+                var con = op.get(j).getConnections();
+                for(var k=0; k<con.getSize(); k++) {
+                    res["spec"] += clauses[i].tlabel.text + "->" + con.get(k).targetPort.parent.tlabel.text+";";
+                }
+            }
+        }
+        res["aal"] = this.generateAAL(visualEditor.ui.activeTab.container.title);
+        return res;
+    },
 
     /**
      * Analyse opened AAL file and update info

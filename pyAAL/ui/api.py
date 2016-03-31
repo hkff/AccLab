@@ -208,6 +208,56 @@ def api_compile_tspass(f):
     return res.replace("\n", "<br>")
 
 
+# Compile ACD
+def api_compile_acd(aal, spec):
+    result = {"compliance": [], "sat": []}
+    tmp_file = "_tmp0001_.aal"
+
+    try:
+        api_write_file(tmp_file, aal)
+        res = aalc(base_dir + "/" + tmp_file, libs_path="libs/aal/", root_path="", web=False)
+
+        # Save current context
+        sysout = sys.stdout
+        syserr = sys.stderr
+
+        # Capture the output
+        reportSIO = StringIO()
+        reportEIO = StringIO()
+        sys.stdout = reportSIO
+        sys.stderr = reportEIO
+
+        # Handling Sat
+        for c in res["mm"].aalprog.clauses:
+            clause = str(c.name)
+            tmp = validate2(res["mm"], "(always (" + c.usage.to_ltl() + "))", check=True)
+            result["sat"].append({clause: tmp["sat"]})
+
+        # Handling Compliance
+        specs = spec.split(";")
+        for x in specs:
+            x = x.strip()
+            sp = x.split("->")
+            if len(sp) == 2:
+                _c1 = res["mm"].clause(sp[0].strip())
+                _c2 = res["mm"].clause(sp[1].strip())
+                tmp = validate(res["mm"], _c1, _c2, resolve=False, verbose=False, use_always=False, acc_formula=0, chk='neg')
+                result["compliance"].append({x: tmp["res"]})
+
+        res = reportSIO.getvalue() + "\n" + reportEIO.getvalue()
+        # Restore context
+        sys.stdout = sysout
+        sys.stderr = syserr
+    except Exception as e:
+        res = "Compilation Error : " + str(e)
+    finally:
+        api_delete_file(tmp_file)
+        print(res)
+
+    print(result)
+    return str(result).replace("'", "\"")
+
+
 # Get AAL declaration in JSON format
 def api_get_aal_dec(f):
     try:

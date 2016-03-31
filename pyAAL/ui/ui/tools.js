@@ -577,58 +577,103 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 
 	control: function(parent, disableShortcut) {
 		var fx = function(e){
-			//var active = visualEditor.ui.activeTab.container.title;
-			//visualEditor.ui.fileManager.showGeneratedTSPASS(active);
-            var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
             var file = visualEditor.ui.activeTab.container.title;
+			var fileType = file.split('.').pop().toLowerCase();
 
-			visualEditor.ui.fileManager.saveFile(file, editor.getValue(), function(){
-                var file = visualEditor.ui.activeTab.container.title;
-                var dType = "text";
-                var action = "compileAAL";
-                var fileType = file.split('.').pop().toLowerCase();
-                if(fileType == "tspass")
-                    action = "compileFOTL";
+			if(fileType == "acd") {
+				// ------------------------ Compile ACD
+				var action = "compileACD";
+				var data = visualEditor.ui.checkPolicies();
+				$.ajax({
+					dataType: "json",
+					type:'POST',
+					url: visualEditor.backend,
+					data: {action: action, aal: data.aal, spec: data.spec},
+					success: function(response){
+						$("#output_window").empty().append(response).scrollTop(0);
+						var clauses = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Policy"});
+						// Handle sat
+						for(var i=0; i<clauses.length; i++) {
+							for(var x in response.sat) {
+								if(response.sat[x].hasOwnProperty(clauses[i].tlabel.text)) {
+									if(response.sat[x][clauses[i].tlabel.text] === "Unsatisfiable")
+										clauses[i].setBackgroundColor('#f3546a');
+									else if(response.sat[x][clauses[i].tlabel.text] === "Satisfiable")
+										clauses[i].setBackgroundColor('#b9dd69');
+									break;
+								}
+							}
+						}
 
-                toastr.error("<i class='fa fa-cog fa-spin'></i>", "Compiling...", {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                    "tapToDismiss": false,
-                    "showDuration": "2000",
-                    "hideDuration": "1000",
-                    "timeOut": 0,
-                    "extendedTimeOut": 0,
-                    "positionClass": "toast-top-center",
-                    "onHidden": function() {
-                        $.ajax({
-                            dataType: 'text',
-                            type: 'POST',
-                            url: visualEditor.backend,
-                            data: {action: "cancelCurrentPS"},
-                            success: function (response) {
-                                $("#output_window").empty().append(response).scrollTop(0);
-                            }
-                        });
-                    }
-			    });
-                $.ajax({
-                    dataType: dType,
-                    type:'POST',
-                    url: visualEditor.backend,
-                    data: {action: action, file: file},
-                    success: function(response){
-                        $("#output_window").empty().append(response).scrollTop(0);
-                        // Clear toastr
-						toastr.clear( $(".toast-error"));
-                        // Setup lines
-                        $(".aceLine").click(function(e) {
-                            var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
-                            if (editor != undefined && editor != null)
-                                editor.gotoLine(parseInt(e.target.innerHTML.replace("at line ", "")));
-                        });
-                    }
-                });
-            });
+						// Handle Compliance
+						for(var i=0; i<clauses.length; i++) {
+							var op = clauses[i].getOutputPorts();
+							for(var j=0; j<op.getSize(); j++) {
+								var con = op.get(j).getConnections();
+								for(var k=0; k<con.getSize(); k++) {
+									var tmp = clauses[i].tlabel.text + "->" + con.get(k).targetPort.parent.tlabel.text+";";
+									var index = response.compliance.indexOf(tmp);
+									if(index > -1) {
+										if(response.compliance[index] === "Unsatisfiable")
+											con.get(k).setColor('#f3546a');
+									}
+								}
+							}
+						}
+					}
+				});
+
+			} else {
+				// ------------------------ Compile AAL / TSPASS
+				var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
+				visualEditor.ui.fileManager.saveFile(file, editor.getValue(), function(){
+					var file = visualEditor.ui.activeTab.container.title;
+					var dType = "text";
+					var action = "compileAAL";
+					var fileType = file.split('.').pop().toLowerCase();
+					if(fileType == "tspass")
+						action = "compileFOTL";
+
+					toastr.error("<i class='fa fa-cog fa-spin'></i>", "Compiling...", {
+						"closeButton": true,
+						"preventDuplicates": true,
+						"tapToDismiss": false,
+						"showDuration": "2000",
+						"hideDuration": "1000",
+						"timeOut": 0,
+						"extendedTimeOut": 0,
+						"positionClass": "toast-top-center",
+						"onHidden": function() {
+							$.ajax({
+								dataType: 'text',
+								type: 'POST',
+								url: visualEditor.backend,
+								data: {action: "cancelCurrentPS"},
+								success: function (response) {
+									$("#output_window").empty().append(response).scrollTop(0);
+								}
+							});
+						}
+					});
+					$.ajax({
+						dataType: dType,
+						type:'POST',
+						url: visualEditor.backend,
+						data: {action: action, file: file},
+						success: function(response){
+							$("#output_window").empty().append(response).scrollTop(0);
+							// Clear toastr
+							toastr.clear( $(".toast-error"));
+							// Setup lines
+							$(".aceLine").click(function(e) {
+								var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
+								if (editor != undefined && editor != null)
+									editor.gotoLine(parseInt(e.target.innerHTML.replace("at line ", "")));
+							});
+						}
+					});
+            	});
+			}
 
             if(visualEditor.activeEditor != null)
 				visualEditor.activeEditor.session.getUndoManager().markClean();
