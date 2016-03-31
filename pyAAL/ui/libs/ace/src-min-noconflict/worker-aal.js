@@ -192,8 +192,9 @@ var findToken = function(tokenName, tokens, options) {
     options.end = (tokens.length > options.end)? options.start - options.end : 0;
 
     for(var i=options.start; i>=options.end; i--) {
-        if(tokens[i].text === tokenName)
-            return true;
+        if(tokens[i] != undefined && tokens[i] != null)
+            if(tokens[i].text === tokenName)
+                return true;
     }
     return false;
 };
@@ -210,9 +211,13 @@ var error_linter = function(msg, tokens, offendingSymbol) {
     var res = "";
     var ant = handleANTLRmsg(msg);
 
-    res = "token -1 : " + tokens[tokens.length-1].toString() +
-        "\ntoken -2 : " + tokens[tokens.length-2].toString() +
-        "\ntoken -3 : " + tokens[tokens.length-3].toString() +
+
+    var t1 = (tokens[tokens.length-1] != undefined)?tokens[tokens.length-1].toString(): "";
+    var t2 = (tokens[tokens.length-2] != undefined)?tokens[tokens.length-2].toString(): "";
+    var t3 = (tokens[tokens.length-3] != undefined)?tokens[tokens.length-3].toString(): "";
+    res = "token -1 : " + t1 +
+        "\ntoken -2 : " + t2 +
+        "\ntoken -3 : " + t3 +
         "\nMsg : " + ant.msg +
         "\nExpected : " + ant.expectedTokens + "\nGiven : " + ant.givenToken +
         "\nOffendingSymbol : " + offendingSymbol;
