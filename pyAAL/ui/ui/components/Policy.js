@@ -125,11 +125,20 @@ PolicyUI = draw2d.shape.layout.StackLayout.extend({
         this.remove(this.getChildren().get(0));
         this.add(this.policyUI);
         this.add(this.nameUI);
+        console.log(this.policyUI.width + " " + this.policyUI.height)
+        this.setDimension(this.policyUI.width, this.policyUI.height);
         this.repaint();
     },
 
     getPolicyName: function() {
-        return "foo";
+        var re = /CLAUSE \w+/;
+        var m = re.exec(this.policy);
+        if (m !== null) {
+            if (m.index === re.lastIndex)
+                re.lastIndex++;
+            return m[0];
+        }
+        return "Policy name";
     }
 });
 /*

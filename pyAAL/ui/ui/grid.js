@@ -69,6 +69,9 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
                         return new MyConnection();
                     }
                 }));
+                this.on("click", function(emitter, event) {
+                    $("#inPlaceAALEditor").fadeOut(400);
+                });
                 break;
 
             // ------------------ VFODTL mode ------------------- //

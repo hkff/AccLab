@@ -174,7 +174,10 @@ visualEditor.ui.components = {
      * Hide Acd components (1)
      */
 	hideAcdCompnents: function(){
-        $('#componentbox_window .btn-components').show().first().hide();
+        var elements = $('#componentbox_window .btn-components');
+        elements.show();
+        for(var i=0; i<2; i++)
+            $(elements.get(i)).hide();
         $('.separators').show();
 	},
 
@@ -186,7 +189,7 @@ visualEditor.ui.components = {
         elements.hide();
         for(var i=0; i<5; i++)
             $(elements.get(i)).show();
-        $('.separators').hide();
+        $('.separators').hide().first().show();
 	},
 
 	/**
