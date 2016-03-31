@@ -542,6 +542,7 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 	 */
 	init: function(attr) {
 		this._this = this;
+		this.updateBuffer = 0;
 	},
 
 	/**
@@ -570,10 +571,16 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 	 */
 	control: function(parent) {
 		this.inPlaceAALEditor.on("change", function(e) {
+            var ui = false;
 			// Check if a node is selected
 			if(visualEditor.ui.selectedNode == undefined || null) return;
+            if(visualEditor.ui.properties.AALEditor.updateBuffer > 10) {
+                visualEditor.ui.properties.AALEditor.updateBuffer = -1;
+                ui = true;
+            }
             if(visualEditor.ui.selectedNode.type === "Policy")
-			    visualEditor.ui.selectedNode.updatePolicy(visualEditor.ui.properties.AALEditor.inPlaceAALEditor.getValue());
+                visualEditor.ui.selectedNode.policy = visualEditor.ui.properties.AALEditor.inPlaceAALEditor.getValue();
+            visualEditor.ui.properties.AALEditor.updateBuffer++;
 		});
 		
 		this.templateAALBtn.click(function(e){

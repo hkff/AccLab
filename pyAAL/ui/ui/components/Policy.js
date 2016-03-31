@@ -41,148 +41,31 @@ Policy = Class.extend({
     }
 });
 
-PolicyUI = draw2d.shape.layout.StackLayout.extend({
-    NAME   : "PolicyUI",
-	type   : "Policy",
 
-    init: function (attr, ui) {
-        this._super(attr);
-        this.policy = "CLAUSE";
-        this.name = "Policy name";
-
-        if(ui) {
-            this.policyUI = new draw2d.shape.basic.Text({text:this.policy, stroke:0});
-            this.nameUI = new draw2d.shape.basic.Text({text:this.name, stroke:0});
-            this.add(this.policyUI);
-            this.add(this.nameUI);
-        }
-
-        this.setKeepAspectRatio(true);
-        this.lastZoom = 1;
-        this.installEditPolicy(new draw2d.policy.figure.AntSelectionFeedbackPolicy());
-        this.createPort("input");
-        this.createPort("output");
-
-        var _this = this;
-        var zoomHandler = function (emitter, event) {
-            var border = 0.7;
-
-            if (_this.lastZoom >= border && event.value < border) {
-                _this.setVisibleLayer(0, 500);
-            }
-            else if (_this.lastZoom <= border && event.value > border) {
-                _this.setVisibleLayer(1, 700);
-            }
-            _this.lastZoom = event.value;
-        };
-
-        this.on("added", function (emitter, event) {
-            event.canvas.on("zoom", zoomHandler);
-        });
-
-        this.on("removed", function (emitter, event) {
-            event.canvas.off("zoom", zoomHandler);
-        });
-
-        this.on("dblclick", function(emitter, event) {
-            visualEditor.ui.properties.AALEditor.inPlaceAALEditor.setValue(_this.policy);
-            $("#inPlaceAALEditor").fadeIn(600);
-        });
-
-        this.on("click", function(e) {
-            visualEditor.ui.selectedNode = _this;
-            visualEditor.ui.properties.AALEditor.inPlaceAALEditor.setValue(_this.policy);
-        });
-
-        this.on("mouseenter", function(e) {
-            visualEditor.ui.selectedNode = _this;
-        });
-    },
-
-     getPersistentAttributes: function() {
-        var memento = this._super();
-        memento.policy = this.policy;
-        memento.type = "PolicyUI";
-        return memento;
-     },
-
-    setPersistentAttributes: function(memento) {
-        this._super(memento);
-        this.policy = memento.policy;
-        return this;
-    },
-
-    updatePolicy: function(policy) {
-        this.policy = policy;
-        this.name = this.getPolicyName();
-        this.policyUI.text = this.policy;
-        this.nameUI.text = this.name;
-        this.refresh();
-    },
-
-    refresh: function () {
-        this.remove(this.getChildren().get(0));
-        this.remove(this.getChildren().get(0));
-        this.add(this.policyUI);
-        this.add(this.nameUI);
-        console.log(this.policyUI.width + " " + this.policyUI.height)
-        this.setDimension(this.policyUI.width, this.policyUI.height);
-        this.repaint();
-    },
-
-    getPolicyName: function() {
-        var re = /CLAUSE \w+/;
-        var m = re.exec(this.policy);
-        if (m !== null) {
-            if (m.index === re.lastIndex)
-                re.lastIndex++;
-            return m[0];
-        }
-        return "Policy name";
-    }
-});
-/*
-policy = Class.extend({
-	NAME : "policy",
-    name : "policy",
-    uiElement : null,
-    leftLocator  : new draw2d.layout.locator.InputPortLocator(),
-    rightLocator : new draw2d.layout.locator.OutputPortLocator(),
-
-	init: function() {
-		this.parent = visualEditor.ui.components;
-        this.uiElement = "PolicyUI";
-	},
-
-	view: function() {
-		// Policy
-		this.cmp_data = $('<div title="Policy (Ctrl+Shift+E)" class="btn-components fa fa-file-powerpoint-o fa-2x"></div>');
-		this.cmp_data.click(this.addElement);
-		this.parent.componentsPanel.append(this.cmp_data);
-        shortcut.add("Ctrl+Shift+E", this.addElement);
-	},
-
-	addElement: function(e, name) {
-		var element = new PolicyUI();
-        if(name != undefined) element.setName(name);
-		visualEditor.ui.canvas.add(element, 100, 100);
-	}
-});
-
-PolicyUI = draw2d.shape.basic.Text.extend({
+PolicyUI = draw2d.shape.basic.Rectangle.extend({
 	NAME   : "PolicyUI",
 	tlabel : null,
 	type   : "Policy",
-	policy : "",
+	policy : " ",
 	DEFAULT_bgColor : "#0d0d0d",
     DEFAULT_labelColor : "#0d0d0d",
 
-    init:function(attr) {
-      this._super(attr);
-      // Create any Draw2D figure as decoration for the connection
-      this.tlabel = new draw2d.shape.basic.Text({text:"this.typeqssssdddddd5f4s6rgrgg\nfergrzgz", stroke:1});
-      // add the new decoration to the connection with a position locator.
-      this.add(this.tlabel, new draw2d.layout.locator.CenterLocator(this));
+    init: function(attr) {
+        this._super(attr);
+        var _this = this;
+        this.tlabel = new draw2d.shape.basic.Text({text:"clause name", stroke:0});
+        this.tlabel.installEditor(new draw2d.ui.LabelInplaceEditor());
+        this.tlabel.on("change", function(e) {
+            // Update name in the policy FIXME
+            //var re = /CLAUSE \w+/;
+            //var m = re.exec(_this.policy);
+            //if (m !== null)
+            //    _this.policy = _this.policy.replace(m[0], "CLAUSE " + this.text);
+            //visualEditor.ui.properties.AALEditor.inPlaceAALEditor.setValue(this.policy);
+        });
+        this.add(this.tlabel, new draw2d.layout.locator.CenterLocator(this));
+        this.createPort("output");
+        this.createPort("input");
     },
 
     onMouseEnter: function() {
@@ -191,13 +74,31 @@ PolicyUI = draw2d.shape.basic.Text.extend({
 
     onClick: function() {
         visualEditor.ui.selectedNode = this;
-        //visualEditor.ui.properties.updateProps();
+        visualEditor.ui.properties.AALEditor.inPlaceAALEditor.setValue(this.policy);
+    },
+
+    onDoubleClick: function(e) {
+        visualEditor.ui.properties.AALEditor.inPlaceAALEditor.setValue(this.policy);
+        $("#inPlaceAALEditor").fadeIn(600);
+    },
+
+    getPersistentAttributes: function() {
+        var memento = this._super();
+        memento.policy = this.policy;
+        memento.tlabeltxt = this.tlabel.text;
+        memento.type = "PolicyUI";
+        return memento;
+     },
+
+    setPersistentAttributes: function(memento) {
+        this._super(memento);
+        this.policy = memento.policy;
+        this.tlabel.text = memento.tlabeltxt;
+        return this;
     },
 
     refresh: function() {
-		console.log("inside "+this.DEFAULT_bgColor)
         this.setBackgroundColor(this.DEFAULT_bgColor);
         this.repaint();
     }
 });
-*/
