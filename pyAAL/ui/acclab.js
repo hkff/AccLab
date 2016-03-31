@@ -663,8 +663,8 @@ window.onload = function() {
     this.toolbox.elementButtonClose.innerHTML = "";
     //this.properties = new dockspawn.PanelContainer($("#properties_window")[0], dockManager);
     //this.properties.elementButtonClose.innerHTML = "";
-    this.inplaceAAL = new dockspawn.PanelContainer($("#inPlaceAALEditor")[0], dockManager);
-    this.inplaceAAL.elementButtonClose.innerHTML = "";
+    //this.inplaceAAL = new dockspawn.PanelContainer($("#inPlaceAALEditor")[0], dockManager);
+    //this.inplaceAAL.elementButtonClose.innerHTML = "";
     this.output = new dockspawn.PanelContainer($("#output_window")[0], dockManager);
     this.output.elementButtonClose.innerHTML = "";
 
@@ -682,7 +682,7 @@ window.onload = function() {
     this.outputNode = dockManager.dockDown(documentNode, output, prop);
 
     this.panelNodes = [window.solution, window.outline, window.components, window.toolbox,
-        /*window.properties,*/ window.inplaceAAL, window.output];
+        /*window.properties, window.inplaceAAL,*/ window.output];
 
     // Load prefs
     visualEditor.userPrefs = visualEditor.loadPrefs();

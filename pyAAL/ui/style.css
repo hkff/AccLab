@@ -137,6 +137,18 @@ body {
 	overflow: auto;
 }
 
+
+.inplaceAAL-window {
+	background-color: #edd;
+	overflow: auto;
+    width: 341px;
+    height: 178px;
+    display: block;
+    left: 703px;
+    position: absolute;
+    top: 220px;
+}
+
 .editor-host {
 	height: auto; 
 	/*overflow: visible;*/

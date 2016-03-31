@@ -54,7 +54,7 @@ visualEditor.ui = {
 		this.inplacePanel    = $('#' + inplacePanel);
 
 		//visualEditor.ui.canvas = new visualEditor.ui.gridEditor(grid, actionsPanel, componentsPanel, propertiesPanel);
-		//visualEditor.ui.properties.init(grid, actionsPanel, componentsPanel, propertiesPanel);
+		visualEditor.ui.properties.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.tools.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.outline.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.fileManager.init(grid, actionsPanel, componentsPanel, propertiesPanel);

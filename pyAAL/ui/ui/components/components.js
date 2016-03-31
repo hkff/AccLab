@@ -57,8 +57,8 @@ visualEditor.ui.components = {
 		// ACD
 		//this.components.push(new agent());
 		//this.components.push(new data());
-		//this.components.push(new policy());
 		this.components.push(new Actor());
+        this.components.push(new Policy());
 
 		this.components.push(new this.Separator());
         this.components.push(new this.Note());
@@ -184,7 +184,7 @@ visualEditor.ui.components = {
 	hideVfodtlCompnents: function(){
         var elements = $('#componentbox_window .btn-components');
         elements.hide();
-        for(var i=0; i<4; i++)
+        for(var i=0; i<5; i++)
             $(elements.get(i)).show();
         $('.separators').hide();
 	},

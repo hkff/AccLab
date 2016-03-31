@@ -19,6 +19,120 @@
 //
 //////////////////////////////////////////////////////////
 
+Policy = Class.extend({
+    NAME: "Policy",
+    type: "Policy",
+
+    init: function() {
+        this.parent = visualEditor.ui.components;
+    },
+
+    view: function(_this) {
+        this.cmp_data = $('<div title="Policy" class="btn-components fa fa-file-powerpoint-o"></div>');
+        this.cmp_data.click(_this, this.addElement);
+        this.parent.componentsPanel.append(this.cmp_data);
+    },
+
+    addElement: function(event, position) {
+        var a = new PolicyUI({width:100, height:60}, true);
+        if(position == undefined) position = {x:100, y:100};
+        visualEditor.ui.canvas.add(a, position.x, position.y);
+        return a;
+    }
+});
+
+PolicyUI = draw2d.shape.layout.StackLayout.extend({
+    NAME   : "PolicyUI",
+	type   : "Policy",
+
+    init: function (attr, ui) {
+        this._super(attr);
+        this.policy = "CLAUSE";
+        this.name = "Policy name";
+
+        if(ui) {
+            this.policyUI = new draw2d.shape.basic.Text({text:this.policy, stroke:0});
+            this.nameUI = new draw2d.shape.basic.Text({text:this.name, stroke:0});
+            this.add(this.policyUI);
+            this.add(this.nameUI);
+        }
+
+        this.setKeepAspectRatio(true);
+        this.lastZoom = 1;
+        this.installEditPolicy(new draw2d.policy.figure.AntSelectionFeedbackPolicy());
+        this.createPort("input");
+        this.createPort("output");
+
+        var _this = this;
+        var zoomHandler = function (emitter, event) {
+            var border = 0.7;
+
+            if (_this.lastZoom >= border && event.value < border) {
+                _this.setVisibleLayer(0, 500);
+            }
+            else if (_this.lastZoom <= border && event.value > border) {
+                _this.setVisibleLayer(1, 700);
+            }
+            _this.lastZoom = event.value;
+        };
+
+        this.on("added", function (emitter, event) {
+            event.canvas.on("zoom", zoomHandler);
+        });
+
+        this.on("removed", function (emitter, event) {
+            event.canvas.off("zoom", zoomHandler);
+        });
+
+        this.on("dblclick", function(emitter, event) {
+            visualEditor.ui.properties.AALEditor.inPlaceAALEditor.setValue(_this.policy);
+            $("#inPlaceAALEditor").fadeIn(600);
+        });
+
+        this.on("click", function(e) {
+            visualEditor.ui.selectedNode = _this;
+            visualEditor.ui.properties.AALEditor.inPlaceAALEditor.setValue(_this.policy);
+        });
+
+        this.on("mouseenter", function(e) {
+            visualEditor.ui.selectedNode = _this;
+        });
+    },
+
+     getPersistentAttributes: function() {
+        var memento = this._super();
+        memento.policy = this.policy;
+        memento.type = "PolicyUI";
+        return memento;
+     },
+
+    setPersistentAttributes: function(memento) {
+        this._super(memento);
+        this.policy = memento.policy;
+        return this;
+    },
+
+    updatePolicy: function(policy) {
+        this.policy = policy;
+        this.name = this.getPolicyName();
+        this.policyUI.text = this.policy;
+        this.nameUI.text = this.name;
+        this.refresh();
+    },
+
+    refresh: function () {
+        this.remove(this.getChildren().get(0));
+        this.remove(this.getChildren().get(0));
+        this.add(this.policyUI);
+        this.add(this.nameUI);
+        this.repaint();
+    },
+
+    getPolicyName: function() {
+        return "foo";
+    }
+});
+/*
 policy = Class.extend({
 	NAME : "policy",
     name : "policy",
@@ -77,3 +191,4 @@ PolicyUI = draw2d.shape.basic.Text.extend({
         this.repaint();
     }
 });
+*/
