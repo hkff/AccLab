@@ -153,7 +153,7 @@ ActorUI2 = draw2d.shape.layout.VerticalLayout.extend({
         this.header = new draw2d.shape.layout.HorizontalLayout({stroke: 0, radius: 0, bgColor: "#1daeef"});
 
         this.classLabel = new draw2d.shape.basic.Label({
-            text: "Actor_name",
+            text: "ActorName",
             stroke:0,
             fontColor:"#ffffff",
             radius: this.getRadius(),
@@ -175,9 +175,9 @@ ActorUI2 = draw2d.shape.layout.VerticalLayout.extend({
                     switch (key) {
                         case "rename": setTimeout(function() { emitter.onDoubleClick(); }, 10);
                             break;
-                        case "newRS": setTimeout(function() { _table.addEntity("name", "RS").onDoubleClick(); }, 10);
+                        case "newRS": setTimeout(function() { _table.addEntity("ServiceName", "RS").onDoubleClick(); }, 10);
                             break;
-                        case "newPS": setTimeout(function() {_table.addEntity("name", "PS").onDoubleClick(); }, 10);
+                        case "newPS": setTimeout(function() {_table.addEntity("ServiceName", "PS").onDoubleClick(); }, 10);
                             break;
                         case "delete": _table.getCanvas().getCommandStack().execute(new draw2d.command.CommandDelete(_table));
                             break;
@@ -263,9 +263,9 @@ ActorUI2 = draw2d.shape.layout.VerticalLayout.extend({
                     switch(key){
                     case "rename": setTimeout(function(){ emitter.onDoubleClick(); },10);
                         break;
-                    case "newRS": setTimeout(function(){ _table.addEntity("_new_", "RS").onDoubleClick(); },10);
+                    case "newRS": setTimeout(function(){ _table.addEntity("ServiceName", "RS").onDoubleClick(); },10);
                         break;
-                    case "newPS": setTimeout(function(){ _table.addEntity("_new_", "PS").onDoubleClick(); },10);
+                    case "newPS": setTimeout(function(){ _table.addEntity("ServiceName", "PS").onDoubleClick(); },10);
                         break;
                     case "delete": emitter.getCanvas().getCommandStack().execute(new draw2d.command.CommandDelete(emitter));
                         break;
@@ -441,7 +441,7 @@ ActorUI2 = draw2d.shape.layout.VerticalLayout.extend({
      * @returns {string}
      */
     getAALDeclaration: function() {
-        var dec = this.type.toUpperCase()+" "+this.getName();
+        var dec = "AGENT "+this.getName();
         var lng = this.types.getSize();
         var i;
         dec += " TYPES(";
