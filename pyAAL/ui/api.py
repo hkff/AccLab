@@ -252,9 +252,7 @@ def api_compile_acd(aal, spec):
         res = "Compilation Error : " + str(e)
     finally:
         api_delete_file(tmp_file)
-        print(res)
 
-    print(result)
     return str(result).replace("'", "\"")
 
 

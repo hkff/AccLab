@@ -59,6 +59,7 @@ visualEditor.ui.components = {
 		//this.components.push(new data());
 		this.components.push(new Actor());
         this.components.push(new Policy());
+        this.components.push(new Import());
 
 		this.components.push(new this.Separator());
         this.components.push(new this.Note());
@@ -98,6 +99,28 @@ visualEditor.ui.components = {
 
 		this.components.push(new this.Separator());
 		this.components.push(new Fodtl_at());
+	},
+
+    /**
+     * Hide Acd components (3)
+     */
+	hideAcdCompnents: function(){
+        var elements = $('#componentbox_window .btn-components');
+        elements.show();
+        for(var i=0; i<3; i++)
+            $(elements.get(i)).hide();
+        $('.separators').show();
+	},
+
+    /**
+     * Hide Vfodtl components (4-n)
+     */
+	hideVfodtlCompnents: function(){
+        var elements = $('#componentbox_window .btn-components');
+        elements.hide();
+        for(var i=0; i<6; i++)
+            $(elements.get(i)).show();
+        $('.separators').hide().first().show();
 	},
 
 	/**
@@ -169,28 +192,6 @@ visualEditor.ui.components = {
             return element;
         }
 	}),
-
-    /**
-     * Hide Acd components (1)
-     */
-	hideAcdCompnents: function(){
-        var elements = $('#componentbox_window .btn-components');
-        elements.show();
-        for(var i=0; i<2; i++)
-            $(elements.get(i)).hide();
-        $('.separators').show();
-	},
-
-    /**
-     * Hide Vfodtl components (4-n)
-     */
-	hideVfodtlCompnents: function(){
-        var elements = $('#componentbox_window .btn-components');
-        elements.hide();
-        for(var i=0; i<5; i++)
-            $(elements.get(i)).show();
-        $('.separators').hide().first().show();
-	},
 
 	/**
 	 * Slide component

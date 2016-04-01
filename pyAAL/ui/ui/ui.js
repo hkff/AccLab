@@ -214,7 +214,16 @@ visualEditor.ui = {
             "\n// Loading types & macros libraries\nLOAD \"core.types\"\nLOAD \"core.macros\"\n\n";
 		var figs = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Actor"});
 		var tmp = null;
-		
+
+        // Handle Imports
+		var imports = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Import"});
+        if(imports.length > 0) {
+            aal += "// Imports\n";
+            for(var i=0; i<imports.length; i++) {
+                aal += 'LOAD "'+imports[i].text.replace(".aal", "")+'"\n';
+            }
+        }
+
 		// Handle declarations
 		aal += "/***************************\n *       Declarations\n ****************************/\n";
 		aal += "// Actors\n";

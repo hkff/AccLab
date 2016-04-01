@@ -613,7 +613,6 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 								for(var k=0; k<con.getSize(); k++) {
 									var tmp = clauses[i].tlabel.text + "->" + con.get(k).targetPort.parent.tlabel.text;
 									for(var p=0; p<response.compliance.length; p++) {
-										console.log(tmp)
 										if (response.compliance[p].hasOwnProperty(tmp)) {
 											if (response.compliance[p][tmp] === "false")
 												con.get(k).setColor('#f3546a');
