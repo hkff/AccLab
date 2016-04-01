@@ -548,7 +548,7 @@ visualEditor.ui.tools.genAALTool = visualEditor.ui.tool.extend({
 			var activeFileType = visualEditor.ui.fileManager.getFileType(active);
             if(activeFileType === "acd"){
                 //visualEditor.ui.fileManager.showGeneratedAAL(active);
-                visualEditor.log(visualEditor.ui.generateAAL(active));
+                visualEditor.log(visualEditor.ui.generateAAL(active), true);
             } else if(activeFileType === "vfodtl"){
                 if(visualEditor.vFodtl_check(visualEditor.ui.canvas) == true)
                     var formulas = visualEditor.vFodtl_to_fodtl(visualEditor.ui.canvas);
@@ -582,6 +582,16 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 
 			if(fileType == "acd") {
 				// ------------------------ Compile ACD
+				toastr.error("<i class='fa fa-cog fa-spin'></i>", "Compiling...", {
+						"closeButton": true,
+						"preventDuplicates": true,
+						"tapToDismiss": false,
+						"showDuration": "2000",
+						"hideDuration": "1000",
+						"timeOut": 0,
+						"extendedTimeOut": 0,
+						"positionClass": "toast-top-center"
+				});
 				var action = "compileACD";
 				var data = visualEditor.ui.checkPolicies();
 				$.ajax({
@@ -623,6 +633,10 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 								}
 							}
 						}
+						if(response.error != "")
+							visualEditor.log(response.error, true);
+
+						toastr.clear( $(".toast-error"));
 					}
 				});
 

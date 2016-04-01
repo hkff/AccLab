@@ -210,13 +210,10 @@ def api_compile_tspass(f):
 
 # Compile ACD
 def api_compile_acd(aal, spec):
-    result = {"compliance": [], "sat": []}
+    result = {"compliance": [], "sat": [], "error": ""}
     tmp_file = "_tmp0001_.aal"
-
+    res = ""
     try:
-        api_write_file(tmp_file, aal)
-        res = aalc(base_dir + "/" + tmp_file, libs_path="libs/aal/", root_path="", web=False)
-
         # Save current context
         sysout = sys.stdout
         syserr = sys.stderr
@@ -226,6 +223,9 @@ def api_compile_acd(aal, spec):
         reportEIO = StringIO()
         sys.stdout = reportSIO
         sys.stderr = reportEIO
+
+        api_write_file(tmp_file, aal)
+        res = aalc(base_dir + "/" + tmp_file, libs_path="libs/aal/", root_path="", web=False)
 
         # Handling Sat
         for c in res["mm"].aalprog.clauses:
@@ -249,11 +249,13 @@ def api_compile_acd(aal, spec):
         sys.stdout = sysout
         sys.stderr = syserr
     except Exception as e:
-        res = "Compilation Error : " + str(e)
+        result["error"] += "\nCompilation Error : " + str(e) + "\n"
     finally:
+        result["error"] += res
+        result["error"] = to_html_colors(result["error"].replace("\n", "</br>"))
         api_delete_file(tmp_file)
-
-    return str(result).replace("'", "\"")
+    import json
+    return json.dumps(result)
 
 
 # Get AAL declaration in JSON format
