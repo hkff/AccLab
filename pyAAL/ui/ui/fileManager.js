@@ -89,7 +89,7 @@ visualEditor.ui.fileManager = {
 			},
 
 			onDblClick: function(node){
-				var path = _this.getAbsPath(node);
+				var path = _this.getAbsPath(node, $("#explorer"));
 				_this.openFile(path);
 			},
 
@@ -128,7 +128,7 @@ visualEditor.ui.fileManager = {
 			}
 			while(file.length < 0);
 
-			var path = _this.getAbsPath(node);
+			var path = _this.getAbsPath(node, $("#explorer"));
 			file = path.replace(node.text, "") + file;
 
 			_this.createFolder(file);
@@ -142,7 +142,7 @@ visualEditor.ui.fileManager = {
 
 		$('#fmm-rename').click(function(e){
 			var node = $("#explorer").tree('getSelected');
-            var path = _this.getAbsPath(node);
+            var path = _this.getAbsPath(node, $("#explorer"));
 			var file;
 			do {
 				file=prompt("Enter file name", path);
@@ -162,13 +162,13 @@ visualEditor.ui.fileManager = {
 
 		$('#fmm-open').click(function(e){
 			var node = $("#explorer").tree('getSelected');
-			var path = _this.getAbsPath(node);
+			var path = _this.getAbsPath(node, $("#explorer"));
 			_this.openFile(path);
 		});		
 
 		$('#fmm-delete').click(function(e){
 			var node = $("#explorer").tree('getSelected');
-			var path = _this.getAbsPath(node);
+			var path = _this.getAbsPath(node, $("#explorer"));
 			_this.deleteFile(path);
 		});
 
@@ -179,7 +179,7 @@ visualEditor.ui.fileManager = {
 
 		$('#fmm-compile').click(function(e){
 			var node = $("#explorer").tree('getSelected');
-			var file = _this.getAbsPath(node);
+			var file = _this.getAbsPath(node, $("#explorer"));
             var dType = "text";
 			var action = "compileAAL";
 			var fileType = file.split('.').pop().toLowerCase();
@@ -200,7 +200,7 @@ visualEditor.ui.fileManager = {
 
         $('#fmm-run').click(function(e){
 			var node = $("#explorer").tree('getSelected');
-			var file = _this.getAbsPath(node);
+			var file = _this.getAbsPath(node, $("#explorer"));
             var dType = "text";
 			var action = "runDjango";
 			var fileType = file.split('.').pop().toLowerCase();
@@ -234,7 +234,7 @@ visualEditor.ui.fileManager = {
         }
         while(file.length <= 0);
         file = file + e.data.type;
-        var path = visualEditor.ui.fileManager.getAbsPath(node);
+        var path = visualEditor.ui.fileManager.getAbsPath(node, $("#explorer"));
         if(visualEditor.ui.fileManager.isDir(path))
             file = path + "/" + file;
         else
@@ -246,10 +246,10 @@ visualEditor.ui.fileManager = {
 	/**
 	 * Get absolute path
 	 */
-	getAbsPath: function(node) {
-		var parent = $("#explorer").tree('getParent', node.target);
+	getAbsPath: function(node, root) {
+		var parent = root.tree('getParent', node.target);
 		if(parent != undefined || parent != null)
-			return (visualEditor.ui.fileManager.getAbsPath(parent) + "/" + node.text);
+			return (visualEditor.ui.fileManager.getAbsPath(parent, root) + "/" + node.text);
 		else
 			return node.text;
 	},
@@ -474,12 +474,12 @@ visualEditor.ui.fileManager = {
 	/**
 	 * Show generated aal file
 	 * @param file
+	 * @param target
 	 */
-	showGeneratedAAL: function(file) {
+	showGeneratedAAL: function(file, target) {
 		var aal = visualEditor.ui.generateAAL(file);
-		var f = file.replace(".acd", ".aal");
-        this.saveFile(f, aal);
-        this.openFile(f);
+		this.saveFile(target, aal);
+        this.openFile(target);
 		toastr.success('AAL file generated !');
 
 		// Update explorer
