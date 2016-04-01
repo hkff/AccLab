@@ -347,7 +347,7 @@ ActorUI2 = draw2d.shape.layout.VerticalLayout.extend({
         memento.DEFAULT_rsColor    = this.DEFAULT_rsColor;
         memento.DEFAULT_psColor    = this.DEFAULT_psColor;
         memento.DEFAULT_labelColor = this.DEFAULT_labelColor;
-
+        memento.ports = [];
         memento.name = this.classLabel.getText();
         memento.entities   = [];
         this.children.each(function(i,e) {
@@ -385,6 +385,7 @@ ActorUI2 = draw2d.shape.layout.VerticalLayout.extend({
         this.DEFAULT_psColor    = memento.DEFAULT_psColor;
         this.DEFAULT_labelColor = memento.DEFAULT_labelColor;
         this.setName(memento.name);
+        this.ports = [];
 
         if(typeof memento.entities !== "undefined"){
             $.each(memento.entities, $.proxy(function(i,e) {
