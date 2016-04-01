@@ -521,9 +521,16 @@ visualEditor.ui.tools.clearTool = visualEditor.ui.tool.extend({
 
 	control: function(parent) {
 		this.button.click(function(e){
-			var reader = new draw2d.io.json.Reader();
-			visualEditor.ui.canvas.clear();
- 			reader.unmarshal(visualEditor.ui.canvas , visualEditor.ui.savedCanvas );
+			//var reader = new draw2d.io.json.Reader();
+			//visualEditor.ui.canvas.clear();
+ 			//reader.unmarshal(visualEditor.ui.canvas , visualEditor.ui.savedCanvas );
+			var clauses = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Policy"});
+			for(var i=0; i<clauses.length; i++) {
+				clauses[i].refresh();
+				var cons = clauses[i].getConnections();
+				for(var j=0; j<cons.getSize(); j++)
+					cons.get(j).setColor("#00A8F0");
+			}
 		});
 	}
 });
