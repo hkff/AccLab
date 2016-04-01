@@ -330,7 +330,7 @@ var visualEditor = {
         visualEditor.ui.updateToastSize("info", {"width": 800, height:350}, false, "none", (window.innerHeight - 600)/2 + "px");
     },
 
-     /**
+    /**
      * Startup panel
      */
     startup: function () {
@@ -383,6 +383,55 @@ var visualEditor = {
 				"positionClass": "toast-top-center"
 			});
         visualEditor.ui.updateToastSize("info", {"width": 800, "height": 400}, false, "none", (window.innerHeight - 600)/2 + "px");
+    },
+
+    /**
+     * Filechooser panel
+     */
+    fileChooser: function (msg, callback, filter) {
+        if(msg == undefined) msg = "Select a file / directory";
+        var abt = "<div id='fileChooser' style='overflow: auto; width: 240px; height: 140px;'></div>";
+
+        toastr.info(abt, msg, {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": false,
+  				"showDuration": "1000",
+			  	"hideDuration": "1000",
+			  	"timeOut": 0,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-center"
+			});
+
+        $("#fileChooser").tree({
+			animate: true,
+			checkbox:false,
+			url: visualEditor.backend + "?action=list",
+
+			onDblClick: function(node){
+				var path = visualEditor.ui.fileManager.getAbsPath(node);
+                if(filter != undefined && filter != null)
+                    if(!path.endsWith(filter))
+                        return;
+                toastr.clear($(".toast-info"));
+                if(callback != undefined)
+                    callback(path);
+			},
+
+			formatter:function(node){
+				var s = node.text;
+				if(node.children){
+					s += ' <span style=\'color:gray\'>(' + node.children.length + ')</span>';
+				}
+				return s;
+			},
+
+			onLoadSuccess: function(node, data){
+                $("#fileChooser").tree("collapseAll");
+			}
+		});
+
+        visualEditor.ui.updateToastSize("info", {"width": 300, "height": 200}, false, "none", (window.innerHeight - 300)/2 + "px");
     },
 
     /**

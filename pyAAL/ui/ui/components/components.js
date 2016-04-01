@@ -178,18 +178,14 @@ visualEditor.ui.components = {
         },
 
         addElement: function(event, position) {
-            var file;
-			do {
-				file=prompt("Select an image file");
-			}
-			while(file.length <= 0);
-
-            var element =  new draw2d.shape.basic.Image({
-               path: '../examples/'+file
+            visualEditor.fileChooser("Select an image file", function(file) {
+                var element =  new draw2d.shape.basic.Image({
+                   path: '../examples/'+file
+                });
+                if(position == undefined) position = {x:100, y:100};
+                visualEditor.ui.canvas.add(element, position.x, position.y);
+                return element;
             });
-            if(position == undefined) position = {x:100, y:100};
-            visualEditor.ui.canvas.add(element, position.x, position.y);
-            return element;
         }
 	}),
 
@@ -242,6 +238,8 @@ visualEditor.ui.components = {
         init: function (attr, ui) {
             this._super(attr);
             this.pictures = [];
+            var _this = this;
+
             if(ui) {
                 var pic2 = this.addPicture("Select the first image file");
                 var pic1 = this.addPicture("Select the second image file");
@@ -254,7 +252,6 @@ visualEditor.ui.components = {
             //this.createPort("input");
             //this.createPort("output");
 
-            var _this = this;
             var zoomHandler = function (emitter, event) {
                 var border = 0.7;
 

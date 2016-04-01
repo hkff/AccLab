@@ -50,7 +50,15 @@ ImportUI = draw2d.shape.basic.Label.extend({
 
     init: function(attr) {
         this._super(attr);
-        this.installEditor(new draw2d.ui.LabelInplaceEditor());
+        //this.installEditor(new draw2d.ui.LabelInplaceEditor());
         this.setText("Click to set AAL file")
+    },
+
+    onDoubleClick: function() {
+        var _this = this;
+        visualEditor.fileChooser("Select an AAL file", function(path) {
+            _this.text = path;
+            _this.repaint();
+        }, ".aal");
     }
 });
