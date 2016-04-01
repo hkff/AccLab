@@ -47,7 +47,7 @@ PolicyUI = draw2d.shape.basic.Rectangle.extend({
 	tlabel : null,
 	type   : "Policy",
 	policy : " ",
-	DEFAULT_bgColor : "#0d0d0d",
+	DEFAULT_bgColor : "#A0A0A0",
     DEFAULT_labelColor : "#0d0d0d",
 
     init: function(attr) {

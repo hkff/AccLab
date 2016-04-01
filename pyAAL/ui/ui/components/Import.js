@@ -50,6 +50,7 @@ ImportUI = draw2d.shape.basic.Label.extend({
 
     init: function(attr) {
         this._super(attr);
+        this.resizeable = true;
         //this.installEditor(new draw2d.ui.LabelInplaceEditor());
         this.setText("Click to set AAL file")
     },
