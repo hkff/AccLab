@@ -611,11 +611,15 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 							for(var j=0; j<op.getSize(); j++) {
 								var con = op.get(j).getConnections();
 								for(var k=0; k<con.getSize(); k++) {
-									var tmp = clauses[i].tlabel.text + "->" + con.get(k).targetPort.parent.tlabel.text+";";
-									var index = response.compliance.indexOf(tmp);
-									if(index > -1) {
-										if(response.compliance[index] === "Unsatisfiable")
-											con.get(k).setColor('#f3546a');
+									var tmp = clauses[i].tlabel.text + "->" + con.get(k).targetPort.parent.tlabel.text;
+									for(var p=0; p<response.compliance.length; p++) {
+										console.log(tmp)
+										if (response.compliance[p].hasOwnProperty(tmp)) {
+											if (response.compliance[p][tmp] === "false")
+												con.get(k).setColor('#f3546a');
+											else if(response.compliance[p][tmp] === "true")
+												con.get(k).setColor('#b9dd69');
+										}
 									}
 								}
 							}

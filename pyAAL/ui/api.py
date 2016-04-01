@@ -242,7 +242,7 @@ def api_compile_acd(aal, spec):
                 _c1 = res["mm"].clause(sp[0].strip())
                 _c2 = res["mm"].clause(sp[1].strip())
                 tmp = validate(res["mm"], _c1, _c2, resolve=False, verbose=False, use_always=False, acc_formula=0, chk='neg')
-                result["compliance"].append({x: tmp["res"]})
+                result["compliance"].append({x: tmp["ok"]})
 
         res = reportSIO.getvalue() + "\n" + reportEIO.getvalue()
         # Restore context
