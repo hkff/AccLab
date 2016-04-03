@@ -30,7 +30,7 @@ import sys, shutil
 from io import StringIO
 from aalc import *
 from AALtoAccmon import *
-
+import json
 base_dir = "examples"
 
 ALLOWED_CMD = ["tspass", "aalc.py", "fotl-translate", "manage.py"]
@@ -79,11 +79,14 @@ def api_get_template(f):
 
 # Write file
 def api_write_file(f, d):
+    res = -1
     # Add \n at the end
     if d[-1] != "\n":
         d += "\n"
     with open(base_dir + "/" + f, "w+") as fd:
-        return str(fd.write(d))
+        res = str(fd.write(d))
+    check_aal_acd(f)
+    return res
 
 
 # Rename file
@@ -254,7 +257,6 @@ def api_compile_acd(aal, spec):
         result["error"] += res
         result["error"] = to_html_colors(result["error"].replace("\n", "</br>"))
         api_delete_file(tmp_file)
-    import json
     return json.dumps(result)
 
 
@@ -511,3 +513,84 @@ def api_clause_to_fodtl(file, clause):
         if c is not None:
             res = aal_clause_to_fodtl(c)
     return res
+
+
+# Check and update the corresponding acd/aal file
+def check_aal_acd(file):
+    def get_clause_node_from_json(acd, clause):
+        for x in acd:
+            if x["type"] == "PolicyUI":
+                c_name = re.search(r'CLAUSE \w+', x["policy"]).group(0).replace("CLAUSE ", "")
+                if c_name == clause:
+                    return x
+        return None
+
+    ext = file.split(".")[-1]
+    if ext == "acd":
+        # Check acd file
+        aal_file_name = base_dir+"/"+file.replace(".acd", ".aal")
+        acd_file_name = base_dir+"/"+file
+        if os.path.isfile(aal_file_name):  # The corresponding aal file exists
+            acd_file = ""
+            aal_file = ""
+
+            # Read acd and aal files
+            with open(acd_file_name, "r") as f:
+                acd_file = json.loads(f.read())
+            with open(aal_file_name, "r") as f:
+                aal_file = f.read()
+
+            mm = aalc(aal_file_name, libs_path="libs/aal/", root_path="", no_exec=True, web=False)["mm"]
+            if mm is not None:
+                inputfile = FileStream(aal_file_name)
+
+                # Update aal file
+                for x in acd_file:
+                    if x["type"] == "PolicyUI":
+                        clause_name = re.search(r'CLAUSE \w+', x["policy"]).group(0)
+                        if clause_name not in aal_file:  # Add the clause in the aal file
+                            aal_file += "\n" + x["policy"]
+                        else:  # Update the clause
+                            cl = mm.clause(clause_name.replace("CLAUSE ", ""))
+                            if cl is not None:
+                                rng = cl.source_range
+                                original_clause = inputfile.getText(rng[0], rng[1])
+                                if x["policy"] != original_clause:
+                                    aal_file = aal_file.replace(original_clause, x["policy"])
+                        # TODO remove deleted clause
+
+                # Save aal file
+                with open(aal_file_name, "w") as f:
+                    f.write(aal_file)
+
+    elif ext == "aal":
+        # Check aal file
+        aal_file_name = base_dir+"/"+file
+        acd_file_name = base_dir+"/"+file.replace(".aal", ".acd")
+        if os.path.isfile(acd_file_name):  # The corresponding acd file exists
+            acd_file = ""
+            aal_file = ""
+
+            # Read acd and aal files
+            with open(acd_file_name, "r") as f:
+                acd_file = json.loads(f.read())
+            with open(aal_file_name, "r") as f:
+                aal_file = f.read()
+
+            mm = aalc(aal_file_name, libs_path="libs/aal/", root_path="", no_exec=True, web=False)["mm"]
+
+            if mm is not None:
+                inputfile = FileStream(aal_file_name)
+
+                # Update acd file
+                for x in mm.aalprog.clauses:
+                    c = get_clause_node_from_json(acd_file, str(x.name))
+                    if c is not None:
+                        rng = x.source_range
+                        original_clause = inputfile.getText(rng[0], rng[1])
+                        if c["policy"] != original_clause:
+                            c["policy"] = original_clause
+
+                # Save acd file
+                with open(acd_file_name, "w") as f:
+                    json.dump(acd_file, f)
