@@ -554,10 +554,9 @@ visualEditor.ui.tools.genAALTool = visualEditor.ui.tool.extend({
 			var active = visualEditor.ui.activeTab.container.title;
 			var activeFileType = visualEditor.ui.fileManager.getFileType(active);
             if(activeFileType === "acd"){
-				visualEditor.fileChooser("Save file", function(path) {
-					//visualEditor.log(visualEditor.ui.generateAAL(active), true);
-					visualEditor.ui.fileManager.showGeneratedAAL(active, path);
-				}, null, true);
+				//visualEditor.log(visualEditor.ui.generateAAL(active), true);
+				// TODO test if file exists
+				visualEditor.ui.fileManager.showGeneratedAAL(active, active.replace(".acd", ".aal"));
             } else if(activeFileType === "vfodtl"){
                 if(visualEditor.vFodtl_check(visualEditor.ui.canvas) == true)
                     var formulas = visualEditor.vFodtl_to_fodtl(visualEditor.ui.canvas);
