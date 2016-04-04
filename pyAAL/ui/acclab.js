@@ -253,6 +253,8 @@ var visualEditor = {
 
         //prop = 250 / $(document).width();
         //window.propertiesNode = dockManager.dockRight(window.documentNode, window.properties, prop);
+        if(visualEditor.ui.canvas != undefined && visualEditor.ui.canvas != null)
+            visualEditor.ui.canvas.installEditPolicy(new draw2d.policy.canvas.ShowDotEditPolicy());
     },
 
     /**
@@ -273,6 +275,8 @@ var visualEditor = {
      */
     presentationMode: function() {
         visualEditor.clearPanels();
+        if(visualEditor.ui.canvas != undefined && visualEditor.ui.canvas != null)
+            visualEditor.ui.canvas.uninstallEditPolicy(new draw2d.policy.canvas.ShowDotEditPolicy());
     },
 
     /**
