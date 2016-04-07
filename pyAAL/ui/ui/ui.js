@@ -542,7 +542,7 @@ visualEditor.ui = {
      * Update AAL ACD switcher
      */
     updateSwitcher: function() {
-        if(visualEditor.ui.activeTab != null && visualEditor.ui.activeTab != undefined) {
+        if(visualEditor.ui.activeTab != null && visualEditor.ui.activeTab != undefined && $("#explorer").length > 0) {
             var active = visualEditor.ui.activeTab.container.title;
             var activeFileType = visualEditor.ui.fileManager.getFileType(active);
 		  	var targetFile = (activeFileType  === "acd")? active.replace(".acd", ".aal"): active.replace(".aal", ".acd");
