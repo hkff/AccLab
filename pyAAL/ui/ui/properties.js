@@ -598,7 +598,7 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 	 * @returns {string}
 	 */
 	getClauseTemplate: function() {
-		var selectedName = visualEditor.ui.selectedNode.getName();
+		var selectedName = visualEditor.ui.selectedNode.tlabel.text;
 		return "CLAUSE " + selectedName + "_policy (\n {Usage}\n AUDITING {actions}\n IF_VIOLATED_THEN {actions}\n)";
 	}
 });
