@@ -83,6 +83,21 @@ visualEditor.ui = {
 
         // Hide ACD preview
         $("#preview").draggable().hide();
+
+        // Hide ACD AAL switcher
+        $("#aalacdSwitcher").draggable().hide().on("dblclick", function(e) {
+            var active = visualEditor.ui.activeTab.container.title;
+			var activeFileType = visualEditor.ui.fileManager.getFileType(active);
+
+		  	var targetFile = (activeFileType  === "acd")? active.replace(".acd", ".aal"): active.replace(".aal", ".acd");
+			var i = visualEditor.ui.fileManager.isOpened(targetFile);
+			if(i != -1) {
+				window.documentNode.container.setActiveChild(documentNode.children[i].container);
+				visualEditor.ui.fileManager.reloadFile();
+			} else {
+				visualEditor.ui.fileManager.openFile(targetFile);
+			}
+        });
 	},
 
 	// Events
@@ -176,6 +191,7 @@ visualEditor.ui = {
             else if(fileType === "vfodtl")
                 visualEditor.ui.components.hideAcdCompnents();
 		}
+        visualEditor.ui.updateSwitcher();
 	},
 
     /**
@@ -518,6 +534,22 @@ visualEditor.ui = {
 
             // AAL to nodes
             visualEditor.activeEditor.postMsgWorker("analyseAALtreeForAcd");
+        }
+    },
+
+    /**
+     * Update AAL ACD switcher
+     */
+    updateSwitcher: function() {
+        if(visualEditor.ui.activeTab != null && visualEditor.ui.activeTab != undefined) {
+            var active = visualEditor.ui.activeTab.container.title;
+            var activeFileType = visualEditor.ui.fileManager.getFileType(active);
+		  	var targetFile = (activeFileType  === "acd")? active.replace(".acd", ".aal"): active.replace(".aal", ".acd");
+            var found = $("#explorer").tree("find", 'examples/' + targetFile);
+            if(found)
+                $("#aalacdSwitcher").show();
+            else
+                $("#aalacdSwitcher").hide();
         }
     },
 

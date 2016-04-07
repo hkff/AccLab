@@ -352,6 +352,50 @@ visualEditor.ui.fileManager = {
 	},
 
 	/**
+	 * Reload the current opened file
+	 */
+	reloadFile: function() {
+        var file = visualEditor.ui.activeTab.container.title;
+		var fileType = file.split('.').pop().toLowerCase();
+		var dType = "text";
+		if(fileType === "acd" || fileType === "vfodtl" )
+			dType = "json";
+		// Ajax request
+        $.ajax({
+			dataType: dType,
+			type:'POST',
+			url: visualEditor.backend,
+			data: {action: "read", file: file},
+			success: function(response){
+                // Add file in recent files
+                visualEditor.ui.fileManager.addToRecentFiles(file);
+
+				switch(fileType) {
+					case "acd":case "vfodtl":
+						// Load ACD diagram
+						var reader = new draw2d.io.json.Reader();
+						visualEditor.ui.canvas.clear();
+			 			reader.unmarshal(visualEditor.ui.canvas, response);
+						visualEditor.ui.outline.canvasToTree();
+
+                        // Switch to acd mode
+                        visualEditor.acdMode();
+			 			break;
+                    case "aal":
+					    // Set the source
+					    visualEditor.activeEditor.setValue(response);
+                        visualEditor.activeEditor.selection.clearSelection();
+                        visualEditor.activeEditor.session.getUndoManager().markClean();
+
+						// Switch to aal mode
+                        visualEditor.aalMode();
+						break;
+				}
+			}
+		});
+	},
+
+	/**
 	 * Check is a file is opened
 	 * @param file
 	 */
