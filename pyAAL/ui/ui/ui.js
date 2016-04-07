@@ -252,10 +252,11 @@ visualEditor.ui = {
 		var services = "";
 		for(var i=0; i<figs.length; i++) {
 			tmp = figs[i];
-			services += tmp.getRservices().data + ",";
-			services += tmp.getPservices().data + ",";
+			services += tmp.getRservices() + ",";
+			services += tmp.getPservices() + ",";
 		}
 
+        console.log(services)
 		var servicesTmp = services.split(",");
 		var servicesTmp2 = [];
 		$.each(servicesTmp, function(i, el){
