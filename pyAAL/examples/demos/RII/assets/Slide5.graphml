@@ -360,7 +360,7 @@
           <y:Geometry height="50.929673942678036" width="276.61800000000005" x="1251.507000000001" y="253.49358693347267"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle hasColor="false" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="node_width" configuration="CroppingLabel" fontFamily="Dialog" fontSize="13" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="36.265625" modelName="custom" textColor="#000000" visible="true" width="276.61800000000005" x="0.0" y="7.332024471338997">The security whole is between the chair and the keyboard...<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="node_width" configuration="CroppingLabel" fontFamily="Dialog" fontSize="13" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="36.265625" modelName="custom" textColor="#000000" visible="true" width="276.61800000000005" x="0.0" y="7.332024471339025">The security hole is between the chair and the keyboard...<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>

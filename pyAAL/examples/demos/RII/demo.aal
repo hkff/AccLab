@@ -29,6 +29,9 @@ SERVICE delete
 /***************************
  *       Clauses
  ****************************/
+/**
+ * Alice's policy (provider)
+ */
 CLAUSE alice_policy (
     // access control
     (FORALL c:Customer FORALL d:data 
@@ -59,8 +62,14 @@ CLAUSE alice_policy (
 
     // data retention 
     AND (FORALL ds:Sensitive  MUST( Alice.delete[Alice](ds) BEFORE "6 month"))
+    
+    AUDITING MUST(dpa.audit[Alice](log) BEFORE "1 month")
+    IF_VIOLATED_THEN MUST(dpa.sanction[Alice](d))
  )
 
+/**
+ * Bob's policy (user)
+ */
 CLAUSE bob_policy (
     // access control
    	(FORALL e:Employee FORALL d:DisplayName DENY e.read[Alice](d)) AND 
@@ -75,6 +84,9 @@ CLAUSE bob_policy (
   
 )
 
+/**
+ * Kim's policy (user)
+ */
 CLAUSE kim_policy (
     // access control
    	(FORALL e:Employee FORALL d:UserName DENY e.read[Alice](d)) AND 
@@ -87,4 +99,3 @@ CLAUSE kim_policy (
     // data retention
     AND (FORALL ds:Sensitive MUST(Alice.delete[Alice](ds) BEFORE "6 month"))  
 )
-
