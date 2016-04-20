@@ -57,8 +57,14 @@ visualEditor.ui.components = {
 		// ACD
 		//this.components.push(new agent());
 		//this.components.push(new data());
-		//this.components.push(new policy());
 		this.components.push(new Actor());
+        this.components.push(new Policy());
+        this.components.push(new Import());
+
+		this.components.push(new this.Separator());
+        this.components.push(new this.Note());
+        this.components.push(new this.Picture());
+        this.components.push(new this.Slide());
 
 		// FODTL
 		this.components.push(new this.Separator());
@@ -95,6 +101,28 @@ visualEditor.ui.components = {
 		this.components.push(new Fodtl_at());
 	},
 
+    /**
+     * Hide Acd components (3)
+     */
+	hideAcdCompnents: function(){
+        var elements = $('#componentbox_window .btn-components');
+        elements.show();
+        for(var i=0; i<3; i++)
+            $(elements.get(i)).hide();
+        $('.separators').show();
+	},
+
+    /**
+     * Hide Vfodtl components (4-n)
+     */
+	hideVfodtlCompnents: function(){
+        var elements = $('#componentbox_window .btn-components');
+        elements.hide();
+        for(var i=0; i<6; i++)
+            $(elements.get(i)).show();
+        $('.separators').hide().first().show();
+	},
+
 	/**
 	 * Separator component
 	 */
@@ -108,14 +136,180 @@ visualEditor.ui.components = {
 		}
 	}),
 
-	hideAcdCompnents: function(){
-        $('#componentbox_window .btn-components').show().first().hide();
-        $('.separators').show();
-	},
+    /**
+	 * Note component
+	 */
+	Note: Class.extend({
+		init: function() {
+			this.parent = visualEditor.ui.components;
+		},
 
-	hideVfodtlCompnents: function(){
-        $('#componentbox_window .btn-components').hide().first().show();
-        $('.separators').hide();
-	}
+        view: function(_this) {
+            this.cmp_data = $('<div title="Note" class="btn-components fa fa-sticky-note"></div>');
+            this.cmp_data.click(_this, this.addElement);
+            this.parent.componentsPanel.append(this.cmp_data);
+        },
 
+        addElement: function(event, position) {
+            var element =  new draw2d.shape.note.PostIt({
+               text:"Click to edit this note",
+               color:"#000000",
+               padding:20
+            });
+            element.installEditor(new draw2d.ui.LabelInplaceEditor());
+            if(position == undefined) position = {x:100, y:100};
+            visualEditor.ui.canvas.add(element, position.x, position.y);
+            return element;
+        }
+	}),
+
+    /**
+	 * Picture component
+	 */
+	Picture: Class.extend({
+		init: function() {
+			this.parent = visualEditor.ui.components;
+		},
+
+        view: function(_this) {
+            this.cmp_data = $('<div title="Picture" class="btn-components fa fa-file-image-o"></div>');
+            this.cmp_data.click(_this, this.addElement);
+            this.parent.componentsPanel.append(this.cmp_data);
+        },
+
+        addElement: function(event, position) {
+            visualEditor.fileChooser("Select an image file", function(file) {
+                var element =  new draw2d.shape.basic.Image({
+                   path: '../examples/'+file
+                });
+                if(position == undefined) position = {x:100, y:100};
+                visualEditor.ui.canvas.add(element, position.x, position.y);
+                return element;
+            });
+        }
+	}),
+
+	/**
+	 * Slide component
+	 */
+    Slide: Class.extend({
+        init: function() {
+			this.parent = visualEditor.ui.components;
+		},
+
+        view: function(_this) {
+            this.cmp_data = $('<div title="Slide" class="btn-components fa fa-outdent"></div>');
+            this.cmp_data.click(_this, this.addElement);
+            this.parent.componentsPanel.append(this.cmp_data);
+        },
+
+        addElement: function(event, position) {
+            var a = new visualEditor.ui.components.ZoomFigure({width:100, height:60}, true);
+            if(position == undefined) position = {x:100, y:100};
+            visualEditor.ui.canvas.add(a, position.x, position.y);
+            return a;
+        }
+	}),
+
+	ZoomFigure: draw2d.shape.layout.StackLayout.extend({
+
+        Picture: draw2d.SetFigure.extend({
+            init: function(path) {
+                this._super();
+                this.strokeScale = false;
+                this.setKeepAspectRatio(false);
+                this.img_path = path;
+            },
+
+            createSet: function() {
+                this.canvas.paper.setStart();
+                this.canvas.paper.image('../examples/'+ this.img_path, 0, 0, 100, 60);
+                return this.canvas.paper.setFinish();
+            }
+        }),
+
+        addPicture: function(msg) {
+            var file;
+			do { file=prompt(msg); } while(file.length <= 0);
+            this.pictures.push(file);
+            return new this.Picture(file);
+        },
+
+        init: function (attr, ui) {
+            this._super(attr);
+            this.pictures = [];
+            var _this = this;
+
+            if(ui) {
+                var pic2 = this.addPicture("Select the first image file");
+                var pic1 = this.addPicture("Select the second image file");
+                this.add(pic1);
+                this.add(pic2);
+            }
+            this.setKeepAspectRatio(true);
+            this.lastZoom = 1;
+            this.installEditPolicy(new draw2d.policy.figure.FigureEditPolicy());
+            //this.createPort("input");
+            //this.createPort("output");
+
+            var zoomHandler = function (emitter, event) {
+                var border = 0.7;
+
+                if (_this.lastZoom >= border && event.value < border) {
+                    _this.setVisibleLayer(0, 500);
+                }
+                else if (_this.lastZoom <= border && event.value > border) {
+                    _this.setVisibleLayer(1, 700);
+                }
+                _this.lastZoom = event.value;
+            };
+
+            this.on("added", function (emitter, event) {
+                event.canvas.on("zoom", zoomHandler);
+            });
+
+            this.on("removed", function (emitter, event) {
+                event.canvas.off("zoom", zoomHandler);
+            });
+
+            this.on("dblclick", function(emitter, event) {
+                //var zoomer = new draw2d.policy.canvas.WheelZoomPolicy();
+                //zoomer.canvas = visualEditor.ui.canvas;
+                //zoomer.onMouseWheel(10, event.x, event.y, true, false);
+                //visualEditor.ui.canvas.setZoom(0.3, true);
+                //visualEditor.ui.canvas.scrollTo(emitter.x*3, emitter.y*3);
+                // FIXME
+            });
+        },
+
+         getPersistentAttributes: function() {
+            var memento = this._super();
+            memento.pic2 = this.pictures[1];
+            memento.pic1 = this.pictures[0];
+            memento.type = "visualEditor.ui.components.ZoomFigure";
+            return memento;
+         },
+
+        setPersistentAttributes: function(memento) {
+            this._super(memento);
+            this.pictures.push(memento.pic1);
+            this.pictures.push(memento.pic2);
+            this.add(new this.Picture(memento.pic2));
+            this.add(new this.Picture(memento.pic1));
+            return this;
+        }
+    })
+};
+
+
+var originalRaphaelImageFn = Raphael.fn.image;
+Raphael.fn.image = function(url, x, y, w, h) {
+    // fix the image dimensions to match original scale unless otherwise provided
+    if( !w || !h ) {
+        var img = new Image();
+        img.src = url;
+        if( !w ) w = img.width;
+        if( !h ) h = img.height;
+    }
+    return originalRaphaelImageFn.call(this, url, x, y, w, h);
 };

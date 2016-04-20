@@ -54,7 +54,7 @@ visualEditor.ui = {
 		this.inplacePanel    = $('#' + inplacePanel);
 
 		//visualEditor.ui.canvas = new visualEditor.ui.gridEditor(grid, actionsPanel, componentsPanel, propertiesPanel);
-		//visualEditor.ui.properties.init(grid, actionsPanel, componentsPanel, propertiesPanel);
+		visualEditor.ui.properties.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.tools.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.outline.init(grid, actionsPanel, componentsPanel, propertiesPanel);
 		visualEditor.ui.fileManager.init(grid, actionsPanel, componentsPanel, propertiesPanel);
@@ -83,6 +83,21 @@ visualEditor.ui = {
 
         // Hide ACD preview
         $("#preview").draggable().hide();
+
+        // Hide ACD AAL switcher
+        $("#aalacdSwitcher").draggable().hide().on("dblclick", function(e) {
+            var active = visualEditor.ui.activeTab.container.title;
+			var activeFileType = visualEditor.ui.fileManager.getFileType(active);
+
+		  	var targetFile = (activeFileType  === "acd")? active.replace(".acd", ".aal"): active.replace(".aal", ".acd");
+			var i = visualEditor.ui.fileManager.isOpened(targetFile);
+			if(i != -1) {
+				window.documentNode.container.setActiveChild(documentNode.children[i].container);
+				visualEditor.ui.fileManager.reloadFile();
+			} else {
+				visualEditor.ui.fileManager.openFile(targetFile);
+			}
+        });
 	},
 
 	// Events
@@ -167,7 +182,7 @@ visualEditor.ui = {
 			this.enableNode(this.componentsPanel);
 			this.enableNode(this.outlinePanel);
 			this.enableNode(this.inplacePanel);
-			$(visualEditor.ui.tools.tools[18].button).hide();
+			//$(visualEditor.ui.tools.tools[18].button).hide();
 			$(visualEditor.ui.tools.tools[20].button).hide();
 			$(visualEditor.ui.tools.tools[21].button).hide();
 
@@ -176,6 +191,7 @@ visualEditor.ui = {
             else if(fileType === "vfodtl")
                 visualEditor.ui.components.hideAcdCompnents();
 		}
+        visualEditor.ui.updateSwitcher();
 	},
 
     /**
@@ -212,25 +228,35 @@ visualEditor.ui = {
 		var aal = "/**\n * Generated AAL file \n * @diagram source : " + file_name +
             "\n * @author : " + visualEditor.getUserName() + "\n * @on : " + date + "\n */\n\n" +
             "\n// Loading types & macros libraries\nLOAD \"core.types\"\nLOAD \"core.macros\"\n\n";
-		var figs = visualEditor.ui.canvas.getFigures();
+		var figs = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Actor"});
 		var tmp = null;
-		
+
+        // Handle Imports
+		var imports = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Import"});
+        if(imports.length > 0) {
+            aal += "// Imports\n";
+            for(var i=0; i<imports.length; i++) {
+                aal += 'LOAD "'+imports[i].text.replace(".aal", "")+'"\n';
+            }
+        }
+
 		// Handle declarations
 		aal += "/***************************\n *       Declarations\n ****************************/\n";
 		aal += "// Actors\n";
-		for(var i=0; i<figs.getSize(); i++) {
-			tmp = figs.get(i);
+		for(var i=0; i<figs.length; i++) {
+			tmp = figs[i];
 			aal += tmp.getAALDeclaration()+"\n";
 		}
 
 		aal += "\n// Services\n";
 		var services = "";
-		for(var i=0; i<figs.getSize(); i++) {
-			tmp = figs.get(i);
-			services += tmp.getRservices().data + ",";
-			services += tmp.getPservices().data + ",";
+		for(var i=0; i<figs.length; i++) {
+			tmp = figs[i];
+			services += tmp.getRservices() + ",";
+			services += tmp.getPservices() + ",";
 		}
 
+        console.log(services)
 		var servicesTmp = services.split(",");
 		var servicesTmp2 = [];
 		$.each(servicesTmp, function(i, el){
@@ -243,14 +269,34 @@ visualEditor.ui = {
 
 		// Handle clauses
 		aal += "\n/***************************\n *       Clauses\n ****************************/\n";
-		for(var i=0; i<figs.getSize(); i++) {
-			tmp = figs.get(i);
+        var figs = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Policy"});
+		for(var i=0; i<figs.length; i++) {
+			tmp = figs[i];
 			var tmp_policy = tmp.policy;
 			if(tmp_policy != "")
 				aal += tmp_policy + "\n\n";
 		}
 		return aal;
 	},
+
+    /**
+     * Check compliance and consistency of diagram policies
+     */
+    checkPolicies: function() {
+        var res = {aal: "", spec: " "};
+        var clauses = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Policy"});
+        for(var i=0; i<clauses.length; i++) {
+            var op = clauses[i].getOutputPorts();
+            for(var j=0; j<op.getSize(); j++) {
+                var con = op.get(j).getConnections();
+                for(var k=0; k<con.getSize(); k++) {
+                    res["spec"] += clauses[i].tlabel.text + "->" + con.get(k).targetPort.parent.tlabel.text+";";
+                }
+            }
+        }
+        res["aal"] = this.generateAAL(visualEditor.ui.activeTab.container.title);
+        return res;
+    },
 
     /**
      * Analyse opened AAL file and update info
@@ -493,6 +539,22 @@ visualEditor.ui = {
     },
 
     /**
+     * Update AAL ACD switcher
+     */
+    updateSwitcher: function() {
+        if(visualEditor.ui.activeTab != null && visualEditor.ui.activeTab != undefined && $("#explorer").length > 0) {
+            var active = visualEditor.ui.activeTab.container.title;
+            var activeFileType = visualEditor.ui.fileManager.getFileType(active);
+		  	var targetFile = (activeFileType  === "acd")? active.replace(".acd", ".aal"): active.replace(".aal", ".acd");
+            var found = $("#explorer").tree("find", 'examples/' + targetFile);
+            if(found)
+                $("#aalacdSwitcher").show();
+            else
+                $("#aalacdSwitcher").hide();
+        }
+    },
+
+    /**
      * Generate Accmon spec
      */
     generateAccmon: function(spec) {
@@ -523,6 +585,31 @@ visualEditor.ui = {
             data: {action: "registerAccMonMonitor", formula: formula, name: name, accmon_url: url},
             success: function(response){
                 console.log(response);
+            }
+	    });
+    },
+
+    /**
+     * Register AAL clause in AccMon
+     */
+    registerClauseToAccMon: function(url, name, clause) {
+        console.log(clause)
+        $.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "clauseToFodtl", file: visualEditor.ui.getOpenedFile(), clause: clause},
+            success: function(response){
+                console.log(response)
+                $.ajax({
+                    dataType: 'text',
+                    type:'POST',
+                    url: visualEditor.backend,
+                    data: {action: "registerAccMonMonitor", formula: response, name: name, accmon_url: url},
+                    success: function(response){
+                        console.log(response);
+                    }
+                });
             }
 	    });
     }

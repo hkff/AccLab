@@ -1,14 +1,19 @@
 {
     "name": "AccMon monitors",
-	"desc": "Add monitor to AccMon.",
+	"desc": "Add a monitor to AccMon.",
 	"vars": [
       {"name": "", "id": "accmonUrl", "type": "text", "pre": "AccMon url ", "post": ""},
 
       {"name": "", "id": "monName", "type": "text", "pre": "Mon name ", "post": ""},
-      {"name": "Register current vfodtl formula", "id": "registerBtn", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.registerVfodtlToAccMon($('#accmonUrl').val(), $('#monName').val())"}
+      {"name": "Register current vfodtl formula", "id": "registerBtn", "type": "button", "pre": " Or ", "post": "", "onclick": "visualEditor.ui.registerVfodtlToAccMon($('#accmonUrl').val(), $('#monName').val())"},
+
+      {"name": "", "id": "c1", "type": "select", "pre": " Clause ", "post": " ", "src": "{aal.clauses}"},
+      {"name": "Register clause", "id": "fregisterBtn", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.registerClauseToAccMon($('#accmonUrl').val(), $('#monName').val(), $('#c1').val())"}
+
     ],
 	"aal": [""],
 	"html": [
-      "<div class='varGroupe'> {accmonUrl} </div> <div class='varGroupe'> {monName} </div> <div class='varGroupe'> {registerBtn} </div>"
+      "<div class='varGroupe'> {accmonUrl} </div> <div class='varGroupe'> {monName} </div> <div class='varGroupe'> {c1} {fregisterBtn} </div>",
+      "<div class='varGroupe'> {registerBtn} </div>"
     ]
 }

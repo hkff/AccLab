@@ -92,6 +92,10 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             save_current_ps_id(os.getpid())
             res = api_compile_tspass(self.get_arg(args, "file", method))
 
+        elif val == "compileACD":
+            save_current_ps_id(os.getpid())
+            res = api_compile_acd(self.get_arg(args, "aal", method), self.get_arg(args, "spec", method))
+
         elif val == "macroCallAPI":
             save_current_ps_id(os.getpid())
             res = api_macro_call(self.get_arg(args, "file", method), self.get_arg(args, "macro", method), self.get_arg(args, "args", method))
@@ -134,6 +138,9 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
 
         elif val == "fodtlToDiagram":
             res = api_fodtl_to_vfodtl(self.get_arg(args, "formula", method))
+
+        elif val == "clauseToFodtl":
+            res = api_clause_to_fodtl(self.get_arg(args, "file", method), self.get_arg(args, "clause", method))
 
         elif val == "registerAccMonMonitor":
             res = api_register_accmon_monitor(self.get_arg(args, "formula", method), self.get_arg(args, "name", method),

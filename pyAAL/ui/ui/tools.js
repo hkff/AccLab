@@ -521,9 +521,16 @@ visualEditor.ui.tools.clearTool = visualEditor.ui.tool.extend({
 
 	control: function(parent) {
 		this.button.click(function(e){
-			var reader = new draw2d.io.json.Reader();
-			visualEditor.ui.canvas.clear();
- 			reader.unmarshal(visualEditor.ui.canvas , visualEditor.ui.savedCanvas );
+			//var reader = new draw2d.io.json.Reader();
+			//visualEditor.ui.canvas.clear();
+ 			//reader.unmarshal(visualEditor.ui.canvas , visualEditor.ui.savedCanvas );
+			var clauses = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Policy"});
+			for(var i=0; i<clauses.length; i++) {
+				clauses[i].refresh();
+				var cons = clauses[i].getConnections();
+				for(var j=0; j<cons.getSize(); j++)
+					cons.get(j).setColor("#00A8F0");
+			}
 		});
 	}
 });
@@ -547,8 +554,9 @@ visualEditor.ui.tools.genAALTool = visualEditor.ui.tool.extend({
 			var active = visualEditor.ui.activeTab.container.title;
 			var activeFileType = visualEditor.ui.fileManager.getFileType(active);
             if(activeFileType === "acd"){
-                //visualEditor.ui.fileManager.showGeneratedAAL(active);
-                visualEditor.log(visualEditor.ui.generateAAL(active));
+				//visualEditor.log(visualEditor.ui.generateAAL(active), true);
+				// TODO test if file exists
+				visualEditor.ui.fileManager.showGeneratedAAL(active, active.replace(".acd", ".aal"));
             } else if(activeFileType === "vfodtl"){
                 if(visualEditor.vFodtl_check(visualEditor.ui.canvas) == true)
                     var formulas = visualEditor.vFodtl_to_fodtl(visualEditor.ui.canvas);
@@ -577,58 +585,120 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 
 	control: function(parent, disableShortcut) {
 		var fx = function(e){
-			//var active = visualEditor.ui.activeTab.container.title;
-			//visualEditor.ui.fileManager.showGeneratedTSPASS(active);
-            var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
             var file = visualEditor.ui.activeTab.container.title;
+			var fileType = file.split('.').pop().toLowerCase();
 
-			visualEditor.ui.fileManager.saveFile(file, editor.getValue(), function(){
-                var file = visualEditor.ui.activeTab.container.title;
-                var dType = "text";
-                var action = "compileAAL";
-                var fileType = file.split('.').pop().toLowerCase();
-                if(fileType == "tspass")
-                    action = "compileFOTL";
+			if(fileType == "acd") {
+				// ------------------------ Compile ACD
+				toastr.error("<i class='fa fa-cog fa-spin'></i>", "Compiling...", {
+						"closeButton": true,
+						"preventDuplicates": true,
+						"tapToDismiss": false,
+						"showDuration": "2000",
+						"hideDuration": "1000",
+						"timeOut": 0,
+						"extendedTimeOut": 0,
+						"positionClass": "toast-top-center"
+				});
+				var action = "compileACD";
+				var data = visualEditor.ui.checkPolicies();
+				$.ajax({
+					dataType: "json",
+					type:'POST',
+					url: visualEditor.backend,
+					data: {action: action, aal: data.aal, spec: data.spec},
+					success: function(response){
+						$("#output_window").empty().append(response).scrollTop(0);
+						var clauses = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Policy"});
+						// Handle sat
+						for(var i=0; i<clauses.length; i++) {
+							for(var x in response.sat) {
+								if(response.sat[x].hasOwnProperty(clauses[i].tlabel.text)) {
+									if(response.sat[x][clauses[i].tlabel.text] === "Unsatisfiable")
+										clauses[i].setBackgroundColor('#f3546a');
+									else if(response.sat[x][clauses[i].tlabel.text] === "Satisfiable")
+										clauses[i].setBackgroundColor('#b9dd69');
+									break;
+								}
+							}
+						}
 
-                toastr.error("<i class='fa fa-cog fa-spin'></i>", "Compiling...", {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                    "tapToDismiss": false,
-                    "showDuration": "2000",
-                    "hideDuration": "1000",
-                    "timeOut": 0,
-                    "extendedTimeOut": 0,
-                    "positionClass": "toast-top-center",
-                    "onHidden": function() {
-                        $.ajax({
-                            dataType: 'text',
-                            type: 'POST',
-                            url: visualEditor.backend,
-                            data: {action: "cancelCurrentPS"},
-                            success: function (response) {
-                                $("#output_window").empty().append(response).scrollTop(0);
-                            }
-                        });
-                    }
-			    });
-                $.ajax({
-                    dataType: dType,
-                    type:'POST',
-                    url: visualEditor.backend,
-                    data: {action: action, file: file},
-                    success: function(response){
-                        $("#output_window").empty().append(response).scrollTop(0);
-                        // Clear toastr
+						// Handle Compliance
+						for(var i=0; i<clauses.length; i++) {
+							var op = clauses[i].getOutputPorts();
+							for(var j=0; j<op.getSize(); j++) {
+								var con = op.get(j).getConnections();
+								for(var k=0; k<con.getSize(); k++) {
+									var tmp = clauses[i].tlabel.text + "->" + con.get(k).targetPort.parent.tlabel.text;
+									for(var p=0; p<response.compliance.length; p++) {
+										if (response.compliance[p].hasOwnProperty(tmp)) {
+											if (response.compliance[p][tmp] === "false")
+												con.get(k).setColor('#f3546a');
+											else if(response.compliance[p][tmp] === "true")
+												con.get(k).setColor('#b9dd69');
+										}
+									}
+								}
+							}
+						}
+						if(response.error != "")
+							visualEditor.log(response.error, true);
+
 						toastr.clear( $(".toast-error"));
-                        // Setup lines
-                        $(".aceLine").click(function(e) {
-                            var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
-                            if (editor != undefined && editor != null)
-                                editor.gotoLine(parseInt(e.target.innerHTML.replace("at line ", "")));
-                        });
-                    }
-                });
-            });
+					}
+				});
+
+			} else {
+				// ------------------------ Compile AAL / TSPASS
+				var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
+				visualEditor.ui.fileManager.saveFile(file, editor.getValue(), function(){
+					var file = visualEditor.ui.activeTab.container.title;
+					var dType = "text";
+					var action = "compileAAL";
+					var fileType = file.split('.').pop().toLowerCase();
+					if(fileType == "tspass")
+						action = "compileFOTL";
+
+					toastr.error("<i class='fa fa-cog fa-spin'></i>", "Compiling...", {
+						"closeButton": true,
+						"preventDuplicates": true,
+						"tapToDismiss": false,
+						"showDuration": "2000",
+						"hideDuration": "1000",
+						"timeOut": 0,
+						"extendedTimeOut": 0,
+						"positionClass": "toast-top-center",
+						"onHidden": function() {
+							$.ajax({
+								dataType: 'text',
+								type: 'POST',
+								url: visualEditor.backend,
+								data: {action: "cancelCurrentPS"},
+								success: function (response) {
+									$("#output_window").empty().append(response).scrollTop(0);
+								}
+							});
+						}
+					});
+					$.ajax({
+						dataType: dType,
+						type:'POST',
+						url: visualEditor.backend,
+						data: {action: action, file: file},
+						success: function(response){
+							$("#output_window").empty().append(response).scrollTop(0);
+							// Clear toastr
+							toastr.clear( $(".toast-error"));
+							// Setup lines
+							$(".aceLine").click(function(e) {
+								var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);
+								if (editor != undefined && editor != null)
+									editor.gotoLine(parseInt(e.target.innerHTML.replace("at line ", "")));
+							});
+						}
+					});
+            	});
+			}
 
             if(visualEditor.activeEditor != null)
 				visualEditor.activeEditor.session.getUndoManager().markClean();

@@ -253,6 +253,8 @@ var visualEditor = {
 
         //prop = 250 / $(document).width();
         //window.propertiesNode = dockManager.dockRight(window.documentNode, window.properties, prop);
+        if(visualEditor.ui.canvas != undefined && visualEditor.ui.canvas != null)
+            visualEditor.ui.canvas.installEditPolicy(new draw2d.policy.canvas.ShowDotEditPolicy());
     },
 
     /**
@@ -266,6 +268,15 @@ var visualEditor = {
         window.toolboxNode = dockManager.dockRight(window.documentNode, window.toolbox, prop);
         prop = 200 / $(document).height();
         window.outputNode = dockManager.dockDown(documentNode, output, prop);
+    },
+
+    /**
+     * Presentation mode
+     */
+    presentationMode: function() {
+        visualEditor.clearPanels();
+        if(visualEditor.ui.canvas != undefined && visualEditor.ui.canvas != null)
+            visualEditor.ui.canvas.uninstallEditPolicy(new draw2d.policy.canvas.ShowDotEditPolicy());
     },
 
     /**
@@ -323,7 +334,7 @@ var visualEditor = {
         visualEditor.ui.updateToastSize("info", {"width": 800, height:350}, false, "none", (window.innerHeight - 600)/2 + "px");
     },
 
-     /**
+    /**
      * Startup panel
      */
     startup: function () {
@@ -376,6 +387,78 @@ var visualEditor = {
 				"positionClass": "toast-top-center"
 			});
         visualEditor.ui.updateToastSize("info", {"width": 800, "height": 400}, false, "none", (window.innerHeight - 600)/2 + "px");
+    },
+
+    /**
+     * Filechooser panel
+     */
+    fileChooser: function (msg, callback, filter, create) {
+        if(msg == undefined) msg = "Select a file / directory";
+        var abt = "<div id='fileChooser' style='overflow: auto; width: 240px; height: 140px;'></div>";
+        if(create) {
+            abt += "<input id='filerChooserInput' placeholder='File name' style='margin-top: 10px;'>" +
+                    "<button id='filerChooserInputSaveBtn'>Save</button>";
+        }
+        toastr.info(abt, msg, {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": false,
+  				"showDuration": "1000",
+			  	"hideDuration": "1000",
+			  	"timeOut": 0,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-center"
+			});
+
+        $("#fileChooser").tree({
+			animate: true,
+			checkbox:false,
+			url: visualEditor.backend + "?action=list",
+
+			onDblClick: function(node){
+                if(!create) {
+                    var path = visualEditor.ui.fileManager.getAbsPath(node, $("#fileChooser"));
+                    if(filter != undefined && filter != null)
+                        if(!path.endsWith(filter))
+                            return;
+                    toastr.clear($(".toast-info"));
+                    if(callback != undefined)
+                        callback(path);
+                }
+			},
+
+			formatter:function(node){
+				var s = node.text;
+				if(node.children){
+					s += ' <span style=\'color:gray\'>(' + node.children.length + ')</span>';
+				}
+				return s;
+			},
+
+			onLoadSuccess: function(node, data){
+                $("#fileChooser").tree("collapseAll");
+                $("#filerChooserInputSaveBtn").on("click", function() {
+                    visualEditor.filerChooserInputSaveBtnHandler(callback, filter);
+                });
+			}
+		});
+        visualEditor.ui.updateToastSize("info", {"width": 300, "height": 220}, false, "none", (window.innerHeight - 300)/2 + "px");
+    },
+
+    filerChooserInputSaveBtnHandler: function(callback, filter) {
+        var selected = $("#fileChooser").tree("getSelected");
+        var path = ".";
+        if(selected != null) {
+            path = visualEditor.ui.fileManager.getAbsPath(selected, $("#fileChooser"));
+            if(!visualEditor.ui.fileManager.isDir(path)) {
+                var t = path.split("/");
+                path = path.replace(t[t.length-1], "");
+            }
+        }
+        path += "/" + $("#filerChooserInput").val();
+        toastr.clear($(".toast-info"));
+        if(callback != undefined)
+            callback(path);
     },
 
     /**
@@ -499,6 +582,7 @@ var visualEditor = {
     /**
      * Log msg into output
      * @param msg
+     * @param clear
      */
     log: function(msg, clear) {
         if(clear == true) $("#output_window").empty();
@@ -655,8 +739,8 @@ window.onload = function() {
     this.toolbox.elementButtonClose.innerHTML = "";
     //this.properties = new dockspawn.PanelContainer($("#properties_window")[0], dockManager);
     //this.properties.elementButtonClose.innerHTML = "";
-    this.inplaceAAL = new dockspawn.PanelContainer($("#inPlaceAALEditor")[0], dockManager);
-    this.inplaceAAL.elementButtonClose.innerHTML = "";
+    //this.inplaceAAL = new dockspawn.PanelContainer($("#inPlaceAALEditor")[0], dockManager);
+    //this.inplaceAAL.elementButtonClose.innerHTML = "";
     this.output = new dockspawn.PanelContainer($("#output_window")[0], dockManager);
     this.output.elementButtonClose.innerHTML = "";
 
@@ -674,7 +758,7 @@ window.onload = function() {
     this.outputNode = dockManager.dockDown(documentNode, output, prop);
 
     this.panelNodes = [window.solution, window.outline, window.components, window.toolbox,
-        /*window.properties,*/ window.inplaceAAL, window.output];
+        /*window.properties, window.inplaceAAL,*/ window.output];
 
     // Load prefs
     visualEditor.userPrefs = visualEditor.loadPrefs();

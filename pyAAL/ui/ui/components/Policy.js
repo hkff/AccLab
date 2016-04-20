@@ -19,47 +19,53 @@
 //
 //////////////////////////////////////////////////////////
 
-policy = Class.extend({
-	NAME : "policy",
-    name : "policy",
-    uiElement : null,
-    leftLocator  : new draw2d.layout.locator.InputPortLocator(),
-    rightLocator : new draw2d.layout.locator.OutputPortLocator(),
+Policy = Class.extend({
+    NAME: "Policy",
+    type: "Policy",
 
-	init: function() {
-		this.parent = visualEditor.ui.components;
-        this.uiElement = "PolicyUI";
-	},
+    init: function() {
+        this.parent = visualEditor.ui.components;
+    },
 
-	view: function() {
-		// Policy
-		this.cmp_data = $('<div title="Policy (Ctrl+Shift+E)" class="btn-components fa fa-file-powerpoint-o fa-2x"></div>');
-		this.cmp_data.click(this.addElement);
-		this.parent.componentsPanel.append(this.cmp_data);
-        shortcut.add("Ctrl+Shift+E", this.addElement);
-	},
+    view: function(_this) {
+        this.cmp_data = $('<div title="Policy" class="btn-components fa fa-file-powerpoint-o"></div>');
+        this.cmp_data.click(_this, this.addElement);
+        this.parent.componentsPanel.append(this.cmp_data);
+    },
 
-	addElement: function(e, name) {
-		var element = new PolicyUI();
-        if(name != undefined) element.setName(name);
-		visualEditor.ui.canvas.add(element, 100, 100);
-	}
+    addElement: function(event, position) {
+        var a = new PolicyUI({width:100, height:60}, true);
+        if(position == undefined) position = {x:100, y:100};
+        visualEditor.ui.canvas.add(a, position.x, position.y);
+        return a;
+    }
 });
 
-PolicyUI = draw2d.shape.basic.Text.extend({
+
+PolicyUI = draw2d.shape.basic.Rectangle.extend({
 	NAME   : "PolicyUI",
 	tlabel : null,
 	type   : "Policy",
-	policy : "",
-	DEFAULT_bgColor : "#0d0d0d",
+	policy : " ",
+	DEFAULT_bgColor : "#A0A0A0",
     DEFAULT_labelColor : "#0d0d0d",
 
-    init:function(attr) {
-      this._super(attr);
-      // Create any Draw2D figure as decoration for the connection
-      this.tlabel = new draw2d.shape.basic.Text({text:"this.typeqssssdddddd5f4s6rgrgg\nfergrzgz", stroke:1});
-      // add the new decoration to the connection with a position locator.
-      this.add(this.tlabel, new draw2d.layout.locator.CenterLocator(this));
+    init: function(attr) {
+        this._super(attr);
+        var _this = this;
+        this.tlabel = new draw2d.shape.basic.Text({text:"clause name", stroke:0});
+        this.tlabel.installEditor(new draw2d.ui.LabelInplaceEditor());
+        this.tlabel.on("change", function(e) {
+            // Update name in the policy FIXME
+            //var re = /CLAUSE \w+/;
+            //var m = re.exec(_this.policy);
+            //if (m !== null)
+            //    _this.policy = _this.policy.replace(m[0], "CLAUSE " + this.text);
+            //visualEditor.ui.properties.AALEditor.inPlaceAALEditor.setValue(this.policy);
+        });
+        this.add(this.tlabel, new draw2d.layout.locator.CenterLocator(this));
+        this.createPort("output");
+        this.createPort("input");
     },
 
     onMouseEnter: function() {
@@ -68,11 +74,30 @@ PolicyUI = draw2d.shape.basic.Text.extend({
 
     onClick: function() {
         visualEditor.ui.selectedNode = this;
-        //visualEditor.ui.properties.updateProps();
+        visualEditor.ui.properties.AALEditor.inPlaceAALEditor.setValue(this.policy);
+    },
+
+    onDoubleClick: function(e) {
+        visualEditor.ui.properties.AALEditor.inPlaceAALEditor.setValue(this.policy);
+        $("#inPlaceAALEditor").fadeIn(600);
+    },
+
+    getPersistentAttributes: function() {
+        var memento = this._super();
+        memento.policy = this.policy;
+        memento.tlabeltxt = this.tlabel.text;
+        memento.type = "PolicyUI";
+        return memento;
+     },
+
+    setPersistentAttributes: function(memento) {
+        this._super(memento);
+        this.policy = memento.policy;
+        this.tlabel.text = memento.tlabeltxt;
+        return this;
     },
 
     refresh: function() {
-		console.log("inside "+this.DEFAULT_bgColor)
         this.setBackgroundColor(this.DEFAULT_bgColor);
         this.repaint();
     }

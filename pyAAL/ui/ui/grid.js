@@ -69,6 +69,9 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
                         return new MyConnection();
                     }
                 }));
+                this.on("click", function(emitter, event) {
+                    $("#inPlaceAALEditor").fadeOut(400);
+                });
                 break;
 
             // ------------------ VFODTL mode ------------------- //
@@ -85,7 +88,7 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
         var _this = this;
         this.getCommandStack().addEventListener(function (e) {
             if (e.isPostChangeEvent())
-                _this.updatePreview();
+                _this.updatePreview(e);
         });
 	},
 
@@ -163,7 +166,12 @@ visualEditor.ui.gridEditor = draw2d.Canvas.extend({
         });
     },
 
-    updatePreview: function() {
+    updatePreview: function(e) {
+        // FIXME
+        if(e.command.figure != undefined && e.command.figure != null)
+            if(e.command.figure.__proto__.NAME === "draw2d.shape.basic.Image")
+                return;
+
         // convert the canvas into a PNG image source string
         try {
             var xCoords = [];

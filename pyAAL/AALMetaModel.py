@@ -142,6 +142,7 @@ class aalmmnode():
         self.parent = None
         self.masked = False
         self.line = "0"
+        self.source_range = None
 
     def mask(self):
         self.masked = True

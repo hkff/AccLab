@@ -137,6 +137,18 @@ body {
 	overflow: auto;
 }
 
+
+.inplaceAAL-window {
+	background-color: #edd;
+	overflow: auto;
+    width: 341px;
+    height: 178px;
+    display: block;
+    left: 703px;
+    position: absolute;
+    top: 220px;
+}
+
 .editor-host {
 	height: auto; 
 	/*overflow: visible;*/
@@ -213,6 +225,20 @@ body {
 .btn-action-pad {
     padding-top: 10px;
     padding-left: 2px;
+}
+
+#aalacdSwitcher {
+    z-index: 999;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    overflow: auto;
+    position: absolute;
+    top:50px;
+    right:250px;
+    width:130px;
+    border:2px solid gray;
+    padding-left: 5px;
+    cursor: pointer !IMPORTANT;
 }
 
 #inPlaceAALEditor {

@@ -1,0 +1,101 @@
+/**
+ * Generated AAL file 
+ * @diagram source : demos/RII/demo.acd
+ * @author : walid
+ * @on : Mon, 11 Apr 2016 13:43:17 GMT
+ */
+
+
+// Loading types & macros libraries
+LOAD "core.types"
+LOAD "core.macros"
+
+// Imports
+LOAD "demos/RII/types"
+/***************************
+ *       Declarations
+ ****************************/
+// Actors
+AGENT Alice TYPES() REQUIRED(transfer ) PROVIDED(read write delete )
+AGENT Bob TYPES() REQUIRED(read write delete ) PROVIDED()
+AGENT Kim TYPES() REQUIRED(read write delete ) PROVIDED()
+
+// Services
+SERVICE transfer
+SERVICE read
+SERVICE write
+SERVICE delete
+
+/***************************
+ *       Clauses
+ ****************************/
+/**
+ * Alice's policy (provider)
+ */
+CLAUSE alice_policy (
+    // access control
+    (FORALL c:Customer FORALL d:data 
+        IF (d.subject==c) THEN {
+            PERMIT c.read[Alice](d) AND 
+            PERMIT c.write[Alice](d) AND 
+            PERMIT c.delete[Alice](d)
+        }
+    )
+    AND
+    (FORALL a:Actor FORALL d:UserName 
+        IF ((a==NSA) OR @Employee(a)) THEN { 
+            DENY a.read[Alice](d)
+        }
+    ) 
+    AND 
+    (FORALL a:Actor FORALL d:DisplayName 
+        IF ((a==NSA) OR (@Employee(a))) THEN {
+            PERMIT a.read[Alice](d)
+        }
+    )
+    // data transfer 
+ 	AND (FORALL d:Sensitive FORALL a:Actor 
+ 	    IF (@Europe(a)) THEN {PERMIT Alice.transfer[a](d)}) 
+	
+	AND (FORALL d:Sensitive FORALL a:Actor 
+	    IF (NOT @Europe(a)) THEN {DENY Alice.transfer[a](d)}) 
+
+    // data retention 
+    AND (FORALL ds:Sensitive  MUST( Alice.delete[Alice](ds) BEFORE "6 month"))
+    
+    AUDITING MUST(dpa.audit[Alice](log) BEFORE "1 month")
+    IF_VIOLATED_THEN MUST(dpa.sanction[Alice](d))
+ )
+
+/**
+ * Bob's policy (user)
+ */
+CLAUSE bob_policy (
+    // access control
+   	(FORALL e:Employee FORALL d:DisplayName DENY e.read[Alice](d)) AND 
+	(FORALL e:Employee FORALL d:DisplayName PERMIT e.read[Alice](d))
+    
+    // data transfer 
+	AND (FORALL d:Sensitive FORALL a:Actor 
+	    IF (@Germany(a) OR @France(a)) THEN {PERMIT Alice.transfer[a](d)}) 
+	    
+    // data retention
+    AND (FORALL ds:Sensitive MUST(Alice.delete[Alice](ds) BEFORE "4 month"))  
+  
+)
+
+/**
+ * Kim's policy (user)
+ */
+CLAUSE kim_policy (
+    // access control
+   	(FORALL e:Employee FORALL d:UserName DENY e.read[Alice](d)) AND 
+	(FORALL e:Employee FORALL d:DisplayName PERMIT e.read[Alice](d))
+    
+    // data transfer 
+	AND (FORALL d:Sensitive FORALL a:Actor 
+	    IF (@US(a)) THEN {PERMIT Alice.transfer[a](d)})
+	    
+    // data retention
+    AND (FORALL ds:Sensitive MUST(Alice.delete[Alice](ds) BEFORE "6 month"))  
+)

@@ -97,6 +97,7 @@
     <script src="ui/components/Agent.js"></script>
     <script src="ui/components/Data.js"></script>
     <script src="ui/components/Policy.js"></script>
+    <script src="ui/components/Import.js"></script>
     <script src="ui/components/Fodlt.js"></script>
     <script src="ui/tools.js"></script>
     <script src="ui/properties.js"></script>
@@ -122,6 +123,7 @@
         <div title="AAL Mode" onclick="visualEditor.aalMode()" class="btn-action fa fa-pencil-square-o fa-lg"></div>
         <div title="Flat Mode" onclick="visualEditor.aalMode(true)" class="btn-action fa fa-columns fa-lg"></div>
         <div title="Design Mode" onclick="visualEditor.acdMode()" class="btn-action fa fa-image fa-lg"></div>
+        <div title="Presentation Mode" onclick="visualEditor.presentationMode()" class="btn-action fa fa-caret-square-o-right fa-lg"></div>
         <div title="Clear preferences" onclick="visualEditor.clearPrefs()" class="btn-action fa fa-recycle fa-lg"></div>
         <div title="Sys Monitor" onclick="visualEditor.monitor()" class="btn-action fa fa-area-chart fa-lg"></div>
         <a   title="Github page" target="_blank" href="https://github.com/hkff/AccLab" class="btn-action fa fa-github-square fa-lg"></a>
@@ -141,10 +143,13 @@
     <div id="toolbox_window" caption="Tools" class="toolbox-window"></div>
     <div id="componentbox_window" caption="Components" class="componentbox-window"></div>
     <div id="outline_window" caption="Outline" class="outline-window"></div>
-    <div id="inPlaceAALEditor" caption="AAL Editor" class="problems-window">
+    <div id="inPlaceAALEditor" caption="AAL Editor" class="inplaceAAL-window">
         <div id="inPlaceAALEditor-tools"></div>
         <div id="inPlaceAALEditor-editor"></div>
     </div>
+
+    <!-- AAL ACD switcher -->
+    <div id="aalacdSwitcher" title="Double click to switch" ><i class="fa fa-exchange"></i> Switch AAL/ACD</div>
 
     <!-- Acd wheel Context Menu -->
     <div id="acdWheelContextMenu">

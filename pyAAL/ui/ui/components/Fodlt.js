@@ -326,11 +326,11 @@ Fodtl_formula = Fodtl_atom2Op.extend({NAME: "fodtl_formula", name: "Formula", fi
 // Predicates and constants
 Fodtl_true  = Fodtl_atomOp.extend({NAME: "fodtl_true", name: "True", figure: Fodtl_rectOpUI, color: "#F0BC00", size: {width: 80, height: 30} });
 Fodtl_false = Fodtl_atomOp.extend({NAME: "fodtl_false", name: "False", figure: Fodtl_rectOpUI, color: "#F0BC00", size: {width: 80, height: 30}});
-Fodtl_constant = Fodtl_unaryOp.extend({NAME: "fodtl_constant", name: "Constant", figure: Fodtl_circleOpUI, color: "#F0BC00", size: {width: 80, height: 40}});
-Fodtl_variable = Fodtl_unaryOp.extend({NAME: "fodtl_variable", name: "Variable", figure: Fodtl_circleOpUI, color: "#F0BC00", size: {width: 80, height: 40}});
-Fodtl_regexp = Fodtl_unaryOp.extend({NAME: "fodtl_regexp", name: "Regexp", figure: Fodtl_circleOpUI, color: "#F0BC00", size: {width: 80, height: 40}});
-Fodtl_predicate = Fodtl_unaryOp.extend({NAME: "fodtl_predicate", name: "Predicate", figure: Fodtl_rectOpUI, color: "#F0BC00", size: {width: 80, height: 40}});
-Fodtl_value = Fodtl_atomOp.extend({NAME: "fodtl_value", name: "Value", figure: Fodtl_rectOpUI, color: "#F0BC00", size: {width: 80, height: 30}, label_editable: true});
+Fodtl_constant = Fodtl_unaryOp.extend({NAME: "fodtl_constant", name: "Constant", figure: Fodtl_circleOpUI, color: "#FF8000", size: {width: 80, height: 40}});
+Fodtl_variable = Fodtl_unaryOp.extend({NAME: "fodtl_variable", name: "Variable", figure: Fodtl_circleOpUI, color: "#F7BE81", size: {width: 80, height: 40}});
+Fodtl_regexp = Fodtl_unaryOp.extend({NAME: "fodtl_regexp", name: "Regexp", figure: Fodtl_circleOpUI, color: "#FA8258", size: {width: 80, height: 40}});
+Fodtl_predicate = Fodtl_unaryOp.extend({NAME: "fodtl_predicate", name: "Predicate", figure: Fodtl_rectOpUI, color: "#FF4000", size: {width: 80, height: 40}, label_editable: true});
+Fodtl_value = Fodtl_atomOp.extend({NAME: "fodtl_value", name: "Value", figure: Fodtl_rectOpUI, color: "#FACC2E", size: {width: 80, height: 30}, label_editable: true});
 
 // Boolean operators
 Fodtl_and   = Fodtl_binaryOp.extend({NAME: "fodtl_and", name: "And", figure: Fodtl_rectOpUI, color: "#25BB1E", size: {width: 60, height: 60}});
@@ -417,7 +417,7 @@ visualEditor.vFodtl_to_fodtl = function(diag) {
             case "fodtl_regexp":
                 port = node.outputPorts.get(0);
                 if (port.connections.getSize() > 0)
-                    return 'r\"' + _eval(port.connections.get(0).targetPort.parent) + '\"';
+                    return 'r\\"' + _eval(port.connections.get(0).targetPort.parent) + '\\"';
                 else
                     return dic[node._type] + "( Error )";
                 break;
@@ -435,8 +435,13 @@ visualEditor.vFodtl_to_fodtl = function(diag) {
             // Predicate
             case "fodtl_predicate":
                 port = node.outputPorts.get(0);
-                if (port.connections.getSize() > 0)
-                    return  _eval(port.connections.get(0).targetPort.parent);
+                if (port.connections.getSize() > 0) {
+                    var vars = [];
+                    for(var i=0; i<port.connections.getSize(); i++) {
+                        vars.push(_eval(port.connections.get(i).targetPort.parent));
+                    }
+                    return  node.tlabel.text + "(" + replaceAll(',', ', ', vars.toString()) + ")";
+                }
                 else
                     return dic[node._type] + "( Error )";
                 break;
@@ -581,7 +586,6 @@ visualEditor.FodtlInterceptorPolicy = draw2d.policy.canvas.DropInterceptorPolicy
 });
 
 visualEditor.createFodtlConnection = function(sourcePort, targetPort){
-    console.log(targetPort)
     var conn= new draw2d.Connection({
         router:new draw2d.layout.connection.InteractiveManhattanConnectionRouter(),
         outlineStroke:1,

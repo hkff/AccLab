@@ -257,7 +257,7 @@ class AALCompilerListener(AALListener.AALListener):
             print(Color("{autored}[ERROR]{/red} clause " + self.currentClause.name + "{automagenta} at line " +
                         str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
             return
-
+        self.currentClause.source_range = [ctx.start.start, ctx.stop.stop]
         self.aalprog.clauses.append(self.currentClause)  # Add the clause to the aalProg clauses
 
         if self.DEBUG:

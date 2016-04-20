@@ -19227,7 +19227,7 @@ draw2d.policy.line.OrthogonalSelectionFeedbackPolicy = draw2d.policy.line.LineSe
  * @class draw2d.policy.port.PortFeedbackPolicy
  *
  * Base class for all port feedback policies. Used for grow, highlight or
- * other decorationhs during drag&drop and connecting of ports.
+ * other decorations during drag&drop and connecting of ports.
  *
  * @author Andreas Herz
  * @extends draw2d.policy.figure.DragDropEditPolicy
@@ -19268,8 +19268,6 @@ draw2d.policy.port.PortFeedbackPolicy = draw2d.policy.figure.DragDropEditPolicy.
     onHoverLeave: function(canvas, draggedFigure, hoverFigure)
     {
     }
-
-        
 });
 
 /*****************************************
@@ -19522,7 +19520,7 @@ draw2d.policy.port.IntrusivePortsFeedbackPolicy = draw2d.policy.port.PortFeedbac
  *   Library is under GPL License (GPL)
  *   Copyright (c) 2012 Andreas Herz
  ****************************************/draw2d.Configuration = {
-    version : "6.1.0",
+    version : "6.1.9",
     i18n : {
         command : {
             move : "Move Shape",
@@ -22634,7 +22632,7 @@ draw2d.Figure = Class.extend({
      * @method
      * Get the top level shape element. May the figure has a set of SVG elements. In this case this
      * method must return the top level node.<br>
-     * This method is used for the toFron/toBack method to order the nodes in the correct way.
+     * This method is used for the toFront/toBack method to order the nodes in the correct way.
      * 
      * @since 5.0.0
      * @private
@@ -25987,6 +25985,9 @@ draw2d.SetFigure = draw2d.shape.basic.Rectangle.extend({
      */
     getTopLevelShapeElement: function()
     {
+        if(this.svgNodes.length===0) {
+            return this.shape;
+        }
         return this.svgNodes;
     },
     
@@ -30636,7 +30637,7 @@ draw2d.shape.basic.Diamond = draw2d.shape.basic.Polygon.extend({
  * @extends draw2d.shape.basic.Rectangle
  * @since 4.7.2
  */
-draw2d.shape.composite.Composite = draw2d.shape.basic.Rectangle.extend({
+draw2d.shape.composite.Composite = draw2d.SetFigure.extend({
     NAME : "draw2d.shape.composite.Composite",
 
     /**
@@ -30647,7 +30648,7 @@ draw2d.shape.composite.Composite = draw2d.shape.basic.Rectangle.extend({
     */
     init: function( attr, setter, getter) 
     {
-      this._super(attr, setter, getter);
+      this._super($.extend({stroke:1,"color": "#f0f0f0"},attr), setter, getter);
     },
     
     /**
@@ -31282,7 +31283,8 @@ draw2d.shape.composite.WeakComposite = draw2d.shape.composite.Composite.extend({
      * 
      * @param {Object} [attr] the configuration of the shape
      */
-    init: function( attr, setter, getter) {
+    init: function( attr, setter, getter)
+    {
        this._super(attr, setter, getter);
     }
 });
@@ -32175,8 +32177,6 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
             draw2d.Connection.DROP_FILTER.element.setAttribute("height", "250%");
             draw2d.Connection.DROP_FILTER.createShadow(1,1,2, 0.3);
         }
-        this.shape.items[0].filter(draw2d.Connection.DROP_FILTER);
-
 
         if(this.sourceDecoratorNode!==null){
            this.sourceDecoratorNode.remove();
@@ -32201,6 +32201,8 @@ draw2d.Connection = draw2d.shape.basic.PolyLine.extend({
            }
        }
        else{
+           this.shape.items[0].filter(draw2d.Connection.DROP_FILTER);
+
            if(this.sourcePort!==null){
                this.sourcePort.on("move",this.moveListener);
                this.canvas.fireEvent("connect", {"port":this.sourcePort, "connection":this});

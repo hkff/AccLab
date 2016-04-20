@@ -62,6 +62,9 @@ visualEditor.ui.properties = {
 	 * @param _this
 	 */
 	view: function(_this) {
+		// Render the AAL editor
+		this.AALEditor.view(this);
+		return;
 		/**
 		 * Extended text editor for propertygrid editor
 		 */
@@ -381,9 +384,6 @@ visualEditor.ui.properties = {
 		pg.propertygrid('insertRow', {index: this.propertiesMap.labelColorProp, row: this.labelColorProp});
 		pg.propertygrid('insertRow', {index: this.propertiesMap.labelSizeProp,  row: this.labelSizeProp});
 		pg.propertygrid('insertRow', {index: this.propertiesMap.typesProp,      row: this.typesProp});
-
-		// Render the AAL editor
-		this.AALEditor.view(this);
 	},
 
 	/**
@@ -391,13 +391,13 @@ visualEditor.ui.properties = {
 	 * @param _this
 	 */
 	control: function(_this) {
+        this.AALEditor.control(this);
+        return;
 		$('#pg').propertygrid({
 			onAfterEdit: function(rowIndex, rowData, changes){
 				//console.log(rowIndex)
 			}
 		});
-		
-		this.AALEditor.control(this);
 
 		// Detect size change
         $('#properties_window').mouseover(function(){$('#pg').datagrid('resize');})
@@ -542,6 +542,7 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 	 */
 	init: function(attr) {
 		this._this = this;
+		this.updateBuffer = 0;
 	},
 
 	/**
@@ -549,20 +550,19 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 	 * @param parent
 	 */
 	view: function(parent) {
-		return;
 		this.inPlaceAALEditor = ace.edit("inPlaceAALEditor-editor");
 	    this.inPlaceAALEditor.setTheme("ace/theme/" + visualEditor.aceTheme);
 	    this.inPlaceAALEditor.getSession().setMode("ace/mode/AAL");
 
 		this.templateAALBtn = $('<div title="Clause template" id="templateAALBtn" class="btn-action fa fa-code fa-lg"/>');
-		$("#inPlaceAALEditor-tools").append(this.templateAALBtn);
-
 		this.clearAALBtn = $('<div title="Clear" id="clearAALBtn" class="btn-action fa fa-file-o fa-lg"/>');
-		$("#inPlaceAALEditor-tools").append(this.clearAALBtn);
+
+        $("#inPlaceAALEditor-tools").append(this.templateAALBtn).append(this.clearAALBtn);
+        $("#inPlaceAALEditor").hide().draggable();
 
 		 // Hide panel prop
-		$(visualEditor.ui.propertiesPanel.children()).css("opacity", 0.15);
-		visualEditor.ui.propertiesPanel[0].addEventListener("click", visualEditor.ui.stoper, true);
+		//$(visualEditor.ui.propertiesPanel.children()).css("opacity", 0.15);
+		//visualEditor.ui.propertiesPanel[0].addEventListener("click", visualEditor.ui.stoper, true);
 	},
 
 	/**
@@ -570,19 +570,26 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 	 * @param parent
 	 */
 	control: function(parent) {
-		return;
 		this.inPlaceAALEditor.on("change", function(e) {
+            var ui = false;
 			// Check if a node is selected
 			if(visualEditor.ui.selectedNode == undefined || null) return;
-			visualEditor.ui.selectedNode.policy = visualEditor.ui.properties.AALEditor.inPlaceAALEditor.getValue();
+            if(visualEditor.ui.properties.AALEditor.updateBuffer > 10) {
+                visualEditor.ui.properties.AALEditor.updateBuffer = -1;
+                ui = true;
+            }
+            if(visualEditor.ui.selectedNode.type === "Policy")
+                visualEditor.ui.selectedNode.policy = visualEditor.ui.properties.AALEditor.inPlaceAALEditor.getValue();
+            visualEditor.ui.properties.AALEditor.updateBuffer++;
 		});
 		
 		this.templateAALBtn.click(function(e){
-			visualEditor.ui.properties.aalEditor._this.inPlaceAALEditor.setValue(this._this.getClauseTemplate());
+			visualEditor.ui.properties.AALEditor.inPlaceAALEditor.setValue(
+                visualEditor.ui.properties.AALEditor.getClauseTemplate());
 		});
 
 		this.clearAALBtn.click(function(e){
-			visualEditor.ui.properties.aalEditor._this.inPlaceAALEditor.setValue("");
+			visualEditor.ui.properties.AALEditor.inPlaceAALEditor.setValue("");
 		});
 	},
 
@@ -591,7 +598,7 @@ visualEditor.ui.properties.aalEditor = Class.extend({
 	 * @returns {string}
 	 */
 	getClauseTemplate: function() {
-		var selectedName = visualEditor.ui.selectedNode.getName();
+		var selectedName = visualEditor.ui.selectedNode.tlabel.text;
 		return "CLAUSE " + selectedName + "_policy (\n {Usage}\n AUDITING {actions}\n IF_VIOLATED_THEN {actions}\n)";
 	}
 });
