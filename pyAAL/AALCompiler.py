@@ -690,7 +690,11 @@ class AALCompilerListener(AALListener.AALListener):
         ac = m_action()
         ag1 = self.checkAgentDec(ctx.h_agentId()[0].ID())
         ac.agent1 = m_ref(label=ag1.name, target=ag1)
-        ag2 = self.checkAgentDec(ctx.h_agentId()[1].ID())
+        if len(ctx.h_agentId()) > 1:  # Allowing agent.action() syntax
+            ag2 = self.checkAgentDec(ctx.h_agentId()[1].ID())
+        else:
+            ag2 = self.checkAgentDec(ctx.h_agentId()[0].ID())
+
         ac.agent2 = m_ref(label=ag2.name, target=ag2)
 
         action = self.checkServiceDec(ctx.h_serviceId().ID())
