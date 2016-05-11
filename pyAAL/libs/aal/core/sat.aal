@@ -103,24 +103,30 @@ if _c1 is not None:
 """
 )
 
-MACRO gsat2(c1 f chk verbose) (
+MACRO gsat2(c1 f chk verbose w) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
     # First pass
     res = validate2(self, f, check=chk, verbose=verbose)
-    # Second pass with forced predicates
-    predicates = _c1.walk(filter_type=m_predicate)
+    print("--------------------- First pass:\n%s" % res["res"])
+
+    # Second pass with forced predicates/quantified types
     spe_env = ""
+    predicates = _c1.walk(filter_type=m_predicate)
     for x in predicates:
         spe_env += "sometime(%s) &" % x.to_ltl()
+    quant_types = _c1.walk(filter_type=m_qvar)
+    for x in quant_types:
+        spe_env += "always(![x] %s(x)) &" % x.variable.target.type
     res2 = validate2(self, spe_env + f, check=chk, verbose=verbose)
-
-    print("--------------------- First pass:\n%s" % res["res"])
     print("--------------------- Second pass:\n%s" % res2["res"])
 
     res["ok"] == 'true'
-    if self.web:
+
+    if w:
+        print("<br><h3>The clause %s is%s satisfiable</h2>" % (c1, ("" if res["ok"] == res2["ok"] == "true" else " not")))
+    if self.web and not w:
         self.call("sat_toast", ["'" + c1 +"'", (res["ok"] == res2["ok"] == 'true')])
 """
 )
@@ -129,7 +135,7 @@ MACRO sat_ue2(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    self.call("gsat2", ["'"+c1+"'", "'" + "(always (" + _c1.usage.to_ltl() + "))" + "'", True, False])
+    self.call("gsat2", ["'"+c1+"'", "'" + "(always (" + _c1.usage.to_ltl() + "))" + "'", True, False, False])
 """
 )
 
@@ -137,6 +143,14 @@ MACRO vsat_ue2(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    self.call("gsat2", ["'"+c1+"'", "'" + "(always (" + _c1.usage.to_ltl() + "))" + "'", True, True])
+    self.call("gsat2", ["'"+c1+"'", "'" + "(always (" + _c1.usage.to_ltl() + "))" + "'", True, True, False])
+"""
+)
+
+MACRO wsat_ue2(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    self.call("gsat2", ["'"+c1+"'", "'" + "(always (" + _c1.usage.to_ltl() + "))" + "'", True, False, True])
 """
 )
