@@ -1178,8 +1178,14 @@ class m_qvar(aalmmnode):
         return res
 
     def to_ltl(self):
-        return str(self.quant.to_ltl()) + "[" + str(self.variable.target.name) + "] ( " + \
-            str(self.variable.target.to_ltl()) + " => "
+        res = str(self.quant.to_ltl()) + "[" + str(self.variable.target.name) + "] ( " + str(self.variable.target.to_ltl())
+        if self.quant is m_quant.Q_forall:
+            res += " => "
+        elif self.quant is m_quant.Q_exists:
+            res += " & "
+        else:
+            res = "Unsupported quantifier"
+        return res
 
     def to_nnf(self, negated):
         if negated:
@@ -1376,6 +1382,9 @@ class m_conditionCmp(m_condition):
         else:
             return "not " + str(self.exp1.to_natural()) + str(self.operator.to_natural()) + str(self.exp2.to_natural())
 
+    def children(self):
+        return [self.exp1, self.exp2]
+
 
 # Condition combination
 class m_conditionComb(m_condition):
@@ -1410,6 +1419,9 @@ class m_conditionComb(m_condition):
         else:
             return "not " + self.cond1.to_natural() + self.operator.to_natural() + self.cond2.to_natural()
 
+    def children(self):
+         return [self.cond1, self.cond2]
+
 
 # Not
 class m_conditionNotComb(m_condition):
@@ -1440,6 +1452,9 @@ class m_conditionNotComb(m_condition):
             return "" + self.operator.to_natural() + self.exp.to_natural()
         else:
             return "" + self.operator.to_natural() + self.exp.to_natural()
+
+    def children(self):
+         return [self.exp]
 
 
 #########################
