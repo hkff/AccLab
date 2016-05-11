@@ -26,7 +26,7 @@ from AALtoFOTL import *
 
 # Web toast printer
 def web_toast(msg, success):
-    opts = "'closeButton': true, 'preventDuplicates': true, 'tapToDismiss': false, 'timeOut': 10000 "
+    opts = "'closeButton': true, 'preventDuplicates': true, 'tapToDismiss': false, 'timeOut': 1000 "
     scs = "success" if success else "error"
     size = "visualEditor.ui.updateToastSize('%s', {'width': 410, 'height': 100}, false);" % scs
     web = "<script> toastr.%s('%s', 'Result', {%s}); %s </script>" % (scs, msg, opts, size)
