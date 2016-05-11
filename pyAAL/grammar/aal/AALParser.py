@@ -66,7 +66,7 @@ def serializedATN():
         buf.write("^`bdfhjlnprtvxz|~\u0080\u0082\u0084\u0086\u0088\u008a")
         buf.write("\u008c\u008e\u0090\u0092\u0094\u0096\u0098\u009a\u009c")
         buf.write("\u009e\u00a0\u00a2\u00a4\2\n\4\2AAEE\4\2@@EE\3\2*+\4\2")
-        buf.write("\27\31%&\3\2()\3\2\27\30\3\2 $\3\2\36\37\u02ae\2\u00a6")
+        buf.write("\27\31%&\3\2()\3\2\27\30\4\2 $\'\'\3\2\36\37\u02ae\2\u00a6")
         buf.write("\3\2\2\2\4\u00a8\3\2\2\2\6\u00aa\3\2\2\2\b\u00ac\3\2\2")
         buf.write("\2\n\u00ae\3\2\2\2\f\u00b0\3\2\2\2\16\u00b2\3\2\2\2\20")
         buf.write("\u00b4\3\2\2\2\22\u00b6\3\2\2\2\24\u00b8\3\2\2\2\26\u00ba")
@@ -4728,6 +4728,9 @@ class AALParser ( Parser ):
         def T_sometime(self):
             return self.getToken(AALParser.T_sometime, 0)
 
+        def T_next(self):
+            return self.getToken(AALParser.T_next, 0)
+
         def getRuleIndex(self):
             return AALParser.RULE_modal
 
@@ -4751,7 +4754,7 @@ class AALParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 607
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << AALParser.T_must) | (1 << AALParser.T_mustnot) | (1 << AALParser.T_always) | (1 << AALParser.T_never) | (1 << AALParser.T_sometime))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << AALParser.T_must) | (1 << AALParser.T_mustnot) | (1 << AALParser.T_always) | (1 << AALParser.T_never) | (1 << AALParser.T_sometime) | (1 << AALParser.T_next))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self.consume()

@@ -264,7 +264,7 @@ condition2cmpExp       : exp (h_equal | h_inequal) exp;
 
 action                 : h_agentId h_dot (h_serviceId) (h_lbar h_agentId? h_rbar)?  h_lpar exp? h_rpar (time)? (M_purpose h_lpar h_purposeId* h_rpar)?;
 
-modal                  : T_must | T_mustnot | T_always | T_never | T_sometime;
+modal                  : T_must | T_mustnot | T_always | T_never | T_sometime | T_next;
 time                   : (O_after | O_before) h_date | time (O_and | O_or) time;
     
 

@@ -1669,6 +1669,8 @@ class m_booleanOp(sEnum):
     O_inequal = "!="
     O_true = "TRUE"
     O_false = "FALSE"
+    O_until = "UNTIL"
+    O_unless = "UNLESS"
 
     def to_natural(self, kw=True):
         if self == m_booleanOp.O_equal:
@@ -1699,9 +1701,9 @@ class m_booleanOp(sEnum):
             return "EQUAL"
         elif self == m_booleanOp.O_inequal:
             return "~EQUAL"
-        elif self == m_modal.T_until:
+        elif self == m_booleanOp.O_until:
             return str(FOTLOperators.t_until)
-        elif self == m_modal.T_unless:
+        elif self == m_booleanOp.O_unless:
             return str(FOTLOperators.t_unless)
 
 
@@ -1747,6 +1749,7 @@ class m_modal(sEnum):
     T_sometime = "SOMETIME"
     T_until = "UNTIL"
     T_unless = "UNLESS"
+    T_next = "NEXT"
 
     def to_natural(self, kw=True):
         if self == m_modal.T_must:
@@ -1759,6 +1762,8 @@ class m_modal(sEnum):
             return "never : "
         elif self == m_modal.T_sometime:
             return "sometimes : "
+        elif self == m_modal.T_next:
+            return "next : "
 
     def to_ltl(self):
         if self == m_modal.T_must:
@@ -1771,6 +1776,12 @@ class m_modal(sEnum):
             return str(FOTLOperators.t_not) + " " + str(FOTLOperators.t_always)
         elif self == m_modal.T_sometime:
             return str(FOTLOperators.t_sometime)
+        elif self == m_modal.T_next:
+            return str(FOTLOperators.t_next)
+        elif self == m_modal.T_until:
+            return str(FOTLOperators.t_until)
+        elif self == m_modal.T_unless:
+            return str(FOTLOperators.t_unless)
 
     def to_nnf(self, negated):
         if negated:
