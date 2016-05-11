@@ -350,18 +350,18 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
         code = ("%s &\n(\n %s & %s \n)" % (pre_cond, c1_formula, c2_formula))
 
         res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
-        if res["res"] == "Unsatisfiable":
+        if res["res"] == "Satisfiable":
+            print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+            fres["sat"] = "Satisfiable"
+            fres["psat"] = "{autogreen}  -> " + res["res"] + "{/green}"
+            fres["ok"] = "true"
+        else:
             print2(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
             v = v and False
             fres["sat"] = "Unsatisfiable"
             fres["psat"] = "{autored}  -> " + res["res"] + "{/red}"
             fres["ok"] = "false"
             return fres
-        else:
-            print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
-            fres["sat"] = "Satisfiable"
-            fres["psat"] = "{autogreen}  -> " + res["res"] + "{/green}"
-            fres["ok"] = "true"
 
         if res["res"] == "":
             print2(res["print"])
@@ -403,17 +403,17 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
         code = ("~(%s =>\n(\n %s => %s \n))" % (pre_cond, c1_formula, c2_formula))
 
         res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
-        if res["res"] == "Unsatisfiable":
-            print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
-            fres["sat"] = "Unsatisfiable"
-            fres["psat"] = "{autogreen}  -> " + res["res"] + "{/green}"
-            fres["ok"] = "true"
-        else:
+        if res["res"] == "Satisfiable":
             print2(Color("{autored}  -> " + res["res"] + "{/red}"))
             fres["sat"] = "Satisfiable"
             fres["psat"] = "{autored}  -> " + res["res"] + "{/red}"
             fres["ok"] = "false"
             v = v and False
+        else:
+            print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+            fres["sat"] = "Unsatisfiable"
+            fres["psat"] = "{autogreen}  -> " + res["res"] + "{/green}"
+            fres["ok"] = "true"
 
         if res["res"] == "":
             print2(res["print"])
@@ -470,15 +470,15 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
     res += "------------------------ Starting " + ("Validity" if not check else "") + " check ---------------------\n"
     res += "----- Checking c1 :\n"
     res2 = compiler.apply_check(code="(" + pre_cond + " & " + c1 + ")", show=False, verbose=verbose)
-    if res2["res"] == "Unsatisfiable":
+    if res2["res"] == "Satisfiable":
+        res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
+        fres["psat"] = "{autogreen}  -> " + res2["res"] + "{/green}"
+        fres["ok"] = "true"
+    else:
         v = False
         res += "{autored}  -> " + res2["res"] + "{/red}\n"
         fres["psat"] = "{autored}  -> " + res2["res"] + "{/red}"
         fres["ok"] = "false"
-    else:
-        res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
-        fres["psat"] = "{autogreen}  -> " + res2["res"] + "{/green}"
-        fres["ok"] = "true"
 
     if res2["res"] == "":
         res += res2["print"] + "\n"
@@ -490,14 +490,14 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
     if not check:
         res += "----- Checking ~(c1) :\n"
         res2 = compiler.apply_check(code="~((" + pre_cond + " & " + c1 + "))", show=False, verbose=verbose)
-        if res2["res"] == "Unsatisfiable":
-            res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
-            fres["pneg"] = "{autogreen}  -> " + res2["res"] + "{/green}"
-            fres["ok"] = "true"
-        else:
+        if res2["res"] == "Satisfiable":
             res += "{autored}  -> " + res2["res"] + "{/red}\n"
             fres["pneg"] = "{autored}  -> " + res2["res"] + "{/red}"
             fres["ok"] = "false"
+        else:
+            res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
+            fres["pneg"] = "{autogreen}  -> " + res2["res"] + "{/green}"
+            fres["ok"] = "true"
 
         if res2["res"] == "":
             res += res2["print"] + "\n"
