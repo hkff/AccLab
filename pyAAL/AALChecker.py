@@ -617,18 +617,17 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1, depth=-1):
     #####################################
     def chk():
         if c2 is None:
-            formula = "(always (" + c1.usage.to_ltl() + "))"
-            res1 = validate2(compiler, formula, check=True, verbose=verbose2)
-            # Second pass with forced predicates/quantified types
-            spe_env = ""
-            predicates = c1.walk(filter_type=m_predicate)
-            for x in predicates:
-                spe_env += "sometime(%s) &" % x.to_ltl()
-            quant_types = c1.walk(filter_type=m_qvar)
-            for x in quant_types:
-                spe_env += "always(![x] %s(x)) &" % x.variable.target.type
-            res2 = validate2(compiler, spe_env + formula, check=True, verbose=verbose2)
-            return res1 if res1["ok"] == 'false' else res2
+            return validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+            # # Second pass with forced predicates/quantified types
+            # spe_env = ""
+            # predicates = c1.walk(filter_type=m_predicate)
+            # for x in predicates:
+            #     spe_env += "sometime(%s) &" % x.to_ltl()
+            # quant_types = c1.walk(filter_type=m_qvar)
+            # for x in quant_types:
+            #     spe_env += "always(![x] %s(x)) &" % x.variable.target.type
+            # res2 = validate2(compiler, spe_env + formula, check=True, verbose=verbose2)
+            # return res1 if res1["ok"] == 'false' else res2
         else:
             return validate(compiler, c1, c2, resolve=False, verbose=verbose2, no_print=True,
                             use_always=True, acc_formula=0, chk="neg")

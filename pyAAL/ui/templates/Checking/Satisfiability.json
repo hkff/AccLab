@@ -7,7 +7,7 @@
       {"name": "", "id": "depth", "type": "select", "pre": " ", "post": "", "src": "[\"Faster\", \"Fast\", \"Slow\", \"MAX\"]"}
     ],
 	"aal": [
-      "{{({detection}.checked)?'conflict':'wsat_ue2'}};[\"{c1}.val\"",
+      "{{({detection}.checked)?'conflict':'wsat_ue'}};[\"{c1}.val\"",
       "{{({detection}.checked && \"{depth}.val\" == 'Faster')?', \"10\"':''}}",
       "{{({detection}.checked && \"{depth}.val\" == 'Fast')  ?', \"27\"':''}}",
       "{{({detection}.checked && \"{depth}.val\" == 'Slow')  ?', \"40\"':''}}",
