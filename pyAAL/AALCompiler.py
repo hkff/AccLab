@@ -701,6 +701,8 @@ class AALCompilerListener(AALListener.AALListener):
         ac.service = m_ref(label=action.name, target=action)
         if len(self.expStack):
             ac.args = self.expStack.pop()
+        else:  # put a default arg
+            ac.args = m_booleanOp.O_true
         ac.name = ctx.h_serviceId().ID()
 
         self.currentAction = ac
