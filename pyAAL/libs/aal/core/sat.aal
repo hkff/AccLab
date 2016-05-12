@@ -107,20 +107,23 @@ MACRO gsat2(c1 f chk verbose w) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    # First pass
+    ################# First pass ##################
     res = validate2(self, f, check=chk, verbose=verbose)
-    print("--------------------- First pass:\n%s" % res["res"])
+    print("%s First pass: %s\n--- Applying simple \n%s" % ("*"*32, "*"*32, res["res"]))
 
-    # Second pass with forced predicates/quantified types
+    ################# Second pass #################
+
+    # with forced predicates/quantified types
     spe_env = ""
     predicates = _c1.walk(filter_type=m_predicate)
     for x in predicates:
         spe_env += "sometime(%s) &" % x.to_ltl()
     quant_types = _c1.walk(filter_type=m_qvar)
     for x in quant_types:
-        spe_env += "always(![x] %s(x)) &" % x.variable.target.type
+        spe_env += "always(%s(x)) &" % x.variable.target.type
+
     res2 = validate2(self, spe_env + f, check=chk, verbose=verbose)
-    print("--------------------- Second pass:\n%s" % res2["res"])
+    print("%s Second pass: %s\n--- Populating predicates \n%s" % ("*"*30, "*"*30, res2["res"]))
 
     res["ok"] == 'true'
 
