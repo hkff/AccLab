@@ -7,7 +7,10 @@
       ""
     ],
 	"html": [
-      "Not yet implemented !"
+      "<div class='varGroupe'>  <h4 class='varsHeader'>sat(c1) :</h4>  Check satisfiability of a clause</div>",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>validate(c1 c2 acc) :</h4>  Check the validity of a clause ()</div>",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>sat(c1) :</h4>  Check satisfiability of a clause</div>",
+      "<div class='varGroupe'>  <h4 class='varsHeader'>type_check() :</h4>  Run types check</div>"
     ],
 	"xacml": ""
 }
