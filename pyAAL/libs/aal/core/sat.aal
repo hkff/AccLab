@@ -10,14 +10,23 @@ if self.web:
 """
 )
 
+
+MACRO gsat(c1 f chk verbose) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    res = validate2(self, f, check=chk, verbose=verbose)
+    print(res["res"])
+    if self.web:
+        self.call("sat_toast", ["'" + c1 +"'", (res["ok"] == 'true')])
+"""
+)
+
 MACRO sat(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    res = validate2(self, _c1.to_ltl(), check=True)
-    print(res["res"])
-    if self.web:
-        self.call("sat_toast", ["'" + c1 +"'", (res["ok"] == 'true')])
+    self.call("gsat", ["'"+c1+"'", "'" + "(always (" + _c1.to_ltl() + "))" + "'", True, False])
 """
 )
 
@@ -25,10 +34,7 @@ MACRO vsat(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    res = validate2(self, _c1.to_ltl(), check=True, verbose=True)
-    print(res["res"])
-    if self.web:
-        self.call("sat_toast", ["'" + c1 +"'", (res["ok"] == 'true')])
+    self.call("gsat", ["'"+c1+"'", "'" + "(always (" + _c1.to_ltl() + "))" + "'", True, True])
 """
 )
 
@@ -36,10 +42,7 @@ MACRO sat_ue(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    res = validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True)
-    print(res["res"])
-    if self.web:
-        self.call("sat_toast", ["'" + c1 +"'", (res["ok"] == 'true')])
+    self.call("gsat", ["'"+c1+"'", "'" + "(always (" + _c1.usage.to_ltl() + "))" + "'", True, False])
 """
 )
 
@@ -47,10 +50,7 @@ MACRO vsat_ue(c1) (
 """
 _c1 = self.clause(c1)
 if _c1 is not None:
-    res = validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True, verbose=True)
-    print(res["res"])
-    if self.web:
-        self.call("sat_toast", ["'" + c1 +"'", (res["ok"] == 'true')])
+    self.call("gsat", ["'"+c1+"'", "'" + "(always (" + _c1.usage.to_ltl() + "))" + "'", True, True])
 """
 )
 
@@ -100,5 +100,69 @@ _c1 = self.clause(c1)
 if _c1 is not None:
     res = validate2(self, "(always (" + _c1.rectification.to_ltl() + "))", check=True, verbose=True)
     print(res["res"])
+"""
+)
+
+MACRO gsat2(c1 acc chk verbose w) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    f = "(always (" + _c1.usage.to_ltl() + "))"
+    ################# First pass ##################
+    print("%s First pass: %s\n--- Applying simple check \n" % ("*"*32, "*"*32))
+    res = validate2(self, f, check=chk, verbose=verbose)
+    print(res["res"])
+
+    ################# Second pass #################
+    print("%s Second pass: %s\n--- Populating predicates \n" % ("*"*30, "*"*30))
+    # with forced predicates/quantified types
+    spe_env = ""
+    predicates = _c1.walk(filter_type=m_predicate)
+    for x in predicates:
+        spe_env += "sometime(%s) &" % x.to_ltl()
+    quant_types = _c1.walk(filter_type=m_qvar)
+    for x in quant_types:
+        spe_env += "always(%s(x)) &" % x.variable.target.type
+
+    res2 = validate2(self, spe_env + f, check=chk, verbose=verbose)
+    print(res2["res"])
+
+    ################# Third pass #################
+    print("%s Third pass: %s\n--- Forcing conditions \n" % ("*"*30, "*"*30))
+    to_ltl_back = m_aexpIfthen.to_ltl
+    m_aexpIfthen.to_ltl = lambda self: " ((%s) & (%s))" %(str(self.condition.to_ltl()), str(self.branchTrue.to_ltl()))
+    f = "(always (" + _c1.usage.to_ltl() + "))"
+    res3 = validate2(self, f, check=chk, verbose=verbose)
+    m_aexpIfthen.to_ltl = to_ltl_back
+    print(res3["res"])
+
+    if w:
+        print("<br><h3>The clause %s is%s satisfiable</h2>" % (c1, ("" if res["ok"] == res2["ok"] == res3["ok"] == "true" else " not")))
+    if self.web and not w:
+        self.call("sat_toast", ["'" + c1 +"'", (res["ok"] == res2["ok"] == 'true')])
+"""
+)
+
+MACRO sat_ue2(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    self.call("gsat2", ["'"+c1+"'", "'ue'", True, False, False])
+"""
+)
+
+MACRO vsat_ue2(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    self.call("gsat2", ["'"+c1+"'", "'ue'", True, True, False])
+"""
+)
+
+MACRO wsat_ue2(c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    self.call("gsat2", ["'"+c1+"'", "'ue'", True, False, True])
 """
 )

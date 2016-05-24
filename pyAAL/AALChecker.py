@@ -26,7 +26,7 @@ from AALtoFOTL import *
 
 # Web toast printer
 def web_toast(msg, success):
-    opts = "'closeButton': true, 'preventDuplicates': true, 'tapToDismiss': false, 'timeOut': 10000 "
+    opts = "'closeButton': true, 'preventDuplicates': true, 'tapToDismiss': false, 'timeOut': 1000 "
     scs = "success" if success else "error"
     size = "visualEditor.ui.updateToastSize('%s', {'width': 410, 'height': 100}, false);" % scs
     web = "<script> toastr.%s('%s', 'Result', {%s}); %s </script>" % (scs, msg, opts, size)
@@ -350,18 +350,18 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
         code = ("%s &\n(\n %s & %s \n)" % (pre_cond, c1_formula, c2_formula))
 
         res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
-        if res["res"] == "Unsatisfiable":
+        if res["res"] == "Satisfiable":
+            print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+            fres["sat"] = "Satisfiable"
+            fres["psat"] = "{autogreen}  -> " + res["res"] + "{/green}"
+            fres["ok"] = "true"
+        else:
             print2(Color("{autored}  -> " + res["res"] + " : c1 & c2 are not consistent{/red}"))
             v = v and False
             fres["sat"] = "Unsatisfiable"
             fres["psat"] = "{autored}  -> " + res["res"] + "{/red}"
             fres["ok"] = "false"
             return fres
-        else:
-            print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
-            fres["sat"] = "Satisfiable"
-            fres["psat"] = "{autogreen}  -> " + res["res"] + "{/green}"
-            fres["ok"] = "true"
 
         if res["res"] == "":
             print2(res["print"])
@@ -403,17 +403,17 @@ def validate(compiler, c1, c2, resolve: bool=False, verbose: bool=False, no_prin
         code = ("~(%s =>\n(\n %s => %s \n))" % (pre_cond, c1_formula, c2_formula))
 
         res = compiler.apply_check(code=code, show=False, verbose=verbose, extended_mode=False)
-        if res["res"] == "Unsatisfiable":
-            print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
-            fres["sat"] = "Unsatisfiable"
-            fres["psat"] = "{autogreen}  -> " + res["res"] + "{/green}"
-            fres["ok"] = "true"
-        else:
+        if res["res"] == "Satisfiable":
             print2(Color("{autored}  -> " + res["res"] + "{/red}"))
             fres["sat"] = "Satisfiable"
             fres["psat"] = "{autored}  -> " + res["res"] + "{/red}"
             fres["ok"] = "false"
             v = v and False
+        else:
+            print2(Color("{autogreen}  -> " + res["res"] + "{/green}"))
+            fres["sat"] = "Unsatisfiable"
+            fres["psat"] = "{autogreen}  -> " + res["res"] + "{/green}"
+            fres["ok"] = "true"
 
         if res["res"] == "":
             print2(res["print"])
@@ -470,15 +470,15 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
     res += "------------------------ Starting " + ("Validity" if not check else "") + " check ---------------------\n"
     res += "----- Checking c1 :\n"
     res2 = compiler.apply_check(code="(" + pre_cond + " & " + c1 + ")", show=False, verbose=verbose)
-    if res2["res"] == "Unsatisfiable":
+    if res2["res"] == "Satisfiable":
+        res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
+        fres["psat"] = "{autogreen}  -> " + res2["res"] + "{/green}"
+        fres["ok"] = "true"
+    else:
         v = False
         res += "{autored}  -> " + res2["res"] + "{/red}\n"
         fres["psat"] = "{autored}  -> " + res2["res"] + "{/red}"
         fres["ok"] = "false"
-    else:
-        res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
-        fres["psat"] = "{autogreen}  -> " + res2["res"] + "{/green}"
-        fres["ok"] = "true"
 
     if res2["res"] == "":
         res += res2["print"] + "\n"
@@ -490,14 +490,14 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
     if not check:
         res += "----- Checking ~(c1) :\n"
         res2 = compiler.apply_check(code="~((" + pre_cond + " & " + c1 + "))", show=False, verbose=verbose)
-        if res2["res"] == "Unsatisfiable":
-            res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
-            fres["pneg"] = "{autogreen}  -> " + res2["res"] + "{/green}"
-            fres["ok"] = "true"
-        else:
+        if res2["res"] == "Satisfiable":
             res += "{autored}  -> " + res2["res"] + "{/red}\n"
             fres["pneg"] = "{autored}  -> " + res2["res"] + "{/red}"
             fres["ok"] = "false"
+        else:
+            res += "{autogreen}  -> " + res2["res"] + "{/green}\n"
+            fres["pneg"] = "{autogreen}  -> " + res2["res"] + "{/green}"
+            fres["ok"] = "true"
 
         if res2["res"] == "":
             res += res2["print"] + "\n"
@@ -618,6 +618,16 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1, depth=-1):
     def chk():
         if c2 is None:
             return validate2(compiler, "(always (" + c1.usage.to_ltl() + "))", check=True, verbose=verbose2)
+            # # Second pass with forced predicates/quantified types
+            # spe_env = ""
+            # predicates = c1.walk(filter_type=m_predicate)
+            # for x in predicates:
+            #     spe_env += "sometime(%s) &" % x.to_ltl()
+            # quant_types = c1.walk(filter_type=m_qvar)
+            # for x in quant_types:
+            #     spe_env += "always(![x] %s(x)) &" % x.variable.target.type
+            # res2 = validate2(compiler, spe_env + formula, check=True, verbose=verbose2)
+            # return res1 if res1["ok"] == 'false' else res2
         else:
             return validate(compiler, c1, c2, resolve=False, verbose=verbose2, no_print=True,
                             use_always=True, acc_formula=0, chk="neg")
@@ -784,3 +794,116 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1, depth=-1):
 
         after_resolving = chk()
         print(Color("\n====== After Resolving : " + after_resolving["psat"] + "\n"))
+
+
+def type_check(compiler):
+    """
+    Type checker
+    :param compiler:
+    :return:
+    """
+    type_errors = []
+    for clause in compiler.aalprog.clauses:
+        ################################################
+        # ########## Checking services calls ###########
+        ################################################
+        actions = clause.walk(filter_type=m_action)
+        for action in actions:
+            # ################# AGENT1 ##################
+            if isinstance(action.agent1.target, m_agent):
+                # Check in agent1 required services
+                service_found = False
+                for s in action.agent1.target.required:
+                    if s.label == action.service.label:
+                        service_found = True
+                        break
+                if not service_found:
+                    # Check in actions types
+                    for t in action.agent1.target.types:
+                        lin = t.target.lin(refs=True)
+                        for t2 in lin:
+                            for ac in t2.actions:
+                                if str(ac) == str(action.service.label):
+                                    service_found = True
+                                    break
+                if not service_found:
+                    type_errors.append(
+                        "Agent %s uses the service %s which is not required {automagenta}at line %s{/automagenta} !"
+                        %(action.agent1.label, action.service.label, action.get_line()))
+            elif isinstance(action.agent1.target, m_qvar):
+                service_found = False
+                # Check in actions types
+                t = action.agent1.target.variable.target.type
+                lin = t.target.lin(refs=True)
+                for t2 in lin:
+                    for ac in t2.actions:
+                        if str(ac) == str(action.service.label):
+                            service_found = True
+                            break
+                if not service_found:
+                    type_errors.append(
+                        "Agent %s uses the service %s which is not required {automagenta}at line %s{/automagenta} !"
+                        %(action.agent1.label, action.service.label, action.get_line()))
+
+            # ################# AGENT2 ##################
+            if isinstance(action.agent2.target, m_agent):
+                # Check in agent2 provided services
+                service_found = False
+                for s in action.agent2.target.provided:
+                    if s.label == action.service.label:
+                        service_found = True
+                        break
+                if not service_found:
+                    # Check in actions types
+                    for t in action.agent2.target.types:
+                        lin = t.target.lin(refs=True)
+                        for t2 in lin:
+                            for ac in t2.actions:
+                                if str(ac) == str(action.service.label):
+                                    service_found = True
+                                    break
+                if not service_found:
+                    type_errors.append(
+                        "Agent %s uses the service %s which is not provided by agent %s {automagenta}at line %s{/automagenta} !"
+                        %(action.agent1.label, action.service.label, action.agent2.label, action.get_line()))
+            elif isinstance(action.agent2.target, m_qvar):
+                service_found = False
+                # Check in actions types
+                t = action.agent2.target.variable.target.type
+                lin = t.target.lin(refs=True)
+                for t2 in lin:
+                    for ac in t2.actions:
+                        if str(ac) == str(action.service.label):
+                            service_found = True
+                            break
+                if not service_found:
+                    type_errors.append(
+                        "Agent %s uses the service %s which is not provided by agent %s {automagenta}at line %s{/automagenta} !"
+                        %(action.agent1.label, action.service.label, action.agent2.label, action.get_line()))
+
+        ################################################
+        # ######## Checking variable attributes ########
+        ################################################
+        varattrs = clause.walk(filter_type=m_varAttr)
+        for va in varattrs:
+            types = []
+            if isinstance(va.variable.target, m_agent):
+                for x in va.variable.target.types:
+                    types = types + x.target.lin(refs=True)
+            elif isinstance(va.variable.target, m_qvar):
+                types = va.variable.target.variable.target.type.target.lin(refs=True)
+            if len(types) > 0:
+                attribute_found = False
+                for t in types:
+                    for at in t.attributes:
+                        if str(va.attribute) == str(at):
+                            attribute_found = True
+                            break
+                if not attribute_found:
+                    type_errors.append("No attribute '%s' found on '%s' {automagenta}at line %s{/automagenta} !"
+                        %(va.attribute, va.variable, va.get_line()))
+
+    if len(type_errors) > 0:
+        print(Color("{autoyellow}[WARNING]{/yellow}"))
+        for e in type_errors:
+            print(Color(e))

@@ -382,7 +382,7 @@ class AALCompilerListener(AALListener.AALListener):
             if len(s) > 0:  # Variable is quantified
                 if self.DEBUG:
                     print("Quantified var : " + str(s[0]))
-                return s[0]
+                return s[-1]
 
         # Check if agent is already declared
         dec = self.aalprog.isDeclared(agentId, m_agent, ret=int)
@@ -417,7 +417,7 @@ class AALCompilerListener(AALListener.AALListener):
             if len(s) > 0:  # Variable is quantified
                 if self.DEBUG:
                     print("Quantified var : " + str(s[0]))
-                return s[0]
+                return s[-1]
 
         # Check if data is already declared
         dec = self.aalprog.isDeclared(dataId, m_data, ret=int)
@@ -449,7 +449,7 @@ class AALCompilerListener(AALListener.AALListener):
             if len(s) > 0:  # Variable is quantified
                 if self.DEBUG:
                     print("Quantified var : " + str(s[0]))
-                return s[0]
+                return s[-1]
 
         # Check if service is already declared
         dec = self.aalprog.isDeclared(serviceId, m_service, ret=int)
@@ -481,7 +481,7 @@ class AALCompilerListener(AALListener.AALListener):
             if len(s) > 0:  # Variable is quantified
                 if self.DEBUG:
                     print("Quantified var : " + str(s[0]))
-                return s[0]
+                return s[-1]
 
         # Check if type is already declared
         dec = self.aalprog.isDeclared(ttypeId, m_type, ret=int)
@@ -701,6 +701,8 @@ class AALCompilerListener(AALListener.AALListener):
         ac.service = m_ref(label=action.name, target=action)
         if len(self.expStack):
             ac.args = self.expStack.pop()
+        else:  # put a default arg
+            ac.args = m_booleanOp.O_true
         ac.name = ctx.h_serviceId().ID()
 
         self.currentAction = ac
@@ -972,6 +974,7 @@ class AALCompilerListener(AALListener.AALListener):
             ref.label = ctx.ID()
             ref.name = ctx.ID()
             ref.target = self.checkVarDec(ctx.ID())
+            vatt.name = ctx.ID()
             vatt.variable = ref
             vatt.attribute = ctx.h_attribute().ID()
             self.expStack[-1] = vatt

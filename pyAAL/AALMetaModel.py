@@ -742,9 +742,9 @@ class m_type(m_declarable):
 
         return str(self.name) + "(a) " + supers
 
-    def lin(self):
-        res = [str(self.name)]
-        p = [x.target.lin() for x in self.superTypes]
+    def lin(self, refs=False):
+        res = [self] if refs else [str(self.name)]
+        p = [x.target.lin(refs=refs) for x in self.superTypes]
         for x in p:
             for y in x:
                 res.append(y)
@@ -1178,8 +1178,14 @@ class m_qvar(aalmmnode):
         return res
 
     def to_ltl(self):
-        return str(self.quant.to_ltl()) + "[" + str(self.variable.target.name) + "] ( " + \
-            str(self.variable.target.to_ltl()) + " => "
+        res = str(self.quant.to_ltl()) + "[" + str(self.variable.target.name) + "] ( " + str(self.variable.target.to_ltl())
+        if self.quant is m_quant.Q_forall:
+            res += " => "
+        elif self.quant is m_quant.Q_exists:
+            res += " & "
+        else:
+            res = "Unsupported quantifier"
+        return res
 
     def to_nnf(self, negated):
         if negated:
@@ -1279,7 +1285,7 @@ class m_predicate(m_exp):
 
     def to_ltl(self):
         q = [str(x) for x in self.args]#[1:]
-        return str(self.name) + "(" + str(" ".join(q)) + ")"
+        return str(self.name) + "(" + str(", ".join(q)) + ")"
 
     def children(self):
         return [self.args]
@@ -1313,6 +1319,14 @@ class m_varAttr(m_exp):
 
     def __str__(self):
         return str(self.variable) + "." + str(self.attribute)
+
+    def children(self):
+        res = []
+        if self.variable is not None:
+            res.append(self.variable)
+        if self.attribute is not None:
+            res.append(self.attribute)
+        return res
 
     def to_ltl(self):
         return str(self.attribute) + "(" + str(self.variable) + ")"
@@ -1376,6 +1390,9 @@ class m_conditionCmp(m_condition):
         else:
             return "not " + str(self.exp1.to_natural()) + str(self.operator.to_natural()) + str(self.exp2.to_natural())
 
+    def children(self):
+        return [self.exp1, self.exp2]
+
 
 # Condition combination
 class m_conditionComb(m_condition):
@@ -1410,6 +1427,9 @@ class m_conditionComb(m_condition):
         else:
             return "not " + self.cond1.to_natural() + self.operator.to_natural() + self.cond2.to_natural()
 
+    def children(self):
+         return [self.cond1, self.cond2]
+
 
 # Not
 class m_conditionNotComb(m_condition):
@@ -1440,6 +1460,9 @@ class m_conditionNotComb(m_condition):
             return "" + self.operator.to_natural() + self.exp.to_natural()
         else:
             return "" + self.operator.to_natural() + self.exp.to_natural()
+
+    def children(self):
+         return [self.exp]
 
 
 #########################
@@ -1654,6 +1677,8 @@ class m_booleanOp(sEnum):
     O_inequal = "!="
     O_true = "TRUE"
     O_false = "FALSE"
+    O_until = "UNTIL"
+    O_unless = "UNLESS"
 
     def to_natural(self, kw=True):
         if self == m_booleanOp.O_equal:
@@ -1684,9 +1709,9 @@ class m_booleanOp(sEnum):
             return "EQUAL"
         elif self == m_booleanOp.O_inequal:
             return "~EQUAL"
-        elif self == m_modal.T_until:
+        elif self == m_booleanOp.O_until:
             return str(FOTLOperators.t_until)
-        elif self == m_modal.T_unless:
+        elif self == m_booleanOp.O_unless:
             return str(FOTLOperators.t_unless)
 
 
@@ -1732,6 +1757,7 @@ class m_modal(sEnum):
     T_sometime = "SOMETIME"
     T_until = "UNTIL"
     T_unless = "UNLESS"
+    T_next = "NEXT"
 
     def to_natural(self, kw=True):
         if self == m_modal.T_must:
@@ -1744,6 +1770,8 @@ class m_modal(sEnum):
             return "never : "
         elif self == m_modal.T_sometime:
             return "sometimes : "
+        elif self == m_modal.T_next:
+            return "next : "
 
     def to_ltl(self):
         if self == m_modal.T_must:
@@ -1756,6 +1784,12 @@ class m_modal(sEnum):
             return str(FOTLOperators.t_not) + " " + str(FOTLOperators.t_always)
         elif self == m_modal.T_sometime:
             return str(FOTLOperators.t_sometime)
+        elif self == m_modal.T_next:
+            return str(FOTLOperators.t_next)
+        elif self == m_modal.T_until:
+            return str(FOTLOperators.t_until)
+        elif self == m_modal.T_unless:
+            return str(FOTLOperators.t_unless)
 
     def to_nnf(self, negated):
         if negated:
