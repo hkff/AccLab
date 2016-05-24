@@ -742,9 +742,9 @@ class m_type(m_declarable):
 
         return str(self.name) + "(a) " + supers
 
-    def lin(self):
-        res = [str(self.name)]
-        p = [x.target.lin() for x in self.superTypes]
+    def lin(self, refs=False):
+        res = [self] if refs else [str(self.name)]
+        p = [x.target.lin(refs=refs) for x in self.superTypes]
         for x in p:
             for y in x:
                 res.append(y)
