@@ -904,6 +904,6 @@ def type_check(compiler):
                         %(va.attribute, va.variable, va.get_line()))
 
     if len(type_errors) > 0:
-        print(Color("{autoyellow}[WARNING]{/yellow}"))
+        print(Color("{autored}[ERROR] You have type errors in your code{/red}"))
         for e in type_errors:
-            print(Color(e))
+            print(" -> %s" % Color(e))
