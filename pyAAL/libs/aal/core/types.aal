@@ -3,7 +3,8 @@
 //=====================================================//
 TYPE data
 TYPE actor
-TYPE Actor
+TYPE Actor            EXTENDS() ATTRIBUTES() ACTIONS()
+TYPE Data             EXTENDS() ATTRIBUTES(subject) ACTIONS()
 TYPE DataSubject      EXTENDS(Actor) ATTRIBUTES() ACTIONS()
 TYPE DataController   EXTENDS(Actor) ATTRIBUTES() ACTIONS()
 TYPE DataProcessor    EXTENDS(Actor) ATTRIBUTES() ACTIONS()
@@ -22,3 +23,12 @@ SERVICE write
 SERVICE delete
 SERVICE update
 SERVICE audit
+
+//=====================================================//
+//=================    Type checker   =================//
+//=====================================================//
+MACRO type_check(
+"""
+type_check(self)
+"""
+)
