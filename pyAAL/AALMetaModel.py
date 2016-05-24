@@ -1510,7 +1510,10 @@ class m_action(m_aexp):
         res = ""
         # HANDLE time
         if self.time is not None:
-            res += "(" + str(self.time.to_ltl()) + " => "
+            if self.time.action == m_booleanOp.O_before:
+                res += "(" + str(self.time.to_ltl()) + " => ("
+            elif self.time.action == m_booleanOp.O_after:
+                res += "(" + str(self.time.to_ltl()) + " => sometime("
 
         if auth != "":
             res += auth
@@ -1528,7 +1531,7 @@ class m_action(m_aexp):
         res += ", ".join(args)
         res += ")"
         if self.time is not None:
-            res += ")"
+            res += "))"
         return res
 
     def to_natural(self, kw=True, auth=False):
