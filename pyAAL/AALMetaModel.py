@@ -1320,6 +1320,14 @@ class m_varAttr(m_exp):
     def __str__(self):
         return str(self.variable) + "." + str(self.attribute)
 
+    def children(self):
+        res = []
+        if self.variable is not None:
+            res.append(self.variable)
+        if self.attribute is not None:
+            res.append(self.attribute)
+        return res
+
     def to_ltl(self):
         return str(self.attribute) + "(" + str(self.variable) + ")"
 
