@@ -382,7 +382,7 @@ class AALCompilerListener(AALListener.AALListener):
             if len(s) > 0:  # Variable is quantified
                 if self.DEBUG:
                     print("Quantified var : " + str(s[0]))
-                return s[0]
+                return s[-1]
 
         # Check if agent is already declared
         dec = self.aalprog.isDeclared(agentId, m_agent, ret=int)
@@ -417,7 +417,7 @@ class AALCompilerListener(AALListener.AALListener):
             if len(s) > 0:  # Variable is quantified
                 if self.DEBUG:
                     print("Quantified var : " + str(s[0]))
-                return s[0]
+                return s[-1]
 
         # Check if data is already declared
         dec = self.aalprog.isDeclared(dataId, m_data, ret=int)
@@ -449,7 +449,7 @@ class AALCompilerListener(AALListener.AALListener):
             if len(s) > 0:  # Variable is quantified
                 if self.DEBUG:
                     print("Quantified var : " + str(s[0]))
-                return s[0]
+                return s[-1]
 
         # Check if service is already declared
         dec = self.aalprog.isDeclared(serviceId, m_service, ret=int)
@@ -481,7 +481,7 @@ class AALCompilerListener(AALListener.AALListener):
             if len(s) > 0:  # Variable is quantified
                 if self.DEBUG:
                     print("Quantified var : " + str(s[0]))
-                return s[0]
+                return s[-1]
 
         # Check if type is already declared
         dec = self.aalprog.isDeclared(ttypeId, m_type, ret=int)
