@@ -974,6 +974,7 @@ class AALCompilerListener(AALListener.AALListener):
             ref.label = ctx.ID()
             ref.name = ctx.ID()
             ref.target = self.checkVarDec(ctx.ID())
+            vatt.name = ctx.ID()
             vatt.variable = ref
             vatt.attribute = ctx.h_attribute().ID()
             self.expStack[-1] = vatt
