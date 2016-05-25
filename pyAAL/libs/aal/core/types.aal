@@ -18,11 +18,11 @@ TYPE User             EXTENDS(Actor) ATTRIBUTES() ACTIONS()
 //=====================================================//
 //================= Defining services =================//
 //=====================================================//
-SERVICE read
-SERVICE write
-SERVICE delete
-SERVICE update
-SERVICE audit
+//SERVICE read
+//SERVICE write
+//SERVICE delete
+//SERVICE update
+//SERVICE audit
 
 //=====================================================//
 //=================    Type checker   =================//

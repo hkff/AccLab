@@ -809,6 +809,14 @@ def type_check(compiler):
         ################################################
         actions = clause.walk(filter_type=m_action)
         for action in actions:
+            # Check if the service is declared
+            # TODO check if not in ref stack
+            res = compiler.aalprog.isDeclared(str(action.service.label), m_service)
+            if res is None:
+                type_errors.append(
+                        "Service %s {automagenta}at line %s{/automagenta} is not declared !"
+                        % (action.service.label, action.get_line()))
+                pass
             # ################# AGENT1 ##################
             if isinstance(action.agent1.target, m_agent):
                 # Check in agent1 required services
@@ -829,7 +837,7 @@ def type_check(compiler):
                 if not service_found:
                     type_errors.append(
                         "Agent %s uses the service %s which is not required {automagenta}at line %s{/automagenta} !"
-                        %(action.agent1.label, action.service.label, action.get_line()))
+                        % (action.agent1.label, action.service.label, action.get_line()))
             elif isinstance(action.agent1.target, m_qvar):
                 service_found = False
                 # Check in actions types
@@ -843,7 +851,7 @@ def type_check(compiler):
                 if not service_found:
                     type_errors.append(
                         "Agent %s uses the service %s which is not required {automagenta}at line %s{/automagenta} !"
-                        %(action.agent1.label, action.service.label, action.get_line()))
+                        % (action.agent1.label, action.service.label, action.get_line()))
 
             # ################# AGENT2 ##################
             if isinstance(action.agent2.target, m_agent):
@@ -865,7 +873,7 @@ def type_check(compiler):
                 if not service_found:
                     type_errors.append(
                         "Agent %s uses the service %s which is not provided by agent %s {automagenta}at line %s{/automagenta} !"
-                        %(action.agent1.label, action.service.label, action.agent2.label, action.get_line()))
+                        % (action.agent1.label, action.service.label, action.agent2.label, action.get_line()))
             elif isinstance(action.agent2.target, m_qvar):
                 service_found = False
                 # Check in actions types
@@ -879,7 +887,8 @@ def type_check(compiler):
                 if not service_found:
                     type_errors.append(
                         "Agent %s uses the service %s which is not provided by agent %s {automagenta}at line %s{/automagenta} !"
-                        %(action.agent1.label, action.service.label, action.agent2.label, action.get_line()))
+                        % (action.agent1.label, action.service.label, action.agent2.label, action.get_line()))
+
 
         ################################################
         # ######## Checking variable attributes ########
@@ -907,3 +916,5 @@ def type_check(compiler):
         print(Color("{autored}[ERROR] You have type errors in your code{/red}"))
         for e in type_errors:
             print(" -> %s" % Color(e))
+    else:
+        print(Color("{autogreen} No type errors found !{/green}"))
