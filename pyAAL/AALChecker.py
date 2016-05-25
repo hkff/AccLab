@@ -796,29 +796,35 @@ def conflict(compiler, c1, c2=None, resolve=False, verbose=0, algo=1, depth=-1):
         print(Color("\n====== After Resolving : " + after_resolving["psat"] + "\n"))
 
 
-def type_check(compiler):
+def get_lin(exp):
     """
-    Type checker
+    Get full linearisation of an exp
+    :param exp:
+    :return:
+    """
+    res = []
+    if isinstance(exp, m_agent) or isinstance(exp, m_service) or isinstance(exp, m_data):
+        for t in exp.types:
+            res.extend(get_lin(t))
+    elif isinstance(exp, m_ref):
+        res.extend(get_lin(exp.target))
+    elif isinstance(exp, m_qvar):
+        res.extend(get_lin(exp.variable))
+    elif isinstance(exp, m_variable):
+        res.extend(get_lin(exp.type))
+    elif isinstance(exp, m_varAttr):
+        res.extend(get_lin(exp.variable))
+    elif isinstance(exp, m_type):
+        res.extend(exp.lin(refs=True))
+    return res
+
+
+def quick_type_check(compiler):
+    """
+    Perform partial type checks
     :param compiler:
     :return:
     """
-    def get_lin(exp):
-        res = []
-        if isinstance(exp, m_agent) or isinstance(exp, m_service) or isinstance(exp, m_data):
-            for t in exp.types:
-                res.extend(get_lin(t))
-        elif isinstance(exp, m_ref):
-            res.extend(get_lin(exp.target))
-        elif isinstance(exp, m_qvar):
-            res.extend(get_lin(exp.variable))
-        elif isinstance(exp, m_variable):
-            res.extend(get_lin(exp.type))
-        elif isinstance(exp, m_varAttr):
-            res.extend(get_lin(exp.variable))
-        elif isinstance(exp, m_type):
-            res.extend(exp.lin(refs=True))
-        return res
-
     type_errors = []
     for clause in compiler.aalprog.clauses:
         ################################################
@@ -833,7 +839,6 @@ def type_check(compiler):
                 type_errors.append(
                         "Service %s {automagenta}at line %s{/automagenta} is not declared !"
                         % (action.service.label, action.get_line()))
-                pass
             # ################# AGENT1 ##################
             if isinstance(action.agent1.target, m_agent):
                 # Check in agent1 required services
@@ -916,8 +921,11 @@ def type_check(compiler):
                     break
             if not found:
                 type_errors.append(
-                        "The service %s is called with a non compatible argument %s {automagenta}at line %s{/automagenta} !"
-                        % (action.service.label, action.args, action.get_line()))
+                    "The service %s is called with a non compatible argument %s "
+                    "{automagenta}at line %s{/automagenta} !\n   Expected: <%s> Found: <%s>"
+                        % (action.service.label, action.args, action.get_line(),
+                           "|".join([str(x.name) for x in service_types]), "|".join([str(x.name) for x in args_types])))
+
 
         ################################################
         # ######## Checking variable attributes ########
@@ -947,3 +955,203 @@ def type_check(compiler):
             print(" -> %s" % Color(e))
     else:
         print(Color("{autogreen} No type errors found !{/green}"))
+
+
+def type_checker(compiler, exp):
+    """
+    AAL full type checker implementation
+    :param compiler:
+    :param exp:
+    :return:
+    """
+    res = []
+    type_errors = []
+    if isinstance(exp, m_aalprog):
+        for c in exp.clauses:
+            res.extend(type_checker(compiler, c))
+
+    elif isinstance(exp, m_usage):
+        for x in exp.actionExp:
+            res.extend(type_checker(compiler, x))
+
+    elif isinstance(exp, m_audit) or isinstance(exp, m_rectification):
+        res = [type_checker(compiler, exp.usage)]
+
+    elif isinstance(exp, m_clause):
+        res = [type_checker(compiler, exp.usage), type_checker(compiler, exp.audit), type_checker(compiler, exp.rectification)]
+
+    elif isinstance(exp, m_agent) or isinstance(exp, m_data) or isinstance(exp, m_service):
+        for t in exp.types:
+            res.extend(type_checker(compiler, t))
+        res = res
+    elif isinstance(exp, m_type):
+        res = exp.lin(refs=True)
+
+    elif isinstance(exp, m_ref):
+        res = type_checker(compiler, exp.target)
+
+    elif isinstance(exp, m_aexpAction):
+        res = [type_checker(compiler, exp.action)]
+
+    elif isinstance(exp, m_aexpNotAexp):
+        res = [type_checker(compiler, exp.actionExpression)]
+
+    elif isinstance(exp, m_aexpModal):
+        res = [type_checker(compiler, exp.actionExpression)]
+
+    elif isinstance(exp, m_aexpCondition):
+        res = [type_checker(compiler, exp.condition)]
+
+    elif isinstance(exp, m_aexpComb):
+        res = [type_checker(compiler, exp.actionExp1), type_checker(compiler, exp.actionExp2)]
+
+    elif isinstance(exp, m_aexpAuthor):
+        res = [type_checker(compiler, exp.action)]
+
+    elif isinstance(exp, m_aexpIfthen):
+        res = [type_checker(compiler, exp.condition), type_checker(compiler, exp.branchTrue)]
+
+    elif isinstance(exp, m_qvar):
+        res = [type_checker(compiler, exp.variable)]
+
+    elif isinstance(exp, m_aexpQvar):
+        for x in exp.qvars:
+            res.extend(type_checker(compiler, x))
+        res.extend(type_checker(compiler, exp.actionExp))
+
+    elif isinstance(exp, m_variable):
+        res = type_checker(compiler, exp.type)
+
+    elif isinstance(exp, m_varAttr):
+        types = type_checker(compiler, exp.variable)
+        if len(types) > 0:
+            attribute_found = False
+            for t in types:
+                for at in t.attributes:
+                    if str(exp.attribute) == str(at):
+                        attribute_found = True
+                        break
+            if not attribute_found:
+                type_errors.append("No attribute '%s' found on '%s' {automagenta}at line %s{/automagenta} !"
+                                   % (exp.attribute, exp.variable, exp.get_line()))
+                print(Color("{autored}[ERROR] You have type errors in your code{/red}"))
+                for e in type_errors:
+                    print(" -> %s" % Color(e))
+        res = types
+
+    elif isinstance(exp, m_conditionCmp):
+        res = [type_checker(compiler, exp.exp1), type_checker(compiler, exp.exp2)]
+
+    elif isinstance(exp, m_conditionComb):
+        res = [type_checker(compiler, exp.cond1), type_checker(compiler, exp.cond2)]
+
+    elif isinstance(exp, m_conditionNotComb):
+        res = [type_checker(compiler, exp.exp)]
+
+    elif isinstance(exp, m_action):
+            # Check if the service is declared
+            # TODO check if not in ref stack
+            res = compiler.aalprog.isDeclared(str(exp.service.label), m_service)
+            if res is None:
+                type_errors.append(
+                        "Service %s {automagenta}at line %s{/automagenta} is not declared !"
+                        % (exp.service.label, exp.get_line()))
+            # ################# AGENT1 ##################
+            if isinstance(exp.agent1.target, m_agent):
+                # Check in agent1 required services
+                service_found = False
+                for s in exp.agent1.target.required:
+                    if s.label == exp.service.label:
+                        service_found = True
+                        break
+                if not service_found:
+                    # Check in actions types
+                    for t in exp.agent1.target.types:
+                        lin = t.target.lin(refs=True)
+                        for t2 in lin:
+                            for ac in t2.actions:
+                                if str(ac) == str(exp.service.label):
+                                    service_found = True
+                                    break
+                if not service_found:
+                    type_errors.append(
+                        "Agent %s uses the service %s which is not required {automagenta}at line %s{/automagenta} !"
+                        % (exp.agent1.label, exp.service.label, exp.get_line()))
+            elif isinstance(exp.agent1.target, m_qvar):
+                service_found = False
+                # Check in actions types
+                t = exp.agent1.target.variable.target.type
+                lin = t.target.lin(refs=True)
+                for t2 in lin:
+                    for ac in t2.actions:
+                        if str(ac) == str(exp.service.label):
+                            service_found = True
+                            break
+                if not service_found:
+                    type_errors.append(
+                        "Agent %s uses the service %s which is not required {automagenta}at line %s{/automagenta} !"
+                        % (exp.agent1.label, exp.service.label, exp.get_line()))
+
+            # ################# AGENT2 ##################
+            if isinstance(exp.agent2.target, m_agent):
+                # Check in agent2 provided services
+                service_found = False
+                for s in exp.agent2.target.provided:
+                    if s.label == exp.service.label:
+                        service_found = True
+                        break
+                if not service_found:
+                    # Check in actions types
+                    for t in exp.agent2.target.types:
+                        lin = t.target.lin(refs=True)
+                        for t2 in lin:
+                            for ac in t2.actions:
+                                if str(ac) == str(exp.service.label):
+                                    service_found = True
+                                    break
+                if not service_found:
+                    type_errors.append(
+                        "Agent %s uses the service %s which is not provided by agent %s {automagenta}at line %s{/automagenta} !"
+                        % (exp.agent1.label, exp.service.label, exp.agent2.label, exp.get_line()))
+            elif isinstance(exp.agent2.target, m_qvar):
+                service_found = False
+                # Check in actions types
+                t = exp.agent2.target.variable.target.type
+                lin = t.target.lin(refs=True)
+                for t2 in lin:
+                    for ac in t2.actions:
+                        if str(ac) == str(exp.service.label):
+                            service_found = True
+                            break
+                if not service_found:
+                    type_errors.append(
+                        "Agent %s uses the service %s which is not provided by agent %s {automagenta}at line %s{/automagenta} !"
+                        % (exp.agent1.label, exp.service.label, exp.agent2.label, exp.get_line()))
+
+            # ################# Exp type ##################
+            args_types = get_lin(exp.args)
+            service_types = get_lin(exp.service)
+            found = False
+            for x in args_types:
+                if x in service_types:
+                    found = True
+                    break
+            if not found:
+                type_errors.append(
+                        "The service %s is called with a non compatible argument %s "
+                        "{automagenta}at line %s{/automagenta} !\n   Expected: <%s> Found: <%s>"
+                        % (exp.service.label, exp.args, exp.get_line(), "|".join([str(x.name) for x in service_types]),
+                           "|".join([str(x.name) for x in args_types])))
+
+            if len(type_errors) > 0:
+                    print(Color("{autored}[ERROR] You have type errors in your code{/red}"))
+                    for e in type_errors:
+                        print(" -> %s" % Color(e))
+            else:
+                res = []
+
+    elif isinstance(exp, m_author) or isinstance(exp, m_modal)\
+            or isinstance(exp, m_constant) or isinstance(exp, m_predicate):
+        pass  # NONE
+
+    return res

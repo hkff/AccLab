@@ -29,6 +29,20 @@ TYPE User             EXTENDS(Actor) ATTRIBUTES() ACTIONS()
 //=====================================================//
 MACRO type_check(
 """
-type_check(self)
+quick_type_check(self)
+"""
+)
+
+MACRO type_checker(
+"""
+type_checker(self, self.aalprog)
+"""
+)
+
+MACRO clause_type_checker (c1) (
+"""
+_c1 = self.clause(c1)
+if _c1 is not None:
+    type_checker(self, _c1)
 """
 )
