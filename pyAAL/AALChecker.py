@@ -802,6 +802,23 @@ def type_check(compiler):
     :param compiler:
     :return:
     """
+    def get_lin(exp):
+        res = []
+        if isinstance(exp, m_agent) or isinstance(exp, m_service) or isinstance(exp, m_data):
+            for t in exp.types:
+                res.extend(get_lin(t))
+        elif isinstance(exp, m_ref):
+            res.extend(get_lin(exp.target))
+        elif isinstance(exp, m_qvar):
+            res.extend(get_lin(exp.variable))
+        elif isinstance(exp, m_variable):
+            res.extend(get_lin(exp.type))
+        elif isinstance(exp, m_varAttr):
+            res.extend(get_lin(exp.variable))
+        elif isinstance(exp, m_type):
+            res.extend(exp.lin(refs=True))
+        return res
+
     type_errors = []
     for clause in compiler.aalprog.clauses:
         ################################################
@@ -889,6 +906,18 @@ def type_check(compiler):
                         "Agent %s uses the service %s which is not provided by agent %s {automagenta}at line %s{/automagenta} !"
                         % (action.agent1.label, action.service.label, action.agent2.label, action.get_line()))
 
+            # ################# Exp type ##################
+            args_types = get_lin(action.args)
+            service_types = get_lin(action.service)
+            found = False
+            for x in args_types:
+                if x in service_types:
+                    found = True
+                    break
+            if not found:
+                type_errors.append(
+                        "The service %s is called with a non compatible argument %s {automagenta}at line %s{/automagenta} !"
+                        % (action.service.label, action.args, action.get_line()))
 
         ################################################
         # ######## Checking variable attributes ########
@@ -910,7 +939,7 @@ def type_check(compiler):
                             break
                 if not attribute_found:
                     type_errors.append("No attribute '%s' found on '%s' {automagenta}at line %s{/automagenta} !"
-                        %(va.attribute, va.variable, va.get_line()))
+                                       % (va.attribute, va.variable, va.get_line()))
 
     if len(type_errors) > 0:
         print(Color("{autored}[ERROR] You have type errors in your code{/red}"))
