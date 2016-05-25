@@ -923,8 +923,8 @@ def quick_type_check(compiler):
                 type_errors.append(
                     "The service %s is called with a non compatible argument %s "
                     "{automagenta}at line %s{/automagenta} !\n   Expected: <%s> Found: <%s>"
-                        % (action.service.label, action.args, action.get_line(),
-                           "|".join([str(x.name) for x in service_types]), "|".join([str(x.name) for x in args_types])))
+                    % (action.service.label, action.args, action.get_line(),
+                        "|".join([str(x.name) for x in service_types]), "|".join([str(x.name) for x in args_types])))
 
 
         ################################################
@@ -1012,7 +1012,7 @@ def type_checker(compiler, exp):
         res = [type_checker(compiler, exp.condition), type_checker(compiler, exp.branchTrue)]
 
     elif isinstance(exp, m_qvar):
-        res = [type_checker(compiler, exp.variable)]
+        res = type_checker(compiler, exp.variable)
 
     elif isinstance(exp, m_aexpQvar):
         for x in exp.qvars:
