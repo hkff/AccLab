@@ -913,7 +913,7 @@ def quick_type_check(compiler):
 
             # ################# Exp type ##################
             args_types = get_lin(action.args)
-            service_types = get_lin(action.service)
+            service_types = [x.target for x in action.service.target.types]
             found = False
             for x in args_types:
                 if x in service_types:
@@ -922,7 +922,7 @@ def quick_type_check(compiler):
             if not found:
                 type_errors.append(
                     "The service %s is called with a non compatible argument %s "
-                    "{automagenta}at line %s{/automagenta} !\n   Expected: <%s> Found: <%s>"
+                    "{automagenta}at line %s{/automagenta} !\n   Expected: { %s } Found: { %s }"
                     % (action.service.label, action.args, action.get_line(),
                         "|".join([str(x.name) for x in service_types]), "|".join([str(x.name) for x in args_types])))
 
@@ -950,7 +950,7 @@ def quick_type_check(compiler):
                                        % (va.attribute, va.variable, va.get_line()))
 
     if len(type_errors) > 0:
-        print(Color("{autored}[ERROR] You have type errors in your code{/red}"))
+        print(Color("\n{autored}[ERROR] You have type errors in your code{/red}"))
         for e in type_errors:
             print(" -> %s" % Color(e))
     else:
@@ -1034,7 +1034,7 @@ def type_checker(compiler, exp):
             if not attribute_found:
                 type_errors.append("No attribute '%s' found on '%s' {automagenta}at line %s{/automagenta} !"
                                    % (exp.attribute, exp.variable, exp.get_line()))
-                print(Color("{autored}[ERROR] You have type errors in your code{/red}"))
+                print(Color("\n{autored}[ERROR] You have type errors in your code{/red}"))
                 for e in type_errors:
                     print(" -> %s" % Color(e))
         res = types
@@ -1130,7 +1130,7 @@ def type_checker(compiler, exp):
 
             # ################# Exp type ##################
             args_types = get_lin(exp.args)
-            service_types = get_lin(exp.service)
+            service_types = [x.target for x in exp.service.target.types]
             found = False
             for x in args_types:
                 if x in service_types:
@@ -1139,12 +1139,12 @@ def type_checker(compiler, exp):
             if not found:
                 type_errors.append(
                         "The service %s is called with a non compatible argument %s "
-                        "{automagenta}at line %s{/automagenta} !\n   Expected: <%s> Found: <%s>"
+                        "{automagenta}at line %s{/automagenta} !\n   Expected: { %s } Found: { %s }"
                         % (exp.service.label, exp.args, exp.get_line(), "|".join([str(x.name) for x in service_types]),
                            "|".join([str(x.name) for x in args_types])))
 
             if len(type_errors) > 0:
-                    print(Color("{autored}[ERROR] You have type errors in your code{/red}"))
+                    print(Color("\n{autored}[ERROR] You have type errors in your code{/red}"))
                     for e in type_errors:
                         print(" -> %s" % Color(e))
             else:
