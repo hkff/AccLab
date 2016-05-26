@@ -1179,6 +1179,8 @@ class m_qvar(aalmmnode):
 
     def to_ltl(self):
         res = str(self.quant.to_ltl()) + "[" + str(self.variable.target.name) + "] ( " + str(self.variable.target.to_ltl())
+        if self.condition is not None:
+            res += " & " + str(self.condition.to_ltl())
         if self.quant is m_quant.Q_forall:
             res += " => "
         elif self.quant is m_quant.Q_exists:
