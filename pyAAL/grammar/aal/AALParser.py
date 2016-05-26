@@ -299,8 +299,8 @@ def serializedATN():
         buf.write("\u0295\5\2\2\2\u0295\u0296\5j\66\2\u0296\u0297\5\4\3\2")
         buf.write("\u0297\u009d\3\2\2\2\u0298\u0299\7\66\2\2\u0299\u029b")
         buf.write("\7@\2\2\u029a\u029c\5\u0094K\2\u029b\u029a\3\2\2\2\u029b")
-        buf.write("\u029c\3\2\2\2\u029c\u029d\3\2\2\2\u029d\u029e\5\n\6\2")
-        buf.write("\u029e\u029f\5\u00a0Q\2\u029f\u02a0\5\f\7\2\u02a0\u009f")
+        buf.write("\u029c\3\2\2\2\u029c\u029d\3\2\2\2\u029d\u029e\5\2\2\2")
+        buf.write("\u029e\u029f\5\u00a0Q\2\u029f\u02a0\5\4\3\2\u02a0\u009f")
         buf.write("\3\2\2\2\u02a1\u02a2\7H\2\2\u02a2\u00a1\3\2\2\2\u02a3")
         buf.write("\u02a4\7\67\2\2\u02a4\u02a5\7@\2\2\u02a5\u02a9\5\2\2\2")
         buf.write("\u02a6\u02a8\7E\2\2\u02a7\u02a6\3\2\2\2\u02a8\u02ab\3")
@@ -5231,16 +5231,16 @@ class AALParser ( Parser ):
         def ID(self):
             return self.getToken(AALParser.ID, 0)
 
-        def h_lmar(self):
-            return self.getTypedRuleContext(AALParser.H_lmarContext,0)
+        def h_lpar(self):
+            return self.getTypedRuleContext(AALParser.H_lparContext,0)
 
 
         def check(self):
             return self.getTypedRuleContext(AALParser.CheckContext,0)
 
 
-        def h_rmar(self):
-            return self.getTypedRuleContext(AALParser.H_rmarContext,0)
+        def h_rpar(self):
+            return self.getTypedRuleContext(AALParser.H_rparContext,0)
 
 
         def args(self):
@@ -5265,7 +5265,6 @@ class AALParser ( Parser ):
 
         localctx = AALParser.LtlCheckContext(self, self._ctx, self.state)
         self.enterRule(localctx, 156, self.RULE_ltlCheck)
-        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 662
@@ -5273,18 +5272,18 @@ class AALParser ( Parser ):
             self.state = 663
             self.match(AALParser.ID)
             self.state = 665
-            _la = self._input.LA(1)
-            if _la==AALParser.T__0:
+            la_ = self._interp.adaptivePredict(self._input,54,self._ctx)
+            if la_ == 1:
                 self.state = 664
                 self.args()
 
 
             self.state = 667
-            self.h_lmar()
+            self.h_lpar()
             self.state = 668
             self.check()
             self.state = 669
-            self.h_rmar()
+            self.h_rpar()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)

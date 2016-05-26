@@ -283,7 +283,7 @@ behavior :  M_behavior ID h_lpar actionExp h_rpar;
 
 
 //****  LTL checking extension ****//
-ltlCheck : M_check ID args? h_lmar check h_rmar;
+ltlCheck : M_check ID args? h_lpar check h_rpar;
 check   : MCODE; //formula;
 checkApply : M_apply ID h_lpar STRING* h_rpar;
 env     : M_env MCODE; //formula;

@@ -406,22 +406,22 @@ var serializedATN = ["\u0003\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd",
     "\u0004\u0003\u0002\u0297\u009d\u0003\u0002\u0002\u0002\u0298\u0299\u0007",
     "6\u0002\u0002\u0299\u029b\u0007@\u0002\u0002\u029a\u029c\u0005\u0094",
     "K\u0002\u029b\u029a\u0003\u0002\u0002\u0002\u029b\u029c\u0003\u0002",
-    "\u0002\u0002\u029c\u029d\u0003\u0002\u0002\u0002\u029d\u029e\u0005\n",
-    "\u0006\u0002\u029e\u029f\u0005\u00a0Q\u0002\u029f\u02a0\u0005\f\u0007",
-    "\u0002\u02a0\u009f\u0003\u0002\u0002\u0002\u02a1\u02a2\u0007H\u0002",
-    "\u0002\u02a2\u00a1\u0003\u0002\u0002\u0002\u02a3\u02a4\u00077\u0002",
-    "\u0002\u02a4\u02a5\u0007@\u0002\u0002\u02a5\u02a9\u0005\u0002\u0002",
-    "\u0002\u02a6\u02a8\u0007E\u0002\u0002\u02a7\u02a6\u0003\u0002\u0002",
-    "\u0002\u02a8\u02ab\u0003\u0002\u0002\u0002\u02a9\u02a7\u0003\u0002\u0002",
-    "\u0002\u02a9\u02aa\u0003\u0002\u0002\u0002\u02aa\u02ac\u0003\u0002\u0002",
-    "\u0002\u02ab\u02a9\u0003\u0002\u0002\u0002\u02ac\u02ad\u0005\u0004\u0003",
-    "\u0002\u02ad\u00a3\u0003\u0002\u0002\u0002\u02ae\u02af\u0007:\u0002",
-    "\u0002\u02af\u02b0\u0007H\u0002\u0002\u02b0\u00a5\u0003\u0002\u0002",
-    "\u0002:\u00c2\u00da\u00e4\u00ee\u00f6\u010a\u010c\u0114\u0117\u0120",
-    "\u012a\u012c\u0135\u013f\u0143\u014a\u0154\u0160\u0165\u016c\u0171\u0178",
-    "\u0180\u0188\u018b\u018e\u0195\u019f\u01a9\u01b9\u01bd\u01bf\u01c3\u01c5",
-    "\u01de\u01e6\u0202\u0209\u021e\u0227\u022c\u0233\u0237\u023e\u0247\u024b",
-    "\u024f\u0253\u025a\u025f\u026c\u0272\u027c\u0287\u029b\u02a9"].join("");
+    "\u0002\u0002\u029c\u029d\u0003\u0002\u0002\u0002\u029d\u029e\u0005\u0002",
+    "\u0002\u0002\u029e\u029f\u0005\u00a0Q\u0002\u029f\u02a0\u0005\u0004",
+    "\u0003\u0002\u02a0\u009f\u0003\u0002\u0002\u0002\u02a1\u02a2\u0007H",
+    "\u0002\u0002\u02a2\u00a1\u0003\u0002\u0002\u0002\u02a3\u02a4\u00077",
+    "\u0002\u0002\u02a4\u02a5\u0007@\u0002\u0002\u02a5\u02a9\u0005\u0002",
+    "\u0002\u0002\u02a6\u02a8\u0007E\u0002\u0002\u02a7\u02a6\u0003\u0002",
+    "\u0002\u0002\u02a8\u02ab\u0003\u0002\u0002\u0002\u02a9\u02a7\u0003\u0002",
+    "\u0002\u0002\u02a9\u02aa\u0003\u0002\u0002\u0002\u02aa\u02ac\u0003\u0002",
+    "\u0002\u0002\u02ab\u02a9\u0003\u0002\u0002\u0002\u02ac\u02ad\u0005\u0004",
+    "\u0003\u0002\u02ad\u00a3\u0003\u0002\u0002\u0002\u02ae\u02af\u0007:",
+    "\u0002\u0002\u02af\u02b0\u0007H\u0002\u0002\u02b0\u00a5\u0003\u0002",
+    "\u0002\u0002:\u00c2\u00da\u00e4\u00ee\u00f6\u010a\u010c\u0114\u0117",
+    "\u0120\u012a\u012c\u0135\u013f\u0143\u014a\u0154\u0160\u0165\u016c\u0171",
+    "\u0178\u0180\u0188\u018b\u018e\u0195\u019f\u01a9\u01b9\u01bd\u01bf\u01c3",
+    "\u01c5\u01de\u01e6\u0202\u0209\u021e\u0227\u022c\u0233\u0237\u023e\u0247",
+    "\u024b\u024f\u0253\u025a\u025f\u026c\u0272\u027c\u0287\u029b\u02a9"].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -7147,16 +7147,16 @@ LtlCheckContext.prototype.ID = function() {
     return this.getToken(AALParser.ID, 0);
 };
 
-LtlCheckContext.prototype.h_lmar = function() {
-    return this.getTypedRuleContext(H_lmarContext,0);
+LtlCheckContext.prototype.h_lpar = function() {
+    return this.getTypedRuleContext(H_lparContext,0);
 };
 
 LtlCheckContext.prototype.check = function() {
     return this.getTypedRuleContext(CheckContext,0);
 };
 
-LtlCheckContext.prototype.h_rmar = function() {
-    return this.getTypedRuleContext(H_rmarContext,0);
+LtlCheckContext.prototype.h_rpar = function() {
+    return this.getTypedRuleContext(H_rparContext,0);
 };
 
 LtlCheckContext.prototype.args = function() {
@@ -7184,7 +7184,6 @@ AALParser.prototype.ltlCheck = function() {
 
     var localctx = new LtlCheckContext(this, this._ctx, this.state);
     this.enterRule(localctx, 156, AALParser.RULE_ltlCheck);
-    var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 662;
@@ -7192,18 +7191,18 @@ AALParser.prototype.ltlCheck = function() {
         this.state = 663;
         this.match(AALParser.ID);
         this.state = 665;
-        _la = this._input.LA(1);
-        if(_la===AALParser.T__0) {
+        var la_ = this._interp.adaptivePredict(this._input,54,this._ctx);
+        if(la_===1) {
             this.state = 664;
             this.args();
-        }
 
+        }
         this.state = 667;
-        this.h_lmar();
+        this.h_lpar();
         this.state = 668;
         this.check();
         this.state = 669;
-        this.h_rmar();
+        this.h_rpar();
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
