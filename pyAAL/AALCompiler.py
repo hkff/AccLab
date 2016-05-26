@@ -81,6 +81,7 @@ class AALCompilerListener(AALListener.AALListener):
         - errors_listener = errors_listener
         - no_exec
         - web
+        - type_checker_enabled
     """
     # Initializer
     def __init__(self, loadlibs: bool=True, serialize: bool=False, file: str="",
@@ -119,6 +120,7 @@ class AALCompilerListener(AALListener.AALListener):
         self.tspass_timeout = tspass_timeout
         self.no_exec = no_exec
         self.web = web
+        self.type_checker_enabled = False
 
         # FIXME
         if hotswaping:
@@ -232,7 +234,12 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Exit AALprog
     def exitAalprog(self, ctx):
-        print(Color(self.checkForwardsRef()))
+        if self.type_checker_enabled:
+            print(Color(self.checkForwardsRef(error=True)))
+            type_checker(self, self.aalprog)
+        else:
+            print(Color(self.checkForwardsRef()))
+
         self.fixLibsForwardsRef()
         if self.DEBUG:
             print("\n")
@@ -317,29 +324,31 @@ class AALCompilerListener(AALListener.AALListener):
         self.isRectification = False
 
     # Check forwards ref
-    def checkForwardsRef(self) -> str:
+    def checkForwardsRef(self, error=False) -> str:
         """
         Check forwards references.
+        :param error:
         :return:
         """
         res = ""
+        err = "{autored}[ERROR]{/red}" if error else "{autoyellow}[WARNING]{/yellow}"
         # Disable check in lib context
         if not self.loadlibs:
             return ""
         if len(self.refForwardAgents) > 0:
-            res += "{autoyellow}[WARNING]{/yellow} Agents declarations missing !\n"
+            res += err + " Agents declarations missing !\n"
             for d in self.refForwardAgents:
                 res += "  -> " + d + " {automagenta}at line " + str(self.refForwardAgents[d].get_line()) + "{/magenta}\n"
         if len(self.refForwardData) > 0:
-            res += "{autoyellow}[WARNING]{/yellow} Data declarations missing !\n"
+            res += err + " Data declarations missing !\n"
             for d in self.refForwardData:
                 res += "  -> " + d + " {automagenta}at line " + str(self.refForwardData[d].get_line()) + "{/magenta}\n"
         if len(self.refForwardServices) > 0:
-            res += "{autoyellow}[WARNING]{/yellow} Services declarations missing !\n"
+            res += err + " Services declarations missing !\n"
             for d in self.refForwardServices:
                 res += "  -> " + d + " {automagenta}at line " + str(self.refForwardServices[d].get_line()) + "{/magenta}\n"
         if len(self.refForwardTypes) > 0:
-            res += "{autoyellow}[WARNING]{/yellow} Types declarations missing !\n"
+            res += err + " Types declarations missing !\n"
             for d in self.refForwardTypes:
                 res += "  -> " + d + " {automagenta}at line " + str(self.refForwardTypes[d].get_line()) + "{/magenta}\n"
         return res

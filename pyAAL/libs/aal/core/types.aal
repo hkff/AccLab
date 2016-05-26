@@ -46,3 +46,9 @@ if _c1 is not None:
     type_checker(self, _c1)
 """
 )
+
+MACRO enable_type_checker(
+"""
+self.type_checker_enabled = True
+"""
+)
