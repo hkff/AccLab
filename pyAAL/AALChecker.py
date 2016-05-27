@@ -819,144 +819,6 @@ def get_lin(exp):
     return res
 
 
-def quick_type_check(compiler):
-    """
-    Perform partial type checks
-    :param compiler:
-    :return:
-    """
-    type_errors = []
-    for clause in compiler.aalprog.clauses:
-        ################################################
-        # ########## Checking services calls ###########
-        ################################################
-        actions = clause.walk(filter_type=m_action)
-        for action in actions:
-            # Check if the service is declared
-            # TODO check if not in ref stack
-            res = compiler.aalprog.isDeclared(str(action.service.label), m_service)
-            if res is None:
-                type_errors.append(
-                        "Service %s {automagenta}at line %s{/automagenta} is not declared !"
-                        % (action.service.label, action.get_line()))
-            # ################# AGENT1 ##################
-            if isinstance(action.agent1.target, m_agent):
-                # Check in agent1 required services
-                service_found = False
-                for s in action.agent1.target.required:
-                    if s.label == action.service.label:
-                        service_found = True
-                        break
-                if not service_found:
-                    # Check in actions types
-                    for t in action.agent1.target.types:
-                        lin = t.target.lin(refs=True)
-                        for t2 in lin:
-                            for ac in t2.actions:
-                                if str(ac) == str(action.service.label):
-                                    service_found = True
-                                    break
-                if not service_found:
-                    type_errors.append(
-                        "Agent %s uses the service %s which is not required {automagenta}at line %s{/automagenta} !"
-                        % (action.agent1.label, action.service.label, action.get_line()))
-            elif isinstance(action.agent1.target, m_qvar):
-                service_found = False
-                # Check in actions types
-                t = action.agent1.target.variable.target.type
-                lin = t.target.lin(refs=True)
-                for t2 in lin:
-                    for ac in t2.actions:
-                        if str(ac) == str(action.service.label):
-                            service_found = True
-                            break
-                if not service_found:
-                    type_errors.append(
-                        "Agent %s uses the service %s which is not required {automagenta}at line %s{/automagenta} !"
-                        % (action.agent1.label, action.service.label, action.get_line()))
-
-            # ################# AGENT2 ##################
-            if isinstance(action.agent2.target, m_agent):
-                # Check in agent2 provided services
-                service_found = False
-                for s in action.agent2.target.provided:
-                    if s.label == action.service.label:
-                        service_found = True
-                        break
-                if not service_found:
-                    # Check in actions types
-                    for t in action.agent2.target.types:
-                        lin = t.target.lin(refs=True)
-                        for t2 in lin:
-                            for ac in t2.actions:
-                                if str(ac) == str(action.service.label):
-                                    service_found = True
-                                    break
-                if not service_found:
-                    type_errors.append(
-                        "Agent %s uses the service %s which is not provided by agent %s {automagenta}at line %s{/automagenta} !"
-                        % (action.agent1.label, action.service.label, action.agent2.label, action.get_line()))
-            elif isinstance(action.agent2.target, m_qvar):
-                service_found = False
-                # Check in actions types
-                t = action.agent2.target.variable.target.type
-                lin = t.target.lin(refs=True)
-                for t2 in lin:
-                    for ac in t2.actions:
-                        if str(ac) == str(action.service.label):
-                            service_found = True
-                            break
-                if not service_found:
-                    type_errors.append(
-                        "Agent %s uses the service %s which is not provided by agent %s {automagenta}at line %s{/automagenta} !"
-                        % (action.agent1.label, action.service.label, action.agent2.label, action.get_line()))
-
-            # ################# Exp type ##################
-            args_types = get_lin(action.args)
-            service_types = [x.target for x in action.service.target.types]
-            found = False
-            for x in args_types:
-                if x in service_types:
-                    found = True
-                    break
-            if not found:
-                type_errors.append(
-                    "The service %s is called with a non compatible argument %s "
-                    "{automagenta}at line %s{/automagenta} !\n   Expected: { %s } Found: { %s }"
-                    % (action.service.label, action.args, action.get_line(),
-                        "|".join([str(x.name) for x in service_types]), "|".join([str(x.name) for x in args_types])))
-
-
-        ################################################
-        # ######## Checking variable attributes ########
-        ################################################
-        varattrs = clause.walk(filter_type=m_varAttr)
-        for va in varattrs:
-            types = []
-            if isinstance(va.variable.target, m_agent):
-                for x in va.variable.target.types:
-                    types = types + x.target.lin(refs=True)
-            elif isinstance(va.variable.target, m_qvar):
-                types = va.variable.target.variable.target.type.target.lin(refs=True)
-            if len(types) > 0:
-                attribute_found = False
-                for t in types:
-                    for at in t.attributes:
-                        if str(va.attribute) == str(at):
-                            attribute_found = True
-                            break
-                if not attribute_found:
-                    type_errors.append("No attribute '%s' found on '%s' {automagenta}at line %s{/automagenta} !"
-                                       % (va.attribute, va.variable, va.get_line()))
-
-    if len(type_errors) > 0:
-        print(Color("\n{autored}[ERROR] You have type errors in your code{/red}"))
-        for e in type_errors:
-            print(" -> %s" % Color(e))
-    else:
-        print(Color("{autogreen} No type errors found !{/green}"))
-
-
 def type_checker(compiler, exp):
     """
     AAL full type checker implementation
@@ -1034,7 +896,7 @@ def type_checker(compiler, exp):
         if not attribute_found:
             type_errors.append("No attribute '%s' found on '%s' {automagenta}at line %s{/automagenta} !"
                                % (exp.attribute, exp.variable, exp.get_line()))
-            print(Color("\n{autored}[ERROR] You have type errors in your code{/red}"))
+            print(Color("\n{autored}[ERROR] Type error {/red}"))
             for e in type_errors:
                 print(" -> %s" % Color(e))
         res = types
@@ -1144,7 +1006,7 @@ def type_checker(compiler, exp):
                            "|".join([str(x.name) for x in args_types])))
 
             if len(type_errors) > 0:
-                    print(Color("\n{autored}[ERROR] You have type errors in your code{/red}"))
+                    print(Color("\n{autored}[ERROR] Type error {/red}"))
                     for e in type_errors:
                         print(" -> %s" % Color(e))
             else:

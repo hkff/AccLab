@@ -27,12 +27,6 @@ TYPE User             EXTENDS(Actor) ATTRIBUTES() ACTIONS()
 //=====================================================//
 //=================    Type checker   =================//
 //=====================================================//
-MACRO type_check(
-"""
-quick_type_check(self)
-"""
-)
-
 MACRO type_checker(
 """
 type_checker(self, self.aalprog)

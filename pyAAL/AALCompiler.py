@@ -812,6 +812,7 @@ class AALCompilerListener(AALListener.AALListener):
         elif ctx.author().A_deny() is not None:
             self.actionExpStack[-1].author = m_author.A_deny
             self.actionExpStack[-1].name = ctx.author().A_deny()
+        action.parent = self.actionExpStack[-1]
         self.actionExpStack[-1].action = action
 
     # ActionExp7ifthen
