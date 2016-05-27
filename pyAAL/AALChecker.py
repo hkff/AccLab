@@ -1024,19 +1024,19 @@ def type_checker(compiler, exp):
 
     elif isinstance(exp, m_varAttr):
         types = type_checker(compiler, exp.variable)
+        attribute_found = False
         if len(types) > 0:
-            attribute_found = False
             for t in types:
                 for at in t.attributes:
                     if str(exp.attribute) == str(at):
                         attribute_found = True
                         break
-            if not attribute_found:
-                type_errors.append("No attribute '%s' found on '%s' {automagenta}at line %s{/automagenta} !"
-                                   % (exp.attribute, exp.variable, exp.get_line()))
-                print(Color("\n{autored}[ERROR] You have type errors in your code{/red}"))
-                for e in type_errors:
-                    print(" -> %s" % Color(e))
+        if not attribute_found:
+            type_errors.append("No attribute '%s' found on '%s' {automagenta}at line %s{/automagenta} !"
+                               % (exp.attribute, exp.variable, exp.get_line()))
+            print(Color("\n{autored}[ERROR] You have type errors in your code{/red}"))
+            for e in type_errors:
+                print(" -> %s" % Color(e))
         res = types
 
     elif isinstance(exp, m_conditionCmp):
