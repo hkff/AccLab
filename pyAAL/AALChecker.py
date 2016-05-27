@@ -991,19 +991,20 @@ def type_checker(compiler, exp):
                         % (exp.agent1.label, exp.service.label, exp.agent2.label, exp.get_line()))
 
             # ################# Exp type ##################
-            args_types = get_lin(exp.args)
-            service_types = [x.target for x in exp.service.target.types]
-            found = False
-            for x in args_types:
-                if x in service_types:
-                    found = True
-                    break
-            if not found:
-                type_errors.append(
-                        "The service %s is called with a non compatible argument %s "
-                        "{automagenta}at line %s{/automagenta} !\n   Expected: { %s } Found: { %s }"
-                        % (exp.service.label, exp.args, exp.get_line(), "|".join([str(x.name) for x in service_types]),
-                           "|".join([str(x.name) for x in args_types])))
+            if not (isinstance(exp.args, m_constant) or isinstance(exp.args, m_predicate)):
+                args_types = get_lin(exp.args)
+                service_types = [x.target for x in exp.service.target.types]
+                found = False
+                for x in args_types:
+                    if x in service_types:
+                        found = True
+                        break
+                if not found:
+                    type_errors.append(
+                            "The service %s is called with a non compatible argument %s "
+                            "{automagenta}at line %s{/automagenta} !\n   Expected: { %s } Found: { %s }"
+                            % (exp.service.label, exp.args, exp.get_line(), "|".join([str(x.name) for x in service_types]),
+                               "|".join([str(x.name) for x in args_types])))
 
             if len(type_errors) > 0:
                     print(Color("\n{autored}[ERROR] Type error {/red}"))
