@@ -992,7 +992,7 @@ def type_checker(compiler, exp):
 
             # ################# Exp type ##################
             if not (isinstance(exp.args, m_constant) or isinstance(exp.args, m_predicate)):
-                args_types = get_lin(exp.args)
+                args_types = type_checker(compiler, exp.args)
                 service_types = [x.target for x in exp.service.target.types]
                 found = False
                 for x in args_types:
