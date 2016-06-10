@@ -45,7 +45,7 @@ def build_env(prog: m_aalprog=None, extra=None):
     pre_cond += "(\n"
 
     pre_cond += "(always ![a] (Actor(a) => EQUAL(a, a))) &\n"
-    pre_cond += "(always ![a, b] ((Actor(a) & Actor(b) & EQUAL(a, b)) => EQUAL(b, a))) &\n"
+    pre_cond += "(always ![a, b] ((Actor(a) & Actor(b) & EQUAL(a, b)) => EQUAL(b, a)))\n"
 
     pre_cond += "\n%%% Types knowledge\n"
     type_cond = ""
@@ -53,7 +53,7 @@ def build_env(prog: m_aalprog=None, extra=None):
         type_cond += " ( ?[a] " + str(x.to_ltl()) + " ) & \n"
     if type_cond[-3:] == "& \n":
         type_cond = type_cond[:-3]
-    pre_cond += "always (\n" + type_cond + "\n) & \n" if len(type_cond) > 0 else ""
+    pre_cond += "& \nalways (\n" + type_cond + "\n) " if len(type_cond) > 0 else ""
 
     pre_cond += "\n\n%%% Action authorizations \n"
     action_cond = ""
@@ -61,7 +61,7 @@ def build_env(prog: m_aalprog=None, extra=None):
         action_cond += "" + str(x.to_ltl()) + " & \n"
     if action_cond[-3:] == "& \n":
         action_cond = action_cond[:-3]
-    pre_cond += "always (\n" + action_cond + "\n) & \n" if len(action_cond) > 0 else ""
+    pre_cond += "& \nalways (\n" + action_cond + "\n) " if len(action_cond) > 0 else ""
 
     pre_cond += "\n\n%%% Actors knowledge \n"
     actor_cond = ""
@@ -69,7 +69,7 @@ def build_env(prog: m_aalprog=None, extra=None):
         actor_cond += " ( " + str(x.to_ltl()) + " ) & \n"
     if actor_cond[-3:] == "& \n":
         actor_cond = actor_cond[:-3]
-    pre_cond += "always (\n" + actor_cond + "\n) & \n" if len(actor_cond) > 0 else ""
+    pre_cond += "& \nalways (\n" + actor_cond + "\n) " if len(actor_cond) > 0 else ""
 
     pre_cond += "\n\n%%% Time knowledge \n"
     time_cond = ""
@@ -96,14 +96,14 @@ def build_env(prog: m_aalprog=None, extra=None):
             time_cond += "( " + str(times[i].to_ltl()) + " => " + str(times[j].to_ltl()) + " ) & \n"
     if time_cond[-3:] == "& \n":
         time_cond = time_cond[:-3]
-    pre_cond += "always (\n" + time_cond + "\n) & \n" if len(time_cond) > 0 else ""
+    pre_cond += "& \nalways (\n" + time_cond + "\n) " if len(time_cond) > 0 else ""
 
     pre_cond += "\n\n%%% Data knowledge \n"
     data_decs = ""
     data_decs += "".join([" ( ?[d](subject(d, " + str(x.name) + ")) ) & \n" for x in prog.get_declared(m_agent)])
     if data_decs[-3:] == "& \n":
         data_decs = data_decs[:-3]
-    pre_cond += "always (\n" + data_decs + "\n) & \n" if len(data_decs) > 0 else ""
+    pre_cond += "& \nalways (\n" + data_decs + "\n) " if len(data_decs) > 0 else ""
 
     if pre_cond[-3:] == "& \n":
         pre_cond = pre_cond[:-3]
