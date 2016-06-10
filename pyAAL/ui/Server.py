@@ -202,6 +202,8 @@ def run(server_class=ForkingSimpleServer, handler_class=HTTPRequestHandler):
     server_address = ('', server_port)
     httpd = server_class(server_address, handler_class)
     print("Server start on port " + str(server_port))
+    print("SVN repo initialization...")
+    svn_init()
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

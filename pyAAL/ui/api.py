@@ -80,17 +80,26 @@ def api_get_template(f):
 # Write file
 def api_write_file(f, d):
     res = -1
+    creation = False
     # Add \n at the end
     if d[-1] != "\n":
         d += "\n"
+    if not os.path.isfile(base_dir + "/" + f):
+        creation = True
     with open(base_dir + "/" + f, "w+") as fd:
         res = str(fd.write(d))
     check_aal_acd(f)
+    if creation:
+        Popen(['svn', "add", base_dir + "/" + f]).wait()
+        Popen(['svn', "commit", "examples/", "-m", "'Add file %s'" % f]).wait()
+    else:
+        Popen(['svn', "commit", "examples/", "-m", "'Edit file %s'" % f]).wait()
     return res
 
 
 # Rename file
 def api_rename_file(f, new_name):
+    # TODO svn
     os.rename(base_dir + "/" + f, base_dir + "/" + new_name)
     return "RENAMED"
 
@@ -100,8 +109,12 @@ def api_delete_file(f):
     file = base_dir + "/" + f
     if os.path.isfile(file):
         os.remove(file)
+        Popen(['svn', "del", file]).wait()
+        Popen(['svn', "commit", "examples/", "-m", "'Delete file %s'" % f]).wait()
     elif os.path.isdir(file):
         shutil.rmtree(file)
+        Popen(['svn', "del", file]).wait()
+        Popen(['svn', "commit", "examples/", "-m", "'Delete folder %s'" % f]).wait()
     return "DELETED"
 
 
@@ -125,7 +138,10 @@ def api_load_prefs():
 # Create Folder
 def api_create_folder(d):
     if not os.path.exists(base_dir + "/" + d):
-        return str(os.makedirs(base_dir + "/" + d))
+        res = str(os.makedirs(base_dir + "/" + d))
+        Popen(['svn', "add", base_dir + "/" + d]).wait()
+        Popen(['svn', "commit", "examples/", "-m", "'Add folder %s'" % d]).wait()
+        return res
     else:
         return "Directory exists !"
 
@@ -594,3 +610,16 @@ def check_aal_acd(file):
                 # Save acd file
                 with open(acd_file_name, "w") as f:
                     json.dump(acd_file, f)
+
+
+# SVN
+def svn_init():
+    if not os.path.isdir(".workspace"):
+        print(" - Creating svn repo at .workspace")
+        p = Popen(['svnadmin', "create", ".workspace"])
+        p.wait()
+        svn_path = "file://%s" % os.path.realpath(__file__).replace("ui/api.py", ".workspace")
+        p = Popen(['svn', "import", "examples/", svn_path, "-m", "'Initial commit'"])
+        p.wait()
+        p = Popen(['svn', "checkout", "--force", svn_path, "examples/"])
+        p.wait()
