@@ -476,6 +476,17 @@ var hint_linter = function(tree) {
      * Level : info
      */
 
+    /**
+     * RULE 10 : Typed variables in quantifiers
+     * Level : error
+     */
+    var quantVar = walk(tree, {"filter_type": aal.AALParser.QvarContext});
+    for(k in quantVar) {
+        if(quantVar[k].children[1].children.length < 2) {
+            msg = " - Variable type is missing in quantification ";
+            annotations.push({row: quantVar[k].h_variable().start.line - 1, column: 0, text: msg, type: "error"});
+        }
+    }
 
     //annotations.push({row: line, column: column, text: msg, type: msgType});
     return annotations;
