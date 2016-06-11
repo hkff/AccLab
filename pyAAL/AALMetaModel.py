@@ -1684,6 +1684,7 @@ class m_booleanOp(sEnum):
     O_false = "FALSE"
     O_until = "UNTIL"
     O_unless = "UNLESS"
+    O_equiv = "<=>"
 
     def to_natural(self, kw=True):
         if self == m_booleanOp.O_equal:
@@ -1718,6 +1719,8 @@ class m_booleanOp(sEnum):
             return str(FOTLOperators.t_until)
         elif self == m_booleanOp.O_unless:
             return str(FOTLOperators.t_unless)
+        elif self == m_booleanOp.O_equiv:
+            return str(FOTLOperators.t_equivalence)
 
 
 # Author
