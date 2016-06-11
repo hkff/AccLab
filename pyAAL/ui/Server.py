@@ -58,12 +58,15 @@ class ForkingSimpleServer(ForkingMixIn, HTTPServer):
 class HTTPRequestHandler(SimpleHTTPRequestHandler):
 
     def get_arg(self, args, name, method):
-        if method == "GET":
-            return args[name]
-        elif method == "POST":
-            return args[name][0]
-        else:
-            return "Method error"
+        try:
+            if method == "GET":
+                return args[name]
+            elif method == "POST":
+                return args[name][0]
+            else:
+                return "Method error"
+        except:
+            return ""
 
     def handle_req(self, args, method):
         # print(args)
@@ -145,6 +148,9 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         elif val == "registerAccMonMonitor":
             res = api_register_accmon_monitor(self.get_arg(args, "formula", method), self.get_arg(args, "name", method),
                                               self.get_arg(args, "accmon_url", method))
+
+        elif val == "svnLog":
+            res = svn_log(self.get_arg(args, "target", method))
 
         elif val == "cancelCurrentPS":
             res = "No aalc/tspassc process is running"

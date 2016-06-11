@@ -623,3 +623,13 @@ def svn_init():
         p.wait()
         p = Popen(['svn', "checkout", "--force", svn_path, "examples/"])
         p.wait()
+
+
+# Svn log
+def svn_log(target):
+    p = Popen(['svn', "up", "examples/"])
+    p.wait()
+    p = Popen(['svn', "log", "examples/" + target, "--xml"], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    p.wait()
+    log = p.stdout.read().decode("utf-8")
+    return log

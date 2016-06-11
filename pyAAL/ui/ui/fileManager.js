@@ -70,6 +70,7 @@ visualEditor.ui.fileManager = {
 		  //'<div class="menu-sep"></div>'+
 		  '<div id="fmm-delete" data-options="iconCls:\'fa fa-times\'" class="menu-item cmenuBtn">Delete</div>'+
 		  '<div id="fmm-refresh" data-options="iconCls:\'fa fa-refresh\'" class="menu-item cmenuBtn">Refresh</div>'+
+          '<div id="fmm-svn" data-options="iconCls:\'fa fa-code-fork\'" class="menu-item cmenuBtn">History</div>'+
 		  '<div id="fmm-compile" data-options="iconCls:\'fa fa-cog\'" class="menu-item cmenuBtn">Compile</div>'+
           '<div id="fmm-run" data-options="iconCls:\'fa fa-flash\'" class="menu-item cmenuBtn">Run</div>'+ '</div>';
 		$('body').append(this.ctMenu);
@@ -220,7 +221,47 @@ visualEditor.ui.fileManager = {
                 toastr.error('Not a runnable file !');
             }
 		});
+
+        $('#fmm-svn').click(function(e){
+			var node = $("#explorer").tree('getSelected');
+			var path = _this.getAbsPath(node, $("#explorer"));
+			_this.svnLog(path, _this.show_svn_history);
+		});
 	},
+
+    /**
+     * Show svn history
+     * @param target
+     * @param history
+     */
+    show_svn_history: function(target, history) {
+        var xml = $.parseXML(history);
+
+        var h = "";
+        $(xml).find("logentry").each(function(index){
+            h += "<div class='svnLogEntry'>" +
+                "r" + $(this).attr("revision") + " | " + $(this).find("author").text() +
+                " | " + $(this).find("date").text() +
+                " | " + $(this).find("msg").text() +
+                "<button>Revert</button>" +
+                "</div><br>";
+        });
+
+        var abt = "" +
+            "<div>" + h +"</div>";
+
+        toastr.info(abt, "History", {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": true,
+  				"showDuration": "1000",
+			  	"hideDuration": "1000",
+			  	"timeOut": 0,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-center"
+			});
+        visualEditor.ui.updateToastSize("info", {"width": 600, height:350}, false, "none", (window.innerHeight - 600)/2 + "px");
+    },
 
     /**
      * Create a file from menu btn
@@ -734,5 +775,17 @@ visualEditor.ui.fileManager = {
             //var children = $("#explorer").tree("getChildren", e);
 
         });
-    }
+    },
+
+	svnLog: function(target, callback) {
+		$.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "svnLog", target: target},
+            success: function(response) {
+                if(callback != null || callback != undefined)
+					callback(target, response)
+            }});
+	}
 };
