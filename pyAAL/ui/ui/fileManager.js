@@ -237,20 +237,20 @@ visualEditor.ui.fileManager = {
     show_svn_history: function(target, history) {
         var xml = $.parseXML(history);
 
-        var h = "";
-        $(xml).find("logentry").each(function(index){
+        var h = "<br>";
+        $(xml).find("logentry").each(function(index) {
             h += "<div class='svnLogEntry'>" +
                 "r" + $(this).attr("revision") + " | " + $(this).find("author").text() +
                 " | " + $(this).find("date").text() +
                 " | " + $(this).find("msg").text() +
-                "<button onclick='visualEditor.ui.fileManager.svnRevert(\"" + target +"\", " + $(this).attr('revision') +")'>Revert</button>" +
+                "<button style='float: right; margin-right: 5px;'" +
+                "onclick='visualEditor.ui.fileManager.svnRevert(\"" + target +"\", " + $(this).attr('revision') +")'>Rollback</button>" +
                 "</div><br>";
         });
 
-        var abt = "" +
-            "<div>" + h +"</div>";
+        var abt = "<div style='overflow: auto; height: 300px;'>" + h +"</div>";
 
-        toastr.info(abt, "History", {
+        toastr.error(abt, "History", {
 				"closeButton": true,
 				"preventDuplicates": true,
 				"tapToDismiss": true,
@@ -260,7 +260,7 @@ visualEditor.ui.fileManager = {
 			  	"extendedTimeOut": 0,
 				"positionClass": "toast-top-center"
 			});
-        visualEditor.ui.updateToastSize("info", {"width": 600, height:350}, false, "none", (window.innerHeight - 600)/2 + "px");
+        visualEditor.ui.updateToastSize("error", {"width": 600, height:350}, false, "none", (window.innerHeight - 600)/2 + "px");
     },
 
     /**
@@ -796,6 +796,7 @@ visualEditor.ui.fileManager = {
             url: visualEditor.backend,
             data: {action: "svnRevert", target: target, version: version},
             success: function(response) {
+                $("#explorer").tree("reload"); // Refresh file tree
                 if(callback != null || callback != undefined)
 					callback(target, response)
             }});
