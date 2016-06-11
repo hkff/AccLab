@@ -243,8 +243,13 @@ visualEditor.ui.fileManager = {
                 "r" + $(this).attr("revision") + " | " + $(this).find("author").text() +
                 " | " + $(this).find("date").text() +
                 " | " + $(this).find("msg").text() +
+
+                "<button style='float: right; margin-rigth: 5px;'" +
+                "onclick='visualEditor.ui.fileManager.svnDiff(\"" + target +"\", " + $(this).attr('revision') +")'>Diff</button>" +
+
                 "<button style='float: right; margin-right: 5px;'" +
                 "onclick='visualEditor.ui.fileManager.svnRevert(\"" + target +"\", " + $(this).attr('revision') +")'>Rollback</button>" +
+
                 "</div><br>";
         });
 
@@ -253,7 +258,7 @@ visualEditor.ui.fileManager = {
         toastr.error(abt, "History", {
 				"closeButton": true,
 				"preventDuplicates": true,
-				"tapToDismiss": true,
+				"tapToDismiss": false,
   				"showDuration": "1000",
 			  	"hideDuration": "1000",
 			  	"timeOut": 0,
@@ -784,6 +789,29 @@ visualEditor.ui.fileManager = {
             url: visualEditor.backend,
             data: {action: "svnLog", target: target},
             success: function(response) {
+                if(callback != null || callback != undefined)
+					callback(target, response)
+            }});
+	},
+
+    svnDiff: function(target, r1, callback) {
+		$.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "svnDiff", target: target, r1: Number.parseInt(r1)-1, r2:r1},
+            success: function(response) {
+                toastr.info("<p style='overflow: auto; width: 100%; height: 200px;'>" + response + "</p>", "Diff", {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                        "tapToDismiss": true,
+                        "showDuration": "1000",
+                        "hideDuration": "1000",
+                        "timeOut": 0,
+                        "extendedTimeOut": 0,
+                        "positionClass": "toast-top-center"
+                    });
+                visualEditor.ui.updateToastSize("info", {"width": 600, height:250}, false, "none", (window.innerHeight - 600)/2 + "px");
                 if(callback != null || callback != undefined)
 					callback(target, response)
             }});

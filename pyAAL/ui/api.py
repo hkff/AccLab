@@ -643,3 +643,22 @@ def svn_revert(target, version):
     p.wait()
     log = p.stdout.read().decode("utf-8")
     return log
+
+
+# Svn diff
+def svn_diff(target, r1, r2):
+    print("%s %s" %(r1, r2))
+    try:
+        r1 = int(r1)
+        r2 = int(r2)
+    except:
+        r1 = 1
+        r2 = 1
+    r1 = r1 if r1 >= 1 else 1
+    r2 = r2 if r2 >= 1 else 1
+    # p = Popen(['svn', "up", "examples/"])
+    # p.wait()
+    p = Popen(['svn', "diff", "examples/" + target, "-r", "%s:%s" %(r1, r2)], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    p.wait()
+    log = p.stdout.read().decode("utf-8").replace("\n", "<br>")
+    return log

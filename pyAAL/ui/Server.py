@@ -152,6 +152,9 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         elif val == "svnLog":
             res = svn_log(self.get_arg(args, "target", method))
 
+        elif val == "svnDiff":
+            res = svn_diff(self.get_arg(args, "target", method), self.get_arg(args, "r1", method), self.get_arg(args, "r2", method))
+
         elif val == "svnRevert":
             res = svn_revert(self.get_arg(args, "target", method), self.get_arg(args, "version", method))
 
