@@ -152,6 +152,9 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         elif val == "svnLog":
             res = svn_log(self.get_arg(args, "target", method))
 
+        elif val == "svnRevert":
+            res = svn_revert(self.get_arg(args, "target", method), self.get_arg(args, "version", method))
+
         elif val == "cancelCurrentPS":
             res = "No aalc/tspassc process is running"
             ps = get_current_ps_id()

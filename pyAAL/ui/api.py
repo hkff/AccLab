@@ -633,3 +633,13 @@ def svn_log(target):
     p.wait()
     log = p.stdout.read().decode("utf-8")
     return log
+
+
+# Svn revert
+def svn_revert(target, version):
+    p = Popen(['svn', "merge", "-r", "HEAD:%s" % version, "%s" % target], cwd=r'examples/')
+    p.wait()
+    p = Popen(['svn', "commit", "-m", "Rolled back to r%s" % version, "examples/%s" % target], stdout=PIPE, stderr=PIPE, stdin=PIPE)
+    p.wait()
+    log = p.stdout.read().decode("utf-8")
+    return log

@@ -243,7 +243,7 @@ visualEditor.ui.fileManager = {
                 "r" + $(this).attr("revision") + " | " + $(this).find("author").text() +
                 " | " + $(this).find("date").text() +
                 " | " + $(this).find("msg").text() +
-                "<button>Revert</button>" +
+                "<button onclick='visualEditor.ui.fileManager.svnRevert(\"" + target +"\", " + $(this).attr('revision') +")'>Revert</button>" +
                 "</div><br>";
         });
 
@@ -783,6 +783,18 @@ visualEditor.ui.fileManager = {
             type:'POST',
             url: visualEditor.backend,
             data: {action: "svnLog", target: target},
+            success: function(response) {
+                if(callback != null || callback != undefined)
+					callback(target, response)
+            }});
+	},
+
+    svnRevert: function(target, version, callback) {
+		$.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "svnRevert", target: target, version: version},
             success: function(response) {
                 if(callback != null || callback != undefined)
 					callback(target, response)
