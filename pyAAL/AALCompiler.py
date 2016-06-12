@@ -1237,7 +1237,7 @@ class AALCompilerListener(AALListener.AALListener):
             for x in param:
                 tmp.append(str(x))
             macro.param = tmp
-        macro.code = str(code).replace('//', '#')
+        macro.code = str(code)  # .replace('//', '#')
         self.aalprog.macros.append(macro)
 
     @staticmethod
