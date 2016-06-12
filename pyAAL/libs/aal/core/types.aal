@@ -46,3 +46,55 @@ MACRO enable_type_checker(
 self.type_checker_enabled = True
 """
 )
+
+MACRO resolve_type_errors (
+"""
+import re
+with open(self.file, "r+") as f:
+    program = f.readlines()
+    # Clear highlight
+    print("<script>visualEditor.ui.clearHighlight();</script>")
+    # Clear previous errors
+    for i in range(len(program)):
+        p = re.search(r" // :ERROR(.)*", program[i])
+        if p is not None:
+            program[i] = program[i].replace(p.group(), "")
+
+    res = type_checker(self, self.aalprog, show=False)
+    for e in res["errors"]:
+        if isinstance(e, AttrNotFound):
+            line = int(e.line) - 1
+            if "// :ERROR" not in program[line]:
+                program[line] = program[line].replace("\n", " // :ERROR attribute %s not found on %s\n" % (e.attr, e.target))
+            print("<script>visualEditor.activeEditor.gotoLine(%s); visualEditor.ui.highlightRed();</script>" % (line+1))
+
+        elif isinstance(e, ServiceNotDeclared):
+            line = int(e.line) - 1
+            if "// :ERROR" not in program[line]:
+                program[line] = program[line].replace("\n", " // :ERROR service %s not declared\n" % (e.service))
+            print("<script>visualEditor.activeEditor.gotoLine(%s); visualEditor.ui.highlightRed();</script>" % (line+1))
+
+        elif isinstance(e, ServiceNotRequired):
+            line = int(e.line) - 1
+            if "// :ERROR" not in program[line]:
+                program[line] = program[line].replace("\n", " // :ERROR service %s not required by %s\n" % (e.service, e.agent))
+            print("<script>visualEditor.activeEditor.gotoLine(%s); visualEditor.ui.highlightRed();</script>" % (line+1))
+
+        elif isinstance(e, ServiceNotProvided):
+            line = int(e.line) - 1
+            if "// :ERROR" not in program[line]:
+                program[line] = program[line].replace("\n", " // :ERROR service %s not provided by %s\n" % (e.service, e.agent2))
+            print("<script>visualEditor.activeEditor.gotoLine(%s); visualEditor.ui.highlightRed();</script>" % (line+1))
+
+        elif isinstance(e, IncompatibleTypeArg):
+            line = int(e.line) - 1
+            if "// :ERROR" not in program[line]:
+                program[line] = program[line].replace("\n", " // :ERROR Incompatible argument type %s\n" % (e.arg))
+            print("<script>visualEditor.activeEditor.gotoLine(%s); visualEditor.ui.highlightRed();</script>" % (line+1))
+
+    # Update the AAL file
+    f.seek(0)
+    for l in program:
+        f.write(l)
+"""
+)
