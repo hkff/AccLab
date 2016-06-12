@@ -689,6 +689,8 @@ visualEditor.ui.tools.genTSPASSTool = visualEditor.ui.tool.extend({
 							$("#output_window").empty().append(response).scrollTop(0);
 							// Clear toastr
 							toastr.clear( $(".toast-error"));
+                            // Reload the file
+                            visualEditor.ui.fileManager.reloadFile(false);
 							// Setup lines
 							$(".aceLine").click(function(e) {
 								var editor = ace.edit(visualEditor.ui.activeTab.container.elementContent.id);

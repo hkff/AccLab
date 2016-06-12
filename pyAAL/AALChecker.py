@@ -879,7 +879,7 @@ class IncompatibleTypeArg(ErrorType):
 
     def __str__(self):
         return "The service %s is called with a non compatible argument %s " \
-                "{automagenta}at line %s{/automagenta} !\n   Expected: { %s } Found: { %s }" \
+                "{automagenta}at line %s{/automagenta} !\n--- Expected: { %s } Found: { %s }" \
                 % (self.service, self.arg, self.line, self.expected, self.found)
 
 

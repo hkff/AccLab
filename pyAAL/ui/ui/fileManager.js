@@ -400,7 +400,8 @@ visualEditor.ui.fileManager = {
 	/**
 	 * Reload the current opened file
 	 */
-	reloadFile: function() {
+	reloadFile: function(changeMode) {
+        changeMode = (changeMode != undefined)? changeMode : true;
         var file = visualEditor.ui.activeTab.container.title;
 		var fileType = file.split('.').pop().toLowerCase();
 		var dType = "text";
@@ -425,7 +426,8 @@ visualEditor.ui.fileManager = {
 						visualEditor.ui.outline.canvasToTree();
 
                         // Switch to acd mode
-                        visualEditor.acdMode();
+                        if(changeMode)
+                            visualEditor.acdMode();
 			 			break;
                     case "aal":
 					    // Set the source
@@ -434,7 +436,8 @@ visualEditor.ui.fileManager = {
                         visualEditor.activeEditor.session.getUndoManager().markClean();
 
 						// Switch to aal mode
-                        visualEditor.aalMode();
+                        if(changeMode)
+                            visualEditor.aalMode();
 						break;
 				}
 			}
