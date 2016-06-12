@@ -886,11 +886,12 @@ class IncompatibleTypeArg(ErrorType):
 #####################################
 # Type checker
 #####################################
-def type_checker(compiler, exp):
+def type_checker(compiler, exp, show=True):
     """
     AAL full type checker implementation
     :param compiler:
     :param exp:
+    :param show:
     :return:
     """
     res = {"type": [], "errors": []}
@@ -898,25 +899,25 @@ def type_checker(compiler, exp):
 
     if isinstance(exp, m_aalprog):
         for c in exp.clauses:
-            tmp = type_checker(compiler, c)
+            tmp = type_checker(compiler, c, show=show)
             res["type"].extend(tmp["type"])
             res["errors"].extend(tmp["errors"])
 
     elif isinstance(exp, m_usage):
         for x in exp.actionExp:
-            tmp = type_checker(compiler, x)
+            tmp = type_checker(compiler, x, show=show)
             res["type"].extend(tmp["type"])
             res["errors"].extend(tmp["errors"])
 
     elif isinstance(exp, m_audit) or isinstance(exp, m_rectification):
-        tmp = type_checker(compiler, exp.usage)
+        tmp = type_checker(compiler, exp.usage, show=show)
         res["type"].extend(tmp["type"])
         res["errors"].extend(tmp["errors"])
 
     elif isinstance(exp, m_clause):
-        tmp1 = type_checker(compiler, exp.usage)
-        tmp2 = type_checker(compiler, exp.audit)
-        tmp3 = type_checker(compiler, exp.rectification)
+        tmp1 = type_checker(compiler, exp.usage, show=show)
+        tmp2 = type_checker(compiler, exp.audit, show=show)
+        tmp3 = type_checker(compiler, exp.rectification, show=show)
 
         res["type"].extend([tmp1["type"], tmp2["type"], tmp3["type"]])
         res["errors"].extend(tmp1["errors"])
@@ -925,7 +926,7 @@ def type_checker(compiler, exp):
 
     elif isinstance(exp, m_agent) or isinstance(exp, m_data) or isinstance(exp, m_service):
         for t in exp.types:
-            tmp = type_checker(compiler, t)
+            tmp = type_checker(compiler, t, show=show)
             res["type"].extend(tmp["type"])
             res["errors"].extend(tmp["errors"])
 
@@ -933,70 +934,70 @@ def type_checker(compiler, exp):
         res["type"].extend(exp.lin(refs=True))
 
     elif isinstance(exp, m_ref):
-        tmp = type_checker(compiler, exp.target)
+        tmp = type_checker(compiler, exp.target, show=show)
         res["type"].extend(tmp["type"])
         res["errors"].extend(tmp["errors"])
 
     elif isinstance(exp, m_aexpAction):
-        tmp = type_checker(compiler, exp.action)
+        tmp = type_checker(compiler, exp.action, show=show)
         res["type"].extend(tmp["type"])
         res["errors"].extend(tmp["errors"])
 
     elif isinstance(exp, m_aexpNotAexp):
-        tmp = type_checker(compiler, exp.actionExpression)
+        tmp = type_checker(compiler, exp.actionExpression, show=show)
         res["type"].extend(tmp["type"])
         res["errors"].extend(tmp["errors"])
 
     elif isinstance(exp, m_aexpModal):
-        tmp = type_checker(compiler, exp.actionExpression)
+        tmp = type_checker(compiler, exp.actionExpression, show=show)
         res["type"].extend(tmp["type"])
         res["errors"].extend(tmp["errors"])
 
     elif isinstance(exp, m_aexpCondition):
-        tmp = type_checker(compiler, exp.condition)
+        tmp = type_checker(compiler, exp.condition, show=show)
         res["type"].extend(tmp["type"])
         res["errors"].extend(tmp["errors"])
 
     elif isinstance(exp, m_aexpComb):
-        tmp1 = type_checker(compiler, exp.actionExp1)
-        tmp2 = type_checker(compiler, exp.actionExp2)
+        tmp1 = type_checker(compiler, exp.actionExp1, show=show)
+        tmp2 = type_checker(compiler, exp.actionExp2, show=show)
         res["type"].extend([tmp1["type"], tmp2["type"]])
         res["errors"].extend(tmp1["errors"])
         res["errors"].extend(tmp2["errors"])
 
     elif isinstance(exp, m_aexpAuthor):
-        tmp = type_checker(compiler, exp.action)
+        tmp = type_checker(compiler, exp.action, show=show)
         res["type"].extend(tmp["type"])
         res["errors"].extend(tmp["errors"])
 
     elif isinstance(exp, m_aexpIfthen):
-        tmp1 = type_checker(compiler, exp.condition)
-        tmp2 = type_checker(compiler, exp.branchTrue)
+        tmp1 = type_checker(compiler, exp.condition, show=show)
+        tmp2 = type_checker(compiler, exp.branchTrue, show=show)
         res["type"].extend([tmp1["type"], tmp2["type"]])
         res["errors"].extend(tmp1["errors"])
         res["errors"].extend(tmp2["errors"])
 
     elif isinstance(exp, m_qvar):
-        tmp = type_checker(compiler, exp.variable)
+        tmp = type_checker(compiler, exp.variable, show=show)
         res["type"].extend(tmp["type"])
         res["errors"].extend(tmp["errors"])
 
     elif isinstance(exp, m_aexpQvar):
         for x in exp.qvars:
-            tmp = type_checker(compiler, x)
+            tmp = type_checker(compiler, x, show=show)
             res["type"].extend(tmp["type"])
             res["errors"].extend(tmp["errors"])
-        tmp = type_checker(compiler, exp.actionExp)
+        tmp = type_checker(compiler, exp.actionExp, show=show)
         res["type"].extend(tmp["type"])
         res["errors"].extend(tmp["errors"])
 
     elif isinstance(exp, m_variable):
-        tmp = type_checker(compiler, exp.type)
+        tmp = type_checker(compiler, exp.type, show=show)
         res["type"].extend(tmp["type"])
         res["errors"].extend(tmp["errors"])
 
     elif isinstance(exp, m_varAttr):
-        tmp = type_checker(compiler, exp.variable)
+        tmp = type_checker(compiler, exp.variable, show=show)
         res["type"].extend(tmp["type"])
         res["errors"].extend(tmp["errors"])
         types = tmp["type"]
@@ -1009,27 +1010,28 @@ def type_checker(compiler, exp):
                         break
         if not attribute_found:
             type_errors.append(AttrNotFound(exp.attribute, exp.variable, exp.get_line()))
-            print(Color("\n{autored}[ERROR] Type error {/red}"))
-            for e in type_errors:
-                print(" -> %s" % Color(str(e)))
+            if show:
+                print(Color("\n{autored}[ERROR] Type error {/red}"))
+                for e in type_errors:
+                    print(" -> %s" % Color(str(e)))
         res["errors"].extend(type_errors)
 
     elif isinstance(exp, m_conditionCmp):
-        tmp1 = type_checker(compiler, exp.exp1)
-        tmp2 = type_checker(compiler, exp.exp2)
+        tmp1 = type_checker(compiler, exp.exp1, show=show)
+        tmp2 = type_checker(compiler, exp.exp2, show=show)
         res["type"].extend([tmp1["type"], tmp2["type"]])
         res["errors"].extend(tmp1["errors"])
         res["errors"].extend(tmp2["errors"])
 
     elif isinstance(exp, m_conditionComb):
-        tmp1 = type_checker(compiler, exp.cond1)
-        tmp2 = type_checker(compiler, exp.cond2)
+        tmp1 = type_checker(compiler, exp.cond1, show=show)
+        tmp2 = type_checker(compiler, exp.cond2, show=show)
         res["type"].extend([tmp1["type"], tmp2["type"]])
         res["errors"].extend(tmp1["errors"])
         res["errors"].extend(tmp2["errors"])
 
     elif isinstance(exp, m_conditionNotComb):
-        tmp = type_checker(compiler, exp.exp)
+        tmp = type_checker(compiler, exp.exp, show=show)
         res["type"].extend(tmp["type"])
         res["errors"].extend(tmp["errors"])
 
@@ -1107,7 +1109,7 @@ def type_checker(compiler, exp):
 
             # ################# Exp type ##################
             if not (isinstance(exp.args, m_constant) or isinstance(exp.args, m_predicate)):
-                tmp = type_checker(compiler, exp.args)
+                tmp = type_checker(compiler, exp.args, show=show)
                 res["type"].extend(tmp["type"])
                 res["errors"].extend(tmp["errors"])
                 args_types = res["type"]
@@ -1123,6 +1125,7 @@ def type_checker(compiler, exp):
                                                            "|".join([str(x.name) for x in args_types])))
 
             if len(type_errors) > 0:
+                if show:
                     print(Color("\n{autored}[ERROR] Type error {/red}"))
                     for e in type_errors:
                         print(" -> %s" % Color(str(e)))
