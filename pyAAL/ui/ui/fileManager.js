@@ -266,6 +266,13 @@ visualEditor.ui.fileManager = {
 				"positionClass": "toast-top-center"
 			});
         visualEditor.ui.updateToastSize("error", {"width": 600, height:350}, false, "none", (window.innerHeight - 600)/2 + "px");
+        // Minimazing on dbl click
+        $(".toast-error").dblclick(function() {
+            if($(this).height() >= 20)
+                $(this).animate({width: "150px", height: "30px"});
+            else
+                $(this).animate({width: "600px", height: "350"});
+        });
     },
 
     /**
