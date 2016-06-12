@@ -253,7 +253,7 @@ visualEditor.ui.fileManager = {
                 "</div><br>";
         });
 
-        var abt = "<div style='overflow: auto; height: 300px;'>" + h +"</div>";
+        var abt = "<div style='overflow: auto; height: 300px; margin-top: 10px;'>" + h +"</div>";
 
         toastr.error(abt, "History", {
 				"closeButton": true,
