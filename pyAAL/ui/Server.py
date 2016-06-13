@@ -58,12 +58,15 @@ class ForkingSimpleServer(ForkingMixIn, HTTPServer):
 class HTTPRequestHandler(SimpleHTTPRequestHandler):
 
     def get_arg(self, args, name, method):
-        if method == "GET":
-            return args[name]
-        elif method == "POST":
-            return args[name][0]
-        else:
-            return "Method error"
+        try:
+            if method == "GET":
+                return args[name]
+            elif method == "POST":
+                return args[name][0]
+            else:
+                return "Method error"
+        except:
+            return ""
 
     def handle_req(self, args, method):
         # print(args)
@@ -146,6 +149,15 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             res = api_register_accmon_monitor(self.get_arg(args, "formula", method), self.get_arg(args, "name", method),
                                               self.get_arg(args, "accmon_url", method))
 
+        elif val == "svnLog":
+            res = svn_log(self.get_arg(args, "target", method))
+
+        elif val == "svnDiff":
+            res = svn_diff(self.get_arg(args, "target", method), self.get_arg(args, "r1", method), self.get_arg(args, "r2", method))
+
+        elif val == "svnRevert":
+            res = svn_revert(self.get_arg(args, "target", method), self.get_arg(args, "version", method))
+
         elif val == "cancelCurrentPS":
             res = "No aalc/tspassc process is running"
             ps = get_current_ps_id()
@@ -202,6 +214,8 @@ def run(server_class=ForkingSimpleServer, handler_class=HTTPRequestHandler):
     server_address = ('', server_port)
     httpd = server_class(server_address, handler_class)
     print("Server start on port " + str(server_port))
+    print("SVN repo initialization...")
+    svn_init()
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

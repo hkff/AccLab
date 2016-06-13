@@ -337,12 +337,12 @@ class m_aalprog(aalmmnode):
         res = ""
         res += "// Types Declarations\n"
         res += "\n".join([str(x) for x in self.declarations["types"]])+"\n\n"
-        res += "// Agents Declarations\n"
-        res += "\n".join([str(x) for x in self.declarations["agents"]])+"\n\n"
         res += "// Service Declarations\n"
         res += "\n".join([str(x) for x in self.declarations["services"]])+"\n\n"
         res += "// Data Declarations\n"
         res += "\n".join([str(x) for x in self.declarations["data"]])+"\n\n"
+        res += "// Agents Declarations\n"
+        res += "\n".join([str(x) for x in self.declarations["agents"]])+"\n\n"
         res += "// Clauses \n"
         res += "\n".join([str(x) for x in self.clauses])+"\n\n"
         res += "// Macros \n"
@@ -1179,6 +1179,8 @@ class m_qvar(aalmmnode):
 
     def to_ltl(self):
         res = str(self.quant.to_ltl()) + "[" + str(self.variable.target.name) + "] ( " + str(self.variable.target.to_ltl())
+        if self.condition is not None:
+            res += " & " + str(self.condition.to_ltl())
         if self.quant is m_quant.Q_forall:
             res += " => "
         elif self.quant is m_quant.Q_exists:
@@ -1510,7 +1512,10 @@ class m_action(m_aexp):
         res = ""
         # HANDLE time
         if self.time is not None:
-            res += "(" + str(self.time.to_ltl()) + " => "
+            if self.time.action == m_booleanOp.O_before:
+                res += "(" + str(self.time.to_ltl()) + " => ("
+            elif self.time.action == m_booleanOp.O_after:
+                res += "(" + str(self.time.to_ltl()) + " => sometime("
 
         if auth != "":
             res += auth
@@ -1528,7 +1533,7 @@ class m_action(m_aexp):
         res += ", ".join(args)
         res += ")"
         if self.time is not None:
-            res += ")"
+            res += "))"
         return res
 
     def to_natural(self, kw=True, auth=False):
@@ -1679,6 +1684,7 @@ class m_booleanOp(sEnum):
     O_false = "FALSE"
     O_until = "UNTIL"
     O_unless = "UNLESS"
+    O_equiv = "<=>"
 
     def to_natural(self, kw=True):
         if self == m_booleanOp.O_equal:
@@ -1713,6 +1719,8 @@ class m_booleanOp(sEnum):
             return str(FOTLOperators.t_until)
         elif self == m_booleanOp.O_unless:
             return str(FOTLOperators.t_unless)
+        elif self == m_booleanOp.O_equiv:
+            return str(FOTLOperators.t_equivalence)
 
 
 # Author

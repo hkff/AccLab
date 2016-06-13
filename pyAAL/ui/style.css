@@ -575,3 +575,7 @@ path.pointer{
     float: left;
     text-decoration: none;
 }
+
+.svnLogEntry {
+    margin-right: 10px;
+}

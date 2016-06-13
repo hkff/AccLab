@@ -84,6 +84,7 @@ O_not      : 'NOT';      // | 'not';
 O_where    : 'WHERE';    // | 'where';
 O_after    : 'AFTER';    // | 'after';
 O_before   : 'BEFORE';   // | 'before';
+O_equiv    : '<=>';
 
 /** Temporal operators **/
 T_must     : 'MUST';     // | 'must';
@@ -243,7 +244,7 @@ actionExp8qvar        : qvar actionExp; // Force the first qvar
 
 quant       : Q_forall | Q_exists;
 qvar        : quant h_variable (O_where condition)?;
-booleanOp   : O_and | O_or | O_onlywhen | T_until | T_unless;
+booleanOp   : O_and | O_or | O_onlywhen | T_until | T_unless | O_equiv;
 author      : (A_permit | A_deny) action NEWLINE?;
 ifthen      : O_if h_lpar actionExp h_rpar O_then h_lmar actionExp h_rmar
             | O_if actionExp O_then actionExp
@@ -283,7 +284,7 @@ behavior :  M_behavior ID h_lpar actionExp h_rpar;
 
 
 //****  LTL checking extension ****//
-ltlCheck : M_check ID args? h_lmar check h_rmar;
+ltlCheck : M_check ID args? h_lpar check h_rpar;
 check   : MCODE; //formula;
 checkApply : M_apply ID h_lpar STRING* h_rpar;
 env     : M_env MCODE; //formula;

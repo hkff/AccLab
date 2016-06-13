@@ -70,6 +70,7 @@ visualEditor.ui.fileManager = {
 		  //'<div class="menu-sep"></div>'+
 		  '<div id="fmm-delete" data-options="iconCls:\'fa fa-times\'" class="menu-item cmenuBtn">Delete</div>'+
 		  '<div id="fmm-refresh" data-options="iconCls:\'fa fa-refresh\'" class="menu-item cmenuBtn">Refresh</div>'+
+          '<div id="fmm-svn" data-options="iconCls:\'fa fa-code-fork\'" class="menu-item cmenuBtn">History</div>'+
 		  '<div id="fmm-compile" data-options="iconCls:\'fa fa-cog\'" class="menu-item cmenuBtn">Compile</div>'+
           '<div id="fmm-run" data-options="iconCls:\'fa fa-flash\'" class="menu-item cmenuBtn">Run</div>'+ '</div>';
 		$('body').append(this.ctMenu);
@@ -220,7 +221,59 @@ visualEditor.ui.fileManager = {
                 toastr.error('Not a runnable file !');
             }
 		});
+
+        $('#fmm-svn').click(function(e){
+			var node = $("#explorer").tree('getSelected');
+			var path = _this.getAbsPath(node, $("#explorer"));
+			_this.svnLog(path, _this.show_svn_history);
+		});
 	},
+
+    /**
+     * Show svn history
+     * @param target
+     * @param history
+     */
+    show_svn_history: function(target, history) {
+        var xml = $.parseXML(history);
+
+        var h = "<br>";
+        $(xml).find("logentry").each(function(index) {
+            h += "<div class='svnLogEntry'>" +
+                "r" + $(this).attr("revision") + " | " + $(this).find("author").text() +
+                " | " + $(this).find("date").text() +
+                " | " + $(this).find("msg").text() +
+
+                "<button style='float: right; margin-rigth: 5px;'" +
+                "onclick='visualEditor.ui.fileManager.svnDiff(\"" + target +"\", " + $(this).attr('revision') +")'>Diff</button>" +
+
+                "<button style='float: right; margin-right: 5px;'" +
+                "onclick='visualEditor.ui.fileManager.svnRevert(\"" + target +"\", " + $(this).attr('revision') +")'>Rollback</button>" +
+
+                "</div><br>";
+        });
+
+        var abt = "<div style='overflow: auto; height: 300px; margin-top: 10px;'>" + h +"</div>";
+
+        toastr.error(abt, "History", {
+				"closeButton": true,
+				"preventDuplicates": true,
+				"tapToDismiss": false,
+  				"showDuration": "1000",
+			  	"hideDuration": "1000",
+			  	"timeOut": 0,
+			  	"extendedTimeOut": 0,
+				"positionClass": "toast-top-center"
+			});
+        visualEditor.ui.updateToastSize("error", {"width": 600, height:350}, false, "none", (window.innerHeight - 600)/2 + "px");
+        // Minimazing on dbl click
+        $(".toast-error").dblclick(function() {
+            if($(this).height() >= 20)
+                $(this).animate({width: "150px", height: "30px"});
+            else
+                $(this).animate({width: "600px", height: "350"});
+        });
+    },
 
     /**
      * Create a file from menu btn
@@ -354,7 +407,8 @@ visualEditor.ui.fileManager = {
 	/**
 	 * Reload the current opened file
 	 */
-	reloadFile: function() {
+	reloadFile: function(changeMode) {
+        changeMode = (changeMode != undefined)? changeMode : true;
         var file = visualEditor.ui.activeTab.container.title;
 		var fileType = file.split('.').pop().toLowerCase();
 		var dType = "text";
@@ -379,7 +433,8 @@ visualEditor.ui.fileManager = {
 						visualEditor.ui.outline.canvasToTree();
 
                         // Switch to acd mode
-                        visualEditor.acdMode();
+                        if(changeMode)
+                            visualEditor.acdMode();
 			 			break;
                     case "aal":
 					    // Set the source
@@ -388,7 +443,8 @@ visualEditor.ui.fileManager = {
                         visualEditor.activeEditor.session.getUndoManager().markClean();
 
 						// Switch to aal mode
-                        visualEditor.aalMode();
+                        if(changeMode)
+                            visualEditor.aalMode();
 						break;
 				}
 			}
@@ -734,5 +790,53 @@ visualEditor.ui.fileManager = {
             //var children = $("#explorer").tree("getChildren", e);
 
         });
-    }
+    },
+
+	svnLog: function(target, callback) {
+		$.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "svnLog", target: target},
+            success: function(response) {
+                if(callback != null || callback != undefined)
+					callback(target, response)
+            }});
+	},
+
+    svnDiff: function(target, r1, callback) {
+		$.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "svnDiff", target: target, r1: Number.parseInt(r1)-1, r2:r1},
+            success: function(response) {
+                toastr.info("<p style='overflow: auto; width: 100%; height: 200px;'>" + response + "</p>", "Diff", {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                        "tapToDismiss": true,
+                        "showDuration": "1000",
+                        "hideDuration": "1000",
+                        "timeOut": 0,
+                        "extendedTimeOut": 0,
+                        "positionClass": "toast-top-center"
+                    });
+                visualEditor.ui.updateToastSize("info", {"width": 600, height:250}, false, "none", (window.innerHeight - 600)/2 + "px");
+                if(callback != null || callback != undefined)
+					callback(target, response)
+            }});
+	},
+
+    svnRevert: function(target, version, callback) {
+		$.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "svnRevert", target: target, version: version},
+            success: function(response) {
+                $("#explorer").tree("reload"); // Refresh file tree
+                if(callback != null || callback != undefined)
+					callback(target, response)
+            }});
+	}
 };
