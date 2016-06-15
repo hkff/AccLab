@@ -452,15 +452,15 @@ def validate2(compiler, c1, check: bool=False, verbose: bool=False):
     res = ""
     fres = {"res": "", "sat": "", "neg": "", "monodic": "", "psat": "", "pneg": "", "ok": ""}
 
-    # Monodic test
-    res += "------------------------- Monodic check -------------------------\n"
-    mc1 = check_monodic(c1)
-    if not mc1["monodic"]:
-        res += mc1["print"] + "\n"
-        res += "{autored}Please correct your clause. Exiting... {/red}\n"
-        return
-    res += "{autogreen}Monodic check passed ! {/green}\n"
-    fres["monodic"] = mc1["monodic"]
+    # # Monodic test
+    # res += "------------------------- Monodic check -------------------------\n"
+    # mc1 = check_monodic(c1)
+    # if not mc1["monodic"]:
+    #     res += mc1["print"] + "\n"
+    #     res += "{autored}Please correct your clause. Exiting... {/red}\n"
+    #     return
+    # res += "{autogreen}Monodic check passed ! {/green}\n"
+    # fres["monodic"] = mc1["monodic"]
 
     ##
     # Satisfiability
