@@ -409,6 +409,7 @@ visualEditor.ui.fileManager = {
 	 */
 	reloadFile: function(changeMode) {
         changeMode = (changeMode != undefined)? changeMode : true;
+		var old_pos = visualEditor.activeEditor.getCursorPosition();
         var file = visualEditor.ui.activeTab.container.title;
 		var fileType = file.split('.').pop().toLowerCase();
 		var dType = "text";
@@ -445,6 +446,7 @@ visualEditor.ui.fileManager = {
 						// Switch to aal mode
                         if(changeMode)
                             visualEditor.aalMode();
+                        visualEditor.activeEditor.gotoLine(old_pos.row+1, old_pos.column, true);
 						break;
 				}
 			}
