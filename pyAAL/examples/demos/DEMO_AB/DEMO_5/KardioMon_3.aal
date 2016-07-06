@@ -1,6 +1,7 @@
-// 29/9/2015
-// ONLY KardioMonPolicy
-// Conflict example between data transfer and transfer behavior
+ // 29/9/2015
+// KardioMonPolicy
+// location processing: if only cardioMon peu utile
+// TODO transfer or storage ?
 
 // Loading types & macros libraries
 LOAD "core.types"
@@ -16,7 +17,6 @@ AGENT customer TYPES(DataSubject ) REQUIRED() PROVIDED()
 AGENT mapOnWeb TYPES(DataProcessor ) REQUIRED() PROVIDED()
 AGENT dataSpacer TYPES(DataProcessor ) REQUIRED() PROVIDED()
 AGENT auditor TYPES(Auditor) REQUIRED() PROVIDED()
-// AGENT fake TYPES(Actor) REQUIRED() PROVIDED()
 
 // Services
 SERVICE read
@@ -26,29 +26,22 @@ SERVICE delete
 SERVICE notify
 SERVICE transfer
 
-LOAD "DEMO_AB.DEMO_5.wtypes"
-LOAD "DEMO_AB.DEMO_5.locations"
+LOAD "demos.DEMO_AB.DEMO_5.wtypes"
+LOAD "demos.DEMO_AB.DEMO_5.locations"
+
 
 /***************************
  *       Clauses
  ****************************/
  // result from the translation of (some) privacy information 
  // with some grouping and simplification from the security expert
-CLAUSE cardioMonPolicy ( 
-
+CLAUSE cardioMonPolicy (  
   // Customer
   (FORALL c:Customer FORALL d:data IF (d.subject==c)
         THEN {PERMIT c.read[cardioMon](d) AND PERMIT c.write[cardioMon](d) AND PERMIT c.update[cardioMon](d) AND PERMIT c.delete[cardioMon](d)})
-  // add no delete for any data any actor not a Customer (not consistent with data retention)
-  AND (FORALL a:Actor FORALL d:data IF (NOT @Customer(a)) THEN {DENY a.delete[cardioMon](d)})
-          
-  // Part of the Kardio - Mon behaviour
-    AND @Italy(dataSpacer) 
-    AND (FORALL s:data cardioMon.transfer[dataSpacer](s))
-  // TODO interaction with mapOnWeb    
-
+  AND
  // lines 1,2,7,8,12
-    AND (FORALL a:Actor FORALL d:UserName IF  ((a==cardioMon) OR @Employee(a) OR (a==mapOnWeb))
+    (FORALL a:Actor FORALL d:UserName IF  ((a==cardioMon) OR @Employee(a) OR (a==mapOnWeb))
         THEN {DENY a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
     AND (FORALL a:Actor FORALL d:Password IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
         THEN {DENY a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
@@ -60,7 +53,7 @@ CLAUSE cardioMonPolicy (
         THEN {DENY a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
   AND 
  // lines 3,4,5
-     (FORALL d:UserId ((FORALL e:Employee PERMIT e.read[cardioMon](d)) AND DENY mapOnWeb.read[cardioMon](d)) AND PERMIT cardioMon.read[cardioMon](d))
+     (FORALL d:UserId (PERMIT cardioMon.read[cardioMon](d) AND (FORALL e:Employee PERMIT e.read[cardioMon](d)) AND DENY mapOnWeb.read[cardioMon](d)))
     AND (FORALL d:DisplayName (PERMIT cardioMon.read[cardioMon](d) AND (FORALL e:Employee PERMIT e.read[cardioMon](d)) AND DENY mapOnWeb.read[cardioMon](d)))
     AND (FORALL d:Gender  (PERMIT cardioMon.read[cardioMon](d) AND (FORALL e:Employee PERMIT e.read[cardioMon](d)) AND DENY mapOnWeb.read[cardioMon](d)))
     AND (FORALL a:Actor FORALL d:UserId IF  ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
@@ -70,7 +63,7 @@ CLAUSE cardioMonPolicy (
     AND (FORALL a:Actor FORALL d:Gender IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
         THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
   AND
- // lines 6,13 (some access control rights)
+ // lines 6,13
      (FORALL a:Actor FORALL d:Age IF  ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
         THEN {PERMIT a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)})
     AND (FORALL a:Actor FORALL d:Country IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
@@ -87,94 +80,118 @@ CLAUSE cardioMonPolicy (
     AND (FORALL a:Actor FORALL d:Heartbeat IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
         THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
 
+// data retention 
+// From DPPT: The data retention period (period after which data will be deleted by CardioMon) is 6 month
+    AND (FORALL ds:Sensitive  MUST( cardioMon.delete[cardioMon](ds) BEFORE "6 month"))
+    
  // data transfer 
  // From DPPT: Kardio - Mon has a data transfer policy country where data will be transferred is Greece
- // DATA: sensitive SOURCE: cardioMon ACTION: transfer TARGET: Greece only
 	AND (FORALL d:Sensitive FORALL a:Actor IF (@Greece(a)) THEN {PERMIT cardioMon.transfer[a](d)}) 
 	AND (FORALL d:Sensitive FORALL a:Actor IF (NOT @Greece(a)) THEN {DENY cardioMon.transfer[a](d)}) 
 
-// data retention 
-// From DPPT: The data retention period (period after which data will be deleted by CardioMon) is 6 months
-// DATA: sensitive RETENTION: 6 months PROVIDER: cardioMon
-    AND (FORALL ds:Sensitive MUST( cardioMon.delete[cardioMon](ds) BEFORE "6 month"))
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
      // fill audit expression 
-//	AUDITING (ALWAYS (auditor.audit[cardioMon](wearableCo)))
+	AUDITING (ALWAYS (auditor.audit[cardioMon](wearableCo)))
     // fill rectification expression
-	//IF_VIOLATED_THEN (FORALL c:Customer auditor.notify[c](dataBreach))
+	IF_VIOLATED_THEN (FORALL c:Customer auditor.notify[c](dataBreach))
 )
 
-// Needed to check inconsistencies but comes from countries disjunction 
-ENV """
-(always ![a] (Italy(a) => ~Greece(a)))
+// quite complete werableCo to Employee policy
+CLAUSE wearableCoToEmployeePolicy (  
+	(FORALL e:Employee FORALL d:UserName (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:TrainingActivity (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Password (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Height (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Weight (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:SugarLevel (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:BloodPressure (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Heartbeat (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:UserId (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:DisplayName (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Gender (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Age (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+    AND (FORALL e:Employee FORALL d:Country (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
 
-"""
+// data retention 
+// From DPPT: WearableCo expects a data retention period of 3 months -> 7months
+   AND  (FORALL ds:Sensitive MUST(cardioMon.delete[cardioMon](ds) BEFORE "7 month"))  
+
+// data transfer 
+// From DPPT: Wearable Co defines Germany as a Location where data can be transferred
+// DATA: sensitive ACTION: transfer SOURCE: cardioMon TARGET-LOCATION : germany
+	AND  (FORALL d:Sensitive FORALL a:Actor IF (@Greece(a)) THEN {PERMIT cardioMon.transfer[a](d)}) 
 
 
-// ------------------------------
+
+
+
+
+
+
+
+
+
+
+    // fill audit expression 
+	AUDITING (ALWAYS (auditor.audit[cardioMon](wearableCo)))
+    // fill rectification expression
+	IF_VIOLATED_THEN (FORALL c:Customer auditor.notify[c](dataBreach))
+	)
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
 // TESTING
 //---------------------------
+// CALL check_aal()
+//CALL sat_ue("cardioMonPolicy") // 
+//CALL sat_ue("wearableCoToEmployeePolicy") // 
 
-//CALL sat_ue("cardioMonPolicy")
-
-// CALL conflict("cardioMonPolicy") 
-// 30 s 
-
-
-//
-//CALL econflict("cardioMonPolicy" "10") 
-// cela fait nqq !!!!!
-
-//CALL conflict("cardioMonPolicy" "30") 
-// with data transfer 6s pas 
-// ???? 43
-
-// with access rights
-// 1 -> nothing
-// 2 -> vu at line 0
-// 3 -> idem 2s
-// 4 -> 2.4s
-// 5 -> 2.6s
-// 6 -> 3s
-// 10 -> 10 s 2lines cette fois
-// 20 -> 24s line 66: une PERMIT et line 0
-// 30 -> OK j'ai les deux en 34s
-
-// --------------- FIRST STEP
-// 1) present declarations ...
-// 2) show line 6 and comment
-// 3 template 
-// CALL sat_ue("cardioMonPolicy") // 
-// 4) discuss conflict detection
-// CALL conflict("cardioMonPolicy") // OK mais plus les lignes !!!
-// Age <-> UserName line 13 fix the problem
-// and recheck satisfiability
-
-// 5) data retention 
-// 6) checking it 
+// check the compliance of WearableCo policy with Kardio-Mon policy
+//CALL validate_usage_neg("cardioMonPolicy" "wearableCoToEmployeePolicy")
 
 
 
-  // Initial specification NEVER allowed to delete
-//    AND (FORALL d:data DENY cardioMon.delete[cardioMon](d))
- 
 
-CALL conflict("cardioMonPolicy")
-CALL conflict("cardioMonPolicy")
+
+
+
+
+
+
+// ----------------- COMMENTS
+// 1) show clause transfer for KardioMon
+// 2) detail the one for WearableCo
+// 3) compiance failed
+// 4) same process to identify and fix the problem
+
+// Greece => Germany NOT compliant
+// Germany should be Greece or WearableCo change for another provider
+// EEA => Germany VALID 
+
+/**
+// checking and finding conflict
+// TODO check unsat ??? 
+// We need more details about the context
+// an an hypothesis which can be inferred from the context
+ENV """
+(always ![a] (Germany(a) => ~Greece(a)))
+& (sometime ?[d, a] (Sensitive(d) & Actor(a) & Germany(a)))
+"""
+
+// CALL validate_usage_and("cardioMonPolicy" "wearableCoToEmployeePolicy")
+// UNSAT
+
+// Check conflict ? patine
+CALL ecompliance("cardioMonPolicy" "wearableCoToEmployeePolicy")
+*/
+CALL wvalidate_usage_neg("cardioMonPolicy" "wearableCoToEmployeePolicy")

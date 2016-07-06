@@ -1,7 +1,7 @@
  // 29/9/2015
 // KardioMonPolicy
 // location processing: if only cardioMon peu utile
-// TODO transfer or storage ?
+// TODO transfer or storage
 
 // Loading types & macros libraries
 LOAD "core.types"
@@ -26,14 +26,13 @@ SERVICE delete
 SERVICE notify
 SERVICE transfer
 
-LOAD "DEMO_AB.DEMO_5.wtypes"
-LOAD "DEMO_AB.DEMO_5.locations"
-
+LOAD "demos.DEMO_AB.DEMO_5.wtypes"
+LOAD "demos.DEMO_AB.DEMO_5.locations"
 
 /***************************
  *       Clauses
  ****************************/
- // result from the translation of (some) privacy information 
+ // result from the translation of privacy information 
  // with some grouping and simplification from the security expert
 CLAUSE cardioMonPolicy (  
   // Customer
@@ -79,24 +78,30 @@ CLAUSE cardioMonPolicy (
         THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
     AND (FORALL a:Actor FORALL d:Heartbeat IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
         THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
-
-// data retention 
-// From DPPT: The data retention period (period after which data will be deleted by CardioMon) is 6 month
-    AND (FORALL ds:Sensitive  MUST( cardioMon.delete[cardioMon](ds) BEFORE "6 month"))
-    
  // data transfer 
  // From DPPT: Kardio - Mon has a data transfer policy country where data will be transferred is Greece
 	AND (FORALL d:Sensitive FORALL a:Actor IF (@Greece(a)) THEN {PERMIT cardioMon.transfer[a](d)}) 
 	AND (FORALL d:Sensitive FORALL a:Actor IF (NOT @Greece(a)) THEN {DENY cardioMon.transfer[a](d)}) 
-
+// data retention 
+// From DPPT: The data retention period (period after which data will be deleted by CardioMon) is 6 month
+    AND (FORALL ds:Sensitive  MUST( cardioMon.delete[cardioMon](ds) BEFORE "6 month"))
      // fill audit expression 
 	AUDITING (ALWAYS (auditor.audit[cardioMon](wearableCo)))
     // fill rectification expression
 	IF_VIOLATED_THEN (FORALL c:Customer auditor.notify[c](dataBreach))
 )
 
-// quite complete werableCo to Employee policy
-CLAUSE wearableCoToEmployeePolicy (  
+
+
+
+
+
+
+
+
+
+// WearableCo  policy
+CLAUSE wearableCoEmployeePolicy (  
 	(FORALL e:Employee FORALL d:UserName (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
 	AND (FORALL e:Employee FORALL d:TrainingActivity (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
 	AND (FORALL e:Employee FORALL d:Password (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
@@ -111,87 +116,50 @@ CLAUSE wearableCoToEmployeePolicy (
 	AND (FORALL e:Employee FORALL d:Age (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
     AND (FORALL e:Employee FORALL d:Country (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
 
+
 // data retention 
-// From DPPT: WearableCo expects a data retention period of 3 months -> 7months
-   AND  (FORALL ds:Sensitive MUST(cardioMon.delete[cardioMon](ds) BEFORE "7 month"))  
-
-// data transfer 
-// From DPPT: Wearable Co defines Germany as a Location where data can be transferred
-// DATA: sensitive ACTION: transfer SOURCE: cardioMon TARGET-LOCATION : germany
-	AND  (FORALL d:Sensitive FORALL a:Actor IF (@Greece(a)) THEN {PERMIT cardioMon.transfer[a](d)}) 
-
-
-
-
-
-
-
-
-
-
-
-
+// From DPPT: WearableCo expects a data retention period of 3 months
+// DATA: sensitive PROVIDER: cardioMon RETENTION: 3 months 
+  AND  (FORALL ds:Sensitive MUST(cardioMon.delete[cardioMon](ds) BEFORE "3 month"))  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // fill audit expression 
-	AUDITING (ALWAYS (auditor.audit[cardioMon](wearableCo)))
+//	AUDITING (ALWAYS (auditor.audit[cardioMon](wearableCo)))
     // fill rectification expression
-	IF_VIOLATED_THEN (FORALL c:Customer auditor.notify[c](dataBreach))
-	)
+//	IF_VIOLATED_THEN (FORALL c:Customer auditor.notify[c](dataBreach))
 	
+	)
 
-
-
-
-
-
-
-
-
-
-
-
-
-// TESTING
-//---------------------------
-// CALL check_aal()
-//CALL sat_ue("cardioMonPolicy") // 
-//CALL sat_ue("wearableCoToEmployeePolicy") // 
-
-// check the compliance of WearableCo policy with Kardio-Mon policy
+	
+	
+	
+	
+	
+	
+	
+// test compliance between the required (first) and offered (second) policies
 //CALL validate_usage_neg("cardioMonPolicy" "wearableCoToEmployeePolicy")
 
-
-
-
-
-
-
-
-
-
-// ----------------- COMMENTS
-// 1) show clause transfer for KardioMon
-// 2) detail the one for WearableCo
-// 3) compiance failed
-// 4) same process to identify and fix the problem
-
-// Greece => Germany NOT compliant
-// Germany should be Greece or WearableCo change for another provider
-// EEA => Germany VALID 
-
-/**
-// checking and finding conflict
-// TODO check unsat ??? 
-// We need more details about the context
-// an an hypothesis which can be inferred from the context
-ENV """
-(always ![a] (Germany(a) => ~Greece(a)))
-& (sometime ?[d, a] (Sensitive(d) & Actor(a) & Germany(a)))
-"""
-
-// CALL validate_usage_and("cardioMonPolicy" "wearableCoToEmployeePolicy")
-// UNSAT
-
-// Check conflict ? patine
-CALL ecompliance("cardioMonPolicy" "wearableCoToEmployeePolicy")
-*/
-CALL wvalidate_usage_neg("cardioMonPolicy" "wearableCoToEmployeePolicy")
+// ----------------------- COMMENTS
+// SECOND STEP
+// 1) comment data retention, rewrite MUST rewrite delete 
+// 2) check it is OK
+// 3) check for compliance it is not
+// // 3 => 6 NO
+// 4) masking we have compliance ...
+// 1 year => 6 VALID
+// 5) fix and recheck it
+//CALL wsat_ue("wearableCoToEmployeePolicy")
+// Check conflict ? no difficult here

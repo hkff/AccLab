@@ -124,7 +124,7 @@ CLAUSE MapOnWeb_Policy (
     }
 
     // Audit : Here the audit is performed by the APPLE runtime monitor
-    AUDITING always(monitor.audit[mapOnWeb]())
+    AUDITING ALWAYS(monitor.audit[mapOnWeb]())
 
     IF_VIOLATED_THEN
         // <!--Notification of Cardio Mon about security breach (policy violation) -->
@@ -144,6 +144,10 @@ EXEC
 print("-------------------")
 """
 
-CHECK c1 (  clause(MapOnWeb_Policy).ue => clause(wearableCo_policy).ue)
+CHECK c1 (
+"""
+clause(MapOnWeb_Policy).ue => clause(wearableCo_policy).ue
+"""
+)
 
 APPLY c1()

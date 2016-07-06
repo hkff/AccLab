@@ -7,6 +7,7 @@
     "width": 50,
     "height": 50,
     "alpha": 1,
+    "angle": 0,
     "userData": {},
     "cssClass": "AgentUI",
     "ports": [
@@ -15,11 +16,13 @@
         "width": 10,
         "height": 10,
         "alpha": 1,
+        "angle": 0,
         "userData": {},
         "cssClass": "draw2d_RequiredPort",
         "bgColor": "#4F6870",
         "color": "#1B1B1B",
         "stroke": 1,
+        "dasharray": null,
         "maxFanOut": 9007199254740991,
         "name": "read",
         "port": "draw2d.RequiredPort",
@@ -30,11 +33,13 @@
         "width": 10,
         "height": 10,
         "alpha": 1,
+        "angle": 0,
         "userData": {},
         "cssClass": "draw2d_RequiredPort",
         "bgColor": "#4F6870",
         "color": "#1B1B1B",
         "stroke": 1,
+        "dasharray": null,
         "maxFanOut": 9007199254740991,
         "name": "store",
         "port": "draw2d.RequiredPort",
@@ -45,11 +50,13 @@
         "width": 10,
         "height": 10,
         "alpha": 1,
+        "angle": 0,
         "userData": {},
         "cssClass": "draw2d_RequiredPort",
         "bgColor": "#4F6870",
         "color": "#1B1B1B",
         "stroke": 1,
+        "dasharray": null,
         "maxFanOut": 9007199254740991,
         "name": "delete",
         "port": "draw2d.RequiredPort",
@@ -60,6 +67,7 @@
     "color": "#1B1B1B",
     "stroke": 1,
     "radius": 0,
+    "dasharray": null,
     "tlabeltxt": "alice",
     "policy": "CLAUSE alice_policy (\n    FORALL d:data\n    // Alice want to be able to read all her data stored on css\n    IF (d.subject == alice) THEN {\n        PERMIT alice.read[css](d)\n    }\n)",
     "pservices": {
@@ -88,6 +96,7 @@
     "width": 50,
     "height": 50,
     "alpha": 1,
+    "angle": 0,
     "userData": {},
     "cssClass": "AgentUI",
     "ports": [
@@ -96,11 +105,13 @@
         "width": 10,
         "height": 10,
         "alpha": 1,
+        "angle": 0,
         "userData": {},
         "cssClass": "draw2d_ProvidedPort",
         "bgColor": "#4F6870",
         "color": "#1B1B1B",
         "stroke": 1,
+        "dasharray": null,
         "maxFanOut": 9007199254740991,
         "name": "read",
         "port": "draw2d.ProvidedPort",
@@ -111,11 +122,13 @@
         "width": 10,
         "height": 10,
         "alpha": 1,
+        "angle": 0,
         "userData": {},
         "cssClass": "draw2d_ProvidedPort",
         "bgColor": "#4F6870",
         "color": "#1B1B1B",
         "stroke": 1,
+        "dasharray": null,
         "maxFanOut": 9007199254740991,
         "name": "store",
         "port": "draw2d.ProvidedPort",
@@ -126,11 +139,13 @@
         "width": 10,
         "height": 10,
         "alpha": 1,
+        "angle": 0,
         "userData": {},
         "cssClass": "draw2d_ProvidedPort",
         "bgColor": "#4F6870",
         "color": "#1B1B1B",
         "stroke": 1,
+        "dasharray": null,
         "maxFanOut": 9007199254740991,
         "name": "delete",
         "port": "draw2d.ProvidedPort",
@@ -141,11 +156,13 @@
         "width": 10,
         "height": 10,
         "alpha": 1,
+        "angle": 0,
         "userData": {},
         "cssClass": "draw2d_RequiredPort",
         "bgColor": "#4F6870",
         "color": "#1B1B1B",
         "stroke": 1,
+        "dasharray": null,
         "maxFanOut": 9007199254740991,
         "name": "backup",
         "port": "draw2d.RequiredPort",
@@ -156,6 +173,7 @@
     "color": "#1B1B1B",
     "stroke": 1,
     "radius": 0,
+    "dasharray": null,
     "tlabeltxt": "css",
     "policy": "CLAUSE css_policy (\n    FORALL d:data FORALL a:Actor\n\n    // Allow users to read their data\n    IF (d.subject == a) THEN {\n        PERMIT a.read[css](d)\n    } AND\n\n    // Deny access to read other\n    IF (d.subject != a) THEN {\n        DENY a.read[css](d)\n    } AND\n\n    // Allow css to read/delete stored data\n    PERMIT css.read[css](d) AND\n    PERMIT css.delete[css](d)\n)",
     "pservices": {
@@ -186,6 +204,7 @@
     "width": 50,
     "height": 50,
     "alpha": 1,
+    "angle": 0,
     "userData": {},
     "cssClass": "AgentUI",
     "ports": [
@@ -194,11 +213,13 @@
         "width": 10,
         "height": 10,
         "alpha": 1,
+        "angle": 0,
         "userData": {},
         "cssClass": "draw2d_ProvidedPort",
         "bgColor": "#4F6870",
         "color": "#1B1B1B",
         "stroke": 1,
+        "dasharray": null,
         "maxFanOut": 9007199254740991,
         "name": "backup",
         "port": "draw2d.ProvidedPort",
@@ -209,6 +230,7 @@
     "color": "#1B1B1B",
     "stroke": 1,
     "radius": 0,
+    "dasharray": null,
     "tlabeltxt": "ebs",
     "policy": "",
     "pservices": {
@@ -228,9 +250,41 @@
     "DEFAULT_labelColor": "#0d0d0d"
   },
   {
-    "type": "draw2d.Connection",
-    "id": "2ce30722-2e66-e0a3-5fb2-df142d42b235",
+    "type": "ActorUI2",
+    "id": "69a27fb9-def2-0f19-bb3f-2f0b250609a4",
+    "x": 207,
+    "y": 452,
+    "width": 101,
+    "height": 27,
     "alpha": 1,
+    "angle": 0,
+    "userData": {},
+    "cssClass": "ActorUI2",
+    "ports": [],
+    "bgColor": "#93D7F3",
+    "color": "#39B2E5",
+    "stroke": 1,
+    "radius": 2,
+    "dasharray": null,
+    "gap": 5,
+    "policy": "",
+    "RSO": [],
+    "PSO": [],
+    "types": {
+      "data": []
+    },
+    "DEFAULT_bgColor": "#93d7f3",
+    "DEFAULT_rsColor": "#0d0d0d",
+    "DEFAULT_psColor": "#0d0d0d",
+    "DEFAULT_labelColor": "#0d0d0d",
+    "name": "Alice",
+    "entities": []
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "4a1bbc6e-fc57-f280-a8db-fb98abac0652",
+    "alpha": 1,
+    "angle": 0,
     "userData": {},
     "cssClass": "draw2d_Connection",
     "stroke": 3,
@@ -238,6 +292,121 @@
     "outlineStroke": 0,
     "outlineColor": "#303030",
     "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "vertex": [
+      {
+        "x": 166,
+        "y": 120.5
+      },
+      {
+        "x": 209.83333333333331,
+        "y": 120.49999999999999
+      },
+      {
+        "x": 228.154296875,
+        "y": 120.5
+      },
+      {
+        "x": 249.55729166666666,
+        "y": 120.49999999999999
+      },
+      {
+        "x": 273.0149739583333,
+        "y": 120.5
+      },
+      {
+        "x": 297.5,
+        "y": 120.50000000000001
+      },
+      {
+        "x": 321.98502604166663,
+        "y": 120.49999999999999
+      },
+      {
+        "x": 345.4427083333333,
+        "y": 120.5
+      },
+      {
+        "x": 366.845703125,
+        "y": 120.5
+      },
+      {
+        "x": 385.1666666666667,
+        "y": 120.49999999999999
+      },
+      {
+        "x": 429,
+        "y": 120.5
+      }
+    ],
+    "router": "draw2d.layout.connection.SplineConnectionRouter",
+    "radius": 0,
+    "source": {
+      "node": "06ae0732-0900-7cb8-6add-ab87cb3f90b9",
+      "port": "delete"
+    },
+    "target": {
+      "node": "a64292db-93df-e7af-0eda-c99e3fd5147f",
+      "port": "delete"
+    }
+  },
+  {
+    "type": "draw2d.Connection",
+    "id": "2ce30722-2e66-e0a3-5fb2-df142d42b235",
+    "alpha": 1,
+    "angle": 0,
+    "userData": {},
+    "cssClass": "draw2d_Connection",
+    "stroke": 3,
+    "color": "#00A8F0",
+    "outlineStroke": 0,
+    "outlineColor": "#303030",
+    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "vertex": [
+      {
+        "x": 166,
+        "y": 95.5
+      },
+      {
+        "x": 209.83333333333331,
+        "y": 95.5
+      },
+      {
+        "x": 228.154296875,
+        "y": 95.49999999999999
+      },
+      {
+        "x": 249.55729166666666,
+        "y": 95.5
+      },
+      {
+        "x": 273.0149739583333,
+        "y": 95.5
+      },
+      {
+        "x": 297.5,
+        "y": 95.50000000000001
+      },
+      {
+        "x": 321.98502604166663,
+        "y": 95.50000000000001
+      },
+      {
+        "x": 345.4427083333333,
+        "y": 95.5
+      },
+      {
+        "x": 366.845703125,
+        "y": 95.49999999999999
+      },
+      {
+        "x": 385.1666666666667,
+        "y": 95.5
+      },
+      {
+        "x": 429,
+        "y": 95.5
+      }
+    ],
     "router": "draw2d.layout.connection.SplineConnectionRouter",
     "radius": 0,
     "source": {
@@ -253,6 +422,7 @@
     "type": "draw2d.Connection",
     "id": "6bbc3d09-bd73-be97-4d09-e48dc9e7d140",
     "alpha": 1,
+    "angle": 0,
     "userData": {},
     "cssClass": "draw2d_Connection",
     "stroke": 3,
@@ -260,6 +430,52 @@
     "outlineStroke": 0,
     "outlineColor": "#303030",
     "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "vertex": [
+      {
+        "x": 166,
+        "y": 108
+      },
+      {
+        "x": 209.83333333333331,
+        "y": 108
+      },
+      {
+        "x": 228.154296875,
+        "y": 108
+      },
+      {
+        "x": 249.55729166666666,
+        "y": 108
+      },
+      {
+        "x": 273.0149739583333,
+        "y": 108
+      },
+      {
+        "x": 297.5,
+        "y": 108
+      },
+      {
+        "x": 321.98502604166663,
+        "y": 108
+      },
+      {
+        "x": 345.4427083333333,
+        "y": 108
+      },
+      {
+        "x": 366.845703125,
+        "y": 108
+      },
+      {
+        "x": 385.1666666666667,
+        "y": 108
+      },
+      {
+        "x": 429,
+        "y": 108
+      }
+    ],
     "router": "draw2d.layout.connection.SplineConnectionRouter",
     "radius": 0,
     "source": {
@@ -269,34 +485,13 @@
     "target": {
       "node": "a64292db-93df-e7af-0eda-c99e3fd5147f",
       "port": "store"
-    }
-  },
-  {
-    "type": "draw2d.Connection",
-    "id": "4a1bbc6e-fc57-f280-a8db-fb98abac0652",
-    "alpha": 1,
-    "userData": {},
-    "cssClass": "draw2d_Connection",
-    "stroke": 3,
-    "color": "#00A8F0",
-    "outlineStroke": 0,
-    "outlineColor": "#303030",
-    "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
-    "router": "draw2d.layout.connection.SplineConnectionRouter",
-    "radius": 0,
-    "source": {
-      "node": "06ae0732-0900-7cb8-6add-ab87cb3f90b9",
-      "port": "delete"
-    },
-    "target": {
-      "node": "a64292db-93df-e7af-0eda-c99e3fd5147f",
-      "port": "delete"
     }
   },
   {
     "type": "draw2d.Connection",
     "id": "95c9c698-915b-87da-1821-71622adc60f9",
     "alpha": 1,
+    "angle": 0,
     "userData": {},
     "cssClass": "draw2d_Connection",
     "stroke": 3,
@@ -304,6 +499,180 @@
     "outlineStroke": 0,
     "outlineColor": "#303030",
     "policy": "draw2d.policy.line.LineSelectionFeedbackPolicy",
+    "vertex": [
+      {
+        "x": 479,
+        "y": 108
+      },
+      {
+        "x": 487.33333333333326,
+        "y": 108
+      },
+      {
+        "x": 490.81640624999994,
+        "y": 108.02360026041667
+      },
+      {
+        "x": 494.8854166666667,
+        "y": 108.18880208333333
+      },
+      {
+        "x": 499.3450520833333,
+        "y": 108.63720703125
+      },
+      {
+        "x": 504,
+        "y": 109.51041666666667
+      },
+      {
+        "x": 508.6549479166667,
+        "y": 110.95003255208333
+      },
+      {
+        "x": 513.1145833333333,
+        "y": 113.09765625
+      },
+      {
+        "x": 517.18359375,
+        "y": 116.09488932291666
+      },
+      {
+        "x": 520.6666666666666,
+        "y": 120.08333333333333
+      },
+      {
+        "x": 523.3655598958334,
+        "y": 125.1337890625
+      },
+      {
+        "x": 525.0703124999999,
+        "y": 131.03385416666669
+      },
+      {
+        "x": 525.5680338541666,
+        "y": 137.50032552083334
+      },
+      {
+        "x": 524.6458333333334,
+        "y": 144.25
+      },
+      {
+        "x": 522.0908203125,
+        "y": 150.99967447916666
+      },
+      {
+        "x": 517.6901041666666,
+        "y": 157.46614583333331
+      },
+      {
+        "x": 511.23079427083326,
+        "y": 163.36621093749997
+      },
+      {
+        "x": 502.49999999999994,
+        "y": 168.41666666666666
+      },
+      {
+        "x": 491.42382812499994,
+        "y": 172.42871093749997
+      },
+      {
+        "x": 478.484375,
+        "y": 175.59114583333331
+      },
+      {
+        "x": 464.302734375,
+        "y": 178.18717447916669
+      },
+      {
+        "x": 449.5,
+        "y": 180.50000000000003
+      },
+      {
+        "x": 434.69726562500006,
+        "y": 182.81282552083334
+      },
+      {
+        "x": 420.515625,
+        "y": 185.40885416666666
+      },
+      {
+        "x": 407.57617187499994,
+        "y": 188.5712890625
+      },
+      {
+        "x": 396.5,
+        "y": 192.58333333333331
+      },
+      {
+        "x": 387.76920572916663,
+        "y": 197.6337890625
+      },
+      {
+        "x": 381.3098958333333,
+        "y": 203.53385416666666
+      },
+      {
+        "x": 376.9091796875,
+        "y": 210.00032552083331
+      },
+      {
+        "x": 374.35416666666674,
+        "y": 216.75000000000003
+      },
+      {
+        "x": 373.43196614583337,
+        "y": 223.49967447916666
+      },
+      {
+        "x": 373.9296875,
+        "y": 229.96614583333331
+      },
+      {
+        "x": 375.63444010416663,
+        "y": 235.8662109375
+      },
+      {
+        "x": 378.3333333333333,
+        "y": 240.91666666666666
+      },
+      {
+        "x": 381.81640625,
+        "y": 244.90511067708331
+      },
+      {
+        "x": 385.88541666666663,
+        "y": 247.90234374999997
+      },
+      {
+        "x": 390.3450520833333,
+        "y": 250.04996744791669
+      },
+      {
+        "x": 395,
+        "y": 251.48958333333334
+      },
+      {
+        "x": 399.65494791666663,
+        "y": 252.36279296874997
+      },
+      {
+        "x": 404.11458333333337,
+        "y": 252.81119791666666
+      },
+      {
+        "x": 408.18359375,
+        "y": 252.97639973958334
+      },
+      {
+        "x": 411.6666666666667,
+        "y": 252.99999999999997
+      },
+      {
+        "x": 420,
+        "y": 253
+      }
+    ],
     "router": "draw2d.layout.connection.SplineConnectionRouter",
     "radius": 0,
     "source": {
