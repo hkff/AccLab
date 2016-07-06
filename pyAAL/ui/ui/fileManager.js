@@ -410,6 +410,7 @@ visualEditor.ui.fileManager = {
 	reloadFile: function(changeMode) {
         changeMode = (changeMode != undefined)? changeMode : true;
 		var old_pos = visualEditor.activeEditor.getCursorPosition();
+        var first_visible_row = visualEditor.activeEditor.getFirstVisibleRow();
         var file = visualEditor.ui.activeTab.container.title;
 		var fileType = file.split('.').pop().toLowerCase();
 		var dType = "text";
@@ -447,6 +448,7 @@ visualEditor.ui.fileManager = {
                         if(changeMode)
                             visualEditor.aalMode();
                         visualEditor.activeEditor.gotoLine(old_pos.row+1, old_pos.column, true);
+                        visualEditor.activeEditor.scrollToLine(first_visible_row+1);
 						break;
 				}
 			}
