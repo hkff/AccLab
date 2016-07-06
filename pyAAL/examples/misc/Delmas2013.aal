@@ -1,0 +1,52 @@
+// 27/6/2016
+// --------------
+// exemple Delmas2013
+
+// Loading types & macros libraries
+LOAD "core.types"
+LOAD "core.macros"
+
+/***************************
+ *       Declarations
+ ****************************/
+
+// Actors
+AGENT s TYPES(Actor) REQUIRED(send) PROVIDED()
+AGENT r TYPES(Actor) REQUIRED(send) PROVIDED()
+AGENT TWC TYPES(Actor) REQUIRED(send) PROVIDED()
+
+SERVICE send
+
+CLAUSE Listing (
+
+// add @data(tsunami) AND @data(military) ???
+
+    // send is permitted
+//    (FORALL s:Actor FORALL r:Actor FORALL d:data IF (s.send[r](d)) THEN {PERMIT s.send[r](d)})  AND
+    // permit is not forbidden
+    (FORALL s:Actor FORALL r:Actor FORALL d:data (NOT (PERMIT s.send[r](d) AND DENY s.send[r](d)))) AND
+    // tsunami example a
+//    (FORALL s:Actor FORALL d:data IF (@topic(d tsunami) AND @know(a d)) THEN {s.send[TWC](d)})  AND
+    // b
+    (FORALL s:Actor FORALL r:Actor FORALL d:data IF (@topic(d military) AND @know(s d)) THEN {DENY s.send[r](d)})  AND
+    // r
+//    (FORALL d:data EXISTS t:data @topic(d t)) AND
+    // c
+    (FORALL s:Actor FORALL r:Actor FORALL d:data IF (@topic(d tsunami) AND @know(s d)) THEN {PERMIT s.send[r](d)})  AND
+    // d
+//    (FORALL s:Actor FORALL r:Actor FORALL d:data IF ((NOT @topic(d military)) AND @know(a d)) THEN {PERMIT s.send[r](d)})  
+    // SAT 
+    // from Delmas
+    // AND (EXISTS d:data (@topic(d tsunami) AND @topic(d military)))
+    // SAT
+    //  P/D+b+c+add are sufficient
+    (EXISTS a:Actor EXISTS d:data (@topic(d tsunami) AND @topic(d military) AND @know(a d)))
+    /// UNSAT
+
+)
+
+// FOTL generation+sat
+CALL vsat("Listing") 
+
+ 
+ 

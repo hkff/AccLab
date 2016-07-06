@@ -1,0 +1,71 @@
+// 27/6/2016
+// --------------
+// examples from Shaikh2010
+
+// Loading types & macros libraries
+LOAD "core.types"
+LOAD "core.macros"
+
+/***************************
+ *       Declarations
+ ****************************/
+// some agents types
+TYPE Hospital EXTENDS(DataSubject) ACTIONS(read write delete) 
+TYPE Doctor EXTENDS(Hospital)
+TYPE Nurse EXTENDS(Hospital)
+TYPE Chief EXTENDS(Hospital)
+TYPE Admin EXTENDS(Hospital) ACTIONS(delegate)
+TYPE Technician EXTENDS(Hospital)
+TYPE Lab EXTENDS(Hospital)
+TYPE Patient EXTENDS(Hospital)
+TYPE MedicalRecord EXTENDS(data)
+TYPE DataBase EXTENDS(data)
+
+// y compris actions 
+SERVICE read
+SERVICE write
+SERVICE delete
+SERVICE delegate 
+
+
+CLAUSE Listing13 (
+
+    // ATTENTION put () 
+    (NOT (day AND night)) AND // context: time period exclusivity
+//    (FORALL x:Doctor FORALL md:MedicalRecord IF (@general(x) AND day) THEN {PERMIT x.read(md)}) AND
+    FORALL x:Doctor FORALL md:MedicalRecord IF (@general(x) AND night) THEN {DENY x.read(md)} AND 
+//    FORALL x:Doctor FORALL md:MedicalRecord IF (@emergency(x) AND day) THEN {PERMIT x.read(md)} AND 
+//    FORALL x:Doctor FORALL md:MedicalRecord IF (@emergency(x) AND night) THEN {PERMIT x.read(md)} AND 
+//    FORALL x:Doctor FORALL md:MedicalRecord IF (@office(x) AND day) THEN {DENY x.read(md)} AND 
+//    (FORALL x:Doctor FORALL md:MedicalRecord IF (@office(x) AND night) THEN {DENY x.read(md)}) AND 
+//    FORALL l:Lab FORALL md:MedicalRecord DENY l.read(md) AND
+//    FORALL a:Admin FORALL md:MedicalRecord DENY a.read(md) AND
+    FORALL x:Doctor FORALL md:MedicalRecord IF (@general(x) AND night) THEN {PERMIT x.read(md)}
+    // sat
+   AND EXISTS d:data EXISTS x:Doctor (@MedicalRecord(d) AND  @general(x) AND night)
+    // UNSAT
+)
+
+// FOTL generation+sat
+// CALL vsat("Listing13") 
+
+
+CLAUSE Listing8 (
+   // (FORALL a:Hospital FORALL d:DataBase (@rights(a d) <=> ((PERMIT a.read(d)) AND (PERMIT  a.write(d)) AND  (PERMIT a.delete(d))))) AND
+    (FORALL a:Hospital FORALL d:DataBase IF (@rights(a d)) THEN {(PERMIT a.read(d)) AND (PERMIT  a.write(d)) AND  (PERMIT a.delete(d))}) AND
+    (FORALL a:Hospital FORALL d:DataBase IF ((PERMIT a.read(d)) AND (PERMIT  a.write(d)) AND  (PERMIT a.delete(d))) THEN {@rights(a d)}) AND
+    (FORALL a:Admin FORALL d:DataBase @rights(a d)) AND
+    (FORALL c:Technician FORALL d:DataBase PERMIT c.read(d) AND PERMIT c.write(d)) AND
+    (FORALL a:Admin FORALL c:Technician FORALL d:DataBase IF (a.delegate(c)) THEN {@rights(c d)}) AND  
+    //(FORALL a:Agent FORALL d:DataBase ((PERMIT delete(c, d)) <=> @Admin(a)))
+    (FORALL a:Hospital FORALL d:DataBase IF (PERMIT c.delete(d)) THEN {@Admin(a)}) AND
+    (FORALL a:Hospital FORALL d:DataBase IF (@Admin(a)) THEN {PERMIT c.delete(d)})
+    // SAT 
+    AND EXISTS a:Admin EXISTS t:Technician a.delegate(t)
+    // SAT too
+    AND FORALL a:Hospital NOT (@Admin(a) AND @Technician(a)) 
+    // UNSAT
+)
+
+CALL vsat("Listing8") 
+ 

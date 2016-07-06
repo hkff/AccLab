@@ -1,0 +1,25 @@
+%% -*-Latex-*-
+%%% 27/6/2016
+%%% student and professor example
+%%%% -------------------
+%%% Only TSPASS version since AAL translation should be fixed
+
+%%%% ----------------------------
+%%%%   SHARED AND DYNAMIC ROLES and inconsistent permissions
+%% FORALL p:Person ((NOT Professor(p)) UNTIL (startPhD(p) AND (ALWAYS Professor(p))))  AND
+%% FORALL p:Person ((NOT getPhD(p)) UNTIL startPhD(p)) AND
+%% FORALL p:Person (Student(p) UNTIL (getPhD(p) AND (ALWAYS NOT Student(p))))
+%%%
+(![x] (~Professor(x) until (startPhD(x) & (always Professor(x)))))  &
+(![x] (~getPhD(x) until startPhD(x)))  &
+(![x] (Student(x) until (getPhD(x) & (always ~Student(x))))) &
+%%%% professors can read marks
+(always ![d,x] ((Professor(x) & Marks(d)) => Pread(x, d))) &
+%%% PERMIT student can read their marks
+(always ![d, x] ((Student(x) & Marks(d) & owner(x, d)) => Pread(x, d))) &
+%%% DENY
+(always ![d, x] ((~Professor(x) | ~Marks(d)) => ~Pread(x, d))) &
+(always ![d, x] ((~Student(x) | ~owner(x, d) | ~Marks(d)) => ~Pread(x, d)))
+%%%% SAT 189/0.008
+%%% (always ?[d] Marks(d)) %%% => UNSAT 282/0.009
+%%% (sometime (?[x] getPhD(x)) & (always (?[d] Marks(d)))) %%% UNSAT 338/0.01s

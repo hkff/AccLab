@@ -1,0 +1,41 @@
+// 27/6/2016
+// --------------
+
+// Loading types & macros libraries
+LOAD "core.types"
+LOAD "core.macros"
+
+/***************************
+ *       Declarations
+ ****************************/
+// some agents types
+TYPE Hospital EXTENDS(DataSubject) ACTIONS(read write) // REQUIRED() PROVIDED(read write) no???
+TYPE Doctor EXTENDS(Hospital)
+TYPE Nurse EXTENDS(Hospital)
+TYPE Chief EXTENDS(Hospital)
+TYPE Patient EXTENDS(Hospital)
+//TYPE MedicalRecord EXTENDS(data)
+
+SERVICE read
+SERVICE write
+
+// exemple 
+CLAUSE Listing12 (
+
+     // exemple Adi2009 
+    (FORALL e:Hospital NOT (@Doctor(e) AND @Nurse(e))) AND 
+    (FORALL p:Patient FORALL d:Doctor (PERMIT d.read(p) AND PERMIT d.write(p))) AND 
+    (FORALL p:Patient FORALL d:Doctor  IF (@sameward(d p)) THEN {PERMIT d.read(p)}) AND 
+    (FORALL p:Patient FORALL c:Chief  PERMIT c.read(p)) AND
+    (FORALL p:Patient FORALL n:Nurse IF (NOT @sameward(n p)) THEN {DENY n.read(p)})
+    // should be sat
+    // AND EXISTS e:Hospital (@Nurse(e) AND @Chief(e))
+    // is still sat
+    AND EXISTS e:Hospital EXISTS p:Patient (@Nurse(e) AND @Chief(e) AND (NOT @sameward(e p)))
+    // UNSAT
+)
+
+// FOTL generation+sat
+CALL vsat("Listing12")
+ 
+ 

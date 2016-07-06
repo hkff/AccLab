@@ -2,9 +2,9 @@
 LOAD "core.types"
 LOAD "core.macros"
 
-LOAD "wearable.wtypes"
-LOAD "wearable.wservices"
-LOAD "wearable.wactors"
+LOAD "demos.wearable.wtypes"
+LOAD "demos.wearable.wservices"
+LOAD "demos.wearable.wactors"
 
 //=====================================================//
 //===================== Clauses =======================//
@@ -269,7 +269,7 @@ CLAUSE r15 (
 //==================== User_pref ======================//
 //=====================================================//
 
-AGENT kim TYPES(Customer) RS() PS()
+AGENT kim TYPES(Customer) REQUIRED() PROVIDED()
 
 
 // Version 1
@@ -285,12 +285,12 @@ CLAUSE up1 (
     }
 )
 
-CHECK c1() {
+CHECK c1() (
 """
   @verbose
   ~( @buildenv (clause(r3).ue) => (clause(up1).ue ))
 """
-}
+)
 //APPLY c1()
 
 // Version 2
@@ -316,12 +316,12 @@ CLAUSE up2 (
     }
 )
 
-CHECK c2() {
+CHECK c2() (
 """
   @verbose
   ~( @buildenv (clause(r3).ue & clause(r14).ue ) => (clause(up2).ue ))
 """
-}
+)
 //APPLY c2()
 CALL vsat("up2")
 CALL validate("r3" "up2")

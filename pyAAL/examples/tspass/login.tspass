@@ -1,0 +1,25 @@
+%% -*-Latex-*-
+%%% 27/6/2016
+%%% protocol example
+%%%% -------------------
+%%%% AAL translation should be tuned for it
+
+%%%% protocol example
+~((
+((always (~(login & logout) & ~(Pread & login) & ~(Pread & logout))) & 
+~Pread & login &
+(always (login => next ((Pread | logout)))) &
+(always (Pread => next ((Pread | logout)))) &
+(always (logout => next login))) &
+%%% action implies permission
+(always (read => Pread))
+)
+%%%%% SAT 24/0.002s
+%%% //1 CONFLICT
+%%% (sometime (logout & (~login until read)))
+%%%% UNSAT 158/0.004s
+%%%% //2 PROPERTY COMPLIANCE
+=> (always (login => next (~login unless logout)))
+)
+%%%% VALID 560/0.01s
+

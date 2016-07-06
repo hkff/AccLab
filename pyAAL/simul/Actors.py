@@ -89,11 +89,11 @@ class Monitor:
     """
     Internal monitor
     """
-    def __init__(self, rootmon=None, formula="", trace=[], kv={}):
-        self.trace = trace
+    def __init__(self, rootmon=None, formula="", trace=None, kv=None):
+        self.trace = [] if trace is None else trace
         self.formula = formula
         self.rootmon = rootmon
-        self.KV = kv
+        self.KV = {} if kv is None else kv
 
     def monitor(self):
         # Handling trace

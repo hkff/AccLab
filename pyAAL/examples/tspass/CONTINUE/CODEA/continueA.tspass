@@ -1,0 +1,190 @@
+%% -*-Latex-*-
+%%% 27/6/2016
+%%%% ----------------------------
+%%%% CodeA CONTINUE step1, 2, 3
+%%%% Policy set/rules HOW MANY 25 +1 RPS
+%%%% without funal default deny
+%%%% -------------------------------
+
+%%%%% --------------- TYPES
+%%%% from the RPS file
+%%%% existence
+(?[x] Conference(x)) & (?[x] ConferenceInfo(x)) & (?[x] PcMember(x)) & (?[x] PcMemberAssignments(x)) &
+(?[x] PcMemberConflicts(x)) & (?[x] PcMemberInfo(x)) & (?[x] PcMemberInfoPassword(x)) & (?[x] PcMemberInfoischairflag(x)) &
+(?[x] Paper(x)) & (?[x] PaperSubmission(x)) & (?[x] PaperFile(x)) & (?[x] PaperDecision(x)) & (?[x] PaperAssignments(x)) &
+(?[x] PaperReview(x)) & (?[x] PaperReviewInfo(x)) & (?[x] PaperReviewContent(x)) & (?[x] PaperReviewStatus(x)) &
+(?[x] PaperReviewRating(x)) & (?[x] PaperReviewAll(x)) & (?[x] PaperReviewPC(x)) & (?[x] PaperReviewReviewer(x)) &
+(?[x] MeetingFlag(x)) & (?[x] PaperReviewInfoSubmission(x)) & (?[x] PaperConflicts(x))
+%%%% for roles
+(?[x] AnySubject(x)) & (?[x] admin(x)) & (?[x] pcchair(x)) & (?[x] pcmember (x)) & (?[x] subreviewer(x))
+%%% subtype/inclusion
+(![x] ((admin(x) | pcchair(x) | pcmember (x) | subreviewer(x)) => AnySubject(x)))
+%%%% pour pcmember subreviewer ?
+%% %%% for action
+(![a, r] ((Pdelete(a, r) | Pcreate(a, r) | Pread(a, r) | Pwrite(a, r)) <=> PAnyAction(a, r)))
+
+%%%%-------------------
+%%%% PPS_conference_rc RESOURCE conference_rc
+%%% PERMIT admin read write anyresource
+(![a,r] ((Conference(r) & admin(a)) => (Pread(a, r) & Pwrite(a, r))))
+%%% PERMIT pc_chair read anyresource
+(![a,r] ((Conference(r) & pcchair(a)) => Pread(a, r)))
+%%% PERMIT pc_member & isMeeting [isMeeting] read anyresource
+(![a,r] ((Conference(r) & pcmember(a) & isMeeting(a)) => Pread(a, r)))
+
+%% PPS_conferenceInfo_rc RESOURCE conferenceInfo_rc
+%%% PERMIT any read any
+(![a,r] ((ConferenceInfo(r) & AnySubject(a)) => Pread(a, r)))
+
+%% PPS_pcMember_rc RESOURCE pcMember_rc
+%%%% PERMIT pc_member read anyresource
+(![a,r] ((PcMember(r) & pcmember(a)) => Pread(a, r)))
+%%%% PERMIT admin create write anyresource
+(![a,r] ((PcMember(r) & admin(a)) => (Pcreate(a, r) & Pwrite(a, r))))
+%%%% DENY pc_member & isEQuserID [isEq-subjUserId-resUserId] read anyresource RQ: generic on action
+(![a,r] ((PcMember(r) & pcmember(a) & isEQuserID(a)) => ~PAnyAction(a, r)))
+%%%% PERMIT admin delete anyresource
+(![a,r] ((PcMember(r) & admin(a)) => Pdelete(a, r)))
+
+%% PPS_pcMember-assignments_rc RESOURCE pcMember-assignments_rc
+%%% PERMIT pc_chair read write anyresource
+(![a,r] ((PcMemberAssignments(r) & pcchair(a)) => (Pread(a, r) & Pwrite(a, r))))
+%%%% PERMIT pc_member & isEQuserID [isEq-subjUserId-resUserId] read anyresource
+(![a,r] ((PcMemberAssignments(r) & pcmember(a) & isEQuserID(a)) => Pread(a, r)))
+
+%% PPS_pcMember-conflicts_rc RESOURCE pcMember-conflicts_rc
+%%% PERMIT pc_chair read write anyresource
+(![a,r] ((PcMemberConflicts(r) & pcchair(a)) => (Pread(a, r) & Pwrite(a, r))))
+%%%% PERMIT pc_member & isEQuserID read anyresource RQ: generic on action
+(![a,r] ((PcMemberConflicts(r) & pcmember(a) & isEQuserID(a)) => Pread(a, r)))
+
+%% PPS_pcMember-assignmentCount_rc RESOURCE pcMember-assignmentCount_rc
+%%% nothing
+
+%% PPS_pcMember-info_rc RESOURCE pcMember-info_rc
+%%% PERMIT pc_chair read write anyresource
+(![a,r] ((PcMemberInfo(r) & pcchair(a)) => (Pread(a, r) & Pwrite(a, r))))
+%%%% PERMIT pc_member & isEQuserID read write anyresource
+(![a,r] ((PcMemberInfo(r) & pcmember(a) & isEQuserID(a)) => (Pwrite(a, r) & Pread(a, r))))
+
+%% PPS_pcMember-info-password_rc RESOURCE pcMember-info-password_rc
+%%%% PERMIT pc_member & isEQuserID write anyresource
+(![a,r] ((PcMemberInfoPassword(r) & pcmember(a) & isEQuserID(a)) => Pwrite(a, r)))
+%%%% PERMIT admin NOT isPending [isPending] write anyresource
+(![a,r] ((PcMemberInfoPassword(r) & admin(a) & ~isPending(a)) => Pwrite(a, r)))
+
+%% PPS_pcMember-info-isChairFlag_rc RESOURCE pcMember-info-isChairFlag_rc
+%%%% PERMIT pc_member  read  anyresource
+(![a,r] ((PcMemberInfoischairflag(r) & pcmember(a)) => Pread(a, r)))
+%%%% DENY pc_member & isEQuserID anyaction anyresource
+(![a,r] ((PcMemberInfoischairflag(r) & pcmember(a) & isEQuserID(a)) => ~PAnyAction(a, r)))
+%%%% PERMIT admin  write anyresource
+(![a,r] ((PcMemberInfoischairflag(r) & admin(a)) => Pwrite(a, r)))
+
+%% PPS_paper_rc RESOURCE paper_rc
+%%% PERMIT pc_chair delete anyresource
+(![a,r] ((Paper(r) & pcchair(a)) => Pdelete(a, r)))
+%%%% PERMIT pc_member & isEQPaper [isEq-meetingPaper-resId] read  anyresource
+(![a,r] ((Paper(r) & pcmember(a) & isEQPaper(a, r)) => Pread(a, r)))
+%%%% PERMIT pc_member  create  anyresource
+(![a,r] ((Paper(r) & pcmember(a)) => Pcreate(a, r)))
+
+%% PPS_paper-submission-info_rc RESOURCE paper-submission-info_rc
+%%% nothing
+
+%% PPS_paper-submission_rc RESOURCE paper-submission_rc
+%%%% PERMIT pc_chair pc_member   read  anyresource
+(![a,r] ((PaperSubmission(r) & (pcmember(a) | pcchair(a))) => Pread(a, r)))
+%%% PERMIT subreviewer & isEQuserID [isEq-subjUserId-resUserId] read anyresource
+(![a,r] ((PaperSubmission(r) & subreviewer(a) & isEQuserID(a)) => Pread(a, r)))
+
+%% PPS_paper-submission-file_rc RESOURCE paper-submission-file_rc
+%%% nothing
+
+%% PPS_paper-decision_rc RESOURCE paper-decision_rc
+%%% PERMIT pc_chair & isSubjectMeeting [isSubjectsMeeting] read write anyresource
+(![a,r] ((PaperDecision(r) & pcchair(a) & isSubjectMeeting(a)) => (Pread(a, r) & Pwrite(a, r))))
+
+%% PPS_paper-conflicts_rc RESOURCE paper-conflicts_rc
+%%%% PERMIT pc_chair admin  read write anyresource
+(![a,r] ((PaperConflicts(r) & (admin(a) | pcchair(a))) => (Pwrite(a, r) & Pread(a, r))))
+%%%% PERMIT pc_member & isConflicted [isConflicted] read anyresource
+(![a,r] ((PaperConflicts(r) &  pcmember(a) & isConflicted(a)) =>  Pread(a, r)))
+%%%% PERMIT pc_member & isMeeting [isMeeting] read anyresource
+(![a,r] ((PaperConflicts(r) &  pcmember(a) & isMeeting(a)) =>  Pread(a, r)))
+%%%% DENY anysubject & isConflicted anyaction anyresource
+(![a,r] ((PaperConflicts(r) & AnySubject(a) & isConflicted(a)) => ~PAnyAction(a, r)))
+
+%% PPS_paper-assignments_rc RESOURCE paper-assignments_rc
+%%%% PERMIT pc_chair admin  read write anyresource
+(![a,r] ((PaperAssignments(r) & (admin(a) | pcchair(a))) => (Pwrite(a, r) & Pread(a, r))))
+%%%% DENY anysubject & isConflicted read anyresource
+(![a,r] ((PaperAssignments(r) & AnySubject(a) & isConflicted(a)) => (~Pcreate(a, r) & ~Pwrite(a, r) & ~Pread(a, r))))
+%%% PERMIT pc_chair & isSubjectMeeting read write PaperAssignments & isEQPaper [isEq-meetingPaper-resId]
+(![a,r] ((PaperAssignments(r) & isEQPaper(a, r) & pcchair(a) & isSubjectMeeting(a)) => Pread(a, r)))
+%%%% DENY anysubject & isMeeting read anyresource
+(![a,r] ((PaperAssignments(r) & AnySubject(a) & isSubjectMeeting(a)) =>  ~Pread(a, r)))
+
+%% PPS_paper-review_rc RESOURCE paper-review_rc
+%%%% PERMIT pc_chair & NOT isconflicted  anyaction  anyresource
+(![a,r] ((PaperReview(r) & pcchair(a) & ~isConflicted(a)) => PAnyAction(a, r)))
+%%%% PERMIT pc_chair & isSubjectMeeting  read  isEQPaper
+(![a,r] ((PaperReview(r) & isEQPaper(a, r) & pcchair(a) & isSubjectMeeting(a)) => Pread(a, r)))
+%%%% PERMIT pc_chair create delete anyresource
+(![a,r] ((PaperReview(r) & pcchair(a)) => (Pdelete(a, r) & Pcreate(a, r))))
+%%%% DENY anysubject & isConflicted anyaction anyresource
+(![a,r] ((PaperReview(r) & AnySubject(a) & isConflicted(a)) => ~PAnyAction(a, r)))
+%%%% PERMIT pc_member & NOT isConflicted read anyresource
+(![a,r] ((PaperReview(r) &  pcmember(a) & ~isConflicted(a)) =>  Pread(a, r)))
+
+%% PPS_paper-review-info_rc RESOURCE paper-review-info_rc
+%%%% PERMIT pc_chair & NOT isconflicted  read anyresource
+(![a,r] ((PaperReviewInfo(r) & pcchair(a)) => PAnyAction(a, r)))
+
+%% PPS_paper-review-content_rc RESOURCE paper-review-content_rc
+%%%% PERMIT pc_member & isEQuserID [isEq-subjUserId-resUserId] read anyresource
+(![a,r] ((PaperReviewContent(r) & pcmember(a) & isEQuserID(a)) => (Pcreate(a, r) & Pwrite(a, r) & Pdelete(a, r))))
+%%%% PERMIT pc_subreviewer & isEQuserID read anyresource RQ: generique sur action
+(![a,r] ((PaperReviewContent(r) & subreviewer(a) & isEQuserID(a)) => Pcreate(a, r)))
+
+%% PPS_paper-review-info-submissionStatus_rc RESOURCE paper-review-info-submissionStatus_rc
+%%%% PERMIT pc_member & isEQuserID & isReviewInPlace [isReviewContentInPlace] write anyresource
+(![a,r] ((PaperReviewInfoSubmission(r) & pcmember(a) & isEQuserID(a) & isReviewInPlace(a)) => Pwrite(a, r) ))
+
+%% PPS_paper-review-content-rating_rc RESOURCE paper-review-content-rating_rc
+%%% nothing
+
+%% PPS_paper-review-content-commentsAll_rc RESOURCE paper-review-content-commentsAll_rc
+%%% nothing
+
+%% PPS_paper-review-content-commentsPc_rc RESOURCE paper-review-content-commentsPc_rc
+%%% nothing
+
+%% PPS_paper-review-info-reviewer_rc RESOURCE paper-review-info-reviewer_rc
+%%% nothing
+
+%% PPS_isMeetingFlag_rc RESOURCE isMeetingFlag_rc
+%%%% PERMIT pc_chair write  read anyresource
+(![a,r] ((MeetingFlag(r) & pcchair(a)) => (Pread(a, r) & Pwrite(a, r))))
+%%%% PERMIT pc_chair write  read anyresource
+(![a,r] ((MeetingFlag(r) & pcmember(a)) => Pread(a, r)))
+
+%%%% Step1: first TESTS sat  0.023s  / 715 total generated
+%%%% #rules= 43 45 implications
+%%%% #actions= 4+1 %%% concrete+abstract
+%%%% #roles= 4+1 %%% concrete+abstract
+%%%% #resources= 23  %%% but few useless
+%%%% #subtypes= 2
+
+%%%% TEST after review
+%%% isMeetingPaper -> isEQPaper dans paper_assignment/review
+%%% deny only read in paper_assignment
+%%% any action paper_review paper_conflicts
+%%% isMeeting ->  isSubjectMeeting paper_decision assignment review
+%%%% isEQpaper -> isEQPaper in paper_rc
+%%% isEQPaper (supposed to have 2, got 1).
+%%%%%% sat en 0.023   / 687 total
+
+%%% Step 3
+%%%% NEW FIX anyaction in pcMember_rc pcMember-info-isChairFlag_rc
+%%%% sat en 0.022 / 657 total
