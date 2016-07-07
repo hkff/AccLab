@@ -44,6 +44,7 @@ var visualEditor = {
         visualEditor.ui.init(grid, actionsPanel, componentsPanel, propertiesPanel, outlinePanel, inplacePanel);
         this.wm = new Ventus.WindowManager();
         $(".wm-overlay").width("0%");
+        $(".wm-space").width("0%");
     },
 
     /**
