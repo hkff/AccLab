@@ -32,10 +32,7 @@ visualEditor.ui.simul = {
     startSimulation: function(port) {
         visualEditor.ui.simul.monitor_port = port;
         this.simulation = {actors: {}};
-        // TODO
-        /*
-        Actor: name, terminal, aal policy, monitors, kv, data, trace, violations
-         */
+
         // 1. Analyse current ACD file and extract all actors with policies
         var actors = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Actor"});
         var clauses = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Policy"});
@@ -191,7 +188,7 @@ visualEditor.ui.simul = {
             }),
 
         attach: command(
-            "Attach the policy 'policy' to the agent",
+            "Attach the policy 'policy' to the agent.",
             function(policy) {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
                 var clauses = visualEditor.ui.canvas.getFigures().data.filter(
@@ -205,7 +202,7 @@ visualEditor.ui.simul = {
             }),
 
         policy: command(
-            "Show AAL policy attached to the actor",
+            "Show AAL policy attached to the current actor.",
             function() {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
                 var policy = visualEditor.ui.simul.simulation.actors[actor].aal_policy;
@@ -219,7 +216,7 @@ visualEditor.ui.simul = {
             }),
 
         policy_name: command(
-            "Show AAL policy name attached to the actor.",
+            "Show AAL policy name attached to the current actor.",
             function() {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
                 var policy = visualEditor.ui.simul.simulation.actors[actor].aal_policy;
