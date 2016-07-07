@@ -20,8 +20,18 @@
 //////////////////////////////////////////////////////////
 
 visualEditor.ui.simul = {
+    simulation: null,
 
-    TestCommands: {
+    startSimulation: function() {
+        this.simulation = {actors: []};
+    },
+
+    stopSimulation: function() {
+        // TODO close all terminals
+        this.simulation = null;
+    },
+
+    SimulationCommands: {
         ls: function () {
             // Fake 'ls' command for demo purposes
             this.write('LICENSE\nMakefile\nREADME.md\nbuild/\nbuild.js\nexamples/\nsrc/\nvendor/\n');
@@ -29,7 +39,7 @@ visualEditor.ui.simul = {
         },
 
         ll: function () {
-            TestCommands.ls.call(this, arguments);
+            SimulationCommands.ls.call(this, arguments);
         },
 
         help: function () {
@@ -37,9 +47,8 @@ visualEditor.ui.simul = {
             this.exit();
         },
 
-        cd: function () {
-            // Fake 'cd' command for demo purposes
-            this.write('Sorry, access not granted');
+        policy: function () {
+            this.write('AAL policy');
             this.exit();
         },
 
@@ -64,14 +73,28 @@ visualEditor.ui.simul = {
         }
     },
 
-    showConsole: function(title) {
-        $("body").append("<div id='terminal-app"+title+"'></div>");
-        var target = '#terminal-app'+title;
+    /**
+     * Show actor's console
+     * @param actor
+     */
+    showConsole: function(actor) {
+        // Check if simulation is running
+        if(visualEditor.ui.simul.simulation == null) {
+            toastr.error("No simulation is running !");
+            return;
+        }
+
+        var target = '.terminal-app-'+actor;
+        // Avoid multiple terminals for same actor
+        if($(target).length > 0)
+            return;
+
+        $("body").append("<div class='terminal-app-"+actor+"'></div>");
         var terminalWin = visualEditor.wm.createWindow.fromQuery(target, {
-            title: title,
+            title: actor,
             x: 60,
             y: 50,
-            width: 450,
+            width: 500,
             height: 300,
             classname: 'terminal-window',
             widget: false,
@@ -88,11 +111,11 @@ visualEditor.ui.simul = {
 		});
 
         var terminal = new Terminus(target, {
-				welcome: "<div class='identity'><h1>Welcome to " +title+ " shell</h1> "+
+				welcome: "<div class='identity'><h1>Welcome to " +actor+ " shell</h1> "+
                 "</div>.<br/>Press <span style='color:green'>&lt; tab &gt;</span> " +
                 "to see a list of available commands."
 			});
-        terminal.shell.include([this.TestCommands]);
+        terminal.shell.include([this.SimulationCommands]);
 
 		terminal.display.events.on('prompt', function() {
 			terminalWin.$content.animate({
@@ -100,6 +123,12 @@ visualEditor.ui.simul = {
 			}, 300);
 		});
 
+        // Configure the terminal with actor environment
+        this.simulation.actors = {
+            terminalWin: terminalWin
+        };
+
+        // Open the terminal
         terminalWin.open();
     }
 };

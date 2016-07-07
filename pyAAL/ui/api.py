@@ -662,3 +662,11 @@ def svn_diff(target, r1, r2):
     p.wait()
     log = p.stdout.read().decode("utf-8").replace("\n", "<br>")
     return log
+
+
+# Fodtlmon web service
+def start_fodtlmon_server(server_port=9999):
+    import os
+    from subprocess import Popen
+    Popen(['python3.4', 'ui/mon.py', server_port])
+    return server_port

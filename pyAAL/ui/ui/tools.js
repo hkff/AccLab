@@ -82,6 +82,7 @@ visualEditor.ui.tools = {
 		this.tools.push(new visualEditor.ui.tools.templatesTool());            // 21
 		this.tools.push(new visualEditor.ui.tools.acethemeTool());             // 22
 		this.tools.push(new visualEditor.ui.tools.clearOutputTool());          // 23
+		this.tools.push(new visualEditor.ui.tools.simulationTool());           // 24
 	},
 
 	/**
@@ -1204,6 +1205,37 @@ visualEditor.ui.tools.clearOutputTool = visualEditor.ui.tool.extend({
 	control: function(parent, disableShortcut) {
 		var fx = function(e){
             $("#output_window").empty();
+		};
+		this.button.click(fx);
+		if(disableShortcut != null) return;
+		//shortcut.add("Ctrl+G", fx);
+	}
+});
+
+//////////////////////////////////////////////////////////
+//
+//  simulationTool
+//
+//////////////////////////////////////////////////////////
+visualEditor.ui.tools.simulationTool = visualEditor.ui.tool.extend({
+	NAME : "visualEditor.ui.tools.simulationTool",
+
+	view: function(parent) {
+		this.button = $('<div title="Start/Stop simulation" id="simulationBtn" class="btn-action fa fa-cubes fa-lg"/>');
+		parent.actionsPanel.append(this.button);
+	},
+
+	control: function(parent, disableShortcut) {
+		var fx = function(e){
+            $.ajax({
+                dataType: 'text',
+                type:'POST',
+                url: visualEditor.backend,
+                data: {action: "startSimulation", port: 9999},
+                success: function(response) {
+                    visualEditor.ui.simul.startSimulation();
+                    toastr.success('Simulation started !');
+                }});
 		};
 		this.button.click(fx);
 		if(disableShortcut != null) return;

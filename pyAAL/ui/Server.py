@@ -166,6 +166,9 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
                 os.kill(ps, signal.SIGKILL)
                 Popen(['killall', 'tspass'])
                 res = "Operation canceled !"
+
+        elif val == "startSimulation":
+            res = start_fodtlmon_server(self.get_arg(args, "port", method))
         return res
 
     def do_GET(self):
