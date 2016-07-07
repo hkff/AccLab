@@ -32,6 +32,7 @@ var visualEditor = {
     aceThemesList : ["monokai", "chrome", "tomorrow", "kuroir", "eclipse", "chaos"],
     backend       : "http://127.0.0.1:8000/",
     version       : "2.0",
+    wm            : null,
 
 
     /**
@@ -41,6 +42,8 @@ var visualEditor = {
     	this.backend = window.location.origin;
     	// init workspace
         visualEditor.ui.init(grid, actionsPanel, componentsPanel, propertiesPanel, outlinePanel, inplacePanel);
+        this.wm = new Ventus.WindowManager();
+        $(".wm-overlay").width("0%");
     },
 
     /**
