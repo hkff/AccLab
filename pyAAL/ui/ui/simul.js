@@ -19,11 +19,18 @@
 //
 //////////////////////////////////////////////////////////
 
+function command(doc, fx) {
+    fx.__doc__ = doc;
+    return fx;
+}
+
 visualEditor.ui.simul = {
     simulation: null,
 
     startSimulation: function() {
         this.simulation = {actors: []};
+        // TODO
+        // 1. Analyse current ACD file and extract all actors with policies
     },
 
     stopSimulation: function() {
@@ -32,40 +39,64 @@ visualEditor.ui.simul = {
     },
 
     SimulationCommands: {
-        ls: function () {
-            // Fake 'ls' command for demo purposes
-            this.write('LICENSE\nMakefile\nREADME.md\nbuild/\nbuild.js\nexamples/\nsrc/\nvendor/\n');
-            this.exit();
-        },
 
         ll: function () {
-            SimulationCommands.ls.call(this, arguments);
+            //SimulationCommands.ls.call(this, arguments);
         },
 
-        help: function () {
-            this.write('Press < tab > to see a list of available commands.');
+        help: command(
+            "Show help",
+            function(cmd) {
+                if(arguments.length > 0) {
+                    if(visualEditor.ui.simul.SimulationCommands.hasOwnProperty(cmd)) {
+                        this.write(cmd + ' ' + visualEditor.ui.simul.SimulationCommands[cmd].__doc__);
+                    } else
+                        this.write('Command not found ! Press < tab > to see a list of available commands.');
+                }  else
+                    this.write('Press < tab > to see a list of available commands.');
+                this.exit();
+            }),
+
+        policy: command(
+            "Show AAL policy attached to the actor",
+
+            function() {
+                this.write('AAL policy');
+                this.exit();
+            }),
+
+        attach: command(
+            "Attach the policy 'policy' to the agent",
+            function(policy) {
+                this.write('new policy');
+                this.exit();
+            }),
+
+        kv: command(
+            "Show local monitor's knowledge vector",
+            function() {
+                this.write('Local KV');
+                this.exit();
+            }),
+
+        call: command(
+            "Perform a service call by the agent",
+            function(action) {
+                this.write('calling:' + action);
+                this.exit();
+            }),
+
+        exit: command("Close the terminal",
+                function() {
+                // TODO close window
+            }),
+
+        sum: function(op1, op2) {
+            //if (arguments.length < 2)
             this.exit();
         },
 
-        policy: function () {
-            this.write('AAL policy');
-            this.exit();
-        },
-
-        exit: function () {
-            location.reload();
-        },
-
-        sum: function (op1, op2) {
-            if (arguments.length < 2)
-                this.write('Please insert two numeric values (ex. > sum 5 6)', 'stderr');
-            else
-                this.write(parseInt(op1, 10) + parseInt(op2, 10));
-
-            this.exit();
-        },
-
-        echo: function () {
+        echo: function() {
             var args = Array.prototype.slice.call(arguments, 0);
             this.write(args.join(' '));
 
@@ -111,9 +142,8 @@ visualEditor.ui.simul = {
 		});
 
         var terminal = new Terminus(target, {
-				welcome: "<div class='identity'><h1>Welcome to " +actor+ " shell</h1> "+
-                "</div>.<br/>Press <span style='color:green'>&lt; tab &gt;</span> " +
-                "to see a list of available commands."
+				welcome: "<div class='identity'><h1>Welcome to " +actor+ "'s shell</h1></div>"+
+                "Press <span style='color:green'>&lt; tab &gt;</span> " + "to see a list of available commands."
 			});
         terminal.shell.include([this.SimulationCommands]);
 
