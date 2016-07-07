@@ -105,7 +105,9 @@ visualEditor.ui.simul = {
         trace: command(
             "Show actor trace.",
             function() {
-                // TODO close window
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                this.write(visualEditor.ui.simul.simulation.actors[actor].trace);
+                this.exit();
             }),
 
         monitor: command(
@@ -115,9 +117,61 @@ visualEditor.ui.simul = {
             }),
 
         call: command(
-            "Perform a service call by the agent",
+            "Perform a service call by the agent.\n -Usage: call service[actor](args)",
             function(action) {
-                this.write('calling:' + action);
+                // TODO check with regexp
+                var service = action.substring(0, action.indexOf("["));
+                var target = action.substring(action.indexOf("[")+1, action.indexOf("]"));
+                var args = action.substring(action.indexOf("(")+1, action.indexOf(")"));
+                if(args == "") args = "NONE";
+
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var currentActorUI = visualEditor.ui.canvas.getFigures().data.filter(
+                    function(e){return e.type === "Actor" && e.getName() == actor});
+                var targetActorUI = visualEditor.ui.canvas.getFigures().data.filter(
+                    function(e){return e.type === "Actor" && e.getName() == target});
+                if(currentActorUI.length > 0 && targetActorUI.length > 0) {
+                    currentActorUI = currentActorUI[0];
+                    targetActorUI = targetActorUI[0];
+                    var s1 = currentActorUI.RSO.data.filter(function (e) {
+                        return e.text == service
+                    });
+                    var s2 = targetActorUI.PSO.data.filter(function (e) {
+                        return e.text == service
+                    });
+                    if (s1.length > 0 && s2.length > 0) {
+                        var cons = s1[0].getConnections();
+                        // TODO select the correct connexion
+                        if (cons.data.length > 0) {
+                            var old_color = cons.get(0).getColor();
+                            cons.get(0).setColor("#230990");
+                            // 1. Animate connection
+                        }
+                    }
+
+                    // 2. Log the event in current actor trace
+                    visualEditor.ui.simul.simulation.actors[actor].trace.push(service+"("+actor+","+target+","+args+")");
+
+                    // 3. Send log to monitor
+
+                    // 4. Simulate the network
+
+                    // 5. Log the event in target actor trace
+
+                    // 6. Send log to target's monitor
+
+                    this.write('calling:' + service + " on " + target + " with " + args);
+                    this.exit();
+                    return;
+                }
+                this.write("Error actors not found !");
+                this.exit();
+            }),
+
+        rm: command(
+            "Remove a local data.\n - Usage: rm data_name",
+            function(name) {
+                this.write('removing:' + name);
                 this.exit();
             }),
 
@@ -178,7 +232,7 @@ visualEditor.ui.simul = {
             function(cmd) {
                 if(arguments.length > 0) {
                     if(visualEditor.ui.simul.SimulationCommands.hasOwnProperty(cmd)) {
-                        this.write(cmd + ' ' + visualEditor.ui.simul.SimulationCommands[cmd].__doc__);
+                        this.write(visualEditor.ui.simul.SimulationCommands[cmd].__doc__);
                     } else
                         this.write('Command not found ! Press < tab > to see a list of available commands.');
                 }  else
