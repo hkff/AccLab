@@ -1,5 +1,5 @@
 /*!
- * Ventus 0.2
+ * Ventus 0.2 (CUSTOM: Modifyed by Walid Benghabrit)
  * Copyright © 2015 Ramón Lamana
  * http://www.rlamana.com
  */
@@ -1566,7 +1566,7 @@ define('ventus/wm/modes/default', [], function () {
     'use strict';
     var DefaultMode = {
         register: function () {
-            console.log('Default mode registered.');
+            //console.log('Default mode registered.');
         },
         plug: function () {
         },
@@ -2208,7 +2208,7 @@ define('ventus/wm/modes/expose', ['underscore'], function (_) {
     var ExposeMode = {
         register: function () {
             var self = this;
-            console.log('Expose mode registered.');
+            //console.log('Expose mode registered.');
             this.el.on('contextmenu', _.throttle(function () {
                 if (self.mode !== 'expose') {
                     self.mode = 'expose';
@@ -2292,7 +2292,7 @@ define('ventus/wm/modes/fullscreen', [], function () {
     'use strict';
     var FullscreenMode = {
         register: function () {
-            console.log('Fullscreen mode registered.');
+            //console.log('Fullscreen mode registered.');
         },
         plug: function () {
             this.el.addClass('fullscreen');
