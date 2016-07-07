@@ -1233,7 +1233,7 @@ visualEditor.ui.tools.simulationTool = visualEditor.ui.tool.extend({
                 url: visualEditor.backend,
                 data: {action: "startSimulation", port: 9999},
                 success: function(response) {
-                    visualEditor.ui.simul.startSimulation();
+                    visualEditor.ui.simul.startSimulation(response);
                     toastr.success('Simulation started !');
                 }});
 		};

@@ -26,11 +26,32 @@ function command(doc, fx) {
 
 visualEditor.ui.simul = {
     simulation: null,
+    monitor_port: 9999,
+    currentTerminal: null,
 
-    startSimulation: function() {
-        this.simulation = {actors: []};
+    startSimulation: function(port) {
+        visualEditor.ui.simul.monitor_port = port;
+        this.simulation = {actors: {}};
         // TODO
+        /*
+        Actor: name, terminal, aal policy, monitors, kv, data, trace, violations
+         */
         // 1. Analyse current ACD file and extract all actors with policies
+        var actors = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Actor"});
+        var clauses = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Policy"});
+        for(var i=0; i<actors.length; i++) {
+            var agent = actors[i].getName();
+            this.simulation.actors[agent] = {
+                name: agent,
+                terminal: null,
+                aal_policy: "",
+                monitors: [],
+                kv: [],
+                data: [],
+                trace: [],
+                violations: []
+            }
+        }
     },
 
     stopSimulation: function() {
@@ -44,6 +65,114 @@ visualEditor.ui.simul = {
             //SimulationCommands.ls.call(this, arguments);
         },
 
+        sum: function(op1, op2) {
+            //if (arguments.length < 2)
+            this.exit();
+        },
+
+        echo: function() {
+            var args = Array.prototype.slice.call(arguments, 0);
+            this.write(args.join(' '));
+
+            this.exit(0);
+        },
+
+        exit: command(
+            "Close the terminal",
+            function() {
+                // TODO close window
+            }),
+
+        spoof: command(
+            "Spoof an agent id to perform an action.\n Usage: spoof actor_name action",
+            function(actor, action) {
+                // TODO close window
+            }),
+
+        violations: command(
+            "Show actor violations.",
+            function() {
+                // TODO close window
+            }),
+
+        kv: command(
+            "Show local monitor's knowledge vector",
+            function() {
+                this.write('Local KV');
+                this.exit();
+            }),
+
+        trace: command(
+            "Show actor trace.",
+            function() {
+                // TODO close window
+            }),
+
+        monitor: command(
+            "Enable/disable the reference monitor.\n Usage: monitor on/off",
+            function() {
+                // TODO close window
+            }),
+
+        call: command(
+            "Perform a service call by the agent",
+            function(action) {
+                this.write('calling:' + action);
+                this.exit();
+            }),
+
+        show_data: command(
+            "Show local data of an actor. If actor_name is not specified it shows current actor data" +
+            "\nUsage: show_data [actor name]",
+            function(name) {
+                this.write('calling:' + name);
+                this.exit();
+            }),
+
+        data: command(
+            "Create a local data. Usage: data name type1 type2 ... typeN",
+            function(name) {
+                this.write('calling:' + name);
+                this.exit();
+            }),
+
+        attach: command(
+            "Attach the policy 'policy' to the agent",
+            function(policy) {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var clauses = visualEditor.ui.canvas.getFigures().data.filter(
+                    function(e){return e.type === "Policy" && e.tlabel.text == policy});
+                if(clauses.length > 0) {
+                    visualEditor.ui.simul.simulation.actors[actor].aal_policy = policy;
+                    this.write("Policy " + policy + " attached successfully !");
+                } else
+                    this.write("Error: policy " + policy + " not found !");
+                this.exit();
+            }),
+
+        policy: command(
+            "Show AAL policy attached to the actor",
+            function() {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var policy = visualEditor.ui.simul.simulation.actors[actor].aal_policy;
+                var clauses = visualEditor.ui.canvas.getFigures().data.filter(
+                    function(e){return e.type === "Policy" && e.tlabel.text == policy});
+                if(clauses.length > 0)
+                    this.write(clauses[0].policy);
+                else
+                    this.write("Error: policy " + policy + " not found !");
+                this.exit();
+            }),
+
+        policy_name: command(
+            "Show AAL policy name attached to the actor.",
+            function() {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var policy = visualEditor.ui.simul.simulation.actors[actor].aal_policy;
+                this.write(policy);
+                this.exit();
+            }),
+
         help: command(
             "Show help",
             function(cmd) {
@@ -55,53 +184,7 @@ visualEditor.ui.simul = {
                 }  else
                     this.write('Press < tab > to see a list of available commands.');
                 this.exit();
-            }),
-
-        policy: command(
-            "Show AAL policy attached to the actor",
-
-            function() {
-                this.write('AAL policy');
-                this.exit();
-            }),
-
-        attach: command(
-            "Attach the policy 'policy' to the agent",
-            function(policy) {
-                this.write('new policy');
-                this.exit();
-            }),
-
-        kv: command(
-            "Show local monitor's knowledge vector",
-            function() {
-                this.write('Local KV');
-                this.exit();
-            }),
-
-        call: command(
-            "Perform a service call by the agent",
-            function(action) {
-                this.write('calling:' + action);
-                this.exit();
-            }),
-
-        exit: command("Close the terminal",
-                function() {
-                // TODO close window
-            }),
-
-        sum: function(op1, op2) {
-            //if (arguments.length < 2)
-            this.exit();
-        },
-
-        echo: function() {
-            var args = Array.prototype.slice.call(arguments, 0);
-            this.write(args.join(' '));
-
-            this.exit(0);
-        }
+            })
     },
 
     /**
@@ -139,6 +222,7 @@ visualEditor.ui.simul = {
 
         terminalWin.signals.on('click', function(win){
 			terminal.display.focus();
+            visualEditor.ui.simul.currentTerminal = terminal;
 		});
 
         var terminal = new Terminus(target, {
@@ -146,6 +230,7 @@ visualEditor.ui.simul = {
                 "Press <span style='color:green'>&lt; tab &gt;</span> " + "to see a list of available commands."
 			});
         terminal.shell.include([this.SimulationCommands]);
+        terminal.agent = actor;
 
 		terminal.display.events.on('prompt', function() {
 			terminalWin.$content.animate({
@@ -154,9 +239,9 @@ visualEditor.ui.simul = {
 		});
 
         // Configure the terminal with actor environment
-        this.simulation.actors = {
-            terminalWin: terminalWin
-        };
+        //this.simulation.actors = {
+        //    terminalWin: terminalWin
+        //};
 
         // Open the terminal
         terminalWin.open();
