@@ -29,6 +29,45 @@ visualEditor.ui.simul = {
     monitor_port: 9999,
     currentTerminal: null,
 
+    Actor: function(agent, time, location) {
+        return {
+            name: agent,
+            terminal: null,
+            aal_policy: "",
+            monitors: [],
+            kv: [],
+            data: [],
+            trace: [],
+            violations: [],
+            location: "",
+            time: "",
+
+            monitor: function() {
+                return 0;
+            },
+
+            register: function() {
+                return 0;
+            },
+
+            disableMonitor: function() {
+                return 0;
+            },
+
+            getKV: function() {
+                return 0;
+            },
+
+            updateKV: function() {
+                return 0;
+            },
+
+            pushEvent: function() {
+                return 0;
+            }
+        }
+    },
+
     startSimulation: function(port) {
         visualEditor.ui.simul.monitor_port = port;
         this.simulation = {actors: {}};
@@ -38,16 +77,7 @@ visualEditor.ui.simul = {
         var clauses = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Policy"});
         for(var i=0; i<actors.length; i++) {
             var agent = actors[i].getName();
-            this.simulation.actors[agent] = {
-                name: agent,
-                terminal: null,
-                aal_policy: "",
-                monitors: [],
-                kv: [],
-                data: [],
-                trace: [],
-                violations: []
-            }
+            this.simulation.actors[agent] = this.Actor(agent);
         }
     },
 
@@ -77,19 +107,60 @@ visualEditor.ui.simul = {
         exit: command(
             "Close the terminal",
             function() {
-                // TODO close window
+                this.write('exit');
+                this.exit();
             }),
 
         spoof: command(
             "Spoof an agent id to perform an action.\n Usage: spoof actor_name action",
             function(actor, action) {
-                // TODO close window
+                this.write('Spoof');
+                this.exit();
+            }),
+
+        set_time: command(
+            "Change actor's time.\n -Usage: time time" +
+            "\n Examples:" +
+            "\n - time 3   // Set current actor's location to france",
+            function() {
+                this.write('Set time');
+                this.exit();
+            }),
+
+        time: command(
+            "Show actor's local time.\n -Usage: time [actor_name]" +
+            "\n Examples:" +
+            "\n - time     // Show current actor's time"+
+            "\n - time bob // Show bob's time",
+            function() {
+                this.write('Time');
+                this.exit();
+            }),
+
+        set_location: command(
+            "Change actor's location.\n -Usage: location location_name" +
+            "\n Examples:" +
+            "\n - location  france   // Set current actor's location to france",
+            function() {
+                this.write('Set location');
+                this.exit();
+            }),
+
+        location: command(
+            "Show actor's location.\n -Usage: location [actor_name]" +
+            "\n Examples:" +
+            "\n - location     // Show current actor's location"+
+            "\n - location bob // Show bob's location",
+            function() {
+                this.write('location');
+                this.exit();
             }),
 
         violations: command(
             "Show actor violations.",
             function() {
-                // TODO close window
+                this.write('Violations');
+                this.exit();
             }),
 
         kv: command(
@@ -110,7 +181,8 @@ visualEditor.ui.simul = {
         monitor: command(
             "Enable/disable the reference monitor.\n Usage: monitor on/off",
             function() {
-                // TODO close window
+                this.write('Monitoring');
+                this.exit();
             }),
 
         call: command(
