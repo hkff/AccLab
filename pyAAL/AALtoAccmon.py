@@ -273,7 +273,7 @@ def aal_clause_to_fodtl(clause: m_clause):
     :return:
     """
     # TODO handle rectification
-    def transform(exp: aalmmnode):
+    def transform(exp: aalmmnode, ref=False):
         if isinstance(exp, m_clause):
             return transform(exp.usage)
         elif isinstance(exp, m_usage):
@@ -286,10 +286,13 @@ def aal_clause_to_fodtl(clause: m_clause):
             return "%s %s %s" % (qs, transform(exp.actionExp), (")"*(len(exp.qvars))))
 
         elif isinstance(exp, m_qvar):
-            return "%s[%s]" % (exp.quant.to_ltl(), transform(exp.variable))
+            if ref:
+                return "%s" % exp.variable.name
+            else:
+                return "%s[%s]" % (exp.quant.to_ltl(), transform(exp.variable, ref=ref))
 
         elif isinstance(exp, m_ref):
-            return exp.target
+            return transform(exp.target, ref=ref)
 
         elif isinstance(exp, m_aexpComb):
             return "(%s %s %s)" % (transform(exp.actionExp1), transform(exp.operator), transform(exp.actionExp2))
@@ -309,7 +312,12 @@ def aal_clause_to_fodtl(clause: m_clause):
             return transform(exp.condition)
 
         elif isinstance(exp, m_conditionCmp):
-            return "(%s %s %s)" % (transform(exp.exp1), transform(exp.operator), transform(exp.exp2))
+            if exp.operator == m_booleanOp.O_equal:
+                return "EQUAL(%s,%s)" % (transform(exp.exp1, ref=True), transform(exp.exp2, ref=True))
+            elif exp.operator == m_booleanOp.O_inequal:
+                return "~EQUAL(%s,%s)" % (transform(exp.exp1, ref=True), transform(exp.exp2, ref=True))
+            else:
+                return "(%s %s %s)" % (transform(exp.exp1), transform(exp.operator), transform(exp.exp2))
 
         elif isinstance(exp, m_conditionNotComb):
             return "(%s)" % (transform(exp.exp)) if exp.operator is None else "~(%s)" % (transform(exp.exp))
@@ -340,14 +348,30 @@ def aal_clause_to_fodtl(clause: m_clause):
         elif isinstance(exp, m_aexpAuthor):
             return "%s%s" % (transform(exp.author), transform(exp.action))
 
+        elif isinstance(exp, m_aexpAction):
+            return "%s" % transform(exp.action)
+
         elif isinstance(exp, m_author):
             return "P" if exp == m_author.A_permit else "~P"
 
         elif isinstance(exp, m_action):
-            return "%s(%s, %s, %s)" % (exp.service, transform(exp.agent1), transform(exp.agent2), exp.args)
+            return "%s(%s, %s, %s)" % (exp.service, transform(exp.agent1, ref=True),
+                                       transform(exp.agent2, ref=True), transform(exp.args, ref=True))
 
         elif isinstance(exp, m_agent):
-            return exp.name
+            return "'%s'" % exp.name
+
+        elif isinstance(exp, m_varAttr):
+            return "%s(%s)" % (exp.attribute, exp.variable)
+
+        elif isinstance(exp, m_variable):
+            if ref:
+                return "%s" % exp.name
+            else:
+                return "%s" % exp
+
+        elif isinstance(exp, m_constant):
+            return "%s" % exp.name
 
         elif isinstance(exp, str):
             return exp
