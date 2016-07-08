@@ -337,6 +337,18 @@ def aal_clause_to_fodtl(clause: m_clause):
             elif exp == m_modal.T_sometime: return "F"
             else: return "<Unsupported boolean op %s>" % exp
 
+        elif isinstance(exp, m_aexpAuthor):
+            return "%s%s" % (transform(exp.author), transform(exp.action))
+
+        elif isinstance(exp, m_author):
+            return "P" if exp == m_author.A_permit else "~P"
+
+        elif isinstance(exp, m_action):
+            return "%s(%s, %s, %s)" % (exp.service, transform(exp.agent1), transform(exp.agent2), exp.args)
+
+        elif isinstance(exp, m_agent):
+            return exp.name
+
         elif isinstance(exp, str):
             return exp
         else:

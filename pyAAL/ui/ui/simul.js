@@ -156,6 +156,16 @@ visualEditor.ui.simul = {
             //SimulationCommands.ls.call(this, arguments);
         },
 
+        autoSetup: command(
+            "<<Admin only>> Auto configure the simulation",
+            function() {
+                // TODO
+                this.write("Attaching actors policies...");
+                this.write("Registering actors...");
+                this.write("Done.");
+                this.exit();
+            }),
+
         exit: command(
             "Close the terminal",
             function() {
@@ -167,6 +177,26 @@ visualEditor.ui.simul = {
             "Spoof an agent id to perform an action.\n Usage: spoof actor_name action",
             function(actor, action) {
                 this.write('Spoof');
+                this.exit();
+            }),
+
+        compilePolicy: command(
+            "Compile actor's policy into FODTL formula and put it in the formula.",
+            function() {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var clause = visualEditor.ui.simul.simulation.actors[actor].aal_policy;
+                var file = visualEditor.ui.getOpenedFile().replace('acd', 'aal');
+                this.write("Compiling...");
+                $.ajax({
+                    dataType: 'text',
+                    type:'POST',
+                    url: visualEditor.backend,
+                    data: {action: "aal_to_fodtl", file: file, clause: clause},
+                    async: false,
+                    success: function(response) {
+                        visualEditor.ui.simul.simulation.actors[actor].formula = response;
+                    }
+                });
                 this.exit();
             }),
 
@@ -264,8 +294,8 @@ visualEditor.ui.simul = {
                 this.exit();
             }),
 
-        call: command(
-            "Perform a service call by the agent.\n -Usage: call service[actor](args)",
+        run: command(
+            "Perform a service call by the agent.\n -Usage: run service[actor](args)",
             function(action) {
                 // TODO check with regexp
                 var service = action.substring(0, action.indexOf("["));

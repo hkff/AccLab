@@ -671,3 +671,14 @@ def start_fodtlmon_server(server_port=9999):
     Popen(['python3.4', 'ui/mon.py', server_port])
     sleep(1)
     return server_port
+
+
+# Translate AAL clause to FODTL
+def aal_to_fodtl(file, clause):
+    res = "Error"
+    mm = aalc(base_dir + "/" + file, libs_path="libs/aal/", root_path="", no_exec=True, web=True)["mm"]
+    if mm is not None:
+        c = mm.clause(clause)
+        if c is not None:
+            res = aal_clause_to_fodtl(c)
+    return res
