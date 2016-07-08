@@ -32,6 +32,14 @@ visualEditor.ui.simul = {
     monitor_backend: "",
     passkey: "1234",
 
+    /**
+     * Actor data type
+     * @param agent
+     * @param time
+     * @param location
+     * @returns actor object
+     * @constructor
+     */
     Actor: function(agent, time, location) {
         return {
             name: agent,
@@ -45,8 +53,27 @@ visualEditor.ui.simul = {
             location: "",
             time: "",
 
+            /**
+             * Run the monitor and get the result
+             * @returns {number}
+             */
             monitor: function() {
-                return 0;
+                this.trace.push(event);
+                var name = this.name;
+                var res = "?";
+                $.ajax({
+                    dataType: 'text',
+                    type:'POST',
+                    url: visualEditor.ui.simul.monitor_backend + "/api/actor/monitor/run",
+                    data: {actor: name, sys: visualEditor.ui.simul.name},
+                    async: false,
+                    crossDomain: true,
+                    success: function(response) {
+                        console.log(response);
+                        res = response;
+                    }
+                });
+                return res;
             },
 
             /**
@@ -83,16 +110,43 @@ visualEditor.ui.simul = {
                 return 0;
             },
 
-            pushEvent: function() {
-                return 0;
+            /**
+             * Push an event into actor's trace and send it to the monitor.
+             * @param event
+             */
+            pushEvent: function(event) {
+                this.trace.push(event);
+                var name = this.name;
+                $.ajax({
+                    dataType: 'text',
+                    type:'POST',
+                    url: visualEditor.ui.simul.monitor_backend + "/api/actor/events/push",
+                    data: {actor: name, event: event, sys: visualEditor.ui.simul.name},
+                    async: true,
+                    crossDomain: true,
+                    success: function(response) {
+                        console.log(response);
+                    }
+                });
             }
         }
     },
 
+    /**
+     * Local data object
+     * @param name
+     * @param types
+     * @returns {{name: *, types: *}}
+     * @constructor
+     */
     Data: function(name, types) {
         return {name: name, types: types}
     },
 
+    /**
+     * Start the simulation and the remote Fodtlmon service
+     * @param port
+     */
     startSimulation: function(port) {
         this.name = "Simulation1";
         this.monitor_port = port;
@@ -131,6 +185,9 @@ visualEditor.ui.simul = {
         });
     },
 
+    /**
+     * Stop the simulation and the Fodtlmon service
+     */
     stopSimulation: function() {
         // TODO close all terminals
         this.simulation = null;
@@ -328,7 +385,7 @@ visualEditor.ui.simul = {
                     }
 
                     // 2. Log the event in current actor trace
-                    visualEditor.ui.simul.simulation.actors[actor].trace.push(service+"("+actor+","+target+","+args+")");
+                    visualEditor.ui.simul.simulation.actors[actor].pushEvent(service+"("+actor+","+target+","+args+")");
 
                     // 3. Send log to monitor
 
