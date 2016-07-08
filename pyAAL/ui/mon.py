@@ -361,8 +361,6 @@ class Webservice:
             _args = Webservice.API.require_args(args_names, args, method)
             if isinstance(_args, str): return _args
             passkey = _args.get("passkey")
-            with open("log", "w+") as f:
-                f.write("%s %s" %(Webservice.passkey == str(passkey), passkey))
             if Webservice.passkey == str(passkey):
                 os._exit(0)
             return "Wrong passkey !"
