@@ -2221,7 +2221,7 @@ define('ventus/wm/modes/expose', ['underscore'], function (_) {
         plug: function () {
             // ---- Custom Hack ----------
             $(".wm-overlay").width("100%");
-            $(".wm-space").width(window.innerWidth+'px');//.height(window.innerHeight+'px');
+            $(".wm-space").width(window.innerWidth+'px').height(window.innerHeight+'px');
             // ---------------------------
             var floor = Math.floor, ceil = Math.ceil, self = this;
             var grid = ceil(this.windows.length / 2);
@@ -2263,7 +2263,7 @@ define('ventus/wm/modes/expose', ['underscore'], function (_) {
         unplug: function () {
             // ---- Custom Hack ----------
             $(".wm-overlay").width("0%");
-            $(".wm-space").width("0%");//.height("0%");
+            $(".wm-space").width("0%").height("0%");
             // ---------------------------
             for (var win, i = this.windows.length; i--;) {
                 win = this.windows[i];
