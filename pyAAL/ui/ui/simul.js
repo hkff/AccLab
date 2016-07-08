@@ -52,13 +52,14 @@ visualEditor.ui.simul = {
             violations: [],
             location: "",
             time: "",
+            monitor_enabled: true,
+            rt_control: false,
 
             /**
              * Run the monitor and get the result
-             * @returns {number}
+             * @returns {string}
              */
             monitor: function() {
-                this.trace.push(event);
                 var name = this.name;
                 var res = "?";
                 $.ajax({
@@ -96,10 +97,6 @@ visualEditor.ui.simul = {
                     }
                 });
                 return res;
-            },
-
-            disableMonitor: function() {
-                return 0;
             },
 
             getKV: function() {
@@ -214,7 +211,7 @@ visualEditor.ui.simul = {
         },
 
         autoSetup: command(
-            "<<Admin only>> Auto configure the simulation",
+            "Admin only: Auto configure the simulation",
             function() {
                 // TODO
                 this.write("Attaching actors policies...");
@@ -224,14 +221,14 @@ visualEditor.ui.simul = {
             }),
 
         exit: command(
-            "Close the terminal",
+            "Close the terminal.",
             function() {
                 this.exit();
                 visualEditor.ui.simul.currentTerminal.win.close();
             }),
 
         spoof: command(
-            "Spoof an agent id to perform an action.\n Usage: spoof actor_name action",
+            "Spoof an agent id to perform an action.\nUsage: spoof <<actor_name>> <<action>>",
             function(actor, action) {
                 this.write('Spoof');
                 this.exit();
@@ -258,11 +255,10 @@ visualEditor.ui.simul = {
             }),
 
         setFormula: command(
-            "Change actor's formula.\n -Usage: formula <<fodtl formula>>",
+            "Change actor's formula.\nUsage: formula <<fodtl formula>>",
             function() {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
-                var formula = Array.prototype.slice.call(arguments, 0).join(" ");
-                visualEditor.ui.simul.simulation.actors[actor].formula = formula;
+                visualEditor.ui.simul.simulation.actors[actor].formula = Array.prototype.slice.call(arguments, 0).join(" ");
                 this.exit();
             }),
 
@@ -276,7 +272,7 @@ visualEditor.ui.simul = {
             }),
 
         register: command(
-            "register actor.",
+            "Register actor.",
             function() {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
                 var res = visualEditor.ui.simul.simulation.actors[actor].register();
@@ -285,54 +281,62 @@ visualEditor.ui.simul = {
             }),
 
         setTime: command(
-            "Change actor's time.\n -Usage: time time" +
+            "Change actor's time.\nUsage: setTime <<time>>" +
             "\n Examples:" +
-            "\n - time 3   // Set current actor's location to france",
-            function() {
-                this.write('Set time');
+            "\n - time 3   // Set current actor's time to 3",
+            function(time) {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                visualEditor.ui.simul.simulation.actors[actor].time = time;
                 this.exit();
             }),
 
         time: command(
-            "Show actor's local time.\n -Usage: time [actor_name]" +
+            "Show actor's local time.\nUsage: time [actor_name]" +
             "\n Examples:" +
             "\n - time     // Show current actor's time"+
             "\n - time bob // Show bob's time",
             function() {
-                this.write('Time');
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                this.write(visualEditor.ui.simul.simulation.actors[actor].time);
                 this.exit();
             }),
 
         setLocation: command(
-            "Change actor's location.\n -Usage: location location_name" +
+            "Change actor's location.\nUsage: setLocation <<location_name>>" +
             "\n Examples:" +
             "\n - location  france   // Set current actor's location to france",
-            function() {
-                this.write('Set location');
+            function(location) {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                visualEditor.ui.simul.simulation.actors[actor].location = location;
                 this.exit();
             }),
 
         location: command(
-            "Show actor's location.\n -Usage: location [actor_name]" +
+            "Show actor's location.\nUsage: location [actor_name]" +
             "\n Examples:" +
             "\n - location     // Show current actor's location"+
             "\n - location bob // Show bob's location",
             function() {
-                this.write('location');
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                this.write(visualEditor.ui.simul.simulation.actors[actor].location);
                 this.exit();
             }),
 
         violations: command(
             "Show actor violations.",
             function() {
-                this.write('Violations');
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var res = visualEditor.ui.simul.simulation.actors[actor].violations;
+                this.write(res);
                 this.exit();
             }),
 
         kv: command(
-            "Show local monitor's knowledge vector",
+            "Show local monitor's knowledge vector.",
             function() {
-                this.write('Local KV');
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var res = visualEditor.ui.simul.simulation.actors[actor].kv;
+                this.write(res);
                 this.exit();
             }),
 
@@ -345,26 +349,32 @@ visualEditor.ui.simul = {
             }),
 
         monitor: command(
-            "Enable/disable the reference monitor.\n Usage: monitor on/off",
+            "Enable/disable the reference monitor.\nUsage: monitor <<on/off>>",
             function() {
                 this.write('Monitoring');
                 this.exit();
             }),
 
         run: command(
-            "Perform a service call by the agent.\n -Usage: run service[actor](args)",
+            "Perform a service call by the agent.\nUsage: run service[actor](args)",
             function(action) {
                 // TODO check with regexp
                 var service = action.substring(0, action.indexOf("["));
                 var target = action.substring(action.indexOf("[")+1, action.indexOf("]"));
-                var args = action.substring(action.indexOf("(")+1, action.indexOf(")"));
-                if(args == "") args = "NONE";
+                var actionArgs = action.substring(action.indexOf("(")+1, action.indexOf(")"));
+                if(actionArgs == "") actionArgs = "NONE";
 
-                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var actorName = visualEditor.ui.simul.currentTerminal.agent;
+                var actor = visualEditor.ui.simul.simulation.actors[actorName];
+
                 var currentActorUI = visualEditor.ui.canvas.getFigures().data.filter(
-                    function(e){return e.type === "Actor" && e.getName() == actor});
+                    function(e){return e.type === "Actor" && e.getName() == actorName});
+
                 var targetActorUI = visualEditor.ui.canvas.getFigures().data.filter(
                     function(e){return e.type === "Actor" && e.getName() == target});
+
+                var consUI = null;
+
                 if(currentActorUI.length > 0 && targetActorUI.length > 0) {
                     currentActorUI = currentActorUI[0];
                     targetActorUI = targetActorUI[0];
@@ -375,43 +385,59 @@ visualEditor.ui.simul = {
                         return e.text == service
                     });
                     if (s1.length > 0 && s2.length > 0) {
-                        var cons = s1[0].getConnections();
+                        cons = s1[0].getConnections();
                         // TODO select the correct connexion
                         if (cons.data.length > 0) {
-                            var old_color = cons.get(0).getColor();
-                            cons.get(0).setColor("#230990");
+                            consUI = cons.get(0);
+                            var old_color = consUI.getColor();
+                            consUI.setColor("#230990");
                             // 1. Animate connection
                         }
                     }
 
                     // 2. Log the event in current actor trace
-                    visualEditor.ui.simul.simulation.actors[actor].pushEvent(service+"("+actor+","+target+","+args+")");
+                    actor.pushEvent(service+"("+actorName+","+target+","+actionArgs+")");
 
-                    // 3. Send log to monitor
+                    // 3. Monitor and get the result
+                    if(actor.monitor_enabled) {
+                        var mon_res = actor.monitor();
+                        if(mon_res == "false") {
+                            actor.violations.push("Violation");
+                            if(actor.rt_control) {
+                                this.write("Violation");
+                                this.exit();
+                                return;
+                            }
+                        }
+                    }
 
                     // 4. Simulate the network
 
+                    // if received:
                     // 5. Log the event in target actor trace
 
-                    // 6. Send log to target's monitor
+                        // 6. Run target's monitor
+                            // if monitor enabled
+                                // if res is false
+                                    // report violation
 
-                    this.write('calling:' + service + " on " + target + " with " + args);
+                    this.write('calling:' + service + " on " + target + " with " + actionArgs);
                     this.exit();
-                    return;
+                 } else {
+                    this.write("Error actors not found !");
+                    this.exit();
                 }
-                this.write("Error actors not found !");
-                this.exit();
             }),
 
         rm: command(
-            "Remove a local data.\n - Usage: rm data_name",
+            "Remove a local data.\nUsage: rm <<data_name>>",
             function(name) {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
                 var data = visualEditor.ui.simul.simulation.actors[actor].data;
                 var deleted = false;
                 for(var i=0; i<data.length; i++) {
                     if(data[i].name == name) {
-                        delete(data[i]);
+                        data.splice(i, 1);
                         deleted = true;
                         this.write("Data deleted !");
                     }
@@ -433,7 +459,7 @@ visualEditor.ui.simul = {
             }),
 
         data: command(
-            "Create a local data. Usage: data name type1 type2 ... typeN",
+            "Create a local data.\nUsage: data name type1 type2 ... typeN",
             function(name) {
                 if(name != undefined) {
                     // TODO check if data exsits
@@ -450,7 +476,7 @@ visualEditor.ui.simul = {
             }),
 
         attach: command(
-            "Attach the policy 'policy' to the agent.",
+            "Attach the given policy to the agent.\nUsage: attach <<policy_name>>",
             function(policy) {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
                 var clauses = visualEditor.ui.canvas.getFigures().data.filter(
@@ -493,8 +519,8 @@ visualEditor.ui.simul = {
                 this.exit();
             }),
 
-        help: command(
-            "Show help",
+        man: command(
+            "Show manual of a command.\nType man <<command_name>> to print command help.",
             function(cmd) {
                 if(arguments.length > 0) {
                     if(visualEditor.ui.simul.SimulationCommands.hasOwnProperty(cmd)) {
@@ -502,7 +528,14 @@ visualEditor.ui.simul = {
                     } else
                         this.write('Command not found ! Press < tab > to see a list of available commands.');
                 }  else
-                    this.write('Press < tab > to see a list of available commands.');
+                    this.write('Type man <<command_name>> to print command help.');
+                this.exit();
+            }),
+
+        help: command(
+            "Show this help. Type help <<command_name>> to print command help",
+            function() {
+                this.write('Press < tab > to see a list of available commands.\nType man <<command>> to print command manual.');
                 this.exit();
             })
     },
@@ -554,9 +587,7 @@ visualEditor.ui.simul = {
         terminal.win = terminalWin;
 
 		terminal.display.events.on('prompt', function() {
-			terminalWin.$content.animate({
-				scrollTop:terminalWin.el.find('.terminusjs').height()
-			}, 300);
+			terminalWin.$content.animate({scrollTop:terminalWin.el.find('.terminusjs').height()}, 300);
 		});
 
         // Open the terminal
