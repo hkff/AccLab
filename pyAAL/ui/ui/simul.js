@@ -26,8 +26,11 @@ function command(doc, fx) {
 
 visualEditor.ui.simul = {
     simulation: null,
+    simulation_name: "",
     monitor_port: 9999,
     currentTerminal: null,
+    monitor_backend: "",
+    passkey: "1234",
 
     Actor: function(agent, time, location) {
         return {
@@ -46,8 +49,26 @@ visualEditor.ui.simul = {
                 return 0;
             },
 
+            /**
+             * Register actor
+             * @returns {string}
+             */
             register: function() {
-                return 0;
+                var res = "";
+                var _this = this;
+                $.ajax({
+                    dataType: 'text',
+                    type:'POST',
+                    url: visualEditor.ui.simul.monitor_backend + "/api/monitor/register",
+                    data: {mon_name: _this.name, formula: "", trace:""},
+                    async: false,
+                    crossDomain: true,
+                    success: function(response) {
+                        console.log(response);
+                        res = response;
+                    }
+                });
+                return res;
             },
 
             disableMonitor: function() {
@@ -73,8 +94,20 @@ visualEditor.ui.simul = {
     },
 
     startSimulation: function(port) {
-        visualEditor.ui.simul.monitor_port = port;
+        this.name = "Simulation1";
+        this.monitor_port = port;
+        this.monitor_backend = "http://127.0.0.1:" + port;
         this.simulation = {actors: {}};
+
+        // Start monitoring server
+        $.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            async: false,
+            data: {action: "startSimulation", port: this.monitor_port},
+            success: function(response) {}
+        });
 
         // 1. Analyse current ACD file and extract all actors with policies
         var actors = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Actor"});
@@ -83,42 +116,66 @@ visualEditor.ui.simul = {
             var agent = actors[i].getName();
             this.simulation.actors[agent] = this.Actor(agent);
         }
+
+        // Register the new system
+        $.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.ui.simul.monitor_backend + "/api/system/create",
+            data: {sys_name: this.name},
+            async: true,
+            crossDomain: true,
+            success: function(response) {
+                console.log(response);
+            }
+        });
     },
 
     stopSimulation: function() {
         // TODO close all terminals
         this.simulation = null;
+        $.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.ui.simul.monitor_backend + "/api/shutdown",
+            data: {passkey: visualEditor.ui.simul.passkey},
+            async: true,
+            crossDomain: true,
+            success: function(response) {
+                console.log(response);
+            }
+        });
     },
 
+    /**
+     * Simulation commands
+     */
     SimulationCommands: {
 
         ll: function () {
             //SimulationCommands.ls.call(this, arguments);
         },
 
-        sum: function(op1, op2) {
-            //if (arguments.length < 2)
-            this.exit();
-        },
-
-        echo: function() {
-            var args = Array.prototype.slice.call(arguments, 0);
-            this.write(args.join(' '));
-
-            this.exit(0);
-        },
-
         exit: command(
             "Close the terminal",
             function() {
-                this.write('exit');
                 this.exit();
+                visualEditor.ui.simul.currentTerminal.win.close();
             }),
 
         spoof: command(
             "Spoof an agent id to perform an action.\n Usage: spoof actor_name action",
             function(actor, action) {
                 this.write('Spoof');
+                this.exit();
+            }),
+
+        register: command(
+            "register actor.",
+            function() {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var res = visualEditor.ui.simul.simulation.actors[actor].register();
+                this.write(res);
                 this.exit();
             }),
 
@@ -244,7 +301,18 @@ visualEditor.ui.simul = {
         rm: command(
             "Remove a local data.\n - Usage: rm data_name",
             function(name) {
-                this.write('removing:' + name);
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var data = visualEditor.ui.simul.simulation.actors[actor].data;
+                var deleted = false;
+                for(var i=0; i<data.length; i++) {
+                    if(data[i].name == name) {
+                        delete(data[i]);
+                        deleted = true;
+                        this.write("Data deleted !");
+                    }
+                }
+                if(!deleted)
+                    this.write("Data not found !");
                 this.exit();
             }),
 
@@ -378,17 +446,13 @@ visualEditor.ui.simul = {
 			});
         terminal.shell.include([this.SimulationCommands]);
         terminal.agent = actor;
+        terminal.win = terminalWin;
 
 		terminal.display.events.on('prompt', function() {
 			terminalWin.$content.animate({
 				scrollTop:terminalWin.el.find('.terminusjs').height()
 			}, 300);
 		});
-
-        // Configure the terminal with actor environment
-        //this.simulation.actors = {
-        //    terminalWin: terminalWin
-        //};
 
         // Open the terminal
         terminalWin.open();

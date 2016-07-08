@@ -1227,15 +1227,13 @@ visualEditor.ui.tools.simulationTool = visualEditor.ui.tool.extend({
 
 	control: function(parent, disableShortcut) {
 		var fx = function(e){
-            $.ajax({
-                dataType: 'text',
-                type:'POST',
-                url: visualEditor.backend,
-                data: {action: "startSimulation", port: 9999},
-                success: function(response) {
-                    visualEditor.ui.simul.startSimulation(response);
-                    toastr.success('Simulation started !');
-                }});
+            if(visualEditor.ui.simul.simulation == null) {
+                visualEditor.ui.simul.startSimulation(9999);
+                toastr.success('Simulation started !');
+            } else {
+                visualEditor.ui.simul.stopSimulation();
+                toastr.error('Simulation stopped !');
+            }
 		};
 		this.button.click(fx);
 		if(disableShortcut != null) return;
