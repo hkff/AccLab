@@ -313,6 +313,13 @@ visualEditor.ui.simul = {
                 this.exit();
             }),
 
+        clear: command(
+            "Clear console.",
+            function() {
+                visualEditor.ui.simul.currentTerminal._display.output.clear();
+                this.exit();
+            }),
+
         help: command(
             "Show help",
             function(cmd) {

@@ -1746,7 +1746,7 @@ define('system/shell',['require','core/util','core/promise','system/process','io
 				this.streams.stdout.write(output);
 			},
 
-			clear: function() {
+			clear2: function() {
 				this.bus.emit('clear');
 			}
 		}
