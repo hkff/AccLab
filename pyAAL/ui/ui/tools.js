@@ -1221,7 +1221,7 @@ visualEditor.ui.tools.simulationTool = visualEditor.ui.tool.extend({
 	NAME : "visualEditor.ui.tools.simulationTool",
 
 	view: function(parent) {
-		this.button = $('<div title="Start/Stop simulation" id="simulationBtn" class="btn-action fa fa-cubes fa-lg"/>');
+		this.button = $('<div title="Start simulation" id="simulationBtn" class="btn-action fa fa-cubes fa-lg"/>');
 		parent.actionsPanel.append(this.button);
 	},
 
@@ -1230,9 +1230,11 @@ visualEditor.ui.tools.simulationTool = visualEditor.ui.tool.extend({
             if(visualEditor.ui.simul.simulation == null) {
                 visualEditor.ui.simul.startSimulation(9999);
                 toastr.success('Simulation started !');
+                $("#simulationBtn").attr("title", "Stop simulation").css("color", "green").addClass("fa-spin");
             } else {
                 visualEditor.ui.simul.stopSimulation();
                 toastr.error('Simulation stopped !');
+                $("#simulationBtn").attr("title", "Start simulation").css("color", "").removeClass("fa-spin");
             }
 		};
 		this.button.click(fx);

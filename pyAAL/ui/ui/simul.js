@@ -26,7 +26,7 @@ function command(doc, fx) {
 
 visualEditor.ui.simul = {
     simulation: null,
-    simulation_name: "",
+    name: "",
     monitor_port: 9999,
     currentTerminal: null,
     monitor_backend: "",
@@ -37,7 +37,7 @@ visualEditor.ui.simul = {
             name: agent,
             terminal: null,
             aal_policy: "",
-            monitors: [],
+            formula: "G(true)",
             kv: [],
             data: [],
             trace: [],
@@ -59,8 +59,8 @@ visualEditor.ui.simul = {
                 $.ajax({
                     dataType: 'text',
                     type:'POST',
-                    url: visualEditor.ui.simul.monitor_backend + "/api/monitor/register",
-                    data: {mon_name: _this.name, formula: "", trace:""},
+                    url: visualEditor.ui.simul.monitor_backend + "/api/actor/register",
+                    data: {actor: _this.name, formula: _this.formula, trace:"{}", sys: visualEditor.ui.simul.name},
                     async: false,
                     crossDomain: true,
                     success: function(response) {
@@ -170,6 +170,24 @@ visualEditor.ui.simul = {
                 this.exit();
             }),
 
+        setFormula: command(
+            "Change actor's formula.\n -Usage: formula <<fodtl formula>>",
+            function() {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var formula = Array.prototype.slice.call(arguments, 0).join(" ");
+                visualEditor.ui.simul.simulation.actors[actor].formula = formula;
+                this.exit();
+            }),
+
+        formula: command(
+            "Show actor's formula.\n -Usage: formula",
+            function() {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var res = visualEditor.ui.simul.simulation.actors[actor].formula;
+                this.write(res);
+                this.exit();
+            }),
+
         register: command(
             "register actor.",
             function() {
@@ -179,7 +197,7 @@ visualEditor.ui.simul = {
                 this.exit();
             }),
 
-        set_time: command(
+        setTime: command(
             "Change actor's time.\n -Usage: time time" +
             "\n Examples:" +
             "\n - time 3   // Set current actor's location to france",
@@ -198,7 +216,7 @@ visualEditor.ui.simul = {
                 this.exit();
             }),
 
-        set_location: command(
+        setLocation: command(
             "Change actor's location.\n -Usage: location location_name" +
             "\n Examples:" +
             "\n - location  france   // Set current actor's location to france",
@@ -316,7 +334,7 @@ visualEditor.ui.simul = {
                 this.exit();
             }),
 
-        show_data: command(
+        showData: command(
             "Show local data of an actor. If actor_name is not specified it shows current actor data" +
             "\nUsage: show_data [actor name]",
             function(name) {
@@ -372,7 +390,7 @@ visualEditor.ui.simul = {
                 this.exit();
             }),
 
-        policy_name: command(
+        policyName: command(
             "Show AAL policy name attached to the current actor.",
             function() {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;

@@ -44,6 +44,13 @@ class Actor:
         self.monitor = None
         self.sub_mons = []
 
+    def to_html(self):
+        return """
+        Name: %s </br>
+        Formula: %s </br>
+        Trace: %s </br>
+        """ % (self.name, self.formula, self.trace)
+
 
 class System:
     """
@@ -62,16 +69,27 @@ class System:
         self.kv_implementation = kv_implementation
         self.forward = []
 
+    def to_html(self):
+        return """
+        <h4># %s</h4>
+        <h5>## Actors:</h5>
+        %s
+        """ % (self.name, "</br>".join([x.to_html() for x in self.actors]))
+
     def add_actors(self, actor):
         """
-        Add an actor / actor list to the system's actors
-        :param actor: Actor | list<Actor>
+        Add an actor
+        :param actor: Actor
         :return: self
         """
-        if isinstance(actor, list):
-            self.actors.extend(actor)
-        elif isinstance(actor, Actor):
-            self.actors.append(actor)
+        if isinstance(actor, Actor):
+            exs = list(filter(lambda x: x.name == actor.name, self.actors))
+            print(exs)
+            if len(exs) == 0:
+                self.actors.append(actor)
+            else:
+                self.actors.remove(exs[0])
+                self.actors.append(actor)
         return self
 
     def get_actor(self, name):
@@ -88,8 +106,6 @@ class System:
         :param actor:
         :return:
         """
-        self.add_actors(actor)
-
         remotes = actor.formula.walk(filter_type=At)
         # Compute formula hash
         for f in remotes:
@@ -117,6 +133,7 @@ class System:
         # for a in self.actors:
         #     a.monitor.KV = copy.deepcopy(kv)
         # TODO handle forward
+        self.add_actors(actor)
 
 
 class Webservice:
@@ -363,6 +380,24 @@ class Webservice:
             passkey = _args.get("passkey")
             if Webservice.passkey == str(passkey):
                 os._exit(0)
+            return "Wrong passkey !"
+
+        @staticmethod
+        def api(args, method):
+            """
+                URL : /api/
+            """
+            args_names = ["passkey"]
+            _args = Webservice.API.require_args(args_names, args, method)
+            if isinstance(_args, str): return _args
+            passkey = _args.get("passkey")
+            if Webservice.passkey == str(passkey):
+                res = """
+                <h2>Systems:</h2>
+                %s
+                """ % (" ".join([Webservice.systems[x].to_html() for x in Webservice.systems.keys()]))
+
+                return res
             return "Wrong passkey !"
 
 
