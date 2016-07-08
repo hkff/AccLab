@@ -68,6 +68,10 @@ visualEditor.ui.simul = {
         }
     },
 
+    Data: function(name, types) {
+        return {name: name, types: types}
+    },
+
     startSimulation: function(port) {
         visualEditor.ui.simul.monitor_port = port;
         this.simulation = {actors: {}};
@@ -248,14 +252,27 @@ visualEditor.ui.simul = {
             "Show local data of an actor. If actor_name is not specified it shows current actor data" +
             "\nUsage: show_data [actor name]",
             function(name) {
-                this.write('calling:' + name);
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var data = visualEditor.ui.simul.simulation.actors[actor].data;
+                for(var i=0; i<data.length; i++)
+                    this.write(data[i].name + ':' + data[i].types + '\n');
                 this.exit();
             }),
 
         data: command(
             "Create a local data. Usage: data name type1 type2 ... typeN",
             function(name) {
-                this.write('calling:' + name);
+                if(name != undefined) {
+                    // TODO check if data exsits
+                    var actor = visualEditor.ui.simul.currentTerminal.agent;
+                    var types = [];
+                    if(arguments.length > 1)
+                        types = Array.prototype.slice.call(arguments, 0).slice(1);
+                    var d = visualEditor.ui.simul.Data(name, types);
+                    visualEditor.ui.simul.simulation.actors[actor].data.push(d);
+                    this.write('Data stored ! ');
+                } else
+                    this.write('Error no name given! ');
                 this.exit();
             }),
 
