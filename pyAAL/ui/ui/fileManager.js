@@ -409,13 +409,15 @@ visualEditor.ui.fileManager = {
 	 */
 	reloadFile: function(changeMode) {
         changeMode = (changeMode != undefined)? changeMode : true;
-		var old_pos = visualEditor.activeEditor.getCursorPosition();
-        var first_visible_row = visualEditor.activeEditor.getFirstVisibleRow();
-        var file = visualEditor.ui.activeTab.container.title;
+		var file = visualEditor.ui.activeTab.container.title;
 		var fileType = file.split('.').pop().toLowerCase();
 		var dType = "text";
-		if(fileType === "acd" || fileType === "vfodtl" )
+		if(fileType === "acd" || fileType === "vfodtl" ) {
 			dType = "json";
+		} else {
+			var old_pos = visualEditor.activeEditor.getCursorPosition();
+        	var first_visible_row = visualEditor.activeEditor.getFirstVisibleRow();
+		}
 		// Ajax request
         $.ajax({
 			dataType: dType,
