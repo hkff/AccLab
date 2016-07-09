@@ -413,10 +413,12 @@ visualEditor.ui.simul = {
                     }
 
                     // 2. Log the event in current actor trace
-                    var ac = service+"("+actorName+","+targetName+","+actionArgs+")";
-                    var location = "LOCATION('" + actorName + "', '" + actor.location + "')";
-                    var time = "TIME('" + actorName + "', '" + actor.time + "')";
-                    var event = "{" +ac+"|"+ location + "|" + time + "}";
+                    var predicates = [];
+                    predicates.push(service+"("+actorName+","+targetName+","+actionArgs+")"); // Action
+                    predicates.push("P"+service+"("+actorName+","+targetName+","+actionArgs+")"); // Action permission
+                    predicates.push("LOCATION('" + actorName + "', '" + actor.location + "')"); // Location
+                    predicates.push("TIME('" + actorName + "', '" + actor.time + "')"); // Time
+                    var event = "{" + predicates.join("|") + "}";
                     actor.pushEvent(event);
 
                     // 3. Monitor and get the result
@@ -449,7 +451,13 @@ visualEditor.ui.simul = {
                         }
                     });
                     // 5. Log the event in target actor trace
-
+                    var predicates2 = [];
+                    predicates2.push(service+"("+actorName+","+targetName+","+actionArgs+")"); // Action
+                    predicates2.push("P"+service+"("+actorName+","+targetName+","+actionArgs+")"); // Action permission
+                    predicates2.push("LOCATION('" + actorName + "', '" + actor.location + "')"); // Location
+                    predicates2.push("TIME('" + actorName + "', '" + actor.time + "')"); // Time
+                    var event2 = "{" + predicates2.join("|") + "}";
+                    target.pushEvent(event2);
                         // 6. Run target's monitor
                             // if monitor enabled
                                 // if res is false
