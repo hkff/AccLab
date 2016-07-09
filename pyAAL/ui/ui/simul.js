@@ -87,7 +87,7 @@ visualEditor.ui.simul = {
                     dataType: 'text',
                     type:'POST',
                     url: visualEditor.ui.simul.monitor_backend + "/api/actor/register",
-                    data: {actor: _this.name, formula: _this.formula, trace:"{}", sys: visualEditor.ui.simul.name},
+                    data: {actor: _this.name, formula: _this.formula, sys: visualEditor.ui.simul.name},
                     async: false,
                     crossDomain: true,
                     success: function(response) {

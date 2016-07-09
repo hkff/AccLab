@@ -290,17 +290,16 @@ class Webservice:
             """
                 URL : /api/actor/register
             """
-            args_names = ["actor", "formula", "trace", "sys"]
+            args_names = ["actor", "formula", "sys"]
             _args = Webservice.API.require_args(args_names, args, method)
             if isinstance(_args, str): return _args
-            tr = Trace().parse(_args.get("trace"))
             fl = FodtlParser.parse(_args.get("formula"))
             name = _args.get("actor")
             sys = _args.get("sys")
 
             system = Webservice.systems.get(sys, None)
             if system is not None:
-                a = Actor(name=name, formula=fl, trace=tr)
+                a = Actor(name=name, formula=fl, trace=Trace())
                 system.register_actor(a)
             else:
                 return "System not found !"
