@@ -506,8 +506,10 @@ class Webservice:
             passkey = _args.get("passkey")
             if Webservice.passkey == str(passkey):
                 res = """
+                <!DOCTYPE html> <html> <head> <meta charset="utf-8"> </head> <body>
                 <h2>Systems:</h2>
                 %s
+                </body></html>
                 """ % (" ".join([Webservice.systems[x].to_html() for x in Webservice.systems.keys()]))
 
                 return res

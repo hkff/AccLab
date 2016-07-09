@@ -98,12 +98,26 @@ visualEditor.ui.simul = {
                 return res;
             },
 
+            /**
+             * Get actor's knowledge vector
+             * @returns {string}
+             */
             getKV: function() {
-                return 0;
-            },
-
-            updateKV: function() {
-                return 0;
+                var res = "";
+                var _this = this;
+                $.ajax({
+                    dataType: 'text',
+                    type:'POST',
+                    url: visualEditor.ui.simul.monitor_backend + "/api/actor/kv",
+                    data: {actor: _this.name, sys: visualEditor.ui.simul.name},
+                    async: false,
+                    crossDomain: true,
+                    success: function(response) {
+                        console.log(response);
+                        res = response;
+                    }
+                });
+                return res;
             },
 
             /**
@@ -185,7 +199,9 @@ visualEditor.ui.simul = {
      * Stop the simulation and the Fodtlmon service
      */
     stopSimulation: function() {
-        // TODO close all terminals
+        // Close all terminals
+        $.each(visualEditor.ui.simul.simulation.actors, function(i, v) {if(v.terminal != null) v.terminal.close()});
+
         this.simulation = null;
         $.ajax({
             dataType: 'text',
@@ -229,6 +245,7 @@ visualEditor.ui.simul = {
         spoof: command(
             "Spoof an agent id to perform an action.\nUsage: spoof <<actor_name>> <<action>>",
             function(actor, action) {
+                // TODO
                 this.write('Spoof');
                 this.exit();
             }),
@@ -334,7 +351,7 @@ visualEditor.ui.simul = {
             "Show local monitor's knowledge vector.",
             function() {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
-                var res = visualEditor.ui.simul.simulation.actors[actor].kv;
+                var res = visualEditor.ui.simul.simulation.actors[actor].getKV();
                 this.write(res);
                 this.exit();
             }),
@@ -469,7 +486,10 @@ visualEditor.ui.simul = {
             "\nUsage: show_data [actor name]",
             function(name) {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
-                var data = visualEditor.ui.simul.simulation.actors[actor].data;
+                if(name != undefined)
+                    var data = visualEditor.ui.simul.simulation.actors[actor].data;
+                else
+                    var data = visualEditor.ui.simul.simulation.actors[name].data; // TODO check
                 for(var i=0; i<data.length; i++)
                     this.write(data[i].name + ':' + data[i].types + '\n');
                 this.exit();
@@ -586,6 +606,8 @@ visualEditor.ui.simul = {
             events: {
                 closed: function() {
                     this.destroy();
+                    if(visualEditor.ui.simul.simulation != null)
+                        visualEditor.ui.simul.simulation.actors[actor].terminal = null;
                 }
             }
         });
@@ -602,6 +624,7 @@ visualEditor.ui.simul = {
         terminal.shell.include([this.SimulationCommands]);
         terminal.agent = actor;
         terminal.win = terminalWin;
+        visualEditor.ui.simul.simulation.actors[actor].terminal = terminalWin;
 
 		terminal.display.events.on('prompt', function() {
 			terminalWin.$content.animate({scrollTop:terminalWin.el.find('.terminusjs').height()}, 300);
