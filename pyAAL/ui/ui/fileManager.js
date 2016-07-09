@@ -434,6 +434,7 @@ visualEditor.ui.fileManager = {
 						var reader = new draw2d.io.json.Reader();
 						visualEditor.ui.canvas.clear();
 			 			reader.unmarshal(visualEditor.ui.canvas, response);
+                        $(visualEditor.ui.outline.tree).tree("reload");
 						visualEditor.ui.outline.canvasToTree();
 
                         // Switch to acd mode
