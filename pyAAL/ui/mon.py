@@ -48,8 +48,13 @@ class Actor:
         self.trace.push_event(event)
 
     def run_monitor(self):
+        # run sub mons and update KV
+        for mon in self.sub_mons:
+            mon.monitor()
+            self.monitor.KV.update(KVector.Entry(mon.fid, agent=self.name, value=mon.last, timestamp=mon.counter))
+
+        # Run main monitor
         res = self.monitor.monitor()
-        # TODO run submons and update KV
         return res
 
     def to_html(self):
@@ -58,7 +63,8 @@ class Actor:
         Formula: %s </br>
         Trace: %s </br>
         Result: %s </br>
-        """ % (self.name, self.formula, self.trace, self.monitor.last)
+        KV: %s </br>
+        """ % (self.name, self.formula, self.trace, self.monitor.last, self.monitor.KV)
 
 
 class System:
@@ -108,6 +114,22 @@ class System:
         """
         return next((x for x in self.actors if x.name == name), None)
 
+    def register_remotes(self, actor):
+        """
+
+        :param actor:
+        :return:
+        """
+        for e in self.forward:
+            if e["formula"].agent == actor.name:
+                ac = self.get_actor(e["actor"])
+                if ac is not None:
+                    f = e["formula"]
+                    actor.sub_mons.append(Fodtlmon(f.inner, actor.trace, parent=actor.monitor, fid=f.fid))
+                    # Add entry into KVs
+                    ac.monitor.KV.add_entry(self.kv_implementation.Entry(f.fid, agent=actor.name, value=Boolean3.Unknown, timestamp=0))
+                    actor.monitor.KV.add_entry(self.kv_implementation.Entry(f.fid, agent=actor.name, value=Boolean3.Unknown, timestamp=0))
+
     def register_actor(self, actor):
         """
 
@@ -122,25 +144,20 @@ class System:
         # Create the global monitor for the actor
         actor.monitor = Fodtlmon(actor.formula, actor.trace)
 
-        submons = []
         # Create the remote sub monitors for each @Formula
         for f in remotes:
             remote_actor = self.get_actor(f.agent)
             if remote_actor is not None:
                 remote_actor.sub_mons.append(Fodtlmon(f.inner, remote_actor.trace, parent=remote_actor.monitor, fid=f.fid))
-                submons.append({"fid": f.fid, "actor": remote_actor.name})
+                # Add entry into KVs
+                actor.monitor.KV.add_entry(self.kv_implementation.Entry(f.fid, agent=remote_actor.name, value=Boolean3.Unknown, timestamp=0))
+                remote_actor.monitor.KV.add_entry(self.kv_implementation.Entry(f.fid, agent=remote_actor.name, value=Boolean3.Unknown, timestamp=0))
             else:
-                self.forward.append(remote_actor)
+                self.forward.append({"formula": f, "actor": actor.name})
 
-        # Create the general KV structure
-        kv = self.kv_implementation()
-        for m in submons:
-            kv.add_entry(self.kv_implementation.Entry(m["fid"], agent=m["actor"], value=Boolean3.Unknown, timestamp=0))
+        # Handle forward
+        self.register_remotes(actor)
 
-        # Add a copy of KV structure for each actor
-        # for a in self.actors:
-        #     a.monitor.KV = copy.deepcopy(kv)
-        # TODO handle forward
         self.add_actors(actor)
 
 
@@ -351,6 +368,49 @@ class Webservice:
                 res = "Actor not found !"
                 if actor is not None:
                     res = actor.run_monitor()
+            return res
+
+        @staticmethod
+        def api_actor_kv(args, method):
+            """
+                URL : /api/actor/kv/
+            """
+            args_names = ["actor", "sys"]
+            _args = Webservice.API.require_args(args_names, args, method)
+            if isinstance(_args, str): return _args
+
+            actor_name = _args.get("actor")
+            sys = Webservice.systems.get(_args.get("sys"), None)
+
+            res = "System not found !"
+            if sys is not None:
+                actor = sys.get_actor(actor_name)
+                res = "Actor not found !"
+                if actor is not None:
+                    res = str(actor.monitor.KV)
+            return res
+
+        @staticmethod
+        def api_actor_updatekv(args, method):
+            """
+                URL : /api/actor/updatekv/
+            """
+            args_names = ["actor", "sys", "from"]
+            _args = Webservice.API.require_args(args_names, args, method)
+            if isinstance(_args, str): return _args
+
+            actor_name = _args.get("actor")
+            source_name = _args.get("from")
+            sys = Webservice.systems.get(_args.get("sys"), None)
+
+            res = "System not found !"
+            if sys is not None:
+                actor = sys.get_actor(actor_name)
+                source_actor = sys.get_actor(source_name)
+                res = "Actor not found !"
+                if actor is not None:
+                    actor.monitor.update_kv(source_actor.monitor.KV)
+                    res = "Updates !"
             return res
 
         @staticmethod

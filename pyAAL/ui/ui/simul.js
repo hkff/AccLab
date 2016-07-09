@@ -419,6 +419,18 @@ visualEditor.ui.simul = {
                     // 4. Simulate the network
 
                     // if received:
+                    // Update target KV
+                     $.ajax({
+                        dataType: 'text',
+                        type:'POST',
+                        url: visualEditor.ui.simul.monitor_backend + "/api/actor/updatekv",
+                        data: {actor: targetName, sys: visualEditor.ui.simul.name, from: actorName},
+                        async: false,
+                        crossDomain: true,
+                        success: function(response) {
+                            console.log(response);
+                        }
+                    });
                     // 5. Log the event in target actor trace
 
                         // 6. Run target's monitor
