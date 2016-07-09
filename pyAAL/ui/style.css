@@ -583,10 +583,12 @@ path.pointer{
 
 .wm-overlay {
 	width: 0%;
+    z-index: 999;
     background-color: #0B476B !important;
 }
 
 .wm-space {
     width: 0%;
+    z-index: 999;
     background-color: #0B476B !important;
 }

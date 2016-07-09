@@ -50,8 +50,8 @@ visualEditor.ui.simul = {
             data: [],
             trace: [],
             violations: [],
-            location: "",
-            time: "",
+            location: "France",
+            time: "0",
             monitor_enabled: true,
             rt_control: false,
 
@@ -70,7 +70,6 @@ visualEditor.ui.simul = {
                     async: false,
                     crossDomain: true,
                     success: function(response) {
-                        console.log(response);
                         res = response;
                     }
                 });
@@ -263,7 +262,7 @@ visualEditor.ui.simul = {
             }),
 
         formula: command(
-            "Show actor's formula.\n -Usage: formula",
+            "Show actor's formula.\nUsage: formula",
             function() {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
                 var res = visualEditor.ui.simul.simulation.actors[actor].formula;
@@ -360,18 +359,19 @@ visualEditor.ui.simul = {
             function(action) {
                 // TODO check with regexp
                 var service = action.substring(0, action.indexOf("["));
-                var target = action.substring(action.indexOf("[")+1, action.indexOf("]"));
+                var targetName = action.substring(action.indexOf("[")+1, action.indexOf("]"));
                 var actionArgs = action.substring(action.indexOf("(")+1, action.indexOf(")"));
                 if(actionArgs == "") actionArgs = "NONE";
 
                 var actorName = visualEditor.ui.simul.currentTerminal.agent;
                 var actor = visualEditor.ui.simul.simulation.actors[actorName];
+                var target = visualEditor.ui.simul.simulation.actors[targetName]; // TODO check
 
                 var currentActorUI = visualEditor.ui.canvas.getFigures().data.filter(
                     function(e){return e.type === "Actor" && e.getName() == actorName});
 
                 var targetActorUI = visualEditor.ui.canvas.getFigures().data.filter(
-                    function(e){return e.type === "Actor" && e.getName() == target});
+                    function(e){return e.type === "Actor" && e.getName() == targetName});
 
                 var consUI = null;
 
@@ -385,7 +385,7 @@ visualEditor.ui.simul = {
                         return e.text == service
                     });
                     if (s1.length > 0 && s2.length > 0) {
-                        cons = s1[0].getConnections();
+                        var cons = s1[0].getConnections();
                         // TODO select the correct connexion
                         if (cons.data.length > 0) {
                             consUI = cons.get(0);
@@ -396,11 +396,16 @@ visualEditor.ui.simul = {
                     }
 
                     // 2. Log the event in current actor trace
-                    actor.pushEvent(service+"("+actorName+","+target+","+actionArgs+")");
+                    var ac = service+"("+actorName+","+targetName+","+actionArgs+")";
+                    var location = "LOCATION('" + actorName + "', '" + actor.location + "')";
+                    var time = "TIME('" + actorName + "', '" + actor.time + "')";
+                    var event = "{" +ac+"|"+ location + "|" + time + "}";
+                    actor.pushEvent(event);
 
                     // 3. Monitor and get the result
                     if(actor.monitor_enabled) {
                         var mon_res = actor.monitor();
+                        this.write(mon_res);
                         if(mon_res == "false") {
                             actor.violations.push("Violation");
                             if(actor.rt_control) {
@@ -421,7 +426,7 @@ visualEditor.ui.simul = {
                                 // if res is false
                                     // report violation
 
-                    this.write('calling:' + service + " on " + target + " with " + actionArgs);
+                    this.write('calling:' + service + " on " + targetName + " with " + actionArgs);
                     this.exit();
                  } else {
                     this.write("Error actors not found !");
@@ -573,7 +578,7 @@ visualEditor.ui.simul = {
             }
         });
 
-        terminalWin.signals.on('click', function(win){
+        terminalWin.signals.on('click', function(win) {
 			terminal.display.focus();
             visualEditor.ui.simul.currentTerminal = terminal;
 		});
