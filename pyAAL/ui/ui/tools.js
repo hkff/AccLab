@@ -1070,14 +1070,14 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
             // Get AAL info
             visualEditor.ui.analyseAAL(visualEditor.ui.activeTab.panel.title, function(e) {
 
-				var p = "<div>" +
-					"<div style='width:19%; float: left;'>" +
-					"	<b>AAL policy wizard</b>" +
+				var p = "<div id='aalwizard'>" +
+					"<div style='width:17%; float: left;'>" +
+					"	<b>Wizards</b>" +
 					"<ul id='tt' class='easyui-tree unselectable'>" +
 					"</div>" +
 					"<div id='templateContent' style=''> </div>" +
 					"</div>";
-
+                /*
 				toastr.info(p, "", {
 					"closeButton": true,
 					"preventDuplicates": true,
@@ -1097,6 +1097,22 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
                     else
                         $(this).animate({width: "800px", height: "453"});
                 });
+                */
+                $("body").append(p);
+                visualEditor.wm.createWindow.fromQuery("#aalwizard", {
+                    title: "AAL wizard",
+					x: 60,
+					y: 50,
+					width: 800,
+					height: 490,
+					widget: false,
+					titlebar: true,
+					events: {
+						closed: function() {
+							this.destroy();
+						}
+					}
+				}).open();
 
 				$("#tt").tree({
 					animate: true,
