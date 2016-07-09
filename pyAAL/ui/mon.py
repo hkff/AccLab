@@ -44,12 +44,21 @@ class Actor:
         self.monitor = None
         self.sub_mons = []
 
+    def push_event(self, event):
+        self.trace.push_event(event)
+
+    def run_monitor(self):
+        res = self.monitor.monitor()
+        # TODO run submons and update KV
+        return res
+
     def to_html(self):
         return """
         Name: %s </br>
         Formula: %s </br>
         Trace: %s </br>
-        """ % (self.name, self.formula, self.trace)
+        Result: %s </br>
+        """ % (self.name, self.formula, self.trace, self.monitor.last)
 
 
 class System:
@@ -84,7 +93,6 @@ class System:
         """
         if isinstance(actor, Actor):
             exs = list(filter(lambda x: x.name == actor.name, self.actors))
-            print(exs)
             if len(exs) == 0:
                 self.actors.append(actor)
             else:
@@ -298,6 +306,51 @@ class Webservice:
                     res = "Pushed"
                 else:
                     return "Bad event format !"
+            return res
+
+        @staticmethod
+        def api_actor_events_push(args, method):
+            """
+                URL : /api/actor/events/push
+            """
+            args_names = ["actor", "event", "sys"]
+            _args = Webservice.API.require_args(args_names, args, method)
+            if isinstance(_args, str): return _args
+
+            actor_name = _args.get("actor")
+            sys = Webservice.systems.get(_args.get("sys"), None)
+
+            res = "System not found !"
+            if sys is not None:
+                actor = sys.get_actor(actor_name)
+                res = "Actor not found !"
+                if actor is not None:
+                    e = Event.parse(_args.get("event"))
+                    if e is not None:
+                        actor.push_event(e)
+                        res = "Pushed"
+                    else:
+                        return "Bad event format !"
+            return res
+
+        @staticmethod
+        def api_actor_monitor_run(args, method):
+            """
+                URL : /api/actor/monitor/run
+            """
+            args_names = ["actor", "sys"]
+            _args = Webservice.API.require_args(args_names, args, method)
+            if isinstance(_args, str): return _args
+
+            actor_name = _args.get("actor")
+            sys = Webservice.systems.get(_args.get("sys"), None)
+
+            res = "System not found !"
+            if sys is not None:
+                actor = sys.get_actor(actor_name)
+                res = "Actor not found !"
+                if actor is not None:
+                    res = actor.run_monitor()
             return res
 
         @staticmethod
