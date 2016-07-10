@@ -50,12 +50,12 @@ class Actor:
     def run_monitor(self):
         # run sub mons and update KV
         for mon in self.sub_mons:
-            mon.monitor()
+            mon.monitor(struct_res=True)
             self.monitor.KV.update(KVector.Entry(mon.fid, agent=self.name, value=mon.last, timestamp=mon.counter))
 
         # Run main monitor
-        res = self.monitor.monitor()
-        return res
+        res = self.monitor.monitor(struct_res=True)
+        return str(res)
 
     def to_html(self):
         return """

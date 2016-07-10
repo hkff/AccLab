@@ -132,7 +132,7 @@ visualEditor.ui.simul = {
                     type:'POST',
                     url: visualEditor.ui.simul.monitor_backend + "/api/actor/events/push",
                     data: {actor: name, event: event, sys: visualEditor.ui.simul.name},
-                    async: true,
+                    async: false,
                     crossDomain: true,
                     success: function(response) {
                         console.log(response);
@@ -216,12 +216,15 @@ visualEditor.ui.simul = {
                 console.log(response);
             }
         });
+
+        visualEditor.log("Starting simulation...", false, true);
     },
 
     /**
      * Stop the simulation and the Fodtlmon service
      */
     stopSimulation: function() {
+        visualEditor.log("Stopping simulation...", false, true);
         // Close all terminals
         $.each(visualEditor.ui.simul.simulation.actors, function(i, v) {if(v.terminal != null) v.terminal.close()});
 
@@ -406,9 +409,10 @@ visualEditor.ui.simul = {
             }),
 
         run: command(
-            "Perform a service call by the agent.\nUsage: run service[actor](args)",
+            "Perform a service call by the agent.\nUsage: run service[actor](args).",
             function(action) {
                 // TODO check with regexp
+                // Get arguments
                 var service = action.substring(0, action.indexOf("["));
                 var targetName = action.substring(action.indexOf("[")+1, action.indexOf("]"));
                 var actionArgs = action.substring(action.indexOf("(")+1, action.indexOf(")"));
@@ -418,6 +422,7 @@ visualEditor.ui.simul = {
                 var actor = visualEditor.ui.simul.simulation.actors[actorName];
                 var target = visualEditor.ui.simul.simulation.actors[targetName]; // TODO check
 
+                // Get UI elements
                 var currentActorUI = visualEditor.ui.canvas.getFigures().data.filter(
                     function(e){return e.type === "Actor" && e.getName() == actorName});
 
@@ -426,14 +431,15 @@ visualEditor.ui.simul = {
 
                 var consUI = null;
 
+                // Get links UI elements
                 if(currentActorUI.length > 0 && targetActorUI.length > 0) {
                     currentActorUI = currentActorUI[0];
                     targetActorUI = targetActorUI[0];
                     var s1 = currentActorUI.RSO.data.filter(function (e) {
-                        return e.text == service
+                        return e.text == service;
                     });
                     var s2 = targetActorUI.PSO.data.filter(function (e) {
-                        return e.text == service
+                        return e.text == service;
                     });
                     if (s1.length > 0 && s2.length > 0) {
                         var cons = s1[0].getConnections();
@@ -442,6 +448,7 @@ visualEditor.ui.simul = {
                             consUI = cons.get(0);
                             var old_color = consUI.getColor();
                             consUI.setColor("#230990");
+                            console.log(consUI)
                             // 1. Animate connection
                         }
                     }
@@ -459,10 +466,11 @@ visualEditor.ui.simul = {
                     if(actor.monitor_enabled) {
                         var mon_res = actor.monitor();
                         this.write(mon_res);
-                        if(mon_res == "false") {
+                        if(mon_res.search("Bottom") != -1) {
                             actor.violations.push("Violation");
+                            currentActorUI.classLabel.setBackgroundColor("#ff0000");
                             if(actor.rt_control) {
-                                this.write("Violation");
+                                this.write("Violation"); // TODO
                                 this.exit();
                                 return;
                             }
@@ -470,34 +478,46 @@ visualEditor.ui.simul = {
                     }
 
                     // 4. Simulate the network
+                    var received = true;
 
-                    // if received:
-                    // Update target KV
-                     $.ajax({
-                        dataType: 'text',
-                        type:'POST',
-                        url: visualEditor.ui.simul.monitor_backend + "/api/actor/updatekv",
-                        data: {actor: targetName, sys: visualEditor.ui.simul.name, from: actorName},
-                        async: false,
-                        crossDomain: true,
-                        success: function(response) {
-                            console.log(response);
+                    if(received) {
+                        // 5. Update target KV
+                        $.ajax({
+                            dataType: 'text',
+                            type: 'POST',
+                            url: visualEditor.ui.simul.monitor_backend + "/api/actor/updatekv",
+                            data: {actor: targetName, sys: visualEditor.ui.simul.name, from: actorName},
+                            async: false,
+                            crossDomain: true,
+                            success: function (response) {
+                                console.log(response);
+                            }
+                        });
+
+                        // 6. Log the event in target actor trace
+                        var predicates2 = [];
+                        predicates2.push(service + "(" + actorName + "," + targetName + "," + actionArgs + ")"); // Action
+                        predicates2.push("P" + service + "(" + actorName + "," + targetName + "," + actionArgs + ")"); // Action permission
+                        predicates2.push("LOCATION('" + actorName + "', '" + actor.location + "')"); // Location
+                        predicates2.push("TIME('" + actorName + "', '" + actor.time + "')"); // Time
+                        var event2 = "{" + predicates2.join("|") + "}";
+                        target.pushEvent(event2);
+
+                        // 7. Run target's monitor
+                        if (target.monitor_enabled) {
+                            var tmon_res = target.monitor();
+                            this.write(tmon_res);
+                            if (tmon_res.search("Bottom") != -1) {
+                                target.violations.push("Violation");
+                                if (target.rt_control) {
+                                    this.write("Violation"); // TODO
+                                }
+                            }
                         }
-                    });
-                    // 5. Log the event in target actor trace
-                    var predicates2 = [];
-                    predicates2.push(service+"("+actorName+","+targetName+","+actionArgs+")"); // Action
-                    predicates2.push("P"+service+"("+actorName+","+targetName+","+actionArgs+")"); // Action permission
-                    predicates2.push("LOCATION('" + actorName + "', '" + actor.location + "')"); // Location
-                    predicates2.push("TIME('" + actorName + "', '" + actor.time + "')"); // Time
-                    var event2 = "{" + predicates2.join("|") + "}";
-                    target.pushEvent(event2);
-                        // 6. Run target's monitor
-                            // if monitor enabled
-                                // if res is false
-                                    // report violation
+                    }
 
                     this.write('calling:' + service + " on " + targetName + " with " + actionArgs);
+                    visualEditor.log();
                     this.exit();
                  } else {
                     this.write("Error actors not found !");
