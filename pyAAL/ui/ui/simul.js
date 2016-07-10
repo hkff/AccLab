@@ -138,6 +138,29 @@ visualEditor.ui.simul = {
                         console.log(response);
                     }
                 });
+            },
+
+            /**
+             * Compile current attached AAL policy and update the formula
+             */
+            compilePolicy: function() {
+                var actor = this.name;
+                var clause = this.aal_policy;
+                if(clause != "") {
+                    var file = visualEditor.ui.getOpenedFile().replace('acd', 'aal');
+                    $.ajax({
+                        dataType: 'text',
+                        type: 'POST',
+                        url: visualEditor.backend,
+                        data: {action: "aal_to_fodtl", file: file, clause: clause},
+                        async: false,
+                        success: function (response) {
+                            visualEditor.ui.simul.simulation.actors[actor].formula = response;
+                        }
+                    });
+                    return "Compiled !"
+                }
+                return "No attached policy !"
             }
         }
     },
@@ -228,9 +251,31 @@ visualEditor.ui.simul = {
         autoSetup: command(
             "Admin only: Auto configure the simulation",
             function() {
-                // TODO
+                var clauses = visualEditor.ui.canvas.getFigures().data.filter(function(e){return e.type === "Policy"});
+                var _this = this;
                 this.write("Attaching actors policies...");
+                $.each(visualEditor.ui.simul.simulation.actors, function(i, v) {
+                    for(var k=0; k<clauses.length; k++) {
+                        if(clauses[k].tlabel.text.toLocaleLowerCase().search(v.name.toLocaleLowerCase()) != -1) {
+                            v.aal_policy = clauses[k].tlabel.text;
+                            _this.write(" - Attaching "+v.aal_policy+" to "+v.name);
+                            break;
+                        }
+                    }
+                });
+
+                this.write("Compiling actors policies...");
+                $.each(visualEditor.ui.simul.simulation.actors, function(i, v) {
+                    var res = v.compilePolicy();
+                    _this.write(" - Compiling "+v.name+"'s policy : "+res);
+                });
+
                 this.write("Registering actors...");
+                $.each(visualEditor.ui.simul.simulation.actors, function(i, v) {
+                    var res = v.register();
+                    _this.write(" - Registering "+v.name+" : "+res);
+                });
+
                 this.write("Done.");
                 this.exit();
             }),
@@ -254,19 +299,8 @@ visualEditor.ui.simul = {
             "Compile actor's policy into FODTL formula and put it in the formula.",
             function() {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
-                var clause = visualEditor.ui.simul.simulation.actors[actor].aal_policy;
-                var file = visualEditor.ui.getOpenedFile().replace('acd', 'aal');
                 this.write("Compiling...");
-                $.ajax({
-                    dataType: 'text',
-                    type:'POST',
-                    url: visualEditor.backend,
-                    data: {action: "aal_to_fodtl", file: file, clause: clause},
-                    async: false,
-                    success: function(response) {
-                        visualEditor.ui.simul.simulation.actors[actor].formula = response;
-                    }
-                });
+                visualEditor.ui.simul.simulation.actors[actor].compilePolicy();
                 this.exit();
             }),
 
@@ -494,10 +528,11 @@ visualEditor.ui.simul = {
             "\nUsage: show_data [actor name]",
             function(name) {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var data = null;
                 if(name != undefined)
-                    var data = visualEditor.ui.simul.simulation.actors[actor].data;
+                    data = visualEditor.ui.simul.simulation.actors[actor].data;
                 else
-                    var data = visualEditor.ui.simul.simulation.actors[name].data; // TODO check
+                    data = visualEditor.ui.simul.simulation.actors[name].data; // TODO check
                 for(var i=0; i<data.length; i++)
                     this.write(data[i].name + ':' + data[i].types + '\n');
                 this.exit();
