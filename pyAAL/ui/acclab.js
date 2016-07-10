@@ -587,13 +587,20 @@ var visualEditor = {
      * Log msg into output
      * @param msg
      * @param clear
+     * @param time
      */
-    log: function(msg, clear) {
+    log: function(msg, clear, time) {
         if(clear == true) $("#output_window").empty();
+        var now = "";
+        if(time == true) {
+            var d = new Date();
+            now = "[" + d.getFullYear() + "-" + d.getMonth()+1 + "-" + d.getDate() + ":" +
+                d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds() +"]: ";
+        }
         if(typeof(msg) == "string")
-            $("#output_window").append(replaceAll("\n", "<br>", msg) + "<br>");
+            $("#output_window").append(now + replaceAll("\n", "<br>", msg) + "<br>");
         else
-            $("#output_window").append(msg + "<br>");
+            $("#output_window").append(now + msg + "<br>");
     }
 };
 
