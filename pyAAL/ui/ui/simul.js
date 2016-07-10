@@ -31,6 +31,8 @@ visualEditor.ui.simul = {
     currentTerminal: null,
     monitor_backend: "",
     passkey: "1234",
+    latency: 0, // Global latency in sc
+    packetLoss: 0, // Global packet loss in %
 
     /**
      * Actor data type
@@ -54,6 +56,9 @@ visualEditor.ui.simul = {
             time: "0",
             monitor_enabled: true,
             rt_control: false,
+            latency: 0, // latency in sc
+            packetLoss: 0, // packet loss in %
+
 
             /**
              * Run the monitor and get the result
@@ -243,6 +248,15 @@ visualEditor.ui.simul = {
     },
 
     /**
+     * Open debug page
+     */
+    openDebugPage: function() {
+        var url = visualEditor.ui.simul.monitor_backend+"/api?passkey="+visualEditor.ui.simul.passkey;
+        window.open(url);
+        return url;
+    },
+
+    /**
      * Simulation commands
      */
     SimulationCommands: {
@@ -250,6 +264,34 @@ visualEditor.ui.simul = {
         ll: function () {
             //SimulationCommands.ls.call(this, arguments);
         },
+
+        setGlobalPacketLoss: command(
+            "Change network's packet loss.\nUsage: setGlobalPacketLoss <<loss in %>>",
+            function(packetLoss) {
+                visualEditor.ui.simul.packetLoss = parseInt(packetLoss);
+                this.exit();
+            }),
+
+        globalPacketLoss: command(
+            "Show network's packetLoss.",
+            function() {
+                this.write(visualEditor.ui.simul.packetLoss);
+                this.exit();
+            }),
+
+        setGlobalLatency: command(
+            "Change network's latency.\nUsage: setGlobalLatency <<latency in sc>>",
+            function(latency) {
+                visualEditor.ui.simul.latency = parseInt(latency);
+                this.exit();
+            }),
+
+        globalLatency: command(
+            "Show network's latency.",
+            function() {
+                this.write(visualEditor.ui.simul.latency);
+                this.exit();
+            }),
 
         autoSetup: command(
             "Admin only: Auto configure the simulation",
@@ -280,6 +322,13 @@ visualEditor.ui.simul = {
                 });
 
                 this.write("Done.");
+                this.exit();
+            }),
+
+        debug: command(
+            "Open debug page.",
+            function() {
+                this.write('Debug page at: ' + visualEditor.ui.simul.openDebugPage());
                 this.exit();
             }),
 
@@ -330,6 +379,38 @@ visualEditor.ui.simul = {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
                 var res = visualEditor.ui.simul.simulation.actors[actor].register();
                 this.write(res);
+                this.exit();
+            }),
+
+        setPacketLoss: command(
+            "Change actor's packet loss.\nUsage: setPacketLoss <<loss in %>>",
+            function(packetLoss) {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                visualEditor.ui.simul.simulation.actors[actor].packetLoss = parseInt(packetLoss);
+                this.exit();
+            }),
+
+        packetLoss: command(
+            "Show actor's packetLoss.",
+            function() {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                this.write(visualEditor.ui.simul.simulation.actors[actor].packetLoss);
+                this.exit();
+            }),
+
+        setLatency: command(
+            "Change actor's latency.\nUsage: setLatency <<latency in sc>>",
+            function(latency) {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                visualEditor.ui.simul.simulation.actors[actor].latency = parseInt(latency);
+                this.exit();
+            }),
+
+        latency: command(
+            "Show actor's latency.",
+            function() {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                this.write(visualEditor.ui.simul.simulation.actors[actor].latency);
                 this.exit();
             }),
 
@@ -403,8 +484,16 @@ visualEditor.ui.simul = {
 
         monitor: command(
             "Enable/disable the reference monitor.\nUsage: monitor <<on/off>>",
-            function() {
-                this.write('Monitoring');
+            function(option) {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                if(option == "on") {
+                    visualEditor.ui.simul.simulation.actors[actor].monitor_enabled = true;
+                    this.write("Monitor enabled !");
+                } else
+                if(option == "off") {
+                    visualEditor.ui.simul.simulation.actors[actor].monitor_enabled = false;
+                    this.write("Monitor disabled !");
+                }
                 this.exit();
             }),
 
@@ -446,10 +535,9 @@ visualEditor.ui.simul = {
                         // TODO select the correct connexion
                         if (cons.data.length > 0) {
                             consUI = cons.get(0);
-                            var old_color = consUI.getColor();
-                            consUI.setColor("#230990");
-                            console.log(consUI)
+                            var consUIcolor = consUI.getColor();
                             // 1. Animate connection
+                            consUI.setColor("#808080");
                         }
                     }
 
@@ -466,11 +554,20 @@ visualEditor.ui.simul = {
                     if(actor.monitor_enabled) {
                         var mon_res = actor.monitor();
                         this.write(mon_res);
+                        console.log(currentActorUI)
                         if(mon_res.search("Bottom") != -1) {
                             actor.violations.push("Violation");
-                            currentActorUI.classLabel.setBackgroundColor("#ff0000");
+                            var oldActorColor = currentActorUI.getBackgroundColor();
+                            currentActorUI.setBackgroundColor("#ff0000");
                             if(actor.rt_control) {
                                 this.write("Violation"); // TODO
+                                setTimeout(function(){
+                                    // Clear consUI
+                                    consUI.setColor(consUIcolor);
+                                    var c = consUI.getChildren();
+                                    if(c.data.length > 0) consUI.remove(c.get(0));
+                                    currentActorUI.setBackgroundColor(oldActorColor);
+                                }, 7000);
                                 this.exit();
                                 return;
                             }
@@ -478,46 +575,84 @@ visualEditor.ui.simul = {
                     }
 
                     // 4. Simulate the network
-                    var received = true;
-
+                    // Calculate packet loss
+                    var received = Math.random() > ((visualEditor.ui.simul.packetLoss + actor.packetLoss + target.packetLoss)/100);
                     if(received) {
-                        // 5. Update target KV
-                        $.ajax({
-                            dataType: 'text',
-                            type: 'POST',
-                            url: visualEditor.ui.simul.monitor_backend + "/api/actor/updatekv",
-                            data: {actor: targetName, sys: visualEditor.ui.simul.name, from: actorName},
-                            async: false,
-                            crossDomain: true,
-                            success: function (response) {
-                                console.log(response);
+                        // Calculate latency
+                        var latency = visualEditor.ui.simul.latency + actor.latency + target.latency;
+                        var _this = this;
+                        setTimeout(function() {
+                            // Update UI
+                            if (consUI != null) {
+                                // Message transmitted
+                                consUI.add(
+                                    new draw2d.shape.basic.Label(
+                                        {text: actionArgs, stroke: 1, color: "#FF0000", fontColor: "#0d0d0d", bgColor: "#ffffff"}),
+                                    new draw2d.layout.locator.PolylineMidpointLocator()
+                                );
+                                consUI.setColor("#008000");
+                                setTimeout(function () {
+                                    // Clear consUI
+                                    consUI.setColor(consUIcolor);
+                                    var c = consUI.getChildren();
+                                    if (c.data.length > 0) consUI.remove(c.get(0));
+                                }, 3000)
                             }
-                        });
+                            // 5. Update target KV
+                            $.ajax({
+                                dataType: 'text',
+                                type: 'POST',
+                                url: visualEditor.ui.simul.monitor_backend + "/api/actor/updatekv",
+                                data: {actor: targetName, sys: visualEditor.ui.simul.name, from: actorName},
+                                async: false,
+                                crossDomain: true,
+                                success: function (response) {
+                                    console.log(response);
+                                }
+                            });
 
-                        // 6. Log the event in target actor trace
-                        var predicates2 = [];
-                        predicates2.push(service + "(" + actorName + "," + targetName + "," + actionArgs + ")"); // Action
-                        predicates2.push("P" + service + "(" + actorName + "," + targetName + "," + actionArgs + ")"); // Action permission
-                        predicates2.push("LOCATION('" + actorName + "', '" + actor.location + "')"); // Location
-                        predicates2.push("TIME('" + actorName + "', '" + actor.time + "')"); // Time
-                        var event2 = "{" + predicates2.join("|") + "}";
-                        target.pushEvent(event2);
+                            // 6. Log the event in target actor trace
+                            var predicates2 = [];
+                            predicates2.push(service + "(" + actorName + "," + targetName + "," + actionArgs + ")"); // Action
+                            predicates2.push("P" + service + "(" + actorName + "," + targetName + "," + actionArgs + ")"); // Action permission
+                            predicates2.push("LOCATION('" + actorName + "', '" + actor.location + "')"); // Location
+                            predicates2.push("TIME('" + actorName + "', '" + actor.time + "')"); // Time
+                            var event2 = "{" + predicates2.join("|") + "}";
+                            target.pushEvent(event2);
 
-                        // 7. Run target's monitor
-                        if (target.monitor_enabled) {
-                            var tmon_res = target.monitor();
-                            this.write(tmon_res);
-                            if (tmon_res.search("Bottom") != -1) {
-                                target.violations.push("Violation");
-                                if (target.rt_control) {
-                                    this.write("Violation"); // TODO
+                            // 7. Run target's monitor
+                            if (target.monitor_enabled) {
+                                var tmon_res = target.monitor();
+                                _this.write(tmon_res);
+                                if (tmon_res.search("Bottom") != -1) {
+                                    target.violations.push("Violation");
+                                    if (target.rt_control) {
+                                        _this.write("Violation"); // TODO
+                                    }
                                 }
                             }
+                        }, latency);
+                    }
+                    else {
+                        // Update UI
+                        if(consUI != null) {
+                            // Message not transmitted
+                            consUI.add(
+                                new draw2d.shape.basic.Label(
+                                    {text: "Message not transmitted !", stroke: 1, color: "#FF0000", fontColor: "#0d0d0d", bgColor: "#ffffff"}),
+                                new draw2d.layout.locator.PolylineMidpointLocator()
+                            );
+                            consUI.setColor("#ff0000");
+                            setTimeout(function(){
+                                // Clear consUI
+                                consUI.setColor(consUIcolor);
+                                var c = consUI.getChildren();
+                                if(c.data.length > 0) consUI.remove(c.get(0));
+                            }, 3000)
                         }
                     }
 
                     this.write('calling:' + service + " on " + targetName + " with " + actionArgs);
-                    visualEditor.log();
                     this.exit();
                  } else {
                     this.write("Error actors not found !");
