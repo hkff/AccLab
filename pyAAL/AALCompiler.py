@@ -1185,7 +1185,7 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Meta function
     def clause(self, clauseId):
-        res = [x for x in self.aalprog.clauses if str(x.name) == str(clauseId)]
+        res = [x for x in self.aalprog.get_clauses() if str(x.name) == str(clauseId)]
         if len(res) > 0:
             return res[0]
         else:
@@ -1193,11 +1193,11 @@ class AALCompilerListener(AALListener.AALListener):
             return None
 
     def show_clauses(self):
-        x = [str(x.name) + " " for x in self.aalprog.clauses]
+        x = [str(x.name) + " " for x in self.aalprog.get_clauses()]
         return "".join(x)
 
     def get_clauses(self):
-        x = [str(x.name) + " " for x in self.aalprog.clauses]
+        x = [str(x.name) + " " for x in self.aalprog.get_clauses()]
         return "".join(x)
 
     def get_macros(self):

@@ -465,6 +465,13 @@ class m_aalprog(aalmmnode):
         macros = self.get_macros()
         return [x for x in macros if str(x.name) == name and len(x.param) == len(args)]
 
+    def get_clauses(self):
+        res = []
+        res.extend(self.clauses)
+        for l in self.libs:
+            res.extend(l.aalprog.get_clauses())
+        return res
+
 
 # Usage
 class m_usage(aalmmnode):
