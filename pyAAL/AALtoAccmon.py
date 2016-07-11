@@ -378,4 +378,4 @@ def aal_clause_to_fodtl(clause: m_clause):
         else:
             return "<Unsupported type %s>" % exp.__class__.__name__
 
-    return transform(clause)
+    return "G(%s)" % transform(clause)

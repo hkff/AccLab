@@ -52,8 +52,9 @@ visualEditor.ui.simul = {
             data: [],
             trace: [],
             violations: [],
-            location: "France",
-            time: "0",
+            permissions: [],
+            location: (location != undefined)?location:"France",
+            time: (time != undefined)?time:0,
             monitor_enabled: true,
             rt_control: false,
             latency: 0, // latency in sc
@@ -166,6 +167,14 @@ visualEditor.ui.simul = {
                     return "Compiled !"
                 }
                 return "No attached policy !"
+            },
+
+            addPermission: function(p) {
+
+            },
+
+            removePermission: function(p) {
+
             }
         }
     },
@@ -547,6 +556,7 @@ visualEditor.ui.simul = {
                     predicates.push("P"+service+"("+actorName+","+targetName+","+actionArgs+")"); // Action permission
                     predicates.push("LOCATION('" + actorName + "', '" + actor.location + "')"); // Location
                     predicates.push("TIME('" + actorName + "', '" + actor.time + "')"); // Time
+                    // TODO ad types from AAL and data
                     var event = "{" + predicates.join("|") + "}";
                     actor.pushEvent(event);
 
@@ -684,7 +694,7 @@ visualEditor.ui.simul = {
             function(name) {
                 var actor = visualEditor.ui.simul.currentTerminal.agent;
                 var data = null;
-                if(name != undefined)
+                if(name == undefined)
                     data = visualEditor.ui.simul.simulation.actors[actor].data;
                 else
                     data = visualEditor.ui.simul.simulation.actors[name].data; // TODO check
@@ -816,7 +826,7 @@ visualEditor.ui.simul = {
 		});
 
         var terminal = new Terminus(target, {
-				welcome: "<div class='identity'><h1>Welcome to " +actor+ "'s shell</h1></div>"+
+				welcome: "<div class='identity'><h1>Welcome to " +actor+ "'s shell</h1></br>version 0.1</div>"+
                 "Press <span style='color:green'>&lt; tab &gt;</span> " + "to see a list of available commands."
 			});
         terminal.shell.include([this.SimulationCommands]);
