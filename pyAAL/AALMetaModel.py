@@ -472,6 +472,13 @@ class m_aalprog(aalmmnode):
             res.extend(l.aalprog.get_clauses())
         return res
 
+    def get_behaviors(self):
+        res = []
+        res.extend(self.behaviors)
+        for l in self.libs:
+            res.extend(l.aalprog.get_behaviors())
+        return res
+
 
 # Usage
 class m_usage(aalmmnode):

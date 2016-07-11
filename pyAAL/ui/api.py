@@ -682,3 +682,16 @@ def aal_to_fodtl(file, clause):
         if c is not None:
             res = aal_clause_to_fodtl(c)
     return res
+
+
+# Get AAL behaviors
+def get_aal_behaviors(file):
+    from simul.SimulGenerator import m_behavior_to_behavior
+    import json
+    res = []
+    mm = aalc(base_dir + "/" + file, libs_path="libs/aal/", root_path="", no_exec=True, web=True)["mm"]
+    if mm is not None:
+        behaviors = mm.aalprog.get_behaviors()
+        for b in behaviors:
+            res.append(json.dumps(m_behavior_to_behavior(b, b.name).to_json()))
+    return json.dumps(res)

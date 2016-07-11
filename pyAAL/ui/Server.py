@@ -173,6 +173,9 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         elif val == "aal_to_fodtl":
             res = aal_to_fodtl(self.get_arg(args, "file", method), self.get_arg(args, "clause", method))
 
+        elif val == "aal_behaviors":
+            res = get_aal_behaviors(self.get_arg(args, "file", method))
+
         return res
 
     def do_GET(self):

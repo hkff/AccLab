@@ -50,6 +50,11 @@ class Behavior:
                "\n- Actions : " + str(" ".join(ac)) + \
                "\n- Triggers : " + str(" ".join(tr)) + "\n"
 
+    def to_json(self):
+        return {"name": self.name, "actions": [str(x) for x in self.actions],
+                "author": [str(x) for x in self.author],
+                "triggers": [str(x) for x in self.triggers]}
+
 
 # AActor
 class AActor(ThreadingActor):
