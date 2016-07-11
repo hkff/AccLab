@@ -594,7 +594,7 @@ var visualEditor = {
         var now = "";
         if(time == true) {
             var d = new Date();
-            now = "[" + d.getFullYear() + "-" + d.getMonth()+1 + "-" + d.getDate() + ":" +
+            now = "[" + d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate() + ":" +
                 d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds() +"]: ";
         }
         if(typeof(msg) == "string")
