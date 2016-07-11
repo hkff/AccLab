@@ -1105,8 +1105,9 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
 					y: 50,
 					width: 800,
 					height: 490,
-					widget: false,
+					widget: true,
 					titlebar: true,
+                    resizable: false,
 					events: {
 						closed: function() {
 							this.destroy();

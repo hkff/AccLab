@@ -1521,6 +1521,10 @@ define('ventus/wm/window', [
         restore: function () {
         },
         maximize: function () {
+            // ---- Custom hack ----
+            if(!this.maximized) $(".wm-space").width(window.innerWidth+'px').height(window.innerHeight+'px');
+            else $(".wm-space").width('0px').height('0px');
+            // ---------------------
             this.el.addClass('maximazing');
             this.el.onTransitionEnd(function () {
                 this.el.removeClass('maximazing');
