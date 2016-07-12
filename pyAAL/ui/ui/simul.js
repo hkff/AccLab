@@ -175,6 +175,25 @@ visualEditor.ui.simul = {
 
             removePermission: function(p) {
 
+            },
+
+            getBehavior: function() {
+                var file = visualEditor.ui.getOpenedFile().replace('acd', 'aal');
+                var _this = this;
+                $.ajax({
+                    dataType: 'text',
+                    type: 'POST',
+                    url: visualEditor.backend,
+                    data: {action: "aal_behaviors", file: file},
+                    async: false,
+                    success: function (response) {
+                        var bs = jQuery.parseJSON(response);
+                        var b =jQuery.parseJSON(bs[0]);
+                        for(var i= 0; i< b.author.length; i++) {
+                            _this.permissions.push(b.author[i])
+                        }
+                    }
+                });
             }
         }
     },
@@ -444,6 +463,17 @@ visualEditor.ui.simul = {
                 this.exit();
             }),
 
+        permissions: command(
+            "Show actor's permissions.\nUsage: permissions [actor_name]" +
+            "\n Examples:" +
+            "\n - permissions     // Show current actor's permissions"+
+            "\n - permissions bob // Show bob's permissions",
+            function() {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                this.write(visualEditor.ui.simul.simulation.actors[actor].permissions);
+                this.exit();
+            }),
+
         setLocation: command(
             "Change actor's location.\nUsage: setLocation <<location_name>>" +
             "\n Examples:" +
@@ -685,6 +715,15 @@ visualEditor.ui.simul = {
                 }
                 if(!deleted)
                     this.write("Data not found !");
+                this.exit();
+            }),
+
+        attachBehavior: command(
+            "Attach a behavior to the actor.",
+            function() {
+                var actor = visualEditor.ui.simul.currentTerminal.agent;
+                var res = visualEditor.ui.simul.simulation.actors[actor].getBehavior(); // TODO
+                this.write(res);
                 this.exit();
             }),
 
