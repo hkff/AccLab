@@ -53,6 +53,8 @@ visualEditor.ui.simul = {
             trace: [],
             violations: [],
             permissions: [],
+            rules: [],
+            actions: [],
             location: (location != undefined)?location:"France",
             time: (time != undefined)?time:0,
             monitor_enabled: true,
@@ -189,8 +191,15 @@ visualEditor.ui.simul = {
                     success: function (response) {
                         var bs = jQuery.parseJSON(response);
                         var b =jQuery.parseJSON(bs[0]);
-                        for(var i= 0; i< b.author.length; i++) {
+                        console.log(b)
+                        for(var i=0; i< b.author.length; i++) {
                             _this.permissions.push(b.author[i])
+                        }
+                        for(var i=0; i< b.triggers.length; i++) {
+                            _this.rules.push(b.triggers[i])
+                        }
+                        for(var i=0; i< b.actions.length; i++) {
+                            _this.actions.push(b.actions[i])
                         }
                     }
                 });

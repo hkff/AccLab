@@ -88,6 +88,9 @@ class Author:
     def __str__(self):
         return str(self.author) + " " + str(self.action)
 
+    def to_trace(self):
+        return "%s%s" % (self.author.to_ltl(), self.action.to_trace())
+
 
 # Msg Protocol
 class MsgProtocol(Enum):

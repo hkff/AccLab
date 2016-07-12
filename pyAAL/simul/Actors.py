@@ -51,9 +51,9 @@ class Behavior:
                "\n- Triggers : " + str(" ".join(tr)) + "\n"
 
     def to_json(self):
-        return {"name": self.name, "actions": [str(x) for x in self.actions],
-                "author": [str(x) for x in self.author],
-                "triggers": [str(x) for x in self.triggers]}
+        return {"name": self.name, "actions": [str(x.to_trace()) for x in self.actions],
+                "author": [str(x.to_trace()) for x in self.author],
+                "triggers": [str(x.to_ltl()) for x in self.triggers]}
 
 
 # AActor
