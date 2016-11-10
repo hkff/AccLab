@@ -627,7 +627,7 @@ class m_clause(m_declarable):
         # return ue + ("\n & " + ae if ae is not None else "") + ("\n & " + re if re is not None else "")
         if ae is not None and re is not None:
             # return ae + " & always(" + ue + " | ((~(" + ue + ")) & (always(" + ae + " => (" + re + "))))) \n"
-            return ae + " & always(" + ue + " | ((~(" + ue + ")) & ((" + ae + " => (" + re + "))))) \n"
+            return ae + " & always(" + ue + " | ((~(" + ue + ")) & ((" + ae + " => (" + re + ")))))"
         else:
             return ue
 

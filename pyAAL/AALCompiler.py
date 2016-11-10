@@ -1151,17 +1151,17 @@ class AALCompilerListener(AALListener.AALListener):
             macro = macro[0]
             # TODO Securing env call
             # Macro code is stored with comments to avoid arbitrary exec
-            # try:
-            code = ""
-            if macro.param is not None:
-                params = iter(macro.param)
-                for x in args:
-                    # code += str(next(params)) + " = " + str(x).replace('"', '') + "\n"
-                    code += str(next(params)) + " = " + str(x) + "\n"
-            code += macro.code.replace('"""', '').replace("return", "__res__ = ")  # FIXME
-            exec(code)
-            # except:
-            # print("Macro eval error !")
+            try:
+                code = ""
+                if macro.param is not None:
+                    params = iter(macro.param)
+                    for x in args:
+                        # code += str(next(params)) + " = " + str(x).replace('"', '') + "\n"
+                        code += str(next(params)) + " = " + str(x) + "\n"
+                code += macro.code.replace('"""', '').replace("return", "__res__ = ")  # FIXME
+                exec(code)
+            except:
+                print("Macro eval error !")
 
         else:
             print(Color("{autored}[ERROR]{/red} Macro '" + macro_name + "' not found !"))

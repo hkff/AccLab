@@ -595,6 +595,7 @@ visualEditor.ui.simul = {
                     predicates.push("P"+service+"("+actorName+","+targetName+","+actionArgs+")"); // Action permission
                     predicates.push("LOCATION('" + actorName + "', '" + actor.location + "')"); // Location
                     predicates.push("TIME('" + actorName + "', '" + actor.time + "')"); // Time
+                    $.each(actor.permissions, function(i, v) {predicates.push(v)});
                     // TODO ad types from AAL and data
                     var event = "{" + predicates.join("|") + "}";
                     actor.pushEvent(event);
