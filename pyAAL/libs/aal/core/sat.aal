@@ -63,7 +63,7 @@ _c1 = self.clause(c1)
 if _c1 is not None:
     m = check_monodic(_c1)
     print(m["print"])
-    if not m["monodic"]:
+    if m["monodic"]:
         res = validate2(self, "(always (" + _c1.usage.to_ltl() + "))", check=True)
         ### Web view ###
         if self.web:

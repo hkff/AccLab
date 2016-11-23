@@ -166,6 +166,16 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
                 os.kill(ps, signal.SIGKILL)
                 Popen(['killall', 'tspass'])
                 res = "Operation canceled !"
+
+        elif val == "startSimulation":
+            res = start_fodtlmon_server(self.get_arg(args, "port", method))
+
+        elif val == "aal_to_fodtl":
+            res = aal_to_fodtl(self.get_arg(args, "file", method), self.get_arg(args, "clause", method))
+
+        elif val == "aal_behaviors":
+            res = get_aal_behaviors(self.get_arg(args, "file", method))
+
         return res
 
     def do_GET(self):

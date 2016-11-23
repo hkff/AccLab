@@ -647,7 +647,7 @@ def svn_revert(target, version):
 
 # Svn diff
 def svn_diff(target, r1, r2):
-    print("%s %s" %(r1, r2))
+    print("%s %s" % (r1, r2))
     try:
         r1 = int(r1)
         r2 = int(r2)
@@ -662,3 +662,36 @@ def svn_diff(target, r1, r2):
     p.wait()
     log = p.stdout.read().decode("utf-8").replace("\n", "<br>")
     return log
+
+
+# Fodtlmon web service
+def start_fodtlmon_server(server_port=9999):
+    import os
+    from subprocess import Popen
+    Popen(['python3.4', 'ui/mon.py', server_port])
+    sleep(1)
+    return server_port
+
+
+# Translate AAL clause to FODTL
+def aal_to_fodtl(file, clause):
+    res = "Error"
+    mm = aalc(base_dir + "/" + file, libs_path="libs/aal/", root_path="", no_exec=True, web=True)["mm"]
+    if mm is not None:
+        c = mm.clause(clause)
+        if c is not None:
+            res = aal_clause_to_fodtl(c)
+    return res
+
+
+# Get AAL behaviors
+def get_aal_behaviors(file):
+    from simul.SimulGenerator import m_behavior_to_behavior
+    import json
+    res = []
+    mm = aalc(base_dir + "/" + file, libs_path="libs/aal/", root_path="", no_exec=True, web=True)["mm"]
+    if mm is not None:
+        behaviors = mm.aalprog.get_behaviors()
+        for b in behaviors:
+            res.append(json.dumps(m_behavior_to_behavior(b, b.name).to_json()))
+    return json.dumps(res)

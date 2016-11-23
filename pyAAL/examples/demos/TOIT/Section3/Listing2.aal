@@ -1,0 +1,33 @@
+// 23/11/2016
+// Examples from Section 3 AAL
+
+// Loading types & macros libraries
+LOAD "core.types"
+LOAD "core.macros"
+
+// Listing 2
+  // some predefined types exists like DataSubject, DataProcessor
+  AGENT Kim TYPES(DataSubject) REQUIRED() PROVIDED()
+  AGENT KardioMon TYPES(DataProcessor) REQUIRED(notify) PROVIDED(process)
+  AGENT auditor TYPES(DataController)  REQUIRED() PROVIDED(notify)
+  TYPE Data EXTENDS(data)
+  TYPE Purpose EXTENDS(data)
+  SERVICE process TYPES(Data Purpose)
+  SERVICE notify  TYPES(Data)
+  DATA purpose TYPES(Purpose)
+
+CLAUSE Listing2 ( 
+  // Processing is allowed only if the purpose is research or statistics
+  ALWAYS (FORALL d:Data  IF ((d.owner==Kim) AND (@research(purpose) OR @statistics(purpose)))
+                          THEN {PERMIT KardioMon.process(d)})
+ AND 
+ ALWAYS (FORALL d:Data  IF ((d.owner==Kim) AND NOT (@research(purpose) OR @statistics(purpose)))
+                           THEN {DENY KardioMon.process(d)})
+ AND
+ // Processing is always followed by a notification to an authority
+ ALWAYS (FORALL d:Data IF (KardioMon.process(d)) THEN {MUST (KardioMon.notify[auditor](d))})
+)
+
+// macro call OK
+CALL vsat("Listing2")
+

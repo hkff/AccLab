@@ -1,0 +1,300 @@
+// 18/10/2016
+// KardioMonPolicy  + WellnessPolicy + WearableCoPolicy + WearableCoFixedPolicy
+// To check for compliance (or not)
+// --------------
+// RESULTS KardioMonPolicy => WearableCoPolicy OK
+// WellnessPolicy => WearableCoFixedPolicy OK
+// WearableCoCompliantNegativePolicy => WearableCoNegativePolicy OK but not the reverse direction
+
+// Loading types & macros libraries
+LOAD "core.types"
+LOAD "core.macros"
+
+/***************************
+ *       Declarations
+ ****************************/
+// Actors
+AGENT cardioMon TYPES(DataProcessor ) REQUIRED() PROVIDED(read write update delete )
+AGENT wearableCo TYPES(DataController ) REQUIRED(read write update delete ) PROVIDED()
+AGENT customer TYPES(DataSubject ) REQUIRED() PROVIDED()
+AGENT mapOnWeb TYPES(DataProcessor ) REQUIRED() PROVIDED()
+AGENT dataSpacer TYPES(DataProcessor ) REQUIRED() PROVIDED()
+AGENT auditor TYPES(Auditor) REQUIRED() PROVIDED()
+
+// Services
+SERVICE read
+SERVICE write
+SERVICE update
+SERVICE delete
+SERVICE notify
+SERVICE transfer
+
+LOAD "TOIT.wtypes"
+LOAD "TOIT.locations"
+
+/***************************
+ *       Policies
+ ****************************/
+ 
+ 
+// The KardioMon provided policy
+CLAUSE KardioMonPolicy (  
+  // Customer
+  (FORALL c:Customer FORALL d:data IF (d.subject==c)
+        THEN {PERMIT c.read[cardioMon](d) AND PERMIT c.write[cardioMon](d) AND PERMIT c.update[cardioMon](d) AND PERMIT c.delete[cardioMon](d)})
+  AND
+ // lines 1,2,7,8,12
+    (FORALL a:Actor FORALL d:UserName IF  ((a==cardioMon) OR @Employee(a) OR (a==mapOnWeb))
+        THEN {DENY a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:Password IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:TrainingActivity IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:Height IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:Weight IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+  AND 
+ // lines 3,4,5
+     (FORALL d:UserId (PERMIT cardioMon.read[cardioMon](d) AND (FORALL e:Employee PERMIT e.read[cardioMon](d)) AND DENY mapOnWeb.read[cardioMon](d)))
+    AND (FORALL d:DisplayName (PERMIT cardioMon.read[cardioMon](d) AND (FORALL e:Employee PERMIT e.read[cardioMon](d)) AND DENY mapOnWeb.read[cardioMon](d)))
+    AND (FORALL d:Gender  (PERMIT cardioMon.read[cardioMon](d) AND (FORALL e:Employee PERMIT e.read[cardioMon](d)) AND DENY mapOnWeb.read[cardioMon](d)))
+    AND (FORALL a:Actor FORALL d:UserId IF  ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:DisplayName IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:Gender IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+  AND
+ // lines 6,13
+     (FORALL a:Actor FORALL d:Age IF  ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {PERMIT a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)})
+    AND (FORALL a:Actor FORALL d:Country IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {PERMIT a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+  AND
+ // lines 9,10,11 
+      (FORALL d:SugarLevel (DENY cardioMon.read[cardioMon](d) AND (FORALL e:Employee DENY e.read[cardioMon](d)) AND PERMIT mapOnWeb.read[cardioMon](d)))
+    AND (FORALL d:BloodPressure (DENY cardioMon.read[cardioMon](d) AND (FORALL e:Employee DENY e.read[cardioMon](d)) AND PERMIT mapOnWeb.read[cardioMon](d)))
+    AND (FORALL d:Heartbeat (DENY cardioMon.read[cardioMon](d) AND (FORALL e:Employee DENY e.read[cardioMon](d)) AND PERMIT mapOnWeb.read[cardioMon](d)))
+    AND (FORALL a:Actor FORALL d:SugarLevel IF  ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:BloodPressure IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:Heartbeat IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+        
+ // data transfer 
+ // From DPPT: Kardio - Mon has a data transfer policy country where data will be transferred is all Europe
+ // DATA: sensitive ACTION: transfer SOURCE: cardioMon TARGET-LOCATION : Europe
+	AND (FORALL d:Sensitive FORALL a:Actor IF (@Europe(a)) THEN {PERMIT cardioMon.transfer[a](d)}) 
+	AND (FORALL d:Sensitive FORALL a:Actor IF (NOT @Europe(a)) THEN {DENY cardioMon.transfer[a](d)}) 
+	
+// data retention 
+// From DPPT: The data retention period (period after which data will be deleted by CardioMon) is 6 month
+// DATA: sensitive RETENTION: 6 month PROVIDER: cardioMon
+    AND (FORALL ds:Sensitive  MUST( cardioMon.delete[cardioMon](ds) BEFORE "6 month"))
+ 
+)
+// --------------------------------------- end of KardioMonPolicy
+
+// A policy provided by Wellness Services Inc.
+CLAUSE WellnessPolicy (  
+  // Customer
+  (FORALL c:Customer FORALL d:data IF (d.subject==c)
+        THEN {PERMIT c.read[cardioMon](d) AND PERMIT c.write[cardioMon](d) AND PERMIT c.update[cardioMon](d) AND PERMIT c.delete[cardioMon](d)})
+  AND
+ // lines 1,2,7,8,12
+    (FORALL a:Actor FORALL d:UserName IF  ((a==cardioMon) OR @Employee(a) OR (a==mapOnWeb))
+        THEN {DENY a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:Password IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:TrainingActivity IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:Height IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:Weight IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+  AND 
+ // lines 3,4,5
+     (FORALL d:UserId (PERMIT cardioMon.read[cardioMon](d) AND (FORALL e:Employee PERMIT e.read[cardioMon](d)) AND DENY mapOnWeb.read[cardioMon](d)))
+    AND (FORALL d:DisplayName (PERMIT cardioMon.read[cardioMon](d) AND (FORALL e:Employee PERMIT e.read[cardioMon](d)) AND DENY mapOnWeb.read[cardioMon](d)))
+    AND (FORALL d:Gender  (PERMIT cardioMon.read[cardioMon](d) AND (FORALL e:Employee PERMIT e.read[cardioMon](d)) AND DENY mapOnWeb.read[cardioMon](d)))
+    AND (FORALL a:Actor FORALL d:UserId IF  ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:DisplayName IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:Gender IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+  AND
+ // lines 6,13
+     (FORALL a:Actor FORALL d:Age IF  ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {PERMIT a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)})
+    AND (FORALL a:Actor FORALL d:Country IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {PERMIT a.read[cardioMon](d) AND DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+  AND
+ // lines 9,10,11 
+      (FORALL d:SugarLevel (DENY cardioMon.read[cardioMon](d) AND (FORALL e:Employee DENY e.read[cardioMon](d)) AND PERMIT mapOnWeb.read[cardioMon](d)))
+    AND (FORALL d:BloodPressure (DENY cardioMon.read[cardioMon](d) AND (FORALL e:Employee DENY e.read[cardioMon](d)) AND PERMIT mapOnWeb.read[cardioMon](d)))
+    AND (FORALL d:Heartbeat (DENY cardioMon.read[cardioMon](d) AND (FORALL e:Employee DENY e.read[cardioMon](d)) AND PERMIT mapOnWeb.read[cardioMon](d)))
+    AND (FORALL a:Actor FORALL d:SugarLevel IF  ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:BloodPressure IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+    AND (FORALL a:Actor FORALL d:Heartbeat IF ((a==cardioMon) OR (@Employee(a)) OR (a==mapOnWeb))
+        THEN {DENY a.write[cardioMon](d) AND DENY a.update[cardioMon](d)}) 
+        
+ // data transfer 
+ // From DPPT: Kardio - Mon has a data transfer policy country where data will be transferred is Russia or Croatia or Denmark
+ // DATA: sensitive ACTION: transfer SOURCE: cardioMon TARGET-LOCATION : Russia + Croatia + Denmark
+	AND (FORALL d:Sensitive FORALL a:Actor IF (@Russia(a) OR @Croatia(a) OR @Denmark(a)) THEN {PERMIT cardioMon.transfer[a](d)}) 
+	AND (FORALL d:Sensitive FORALL a:Actor IF (NOT (@Russia(a) OR @Croatia(a) OR @Denmark(a))) THEN {DENY cardioMon.transfer[a](d)}) 
+	
+// data retention 
+// From DPPT: The data retention period (period after which data will be deleted by CardioMon) is 6 month
+// DATA: sensitive RETENTION: 6 month PROVIDER: cardioMon
+    AND (FORALL ds:Sensitive  MUST( cardioMon.delete[cardioMon](ds) BEFORE "6 month"))
+ 
+)
+// -------------------------- end of WellnessPolicy
+
+// original WearableCo  policy (not yet complete ? que manque t'il ?)
+CLAUSE WearableCoPolicy (  
+   // ACCESS CONTROLS
+	(FORALL e:Employee FORALL d:UserName (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:TrainingActivity (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Password (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Height (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Weight (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:SugarLevel (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:BloodPressure (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Heartbeat (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:UserId (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:DisplayName (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Gender (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Age (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+    AND (FORALL e:Employee FORALL d:Country (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+
+// DATA RETENTION 
+// From DPPT: WearableCo expects a data retention period of 6 months
+// DATA: sensitive PROVIDER: cardioMon RETENTION: 6 months 
+  AND  (FORALL ds:Sensitive MUST(cardioMon.delete[cardioMon](ds) BEFORE "6 month"))  
+  
+// DATA TRANSFER 
+// From DPPT: Wearable Co defines EEA as  locations where data can be transferred
+// DATA: sensitive ACTION: transfer SOURCE: cardioMon TARGET-LOCATION : EEA
+	AND  (FORALL d:Sensitive FORALL a:Actor IF (@EEA(a)) THEN {PERMIT cardioMon.transfer[a](d)}) 
+) 
+// ----------- end of WearablePolicy
+	
+// WearableCoFixed  policy 
+CLAUSE WearableCoFixedPolicy (  
+	(FORALL e:Employee FORALL d:UserName (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:TrainingActivity (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Password (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Height (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Weight (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:SugarLevel (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:BloodPressure (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Heartbeat (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:UserId (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:DisplayName (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Gender (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Age (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+    AND (FORALL e:Employee FORALL d:Country (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+
+// data retention 
+// From DPPT: WearableCo expects a data retention period of 7 months
+// DATA: sensitive PROVIDER: cardioMon RETENTION: 7 months 
+  AND  (FORALL ds:Sensitive MUST(cardioMon.delete[cardioMon](ds) BEFORE "7 month"))  
+  
+// data transfer 
+// From DPPT: Wearable Co defines locations where data can be transferred as Russia or Croatia
+// DATA: sensitive ACTION: transfer SOURCE: cardioMon TARGET-LOCATION : Russia + Croatia
+	AND  (FORALL d:Sensitive FORALL a:Actor IF (@Russia(a)) THEN {PERMIT cardioMon.transfer[a](d)}) 
+ 
+) 
+// ----------- end of WearableCoFixedPolicy
+
+// WearableCo negative data transfer policy (not yet complete)
+CLAUSE WearableCoNegativePolicy (  
+   // ACCESS CONTROLS
+	(FORALL e:Employee FORALL d:UserName (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:TrainingActivity (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Password (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Height (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Weight (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:SugarLevel (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:BloodPressure (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Heartbeat (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:UserId (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:DisplayName (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Gender (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Age (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+    AND (FORALL e:Employee FORALL d:Country (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+
+// DATA RETENTION 
+// From DPPT: WearableCo expects a data retention period of 6 months
+// DATA: sensitive PROVIDER: cardioMon RETENTION: 6 months 
+  AND  (FORALL ds:Sensitive MUST(cardioMon.delete[cardioMon](ds) BEFORE "6 month"))  
+  
+// DATA TRANSFER 
+// From DPPT: Wearable Co defines EEA as  locations where data can be transferred
+// DATA: sensitive ACTION: transfer SOURCE: cardioMon TARGET-LOCATION : EEA
+	AND  (FORALL d:Sensitive FORALL a:Actor IF (NOT @EEA(a)) THEN {DENY cardioMon.transfer[a](d)}) 
+ 
+) 
+// ----------- end of WearableCoNegativePolicy
+
+// WearableCo compliant with negative data transfer policy (not yet complete)
+// WearableCoCompliantNegativePolicy => WearableCoNegativePolicy OK but not the reverse direction
+CLAUSE WearableCoCompliantNegativePolicy (  
+   // ACCESS CONTROLS
+	(FORALL e:Employee FORALL d:UserName (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:TrainingActivity (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Password (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Height (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Weight (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:SugarLevel (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:BloodPressure (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Heartbeat (DENY e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:UserId (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:DisplayName (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Gender (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+	AND (FORALL e:Employee FORALL d:Age (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+    AND (FORALL e:Employee FORALL d:Country (PERMIT e.read[cardioMon](d) AND DENY e.write[cardioMon](d) AND DENY e.update[cardioMon](d)))
+
+// DATA RETENTION 
+// From DPPT: WearableCo expects a data retention period of 6 months
+// DATA: sensitive PROVIDER: cardioMon RETENTION: 6 months 
+  AND  (FORALL ds:Sensitive MUST(cardioMon.delete[cardioMon](ds) BEFORE "6 month"))  
+  
+// DATA TRANSFER 
+// From DPPT: Wearable Co defines EEA as  locations where data can be transferred
+// DATA: sensitive ACTION: transfer SOURCE: cardioMon TARGET-LOCATION : Germany
+	AND  (FORALL d:Sensitive FORALL a:Actor IF (@Germany(a)) THEN {PERMIT cardioMon.transfer[a](d)}) 
+	AND  (FORALL d:Sensitive FORALL a:Actor IF (NOT @Germany(a)) THEN {DENY cardioMon.transfer[a](d)}) 
+) 
+// ----------- end of WearableCoCompliantNegativePolicy
+
+// ------------------------- satisfiability
+// to run tests but use the wizard (ctrl+e) panel is better
+// FOTL generation+sat
+// CALL vsat("KardioMonPolicy") //OK
+// CALL vsat("WellnessPolicy") //OK
+// CALL vsat("WearableCoPolicy") //OK
+// CALL vsat("WearableCoFixedPolicy") //OK
+// CALL vsat("WearableCoNegativePolicy") //OK
+// CALL vsat("WearableCoCompliantNegativePolicy") //OK
+
+// ----------------------- compliance
+// CALL wvalidate_usage_neg("provided" "required") 
+// CALL wvalidate_usage_neg("KardioMonPolicy" "WellnessPolicy") //KO
+// CALL wvalidate_usage_neg("KardioMonPolicy" "WearableCoPolicy") //OK
+// CALL wvalidate_usage_neg("KardioMonPolicy" "WearableCoFixedPolicy") //KO
+
+// CALL wvalidate_usage_neg("WellnessPolicy" "WearableCoPolicy") //KO
+// CALL wvalidate_usage_neg("WellnessPolicy" "WearableCoFixedPolicy") //OK
+
+
+
+ 
