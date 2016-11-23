@@ -1,0 +1,41 @@
+// 23/11/2016
+// Examples from Section 3 AAL
+
+// Loading types & macros libraries
+LOAD "core.types"
+LOAD "core.macros"
+
+  // some predefined types exists like DataSubject, DataProcessor
+  AGENT Kim TYPES(DataSubject) REQUIRED() PROVIDED()
+  AGENT KardioMon TYPES(DataProcessor) REQUIRED(notify) PROVIDED(process)
+  AGENT auditor TYPES(DataController)  REQUIRED() PROVIDED(notify)
+  TYPE Data EXTENDS(data)
+  TYPE Subject EXTENDS(DataSubject)
+  TYPE Purpose EXTENDS(data)
+  DATA purpose TYPES(Purpose)
+  SERVICE process TYPES(Data Purpose)
+  SERVICE notify  TYPES(Data)
+  SERVICE audit 
+  SERVICE usage TYPES(Data)
+  SERVICE send TYPES(Data)
+  SERVICE punish 
+  SERVICE give
+  SERVICE compensate
+  SERVICE giveConsent
+
+CLAUSE Listing4 (  
+  // usage expression
+  ALWAYS (FORALL d:Data IF (d.owner==Kim) THEN {
+     ((PERMIT KardioMon.process(d)) AND FORALL X:Subject (DENY KardioMon.send[X](d)))
+     }) AND
+  // illegal processing and rectifying
+  ALWAYS (FORALL d:Data  IF (NOT Kim.giveConsent[KardioMon]("Agreed") UNTIL (KardioMon.process(d) AND (d.owner==Kim)))
+            THEN {ALWAYS (FORALL d:Data DENY KardioMon.process(d))}) AND
+   // illegal sending then punishing and compensating 
+  ALWAYS (IF (SOMETIME (EXISTS d:Data (EXISTS X:Subject (KardioMon.send[X](d) AND (d.owner == Kim) AND (X != Kim)))))
+   THEN {(auditor.punish[KardioMon]()  AND auditor.compensate[Kim](tenEuros))})
+)
+
+// OK
+CALL vsat("Listing4")
+ 

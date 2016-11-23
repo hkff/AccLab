@@ -1,0 +1,110 @@
+//=====================================================//
+//================ Defining data types ================//
+//=====================================================//
+
+TYPE Customer EXTENDS(DataSubject)
+TYPE Employee EXTENDS(DataSubject)
+
+TYPE Sensitive EXTENDS(data)
+TYPE Public EXTENDS(data)
+
+/*
+ * Username
+ * The username used as user credentials, along with the password, to log in to the Wearable Service
+ * Sensitive PII
+ */
+TYPE UserName EXTENDS(Sensitive)
+
+/*
+ * Password
+ * The password used as user credentials, along with the username, to log in to the Wearable Service
+ * Sensitive PII
+ */
+TYPE Password EXTENDS(Sensitive)
+
+/*
+ * User ID
+ * The unique identification number assigned to the user in order to accomplish user specific actions within a session life time
+ * Sensitive PII
+ */
+TYPE UserId EXTENDS(Sensitive)
+
+/*
+ * Display Name
+ * The nickname selected by the user to display on the Wearable Service front end, as a comprehensive user reference
+ * Public PII
+ */
+TYPE DisplayName EXTENDS(Public)
+
+/*
+ * Gender
+ * The gender of the user to be used for determining the threshold values applied to the collected wellbeing metric values.
+ *  Gender is considered to affect the optimal values determining the threshold values.
+ * Public PII
+ */
+TYPE Gender EXTENDS(Public)
+
+/*
+ * Age
+ * The age of the user to be used for determining the threshold values applied to the collected wellbeing metric values.
+ *  Different age groups are considered to have different optimal values determining the threshold values.
+ * Public PII
+ */
+TYPE Age EXTENDS(Public)
+
+/*
+ * Height
+ * The height of the user to be used for determining wellbeing related information by joining up the wellbeing record with the body type.
+ * Sensitive PII
+ */
+TYPE Height EXTENDS(Sensitive)
+
+/*
+ * Weight
+ * The weight of the user to be used for determining wellbeing related information by joining up the wellbeing record with the body type.
+ * Sensitive PII
+ */
+TYPE Weight EXTENDS(Sensitive)
+
+/*
+ * Sugar Level
+ * The sugar level in the user's blood, measured by the wearable device
+ * Sensitive PII
+ */
+TYPE SugarLevel EXTENDS(Sensitive)
+
+/*
+ * Blood Pressure
+ * The user's blood pressure, measured by the wearable device
+ * Sensitive PII
+ */
+TYPE BloodPressure EXTENDS(Sensitive)
+
+/*
+ * Heartbeat Rate
+ * The user's heart beat rate, measured by the wearable device
+ * Sensitive PII
+ */
+TYPE Heartbeat EXTENDS(Sensitive)
+
+/*
+ * Training Activity
+ * The daily exercises taken by the user, such as time of walking, running, swimming and any other physical exercise
+ * Sensitive PII
+ */
+TYPE TrainingActivity EXTENDS(Sensitive)
+
+/*
+ * Wellbeing Score
+ * The value of the wellbeing score, based on the formula defined by the cloud service
+ * Sensitive PII
+ 
+TYPE wellbeing EXTENDS(sensitive) */
+
+/*
+ * Country
+ * The country of permanent residence of the user
+ * Public PII
+ */
+TYPE Country EXTENDS(Public)
+ 
