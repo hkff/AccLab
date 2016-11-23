@@ -2,7 +2,7 @@
 [![License](https://img.shields.io/badge/license-GPL3-blue.svg)]()
 [![Python](https://img.shields.io/badge/python->%3D3.4-green.svg)]()
 
-AccLab Last release : Version 2.0 26/03/2016
+AccLab Last release : Version 2.1 23/11/2016
 
 What is it?
 -----------
