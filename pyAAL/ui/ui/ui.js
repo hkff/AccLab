@@ -612,5 +612,28 @@ visualEditor.ui = {
                 });
             }
 	    });
+    },
+
+    /**
+     * Connect to LDAP
+     */
+    LDAPConnect: function(server, port, username, password) {
+        $.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "ldapConnect", file: visualEditor.ui.getOpenedFile()},
+            success: function(response){
+                $.ajax({
+                    dataType: 'text',
+                    type:'POST',
+                    url: visualEditor.backend,
+                    data: {action: "ldapConnect", server: server, port: port, username: username, password: password},
+                    success: function(response){
+                        console.log(response);
+                    }
+                });
+            }
+	    });
     }
 };

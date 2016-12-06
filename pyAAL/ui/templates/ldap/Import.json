@@ -1,0 +1,21 @@
+{
+    "name": "LDAP Import",
+	"desc": "Import users and groups from LDAP.",
+	"vars": [
+      {"name": "", "id": "ipAddr", "type": "text", "pre": "IP ", "post": ""},
+      {"name": "", "id": "portAddr", "type": "text", "pre": "PORT ", "post": ""},
+      {"name": "", "id": "username", "type": "text", "pre": "USERNAME ", "post": ""},
+      {"name": "", "id": "pwd", "type": "text", "pre": "PASSWORD ", "post": ""},
+
+      {"name": "", "id": "usersDN", "type": "text", "pre": "Users OU ", "post": ""},
+      {"name": "", "id": "groupsDN", "type": "text", "pre": "Groups OU ", "post": ""},
+
+      {"name": "Import", "id": "djGenBtn", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.LDAPImport($('#ipAddr').val(), $('#portAddr').val(), $('#username').val(), $('#password').val(), $('#usersDN').val(), $('#groupsDN').val())"}
+    ],
+	"aal": [""],
+	"html": [
+      "<div class='varGroupe'> <h4 class='varsHeader'>Connection : </h4> {ipAddr} {portAddr} {username} {pwd}</div>",
+      "<div class='varGroupe'> <h4 class='varsHeader'>LDAP OU : </h4> {usersDN} {groupsDN}</div>",
+      "{djGenBtn}"
+    ]
+}

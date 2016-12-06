@@ -30,6 +30,7 @@ import sys, shutil
 from io import StringIO
 from aalc import *
 from AALtoAccmon import *
+from LDAPConnectors import *
 import json
 base_dir = "examples"
 
@@ -695,3 +696,7 @@ def get_aal_behaviors(file):
         for b in behaviors:
             res.append(json.dumps(m_behavior_to_behavior(b, b.name).to_json()))
     return json.dumps(res)
+
+
+def LDAP_connect(server, port, username, password):
+    return LDAP_Connect(server, port, username, password)

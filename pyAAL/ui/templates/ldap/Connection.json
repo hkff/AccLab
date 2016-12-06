@@ -1,0 +1,16 @@
+{
+    "name": "LDAP connection",
+	"desc": "Connect to LDAP.",
+	"vars": [
+      {"name": "", "id": "ipAddr", "type": "text", "pre": "IP ", "post": ""},
+      {"name": "", "id": "portAddr", "type": "text", "pre": "PORT ", "post": ""},
+      {"name": "", "id": "username", "type": "text", "pre": "USERNAME ", "post": ""},
+      {"name": "", "id": "pwd", "type": "text", "pre": "PASSWORD ", "post": ""},
+
+      {"name": "Connect", "id": "djGenBtn", "type": "button", "pre": " ", "post": "", "onclick": "visualEditor.ui.LDAPConnect($('#ipAddr').val(), $('#portAddr').val(), $('#username').val(), $('#password').val())"}
+    ],
+	"aal": [""],
+	"html": [
+      "<div class='varGroupe'> {ipAddr} {portAddr} {username} {pwd}</div> {djGenBtn}"
+    ]
+}

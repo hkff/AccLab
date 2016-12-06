@@ -176,6 +176,9 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         elif val == "aal_behaviors":
             res = get_aal_behaviors(self.get_arg(args, "file", method))
 
+        elif val == "ldapConnect":
+            res = LDAP_connect(self.get_arg(args, "server", method), self.get_arg(args, "port", method), self.get_arg(args, "username", method), self.get_arg(args, "password", method))
+
         return res
 
     def do_GET(self):
