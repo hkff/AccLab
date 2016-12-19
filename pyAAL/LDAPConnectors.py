@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 __author__ = 'walid'
-from ldap3 import Server, Connection, ALL
+from ldap3 import Server, Connection, ALL, SUBTREE
 
 
 def LDAP_Connect(server, port, username, password):
@@ -26,8 +26,29 @@ def LDAP_Connect(server, port, username, password):
 
         if not c.bind():
             print('error in bind', c.result)
-            return "Not connected to LDAP"
+            return None
     except:
-        return "Exception : Not connected to LDAP"
+        print("Exception : Not connected to LDAP")
+        return None
 
-    return "Connected to LDAP"
+    return c
+
+
+def LDAP_Import(server, port, username, password, usersDN, groupsDN):
+    c = LDAP_Connect(server, port, username, password)
+    if c is None:
+        return "Error : Connection to LDAP error"
+    else:
+        res = ""
+        total_entries = 0
+        search_filter = '(objectClass=inetOrgPerson)'
+        search_scope = SUBTREE,
+        attributes = ['cn', 'givenName']
+        paged_size = 5
+        c.search(search_base=usersDN, search_filter=search_filter)
+
+        total_entries += len(c.response)
+        for entry in c.response:
+            res += "%s - %s" % (entry['dn'], entry['attributes'])
+
+        return res

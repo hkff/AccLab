@@ -179,6 +179,10 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         elif val == "ldapConnect":
             res = LDAP_connect(self.get_arg(args, "server", method), self.get_arg(args, "port", method), self.get_arg(args, "username", method), self.get_arg(args, "password", method))
 
+        elif val == "ldapImport":
+            res = LDAP_import(self.get_arg(args, "server", method), self.get_arg(args, "port", method), self.get_arg(args, "username", method), self.get_arg(args, "password", method), \
+                              self.get_arg(args, "usersDN", method), self.get_arg(args, "groupsDN", method))
+
         return res
 
     def do_GET(self):

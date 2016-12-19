@@ -699,4 +699,12 @@ def get_aal_behaviors(file):
 
 
 def LDAP_connect(server, port, username, password):
-    return LDAP_Connect(server, port, username, password)
+    res = LDAP_Connect(server, port, username, password)
+    if res is None:
+        return "Error : Not connected to LDAP"
+    else:
+        return "Connected to LDAP"
+
+
+def LDAP_import(server, port, username, password, userDN, groupsDN):
+    return LDAP_Import(server, port, username, password, userDN, groupsDN)

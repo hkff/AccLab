@@ -635,5 +635,20 @@ visualEditor.ui = {
                 });
             }
 	    });
+    },
+
+    /**
+     * Connect to LDAP
+     */
+    LDAPImport: function(server, port, username, password, usersDN, groupsDN) {
+        $.ajax({
+            dataType: 'text',
+            type:'POST',
+            url: visualEditor.backend,
+            data: {action: "ldapImport", server: server, port: port, username: username, password: password, usersDN: usersDN, groupsDN: groupsDN},
+            success: function(response){
+                console.log(response);
+            }
+	    });
     }
 };
