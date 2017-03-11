@@ -319,7 +319,7 @@ print("NOT YET IMPLEMENTED !")
 MACRO obligation29_30 (
 """
 //  Cloud X and Cloud Y should inform M about any policy violation that are related to personal data and any
-// violation of users’ privacy preferences. The same relationship exists between M and the hospital and
+// violation of users privacy preferences. The same relationship exists between M and the hospital and
 // between the hospital and the patients.
 
 print("NOT YET IMPLEMENTED !")
