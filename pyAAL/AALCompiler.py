@@ -1151,17 +1151,17 @@ class AALCompilerListener(AALListener.AALListener):
             macro = macro[0]
             # TODO Securing env call
             # Macro code is stored with comments to avoid arbitrary exec
-            # try:
-            code = ""
-            if macro.param is not None:
-                params = iter(macro.param)
-                for x in args:
-                    # code += str(next(params)) + " = " + str(x).replace('"', '') + "\n"
-                    code += str(next(params)) + " = " + str(x) + "\n"
-            code += macro.code.replace('"""', '').replace("return", "__res__ = ")  # FIXME
-            exec(code)
-            # except:
-            # print("Macro eval error !")
+            try:
+                code = ""
+                if macro.param is not None:
+                    params = iter(macro.param)
+                    for x in args:
+                        # code += str(next(params)) + " = " + str(x).replace('"', '') + "\n"
+                        code += str(next(params)) + " = " + str(x) + "\n"
+                code += macro.code.replace('"""', '').replace("return", "__res__ = ")  # FIXME
+                exec(code)
+            except:
+                print("Macro eval error !")
 
         else:
             print(Color("{autored}[ERROR]{/red} Macro '" + macro_name + "' not found !"))
@@ -1185,7 +1185,7 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Meta function
     def clause(self, clauseId):
-        res = [x for x in self.aalprog.clauses if str(x.name) == str(clauseId)]
+        res = [x for x in self.aalprog.get_clauses() if str(x.name) == str(clauseId)]
         if len(res) > 0:
             return res[0]
         else:
@@ -1193,11 +1193,11 @@ class AALCompilerListener(AALListener.AALListener):
             return None
 
     def show_clauses(self):
-        x = [str(x.name) + " " for x in self.aalprog.clauses]
+        x = [str(x.name) + " " for x in self.aalprog.get_clauses()]
         return "".join(x)
 
     def get_clauses(self):
-        x = [str(x.name) + " " for x in self.aalprog.clauses]
+        x = [str(x.name) + " " for x in self.aalprog.get_clauses()]
         return "".join(x)
 
     def get_macros(self):

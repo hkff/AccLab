@@ -1,0 +1,55 @@
+// 3/11/2016
+// Examples from Section 3 AAL
+
+
+// Loading types & macros libraries
+LOAD "core.types"
+LOAD "core.macros"
+
+  // some predefined types exists like DataSubject, DataProcessor
+  AGENT Kim TYPES(DataSubject) REQUIRED() PROVIDED()
+  AGENT KardioMon TYPES(DataProcessor) REQUIRED(notify) PROVIDED(process)
+  AGENT auditor TYPES(DataController)  REQUIRED() PROVIDED(notify)
+  AGENT Sys TYPES(DataController) REQUIRED(registered) PROVIDED()
+  TYPE Data EXTENDS(data)
+  TYPE Nat EXTENDS(data)
+  TYPE Purpose EXTENDS(data)
+  SERVICE process TYPES(Data Purpose)
+  SERVICE notify  TYPES(Data)
+  SERVICE audit 
+  SERVICE usage TYPES(Data)
+  SERVICE send TYPES(Data)
+  SERVICE punish 
+  SERVICE give
+  SERVICE do
+  SERVICE registered
+  SERVICE pay
+  DATA purpose TYPES(Purpose)
+
+CLAUSE Listing5 (  
+// registering and an interdiction
+ALWAYS (IF (Sys.registered[Kim]()) THEN {NEXT (ALWAYS (DENY Kim.do()))}) AND
+// should be equiv
+// ALWAYS ((NOT (Sys.registered[Kim]())) OR (NEXT ALWAYS (DENY Kim.do()))) AND
+// rectifications
+ALWAYS (
+  // first penalty
+  IF (Kim.do()) THEN {Kim.pay[Sys](ten)} AND
+  // increase penalty
+  IF (Kim.do() AND NEXT (SOMETIME (Kim.do()))) THEN {Kim.pay[Sys](hundred)} AND
+  // unregistered
+  IF (Kim.do() AND (NEXT (SOMETIME (Kim.do() AND (NEXT (SOMETIME (Kim.do())))))))
+                        THEN {NEXT (ALWAYS (NOT Sys.registered[Kim]()))}
+   )
+   )
+   
+CLAUSE more (
+ IF (Kim.do()) THEN {NEXT (Kim.pay[auditor](tenEuros))}  AND
+ ALWAYS  (FORALL x:Nat  IF (Kim.pay[auditor](x) AND Kim.do())
+            THEN {NEXT (ALWAYS (EXISTS y:Nat (@twice(x y) AND Kim.pay[auditor](y))))})
+)
+
+// OK
+CALL vsat("Listing5")
+// CALL vsat("more")
+ 

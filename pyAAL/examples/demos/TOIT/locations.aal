@@ -1,0 +1,84 @@
+// Types for locations
+// https://en.wikipedia.org/wiki/List_of_sovereign_states_and_dependent_territories_in_Europe#cite_note-18
+// 17/10/2016
+
+TYPE Location EXTENDS(data)
+
+TYPE America EXTENDS(Location)
+TYPE Asia EXTENDS(Location)
+TYPE Africa EXTENDS(Location)
+TYPE Australia EXTENDS(Location)
+
+// Europe
+TYPE Europe EXTENDS(Location)
+TYPE EEA EXTENDS(Europe)
+TYPE EU EXTENDS(EEA)
+
+// EU = 28 countries
+// https://fr.wikipedia.org/wiki/Union_europ%C3%A9enne
+TYPE Germany EXTENDS(EU)
+TYPE France EXTENDS(EU)
+TYPE Italy EXTENDS(EU)
+TYPE Austria  EXTENDS(EU)
+TYPE Belgium EXTENDS(EU)
+TYPE Bulgaria EXTENDS(EU)
+TYPE Cyprus EXTENDS(EU)
+TYPE Croatia EXTENDS(EU)
+TYPE Denmark EXTENDS(EU)
+TYPE Spain EXTENDS(EU)
+TYPE Estonia EXTENDS(EU)
+TYPE Finland EXTENDS(EU)
+TYPE Greece EXTENDS(EU)
+TYPE Hungary EXTENDS(EU)
+TYPE Ireland EXTENDS(EU)
+TYPE Latvia EXTENDS(EU)
+TYPE Lithuania EXTENDS(EU)
+TYPE Luxembourg EXTENDS(EU)
+TYPE Malta EXTENDS(EU)
+TYPE Netherlands EXTENDS(EU)
+TYPE Poland EXTENDS(EU)
+TYPE Portugal EXTENDS(EU)
+TYPE Czechrepublic EXTENDS(EU)
+TYPE Romania EXTENDS(EU)
+TYPE UnitedKingdom EXTENDS(EU)
+TYPE Slovakia EXTENDS(EU)
+TYPE Slovenia EXTENDS(EU)
+TYPE Sweden EXTENDS(EU)
+
+// EEA = EU + 3 more 
+// https://fr.wikipedia.org/wiki/Espace_%C3%A9conomique_europ%C3%A9en
+TYPE Norway EXTENDS(EEA)
+TYPE Iceland EXTENDS(EEA)
+TYPE Liechtenstein EXTENDS(EEA)
+
+// others +19=50 recognized states
+TYPE Albania EXTENDS(Europe)
+TYPE Andora EXTENDS(Europe)
+TYPE Armenia EXTENDS(Europe)
+TYPE Azerbaijan EXTENDS(Europe)
+TYPE Belarus EXTENDS(Europe)
+TYPE BosniaAndHerzegovina EXTENDS(Europe)
+TYPE Georgia EXTENDS(Europe)
+TYPE Kazakhstan EXTENDS(Europe)
+TYPE Macedonia EXTENDS(Europe)
+TYPE Moldova EXTENDS(Europe)
+TYPE Monaco EXTENDS(Europe)
+TYPE Montenegro EXTENDS(Europe)
+TYPE Russia EXTENDS(Europe)
+TYPE SanMarino EXTENDS(Europe)
+TYPE Serbia EXTENDS(Europe)
+TYPE Switzerland EXTENDS(Europe)
+TYPE Turkey EXTENDS(Europe)
+TYPE Ukraine EXTENDS(Europe)
+TYPE VaticanCity EXTENDS(Europe)
+
+// and 6 more ...
+// in discussion ...
+
+// add more 
+// (always (![a] (America(a) => ~Europe(a)))) &
+// TYPE America EXTENDS(NOT Europe) no
+// +union, disjoint, aggregation ?
+// TODO add reverse way ?
+
+ 

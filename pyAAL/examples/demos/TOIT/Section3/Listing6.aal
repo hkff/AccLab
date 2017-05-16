@@ -1,0 +1,81 @@
+// 12/11/2016
+// Examples from Section 3 AAL
+
+// Loading types & macros libraries
+LOAD "core.types"
+LOAD "core.macros"
+
+  // some predefined types exists like DataSubject, DataProcessor
+  AGENT Paul TYPES(DataSubject) REQUIRED() PROVIDED()
+  AGENT Jean TYPES(DataSubject) REQUIRED() PROVIDED()
+  AGENT Kim TYPES(DataSubject) REQUIRED() PROVIDED()
+  AGENT X TYPES(DataSubject) REQUIRED() PROVIDED()
+  AGENT Y TYPES(DataSubject) REQUIRED() PROVIDED()
+  AGENT Z TYPES(DataSubject) REQUIRED() PROVIDED()
+  AGENT KardioMon TYPES(DataProcessor) REQUIRED(notify) PROVIDED(process)
+  AGENT auditor TYPES(DataController)  REQUIRED() PROVIDED(notify)
+  AGENT Sys TYPES(DataController) REQUIRED(registered) PROVIDED()
+  TYPE Data EXTENDS(data)
+  TYPE Agent EXTENDS(data)
+  TYPE Nat EXTENDS(data)
+  TYPE Purpose EXTENDS(data)
+  DATA purpose TYPES(Purpose)
+  SERVICE process TYPES(Data Purpose)
+  SERVICE notify  TYPES(Data)
+  SERVICE audit 
+  SERVICE usage TYPES(Data)
+  SERVICE send TYPES(Data)
+  SERVICE punish 
+  SERVICE compensate
+  SERVICE give
+  SERVICE do
+  SERVICE logModified
+  SERVICE logSent
+  SERVICE registered
+  SERVICE pay
+  SERVICE modify
+
+// not a monodic example
+CLAUSE Listing6 (
+// strict permissions
+FORALL X:Agent FORALL Y:Agent FORALL Z:Agent FORALL d:Data ALWAYS 
+   (IF (@relatives(X Y) AND (d.owner==X)) THEN  {(PERMIT Y.modify(d)) AND PERMIT Y.send[Z](d)}) 
+AND FORALL X:Agent FORALL Y:Agent FORALL Z:Agent FORALL d:Data ALWAYS 
+   (IF (PERMIT Y.modify(d) AND PERMIT Y.send[Z](d)) THEN {@relatives(X Y) AND (d.owner==X)})
+// but prohibition to chain modify and send
+AND FORALL Y:Agent FORALL Z:Agent FORALL d:Data ALWAYS (NOT (Y.modify(d) AND SOMETIME (Y.send[Z](d))))
+// logging some actions by an external observer
+//AND FORALL Y:Agent FORALL d:Data ALWAYS (IF (Y.modify(d)) THEN {auditor.log("modify", Y, d)})  
+AND FORALL Y:Agent FORALL d:Data ALWAYS (IF (Y.modify(d)) THEN {auditor.logModified(Y)})  
+AND FORALL Y:Agent FORALL Z:Agent FORALL d:Data ALWAYS (IF (Y.send[Z](d)) THEN {auditor.logSent(Y)})  
+// auditing and rectifying
+AND FORALL Y:Agent FORALL d:Data ALWAYS 
+     (IF (auditor.logModified(Y) AND SOMETIME (auditor.logSent(Y)))
+        THEN  {auditor.punish[Y](twenty) AND (EXISTS X:Agent ((d.owner==X) AND auditor.compensate[X](ten)))})
+)
+
+// OK
+CALL vsat("Listing6")
+// Formula is not monodic !
+// - found 4 free variables in [ALWAYS IF (( @relatives(X Y) AND d.owner == X)) THEN ((PERMIT Y.modify[Y](d) AND PERMIT Y.send[Z](d) ))]
+
+// restricted but monodic version
+CLAUSE Listing6bis (
+// strict permissions with Paul, Jean, Kim
+FORALL d:Data ALWAYS 
+   (IF (@relatives(Paul Jean) AND (d.owner==Paul)) THEN  {(PERMIT Jean.modify(d)) AND PERMIT Jean.send[Kim](d)}) 
+AND FORALL d:Data ALWAYS 
+   (IF (PERMIT Jean.modify(d) AND PERMIT Jean.send[Kim](d)) THEN {@relatives(Paul Jean) AND (d.owner==Paul)})
+// but prohibition to chain modify and send
+AND FORALL d:Data ALWAYS (NOT (Jean.modify(d) AND SOMETIME (Jean.send[Kim](d))))
+// logging some actions by an external observer
+AND FORALL d:Data ALWAYS (IF (Jean.modify(d)) THEN {auditor.logModified(Jean)})  
+AND FORALL d:Data ALWAYS (IF (Jean.send[Kim](d)) THEN {auditor.logSent(Jean)})  
+// auditing and rectifying
+AND FORALL d:Data ALWAYS 
+     (IF (auditor.logModified(Jean) AND SOMETIME (auditor.logSent(Jean)))
+        THEN  {auditor.punish[Jean](twenty) AND (EXISTS X:Agent ((d.owner==X) AND auditor.compensate[Paul](ten)))})
+)
+// monodic and satisfiable
+
+

@@ -181,6 +181,8 @@ ActorUI2 = draw2d.shape.layout.VerticalLayout.extend({
                             break;
                         case "delete": _table.getCanvas().getCommandStack().execute(new draw2d.command.CommandDelete(_table));
                             break;
+                        case "console": visualEditor.ui.simul.showConsole(_table.classLabel.text);
+                            break;
                         default:
                             break;
                     }
@@ -192,6 +194,8 @@ ActorUI2 = draw2d.shape.layout.VerticalLayout.extend({
                     "newPS": {name: "New Provided service"},
                     "newRS": {name: "New Required service"},
                     "sep1": "---------",
+                    "console": {name: "Console"},
+                    "sep2": "---------",
                     "delete": {name: "Delete"}
                 }
             });

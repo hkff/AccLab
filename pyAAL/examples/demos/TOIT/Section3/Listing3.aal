@@ -1,0 +1,41 @@
+// 23/11/2016
+// Examples from Section 3 AAL
+
+// Loading types & macros libraries
+LOAD "core.types"
+LOAD "core.macros"
+
+  // some predefined types exists like DataSubject, DataProcessor
+  AGENT Kim TYPES(DataSubject) REQUIRED() PROVIDED()
+  AGENT KardioMon TYPES(DataProcessor) REQUIRED(notify) PROVIDED(process)
+  AGENT auditor TYPES(DataController)  REQUIRED() PROVIDED(notify)
+  AGENT MapOnWeb TYPES(DataController) REQUIRED() PROVIDED(send)
+  TYPE Data EXTENDS(data)
+  TYPE Purpose EXTENDS(data)
+  SERVICE process TYPES(Data Purpose)
+  SERVICE notify  TYPES(Data)
+  SERVICE audit 
+  SERVICE usage TYPES(Data)
+  SERVICE send TYPES(Data)
+  SERVICE punish 
+  SERVICE give
+  SERVICE transfer
+  DATA purpose TYPES(Purpose)
+  DATA tenEuros TYPES(Data)
+
+// Listing 3
+CLAUSE AccPolicy (
+  //  usage expression
+  (FORALL d:Data IF (d.owner==Kim) THEN {PERMIT KardioMon.usage(d) AND PERMIT KardioMon.send[MapOnWeb](d)})  AND
+  (FORALL d:Data IF ((d.owner==Kim) AND KardioMon.send[MapOnWeb](d)) THEN {KardioMon.notify[Kim]()})
+  // auditing
+  AUDITING ALWAYS (IF (Kim.notify[auditor]()) THEN {MUST (auditor.audit())})
+  // rectification
+  IF_VIOLATED_THEN (MUST (auditor.punish[KardioMon](tenEuros) AND (NEXT (KardioMon.give[auditor](tenEuros))) 
+                                             AND  auditor.transfer[Kim](tenEuros)))
+  )
+
+
+// OK
+CALL vsat("AccPolicy")
+
