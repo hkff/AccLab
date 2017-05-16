@@ -647,7 +647,7 @@ def svn_revert(target, version):
 
 # Svn diff
 def svn_diff(target, r1, r2):
-    print("%s %s" %(r1, r2))
+    print("%s %s" % (r1, r2))
     try:
         r1 = int(r1)
         r2 = int(r2)
@@ -662,3 +662,11 @@ def svn_diff(target, r1, r2):
     p.wait()
     log = p.stdout.read().decode("utf-8").replace("\n", "<br>")
     return log
+
+# Fodtlmon web service
+def start_fodtlmon_server(server_port=9999):
+    import os
+    from subprocess import Popen
+    Popen(['python3.4', 'ui/mon.py', server_port])
+    sleep(1)
+    return server_port
