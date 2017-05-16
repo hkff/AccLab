@@ -672,7 +672,6 @@ def start_fodtlmon_server(server_port=9999):
     sleep(1)
     return server_port
 
-
 # Translate AAL clause to FODTL
 def aal_to_fodtl(file, clause):
     res = "Error"
@@ -695,3 +694,4 @@ def get_aal_behaviors(file):
         for b in behaviors:
             res.append(json.dumps(m_behavior_to_behavior(b, b.name).to_json()))
     return json.dumps(res)
+
