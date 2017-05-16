@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 //
-//  AccLab UI V 2.0 : acclab.js
+//  AccLab UI V 2.1 : acclab.js
 //
 // Copyright (C) 2014 Walid Benghabrit
 //
@@ -31,7 +31,8 @@ var visualEditor = {
     aceTheme      : "monokai",
     aceThemesList : ["monokai", "chrome", "tomorrow", "kuroir", "eclipse", "chaos"],
     backend       : "http://127.0.0.1:8000/",
-    version       : "2.0",
+    version       : "2.1",
+    wm            : null,
 
 
     /**
@@ -41,6 +42,9 @@ var visualEditor = {
     	this.backend = window.location.origin;
     	// init workspace
         visualEditor.ui.init(grid, actionsPanel, componentsPanel, propertiesPanel, outlinePanel, inplacePanel);
+        this.wm = new Ventus.WindowManager();
+        $(".wm-overlay").width("0%");
+        $(".wm-space").width("0%");
     },
 
     /**
@@ -304,7 +308,7 @@ var visualEditor = {
     about: function () {
         var abt = "" +
             "<img src='assets/icon_128.png' class='logoAbout' alt='AccLab logo'>" +
-            "<div class='versionAbout'>AccLab Version 2.0</div>" +
+            "<div class='versionAbout'>AccLab Version 2.1</div>" +
             "<div class='aboutCore'>AccLab is a web based accountability framework designed in the context of A4CLOUD project. " +
             "The main goal is to observe ”accountability in action” by simulating a software system with several" +
             " agents exchanging data and requiring different privacy policy." +
@@ -374,7 +378,7 @@ var visualEditor = {
             "<a class='catElement' onclick='visualEditor.about()'><i class='fa fa-question'></i> About</a></br></br>"+
             "</div></div>"+
             "</div>"+
-            "<div style='padding-top: 150px; display: inline-block; padding-right: 60px;'>AccLab version 2.0 2014-2016</div>";
+            "<div style='padding-top: 150px; display: inline-block; padding-right: 60px;'>AccLab version 2.1 2014-2016</div>";
 
         toastr.info(abt, "Get started", {
 				"closeButton": true,
@@ -583,13 +587,20 @@ var visualEditor = {
      * Log msg into output
      * @param msg
      * @param clear
+     * @param time
      */
-    log: function(msg, clear) {
+    log: function(msg, clear, time) {
         if(clear == true) $("#output_window").empty();
+        var now = "";
+        if(time == true) {
+            var d = new Date();
+            now = "[" + d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate() + ":" +
+                d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds() +"]: ";
+        }
         if(typeof(msg) == "string")
-            $("#output_window").append(replaceAll("\n", "<br>", msg) + "<br>");
+            $("#output_window").append(now + replaceAll("\n", "<br>", msg) + "<br>");
         else
-            $("#output_window").append(msg + "<br>");
+            $("#output_window").append(now + msg + "<br>");
     }
 };
 

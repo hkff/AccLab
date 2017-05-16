@@ -53,6 +53,7 @@ body {
     color: #888;
     width: 100%;
     height: 46px;
+    position: relative;
 }
 
 .demo-header-title {
@@ -578,4 +579,16 @@ path.pointer{
 
 .svnLogEntry {
     margin-right: 10px;
+}
+
+.wm-overlay {
+	width: 0%;
+    z-index: 999;
+    background-color: #0B476B !important;
+}
+
+.wm-space {
+    width: 0%;
+    z-index: 999;
+    background-color: #0B476B !important;
 }

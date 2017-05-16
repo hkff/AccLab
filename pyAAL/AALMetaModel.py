@@ -465,6 +465,20 @@ class m_aalprog(aalmmnode):
         macros = self.get_macros()
         return [x for x in macros if str(x.name) == name and len(x.param) == len(args)]
 
+    def get_clauses(self):
+        res = []
+        res.extend(self.clauses)
+        for l in self.libs:
+            res.extend(l.aalprog.get_clauses())
+        return res
+
+    def get_behaviors(self):
+        res = []
+        res.extend(self.behaviors)
+        for l in self.libs:
+            res.extend(l.aalprog.get_behaviors())
+        return res
+
 
 # Usage
 class m_usage(aalmmnode):
@@ -613,7 +627,7 @@ class m_clause(m_declarable):
         # return ue + ("\n & " + ae if ae is not None else "") + ("\n & " + re if re is not None else "")
         if ae is not None and re is not None:
             # return ae + " & always(" + ue + " | ((~(" + ue + ")) & (always(" + ae + " => (" + re + "))))) \n"
-            return ae + " & always(" + ue + " | ((~(" + ue + ")) & ((" + ae + " => (" + re + "))))) \n"
+            return ae + " & always(" + ue + " | ((~(" + ue + ")) & ((" + ae + " => (" + re + ")))))"
         else:
             return ue
 

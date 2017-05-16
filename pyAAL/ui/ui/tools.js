@@ -82,6 +82,7 @@ visualEditor.ui.tools = {
 		this.tools.push(new visualEditor.ui.tools.templatesTool());            // 21
 		this.tools.push(new visualEditor.ui.tools.acethemeTool());             // 22
 		this.tools.push(new visualEditor.ui.tools.clearOutputTool());          // 23
+		this.tools.push(new visualEditor.ui.tools.simulationTool());           // 24
 	},
 
 	/**
@@ -1069,14 +1070,14 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
             // Get AAL info
             visualEditor.ui.analyseAAL(visualEditor.ui.activeTab.panel.title, function(e) {
 
-				var p = "<div>" +
-					"<div style='width:19%; float: left;'>" +
-					"	<b>AAL policy wizard</b>" +
+				var p = "<div id='aalwizard'>" +
+					"<div style='width:17%; float: left;'>" +
+					"	<b>Wizards</b>" +
 					"<ul id='tt' class='easyui-tree unselectable'>" +
 					"</div>" +
 					"<div id='templateContent' style=''> </div>" +
 					"</div>";
-
+                /*
 				toastr.info(p, "", {
 					"closeButton": true,
 					"preventDuplicates": true,
@@ -1096,6 +1097,23 @@ visualEditor.ui.tools.templatesTool = visualEditor.ui.tool.extend({
                     else
                         $(this).animate({width: "800px", height: "453"});
                 });
+                */
+                $("body").append(p);
+                visualEditor.wm.createWindow.fromQuery("#aalwizard", {
+                    title: "AAL wizard",
+					x: 60,
+					y: 50,
+					width: 800,
+					height: 490,
+					widget: true,
+					titlebar: true,
+                    resizable: false,
+					events: {
+						closed: function() {
+							this.destroy();
+						}
+					}
+				}).open();
 
 				$("#tt").tree({
 					animate: true,
@@ -1204,6 +1222,37 @@ visualEditor.ui.tools.clearOutputTool = visualEditor.ui.tool.extend({
 	control: function(parent, disableShortcut) {
 		var fx = function(e){
             $("#output_window").empty();
+		};
+		this.button.click(fx);
+		if(disableShortcut != null) return;
+		//shortcut.add("Ctrl+G", fx);
+	}
+});
+
+//////////////////////////////////////////////////////////
+//
+//  simulationTool
+//
+//////////////////////////////////////////////////////////
+visualEditor.ui.tools.simulationTool = visualEditor.ui.tool.extend({
+	NAME : "visualEditor.ui.tools.simulationTool",
+
+	view: function(parent) {
+		this.button = $('<div title="Start simulation" id="simulationBtn" class="btn-action fa fa-cubes fa-lg"/>');
+		parent.actionsPanel.append(this.button);
+	},
+
+	control: function(parent, disableShortcut) {
+		var fx = function(e){
+            if(visualEditor.ui.simul.simulation == null) {
+                visualEditor.ui.simul.startSimulation(9999);
+                toastr.success('Simulation started !');
+                $("#simulationBtn").attr("title", "Stop simulation").css("color", "green").addClass("fa-spin");
+            } else {
+                visualEditor.ui.simul.stopSimulation();
+                toastr.error('Simulation stopped !');
+                $("#simulationBtn").attr("title", "Start simulation").css("color", "").removeClass("fa-spin");
+            }
 		};
 		this.button.click(fx);
 		if(disableShortcut != null) return;
