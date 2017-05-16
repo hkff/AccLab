@@ -134,3 +134,14 @@ MACRO to_djfodtlmon() (
 AALtoDJFODTLMON(self, MappingSpec())
 """
 )
+
+/*
+ * Translate an AAL clause to FODTL
+ */
+MACRO to_fodtl(c1) (
+"""
+cl = self.clause(c1)
+if cl is not None:
+    print(aal_clause_to_fodtl(cl))
+"""
+)
