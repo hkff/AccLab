@@ -725,7 +725,10 @@ class AALCompilerListener(AALListener.AALListener):
 
             tm.time = ctx.time().h_date().STRING()
             ac.time = tm
-            # TODO: hanle purpose
+
+        # Handling purpose
+        for purpose in ctx.h_purposeId():
+            ac.purpose.append(purpose.ID())
 
     # Enter ActionExp
     def enterActionExp(self, ctx):

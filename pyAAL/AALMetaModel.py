@@ -1524,6 +1524,9 @@ class m_action(m_aexp):
     def to_ltl(self, auth=""):
         args = []
         res = ""
+        # HANDLE purpose
+        if len(self.purpose) > 0:
+            res += "("
         # HANDLE time
         if self.time is not None:
             if self.time.action == m_booleanOp.O_before:
@@ -1548,6 +1551,9 @@ class m_action(m_aexp):
         res += ")"
         if self.time is not None:
             res += "))"
+
+        if len(self.purpose) > 0:
+            res += " => " + str(self.purpose[0]) + ")"
         return res
 
     def to_natural(self, kw=True, auth=False):
