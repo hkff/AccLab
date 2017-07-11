@@ -1,4 +1,4 @@
-[![Version](https://img.shields.io/badge/version-2.0-orange.svg)]()
+[![Version](https://img.shields.io/badge/version-2.1-orange.svg)]()
 [![License](https://img.shields.io/badge/license-GPL3-blue.svg)]()
 [![Python](https://img.shields.io/badge/python->%3D3.4-green.svg)]()
 
@@ -83,7 +83,7 @@ Contacts
 >   Julie Spens         (UI)  
 
 -------------------------------------------------------------------------------
-Copyright (C) 2014-2016 Walid Benghabrit  
+Copyright (C) 2014-2017 Walid Benghabrit
 Ecole des Mines de Nantes - ARMINES  
 ASCOLA Research Group  
 A4CLOUD Project http://www.a4cloud.eu/
