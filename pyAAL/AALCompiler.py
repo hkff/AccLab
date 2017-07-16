@@ -811,7 +811,8 @@ class AALCompilerListener(AALListener.AALListener):
         self.actionExpStack.append(aex)
 
     def exitActionExp6Author(self, ctx):
-        action = self.currentAction
+        action = self.currentAction if ctx.author().actionExp() is None else self.actionExpStack.pop()
+        # action = self.currentAction
         if ctx.author().A_permit() is not None:
             self.actionExpStack[-1].author = m_author.A_permit
             self.actionExpStack[-1].name = ctx.author().A_permit()

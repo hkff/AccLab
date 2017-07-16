@@ -1115,8 +1115,10 @@ class m_aexpAuthor(m_aexp):
         return [self.author, self.action]
 
     def to_ltl(self):
-        return str(self.action.to_ltl(auth=str(self.author.to_ltl())))
-
+        if isinstance(self.action, m_action):
+            return str(self.action.to_ltl(auth=str(self.author.to_ltl())))
+        else:
+            return "NOT YET IMPLEMENTED"
     #    def to_nnf(self,bool):
     #       #TODO: check
     #      self.action.to_nnf(bool)
