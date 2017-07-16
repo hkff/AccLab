@@ -228,12 +228,15 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Start parsing
     def enterAalprog(self, ctx):
-        self.aalprog = m_aalprog()
+        self.aalprog = m_aalprog(currentCompilerInstance=self)
         # if self.loadlibs:
         #    self.load_lib("libs/aal/core/types.aal")
 
     # Exit AALprog
     def exitAalprog(self, ctx):
+        if len(m_aalprog.currentCompilerInstances) > 0:
+            m_aalprog.currentCompilerInstances.pop()
+
         if self.type_checker_enabled:
             print(Color(self.checkForwardsRef(error=True)))
             type_checker(self, self.aalprog)
@@ -1202,6 +1205,18 @@ class AALCompilerListener(AALListener.AALListener):
     def get_clauses(self):
         x = [str(x.name) + " " for x in self.aalprog.get_clauses()]
         return "".join(x)
+
+    def get_behaviors(self):
+        x = [str(x.name) + " " for x in self.aalprog.get_behaviors()]
+        return "".join(x)
+
+    def behavior(self, clauseId):
+        res = [x for x in self.aalprog.get_behaviors() if str(x.name) == str(clauseId)]
+        if len(res) > 0:
+            return res[0]
+        else:
+            print("Behavior " + clauseId + " not found !")
+            return None
 
     def get_macros(self):
         res = [str(x.name) + "(" + " ".join(x.param) + ")" for x in self.aalprog.get_macros()]

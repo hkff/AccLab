@@ -316,7 +316,9 @@ class m_aalprog(aalmmnode):
         - macros: a list that contains program's macros declarations
         - macroCalls: a list that contains program's comment
     """
-    def __init__(self, name: str=None):
+    currentCompilerInstances = []  # Seriously ! this is used for templates
+
+    def __init__(self, name: str=None, currentCompilerInstance=None):
         super().__init__(name)
         self.clauses = []
         self.declarations = dict(agents=[], services=[], data=[], types=[])
@@ -328,6 +330,8 @@ class m_aalprog(aalmmnode):
         self.libs = []
         self.behaviors = []
         self.envs = []
+        if currentCompilerInstance is not None:
+            m_aalprog.currentCompilerInstances.append(currentCompilerInstance)
 
     def __str__(self):
         """
@@ -828,7 +832,8 @@ class m_behavior(aalmmnode):
         self.actionExp = None
 
     def __str__(self):
-        return "BEHAVIOR " + str(self.name) + " (\n " + str(self.actionExp) + "\n)"
+         return str(self.actionExp)
+        #return "BEHAVIOR " + str(self.name) + " (\n " + str(self.actionExp) + "\n)"
 
     def children(self):
         return [self.actionExp]
@@ -1297,10 +1302,16 @@ class m_predicate(m_exp):
 
     def __str__(self):
         q = [str(x) for x in self.args]
+        # Handle custom predicates
+        if str(self.name) == "ref":
+            return str(m_aalprog.currentCompilerInstances[-1].behavior(q[0]))
         return "@" + str(self.name) + "(" + str(" ".join(q)) + ")"
 
     def to_ltl(self):
         q = [str(x) for x in self.args]#[1:]
+        # Handle custom predicates
+        if str(self.name) == "ref":
+            return m_aalprog.currentCompilerInstances[-1].behavior(q[0]).to_ltl()
         return str(self.name) + "(" + str(", ".join(q)) + ")"
 
     def children(self):

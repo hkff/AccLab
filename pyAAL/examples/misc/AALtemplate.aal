@@ -1,0 +1,46 @@
+LOAD "core.types"
+LOAD "core.macros"
+
+// Declaring services
+SERVICE read
+SERVICE store
+SERVICE delete
+SERVICE audit
+SERVICE sanction
+
+// Declaring actors
+AGENT alice TYPES(Actor) REQUIRED(read store delete) PROVIDED()
+AGENT bob   TYPES(Actor) REQUIRED(read store delete) PROVIDED()
+AGENT css   TYPES(Actor) REQUIRED() PROVIDED(read store delete)
+AGENT dpa
+
+
+BEHAVIOR UE (
+    FORALL d:data FORALL a:Actor
+
+    // Allow users to read their data
+    IF (d.subject == a) THEN {
+        PERMIT a.read[css](d) AND DENY a.read[css](d)
+    } AND
+
+    // Deny access to read other
+    IF (d.subject != a) THEN {
+        DENY a.read[css](d)
+    } AND
+
+    // Allow css to read/delete stored data
+    PERMIT css.read[css](d) AND
+    PERMIT css.delete[css](d)
+)
+
+BEHAVIOR AE (
+    dpa.audit[css](log)
+)
+BEHAVIOR RE (
+    MUST(dpa.sanction[css](d) AND css.delete[css](d))
+)
+
+LOAD "templates.acc" // This will generate a clause named acc using the template acc.aal
+
+CALL show_clause("acc")
+CALL clause_fotl("acc")
