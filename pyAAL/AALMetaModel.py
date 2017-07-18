@@ -741,22 +741,28 @@ class m_type(m_declarable):
         self.superTypes = []
         self.attributes = []
         self.actions = []
+        self.kind = "EXTENDS"
 
     def __str__(self):
         slsuperTypes = [str(elt) for elt in self.superTypes]
         slattributes = [str(elt) for elt in self.attributes]
         slactions = [str(elt) for elt in self.actions]
-        return "TYPE " + str(self.name) + " EXTENDS(" + " ".join(slsuperTypes) + ") ATTRIBUTES(" + " ".join(
+        return "TYPE " + str(self.name) + " " + str(self.kind) + "(" + " ".join(slsuperTypes) + ") ATTRIBUTES(" + " ".join(
             slattributes) + ") ACTIONS(" + " ".join(slactions) + ")"
 
     def to_ltl(self):
-        supers = "& (![x] ( "
-        for x in self.superTypes:
-            supers += "(" + str(self.name) + "(x) => " + str(x) + "(x) ) &"
-        if len(supers) > 10:
-            supers = supers[:-1] + "))"
+        if self.kind == "INTERSECT":
+            supers = "& (![x] ( (%s(x) => (%s(x) => false)) => false ))" % (self.superTypes[0], self.superTypes[1])
+        elif self.kind == "UNION":
+            supers = "& (![x] ( (%s(x) => %s(x)) => %s(x)  ))" % (self.superTypes[0], self.superTypes[1], self.superTypes[1])
         else:
-            supers = ""
+            supers = "& (![x] ( "
+            for x in self.superTypes:
+                supers += "(" + str(self.name) + "(x) => " + str(x) + "(x) ) &"
+            if len(supers) > 10:
+                supers = supers[:-1] + "))"
+            else:
+                supers = ""
 
         return str(self.name) + "(a) " + supers
 

@@ -662,6 +662,11 @@ class AALCompilerListener(AALListener.AALListener):
 
         # Handle type superTypes
         if ctx.type_super():
+            if ctx.type_super().M_union():
+                dtDec.kind = "UNION"
+            elif ctx.type_super().M_intersec():
+                dtDec.kind = "INTERSEC"
+
             for x in ctx.type_super().ID():
                 tmp = self.checkTypeDec(x)
                 ref = m_ref()

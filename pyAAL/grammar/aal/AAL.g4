@@ -23,7 +23,7 @@ grammar AAL;
 
     Exp           ::= Variable | Constant | Variable.Attribute
     Condition     ::= [NOT] Exp | Exp ['==' | '!='] Exp | Condition (AND|OR) Condition
-    Author        ::= (PERMIT | DENY) Action
+    Author        ::= (PERMIT | DENY) (Action | ActionExp)
     Action        ::= agent.service ['['[agent]']'] '('Exp')' [Time] [Purpose]
     Quant         ::= (FORALL | EXISTS) Var [WHERE Condition]
     Variable      ::= Var ':' Type
@@ -34,7 +34,7 @@ grammar AAL;
 
 
     // AAL Type extension
-    TypesDec      ::= TYPE Id [EXTENDS '(' Type* ')'] ATTRIBUTES '(' AttributeDec* ')' ACTIONS '(' ActionDec* ')'
+    TypesDec      ::= TYPE Id [(EXTENDS|UNION|INTERSECT) '(' Type* ')'] ATTRIBUTES '(' AttributeDec* ')' ACTIONS '(' ActionDec* ')'
     AttributeDec  ::= Id ':' Type
     ActionDec     ::= Id
     Type, Id      ::= litteral
@@ -123,6 +123,8 @@ M_apply    : 'APPLY';      // | 'apply';
 M_exec     : 'EXEC';       // | 'exec';
 M_behavior : 'BEHAVIOR';   // | 'behavior';
 M_env      : 'ENV';        // | 'env';
+M_union    : 'UNION';      // | 'union';
+M_intersec : 'INTERSEC';   // | 'intersec';
 
 /** Check **/
 C_clause        : 'clause'           | 'cl';
@@ -199,7 +201,7 @@ attrValue    : h_attribute h_lpar ID* h_rpar;
 
 // TypesDec      ::= TYPE Id [EXTENDS '(' Type* ')'] ATTRIBUTES '(' AttributeDec* ')' ACTIONS '(' ActionDec* ')'
 typeDec      : D_type ID  type_super? type_attr? type_actions?;
-type_super   : M_extends h_lpar ID* h_rpar;
+type_super   : (M_extends | M_union | M_intersec) h_lpar ID* h_rpar;
 type_attr    : M_attr h_lpar ID* h_rpar;
 type_actions : M_actions h_lpar ID* h_rpar;
 
