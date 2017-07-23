@@ -228,12 +228,15 @@ class AALCompilerListener(AALListener.AALListener):
 
     # Start parsing
     def enterAalprog(self, ctx):
-        self.aalprog = m_aalprog()
+        self.aalprog = m_aalprog(currentCompilerInstance=self)
         # if self.loadlibs:
         #    self.load_lib("libs/aal/core/types.aal")
 
     # Exit AALprog
     def exitAalprog(self, ctx):
+        if len(m_aalprog.currentCompilerInstances) > 0:
+            m_aalprog.currentCompilerInstances.pop()
+
         if self.type_checker_enabled:
             print(Color(self.checkForwardsRef(error=True)))
             type_checker(self, self.aalprog)
@@ -659,6 +662,11 @@ class AALCompilerListener(AALListener.AALListener):
 
         # Handle type superTypes
         if ctx.type_super():
+            if ctx.type_super().M_union():
+                dtDec.kind = "UNION"
+            elif ctx.type_super().M_intersec():
+                dtDec.kind = "INTERSEC"
+
             for x in ctx.type_super().ID():
                 tmp = self.checkTypeDec(x)
                 ref = m_ref()
@@ -808,7 +816,8 @@ class AALCompilerListener(AALListener.AALListener):
         self.actionExpStack.append(aex)
 
     def exitActionExp6Author(self, ctx):
-        action = self.currentAction
+        action = self.currentAction if ctx.author().actionExp() is None else self.actionExpStack.pop()
+        # action = self.currentAction
         if ctx.author().A_permit() is not None:
             self.actionExpStack[-1].author = m_author.A_permit
             self.actionExpStack[-1].name = ctx.author().A_permit()
@@ -1202,6 +1211,18 @@ class AALCompilerListener(AALListener.AALListener):
     def get_clauses(self):
         x = [str(x.name) + " " for x in self.aalprog.get_clauses()]
         return "".join(x)
+
+    def get_behaviors(self):
+        x = [str(x.name) + " " for x in self.aalprog.get_behaviors()]
+        return "".join(x)
+
+    def behavior(self, clauseId):
+        res = [x for x in self.aalprog.get_behaviors() if str(x.name) == str(clauseId)]
+        if len(res) > 0:
+            return res[0]
+        else:
+            print("Behavior " + clauseId + " not found !")
+            return None
 
     def get_macros(self):
         res = [str(x.name) + "(" + " ".join(x.param) + ")" for x in self.aalprog.get_macros()]

@@ -52,16 +52,17 @@ def build_env(prog: m_aalprog=None, extra=None):
     type_cond = ""
     for x in prog.get_declared(m_type):
         type_cond += " ( ?[a] " + str(x.to_ltl()) + " ) & \n"
+        # type_cond += " ( ?[a] always(" + str(x.to_ltl()) + ") ) & \n"
     if type_cond[-3:] == "& \n":
         type_cond = type_cond[:-3]
     pre_cond += "& \nalways (\n" + type_cond + "\n) " if len(type_cond) > 0 else ""
 
-    type_cond = ""
-    for x in prog.get_declared(m_type):
-        type_cond += " ( ?[a] always(" + str(x.to_ltl()) + ") ) & \n"
-    if type_cond[-3:] == "& \n":
-        type_cond = type_cond[:-3]
-    pre_cond += "& \n (\n" + type_cond + "\n) " if len(type_cond) > 0 else ""
+    #type_cond = ""
+    #for x in prog.get_declared(m_type):
+    #    type_cond += " ( ?[a] always(" + str(x.to_ltl()) + ") ) & \n"
+    #if type_cond[-3:] == "& \n":
+    #    type_cond = type_cond[:-3]
+    #pre_cond += "& \nalways (\n" + type_cond + "\n) " if len(type_cond) > 0 else ""
 
     pre_cond += "\n\n%%% Action authorizations \n"
     action_cond = ""

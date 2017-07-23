@@ -1,0 +1,4 @@
+CLAUSE acc(
+ALWAYS ( @ref(AE) AND ALWAYS (@ref(UE) OR
+    ((NOT( @ref(UE))) AND (ALWAYS ( IF(@AUD()) THEN { @ref(RE)})))))
+)

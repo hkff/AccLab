@@ -316,7 +316,9 @@ class m_aalprog(aalmmnode):
         - macros: a list that contains program's macros declarations
         - macroCalls: a list that contains program's comment
     """
-    def __init__(self, name: str=None):
+    currentCompilerInstances = []  # Seriously ! this is used for templates
+
+    def __init__(self, name: str=None, currentCompilerInstance=None):
         super().__init__(name)
         self.clauses = []
         self.declarations = dict(agents=[], services=[], data=[], types=[])
@@ -328,6 +330,8 @@ class m_aalprog(aalmmnode):
         self.libs = []
         self.behaviors = []
         self.envs = []
+        if currentCompilerInstance is not None:
+            m_aalprog.currentCompilerInstances.append(currentCompilerInstance)
 
     def __str__(self):
         """
@@ -737,22 +741,28 @@ class m_type(m_declarable):
         self.superTypes = []
         self.attributes = []
         self.actions = []
+        self.kind = "EXTENDS"
 
     def __str__(self):
         slsuperTypes = [str(elt) for elt in self.superTypes]
         slattributes = [str(elt) for elt in self.attributes]
         slactions = [str(elt) for elt in self.actions]
-        return "TYPE " + str(self.name) + " EXTENDS(" + " ".join(slsuperTypes) + ") ATTRIBUTES(" + " ".join(
+        return "TYPE " + str(self.name) + " " + str(self.kind) + "(" + " ".join(slsuperTypes) + ") ATTRIBUTES(" + " ".join(
             slattributes) + ") ACTIONS(" + " ".join(slactions) + ")"
 
     def to_ltl(self):
-        supers = "& (![x] ( "
-        for x in self.superTypes:
-            supers += "(" + str(self.name) + "(x) => " + str(x) + "(x) ) &"
-        if len(supers) > 10:
-            supers = supers[:-1] + "))"
+        if self.kind == "INTERSECT":
+            supers = "& (![x] ( (%s(x) => (%s(x) => false)) => false ))" % (self.superTypes[0], self.superTypes[1])
+        elif self.kind == "UNION":
+            supers = "& (![x] ( (%s(x) => %s(x)) => %s(x)  ))" % (self.superTypes[0], self.superTypes[1], self.superTypes[1])
         else:
-            supers = ""
+            supers = "& (![x] ( "
+            for x in self.superTypes:
+                supers += "(" + str(self.name) + "(x) => " + str(x) + "(x) ) &"
+            if len(supers) > 10:
+                supers = supers[:-1] + "))"
+            else:
+                supers = ""
 
         return str(self.name) + "(a) " + supers
 
@@ -828,7 +838,8 @@ class m_behavior(aalmmnode):
         self.actionExp = None
 
     def __str__(self):
-        return "BEHAVIOR " + str(self.name) + " (\n " + str(self.actionExp) + "\n)"
+         return str(self.actionExp)
+        #return "BEHAVIOR " + str(self.name) + " (\n " + str(self.actionExp) + "\n)"
 
     def children(self):
         return [self.actionExp]
@@ -1110,8 +1121,10 @@ class m_aexpAuthor(m_aexp):
         return [self.author, self.action]
 
     def to_ltl(self):
-        return str(self.action.to_ltl(auth=str(self.author.to_ltl())))
-
+        if isinstance(self.action, m_action):
+            return str(self.action.to_ltl(auth=str(self.author.to_ltl())))
+        else:
+            return "NOT YET IMPLEMENTED"
     #    def to_nnf(self,bool):
     #       #TODO: check
     #      self.action.to_nnf(bool)
@@ -1297,10 +1310,16 @@ class m_predicate(m_exp):
 
     def __str__(self):
         q = [str(x) for x in self.args]
+        # Handle custom predicates
+        if str(self.name) == "ref":
+            return str(m_aalprog.currentCompilerInstances[-1].behavior(q[0]))
         return "@" + str(self.name) + "(" + str(" ".join(q)) + ")"
 
     def to_ltl(self):
         q = [str(x) for x in self.args]#[1:]
+        # Handle custom predicates
+        if str(self.name) == "ref":
+            return m_aalprog.currentCompilerInstances[-1].behavior(q[0]).to_ltl()
         return str(self.name) + "(" + str(", ".join(q)) + ")"
 
     def children(self):
