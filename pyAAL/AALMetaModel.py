@@ -752,8 +752,8 @@ class m_type(m_declarable):
 
     def to_ltl(self):
         supers = "& (![x] ( "
-        #if str(self.name) == "Void":
-        #    supers += "(%s(x) => false)" % self.name
+        if str(self.name) == "Void":
+            supers += "(%s(x) => false)" % self.name
 
         if self.kind == "INTERSEC":
             # supers = "& (![x] ( (%s(x) => (%s(x) => false)) => false ))" % (self.superTypes[0], self.superTypes[1])
