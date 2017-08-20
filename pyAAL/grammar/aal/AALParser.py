@@ -66,38 +66,38 @@ def serializedATN():
         buf.write("HJLNPRTVXZ\\^`bdfhjlnprtvxz|~\u0080\u0082\u0084\u0086")
         buf.write("\u0088\u008a\u008c\u008e\u0090\u0092\u0094\u0096\u0098")
         buf.write("\u009a\u009c\u009e\u00a0\u00a2\u00a4\2\13\4\2DDHH\4\2")
-        buf.write("CCHH\4\2\61\61<=\3\2+,\5\2\27\31  &\'\3\2)*\3\2\27\30")
-        buf.write("\4\2!%((\3\2\36\37\u02b2\2\u00a6\3\2\2\2\4\u00a8\3\2\2")
-        buf.write("\2\6\u00aa\3\2\2\2\b\u00ac\3\2\2\2\n\u00ae\3\2\2\2\f\u00b0")
-        buf.write("\3\2\2\2\16\u00b2\3\2\2\2\20\u00b4\3\2\2\2\22\u00b6\3")
-        buf.write("\2\2\2\24\u00b8\3\2\2\2\26\u00ba\3\2\2\2\30\u00bc\3\2")
-        buf.write("\2\2\32\u00be\3\2\2\2\34\u00c2\3\2\2\2\36\u00c4\3\2\2")
-        buf.write("\2 \u00c6\3\2\2\2\"\u00c8\3\2\2\2$\u00ca\3\2\2\2&\u00cc")
-        buf.write("\3\2\2\2(\u00ce\3\2\2\2*\u00d0\3\2\2\2,\u00d2\3\2\2\2")
-        buf.write(".\u00d4\3\2\2\2\60\u00da\3\2\2\2\62\u00dc\3\2\2\2\64\u00e4")
-        buf.write("\3\2\2\2\66\u00e6\3\2\2\28\u00e8\3\2\2\2:\u00ea\3\2\2")
-        buf.write("\2<\u00f0\3\2\2\2>\u00fb\3\2\2\2@\u00fd\3\2\2\2B\u010c")
-        buf.write("\3\2\2\2D\u0114\3\2\2\2F\u0119\3\2\2\2H\u012e\3\2\2\2")
-        buf.write("J\u0145\3\2\2\2L\u014f\3\2\2\2N\u0159\3\2\2\2P\u0173\3")
-        buf.write("\2\2\2R\u017b\3\2\2\2T\u0185\3\2\2\2V\u0190\3\2\2\2X\u019a")
-        buf.write("\3\2\2\2Z\u01a4\3\2\2\2\\\u01ae\3\2\2\2^\u01b0\3\2\2\2")
-        buf.write("`\u01b2\3\2\2\2b\u01b4\3\2\2\2d\u01c9\3\2\2\2f\u01cb\3")
-        buf.write("\2\2\2h\u01ce\3\2\2\2j\u01de\3\2\2\2l\u01e9\3\2\2\2n\u01eb")
-        buf.write("\3\2\2\2p\u01ee\3\2\2\2r\u01f3\3\2\2\2t\u01f5\3\2\2\2")
-        buf.write("v\u01f7\3\2\2\2x\u01f9\3\2\2\2z\u01fc\3\2\2\2|\u01fe\3")
-        buf.write("\2\2\2~\u0204\3\2\2\2\u0080\u0206\3\2\2\2\u0082\u0221")
-        buf.write("\3\2\2\2\u0084\u022a\3\2\2\2\u0086\u022f\3\2\2\2\u0088")
-        buf.write("\u023a\3\2\2\2\u008a\u023e\3\2\2\2\u008c\u0245\3\2\2\2")
-        buf.write("\u008e\u0264\3\2\2\2\u0090\u0266\3\2\2\2\u0092\u0272\3")
-        buf.write("\2\2\2\u0094\u027b\3\2\2\2\u0096\u0284\3\2\2\2\u0098\u028f")
-        buf.write("\3\2\2\2\u009a\u0292\3\2\2\2\u009c\u0295\3\2\2\2\u009e")
-        buf.write("\u029b\3\2\2\2\u00a0\u02a4\3\2\2\2\u00a2\u02a6\3\2\2\2")
-        buf.write("\u00a4\u02b1\3\2\2\2\u00a6\u00a7\7\3\2\2\u00a7\3\3\2\2")
-        buf.write("\2\u00a8\u00a9\7\4\2\2\u00a9\5\3\2\2\2\u00aa\u00ab\7\5")
-        buf.write("\2\2\u00ab\7\3\2\2\2\u00ac\u00ad\7\6\2\2\u00ad\t\3\2\2")
-        buf.write("\2\u00ae\u00af\7\7\2\2\u00af\13\3\2\2\2\u00b0\u00b1\7")
-        buf.write("\b\2\2\u00b1\r\3\2\2\2\u00b2\u00b3\7\t\2\2\u00b3\17\3")
-        buf.write("\2\2\2\u00b4\u00b5\7\n\2\2\u00b5\21\3\2\2\2\u00b6\u00b7")
+        buf.write("CCHH\5\2\34\34\61\61<=\3\2+,\5\2\27\31  &\'\3\2)*\3\2")
+        buf.write("\27\30\4\2!%((\3\2\36\37\u02b2\2\u00a6\3\2\2\2\4\u00a8")
+        buf.write("\3\2\2\2\6\u00aa\3\2\2\2\b\u00ac\3\2\2\2\n\u00ae\3\2\2")
+        buf.write("\2\f\u00b0\3\2\2\2\16\u00b2\3\2\2\2\20\u00b4\3\2\2\2\22")
+        buf.write("\u00b6\3\2\2\2\24\u00b8\3\2\2\2\26\u00ba\3\2\2\2\30\u00bc")
+        buf.write("\3\2\2\2\32\u00be\3\2\2\2\34\u00c2\3\2\2\2\36\u00c4\3")
+        buf.write("\2\2\2 \u00c6\3\2\2\2\"\u00c8\3\2\2\2$\u00ca\3\2\2\2&")
+        buf.write("\u00cc\3\2\2\2(\u00ce\3\2\2\2*\u00d0\3\2\2\2,\u00d2\3")
+        buf.write("\2\2\2.\u00d4\3\2\2\2\60\u00da\3\2\2\2\62\u00dc\3\2\2")
+        buf.write("\2\64\u00e4\3\2\2\2\66\u00e6\3\2\2\28\u00e8\3\2\2\2:\u00ea")
+        buf.write("\3\2\2\2<\u00f0\3\2\2\2>\u00fb\3\2\2\2@\u00fd\3\2\2\2")
+        buf.write("B\u010c\3\2\2\2D\u0114\3\2\2\2F\u0119\3\2\2\2H\u012e\3")
+        buf.write("\2\2\2J\u0145\3\2\2\2L\u014f\3\2\2\2N\u0159\3\2\2\2P\u0173")
+        buf.write("\3\2\2\2R\u017b\3\2\2\2T\u0185\3\2\2\2V\u0190\3\2\2\2")
+        buf.write("X\u019a\3\2\2\2Z\u01a4\3\2\2\2\\\u01ae\3\2\2\2^\u01b0")
+        buf.write("\3\2\2\2`\u01b2\3\2\2\2b\u01b4\3\2\2\2d\u01c9\3\2\2\2")
+        buf.write("f\u01cb\3\2\2\2h\u01ce\3\2\2\2j\u01de\3\2\2\2l\u01e9\3")
+        buf.write("\2\2\2n\u01eb\3\2\2\2p\u01ee\3\2\2\2r\u01f3\3\2\2\2t\u01f5")
+        buf.write("\3\2\2\2v\u01f7\3\2\2\2x\u01f9\3\2\2\2z\u01fc\3\2\2\2")
+        buf.write("|\u01fe\3\2\2\2~\u0204\3\2\2\2\u0080\u0206\3\2\2\2\u0082")
+        buf.write("\u0221\3\2\2\2\u0084\u022a\3\2\2\2\u0086\u022f\3\2\2\2")
+        buf.write("\u0088\u023a\3\2\2\2\u008a\u023e\3\2\2\2\u008c\u0245\3")
+        buf.write("\2\2\2\u008e\u0264\3\2\2\2\u0090\u0266\3\2\2\2\u0092\u0272")
+        buf.write("\3\2\2\2\u0094\u027b\3\2\2\2\u0096\u0284\3\2\2\2\u0098")
+        buf.write("\u028f\3\2\2\2\u009a\u0292\3\2\2\2\u009c\u0295\3\2\2\2")
+        buf.write("\u009e\u029b\3\2\2\2\u00a0\u02a4\3\2\2\2\u00a2\u02a6\3")
+        buf.write("\2\2\2\u00a4\u02b1\3\2\2\2\u00a6\u00a7\7\3\2\2\u00a7\3")
+        buf.write("\3\2\2\2\u00a8\u00a9\7\4\2\2\u00a9\5\3\2\2\2\u00aa\u00ab")
+        buf.write("\7\5\2\2\u00ab\7\3\2\2\2\u00ac\u00ad\7\6\2\2\u00ad\t\3")
+        buf.write("\2\2\2\u00ae\u00af\7\7\2\2\u00af\13\3\2\2\2\u00b0\u00b1")
+        buf.write("\7\b\2\2\u00b1\r\3\2\2\2\u00b2\u00b3\7\t\2\2\u00b3\17")
+        buf.write("\3\2\2\2\u00b4\u00b5\7\n\2\2\u00b5\21\3\2\2\2\u00b6\u00b7")
         buf.write("\7\13\2\2\u00b7\23\3\2\2\2\u00b8\u00b9\7\f\2\2\u00b9\25")
         buf.write("\3\2\2\2\u00ba\u00bb\7\r\2\2\u00bb\27\3\2\2\2\u00bc\u00bd")
         buf.write("\7C\2\2\u00bd\31\3\2\2\2\u00be\u00bf\5\66\34\2\u00bf\33")
@@ -2856,7 +2856,7 @@ class AALParser ( Parser ):
             self.match(AALParser.ID)
             self.state = 390
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << AALParser.M_extends) | (1 << AALParser.M_union) | (1 << AALParser.M_intersec))) != 0):
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << AALParser.O_not) | (1 << AALParser.M_extends) | (1 << AALParser.M_union) | (1 << AALParser.M_intersec))) != 0):
                 self.state = 389
                 self.type_super()
 
@@ -2906,6 +2906,9 @@ class AALParser ( Parser ):
         def M_intersec(self):
             return self.getToken(AALParser.M_intersec, 0)
 
+        def O_not(self):
+            return self.getToken(AALParser.O_not, 0)
+
         def ID(self, i:int=None):
             if i is None:
                 return self.getTokens(AALParser.ID)
@@ -2935,7 +2938,7 @@ class AALParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 398
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << AALParser.M_extends) | (1 << AALParser.M_union) | (1 << AALParser.M_intersec))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << AALParser.O_not) | (1 << AALParser.M_extends) | (1 << AALParser.M_union) | (1 << AALParser.M_intersec))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self.consume()

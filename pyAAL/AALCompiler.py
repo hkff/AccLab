@@ -666,6 +666,8 @@ class AALCompilerListener(AALListener.AALListener):
                 dtDec.kind = "UNION"
             elif ctx.type_super().M_intersec():
                 dtDec.kind = "INTERSEC"
+            elif ctx.type_super().O_not():
+                dtDec.kind = "NOT"
 
             for x in ctx.type_super().ID():
                 tmp = self.checkTypeDec(x)

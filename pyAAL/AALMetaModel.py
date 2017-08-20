@@ -751,18 +751,39 @@ class m_type(m_declarable):
             slattributes) + ") ACTIONS(" + " ".join(slactions) + ")"
 
     def to_ltl(self):
-        if self.kind == "INTERSECT":
-            supers = "& (![x] ( (%s(x) => (%s(x) => false)) => false ))" % (self.superTypes[0], self.superTypes[1])
+        supers = "& (![x] ( "
+        #if str(self.name) == "Void":
+        #    supers += "(%s(x) => false)" % self.name
+
+        if self.kind == "INTERSEC":
+            # supers = "& (![x] ( (%s(x) => (%s(x) => false)) => false ))" % (self.superTypes[0], self.superTypes[1])
+            tmp = "("
+            for x in self.superTypes:
+                tmp += " %s(x) &" % x
+            if len(tmp) > 1:
+                tmp = tmp[:-1] + ") "  # IMPORTANT : do not remove the space
+                supers += "%s(x) <=> %s" % (self.name, tmp)
+
         elif self.kind == "UNION":
-            supers = "& (![x] ( (%s(x) => %s(x)) => %s(x)  ))" % (self.superTypes[0], self.superTypes[1], self.superTypes[1])
+            # supers = "& (![x] ( (%s(x) => %s(x)) => %s(x)  ))" % (self.superTypes[0], self.superTypes[1], self.superTypes[1])
+            tmp = "("
+            for x in self.superTypes:
+                tmp += " %s(x) |" % x
+            if len(tmp) > 1:
+                tmp = tmp[:-1] + ") "  # IMPORTANT : do not remove the space
+                supers += "%s(x) <=> %s" % (self.name, tmp)
+
+        elif self.kind == "NOT":
+            for x in self.superTypes:
+                supers += " (%s(x) => ~%s(x) ) &" % (self.name, x)
         else:
-            supers = "& (![x] ( "
             for x in self.superTypes:
                 supers += "(" + str(self.name) + "(x) => " + str(x) + "(x) ) &"
-            if len(supers) > 10:
-                supers = supers[:-1] + "))"
-            else:
-                supers = ""
+
+        if len(supers) > 10:
+            supers = supers[:-1] + "))"
+        else:
+            supers = ""
 
         return str(self.name) + "(a) " + supers
 

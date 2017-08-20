@@ -201,7 +201,7 @@ attrValue    : h_attribute h_lpar ID* h_rpar;
 
 // TypesDec      ::= TYPE Id [EXTENDS '(' Type* ')'] ATTRIBUTES '(' AttributeDec* ')' ACTIONS '(' ActionDec* ')'
 typeDec      : D_type ID  type_super? type_attr? type_actions?;
-type_super   : (M_extends | M_union | M_intersec) h_lpar ID* h_rpar;
+type_super   : (M_extends | M_union | M_intersec | O_not) h_lpar ID* h_rpar;
 type_attr    : M_attr h_lpar ID* h_rpar;
 type_actions : M_actions h_lpar ID* h_rpar;
 
