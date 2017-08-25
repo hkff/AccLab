@@ -74,6 +74,15 @@ AALListener.prototype.exitH_dot = function(ctx) {
 };
 
 
+// Enter a parse tree produced by AALParser#h_comma.
+AALListener.prototype.enterH_comma = function(ctx) {
+};
+
+// Exit a parse tree produced by AALParser#h_comma.
+AALListener.prototype.exitH_comma = function(ctx) {
+};
+
+
 // Enter a parse tree produced by AALParser#h_colon.
 AALListener.prototype.enterH_colon = function(ctx) {
 };
@@ -710,6 +719,15 @@ AALListener.prototype.enterBehavior = function(ctx) {
 
 // Exit a parse tree produced by AALParser#behavior.
 AALListener.prototype.exitBehavior = function(ctx) {
+};
+
+
+// Enter a parse tree produced by AALParser#template.
+AALListener.prototype.enterTemplate = function(ctx) {
+};
+
+// Exit a parse tree produced by AALParser#template.
+AALListener.prototype.exitTemplate = function(ctx) {
 };
 
 
