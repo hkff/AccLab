@@ -4,7 +4,12 @@
 TYPE Void
 TYPE data
 TYPE actor
-TYPE Actor            EXTENDS() ATTRIBUTES() ACTIONS()
+TYPE Clause
+TYPE Usage
+TYPE Audit
+TYPE Rectification
+TYPE Behavior
+TYPE Actor
 TYPE Data             EXTENDS() ATTRIBUTES(subject) ACTIONS()
 TYPE DataSubject      EXTENDS(Actor) ATTRIBUTES() ACTIONS()
 TYPE DataController   EXTENDS(Actor) ATTRIBUTES() ACTIONS()
