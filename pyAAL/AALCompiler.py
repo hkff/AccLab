@@ -712,7 +712,7 @@ class AALCompilerListener(AALListener.AALListener):
         #template = m_template(name=name)
         self.currentTemplate.name = name
         self.currentTemplate.actionExp = self.actionExpStack.pop()
-        while (len(self.currentVar) > 0):
+        while len(self.currentVar) > 0:
             self.currentTemplate.args.append(self.currentVar.pop())
         self.currentTemplate.args.reverse()
         self.aalprog.templates.append(self.currentTemplate)

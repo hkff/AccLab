@@ -494,6 +494,7 @@ class m_aalprog(aalmmnode):
             res.extend(l.aalprog.get_templates())
         return res
 
+
 # Usage
 class m_usage(aalmmnode):
     """
@@ -887,7 +888,7 @@ class m_template(aalmmnode):
         self.args_stack = {}
 
     def __str__(self):
-         return str(self.actionExp)
+        return str(self.actionExp)
 
     def children(self):
         return [self.actionExp]
@@ -905,30 +906,30 @@ class m_template(aalmmnode):
         for arg in args:
             ref = None
             arg_type = str(self.args[i].type).lower()
-            if arg_type == "behavior": # Behavior case
+            if arg_type == "behavior":  # Behavior case
                 ref = m_aalprog.currentCompilerInstances[-1].behavior(arg)
                 
-            elif arg_type == "clause": # Clause case
+            elif arg_type == "clause":  # Clause case
                 ref = m_aalprog.currentCompilerInstances[-1].clause(arg)
 
-            elif arg_type == "usage" or arg_type == "audit" or arg_type == "rectification": # Clause's elements case
+            elif arg_type == "usage" or arg_type == "audit" or arg_type == "rectification":  # Clause's elements case
                 ref = m_aalprog.currentCompilerInstances[-1].clause(arg)
                 if ref is not None:
                     ref = ref.__getattribute__(arg_type)
             else:
-                refs = caller.parent.walk(filters="str(self.name)=='%s'"%arg)
-                if(len(refs) > 0):
+                refs = caller.parent.walk(filters="str(self.name)=='%s'" % arg)
+                if len(refs) > 0:
                     # Infer the correct reference
                     for x in refs:
                         if isinstance(x, m_ref):
                             # TODO Use subtype relation instead !
-                            if str(x.target.type).lower() == arg_type: # ERROR : remove lower(), type are case sensitive in AAL
+                            if str(x.target.type).lower() == arg_type:  # ERROR : remove lower(), type are case sensitive in AAL
                                 ref = x
                     
             if ref is not None:
                 self.args_stack[str(self.args[i].name)] = ref
             else:
-                print(Color("{autored}[ERROR]{/red} Argument %s of type %s not found !" %(arg, arg_type)))
+                print(Color("{autored}[ERROR]{/red} Argument %s of type %s not found !" % (arg, arg_type)))
                 return False  
             i += 1
         return True
@@ -1400,19 +1401,19 @@ class m_predicate(m_exp):
     def __str__(self):
         q = [str(x) for x in self.args]
         # Handle custom predicates
-        if str(self.name).lower() == "ref":
+        if str(self.name).lower() == "ref":  # Behavior reference
             return str(m_aalprog.currentCompilerInstances[-1].behavior(q[0]))
-        elif str(self.name).lower() == "temp": # Template CALL
+        elif str(self.name).lower() == "template":  # Template CALL
             ####### RESOLVE ARGUMENTS #########
             template = m_aalprog.currentCompilerInstances[-1].template(q[0])
-            if(template.resolve_args(self, q[1:])):
+            if template.resolve_args(self, q[1:]):
                 res = str(template)
                 template.clean_call()
                 return res
             else:
                 return "ERROR"
-        elif str(self.name).lower() == "arg": # Template ARG
-            return "%s" %self.parent.args_stack[str(q[0])]
+        elif str(self.name).lower() == "arg":  # Template ARG
+            return "%s" % self.parent.args_stack[str(q[0])]
         return "@" + str(self.name) + "(" + str(" ".join(q)) + ")"
 
     def to_ltl(self):
@@ -1420,16 +1421,16 @@ class m_predicate(m_exp):
         # Handle custom predicates
         if str(self.name) == "ref":
             return m_aalprog.currentCompilerInstances[-1].behavior(q[0]).to_ltl()
-        elif str(self.name).lower() == "temp": # Template CALL
+        elif str(self.name).lower() == "template":  # Template CALL
             ####### RESOLVE ARGUMENTS #########
             template = m_aalprog.currentCompilerInstances[-1].template(q[0])
-            if(template.resolve_args(self, q[1:])):
+            if template.resolve_args(self, q[1:]):
                 res = template.to_ltl()
                 template.clean_call()
                 return res
             else:
                 return "ERROR"
-        elif str(self.name).lower() == "arg": # Template ARG
+        elif str(self.name).lower() == "arg":  # Template ARG
             return self.parent.args_stack[str(q[0])].to_ltl()
         return str(self.name) + "(" + str(", ".join(q)) + ")"
 

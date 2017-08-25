@@ -102,14 +102,14 @@ ace.define('ace/mode/aal_highlight_rules', function(require, exports, module) {
         // Keywords
         var keywords = (
             ", AFTER AND BEFORE EXISTS FORALL IF NOT ONLYWHEN OR THEN WHERE " +
-            "APPLY AUDITING BEHAVIOR CALL CHECK CLAUSE EXEC IF_VIOLATED_THEN LOAD MACRO OF TYPES PROVIDED PS PURPOSE REQUIRED RS ENV " +
+            "APPLY AUDITING BEHAVIOR TEMPLATE CALL CHECK CLAUSE EXEC IF_VIOLATED_THEN LOAD MACRO OF TYPES PROVIDED PS PURPOSE REQUIRED RS ENV " +
             "ae ACTIONS ATTRIBUTES DENY EXTENDS UNION INTERSEC GET_AUDIT GET_RECTIFICATION GET_USAGE PERMIT re SUBJECT ue "
         );
 
         //this.$keywordList = keywords;
 
         // Predefined Types
-        var types = ("Actor DataSubject DataController DataProcessor DwDataController Auditor CloudProvider CloudCustomer EndUser User");
+        var types = ("Behavior Template Clause Usage Rectification Audit Actor DataSubject DataController DataProcessor DwDataController Auditor CloudProvider CloudCustomer EndUser User Data");
         
         // Operators
         var operators = ("OR AND NOT THEN ONLYWHEN FORALL EXISTS IF WHERE");
@@ -119,7 +119,7 @@ ace.define('ace/mode/aal_highlight_rules', function(require, exports, module) {
 
         // Keyword mapper
         var keywordMapper = this.createKeywordMapper({
-            "variable.language": "this AGENT SERVICE DATA TYPE",
+            "variable.language": "this AGENT SERVICE DATA TYPE ref arg template",
             "keyword": keywords,
             "constant.language": "true false TRUE FALSE NULL SPACE",
             "support.type": types,
