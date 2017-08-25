@@ -111,6 +111,8 @@ class AALCompilerListener(AALListener.AALListener):
         self.isRectification = False
         self.isAudit = False
         self.isBehavior = False
+        self.isTemplate = False
+        self.currentTemplate = None
         self.libsPath = libs_path
         self.file = file
         self.output = ""
@@ -167,7 +169,7 @@ class AALCompilerListener(AALListener.AALListener):
             root_path = root_path + self.root_path + "/"
 
         lib_path = lib_name.replace('"', '').replace(".", "/") + ".aal"
-        #  Search in the file scope before
+        # Search in the file scope before
         if not internal:
             lib_path2 = root_path + lib_path
             # print(lib_path2)
@@ -357,7 +359,7 @@ class AALCompilerListener(AALListener.AALListener):
         return res
 
 
-    # Fix forwards Ref in loaded libs
+    # Fix forwards Ref in loaded libs
     def fixLibsForwardsRef(self):
         """
         Fix forwards Ref in loaded libs
@@ -699,6 +701,23 @@ class AALCompilerListener(AALListener.AALListener):
         self.aalprog.behaviors.append(behavior)
         self.isBehavior = False
 
+    # Enter Template
+    def enterTemplate(self, ctx):
+        self.isTemplate = True
+        self.currentTemplate = m_template()
+
+    # Exit Template
+    def exitTemplate(self, ctx):
+        name = str(ctx.ID())
+        #template = m_template(name=name)
+        self.currentTemplate.name = name
+        self.currentTemplate.actionExp = self.actionExpStack.pop()
+        while (len(self.currentVar) > 0):
+            self.currentTemplate.args.append(self.currentVar.pop())
+        self.currentTemplate.args.reverse()
+        self.aalprog.templates.append(self.currentTemplate)
+        self.isTemplate = False
+        self.currentTemplate = None
 
     ##########################
     ####### ActionExp  #######
@@ -856,7 +875,7 @@ class AALCompilerListener(AALListener.AALListener):
         # Handle all qvars
         # for qv in ctx.qvar():  # Reverse to get the right order of vars
         # qvar = self.qvarsStack.pop()
-        # TODO: check qvar and qv
+        # TODO: check qvar and qv
         # self.actionExpStack[-1].qvars.insert(0, qvar)
         self.actionExpStack[-1].qvars.insert(0, self.qvarsStack.pop())
 
@@ -890,7 +909,7 @@ class AALCompilerListener(AALListener.AALListener):
 
         currentVar = self.currentVar.pop()
         qvar.name = currentVar.name  # Set the name
-        #  Set the target
+        # Set the target
         ref = m_ref()
         ref.label = currentVar.name
         ref.name = currentVar.name
@@ -983,6 +1002,10 @@ class AALCompilerListener(AALListener.AALListener):
 
         elif ctx.h_predicate() is not None:  # Test Predicate
             cts = m_predicate()
+            if self.isTemplate:
+                cts.parent = self.currentTemplate
+            else:
+                cts.parent = self.currentClause
             if ctx.h_predicate().ID() is not None:
                 cts.name = ctx.h_predicate().ID()
                 for x in ctx.h_predicate().h_pArgs():
@@ -1069,7 +1092,7 @@ class AALCompilerListener(AALListener.AALListener):
         if chk is None:
             chk = m_ltlCheck(name="tmp", code=code)
 
-        #  Generating LTL formula
+        # Generating LTL formula
         code = str(chk.code)
         ltl = code
 
@@ -1174,8 +1197,8 @@ class AALCompilerListener(AALListener.AALListener):
                         code += str(next(params)) + " = " + str(x) + "\n"
                 code += macro.code.replace('"""', '').replace("return", "__res__ = ")  # FIXME
                 exec(code)
-            except:
-                print("Macro eval error !")
+            except Exception as e:
+                print(Color("{autored}[ERROR]{/red} Macro eval error ! Error : %s" % e))
 
         else:
             print(Color("{autored}[ERROR]{/red} Macro '" + macro_name + "' not found !"))
@@ -1217,6 +1240,10 @@ class AALCompilerListener(AALListener.AALListener):
     def get_behaviors(self):
         x = [str(x.name) + " " for x in self.aalprog.get_behaviors()]
         return "".join(x)
+        
+    def get_templates(self):
+        x = [str(x) + " " for x in self.aalprog.get_templates()]
+        return "".join(x)
 
     def behavior(self, clauseId):
         res = [x for x in self.aalprog.get_behaviors() if str(x.name) == str(clauseId)]
@@ -1226,6 +1253,14 @@ class AALCompilerListener(AALListener.AALListener):
             print("Behavior " + clauseId + " not found !")
             return None
 
+    def template(self, templateId):
+        res = [x for x in self.aalprog.get_templates() if str(x.name) == str(templateId)]
+        if len(res) > 0:
+            return res[0]
+        else:
+            print("Template " + templateId + " not found !")
+            return None
+            
     def get_macros(self):
         res = [str(x.name) + "(" + " ".join(x.param) + ")" for x in self.aalprog.get_macros()]
         return "\n".join(res)

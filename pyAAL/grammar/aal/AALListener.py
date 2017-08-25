@@ -71,6 +71,15 @@ class AALListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by AALParser#h_comma.
+    def enterH_comma(self, ctx:AALParser.H_commaContext):
+        pass
+
+    # Exit a parse tree produced by AALParser#h_comma.
+    def exitH_comma(self, ctx:AALParser.H_commaContext):
+        pass
+
+
     # Enter a parse tree produced by AALParser#h_colon.
     def enterH_colon(self, ctx:AALParser.H_colonContext):
         pass
@@ -707,6 +716,15 @@ class AALListener(ParseTreeListener):
 
     # Exit a parse tree produced by AALParser#behavior.
     def exitBehavior(self, ctx:AALParser.BehaviorContext):
+        pass
+
+
+    # Enter a parse tree produced by AALParser#template.
+    def enterTemplate(self, ctx:AALParser.TemplateContext):
+        pass
+
+    # Exit a parse tree produced by AALParser#template.
+    def exitTemplate(self, ctx:AALParser.TemplateContext):
         pass
 
 

@@ -122,9 +122,10 @@ M_check    : 'CHECK';      // | 'check';
 M_apply    : 'APPLY';      // | 'apply';
 M_exec     : 'EXEC';       // | 'exec';
 M_behavior : 'BEHAVIOR';   // | 'behavior';
+M_template : 'TEMPLATE';   // | 'template';
 M_env      : 'ENV';        // | 'env';
 M_union    : 'UNION';      // | 'union';
-M_intersec : 'INTERSEC';   // | 'intersec';
+    M_intersec : 'INTERSEC';   // | 'intersec';
 
 /** Check **/
 C_clause        : 'clause'           | 'cl';
@@ -142,6 +143,7 @@ h_rbar    : ']';
 h_lmar    : '{';
 h_rmar    : '}';
 h_dot     : '.';
+h_comma   : ',';
 h_colon   : ':';
 h_equal   : '==';
 h_inequal : '!=';
@@ -164,7 +166,7 @@ h_parameters : h_constant | h_variable;
 h_constant   : INT |  STRING;
 h_type       : ID;
 h_variable   : ID (h_colon h_type)?;
-h_predicate  : '@' ID h_lpar (h_pArgs)* h_rpar;
+h_predicate  : '@' ID h_lpar (h_pArgs h_comma?)* h_rpar;
 h_pArgs      : ID | STRING;
 
 //-------------------------------------------------------//
@@ -185,7 +187,7 @@ MLCOMMENT : '/*' (.)*? '*/' -> channel(HIDDEN);
 //------------------------------------------------------//
 
 main        : aalprog;
-aalprog     : (clause | declaration | h_comment | macro | macroCall | loadlib | ltlCheck | checkApply | exec | behavior | env)*;
+aalprog     : (clause | declaration | h_comment | macro | macroCall | loadlib | ltlCheck | checkApply | exec | behavior | env | template)*;
 declaration : (agentDec | serviceDec | dataDec | typeDec | varDec) NEWLINE?;
 
 
@@ -283,6 +285,9 @@ loadlib : M_load STRING;
 
 //****  Behavior extension ****//
 behavior :  M_behavior ID h_lpar actionExp h_rpar;
+
+//****  Templates extension ****//
+template :  M_template ID (h_lpar (h_variable (h_comma)?)* h_rpar)? h_lpar actionExp h_rpar;
 
 
 //****  LTL checking extension ****//
