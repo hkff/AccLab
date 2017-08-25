@@ -125,7 +125,7 @@ M_behavior : 'BEHAVIOR';   // | 'behavior';
 M_template : 'TEMPLATE';   // | 'template';
 M_env      : 'ENV';        // | 'env';
 M_union    : 'UNION';      // | 'union';
-    M_intersec : 'INTERSEC';   // | 'intersec';
+M_intersec : 'INTERSEC';   // | 'intersec';
 
 /** Check **/
 C_clause        : 'clause'           | 'cl';
@@ -276,9 +276,9 @@ time                   : (O_after | O_before) h_date | time (O_and | O_or) time;
 
 //****  Reflexion extension ****//
 macro  : M_macro ID args? h_lpar MCODE h_rpar;
-args   : h_lpar ID* h_rpar;
+args   : h_lpar (ID h_comma?)* h_rpar;
 MCODE : '"""' (.)*? '"""';
-macroCall : M_call ID h_lpar STRING* h_rpar;
+macroCall : M_call ID h_lpar (STRING h_comma?)* h_rpar;
 exec   : M_exec MCODE;
 loadlib : M_load STRING;
 
