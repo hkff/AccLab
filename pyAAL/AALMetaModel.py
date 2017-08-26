@@ -917,13 +917,15 @@ class m_template(aalmmnode):
                 if ref is not None:
                     ref = ref.__getattribute__(arg_type)
             else:
+                arg_type = str(self.args[i].type)
                 refs = caller.parent.walk(filters="str(self.name)=='%s'" % arg)
                 if len(refs) > 0:
                     # Infer the correct reference
                     for x in refs:
                         if isinstance(x, m_ref):
-                            # TODO Use subtype relation instead !
-                            if str(x.target.type).lower() == arg_type:  # ERROR : remove lower(), type are case sensitive in AAL
+                            ref_type_dec = x.target.type.target
+                            # if str(x.target.type) == arg_type:
+                            if ref_type_dec.subtype_of(arg_type):
                                 ref = x
                     
             if ref is not None:
@@ -1411,6 +1413,7 @@ class m_predicate(m_exp):
                 template.clean_call()
                 return res
             else:
+                print(Color("{autored}[ERROR]{/red} Error while calling template %s !" % q[0]))
                 return "ERROR"
         elif str(self.name).lower() == "arg":  # Template ARG
             return "%s" % self.parent.args_stack[str(q[0])]
@@ -1429,6 +1432,7 @@ class m_predicate(m_exp):
                 template.clean_call()
                 return res
             else:
+                print(Color("{autored}[ERROR]{/red} Error while calling template %s !" % q[0]))
                 return "ERROR"
         elif str(self.name).lower() == "arg":  # Template ARG
             return self.parent.args_stack[str(q[0])].to_ltl()
