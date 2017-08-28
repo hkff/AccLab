@@ -908,10 +908,10 @@ class m_template(aalmmnode):
             arg_type = str(self.args[i].type).lower()
             if arg_type == "behavior":  # Behavior case
                 ref = m_aalprog.currentCompilerInstances[-1].behavior(arg)
-                
+            if arg_type == "template":  # Template case
+                ref = m_aalprog.currentCompilerInstances[-1].template(arg)
             elif arg_type == "clause":  # Clause case
                 ref = m_aalprog.currentCompilerInstances[-1].clause(arg)
-
             elif arg_type == "usage" or arg_type == "audit" or arg_type == "rectification":  # Clause's elements case
                 ref = m_aalprog.currentCompilerInstances[-1].clause(arg)
                 if ref is not None:
