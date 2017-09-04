@@ -657,7 +657,7 @@ class AALCompilerListener(AALListener.AALListener):
             if dtName in self.refForwardTypes:  # Check if type is in forwards ref
                 del self.refForwardTypes[dtName]  # Remove it to resolve forwards ref
                 # Remove it from the declarations list
-                self.aalprog.declarations["services"].remove(self.aalprog.isDeclared(dtName, m_type, ret=int))
+                self.aalprog.declarations["types"].remove(self.aalprog.isDeclared(dtName, m_type, ret=int))
             else:  # The data was effectively declared
                 if not self.use_advanced_types:
                     print(Color("{autored}[ERROR]{/red} type " + dtName + "{automagenta} at line " +
