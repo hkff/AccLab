@@ -785,6 +785,19 @@ class m_type(m_declarable):
                 tmp = tmp[:-1] + ") "  # IMPORTANT : do not remove the space
                 supers += "%s(x) <=> %s" % (self.name, tmp)
 
+        elif self.kind == "SUM":
+            tmp = "("
+            for x in self.superTypes:
+                tmp += " (%s(x) => %s(x) &" % (self.name, x)
+                for y in self.superTypes:
+                    if y is not x:
+                        tmp += " ~%s(x) &" % y
+                tmp = tmp[:-1] + ") |"
+
+            if len(tmp) > 1:
+                tmp = tmp[:-1] + ") "  # IMPORTANT : do not remove the space
+                supers += "%s(x) <=> %s" % (self.name, tmp)
+
         elif self.kind == "NOT":
             for x in self.superTypes:
                 supers += " (%s(x) => ~%s(x) ) &" % (self.name, x)
