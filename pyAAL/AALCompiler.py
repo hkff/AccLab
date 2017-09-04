@@ -123,6 +123,7 @@ class AALCompilerListener(AALListener.AALListener):
         self.no_exec = no_exec
         self.web = web
         self.type_checker_enabled = False
+        self.use_advanced_types = False
 
         # FIXME
         if hotswaping:
@@ -658,9 +659,10 @@ class AALCompilerListener(AALListener.AALListener):
                 # Remove it from the declarations list
                 self.aalprog.declarations["services"].remove(self.aalprog.isDeclared(dtName, m_type, ret=int))
             else:  # The data was effectively declared
-                print(Color("{autored}[ERROR]{/red} type " + dtName + "{automagenta} at line " +
-                            str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
-                return
+                if not self.use_advanced_types:
+                    print(Color("{autored}[ERROR]{/red} type " + dtName + "{automagenta} at line " +
+                                str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
+                    return
 
         # Handle type superTypes
         if ctx.type_super():

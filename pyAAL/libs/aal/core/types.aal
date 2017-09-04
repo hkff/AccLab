@@ -53,6 +53,15 @@ self.type_checker_enabled = True
 """
 )
 
+
+MACRO enable_advanced_types(
+"""
+print(Color("{autoyellow}[WARNING]{/autoyellow} You are using advanced types mode, type checking may shows some errors !"))
+                    
+self.use_advanced_types = True
+"""
+)
+
 MACRO resolve_type_errors (
 """
 import re
