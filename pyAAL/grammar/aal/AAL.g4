@@ -188,7 +188,7 @@ MLCOMMENT : '/*' (.)*? '*/' -> channel(HIDDEN);
 //------------------------------------------------------//
 
 main        : aalprog;
-aalprog     : (clause | declaration | h_comment | macro | macroCall | loadlib | ltlCheck | checkApply | exec | behavior | env | template)*;
+aalprog     : (clause | declaration | h_comment | macro | macroCall | loadlib | ltlCheck | checkApply | exec | behavior | env | template | h_predicate)*;
 declaration : (agentDec | serviceDec | dataDec | typeDec | varDec) NEWLINE?;
 
 

@@ -371,6 +371,30 @@ class AALCompilerListener(AALListener.AALListener):
         #        print(str(d) + " " + str(self.isDeclared(d, m_type)) )
         #        res = self.isDeclared(d, m_type)
         pass
+    
+    def exitH_predicate(self, ctx):
+        # Handle custom case of a clause defined by a template call
+        if str(ctx.ID()) == "Clause":
+            currentClause = m_clause()
+            currentClause.name = ctx.h_pArgs()[0].ID()
+            # Check if clause is already declared
+            if self.aalprog.isDeclared(currentClause.name, m_clause) is True:
+                print(Color("{autored}[ERROR]{/red} clause " + currentClause.name + "{automagenta} at line " +
+                            str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
+                return
+            currentClause.source_range = [ctx.start.start, ctx.stop.stop]
+            # Build the clause
+            usage = m_usage()
+            pred = m_predicate()
+            pred.name = "Template"
+            if len(ctx.h_pArgs()) < 2:
+                print(Color("{autored}[ERROR]{/red} missing arguments in template defined clause  " + str(currentClause.name) + " !"))
+                return
+            for arg in ctx.h_pArgs()[1:]:
+                pred.args.append(arg.ID())
+            usage.actionExp.append(pred)
+            currentClause.usage = usage
+            self.aalprog.clauses.append(currentClause)  # Add the clause to the aalProg clauses
 
     ##########################
     ####### Declarable #######
