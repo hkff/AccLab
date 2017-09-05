@@ -765,7 +765,8 @@ class m_type(m_declarable):
         supers = "& (![x] ( "
         if str(self.name) == "Void":
             #supers += "(%s(x) => false)" % self.name
-            supers += "~%s(x) " % self.name
+            supers = "~%s(x) " % self.name
+            return "~Void(a) & (![x] (%s))" % supers
 
         if self.kind == "INTERSEC":
             # supers = "& (![x] ( (%s(x) => (%s(x) => false)) => false ))" % (self.superTypes[0], self.superTypes[1])
