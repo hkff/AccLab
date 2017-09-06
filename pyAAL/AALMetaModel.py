@@ -797,7 +797,7 @@ class m_type(m_declarable):
 
             if len(tmp) > 1:
                 tmp = tmp[:-1] + ") "  # IMPORTANT : do not remove the space
-                supers += "%s(x) <=> %s" % (self.name, tmp)
+                supers += "%s" % tmp
 
         elif self.kind == "NOT":
             for x in self.superTypes:
