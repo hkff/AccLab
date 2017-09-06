@@ -395,6 +395,8 @@ class AALCompilerListener(AALListener.AALListener):
             usage.actionExp.append(pred)
             currentClause.usage = usage
             self.aalprog.clauses.append(currentClause)  # Add the clause to the aalProg clauses
+        elif str(ctx.ID()) == "exit":
+            exit()
 
     ##########################
     ####### Declarable #######
