@@ -942,6 +942,7 @@ class m_template(aalmmnode):
                             # if str(x.target.type) == arg_type:
                             if ref_type_dec.subtype_of(arg_type):
                                 ref = x
+                                break
                     
             if ref is not None:
                 self.args_stack[str(self.args[i].name)] = ref
