@@ -169,7 +169,7 @@ h_constant   : INT |  STRING;
 h_type       : ID;
 h_variable   : ID (h_colon h_type)?;
 h_predicate  : '@' ID h_lpar (h_pArgs h_comma?)* h_rpar;
-h_pArgs      : ID | STRING;
+h_pArgs      : ID | STRING | exp;
 
 //-------------------------------------------------------//
 //----------------- Lexer rules ------------------------//
@@ -234,8 +234,8 @@ actionExp  : actionExp1Action
            | actionExp6Author
            | actionExp7ifthen
            | actionExp8qvar
-           | h_lpar actionExp h_rpar
-           | h_predicate;
+           | h_lpar actionExp h_rpar;
+           //| h_predicate;
 
 actionExp1Action      : action;
 actionExp2notAction   : O_not actionExp;

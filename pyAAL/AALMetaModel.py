@@ -936,7 +936,11 @@ class m_template(aalmmnode):
                 # Local vars lookup
                 arg_type = str(self.args[i].type)
                 refs = caller.parent.walk(filters="str(self.name)=='%s'" % arg)
-                if len(refs) > 0:
+                if len(refs) == 0:
+                    # TODO : handle template args
+                    if str(caller.name).lower() == "template":
+                      None
+                else:
                     # Infer the correct reference
                     for x in refs:
                         if isinstance(x, m_ref):
@@ -947,7 +951,7 @@ class m_template(aalmmnode):
                                 break
                 if ref is None:
                     # Global vars lookup
-                    var = m_aalprog.currentCompilerInstances[-1].checkVarDec(str(arg))
+                    var = m_aalprog.currentCompilerInstances[-1].checkVarDec(str(arg), quant=False)
                     if var is not None:
                         # Type check
                         for y in var.types:
