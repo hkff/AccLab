@@ -894,6 +894,7 @@ class m_behavior(aalmmnode):
     def to_ltl(self):
         return self.actionExp.to_ltl()
 
+
 # Template
 class m_template(aalmmnode):
     def __init__(self, init=False, name=None, args=None):
@@ -932,6 +933,7 @@ class m_template(aalmmnode):
                 if ref is not None:
                     ref = ref.__getattribute__(arg_type)
             else:
+                # Local vars lookup
                 arg_type = str(self.args[i].type)
                 refs = caller.parent.walk(filters="str(self.name)=='%s'" % arg)
                 if len(refs) > 0:
@@ -943,7 +945,15 @@ class m_template(aalmmnode):
                             if ref_type_dec.subtype_of(arg_type):
                                 ref = x
                                 break
-                    
+                if ref is None:
+                    # Global vars lookup
+                    var = m_aalprog.currentCompilerInstances[-1].checkVarDec(str(arg))
+                    if var is not None:
+                        # Type check
+                        for y in var.types:
+                            if str(arg_type) == str(y.label):
+                                ref = m_ref(label=var.name, target=var)
+
             if ref is not None:
                 self.args_stack[str(self.args[i].name)] = ref
             else:
