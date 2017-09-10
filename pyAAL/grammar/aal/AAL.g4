@@ -85,6 +85,7 @@ O_where    : 'WHERE';    // | 'where';
 O_after    : 'AFTER';    // | 'after';
 O_before   : 'BEFORE';   // | 'before';
 O_equiv    : '<=>';
+O_imply    : '->' |'=>';
 
 /** Temporal operators **/
 T_must     : 'MUST';     // | 'must';
@@ -253,7 +254,7 @@ booleanOp   : O_and | O_or | O_onlywhen | T_until | T_unless | O_equiv;
 author      : (A_permit | A_deny) (action | actionExp) NEWLINE?;
 ifthen      : O_if h_lpar actionExp h_rpar O_then h_lmar actionExp h_rmar
             | O_if actionExp O_then actionExp
-            | O_if actionExp IMPLICATION actionExp;
+            | O_if actionExp O_imply actionExp;
 
 
 exp : h_variable
@@ -297,7 +298,7 @@ check   : MCODE; //formula;
 checkApply : M_apply ID h_lpar STRING* h_rpar;
 env     : M_env MCODE; //formula;
 
-
+/*
 NEGATION    : '~' | 'not';
 CONJUNCTION : '&';
 DISJUNCTION : '|';
@@ -306,7 +307,6 @@ EQUIVALENCE :'<->' | '<=>';
 CONSTANTS   : 'true' | 'false';
 PREDICATE   : ID;
 
-/*
 atom : C_clause h_lpar h_clauseId h_rpar (h_dot (C_usage | C_audit | C_rectification))?
      | PREDICATE | CONSTANTS;
 
