@@ -1,0 +1,7 @@
+AGENT Socrates
+CLAUSE syllogism (
+    ALWAYS(
+        FORALL x:Human @Mortal(x) AND
+        IF (@Human(Socrates)) THEN { @Mortal(Socrates) }
+    )
+)

@@ -1,0 +1,31 @@
+LOAD "core.macros"
+
+CLAUSE bob_policy (
+    FORALL x:Data
+    PERMIT alice.read[bob](x) AND DENY alice.read[bob](x)
+)
+
+CALL sat_ue("bob_policy") // bob_policy clause is not satisfiable
+
+CLAUSE provider_policy (
+    FORALL x:Data FORALL y:Actor
+    IF(x.subject == y) THEN {
+        DENY y.read[bob](x) AND
+        DENY john.read[bob](x)
+    }
+)
+CALL sat_ue("provider_policy") // provider_policy is satisfiable
+
+CLAUSE alice_policy (
+    FORALL x:Data
+    IF(x.subject == alice) THEN {
+        PERMIT alice.read[bob](x) AND
+        DENY john.read[bob](x) AND
+        IF (john.read[bob](x)) THEN {
+            SOMETIME( bob.notify[alice]("Data access") )
+        }
+    }
+)
+CALL sat_ue("alice_policy")// alice_policy is satisfiable
+// provider_policy is not compliant with alice_policy
+CALL validate_usage("provider_policy" "alice_policy")

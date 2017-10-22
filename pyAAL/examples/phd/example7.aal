@@ -1,0 +1,9 @@
+LOAD "core.macros"
+
+CLAUSE bob_policy (
+  	FORALL x:Data
+  	IF(@login(alice)) THEN {  
+  	  PERMIT alice.read[bob](x) AND DENY alice.read[bob](x)
+  	}
+)
+CALL sat_ue("bob_policy") // bob_policy clause is satisfiable

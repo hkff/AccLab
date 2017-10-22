@@ -1,0 +1,22 @@
+AGENT alice TYPES(User) REQUIRED(read) PROVIDED(notify)
+AGENT bob TYPES(Provider) REQUIRED(read notify) PROVIDED()
+AGENT john TYPES(User) REQUIRED(read) PROVIDED()
+SERVICE read
+DATA aliceData TYPES(Data)
+
+CLAUSE alice_policy (
+    // For all data where the subject is alice
+    FORALL x:Data
+    IF(x.subject == alice) THEN {
+        // Allow alice to read her data from bob
+        PERMIT alice.read[bob](x) AND
+        // Deny john to read alice’s data from bob
+        DENY john.read[bob](x) AND
+        IF(alice.requestDeletion[bob](x)) THEN {
+            SOMETIME(bob.delete[bob](x))
+        }
+    }
+    AUDITING auditor.audit[bob]()
+    // If a violation occurs, bob should notify alice about the violation
+    IF_VIOLATED_THEN bob.notify[alice]("Data access violation")
+)

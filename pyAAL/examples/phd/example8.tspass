@@ -1,0 +1,62 @@
+
+%%%%%%%%% START EVN %%%%%%%%%%%
+(
+(always ![a] (Actor(a) => EQUAL(a, a))) &
+(always ![a, b] ((Actor(a) & Actor(b) & EQUAL(a, b)) => EQUAL(b, a))) 
+
+%%% Types knowledge
+& 
+always (
+ ( ?[a] data(a)  ) & 
+ ( ?[a] actor(a)  ) & 
+ ( ?[a] Actor(a)  ) & 
+ ( ?[a] Data(a)  ) & 
+ ( ?[a] DataSubject(a) & (![x] ( (DataSubject(x) => Actor(x) ) )) ) & 
+ ( ?[a] DataController(a) & (![x] ( (DataController(x) => Actor(x) ) )) ) & 
+ ( ?[a] DataProcessor(a) & (![x] ( (DataProcessor(x) => Actor(x) ) )) ) & 
+ ( ?[a] DwDataController(a) & (![x] ( (DwDataController(x) => Actor(x) ) )) ) & 
+ ( ?[a] Auditor(a) & (![x] ( (Auditor(x) => Actor(x) ) )) ) & 
+ ( ?[a] CloudProvider(a) & (![x] ( (CloudProvider(x) => Actor(x) ) )) ) & 
+ ( ?[a] CloudCustomer(a) & (![x] ( (CloudCustomer(x) => Actor(x) ) )) ) & 
+ ( ?[a] EndUser(a) & (![x] ( (EndUser(x) => Actor(x) ) )) ) & 
+ ( ?[a] User(a) & (![x] ( (User(x) => Actor(x) ) )) ) 
+) 
+
+%%% Action authorizations 
+& 
+always (
+( ![x, y, z] (read(x, y, z) => Pread(x, y, z)) ) & 
+( ![x, y, z] (delete(x, y, z) => Pdelete(x, y, z)) ) & 
+( ![x, y, z] (audit(x, y, z) => Paudit(x, y, z)) ) & 
+( ![x, y, z] (sanction(x, y, z) => Psanction(x, y, z)) ) 
+) 
+
+%%% Actors knowledge 
+& 
+always (
+ ( Actor(kim)  ) & 
+ ( Actor(cloudX) ) & 
+ ( Actor(DPA) ) 
+) 
+
+%%% Time knowledge 
+& 
+always (
+( fivemonth => twomonth ) 
+) 
+
+%%% Data knowledge 
+& 
+always (
+ ( ?[d](subject(d, kim)) ) & 
+ ( ?[d](subject(d, cloudX)) ) & 
+ ( ?[d](subject(d, DPA)) ) 
+) 
+)
+%%%%%%%%% END EVN %%%%%%%%%%%
+
+
+%% Clause : kim_policy
+audit(DPA, cloudX, None)  & always(((![file] ( data(file) => ( ((subject(file, kim)) => ((Pread(kim, cloudX, file) & sometime((twomonth => (delete(cloudX, cloudX, file)))))))) )) ) | ((~(((![file] ( data(file) => ( ((subject(file, kim)) => ((Pread(kim, cloudX, file) & sometime((twomonth => (delete(cloudX, cloudX, file)))))))) )) ))) & ((audit(DPA, cloudX, None)  => (sometime(sanction(DPA, cloudX, None)) )))))
+%% Clause : cloudX_policy
+audit(DPA, cloudX, None)  & always(((![a] ( Actor(a) => ((![file] ( data(file) => ( ((subject(file, a)) => ((Pread(a, cloudX, file) & sometime((fivemonth => (delete(cloudX, cloudX, file)))))))) ))) )) ) | ((~(((![a] ( Actor(a) => ((![file] ( data(file) => ( ((subject(file, a)) => ((Pread(a, cloudX, file) & sometime((fivemonth => (delete(cloudX, cloudX, file)))))))) ))) )) ))) & ((audit(DPA, cloudX, None)  => (sanction(DPA, cloudX, None) )))))

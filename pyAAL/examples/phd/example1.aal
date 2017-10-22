@@ -1,0 +1,10 @@
+CLAUSE alice_policy (
+    // Allow alice to read ’aliceData’ from bob
+    PERMIT alice.read[bob](aliceData) AND
+    // Deny john to read ’aliceData’ from bob
+    DENY john.read[bob](aliceData)
+    // The agent auditor audit the agent bob
+    AUDITING auditor.audit[bob]()
+    // If a violation occurs, bob should notify alice about the violation
+    IF_VIOLATED_THEN bob.notify[alice]("Data access violation")
+)
