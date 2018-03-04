@@ -1,6 +1,6 @@
 #!/usr/bin/python3.4
 """
-aalc version 2.2 main AccLab program
+aalc version 2.3 main AccLab program
 Copyright (C) 2014 Walid Benghabrit
 
 This program is free software: you can redistribute it and/or modify
@@ -303,7 +303,7 @@ def main(argv):
     global ACCLAB_PATH
     inputfile = ""
     outputfile = ""
-    help_str_extended = "AAL tools set V 2.2 . aalc is a part of Acclab tool.\n" + \
+    help_str_extended = "AAL tools set V 2.3 . aalc is a part of Acclab tool.\n" + \
                         "For more information see AccLab home page\n Usage : aalc.py [OPTIONS]" + \
                         "\n  -h \t--help          " + "\t display this help and exit" + \
                         "\n  -i \t--input= [file] " + "\t the input file" + \
