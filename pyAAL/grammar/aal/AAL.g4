@@ -85,6 +85,7 @@ O_where    : 'WHERE';    // | 'where';
 O_after    : 'AFTER';    // | 'after';
 O_before   : 'BEFORE';   // | 'before';
 O_equiv    : '<=>';
+O_imply    : '->' |'=>';
 
 /** Temporal operators **/
 T_must     : 'MUST';     // | 'must';
@@ -122,9 +123,11 @@ M_check    : 'CHECK';      // | 'check';
 M_apply    : 'APPLY';      // | 'apply';
 M_exec     : 'EXEC';       // | 'exec';
 M_behavior : 'BEHAVIOR';   // | 'behavior';
+M_template : 'TEMPLATE';   // | 'template';
 M_env      : 'ENV';        // | 'env';
 M_union    : 'UNION';      // | 'union';
 M_intersec : 'INTERSEC';   // | 'intersec';
+M_sum      : 'SUM';        // | 'sum';
 
 /** Check **/
 C_clause        : 'clause'           | 'cl';
@@ -142,6 +145,7 @@ h_rbar    : ']';
 h_lmar    : '{';
 h_rmar    : '}';
 h_dot     : '.';
+h_comma   : ',';
 h_colon   : ':';
 h_equal   : '==';
 h_inequal : '!=';
@@ -164,8 +168,8 @@ h_parameters : h_constant | h_variable;
 h_constant   : INT |  STRING;
 h_type       : ID;
 h_variable   : ID (h_colon h_type)?;
-h_predicate  : '@' ID h_lpar (h_pArgs)* h_rpar;
-h_pArgs      : ID | STRING;
+h_predicate  : '@' ID h_lpar (h_pArgs h_comma?)* h_rpar;
+h_pArgs      : ID | STRING | exp;
 
 //-------------------------------------------------------//
 //----------------- Lexer rules ------------------------//
@@ -185,7 +189,7 @@ MLCOMMENT : '/*' (.)*? '*/' -> channel(HIDDEN);
 //------------------------------------------------------//
 
 main        : aalprog;
-aalprog     : (clause | declaration | h_comment | macro | macroCall | loadlib | ltlCheck | checkApply | exec | behavior | env)*;
+aalprog     : (clause | declaration | h_comment | macro | macroCall | loadlib | ltlCheck | checkApply | exec | behavior | env | template | h_predicate)*;
 declaration : (agentDec | serviceDec | dataDec | typeDec | varDec) NEWLINE?;
 
 
@@ -201,7 +205,7 @@ attrValue    : h_attribute h_lpar ID* h_rpar;
 
 // TypesDec      ::= TYPE Id [EXTENDS '(' Type* ')'] ATTRIBUTES '(' AttributeDec* ')' ACTIONS '(' ActionDec* ')'
 typeDec      : D_type ID  type_super? type_attr? type_actions?;
-type_super   : (M_extends | M_union | M_intersec) h_lpar ID* h_rpar;
+type_super   : (M_extends | M_union | M_intersec | O_not | M_sum) h_lpar ID* h_rpar;
 type_attr    : M_attr h_lpar ID* h_rpar;
 type_actions : M_actions h_lpar ID* h_rpar;
 
@@ -230,8 +234,8 @@ actionExp  : actionExp1Action
            | actionExp6Author
            | actionExp7ifthen
            | actionExp8qvar
-           | h_lpar actionExp h_rpar
-           | h_predicate;
+           | h_lpar actionExp h_rpar;
+           //| h_predicate;
 
 actionExp1Action      : action;
 actionExp2notAction   : O_not actionExp;
@@ -250,7 +254,7 @@ booleanOp   : O_and | O_or | O_onlywhen | T_until | T_unless | O_equiv;
 author      : (A_permit | A_deny) (action | actionExp) NEWLINE?;
 ifthen      : O_if h_lpar actionExp h_rpar O_then h_lmar actionExp h_rmar
             | O_if actionExp O_then actionExp
-            | O_if actionExp IMPLICATION actionExp;
+            | O_if actionExp O_imply actionExp;
 
 
 exp : h_variable
@@ -274,15 +278,18 @@ time                   : (O_after | O_before) h_date | time (O_and | O_or) time;
 
 //****  Reflexion extension ****//
 macro  : M_macro ID args? h_lpar MCODE h_rpar;
-args   : h_lpar ID* h_rpar;
+args   : h_lpar (ID h_comma?)* h_rpar;
 MCODE : '"""' (.)*? '"""';
-macroCall : M_call ID h_lpar STRING* h_rpar;
+macroCall : M_call ID h_lpar (STRING h_comma?)* h_rpar;
 exec   : M_exec MCODE;
 loadlib : M_load STRING;
 
 
 //****  Behavior extension ****//
 behavior :  M_behavior ID h_lpar actionExp h_rpar;
+
+//****  Templates extension ****//
+template :  M_template ID (h_lpar (h_variable (h_comma)?)* h_rpar)? h_lpar actionExp h_rpar;
 
 
 //****  LTL checking extension ****//
@@ -291,7 +298,7 @@ check   : MCODE; //formula;
 checkApply : M_apply ID h_lpar STRING* h_rpar;
 env     : M_env MCODE; //formula;
 
-
+/*
 NEGATION    : '~' | 'not';
 CONJUNCTION : '&';
 DISJUNCTION : '|';
@@ -300,7 +307,6 @@ EQUIVALENCE :'<->' | '<=>';
 CONSTANTS   : 'true' | 'false';
 PREDICATE   : ID;
 
-/*
 atom : C_clause h_lpar h_clauseId h_rpar (h_dot (C_usage | C_audit | C_rectification))?
      | PREDICATE | CONSTANTS;
 

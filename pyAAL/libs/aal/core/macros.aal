@@ -85,6 +85,14 @@ if cl is not None:
 """
 )
 
+/*
+ * Print the fotl context
+ */
+MACRO show_context() (
+"""
+print(build_env(self.aalprog))
+"""
+)
 
 /*
  * Get natural language translation of a clause

@@ -111,6 +111,8 @@ class AALCompilerListener(AALListener.AALListener):
         self.isRectification = False
         self.isAudit = False
         self.isBehavior = False
+        self.isTemplate = False
+        self.currentTemplate = None
         self.libsPath = libs_path
         self.file = file
         self.output = ""
@@ -121,6 +123,7 @@ class AALCompilerListener(AALListener.AALListener):
         self.no_exec = no_exec
         self.web = web
         self.type_checker_enabled = False
+        self.use_advanced_types = False
 
         # FIXME
         if hotswaping:
@@ -167,7 +170,7 @@ class AALCompilerListener(AALListener.AALListener):
             root_path = root_path + self.root_path + "/"
 
         lib_path = lib_name.replace('"', '').replace(".", "/") + ".aal"
-        #  Search in the file scope before
+        # Search in the file scope before
         if not internal:
             lib_path2 = root_path + lib_path
             # print(lib_path2)
@@ -357,7 +360,7 @@ class AALCompilerListener(AALListener.AALListener):
         return res
 
 
-    # Fix forwards Ref in loaded libs
+    # Fix forwards Ref in loaded libs
     def fixLibsForwardsRef(self):
         """
         Fix forwards Ref in loaded libs
@@ -368,6 +371,32 @@ class AALCompilerListener(AALListener.AALListener):
         #        print(str(d) + " " + str(self.isDeclared(d, m_type)) )
         #        res = self.isDeclared(d, m_type)
         pass
+    
+    def exitH_predicate(self, ctx):
+        # Handle custom case of a clause defined by a template call
+        if str(ctx.ID()) == "Clause":
+            currentClause = m_clause()
+            currentClause.name = ctx.h_pArgs()[0].ID()
+            # Check if clause is already declared
+            if self.aalprog.isDeclared(currentClause.name, m_clause) is True:
+                print(Color("{autored}[ERROR]{/red} clause " + currentClause.name + "{automagenta} at line " +
+                            str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
+                return
+            currentClause.source_range = [ctx.start.start, ctx.stop.stop]
+            # Build the clause
+            usage = m_usage()
+            pred = m_predicate()
+            pred.name = "Template"
+            if len(ctx.h_pArgs()) < 2:
+                print(Color("{autored}[ERROR]{/red} missing arguments in template defined clause  " + str(currentClause.name) + " !"))
+                return
+            for arg in ctx.h_pArgs()[1:]:
+                pred.args.append(arg.ID())
+            usage.actionExp.append(pred)
+            currentClause.usage = usage
+            self.aalprog.clauses.append(currentClause)  # Add the clause to the aalProg clauses
+        elif str(ctx.ID()) == "exit":
+            exit()
 
     ##########################
     ####### Declarable #######
@@ -654,11 +683,12 @@ class AALCompilerListener(AALListener.AALListener):
             if dtName in self.refForwardTypes:  # Check if type is in forwards ref
                 del self.refForwardTypes[dtName]  # Remove it to resolve forwards ref
                 # Remove it from the declarations list
-                self.aalprog.declarations["services"].remove(self.aalprog.isDeclared(dtName, m_type, ret=int))
+                self.aalprog.declarations["types"].remove(self.aalprog.isDeclared(dtName, m_type, ret=int))
             else:  # The data was effectively declared
-                print(Color("{autored}[ERROR]{/red} type " + dtName + "{automagenta} at line " +
-                            str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
-                return
+                if not self.use_advanced_types:
+                    print(Color("{autored}[ERROR]{/red} type " + dtName + "{automagenta} at line " +
+                                str(ctx.getPayload().start.line) + "{/magenta} already declared !"))
+                    return
 
         # Handle type superTypes
         if ctx.type_super():
@@ -666,6 +696,10 @@ class AALCompilerListener(AALListener.AALListener):
                 dtDec.kind = "UNION"
             elif ctx.type_super().M_intersec():
                 dtDec.kind = "INTERSEC"
+            elif ctx.type_super().M_sum():
+                dtDec.kind = "SUM"
+            elif ctx.type_super().O_not():
+                dtDec.kind = "NOT"
 
             for x in ctx.type_super().ID():
                 tmp = self.checkTypeDec(x)
@@ -697,6 +731,23 @@ class AALCompilerListener(AALListener.AALListener):
         self.aalprog.behaviors.append(behavior)
         self.isBehavior = False
 
+    # Enter Template
+    def enterTemplate(self, ctx):
+        self.isTemplate = True
+        self.currentTemplate = m_template()
+
+    # Exit Template
+    def exitTemplate(self, ctx):
+        name = str(ctx.ID())
+        #template = m_template(name=name)
+        self.currentTemplate.name = name
+        self.currentTemplate.actionExp = self.actionExpStack.pop()
+        while len(self.currentVar) > 0:
+            self.currentTemplate.args.append(self.currentVar.pop())
+        self.currentTemplate.args.reverse()
+        self.aalprog.templates.append(self.currentTemplate)
+        self.isTemplate = False
+        self.currentTemplate = None
 
     ##########################
     ####### ActionExp  #######
@@ -854,7 +905,7 @@ class AALCompilerListener(AALListener.AALListener):
         # Handle all qvars
         # for qv in ctx.qvar():  # Reverse to get the right order of vars
         # qvar = self.qvarsStack.pop()
-        # TODO: check qvar and qv
+        # TODO: check qvar and qv
         # self.actionExpStack[-1].qvars.insert(0, qvar)
         self.actionExpStack[-1].qvars.insert(0, self.qvarsStack.pop())
 
@@ -888,7 +939,7 @@ class AALCompilerListener(AALListener.AALListener):
 
         currentVar = self.currentVar.pop()
         qvar.name = currentVar.name  # Set the name
-        #  Set the target
+        # Set the target
         ref = m_ref()
         ref.label = currentVar.name
         ref.name = currentVar.name
@@ -981,6 +1032,10 @@ class AALCompilerListener(AALListener.AALListener):
 
         elif ctx.h_predicate() is not None:  # Test Predicate
             cts = m_predicate()
+            if self.isTemplate:
+                cts.parent = self.currentTemplate
+            else:
+                cts.parent = self.currentClause
             if ctx.h_predicate().ID() is not None:
                 cts.name = ctx.h_predicate().ID()
                 for x in ctx.h_predicate().h_pArgs():
@@ -988,6 +1043,8 @@ class AALCompilerListener(AALListener.AALListener):
                         cts.args.append(x.STRING())
                     elif x.ID() is not None:
                         cts.args.append(x.ID())
+                    elif x.exp() is not None:
+                        cts.args.append(self.expStack.pop())
             self.expStack[-1] = cts
 
         elif (ctx.ID() is not None) and (ctx.h_attribute() is not None):  # Test attribute var
@@ -1067,7 +1124,7 @@ class AALCompilerListener(AALListener.AALListener):
         if chk is None:
             chk = m_ltlCheck(name="tmp", code=code)
 
-        #  Generating LTL formula
+        # Generating LTL formula
         code = str(chk.code)
         ltl = code
 
@@ -1172,8 +1229,8 @@ class AALCompilerListener(AALListener.AALListener):
                         code += str(next(params)) + " = " + str(x) + "\n"
                 code += macro.code.replace('"""', '').replace("return", "__res__ = ")  # FIXME
                 exec(code)
-            except:
-                print("Macro eval error !")
+            except Exception as e:
+                print(Color("{autored}[ERROR]{/red} Macro eval error ! Error : %s" % e))
 
         else:
             print(Color("{autored}[ERROR]{/red} Macro '" + macro_name + "' not found !"))
@@ -1215,6 +1272,10 @@ class AALCompilerListener(AALListener.AALListener):
     def get_behaviors(self):
         x = [str(x.name) + " " for x in self.aalprog.get_behaviors()]
         return "".join(x)
+        
+    def get_templates(self):
+        x = [str(x) + " " for x in self.aalprog.get_templates()]
+        return "".join(x)
 
     def behavior(self, clauseId):
         res = [x for x in self.aalprog.get_behaviors() if str(x.name) == str(clauseId)]
@@ -1224,6 +1285,14 @@ class AALCompilerListener(AALListener.AALListener):
             print("Behavior " + clauseId + " not found !")
             return None
 
+    def template(self, templateId):
+        res = [x for x in self.aalprog.get_templates() if str(x.name) == str(templateId)]
+        if len(res) > 0:
+            return res[0]
+        else:
+            print("Template " + templateId + " not found !")
+            return None
+            
     def get_macros(self):
         res = [str(x.name) + "(" + " ".join(x.param) + ")" for x in self.aalprog.get_macros()]
         return "\n".join(res)

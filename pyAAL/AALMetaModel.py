@@ -329,6 +329,7 @@ class m_aalprog(aalmmnode):
         self.checksApply = []
         self.libs = []
         self.behaviors = []
+        self.templates = []
         self.envs = []
         if currentCompilerInstance is not None:
             m_aalprog.currentCompilerInstances.append(currentCompilerInstance)
@@ -355,6 +356,8 @@ class m_aalprog(aalmmnode):
         res += "\n".join([str(x) for x in self.checks])+"\n\n"
         res += "// Behaviors \n"
         res += "\n".join([str(x) for x in self.behaviors])+"\n\n"
+        res += "// Templates \n"
+        res += "\n".join([str(x) for x in self.templates])+"\n\n"
         res += "// Env \n"
         res += "\n".join([str(x) for x in self.envs])+"\n\n"
         return res
@@ -455,6 +458,7 @@ class m_aalprog(aalmmnode):
         res.extend(self.checks)
         res.extend(self.checksApply)
         res.extend(self.behaviors)
+        res.extend(self.templates)
         res.extend(self.envs)
         return res
 
@@ -481,6 +485,13 @@ class m_aalprog(aalmmnode):
         res.extend(self.behaviors)
         for l in self.libs:
             res.extend(l.aalprog.get_behaviors())
+        return res
+
+    def get_templates(self):
+        res = []
+        res.extend(self.templates)
+        for l in self.libs:
+            res.extend(l.aalprog.get_templates())
         return res
 
 
@@ -751,18 +762,54 @@ class m_type(m_declarable):
             slattributes) + ") ACTIONS(" + " ".join(slactions) + ")"
 
     def to_ltl(self):
-        if self.kind == "INTERSECT":
-            supers = "& (![x] ( (%s(x) => (%s(x) => false)) => false ))" % (self.superTypes[0], self.superTypes[1])
+        supers = "& (![x] ( "
+        if str(self.name) == "Void":
+            #supers += "(%s(x) => false)" % self.name
+            supers = "~%s(x) " % self.name
+            return "~Void(a) & (![x] (%s))" % supers
+
+        if self.kind == "INTERSEC":
+            # supers = "& (![x] ( (%s(x) => (%s(x) => false)) => false ))" % (self.superTypes[0], self.superTypes[1])
+            tmp = "("
+            for x in self.superTypes:
+                tmp += " %s(x) &" % x
+            if len(tmp) > 1:
+                tmp = tmp[:-1] + ") "  # IMPORTANT : do not remove the space
+                supers += "%s(x) <=> %s" % (self.name, tmp)
+
         elif self.kind == "UNION":
-            supers = "& (![x] ( (%s(x) => %s(x)) => %s(x)  ))" % (self.superTypes[0], self.superTypes[1], self.superTypes[1])
+            # supers = "& (![x] ( (%s(x) => %s(x)) => %s(x)  ))" % (self.superTypes[0], self.superTypes[1], self.superTypes[1])
+            tmp = "("
+            for x in self.superTypes:
+                tmp += " %s(x) |" % x
+            if len(tmp) > 1:
+                tmp = tmp[:-1] + ") "  # IMPORTANT : do not remove the space
+                supers += "%s(x) <=> %s" % (self.name, tmp)
+
+        elif self.kind == "SUM":
+            tmp = "("
+            for x in self.superTypes:
+                tmp += " (%s(x) => %s(x) &" % (self.name, x)
+                for y in self.superTypes:
+                    if y is not x:
+                        tmp += " ~%s(x) &" % y
+                tmp = tmp[:-1] + ") |"
+
+            if len(tmp) > 1:
+                tmp = tmp[:-1] + ") "  # IMPORTANT : do not remove the space
+                supers += "%s" % tmp
+
+        elif self.kind == "NOT":
+            for x in self.superTypes:
+                supers += " (%s(x) => ~%s(x) ) &" % (self.name, x)
         else:
-            supers = "& (![x] ( "
             for x in self.superTypes:
                 supers += "(" + str(self.name) + "(x) => " + str(x) + "(x) ) &"
-            if len(supers) > 10:
-                supers = supers[:-1] + "))"
-            else:
-                supers = ""
+
+        if len(supers) > 10:
+            supers = supers[:-1] + "))"
+        else:
+            supers = ""
 
         return str(self.name) + "(a) " + supers
 
@@ -848,6 +895,83 @@ class m_behavior(aalmmnode):
         return self.actionExp.to_ltl()
 
 
+# Template
+class m_template(aalmmnode):
+    def __init__(self, init=False, name=None, args=None):
+        super().__init__(name)
+        self.actionExp = None
+        self.args = [] if args is None else args
+        self.args_stack = {}
+
+    def __str__(self):
+        return str(self.actionExp)
+
+    def children(self):
+        return [self.actionExp]
+
+    def to_ltl(self):
+        return self.actionExp.to_ltl()
+        
+    def resolve_args(self, caller, args):
+        self.args_stack = {}
+        if len(self.args) != len(args):
+            print(Color("{autored}[ERROR]{/red} Missing arguments in template call !"))
+            return False
+
+        i = 0
+        for arg in args:
+            ref = None
+            arg_type = str(self.args[i].type).lower()
+            if arg_type == "behavior":  # Behavior case
+                ref = m_aalprog.currentCompilerInstances[-1].behavior(str(arg))
+            if arg_type == "template":  # Template case
+                ref = m_aalprog.currentCompilerInstances[-1].template(str(arg))
+            elif arg_type == "clause":  # Clause case
+                ref = m_aalprog.currentCompilerInstances[-1].clause(str(arg))
+            elif arg_type == "usage" or arg_type == "audit" or arg_type == "rectification":  # Clause's elements case
+                ref = m_aalprog.currentCompilerInstances[-1].clause(str(arg))
+                if ref is not None:
+                    ref = ref.__getattribute__(arg_type)
+            else:
+                # Local vars lookup
+                arg_type = str(self.args[i].type)
+                refs = caller.parent.walk(filters="str(self.name)=='%s'" % arg)
+                if len(refs) == 0:
+                    # handle template args
+                    if str(caller.name).lower() == "template":
+                        if isinstance(arg, m_predicate):
+                            if str(arg.name).lower() == "arg": # TODO type check
+                                ref = caller.parent.args_stack[str(arg.args[0])]
+                else:
+                    # Infer the correct reference
+                    for x in refs:
+                        if isinstance(x, m_ref):
+                            ref_type_dec = x.target.type.target
+                            # if str(x.target.type) == arg_type:
+                            if ref_type_dec.subtype_of(arg_type):
+                                ref = x
+                                break
+                if ref is None:
+                    # Global vars lookup
+                    var = m_aalprog.currentCompilerInstances[-1].checkVarDec(str(arg), quant=False)
+                    if var is not None:
+                        # Type check
+                        for y in var.types:
+                            if str(arg_type) == str(y.label):
+                                ref = m_ref(label=var.name, target=var)
+
+            if ref is not None:
+                self.args_stack[str(self.args[i].name)] = ref
+            else:
+                print(Color("{autored}[ERROR]{/red} Argument %s of type %s not found !" % (arg, arg_type)))
+                return False  
+            i += 1
+        return True
+
+    def clean_call(self):
+        self.args_stack = {}
+
+
 # Declarable Reference
 class m_ref(aalmmnode):
     """
@@ -871,7 +995,7 @@ class m_ref(aalmmnode):
         return [self]
 
     def to_ltl(self):
-        return self.label  # TODO: check
+        return self.label  # TODO: check
 
     def to_nnf(self, negated):
         return self.label  # TODO: check
@@ -1309,17 +1433,43 @@ class m_predicate(m_exp):
         self.args = []
 
     def __str__(self):
-        q = [str(x) for x in self.args]
+        q = self.args
         # Handle custom predicates
-        if str(self.name) == "ref":
-            return str(m_aalprog.currentCompilerInstances[-1].behavior(q[0]))
+        if str(self.name).lower() == "ref":  # Behavior reference
+            return str(m_aalprog.currentCompilerInstances[-1].behavior(str(q[0])))
+        elif str(self.name).lower() == "template":  # Template CALL
+            ####### RESOLVE ARGUMENTS #########
+            template = m_aalprog.currentCompilerInstances[-1].template(str(q[0]))
+            if template.resolve_args(self, q[1:]):
+                res = str(template)
+                template.clean_call()
+                return res
+            else:
+                print(Color("{autored}[ERROR]{/red} Error while calling template %s !" % q[0]))
+                return "ERROR"
+        elif str(self.name).lower() == "arg":  # Template ARG
+            return "%s" % self.parent.args_stack[str(q[0])]
+        q = [str(x) for x in self.args]
         return "@" + str(self.name) + "(" + str(" ".join(q)) + ")"
 
     def to_ltl(self):
-        q = [str(x) for x in self.args]#[1:]
+        q = self.args
         # Handle custom predicates
         if str(self.name) == "ref":
-            return m_aalprog.currentCompilerInstances[-1].behavior(q[0]).to_ltl()
+            return m_aalprog.currentCompilerInstances[-1].behavior(str(q[0])).to_ltl()
+        elif str(self.name).lower() == "template":  # Template CALL
+            ####### RESOLVE ARGUMENTS #########
+            template = m_aalprog.currentCompilerInstances[-1].template(str(q[0]))
+            if template.resolve_args(self, q[1:]):
+                res = template.to_ltl()
+                template.clean_call()
+                return res
+            else:
+                print(Color("{autored}[ERROR]{/red} Error while calling template %s !" % q[0]))
+                return "ERROR"
+        elif str(self.name).lower() == "arg":  # Template ARG
+            return self.parent.args_stack[str(q[0])].to_ltl()
+        q = [str(x) for x in self.args]#[1:]
         return str(self.name) + "(" + str(", ".join(q)) + ")"
 
     def children(self):

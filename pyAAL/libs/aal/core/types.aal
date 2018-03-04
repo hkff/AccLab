@@ -1,9 +1,15 @@
 //=====================================================//
 //=================== Defining Types ==================//
 //=====================================================//
+TYPE Void
 TYPE data
 TYPE actor
-TYPE Actor            EXTENDS() ATTRIBUTES() ACTIONS()
+TYPE Clause
+TYPE Usage
+TYPE Audit
+TYPE Rectification
+TYPE Behavior
+TYPE Actor
 TYPE Data             EXTENDS() ATTRIBUTES(subject) ACTIONS()
 TYPE DataSubject      EXTENDS(Actor) ATTRIBUTES() ACTIONS()
 TYPE DataController   EXTENDS(Actor) ATTRIBUTES() ACTIONS()
@@ -44,6 +50,15 @@ if _c1 is not None:
 MACRO enable_type_checker(
 """
 self.type_checker_enabled = True
+"""
+)
+
+
+MACRO enable_advanced_types(
+"""
+print(Color("{autoyellow}[WARNING]{/autoyellow} You are using advanced types mode, type checking may shows some errors !"))
+                    
+self.use_advanced_types = True
 """
 )
 

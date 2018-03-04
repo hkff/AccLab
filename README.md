@@ -1,8 +1,8 @@
-[![Version](https://img.shields.io/badge/version-2.2-orange.svg)]()
+[![Version](https://img.shields.io/badge/version-2.3-orange.svg)]()
 [![License](https://img.shields.io/badge/license-GPL3-blue.svg)]()
 [![Python](https://img.shields.io/badge/python->%3D3.4-green.svg)]()
 
-AccLab Last release : Version 2.2 23/07/2017
+AccLab Last release : Version 2.3 04/03/2018
 
 What is it?
 -----------
@@ -83,8 +83,7 @@ Contacts
 >   Julie Spens         (UI)  
 
 -------------------------------------------------------------------------------
-Copyright (C) 2014-2017 Walid Benghabrit
-Ecole des Mines de Nantes - ARMINES  
+Copyright (C) 2014-2018 Walid Benghabrit
 ASCOLA Research Group  
 A4CLOUD Project http://www.a4cloud.eu/
 

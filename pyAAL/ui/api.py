@@ -668,7 +668,7 @@ def svn_diff(target, r1, r2):
 def start_fodtlmon_server(server_port=9999):
     import os
     from subprocess import Popen
-    Popen(['python3.4', 'ui/mon.py', server_port])
+    Popen(['python3', 'ui/mon.py', server_port])
     sleep(1)
     return server_port
 

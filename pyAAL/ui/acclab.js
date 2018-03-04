@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 //
-//  AccLab UI V 2.2 : acclab.js
+//  AccLab UI V 2.3 : acclab.js
 //
 // Copyright (C) 2014 Walid Benghabrit
 //
@@ -31,7 +31,7 @@ var visualEditor = {
     aceTheme      : "monokai",
     aceThemesList : ["monokai", "chrome", "tomorrow", "kuroir", "eclipse", "chaos"],
     backend       : "http://127.0.0.1:8000/",
-    version       : "2.2",
+    version       : "2.3",
     wm            : null,
 
 
@@ -308,7 +308,7 @@ var visualEditor = {
     about: function () {
         var abt = "" +
             "<img src='assets/icon_128.png' class='logoAbout' alt='AccLab logo'>" +
-            "<div class='versionAbout'>AccLab Version 2.2</div>" +
+            "<div class='versionAbout'>AccLab Version 2.3</div>" +
             "<div class='aboutCore'>AccLab is a web based accountability framework designed in the context of A4CLOUD project. " +
             "The main goal is to observe ”accountability in action” by simulating a software system with several" +
             " agents exchanging data and requiring different privacy policy." +
@@ -378,7 +378,7 @@ var visualEditor = {
             "<a class='catElement' onclick='visualEditor.about()'><i class='fa fa-question'></i> About</a></br></br>"+
             "</div></div>"+
             "</div>"+
-            "<div style='padding-top: 150px; display: inline-block; padding-right: 60px;'>AccLab version 2.2 2014-2017</div>";
+            "<div style='padding-top: 150px; display: inline-block; padding-right: 60px;'>AccLab version 2.3 2014-2018</div>";
 
         toastr.info(abt, "Get started", {
 				"closeButton": true,
