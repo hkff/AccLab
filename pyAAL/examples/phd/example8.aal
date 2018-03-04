@@ -1,0 +1,33 @@
+ LOAD "core.types"
+ LOAD "core.macros"
+ 
+ 
+ AGENT kim TYPES(Actor) REQUIRED() PROVIDED()
+ 
+/*** Kim's user preference ***/
+CLAUSE kim_policy (
+  (FORALL file:data 
+  IF (file.subject == kim) THEN {
+    PERMIT kim.read[cloudX](file) AND
+    MUST (cloudX.delete[cloudX](file) BEFORE "2 month")
+    //AND (IF (cloudX.delete[file]()) THEN cloudX.notify[kim]("DATA DELETED"))
+  })
+  AUDITING DPA.audit[cloudX]()
+  IF_VIOLATED_THEN MUST(DPA.sanction[cloudX]())
+)
+/*** CloudX's policy ***/
+CLAUSE cloudX_policy (
+  FORALL a:Actor 
+  FORALL file:data 
+  IF (file.subject == a) THEN {
+     PERMIT a.read[cloudX](file) AND
+     MUST (cloudX.delete[cloudX](file) BEFORE "5 month")
+     //AND (IF (cloudX.delete[file]()) THEN cloudX.notify[a]("DATA DELETED"))
+   }
+  AUDITING DPA.audit[cloudX]()
+  IF_VIOLATED_THEN DPA.sanction[cloudX]()
+)
+
+
+//CALL validate_usage_neg("cloudX_policy" "kim_policy")
+//CALL compliance("cloudX_policy" "kim_policy" )

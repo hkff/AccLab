@@ -894,6 +894,7 @@ class m_behavior(aalmmnode):
     def to_ltl(self):
         return self.actionExp.to_ltl()
 
+
 # Template
 class m_template(aalmmnode):
     def __init__(self, init=False, name=None, args=None):
@@ -922,19 +923,26 @@ class m_template(aalmmnode):
             ref = None
             arg_type = str(self.args[i].type).lower()
             if arg_type == "behavior":  # Behavior case
-                ref = m_aalprog.currentCompilerInstances[-1].behavior(arg)
+                ref = m_aalprog.currentCompilerInstances[-1].behavior(str(arg))
             if arg_type == "template":  # Template case
-                ref = m_aalprog.currentCompilerInstances[-1].template(arg)
+                ref = m_aalprog.currentCompilerInstances[-1].template(str(arg))
             elif arg_type == "clause":  # Clause case
-                ref = m_aalprog.currentCompilerInstances[-1].clause(arg)
+                ref = m_aalprog.currentCompilerInstances[-1].clause(str(arg))
             elif arg_type == "usage" or arg_type == "audit" or arg_type == "rectification":  # Clause's elements case
-                ref = m_aalprog.currentCompilerInstances[-1].clause(arg)
+                ref = m_aalprog.currentCompilerInstances[-1].clause(str(arg))
                 if ref is not None:
                     ref = ref.__getattribute__(arg_type)
             else:
+                # Local vars lookup
                 arg_type = str(self.args[i].type)
                 refs = caller.parent.walk(filters="str(self.name)=='%s'" % arg)
-                if len(refs) > 0:
+                if len(refs) == 0:
+                    # handle template args
+                    if str(caller.name).lower() == "template":
+                        if isinstance(arg, m_predicate):
+                            if str(arg.name).lower() == "arg": # TODO type check
+                                ref = caller.parent.args_stack[str(arg.args[0])]
+                else:
                     # Infer the correct reference
                     for x in refs:
                         if isinstance(x, m_ref):
@@ -943,7 +951,15 @@ class m_template(aalmmnode):
                             if ref_type_dec.subtype_of(arg_type):
                                 ref = x
                                 break
-                    
+                if ref is None:
+                    # Global vars lookup
+                    var = m_aalprog.currentCompilerInstances[-1].checkVarDec(str(arg), quant=False)
+                    if var is not None:
+                        # Type check
+                        for y in var.types:
+                            if str(arg_type) == str(y.label):
+                                ref = m_ref(label=var.name, target=var)
+
             if ref is not None:
                 self.args_stack[str(self.args[i].name)] = ref
             else:
@@ -1417,13 +1433,13 @@ class m_predicate(m_exp):
         self.args = []
 
     def __str__(self):
-        q = [str(x) for x in self.args]
+        q = self.args
         # Handle custom predicates
         if str(self.name).lower() == "ref":  # Behavior reference
-            return str(m_aalprog.currentCompilerInstances[-1].behavior(q[0]))
+            return str(m_aalprog.currentCompilerInstances[-1].behavior(str(q[0])))
         elif str(self.name).lower() == "template":  # Template CALL
             ####### RESOLVE ARGUMENTS #########
-            template = m_aalprog.currentCompilerInstances[-1].template(q[0])
+            template = m_aalprog.currentCompilerInstances[-1].template(str(q[0]))
             if template.resolve_args(self, q[1:]):
                 res = str(template)
                 template.clean_call()
@@ -1433,16 +1449,17 @@ class m_predicate(m_exp):
                 return "ERROR"
         elif str(self.name).lower() == "arg":  # Template ARG
             return "%s" % self.parent.args_stack[str(q[0])]
+        q = [str(x) for x in self.args]
         return "@" + str(self.name) + "(" + str(" ".join(q)) + ")"
 
     def to_ltl(self):
-        q = [str(x) for x in self.args]#[1:]
+        q = self.args
         # Handle custom predicates
         if str(self.name) == "ref":
-            return m_aalprog.currentCompilerInstances[-1].behavior(q[0]).to_ltl()
+            return m_aalprog.currentCompilerInstances[-1].behavior(str(q[0])).to_ltl()
         elif str(self.name).lower() == "template":  # Template CALL
             ####### RESOLVE ARGUMENTS #########
-            template = m_aalprog.currentCompilerInstances[-1].template(q[0])
+            template = m_aalprog.currentCompilerInstances[-1].template(str(q[0]))
             if template.resolve_args(self, q[1:]):
                 res = template.to_ltl()
                 template.clean_call()
@@ -1452,6 +1469,7 @@ class m_predicate(m_exp):
                 return "ERROR"
         elif str(self.name).lower() == "arg":  # Template ARG
             return self.parent.args_stack[str(q[0])].to_ltl()
+        q = [str(x) for x in self.args]#[1:]
         return str(self.name) + "(" + str(", ".join(q)) + ")"
 
     def children(self):

@@ -1043,6 +1043,8 @@ class AALCompilerListener(AALListener.AALListener):
                         cts.args.append(x.STRING())
                     elif x.ID() is not None:
                         cts.args.append(x.ID())
+                    elif x.exp() is not None:
+                        cts.args.append(self.expStack.pop())
             self.expStack[-1] = cts
 
         elif (ctx.ID() is not None) and (ctx.h_attribute() is not None):  # Test attribute var
